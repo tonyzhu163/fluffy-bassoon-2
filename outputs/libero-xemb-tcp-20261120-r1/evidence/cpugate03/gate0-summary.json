@@ -1,0 +1,2955 @@
+{
+  "gate0_passed": true,
+  "selected_radius_m": 0.035,
+  "seconds": 291.0,
+  "nominal_base_successes": "8/8",
+  "zero_leak_checks": {
+    "frame0_rgb_bitwise_equal": true,
+    "precontact_rgb_bitwise_equal": true,
+    "precontact_proprio_bitwise_equal": true,
+    "mujoco_shift_exact_and_collision_free": true
+  },
+  "by_radius": {
+    "r25": {
+      "radius_m": 0.025,
+      "trials": 32,
+      "nominal_shifted_successes": 10,
+      "nominal_shifted_rate": 0.3125,
+      "mean_opp_rgb_l1": 8.487758740782738,
+      "min_opp_rgb_l1": 2.152376413345337,
+      "mean_opp_jaw_l1_mm": 11.321594708533667,
+      "distinguishable_tasks": 8,
+      "passes_gate0": false
+    },
+    "r35": {
+      "radius_m": 0.035,
+      "trials": 32,
+      "nominal_shifted_successes": 8,
+      "nominal_shifted_rate": 0.25,
+      "mean_opp_rgb_l1": 9.750304445624352,
+      "min_opp_rgb_l1": 3.2164876461029053,
+      "mean_opp_jaw_l1_mm": 6.5206144540752575,
+      "distinguishable_tasks": 8,
+      "passes_gate0": true
+    },
+    "r45": {
+      "radius_m": 0.045,
+      "trials": 32,
+      "nominal_shifted_successes": 3,
+      "nominal_shifted_rate": 0.09375,
+      "mean_opp_rgb_l1": 8.054627746343613,
+      "min_opp_rgb_l1": 1.3082153797149658,
+      "mean_opp_jaw_l1_mm": 8.613935013372487,
+      "distinguishable_tasks": 8,
+      "passes_gate0": true
+    }
+  },
+  "task_separability": {
+    "libero_10-0": {
+      "r25": {
+        "px_vs_mx": {
+          "rgb_l1": 6.359440326690674,
+          "jaw_l1_mm": 27.746882289648056,
+          "joint_l1": 0.019512642174959183
+        },
+        "py_vs_my": {
+          "rgb_l1": 9.125008583068848,
+          "jaw_l1_mm": 1.6152949538081884,
+          "joint_l1": 0.0533430241048336
+        }
+      },
+      "r35": {
+        "px_vs_mx": {
+          "rgb_l1": 6.134020805358887,
+          "jaw_l1_mm": 6.952178664505482,
+          "joint_l1": 0.007071439176797867
+        },
+        "py_vs_my": {
+          "rgb_l1": 6.074450492858887,
+          "jaw_l1_mm": 0.9928856743499637,
+          "joint_l1": 0.025351082906126976
+        }
+      },
+      "r45": {
+        "px_vs_mx": {
+          "rgb_l1": 3.54248046875,
+          "jaw_l1_mm": 4.186155740171671,
+          "joint_l1": 0.0041386643424630165
+        },
+        "py_vs_my": {
+          "rgb_l1": 7.816735744476318,
+          "jaw_l1_mm": 4.33321250602603,
+          "joint_l1": 0.03648805245757103
+        }
+      }
+    },
+    "libero_10-3": {
+      "r25": {
+        "px_vs_mx": {
+          "rgb_l1": 7.4729533195495605,
+          "jaw_l1_mm": 3.3643487840890884,
+          "joint_l1": 0.014087061397731304
+        },
+        "py_vs_my": {
+          "rgb_l1": 7.333947658538818,
+          "jaw_l1_mm": 2.4850377812981606,
+          "joint_l1": 0.025733552873134613
+        }
+      },
+      "r35": {
+        "px_vs_mx": {
+          "rgb_l1": 8.277201652526855,
+          "jaw_l1_mm": 5.668667610734701,
+          "joint_l1": 0.01462160237133503
+        },
+        "py_vs_my": {
+          "rgb_l1": 13.042301177978516,
+          "jaw_l1_mm": 2.141307108104229,
+          "joint_l1": 0.03483960032463074
+        }
+      },
+      "r45": {
+        "px_vs_mx": {
+          "rgb_l1": 9.019559860229492,
+          "jaw_l1_mm": 3.4197554923594,
+          "joint_l1": 0.025752630084753036
+        },
+        "py_vs_my": {
+          "rgb_l1": 10.052303314208984,
+          "jaw_l1_mm": 0.7293263915926218,
+          "joint_l1": 0.018491089344024658
+        }
+      }
+    },
+    "libero_goal-0": {
+      "r25": {
+        "px_vs_mx": {
+          "rgb_l1": 13.388391494750977,
+          "jaw_l1_mm": 3.080810187384486,
+          "joint_l1": 0.029558585956692696
+        },
+        "py_vs_my": {
+          "rgb_l1": 2.152376413345337,
+          "jaw_l1_mm": 2.0976129453629255,
+          "joint_l1": 0.0054022930562496185
+        }
+      },
+      "r35": {
+        "px_vs_mx": {
+          "rgb_l1": 20.233613967895508,
+          "jaw_l1_mm": 10.010527446866035,
+          "joint_l1": 0.13226273655891418
+        },
+        "py_vs_my": {
+          "rgb_l1": 3.2164876461029053,
+          "jaw_l1_mm": 2.0100579131394625,
+          "joint_l1": 0.007286413572728634
+        }
+      },
+      "r45": {
+        "px_vs_mx": {
+          "rgb_l1": 20.426441192626953,
+          "jaw_l1_mm": 9.724762290716171,
+          "joint_l1": 0.14094632863998413
+        },
+        "py_vs_my": {
+          "rgb_l1": 2.18438720703125,
+          "jaw_l1_mm": 2.038986887782812,
+          "joint_l1": 0.0046977992169559
+        }
+      }
+    },
+    "libero_goal-1": {
+      "r25": {
+        "px_vs_mx": {
+          "rgb_l1": 9.84759521484375,
+          "jaw_l1_mm": 10.429682210087776,
+          "joint_l1": 0.014223821461200714
+        },
+        "py_vs_my": {
+          "rgb_l1": 12.649487495422363,
+          "jaw_l1_mm": 1.9568183925002813,
+          "joint_l1": 0.00598529726266861
+        }
+      },
+      "r35": {
+        "px_vs_mx": {
+          "rgb_l1": 13.792566299438477,
+          "jaw_l1_mm": 2.400605473667383,
+          "joint_l1": 0.020727528259158134
+        },
+        "py_vs_my": {
+          "rgb_l1": 12.9053955078125,
+          "jaw_l1_mm": 1.4955876395106316,
+          "joint_l1": 0.007232632953673601
+        }
+      },
+      "r45": {
+        "px_vs_mx": {
+          "rgb_l1": 1.3082153797149658,
+          "jaw_l1_mm": 4.935441921816164e-05,
+          "joint_l1": 0.00038571248296648264
+        },
+        "py_vs_my": {
+          "rgb_l1": 10.626570701599121,
+          "jaw_l1_mm": 0.13449860853143036,
+          "joint_l1": 0.023421306163072586
+        }
+      }
+    },
+    "libero_object-0": {
+      "r25": {
+        "px_vs_mx": {
+          "rgb_l1": 6.688012599945068,
+          "jaw_l1_mm": 52.802808582782745,
+          "joint_l1": 0.005460002459585667
+        },
+        "py_vs_my": {
+          "rgb_l1": 4.909814357757568,
+          "jaw_l1_mm": 0.22418303706217557,
+          "joint_l1": 0.008922726847231388
+        }
+      },
+      "r35": {
+        "px_vs_mx": {
+          "rgb_l1": 9.928881645202637,
+          "jaw_l1_mm": 2.669181441888213,
+          "joint_l1": 0.03437087684869766
+        },
+        "py_vs_my": {
+          "rgb_l1": 7.0094523429870605,
+          "jaw_l1_mm": 0.09598228643881157,
+          "joint_l1": 0.016777612268924713
+        }
+      },
+      "r45": {
+        "px_vs_mx": {
+          "rgb_l1": 5.4675984382629395,
+          "jaw_l1_mm": 46.01050168275833,
+          "joint_l1": 0.002269943244755268
+        },
+        "py_vs_my": {
+          "rgb_l1": 9.829846382141113,
+          "jaw_l1_mm": 2.8716379310935736,
+          "joint_l1": 0.025622352957725525
+        }
+      }
+    },
+    "libero_object-7": {
+      "r25": {
+        "px_vs_mx": {
+          "rgb_l1": 9.985852241516113,
+          "jaw_l1_mm": 48.20345714688301,
+          "joint_l1": 0.0034954864531755447
+        },
+        "py_vs_my": {
+          "rgb_l1": 14.332690238952637,
+          "jaw_l1_mm": 0.48061468987725675,
+          "joint_l1": 0.06035054475069046
+        }
+      },
+      "r35": {
+        "px_vs_mx": {
+          "rgb_l1": 9.177071571350098,
+          "jaw_l1_mm": 48.01377281546593,
+          "joint_l1": 0.002591772237792611
+        },
+        "py_vs_my": {
+          "rgb_l1": 12.74786376953125,
+          "jaw_l1_mm": 0.9801174746826291,
+          "joint_l1": 0.053734757006168365
+        }
+      },
+      "r45": {
+        "px_vs_mx": {
+          "rgb_l1": 9.216971397399902,
+          "jaw_l1_mm": 47.66330495476723,
+          "joint_l1": 0.0020623409654945135
+        },
+        "py_vs_my": {
+          "rgb_l1": 11.115592002868652,
+          "jaw_l1_mm": 0.3573097928892821,
+          "joint_l1": 0.05136008560657501
+        }
+      }
+    },
+    "libero_spatial-1": {
+      "r25": {
+        "px_vs_mx": {
+          "rgb_l1": 6.314806938171387,
+          "jaw_l1_mm": 10.360877960920334,
+          "joint_l1": 0.003023359226062894
+        },
+        "py_vs_my": {
+          "rgb_l1": 10.867867469787598,
+          "jaw_l1_mm": 2.6087958831340075,
+          "joint_l1": 0.062059491872787476
+        }
+      },
+      "r35": {
+        "px_vs_mx": {
+          "rgb_l1": 9.466276168823242,
+          "jaw_l1_mm": 2.187945181503892,
+          "joint_l1": 0.003979278728365898
+        },
+        "py_vs_my": {
+          "rgb_l1": 7.042920112609863,
+          "jaw_l1_mm": 1.8475017277523875,
+          "joint_l1": 0.05100042372941971
+        }
+      },
+      "r45": {
+        "px_vs_mx": {
+          "rgb_l1": 9.715795516967773,
+          "jaw_l1_mm": 8.173617534339428,
+          "joint_l1": 0.024506643414497375
+        },
+        "py_vs_my": {
+          "rgb_l1": 2.8514201641082764,
+          "jaw_l1_mm": 0.03683806426124647,
+          "joint_l1": 0.000514887913595885
+        }
+      }
+    },
+    "libero_spatial-7": {
+      "r25": {
+        "px_vs_mx": {
+          "rgb_l1": 7.498144626617432,
+          "jaw_l1_mm": 8.319934830069542,
+          "joint_l1": 0.00426788255572319
+        },
+        "py_vs_my": {
+          "rgb_l1": 6.877750873565674,
+          "jaw_l1_mm": 5.3683556616306305,
+          "joint_l1": 0.008582607842981815
+        }
+      },
+      "r35": {
+        "px_vs_mx": {
+          "rgb_l1": 7.388391017913818,
+          "jaw_l1_mm": 11.556047946214676,
+          "joint_l1": 0.009696399793028831
+        },
+        "py_vs_my": {
+          "rgb_l1": 9.567976951599121,
+          "jaw_l1_mm": 5.307464860379696,
+          "joint_l1": 0.024180063977837563
+        }
+      },
+      "r45": {
+        "px_vs_mx": {
+          "rgb_l1": 8.939436912536621,
+          "jaw_l1_mm": 6.9255041889846325,
+          "joint_l1": 0.01262296736240387
+        },
+        "py_vs_my": {
+          "rgb_l1": 6.7606892585754395,
+          "jaw_l1_mm": 1.2174987932667136,
+          "joint_l1": 0.014449368230998516
+        }
+      }
+    }
+  },
+  "rows": [
+    {
+      "task": "libero_10-0",
+      "variant": "nom",
+      "radius_m": 0.0,
+      "dx_m": 0.0,
+      "dy_m": 0.0,
+      "success": true,
+      "controls": 281,
+      "first_contact": {
+        "control": 60,
+        "substep": 1486,
+        "geoms": [
+          "gripper0_finger2_pad_collision",
+          "alphabet_soup_1_g7"
+        ]
+      },
+      "joint_precontact_last": 59,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 0.0,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_10-0",
+      "variant": "r25_px",
+      "radius_m": 0.025,
+      "dx_m": 0.025,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 281,
+      "first_contact": {
+        "control": 64,
+        "substep": 1594,
+        "geoms": [
+          "gripper0_finger2_pad_collision",
+          "alphabet_soup_1_g21"
+        ]
+      },
+      "joint_precontact_last": 59,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 3.469446951953614e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_10-0",
+      "variant": "r25_mx",
+      "radius_m": 0.025,
+      "dx_m": -0.025,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 281,
+      "first_contact": {
+        "control": 66,
+        "substep": 1638,
+        "geoms": [
+          "gripper0_finger2_pad_collision",
+          "alphabet_soup_1_g14"
+        ]
+      },
+      "joint_precontact_last": 59,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 3.469446951953614e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_10-0",
+      "variant": "r25_py",
+      "radius_m": 0.025,
+      "dx_m": 0.0,
+      "dy_m": 0.025,
+      "success": false,
+      "controls": 281,
+      "first_contact": {
+        "control": 68,
+        "substep": 1680,
+        "geoms": [
+          "alphabet_soup_1_g6",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 59,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 4.163336342344337e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_10-0",
+      "variant": "r25_my",
+      "radius_m": 0.025,
+      "dx_m": 0.0,
+      "dy_m": -0.025,
+      "success": false,
+      "controls": 281,
+      "first_contact": {
+        "control": 56,
+        "substep": 1395,
+        "geoms": [
+          "alphabet_soup_1_g19",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 55,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 4.85722573273506e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_10-0",
+      "variant": "r35_px",
+      "radius_m": 0.035,
+      "dx_m": 0.035,
+      "dy_m": 0.0,
+      "success": true,
+      "controls": 276,
+      "first_contact": {
+        "control": 67,
+        "substep": 1653,
+        "geoms": [
+          "alphabet_soup_1_g1",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 59,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 5.551115123125783e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_10-0",
+      "variant": "r35_mx",
+      "radius_m": 0.035,
+      "dx_m": -0.035,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 281,
+      "first_contact": {
+        "control": 97,
+        "substep": 2423,
+        "geoms": [
+          "gripper0_finger1_pad_collision",
+          "gripper0_finger2_pad_collision"
+        ]
+      },
+      "joint_precontact_last": 59,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 5.551115123125783e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_10-0",
+      "variant": "r35_py",
+      "radius_m": 0.035,
+      "dx_m": 0.0,
+      "dy_m": 0.035,
+      "success": false,
+      "controls": 281,
+      "first_contact": {
+        "control": 68,
+        "substep": 1680,
+        "geoms": [
+          "alphabet_soup_1_g6",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 59,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 6.938893903907228e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_10-0",
+      "variant": "r35_my",
+      "radius_m": 0.035,
+      "dx_m": 0.0,
+      "dy_m": -0.035,
+      "success": false,
+      "controls": 281,
+      "first_contact": {
+        "control": 64,
+        "substep": 1592,
+        "geoms": [
+          "alphabet_soup_1_g1",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 59,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 6.245004513516506e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_10-0",
+      "variant": "r45_px",
+      "radius_m": 0.045,
+      "dx_m": 0.045,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 281,
+      "first_contact": {
+        "control": 69,
+        "substep": 1708,
+        "geoms": [
+          "alphabet_soup_1_g1",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 59,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 6.245004513516506e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_10-0",
+      "variant": "r45_mx",
+      "radius_m": 0.045,
+      "dx_m": -0.045,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 281,
+      "first_contact": {
+        "control": 97,
+        "substep": 2423,
+        "geoms": [
+          "gripper0_finger1_pad_collision",
+          "gripper0_finger2_pad_collision"
+        ]
+      },
+      "joint_precontact_last": 59,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 6.245004513516506e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_10-0",
+      "variant": "r45_py",
+      "radius_m": 0.045,
+      "dx_m": 0.0,
+      "dy_m": 0.045,
+      "success": false,
+      "controls": 281,
+      "first_contact": {
+        "control": 69,
+        "substep": 1717,
+        "geoms": [
+          "alphabet_soup_1_g20",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 59,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 8.326672684688674e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_10-0",
+      "variant": "r45_my",
+      "radius_m": 0.045,
+      "dx_m": 0.0,
+      "dy_m": -0.045,
+      "success": false,
+      "controls": 281,
+      "first_contact": {
+        "control": 64,
+        "substep": 1587,
+        "geoms": [
+          "alphabet_soup_1_g4",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 59,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 7.632783294297951e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_10-3",
+      "variant": "nom",
+      "radius_m": 0.0,
+      "dx_m": 0.0,
+      "dy_m": 0.0,
+      "success": true,
+      "controls": 206,
+      "first_contact": {
+        "control": 83,
+        "substep": 2070,
+        "geoms": [
+          "akita_black_bowl_1_g19",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 82,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 0.0,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_10-3",
+      "variant": "r25_px",
+      "radius_m": 0.025,
+      "dx_m": 0.025,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 206,
+      "first_contact": {
+        "control": 78,
+        "substep": 1930,
+        "geoms": [
+          "akita_black_bowl_1_g21",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 77,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.1796119636642288e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_10-3",
+      "variant": "r25_mx",
+      "radius_m": 0.025,
+      "dx_m": -0.025,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 206,
+      "first_contact": {
+        "control": 82,
+        "substep": 2049,
+        "geoms": [
+          "akita_black_bowl_1_g16",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 81,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 9.020562075079397e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_10-3",
+      "variant": "r25_py",
+      "radius_m": 0.025,
+      "dx_m": 0.0,
+      "dy_m": 0.025,
+      "success": false,
+      "controls": 206,
+      "first_contact": {
+        "control": 80,
+        "substep": 1980,
+        "geoms": [
+          "akita_black_bowl_1_g2",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 79,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 9.71445146547012e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_10-3",
+      "variant": "r25_my",
+      "radius_m": 0.025,
+      "dx_m": 0.0,
+      "dy_m": -0.025,
+      "success": true,
+      "controls": 206,
+      "first_contact": {
+        "control": 78,
+        "substep": 1941,
+        "geoms": [
+          "akita_black_bowl_1_g19",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 77,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.0408340855860843e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_10-3",
+      "variant": "r35_px",
+      "radius_m": 0.035,
+      "dx_m": 0.035,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 206,
+      "first_contact": {
+        "control": 71,
+        "substep": 1773,
+        "geoms": [
+          "akita_black_bowl_1_g22",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 70,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.3947004136484323e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_10-3",
+      "variant": "r35_mx",
+      "radius_m": 0.035,
+      "dx_m": -0.035,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 206,
+      "first_contact": {
+        "control": 81,
+        "substep": 2012,
+        "geoms": [
+          "akita_black_bowl_1_g16",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 80,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.3877787807814457e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_10-3",
+      "variant": "r35_py",
+      "radius_m": 0.035,
+      "dx_m": 0.0,
+      "dy_m": 0.035,
+      "success": false,
+      "controls": 206,
+      "first_contact": {
+        "control": 80,
+        "substep": 1980,
+        "geoms": [
+          "akita_black_bowl_1_g2",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 79,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.457167719820518e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_10-3",
+      "variant": "r35_my",
+      "radius_m": 0.035,
+      "dx_m": 0.0,
+      "dy_m": -0.035,
+      "success": false,
+      "controls": 206,
+      "first_contact": {
+        "control": 76,
+        "substep": 1885,
+        "geoms": [
+          "akita_black_bowl_1_g19",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 75,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.5265566588595902e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_10-3",
+      "variant": "r45_px",
+      "radius_m": 0.045,
+      "dx_m": 0.045,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 206,
+      "first_contact": {
+        "control": 71,
+        "substep": 1773,
+        "geoms": [
+          "akita_black_bowl_1_g22",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 70,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.8094421531119201e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_10-3",
+      "variant": "r45_mx",
+      "radius_m": 0.045,
+      "dx_m": -0.045,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 206,
+      "first_contact": {
+        "control": 81,
+        "substep": 2005,
+        "geoms": [
+          "akita_black_bowl_1_g16",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 80,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 2.0816681711721685e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_10-3",
+      "variant": "r45_py",
+      "radius_m": 0.045,
+      "dx_m": 0.0,
+      "dy_m": 0.045,
+      "success": false,
+      "controls": 206,
+      "first_contact": {
+        "control": 73,
+        "substep": 1808,
+        "geoms": [
+          "akita_black_bowl_1_g27",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 72,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.8735013540549517e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_10-3",
+      "variant": "r45_my",
+      "radius_m": 0.045,
+      "dx_m": 0.0,
+      "dy_m": -0.045,
+      "success": false,
+      "controls": 206,
+      "first_contact": {
+        "control": 68,
+        "substep": 1688,
+        "geoms": [
+          "akita_black_bowl_1_g19",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 67,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.942890293094024e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_goal-0",
+      "variant": "nom",
+      "radius_m": 0.0,
+      "dx_m": 0.0,
+      "dy_m": 0.0,
+      "success": true,
+      "controls": 106,
+      "first_contact": {
+        "control": 80,
+        "substep": 1984,
+        "geoms": [
+          "wooden_cabinet_1_g22",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 79,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 0.0,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_goal-0",
+      "variant": "r25_px",
+      "radius_m": 0.025,
+      "dx_m": 0.025,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 106,
+      "first_contact": {
+        "control": 77,
+        "substep": 1913,
+        "geoms": [
+          "wooden_cabinet_1_g29",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 76,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 6.245004513516506e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_goal-0",
+      "variant": "r25_mx",
+      "radius_m": 0.025,
+      "dx_m": -0.025,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 106,
+      "first_contact": {
+        "control": 71,
+        "substep": 1758,
+        "geoms": [
+          "wooden_cabinet_1_g18",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 70,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 6.245004513516506e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_goal-0",
+      "variant": "r25_py",
+      "radius_m": 0.025,
+      "dx_m": 0.0,
+      "dy_m": 0.025,
+      "success": true,
+      "controls": 106,
+      "first_contact": {
+        "control": 80,
+        "substep": 1991,
+        "geoms": [
+          "wooden_cabinet_1_g22",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 79,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 6.245004513516506e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_goal-0",
+      "variant": "r25_my",
+      "radius_m": 0.025,
+      "dx_m": 0.0,
+      "dy_m": -0.025,
+      "success": true,
+      "controls": 106,
+      "first_contact": {
+        "control": 80,
+        "substep": 1977,
+        "geoms": [
+          "wooden_cabinet_1_g22",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 79,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 6.245004513516506e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_goal-0",
+      "variant": "r35_px",
+      "radius_m": 0.035,
+      "dx_m": 0.035,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 106,
+      "first_contact": {
+        "control": 77,
+        "substep": 1920,
+        "geoms": [
+          "wooden_cabinet_1_g29",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 76,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.1102230246251565e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_goal-0",
+      "variant": "r35_mx",
+      "radius_m": 0.035,
+      "dx_m": -0.035,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 106,
+      "first_contact": {
+        "control": 71,
+        "substep": 1758,
+        "geoms": [
+          "wooden_cabinet_1_g18",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 70,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 8.355534721610419e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_goal-0",
+      "variant": "r35_py",
+      "radius_m": 0.035,
+      "dx_m": 0.0,
+      "dy_m": 0.035,
+      "success": true,
+      "controls": 106,
+      "first_contact": {
+        "control": 80,
+        "substep": 1994,
+        "geoms": [
+          "wooden_cabinet_1_g22",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 79,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 9.020562075079397e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_goal-0",
+      "variant": "r35_my",
+      "radius_m": 0.035,
+      "dx_m": 0.0,
+      "dy_m": -0.035,
+      "success": true,
+      "controls": 106,
+      "first_contact": {
+        "control": 79,
+        "substep": 1974,
+        "geoms": [
+          "wooden_cabinet_1_g22",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 78,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 9.020562075079397e-17,
+      "pad_gap_err_m": 1.3877787807814457e-17,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_goal-0",
+      "variant": "r45_px",
+      "radius_m": 0.045,
+      "dx_m": 0.045,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 106,
+      "first_contact": {
+        "control": 78,
+        "substep": 1950,
+        "geoms": [
+          "wooden_cabinet_1_g29",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 77,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.2509268882771003e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_goal-0",
+      "variant": "r45_mx",
+      "radius_m": 0.045,
+      "dx_m": -0.045,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 106,
+      "first_contact": {
+        "control": 71,
+        "substep": 1758,
+        "geoms": [
+          "wooden_cabinet_1_g18",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 70,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.249000902703301e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_goal-0",
+      "variant": "r45_py",
+      "radius_m": 0.045,
+      "dx_m": 0.0,
+      "dy_m": 0.045,
+      "success": true,
+      "controls": 106,
+      "first_contact": {
+        "control": 80,
+        "substep": 1997,
+        "geoms": [
+          "wooden_cabinet_1_g22",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 79,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.1102230246251565e-16,
+      "pad_gap_err_m": 1.3877787807814457e-17,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_goal-0",
+      "variant": "r45_my",
+      "radius_m": 0.045,
+      "dx_m": 0.0,
+      "dy_m": -0.045,
+      "success": true,
+      "controls": 106,
+      "first_contact": {
+        "control": 79,
+        "substep": 1971,
+        "geoms": [
+          "wooden_cabinet_1_g22",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 78,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.1102230246251565e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_goal-1",
+      "variant": "nom",
+      "radius_m": 0.0,
+      "dx_m": 0.0,
+      "dy_m": 0.0,
+      "success": true,
+      "controls": 82,
+      "first_contact": {
+        "control": 42,
+        "substep": 1038,
+        "geoms": [
+          "akita_black_bowl_1_g34",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 41,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 0.0,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_goal-1",
+      "variant": "r25_px",
+      "radius_m": 0.025,
+      "dx_m": 0.025,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 82,
+      "first_contact": {
+        "control": 45,
+        "substep": 1110,
+        "geoms": [
+          "gripper0_finger2_pad_collision",
+          "akita_black_bowl_1_g32"
+        ]
+      },
+      "joint_precontact_last": 41,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.1796119636642288e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_goal-1",
+      "variant": "r25_mx",
+      "radius_m": 0.025,
+      "dx_m": -0.025,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 82,
+      "first_contact": {
+        "control": 35,
+        "substep": 870,
+        "geoms": [
+          "akita_black_bowl_1_g18",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 34,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.1796119636642288e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_goal-1",
+      "variant": "r25_py",
+      "radius_m": 0.025,
+      "dx_m": 0.0,
+      "dy_m": 0.025,
+      "success": true,
+      "controls": 81,
+      "first_contact": {
+        "control": 36,
+        "substep": 896,
+        "geoms": [
+          "cream_cheese_1_g1",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 35,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.0408340855860843e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_goal-1",
+      "variant": "r25_my",
+      "radius_m": 0.025,
+      "dx_m": 0.0,
+      "dy_m": -0.025,
+      "success": false,
+      "controls": 82,
+      "first_contact": {
+        "control": 36,
+        "substep": 881,
+        "geoms": [
+          "akita_black_bowl_1_g19",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 35,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.0408340855860843e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_goal-1",
+      "variant": "r35_px",
+      "radius_m": 0.035,
+      "dx_m": 0.035,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 82,
+      "first_contact": {
+        "control": 70,
+        "substep": 1748,
+        "geoms": [
+          "gripper0_finger1_pad_collision",
+          "gripper0_finger2_pad_collision"
+        ]
+      },
+      "joint_precontact_last": 41,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.3877787807814457e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_goal-1",
+      "variant": "r35_mx",
+      "radius_m": 0.035,
+      "dx_m": -0.035,
+      "dy_m": 0.0,
+      "success": true,
+      "controls": 81,
+      "first_contact": {
+        "control": 35,
+        "substep": 862,
+        "geoms": [
+          "akita_black_bowl_1_g18",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 34,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.6653345369377348e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_goal-1",
+      "variant": "r35_py",
+      "radius_m": 0.035,
+      "dx_m": 0.0,
+      "dy_m": 0.035,
+      "success": true,
+      "controls": 80,
+      "first_contact": {
+        "control": 36,
+        "substep": 894,
+        "geoms": [
+          "cream_cheese_1_g1",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 35,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.3877787807814457e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_goal-1",
+      "variant": "r35_my",
+      "radius_m": 0.035,
+      "dx_m": 0.0,
+      "dy_m": -0.035,
+      "success": false,
+      "controls": 82,
+      "first_contact": {
+        "control": 34,
+        "substep": 845,
+        "geoms": [
+          "akita_black_bowl_1_g20",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 33,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.457167719820518e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_goal-1",
+      "variant": "r45_px",
+      "radius_m": 0.045,
+      "dx_m": 0.045,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 82,
+      "first_contact": {
+        "control": 70,
+        "substep": 1748,
+        "geoms": [
+          "gripper0_finger1_pad_collision",
+          "gripper0_finger2_pad_collision"
+        ]
+      },
+      "joint_precontact_last": 41,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.8054463245622665e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_goal-1",
+      "variant": "r45_mx",
+      "radius_m": 0.045,
+      "dx_m": -0.045,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 82,
+      "first_contact": {
+        "control": 35,
+        "substep": 869,
+        "geoms": [
+          "akita_black_bowl_1_g18",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 34,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.8041124150158794e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_goal-1",
+      "variant": "r45_py",
+      "radius_m": 0.045,
+      "dx_m": 0.0,
+      "dy_m": 0.045,
+      "success": false,
+      "controls": 82,
+      "first_contact": {
+        "control": 36,
+        "substep": 892,
+        "geoms": [
+          "cream_cheese_1_g1",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 35,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.8735013540549517e-16,
+      "pad_gap_err_m": 4.163336342344337e-17,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_goal-1",
+      "variant": "r45_my",
+      "radius_m": 0.045,
+      "dx_m": 0.0,
+      "dy_m": -0.045,
+      "success": false,
+      "controls": 82,
+      "first_contact": {
+        "control": 34,
+        "substep": 837,
+        "geoms": [
+          "akita_black_bowl_1_g21",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 33,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.8735013540549517e-16,
+      "pad_gap_err_m": 4.163336342344337e-17,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_object-0",
+      "variant": "nom",
+      "radius_m": 0.0,
+      "dx_m": 0.0,
+      "dy_m": 0.0,
+      "success": true,
+      "controls": 133,
+      "first_contact": {
+        "control": 57,
+        "substep": 1423,
+        "geoms": [
+          "alphabet_soup_1_g21",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 56,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 0.0,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_object-0",
+      "variant": "r25_px",
+      "radius_m": 0.025,
+      "dx_m": 0.025,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 133,
+      "first_contact": {
+        "control": 62,
+        "substep": 1538,
+        "geoms": [
+          "alphabet_soup_1_g18",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 56,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 9.020562075079397e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_object-0",
+      "variant": "r25_mx",
+      "radius_m": 0.025,
+      "dx_m": -0.025,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 133,
+      "first_contact": {
+        "control": 56,
+        "substep": 1387,
+        "geoms": [
+          "alphabet_soup_1_g7",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 55,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 9.020562075079397e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_object-0",
+      "variant": "r25_py",
+      "radius_m": 0.025,
+      "dx_m": 0.0,
+      "dy_m": 0.025,
+      "success": false,
+      "controls": 133,
+      "first_contact": {
+        "control": 56,
+        "substep": 1384,
+        "geoms": [
+          "alphabet_soup_1_g3",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 55,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 9.71445146547012e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_object-0",
+      "variant": "r25_my",
+      "radius_m": 0.025,
+      "dx_m": 0.0,
+      "dy_m": -0.025,
+      "success": false,
+      "controls": 133,
+      "first_contact": {
+        "control": 56,
+        "substep": 1390,
+        "geoms": [
+          "alphabet_soup_1_g19",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 55,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 9.367506770274758e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_object-0",
+      "variant": "r35_px",
+      "radius_m": 0.035,
+      "dx_m": 0.035,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 133,
+      "first_contact": {
+        "control": 86,
+        "substep": 2147,
+        "geoms": [
+          "gripper0_finger1_pad_collision",
+          "gripper0_finger2_pad_collision"
+        ]
+      },
+      "joint_precontact_last": 56,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.389512421408389e-16,
+      "pad_gap_err_m": 1.3877787807814457e-17,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_object-0",
+      "variant": "r35_mx",
+      "radius_m": 0.035,
+      "dx_m": -0.035,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 133,
+      "first_contact": {
+        "control": 56,
+        "substep": 1387,
+        "geoms": [
+          "alphabet_soup_1_g7",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 55,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.3877787807814457e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_object-0",
+      "variant": "r35_py",
+      "radius_m": 0.035,
+      "dx_m": 0.0,
+      "dy_m": 0.035,
+      "success": false,
+      "controls": 133,
+      "first_contact": {
+        "control": 56,
+        "substep": 1384,
+        "geoms": [
+          "alphabet_soup_1_g3",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 55,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.3183898417423734e-16,
+      "pad_gap_err_m": 1.3877787807814457e-17,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_object-0",
+      "variant": "r35_my",
+      "radius_m": 0.035,
+      "dx_m": 0.0,
+      "dy_m": -0.035,
+      "success": false,
+      "controls": 133,
+      "first_contact": {
+        "control": 56,
+        "substep": 1390,
+        "geoms": [
+          "alphabet_soup_1_g19",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 55,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.3877787807814457e-16,
+      "pad_gap_err_m": 1.3877787807814457e-17,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_object-0",
+      "variant": "r45_px",
+      "radius_m": 0.045,
+      "dx_m": 0.045,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 133,
+      "first_contact": {
+        "control": 86,
+        "substep": 2147,
+        "geoms": [
+          "gripper0_finger1_pad_collision",
+          "gripper0_finger2_pad_collision"
+        ]
+      },
+      "joint_precontact_last": 56,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.8054463245622665e-16,
+      "pad_gap_err_m": 1.3877787807814457e-17,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_object-0",
+      "variant": "r45_mx",
+      "radius_m": 0.045,
+      "dx_m": -0.045,
+      "dy_m": 0.0,
+      "success": true,
+      "controls": 133,
+      "first_contact": {
+        "control": 57,
+        "substep": 1404,
+        "geoms": [
+          "alphabet_soup_1_g5",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 56,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.8041124150158794e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_object-0",
+      "variant": "r45_py",
+      "radius_m": 0.045,
+      "dx_m": 0.0,
+      "dy_m": 0.045,
+      "success": false,
+      "controls": 133,
+      "first_contact": {
+        "control": 56,
+        "substep": 1377,
+        "geoms": [
+          "alphabet_soup_1_g19",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 55,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.6653345369377348e-16,
+      "pad_gap_err_m": 1.3877787807814457e-17,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_object-0",
+      "variant": "r45_my",
+      "radius_m": 0.045,
+      "dx_m": 0.0,
+      "dy_m": -0.045,
+      "success": false,
+      "controls": 133,
+      "first_contact": {
+        "control": 57,
+        "substep": 1425,
+        "geoms": [
+          "alphabet_soup_1_g12",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 56,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.6653345369377348e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_object-7",
+      "variant": "nom",
+      "radius_m": 0.0,
+      "dx_m": 0.0,
+      "dy_m": 0.0,
+      "success": true,
+      "controls": 127,
+      "first_contact": {
+        "control": 46,
+        "substep": 1139,
+        "geoms": [
+          "gripper0_finger2_pad_collision",
+          "milk_1_g1"
+        ]
+      },
+      "joint_precontact_last": 45,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 0.0,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_object-7",
+      "variant": "r25_px",
+      "radius_m": 0.025,
+      "dx_m": 0.025,
+      "dy_m": 0.0,
+      "success": true,
+      "controls": 127,
+      "first_contact": {
+        "control": 46,
+        "substep": 1146,
+        "geoms": [
+          "gripper0_finger2_pad_collision",
+          "milk_1_g1"
+        ]
+      },
+      "joint_precontact_last": 45,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 7.376145397762941e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_object-7",
+      "variant": "r25_mx",
+      "radius_m": 0.025,
+      "dx_m": -0.025,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 127,
+      "first_contact": {
+        "control": 78,
+        "substep": 1944,
+        "geoms": [
+          "gripper0_finger1_pad_collision",
+          "gripper0_finger2_pad_collision"
+        ]
+      },
+      "joint_precontact_last": 45,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 6.546139416680338e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_object-7",
+      "variant": "r25_py",
+      "radius_m": 0.025,
+      "dx_m": 0.0,
+      "dy_m": 0.025,
+      "success": false,
+      "controls": 127,
+      "first_contact": {
+        "control": 50,
+        "substep": 1233,
+        "geoms": [
+          "milk_1_g1",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 45,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 6.736447455048117e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_object-7",
+      "variant": "r25_my",
+      "radius_m": 0.025,
+      "dx_m": 0.0,
+      "dy_m": -0.025,
+      "success": false,
+      "controls": 127,
+      "first_contact": {
+        "control": 40,
+        "substep": 983,
+        "geoms": [
+          "milk_1_g3",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 39,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 4.85722573273506e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_object-7",
+      "variant": "r35_px",
+      "radius_m": 0.035,
+      "dx_m": 0.035,
+      "dy_m": 0.0,
+      "success": true,
+      "controls": 127,
+      "first_contact": {
+        "control": 46,
+        "substep": 1150,
+        "geoms": [
+          "gripper0_finger2_pad_collision",
+          "milk_1_g1"
+        ]
+      },
+      "joint_precontact_last": 45,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 8.326672684688674e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_object-7",
+      "variant": "r35_mx",
+      "radius_m": 0.035,
+      "dx_m": -0.035,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 127,
+      "first_contact": {
+        "control": 78,
+        "substep": 1944,
+        "geoms": [
+          "gripper0_finger1_pad_collision",
+          "gripper0_finger2_pad_collision"
+        ]
+      },
+      "joint_precontact_last": 45,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 5.551115123125783e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_object-7",
+      "variant": "r35_py",
+      "radius_m": 0.035,
+      "dx_m": 0.0,
+      "dy_m": 0.035,
+      "success": false,
+      "controls": 127,
+      "first_contact": {
+        "control": 50,
+        "substep": 1233,
+        "geoms": [
+          "milk_1_g1",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 45,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 6.245004513516506e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_object-7",
+      "variant": "r35_my",
+      "radius_m": 0.035,
+      "dx_m": 0.0,
+      "dy_m": -0.035,
+      "success": false,
+      "controls": 127,
+      "first_contact": {
+        "control": 40,
+        "substep": 983,
+        "geoms": [
+          "milk_1_g3",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 39,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 6.245004513516506e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_object-7",
+      "variant": "r45_px",
+      "radius_m": 0.045,
+      "dx_m": 0.045,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 127,
+      "first_contact": {
+        "control": 47,
+        "substep": 1153,
+        "geoms": [
+          "gripper0_finger2_pad_collision",
+          "milk_1_g1"
+        ]
+      },
+      "joint_precontact_last": 45,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 9.71445146547012e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_object-7",
+      "variant": "r45_mx",
+      "radius_m": 0.045,
+      "dx_m": -0.045,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 127,
+      "first_contact": {
+        "control": 78,
+        "substep": 1944,
+        "geoms": [
+          "gripper0_finger1_pad_collision",
+          "gripper0_finger2_pad_collision"
+        ]
+      },
+      "joint_precontact_last": 45,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 6.938893903907228e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_object-7",
+      "variant": "r45_py",
+      "radius_m": 0.045,
+      "dx_m": 0.0,
+      "dy_m": 0.045,
+      "success": false,
+      "controls": 127,
+      "first_contact": {
+        "control": 50,
+        "substep": 1233,
+        "geoms": [
+          "milk_1_g1",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 45,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 8.326672684688674e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_object-7",
+      "variant": "r45_my",
+      "radius_m": 0.045,
+      "dx_m": 0.0,
+      "dy_m": -0.045,
+      "success": false,
+      "controls": 127,
+      "first_contact": {
+        "control": 40,
+        "substep": 983,
+        "geoms": [
+          "milk_1_g3",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 39,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 8.326672684688674e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_spatial-1",
+      "variant": "nom",
+      "radius_m": 0.0,
+      "dx_m": 0.0,
+      "dy_m": 0.0,
+      "success": true,
+      "controls": 95,
+      "first_contact": {
+        "control": 51,
+        "substep": 1256,
+        "geoms": [
+          "akita_black_bowl_1_g30",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 50,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 0.0,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_spatial-1",
+      "variant": "r25_px",
+      "radius_m": 0.025,
+      "dx_m": 0.025,
+      "dy_m": 0.0,
+      "success": true,
+      "controls": 94,
+      "first_contact": {
+        "control": 44,
+        "substep": 1098,
+        "geoms": [
+          "akita_black_bowl_1_g24",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 43,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.1796119636642288e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_spatial-1",
+      "variant": "r25_mx",
+      "radius_m": 0.025,
+      "dx_m": -0.025,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 95,
+      "first_contact": {
+        "control": 51,
+        "substep": 1265,
+        "geoms": [
+          "akita_black_bowl_1_g16",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 50,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 9.020562075079397e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_spatial-1",
+      "variant": "r25_py",
+      "radius_m": 0.025,
+      "dx_m": 0.0,
+      "dy_m": 0.025,
+      "success": true,
+      "controls": 95,
+      "first_contact": {
+        "control": 51,
+        "substep": 1271,
+        "geoms": [
+          "akita_black_bowl_1_g32",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 50,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 9.020562075079397e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_spatial-1",
+      "variant": "r25_my",
+      "radius_m": 0.025,
+      "dx_m": 0.0,
+      "dy_m": -0.025,
+      "success": false,
+      "controls": 95,
+      "first_contact": {
+        "control": 44,
+        "substep": 1079,
+        "geoms": [
+          "akita_black_bowl_1_g22",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 43,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 9.71445146547012e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_spatial-1",
+      "variant": "r35_px",
+      "radius_m": 0.035,
+      "dx_m": 0.035,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 95,
+      "first_contact": {
+        "control": 44,
+        "substep": 1100,
+        "geoms": [
+          "akita_black_bowl_1_g24",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 43,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.3877787807814457e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_spatial-1",
+      "variant": "r35_mx",
+      "radius_m": 0.035,
+      "dx_m": -0.035,
+      "dy_m": 0.0,
+      "success": true,
+      "controls": 95,
+      "first_contact": {
+        "control": 48,
+        "substep": 1186,
+        "geoms": [
+          "akita_black_bowl_1_g18",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 47,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.3877787807814457e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_spatial-1",
+      "variant": "r35_py",
+      "radius_m": 0.035,
+      "dx_m": 0.0,
+      "dy_m": 0.035,
+      "success": false,
+      "controls": 95,
+      "first_contact": {
+        "control": 50,
+        "substep": 1233,
+        "geoms": [
+          "akita_black_bowl_1_g32",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 49,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.249000902703301e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_spatial-1",
+      "variant": "r35_my",
+      "radius_m": 0.035,
+      "dx_m": 0.0,
+      "dy_m": -0.035,
+      "success": false,
+      "controls": 95,
+      "first_contact": {
+        "control": 44,
+        "substep": 1079,
+        "geoms": [
+          "akita_black_bowl_1_g22",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 43,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.3183898417423734e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_spatial-1",
+      "variant": "r45_px",
+      "radius_m": 0.045,
+      "dx_m": 0.045,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 95,
+      "first_contact": {
+        "control": 45,
+        "substep": 1114,
+        "geoms": [
+          "akita_black_bowl_1_g24",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 44,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.8041124150158794e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_spatial-1",
+      "variant": "r45_mx",
+      "radius_m": 0.045,
+      "dx_m": -0.045,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 95,
+      "first_contact": {
+        "control": 47,
+        "substep": 1154,
+        "geoms": [
+          "akita_black_bowl_1_g18",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 46,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.528132866464668e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_spatial-1",
+      "variant": "r45_py",
+      "radius_m": 0.045,
+      "dx_m": 0.0,
+      "dy_m": 0.045,
+      "success": false,
+      "controls": 95,
+      "first_contact": {
+        "control": 49,
+        "substep": 1225,
+        "geoms": [
+          "akita_black_bowl_1_g32",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 48,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.6653345369377348e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_spatial-1",
+      "variant": "r45_my",
+      "radius_m": 0.045,
+      "dx_m": 0.0,
+      "dy_m": -0.045,
+      "success": false,
+      "controls": 95,
+      "first_contact": {
+        "control": 45,
+        "substep": 1118,
+        "geoms": [
+          "akita_black_bowl_1_g21",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 44,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.734723475976807e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_spatial-7",
+      "variant": "nom",
+      "radius_m": 0.0,
+      "dx_m": 0.0,
+      "dy_m": 0.0,
+      "success": true,
+      "controls": 118,
+      "first_contact": {
+        "control": 34,
+        "substep": 841,
+        "geoms": [
+          "flat_stove_1_collision_burner",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 33,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 0.0,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_spatial-7",
+      "variant": "r25_px",
+      "radius_m": 0.025,
+      "dx_m": 0.025,
+      "dy_m": 0.0,
+      "success": true,
+      "controls": 118,
+      "first_contact": {
+        "control": 34,
+        "substep": 835,
+        "geoms": [
+          "akita_black_bowl_1_g36",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 33,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 9.020562075079397e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_spatial-7",
+      "variant": "r25_mx",
+      "radius_m": 0.025,
+      "dx_m": -0.025,
+      "dy_m": 0.0,
+      "success": true,
+      "controls": 117,
+      "first_contact": {
+        "control": 31,
+        "substep": 775,
+        "geoms": [
+          "akita_black_bowl_1_g18",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 30,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 6.245004513516506e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_spatial-7",
+      "variant": "r25_py",
+      "radius_m": 0.025,
+      "dx_m": 0.0,
+      "dy_m": 0.025,
+      "success": true,
+      "controls": 116,
+      "first_contact": {
+        "control": 33,
+        "substep": 813,
+        "geoms": [
+          "akita_black_bowl_1_g15",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 32,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 6.938893903907228e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_spatial-7",
+      "variant": "r25_my",
+      "radius_m": 0.025,
+      "dx_m": 0.0,
+      "dy_m": -0.025,
+      "success": false,
+      "controls": 118,
+      "first_contact": {
+        "control": 33,
+        "substep": 817,
+        "geoms": [
+          "akita_black_bowl_1_g3",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 32,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 6.938893903907228e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_spatial-7",
+      "variant": "r35_px",
+      "radius_m": 0.035,
+      "dx_m": 0.035,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 118,
+      "first_contact": {
+        "control": 34,
+        "substep": 833,
+        "geoms": [
+          "flat_stove_1_collision_burner",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 33,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.1102230246251565e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_spatial-7",
+      "variant": "r35_mx",
+      "radius_m": 0.035,
+      "dx_m": -0.035,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 118,
+      "first_contact": {
+        "control": 30,
+        "substep": 748,
+        "geoms": [
+          "akita_black_bowl_1_g18",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 29,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.1102230246251565e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_spatial-7",
+      "variant": "r35_py",
+      "radius_m": 0.035,
+      "dx_m": 0.0,
+      "dy_m": 0.035,
+      "success": true,
+      "controls": 116,
+      "first_contact": {
+        "control": 31,
+        "substep": 753,
+        "geoms": [
+          "akita_black_bowl_1_g32",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 30,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.0408340855860843e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_spatial-7",
+      "variant": "r35_my",
+      "radius_m": 0.035,
+      "dx_m": 0.0,
+      "dy_m": -0.035,
+      "success": false,
+      "controls": 118,
+      "first_contact": {
+        "control": 31,
+        "substep": 759,
+        "geoms": [
+          "akita_black_bowl_1_g20",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 30,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 9.71445146547012e-17,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_spatial-7",
+      "variant": "r45_px",
+      "radius_m": 0.045,
+      "dx_m": 0.045,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 118,
+      "first_contact": {
+        "control": 34,
+        "substep": 831,
+        "geoms": [
+          "flat_stove_1_collision_burner",
+          "gripper0_finger2_collision"
+        ]
+      },
+      "joint_precontact_last": 33,
+      "precontact_cam_checkpoints": 5,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.5265566588595902e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_spatial-7",
+      "variant": "r45_mx",
+      "radius_m": 0.045,
+      "dx_m": -0.045,
+      "dy_m": 0.0,
+      "success": false,
+      "controls": 118,
+      "first_contact": {
+        "control": 29,
+        "substep": 723,
+        "geoms": [
+          "akita_black_bowl_1_g18",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 28,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.5265566588595902e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_spatial-7",
+      "variant": "r45_py",
+      "radius_m": 0.045,
+      "dx_m": 0.0,
+      "dy_m": 0.045,
+      "success": false,
+      "controls": 118,
+      "first_contact": {
+        "control": 30,
+        "substep": 736,
+        "geoms": [
+          "akita_black_bowl_1_g32",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 29,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.3183898417423734e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    },
+    {
+      "task": "libero_spatial-7",
+      "variant": "r45_my",
+      "radius_m": 0.045,
+      "dx_m": 0.0,
+      "dy_m": -0.045,
+      "success": false,
+      "controls": 118,
+      "first_contact": {
+        "control": 27,
+        "substep": 662,
+        "geoms": [
+          "akita_black_bowl_1_g23",
+          "gripper0_finger1_collision"
+        ]
+      },
+      "joint_precontact_last": 26,
+      "precontact_cam_checkpoints": 4,
+      "frame0_rgb_equal": true,
+      "precontact_rgb_equal": true,
+      "precontact_proprio_equal": true,
+      "max_shift_err_m": 1.249000902703301e-16,
+      "pad_gap_err_m": 0.0,
+      "reset_ncon_unchanged": true
+    }
+  ]
+}
