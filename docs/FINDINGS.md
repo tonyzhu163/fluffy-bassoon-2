@@ -1,5 +1,7 @@
 # Verified findings
 
+On 50 simulated Sawyer Goal 5 source-development starts, a fixed scripted expert introduced at PaliGemma's first plate contact rescued 18/30 raw failures and lost 7/20 raw successes. Net native success rose from 20/50 to 31/50. The same expert achieved 37/50 from reset. All 50 takeover states and prefixes matched the raw branch. This establishes a post-contact corrective opportunity under privileged control. [Matched fork and reset control](../outputs/embodiment-sawyer-contact-fork-20261120-r1/RESULT.md)
+
 The controlled OpenDrawer reader used one probe to choose a useful correction on measured native branches. The broader RoboCasa studies found no consistent held-out benefit from retaining history. The results below distinguish selection among executable actions, learned motor control and source-policy competence. [Controlled reader](#native-history-under-a-persistent-calibration-error) · [Multi-task comparison](#corrected-three--versus-six-task-transformer-comparison) · [Corpus diagnosis](../outputs/project-diagnosis-20261116-r1/RESULT.md)
 
 ## Synthetic learning histories
