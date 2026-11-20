@@ -130,7 +130,7 @@ def frozen_task_policy(env, task_id: str, step_idx: int) -> np.ndarray:
         return x[0] if x.ndim == 2 else x
 
     obj = _np3(unw.obj.pose.p) if hasattr(unw, "obj") else _np3(unw.cube.pose.p)
-    goal = _np3(unw.goal_pos) if hasattr(unw, "goal_pos") else _np3(unw.goal_region.pose.p)
+    goal = _np3(unw.goal_site.pose.p) if hasattr(unw, "goal_site") else _np3(unw.goal_region.pose.p)
 
     if task_id == "PickCube-v1":
         if step_idx < 18:
@@ -251,7 +251,7 @@ class SmallCNN(nn.Module):
 class MS3Reader(nn.Module):
     """PyTorch mirror of our JAX readers: factored_equiv, factored_no_equiv, joint_transformer."""
 
-    def __init__(self, model_type: str, width: int = 64):
+    def __init__(self, model_type: str, width: int = 96):
         super().__init__()
         self.model_type = model_type
         self.cnn = SmallCNN(8, width)
@@ -383,12 +383,12 @@ def main():
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
     t0 = time.monotonic()
-    # 1. Collect training traces strictly on 7-DoF Panda + Fetch (3 tasks x 2 robots x 6 seeds x 7 train embodiments = 252 trials)
+    # 1. Collect training traces strictly on 7-DoF Panda + Fetch (3 tasks x 2 robots x 12 seeds x 7 train embodiments = 504 trials)
     train_lists = {k: [] for k in ("img_before", "img_after", "issued_mean", "delta_eef", "delta_jaw", "valid", "yaw_deg", "xy_scale", "gripper_sign")}
     for task in TASKS:
         for robot in TRAIN_ROBOTS:
             env = gym.make(task, num_envs=1, obs_mode="rgbd", control_mode="pd_ee_delta_pose", robot_uids=robot, render_mode="rgb_array", sim_backend="cpu")
-            for seed in range(6):
+            for seed in range(12):
                 for spec in TRAIN_EMBODIMENTS:
                     tr = collect_probe_trace(env, spec, seed=100 * TASKS.index(task) + seed)
                     for k in ("img_before", "img_after", "issued_mean", "delta_eef", "delta_jaw", "valid"):

@@ -30,5 +30,5 @@ PYTHONPATH="$REPO/src" "$PROBE_PY" -Bu "$REPO/scripts/[train]gpu_probe.py" \
   --expected-count 1 --purpose training --baige-container --baige-exclusive-training \
   --output "$OUT/gpu.json" > "$OUT/probe.log" 2>&1
 
-"$PY" -Bu "$SCRIPT" --out-dir "$OUT" --steps 1200 > "$OUT/run.log" 2>&1
+"$PY" -Bu "$SCRIPT" --out-dir "$OUT" --steps 2500 > "$OUT/run.log" 2>&1
 echo "0 $(date +%s) $START_TS" > "$OUT/exit.txt"
