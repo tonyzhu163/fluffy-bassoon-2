@@ -1,0 +1,14 @@
+# Two-arm PaliGemma source qualification and held-out transfer
+
+Can a general PaliGemma motor learn the Goal 5 plate push on both source arms, and does practice then improve its frozen policy on UR5e? Simulate the same stock arms, public observations, native OSC and sparse LIBERO-Pro2.0 BASE reward as [the pilot](../libero-paligemma-crossarm-20261120-r1/RESULT.md). All task evaluation uses fresh simulator resets. No hardware is involved.
+
+| Stage | Selection and evidence |
+| --- | --- |
+| Native demonstrations | Recover real successful trajectories on Panda and Sawyer. Store the two pre-action camera frames, measured state, issued command and terminal native reward. Distinguish unique layouts from repeated seeds, expert variants or duplicated trajectories. Train layouts 0–27. Use 28–31 only for offline source validation. Begin SFT when both sources have diverse native successes. Add corrective trajectories on training layouts if fresh source performance stalls. |
+| Supervised motor | Start from fluffy-bassoon's general PaliGemma-3B-MIX-224 snapshot with a freshly initialized action head. Select checkpoints on source validation and independent online development layouts 32–35. Qualify a checkpoint at 3/4 or better on each source, then freeze it before opening confirmation. |
+| Fresh confirmation | All eight previously unselected layouts 40–47 per arm. Require at least 6/8 native successes separately on Panda and Sawyer on the same frozen checkpoint. Never train on these layouts or choose checkpoints from confirmation scores. This is a finite-panel engineering gate for a single task. |
+| Held-out transfer | After confirmation, fit the source-only history reader and residual to the qualified frozen motor. Compare raw, correct, cleared, command-matched wrong-body history and independent calibration on the eight paired UR5e starts 40–47. Record paired gains and losses with native rewards. UR5e has appeared in earlier research and is held out of the new fits/decisions. IIWA remains reserved. |
+
+The prior result was 11/16 Panda and 0/16 Sawyer expert successes. Panda-only SFT scored 0/2 on fresh Panda. Repeated source failures after additional successful data count against the proposed SFT recipe. A correct-history controller that fails to beat the paired raw and history controls does not establish useful transfer. [Pilot](../libero-paligemma-crossarm-20261120-r1/RESULT.md)
+
+The three CLI workers own expert collection, motor SFT and transfer fitting respectively. The orchestrator owns contact diagnosis, deployment, native job records and review. Initial allocation budget is 16 single-GPU hours, cumulative across jobs. Scope can proceed within the repository's 50 GPU-hour allowance. Use distributed training for collection, SFT and evaluation. Short CPU physics qualification runs use Baige development.
