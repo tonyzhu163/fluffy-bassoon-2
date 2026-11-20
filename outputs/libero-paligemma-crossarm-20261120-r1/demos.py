@@ -11,6 +11,7 @@ import traceback
 import numpy as np
 
 from sim import PRIOR, Session
+from rim_expert import RimExpert
 
 
 COLLECTION_BODIES = ("Panda", "Sawyer", "UR5e")
@@ -142,7 +143,7 @@ def collect_attempt(root, body, pose, seed, route, limit):
             obs = env.reset(pose, seed)
             record["reset"] = env.reset_info
             scene = env.expert_scene()
-            expert = PushExpert(scene, route)
+            expert = RimExpert(scene) if route == "inner_rim" else PushExpert(scene, route)
             record["waypoints_xy"] = [p.tolist() for p in expert.points]
             prompt = obs["prompt"]
             horizon = min(limit, env.reset_info["max_steps"])
@@ -209,8 +210,11 @@ def main():
     parser.add_argument("--bodies", type=lambda x: split_values(x, str), default=["Panda", "Sawyer"])
     parser.add_argument("--task-id", type=int, choices=[5], default=5)
     parser.add_argument("--seed", type=int, default=20261120, help="BASE seed for pose 0; each pose adds its index")
+    parser.add_argument("--routes", type=lambda x: split_values(x, str), default=ROUTES)
     parser.add_argument("--max-steps", type=int, default=300, help="Per-attempt ceiling, capped by native horizon")
     args = parser.parse_args()
+    if not set(args.routes) <= {*ROUTES, "inner_rim"}:
+        parser.error("Unknown demonstration route")
     if any(body not in COLLECTION_BODIES for body in args.bodies):
         parser.error(f"Collection bodies are {COLLECTION_BODIES}. IIWA is reserved.")
     if not all(0 <= p < 50 for p in args.poses) or args.max_steps < 1:
@@ -220,15 +224,15 @@ def main():
     root = args.output
     root.mkdir(parents=True, exist_ok=False)
     attempts = []
-    code = [Path(__file__).resolve(), Path(__file__).with_name("sim.py"), PRIOR / "arm_env.py", PRIOR / "sim_reset.py"]
+    code = [Path(__file__).with_name("rim_expert.py"), Path(__file__).resolve(), Path(__file__).with_name("sim.py"), PRIOR / "arm_env.py", PRIOR / "sim_reset.py"]
     index = dict(task_id=args.task_id, suite="libero_goal", case="BASE", poses=args.poses, bodies=args.bodies,
-                 seed_base=args.seed, max_steps=args.max_steps, command=sys.argv, routes=ROUTES,
+                 seed_base=args.seed, max_steps=args.max_steps, command=sys.argv, routes=args.routes,
                  code_sha256={p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in code}, attempts=attempts)
     json_write(root / "index.json", index)
     requested = len(args.bodies) * len(args.poses)
     for body in args.bodies:
         for pose in args.poses:
-            for route in ROUTES:
+            for route in args.routes:
                 record = collect_attempt(root, body, pose, args.seed + pose, route, args.max_steps)
                 attempts.append(record)
                 json_write(root / "index.json", index)
@@ -240,7 +244,7 @@ def main():
                            by_body={b: dict(requested=len(args.poses),
                                             accepted=sum(r["accepted"] for r in attempts if r["body"] == b),
                                             first_pass=sum(r["accepted"] for r in attempts
-                                                           if r["body"] == b and r["route"] == ROUTES[0]))
+                                                           if r["body"] == b and r["route"] == args.routes[0]))
                                     for b in args.bodies})
             json_write(root / "quality.json", quality)
     return 0 if quality["accepted"] == requested else 1
