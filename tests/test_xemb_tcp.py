@@ -128,3 +128,56 @@ def test_tcp_controller_passthrough_sequence_and_rearm():
     ctrl.next_action(pos, q90, jaw_open, close_prop)
     ctrl.next_action(pos, q90, jaw_open, close_prop)
     assert ctrl.grasp_trigger_count == 2
+
+
+def test_apply_mujoco_tcp_offset_handles_stale_kinematics():
+    from types import SimpleNamespace
+    from fluffy_bassoon.xemb.tcp import FINGER_COLLISION_SUFFIXES, apply_mujoco_tcp_offset
+
+    names = [f"gripper0_{suffix}" for suffix in FINGER_COLLISION_SUFFIXES]
+    # 90 deg rotation around Z for the finger bodies.
+    rmat = np.array([[0.0, -1.0, 0.0], [1.0, 0.0, 0.0], [0.0, 0.0, 1.0]], dtype=np.float64)
+    body_xpos = np.array([[0.1, 0.2, 0.8], [0.1, 0.2, 0.8]], dtype=np.float64)
+    geom_pos = np.array(
+        [
+            [0.0, 0.04, 0.01],
+            [0.0, -0.04, 0.01],
+            [0.0, 0.038, 0.02],
+            [0.0, -0.038, 0.02],
+        ],
+        dtype=np.float64,
+    )
+    geom_bodyid = np.array([0, 1, 0, 1], dtype=np.int32)
+    stale_lag = np.array([2e-5, -1e-5, 0.0], dtype=np.float64)
+
+    class FakeModel:
+        def __init__(self):
+            self.ngeom = len(names)
+            self.geom_bodyid = geom_bodyid
+            self.geom_pos = geom_pos.copy()
+
+        def geom_id2name(self, idx):
+            return names[idx]
+
+    class FakeSim:
+        def __init__(self):
+            self.model = FakeModel()
+            body_xmat = np.stack([rmat.reshape(9), rmat.reshape(9)], axis=0)
+            true_xpos = np.array([body_xpos[geom_bodyid[i]] + rmat @ self.model.geom_pos[i] for i in range(4)])
+            self.data = SimpleNamespace(
+                geom_xpos=true_xpos - stale_lag[None],
+                body_xmat=body_xmat,
+                ncon=12,
+            )
+
+        def forward(self):
+            self.data.geom_xpos = np.array(
+                [body_xpos[geom_bodyid[i]] + rmat @ self.model.geom_pos[i] for i in range(4)],
+                dtype=np.float64,
+            )
+
+    world = SimpleNamespace(sim=FakeSim())
+    meta = apply_mujoco_tcp_offset(world, 0.035, 0.0, 0.0)
+    assert meta["max_shift_err_m"] < 1e-12
+    assert meta["pad_gap_err_m"] < 1e-12
+    assert meta["before_ncon"] == meta["after_ncon"] == 12

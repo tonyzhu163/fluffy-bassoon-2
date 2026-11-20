@@ -100,21 +100,45 @@ def apply_mujoco_tcp_offset(world, dx_m: float, dy_m: float, dz_m: float = 0.0) 
         geom_ids.append(matches[0])
 
     pad1_id, pad2_id = geom_ids[2], geom_ids[3]
-    before_xpos = np.asarray(sim.data.geom_xpos[geom_ids], dtype=np.float64).copy()
-    before_gap = float(np.linalg.norm(before_xpos[2] - before_xpos[3]))
-    before_ncon = int(sim.data.ncon)
-
     delta_world = np.array([float(dx_m), float(dy_m), float(dz_m)], dtype=np.float64)
-    if np.linalg.norm(delta_world) > 0.0:
-        for gid in geom_ids:
-            bid = int(model.geom_bodyid[gid])
-            body_rmat = np.asarray(sim.data.body_xmat[bid], dtype=np.float64).reshape(3, 3)
-            model.geom_pos[gid] = np.asarray(model.geom_pos[gid], dtype=np.float64) + body_rmat.T @ delta_world
-        sim.forward()
 
-    after_xpos = np.asarray(sim.data.geom_xpos[geom_ids], dtype=np.float64).copy()
-    after_gap = float(np.linalg.norm(after_xpos[2] - after_xpos[3]))
-    after_ncon = int(sim.data.ncon)
+    if hasattr(model, "_model"):
+        import mujoco
+
+        # Verify on a temporary MjData at post-reset qpos/qvel so live sim.data remains
+        # bitwise identical to unmodified nominal LIBERO (mj_step ends before mj_fwdPosition).
+        raw_model = model._model
+        tmp_data = mujoco.MjData(raw_model)
+        tmp_data.qpos[:] = sim.data.qpos
+        tmp_data.qvel[:] = sim.data.qvel
+        mujoco.mj_forward(raw_model, tmp_data)
+        before_xpos = np.asarray(tmp_data.geom_xpos[geom_ids], dtype=np.float64).copy()
+        before_gap = float(np.linalg.norm(before_xpos[2] - before_xpos[3]))
+        before_ncon = int(tmp_data.ncon)
+        if np.linalg.norm(delta_world) > 0.0:
+            for gid in geom_ids:
+                bid = int(raw_model.geom_bodyid[gid])
+                body_rmat = np.asarray(tmp_data.xmat[bid], dtype=np.float64).reshape(3, 3)
+                model.geom_pos[gid] = np.asarray(model.geom_pos[gid], dtype=np.float64) + body_rmat.T @ delta_world
+            mujoco.mj_forward(raw_model, tmp_data)
+        after_xpos = np.asarray(tmp_data.geom_xpos[geom_ids], dtype=np.float64).copy()
+        after_gap = float(np.linalg.norm(after_xpos[2] - after_xpos[3]))
+        after_ncon = int(tmp_data.ncon)
+    else:
+        sim.forward()
+        before_xpos = np.asarray(sim.data.geom_xpos[geom_ids], dtype=np.float64).copy()
+        before_gap = float(np.linalg.norm(before_xpos[2] - before_xpos[3]))
+        before_ncon = int(sim.data.ncon)
+        if np.linalg.norm(delta_world) > 0.0:
+            for gid in geom_ids:
+                bid = int(model.geom_bodyid[gid])
+                body_rmat = np.asarray(sim.data.body_xmat[bid], dtype=np.float64).reshape(3, 3)
+                model.geom_pos[gid] = np.asarray(model.geom_pos[gid], dtype=np.float64) + body_rmat.T @ delta_world
+            sim.forward()
+        after_xpos = np.asarray(sim.data.geom_xpos[geom_ids], dtype=np.float64).copy()
+        after_gap = float(np.linalg.norm(after_xpos[2] - after_xpos[3]))
+        after_ncon = int(sim.data.ncon)
+
     shifts = after_xpos - before_xpos
     max_shift_err_m = float(np.max(np.linalg.norm(shifts - delta_world[None], axis=1)))
     pad_gap_err_m = abs(after_gap - before_gap)
