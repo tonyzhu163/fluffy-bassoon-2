@@ -3,13 +3,13 @@
 set -euo pipefail
 
 if [[ $# -lt 2 || $# -gt 3 || ! $2 =~ ^[a-z0-9]+$ ]]; then
-    echo 'Usage: bash run.sh FULL_GIT_PIN FRESH_ATTEMPT [reader|panda]' >&2
+    echo 'Usage: bash run.sh FULL_GIT_PIN FRESH_ATTEMPT [reader|panda|motion]' >&2
     exit 2
 fi
 pin=$1
 attempt=$2
 mode=${3:-pipeline}
-[[ $mode == pipeline || $mode == reader || $mode == panda ]]
+[[ $mode == pipeline || $mode == reader || $mode == panda || $mode == motion ]]
 here=$(cd "$(dirname "$0")" && pwd)
 code=$(git -C "$here" rev-parse --show-toplevel)
 root=/mowenjie/fluffy-bassoon-2
@@ -91,6 +91,12 @@ from motor_weights import verified_snapshot
 with verified_snapshot(sys.argv[1]) as (_, receipt):
     Path(sys.argv[2]).write_text(json.dumps(receipt, indent=2))
 PYCODE
+if [[ $mode == motion ]]; then
+    common=(--motor-output "$run/panda01/motor" --weights "$weights" --revision "$pin")
+    "$probe_python" -Bu "$here/motion_joint.py" "${common[@]}" --pretrain "$run/reader01/pretrain" --out "$out/joint"
+    "$probe_python" -Bu "$here/motion_dev.py" "${common[@]}" --fit "$out/joint" --out "$out/dev"
+    exit 0
+fi
 if [[ $mode == panda ]]; then
     source_bank="$run/gpu01/demos_motor"
     test -f "$source_bank/index.json"
