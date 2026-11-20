@@ -4,6 +4,7 @@
 
 | Work | Cluster / job / source | Last check, progress and next action |
 | --- | --- | --- |
+| Source-only command-frame breadth trial | Native simulation on Panda/Sawyer, nine CPU reader fits planned | Nov 20. Collector, fitter, allocation check and novelty review assigned. [Run](embodiment-command-frame-20261120-r1/PLAN.md) |
 | Embodiment meta-pretraining scale and hidden-variable literature | Three local CLI evidence reviews, 0 GPUh | Nov 20. Reviewed task diversity, hidden dynamics, and cross-arm manipulation. [Evidence and conclusions](embodiment-meta-literature-20261120-r1/RESULT.md) |
 | Dual-arm PaliGemma source qualification | Baige Pro6K, `job-iticjkite8we`, `job-9zpwf7aapj3u`; additional source training | Nov 20. Native successes on 50 new layouts per arm were 25 Panda and 6 Sawyer for SFT-1600, and 34 Panda and 20 Sawyer for extended regression at 6400. Raw motor only. [Execution](libero-paligemma-dualarm-20261120-r2/EXECUTION.md) |
 | Embodiment meta-learning design factory | Five independent local CLI workers, 0 GPUh for the evidence review | Nov 20. Five workstream reviews complete. The CPU hard-off test reproduced 19,563/19,563 archived raw controls on 100 native source episodes. Learned abstention and task benefit require paired nominal and shifted trials. [Decisions and evidence](embodiment-meta-factory-20261120-r1/DECISION.md) |
