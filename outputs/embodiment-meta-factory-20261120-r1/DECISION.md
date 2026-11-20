@@ -8,6 +8,10 @@ The motor starts from general PaliGemma‑3B‑Mix‑224 and learns source actio
 
 The earlier reader trained on two source arms, two support and two query trajectories per arm, sixteen transitions per trajectory. That gives eight training trajectories and 128 transitions, plus two held-out trajectories. The subsequent R2 joint-fit recipe takes 16 sampled action targets per arm for 150 updates while reusing four source support trajectories. The earlier completed fallback used motion-matching targets. The model pools action and measured motion into a 16-dimensional context. The context selects an affine residual on each frozen seven-dimensional action. The present reader receives no images. A useful predictive context can emerge without ever assigning a robot name. [Meta-training audit](SCALE.md) · [Reader source](../libero-paligemma-crossarm-20261120-r1/adapt_eval.py)
 
+## What the no-op already does
+
+In the previous adapter, clearing history sets the context to zero but still applies a learned bias. In one archived example it changed the raw gripper command from 1.000000 to 0.992186. The factory tested a separate explicit off switch against all 100 archived native episodes of the 6,400-update regression motor. It returned the original bytes for **19,563/19,563** issued controls (8,066 Panda, 11,497 Sawyer), with zero residual calls. This verifies a selectable identity path on recorded proposals. A learner choosing that path correctly in a fresh closed-loop episode is a separate, open hypothesis. [Native readback](identity-native.json) · [Gate audit](IDENTITY.md)
+
 ## Ranked decision tests
 
 | Priority | Hypothesis | Cheapest comparison and decision |
