@@ -1,0 +1,6518 @@
+{
+  "archived_report_sha256": "7e2122efbd976638680c8215c3830eeb974179c5944f5185b38771988a3d464a",
+  "arms": {
+    "Panda": {
+      "always": 30,
+      "always_vs_off": {
+        "gains": 5,
+        "losses": 8,
+        "ties": 37
+      },
+      "archived_raw_action_matches": 46,
+      "archived_raw_outcome_mismatch_seeds": [
+        740002,
+        740019,
+        740024
+      ],
+      "archived_raw_steps_mismatch_seeds": [
+        740002,
+        740019,
+        740024,
+        740038
+      ],
+      "choice": {
+        "available_losses": 8,
+        "available_rescues": 5,
+        "both_fail": 12,
+        "both_succeed": 25,
+        "hindsight_successes": 38,
+        "losses_avoided": 5,
+        "rescues_taken": 0
+      },
+      "decision_reached": 41,
+      "gate_open": 5,
+      "gated": 30,
+      "gated_vs_always": {
+        "gains": 5,
+        "losses": 5,
+        "ties": 40
+      },
+      "gated_vs_off": {
+        "gains": 0,
+        "losses": 3,
+        "ties": 47
+      },
+      "off": 33,
+      "total": 50
+    },
+    "Sawyer": {
+      "always": 0,
+      "always_vs_off": {
+        "gains": 0,
+        "losses": 20,
+        "ties": 30
+      },
+      "archived_raw_action_matches": 49,
+      "archived_raw_outcome_mismatch_seeds": [],
+      "archived_raw_steps_mismatch_seeds": [],
+      "choice": {
+        "available_losses": 20,
+        "available_rescues": 0,
+        "both_fail": 30,
+        "both_succeed": 0,
+        "hindsight_successes": 20,
+        "losses_avoided": 18,
+        "rescues_taken": 0
+      },
+      "decision_reached": 50,
+      "gate_open": 11,
+      "gated": 18,
+      "gated_vs_always": {
+        "gains": 18,
+        "losses": 0,
+        "ties": 32
+      },
+      "gated_vs_off": {
+        "gains": 0,
+        "losses": 2,
+        "ties": 48
+      },
+      "off": 20,
+      "total": 50
+    }
+  },
+  "checkpoint_sha256": "77d18c386b2cc176252cfb68449e4415748382f554046ca50367ed4592676d9f",
+  "episodes": [
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 65,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "e388a24154e8f977c64ada41e9bdd56ea69465d4b5d58c6b40f190c7c19889e7"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 66,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.4489121422366246,
+          "native_return": 1.0,
+          "steps": 65,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 65,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "f440b09bae677c93e400bd6f93fb0b269a91044572e2ad0a4c937bd525d4a3bc",
+      "gated_reproduces": "off",
+      "layout_id": 1740000,
+      "layout_seed": 740000,
+      "precommitted_gate_score": -0.4489121422366246,
+      "prefix_controls": 60,
+      "scene_hash": "e681f735a7d07bb0ea6c1d3bcdde98eb22d1f413d2ece14512d85583e17bf578",
+      "tape_sha256": "5f4d2937ba386e20a706c8cab5d7379d018482d3bdae7bca49be3077a68688c8"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "17824faf6d0aa50d997b30533311a023b66e2b58d97f5bbb0c2a4d616f6e6b73"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": 0.04627813860212926,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "753455a461b07e9d52f54166664090ab7b37709d2234c48be1d00e14710148f9",
+      "gated_reproduces": "off",
+      "layout_id": 1740001,
+      "layout_seed": 740001,
+      "precommitted_gate_score": 0.04627813860212926,
+      "prefix_controls": 60,
+      "scene_hash": "b9244f71da0611d4b8db5c2d65a8e999c22f452d66e0de2821fa2ea9befe14c8",
+      "tape_sha256": "f9a7a219693a320bb906122d13adec779223d623fc855811b87daa9621b2912f"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": false,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": false,
+        "rewards_match": false,
+        "steps": 300,
+        "steps_match": false,
+        "success": false,
+        "tape_sha256": "9e53a77cfb4776e84a4263fc2f1b94a1d6cc516675dc7ccf4b5205fac8d80a8d"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 63,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.19383088821548572,
+          "native_return": 1.0,
+          "steps": 62,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 62,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "b34f815171b6eeddb0ef8f02fa0812a694b211925c9d6decea81cac034b0895a",
+      "gated_reproduces": "off",
+      "layout_id": 1740002,
+      "layout_seed": 740002,
+      "precommitted_gate_score": -0.19383088821548572,
+      "prefix_controls": 60,
+      "scene_hash": "5abb408502c75e26518e1c8ad6d380409e18864e22590a295e885471f8a27b3d",
+      "tape_sha256": "c4135be260da0b98bd9edffe582fc8bb57683701f8bd1aefcca11c01ec5aa958"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "64cb0beb40976ae4fa7aea5c1035f9b2b94db28cc26519e2f73d698104da5864"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.08317801717516177,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "1628ff5f80e9a18222e5b29e00f5fecb423d1faab3e209ccbc3f2b4c94aee3a0",
+      "gated_reproduces": "off",
+      "layout_id": 1740003,
+      "layout_seed": 740003,
+      "precommitted_gate_score": -0.08317801717516177,
+      "prefix_controls": 60,
+      "scene_hash": "c20753805fb5c0d184524e37c991acf2744b977501ceb917515ff8be16bafe19",
+      "tape_sha256": "7f439c695fee019f66dbcc77d3afd64385b52a31a0d03a12729827bcfcc2fbab"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "71e64650cee76210d5e8b6fd8bdaa7ffd087574c7b56c07ce2deb10f2d673b87"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.7118812143109277,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "cbdb05d6266f047f7d8bc0669f08e58334f1e97bbcb08dd006d01ef89fa19654",
+      "gated_reproduces": "off",
+      "layout_id": 1740004,
+      "layout_seed": 740004,
+      "precommitted_gate_score": -0.7118812143109277,
+      "prefix_controls": 60,
+      "scene_hash": "de9b5a40776d4507bf10dfe875dcc010db0814299a60b9babf6d9edf4cc1089f",
+      "tape_sha256": "1dfb3cc1cba30e0002ae4beeadc40321d9d8c67211d44f49ae0e404a2e8c59b4"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 51,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "3e1fcc96483c7d048af0385fb37abc10e3f72407d4e24c829837960a2879194c"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 51,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 51,
+          "success": true
+        },
+        "off": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 51,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "72c127c8a76c0ac935f771649301c9f29b5aae029713de3b64ef8f72f908977b",
+      "gated_reproduces": "off",
+      "layout_id": 1740005,
+      "layout_seed": 740005,
+      "precommitted_gate_score": null,
+      "prefix_controls": 51,
+      "scene_hash": "213221d5df0a9747ec54e385ef10a674812b5e3fd7939a13a1fc2c714b0ee0f5",
+      "tape_sha256": "6de11153ec175e75eb4a9e613aa62eb50390d375e6ee6f64d6da090aa07f1b07"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "4dfdd77ba17197b0487715e60c1b836d0e680f137ac75faad092e012fa94c6d8"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.02375286923974687,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "8fd0c3a277414836cc5ab6d10998886345506b32d882a313be5c1af4797ea474",
+      "gated_reproduces": "off",
+      "layout_id": 1740006,
+      "layout_seed": 740006,
+      "precommitted_gate_score": -0.02375286923974687,
+      "prefix_controls": 60,
+      "scene_hash": "94ee7d92e7acf16c199abeccaeb5caa0135f12761c177a9ebf8e7bc288e0bd74",
+      "tape_sha256": "9e5377605fe6fbed73b5c13f2647978d746d39eeb26ee1da05f9955beb96ff1f"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 64,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "73f5d05a0f316703275144b03b72f77bb05ddd815e6d7973323d5fe579bf9074"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 65,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.2624012378363471,
+          "native_return": 1.0,
+          "steps": 64,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 64,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "e54a7fb14fb21b396fdfe07e62593c9b2617e24e1135dfe043307f09fe916422",
+      "gated_reproduces": "off",
+      "layout_id": 1740007,
+      "layout_seed": 740007,
+      "precommitted_gate_score": -0.2624012378363471,
+      "prefix_controls": 60,
+      "scene_hash": "628e3b02c1d50abca0a6d914dae563ecbf57900bee1ac836b15d8e8cbca38aeb",
+      "tape_sha256": "e1a45ac67a7c74b2daffd71c1b52ff5a1e0e3290237e56d52323d2cf70292216"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 65,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "c4c813f499de13c5a9bada74b44b26ce3f2e4e1f88d8930c8e727c49452098ba"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 69,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.07089490269744857,
+          "native_return": 1.0,
+          "steps": 65,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 65,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "a24a25a2d39535cc76a9a6f935f2b56b95253220f739f748cf4533cc108a4033",
+      "gated_reproduces": "off",
+      "layout_id": 1740008,
+      "layout_seed": 740008,
+      "precommitted_gate_score": -0.07089490269744857,
+      "prefix_controls": 60,
+      "scene_hash": "aa7377e5f6fee459b014ea06752e49592da7d1b6a245bbc75bffcbccf33cb68c",
+      "tape_sha256": "9cfc942de5ab96c4d38f1494996ec0eca20a787f0647739228516109c8465188"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 218,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "9444fcd1f70597a596d43b56a8cbb55ff791b40d71fefb2a15fe879a59a4fd39"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": 0.10239162835427723,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 218,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "c0ffd0037d861f913804358b33ca9c4faba9bbec1244760d5d395b8b2f71dd13",
+      "gated_reproduces": "always",
+      "layout_id": 1740009,
+      "layout_seed": 740009,
+      "precommitted_gate_score": 0.10239162835427723,
+      "prefix_controls": 60,
+      "scene_hash": "49ea46ecbe05e1aab55ce5a0c027ce908014dac671413c5895725b6b1df15c19",
+      "tape_sha256": "a02ae15009a0061baecb2963d60acdf308c0ae75f02c481493decf429dd7453c"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 98,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "63a4beec23659a636fff9e4214c791b62c4e3fa62b3081daf9815c3ffe2e89b5"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": 0.5445836776679238,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 98,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": [
+            20
+          ]
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "3abefeeef15dc7175877981c00e6e239a507a0ab9c32cc15192e007fe16992ce",
+      "gated_reproduces": "always",
+      "layout_id": 1740010,
+      "layout_seed": 740010,
+      "precommitted_gate_score": 0.5445836776679238,
+      "prefix_controls": 60,
+      "scene_hash": "db30e4ea39aff2d0142e648d8d983fbe9dbae27bb8840099bce6179a9afb05fe",
+      "tape_sha256": "4bc910874cda288b481f2f6630b1a62e4f6a3d5fd5bac54312ca29a3b7e771ca"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 53,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "795dcaeca4b76d5661a1dbc5de619daae7386e1871ac6a40a7310eb10950d46d"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 53,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 53,
+          "success": true
+        },
+        "off": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 53,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "919da583b04fceb7a9ad38fe4f88b4a96eb5b98eaece0c86aedba6509d094ddf",
+      "gated_reproduces": "off",
+      "layout_id": 1740011,
+      "layout_seed": 740011,
+      "precommitted_gate_score": null,
+      "prefix_controls": 53,
+      "scene_hash": "ad60ef41159aabca84db26e1efac27d98b178b832a81382388bb4ebc31daa374",
+      "tape_sha256": "357a4404d5b6e8a19b02519bd4ff04000ab2e40cc4adf721524422c0a868b654"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 202,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "fa957d51cf316ea1457f8655f08234cca08aeb0f4a025b2ce823d438e524775c"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.5595831708173918,
+          "native_return": 1.0,
+          "steps": 202,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 202,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "4fba2ddb3b252adfca12b0dc90b4dec6ecb8fb0536b08347b333bdb46c5b798e",
+      "gated_reproduces": "off",
+      "layout_id": 1740012,
+      "layout_seed": 740012,
+      "precommitted_gate_score": -0.5595831708173918,
+      "prefix_controls": 60,
+      "scene_hash": "01d4bb866f4a2be0879003de3e0ffd7fa7d00b338dc7fcaaf630011e51eb9637",
+      "tape_sha256": "f092453c58da59eecf2fe09c1bc395defa6b74b855eb16dcbe003cb8c41a551b"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 55,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "4771c2a0244501da27bb21d0349226209a5aa76f8941a75def35c399b3c0f779"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 55,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 55,
+          "success": true
+        },
+        "off": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 55,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": [
+            25
+          ]
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "9f3fff99ea00216b9a5545a0db644610652e6de48bec4e4bf648c0bc337f10e7",
+      "gated_reproduces": "off",
+      "layout_id": 1740013,
+      "layout_seed": 740013,
+      "precommitted_gate_score": null,
+      "prefix_controls": 55,
+      "scene_hash": "b70d32c147222765c15e78a69ba2a41de4fb42d168471bd203630f092878c456",
+      "tape_sha256": "be0b0298766bea8d0af021ac71ce364e70de67646821b00b16650a8f9f0576fb"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "2f4d036e613e677260af05a74143fe1dfdf551ba45a1760013b10a8cfb03703c"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.526683715385974,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "03503a3bb99e7fff59bdb117e01f1904438f4ba1e4f59b7078a60f3e7a802d00",
+      "gated_reproduces": "off",
+      "layout_id": 1740014,
+      "layout_seed": 740014,
+      "precommitted_gate_score": -0.526683715385974,
+      "prefix_controls": 60,
+      "scene_hash": "bfb367af37f2d1c23b20bb94d5e7de435bcbd06ac1004c4d41bc021f235aebeb",
+      "tape_sha256": "6f9df970d3eacd39bc08139e8b71151048ce0601e490828fe603708b699dae68"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 58,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "c23263c300742941487828d3c6e5e70d7591ef2cc59a8a6f92054afb249b684f"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 58,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 58,
+          "success": true
+        },
+        "off": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 58,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "df493daa68e50a5b65e9be2a1b0370c6189704421c5fede00f454d1eeb075fd2",
+      "gated_reproduces": "off",
+      "layout_id": 1740015,
+      "layout_seed": 740015,
+      "precommitted_gate_score": null,
+      "prefix_controls": 58,
+      "scene_hash": "492fa614e96118990b73c208f870a8c41469b89b4ab5e4f4471a31b6baae506d",
+      "tape_sha256": "a47b5b6ac33e9465479b24067e623f92bef28a300b2f7160c3e4901eb504e293"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 76,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "38d64fa5ad6d4484045ab63c2e85a12a0ab2cf056ab9c6d4eae55824633e41e8"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 76,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.2621447067290788,
+          "native_return": 1.0,
+          "steps": 76,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 76,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "7345cb6ec4f1b8117bd6d4a3aa21bad99d03c17e5aa79d2ff2a2bc6d88840b8f",
+      "gated_reproduces": "off",
+      "layout_id": 1740016,
+      "layout_seed": 740016,
+      "precommitted_gate_score": -0.2621447067290788,
+      "prefix_controls": 60,
+      "scene_hash": "518adb0047c662909a042db48bad6f6ef7bd61a35a90b7f49f36c2b7f0c224ee",
+      "tape_sha256": "fc260f03324f406ccd6a03e3163e681149327a23234ef699278cbd526f381f8b"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "3961b9184971460b9279887567b7e6ae46f486aa9ca074c3113bf843ef40fc39"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.5226687625310104,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "cd461b8d57000e039ea46e2d5ca6f1567f2d9fd86bb8911b9154500ea6576b7d",
+      "gated_reproduces": "off",
+      "layout_id": 1740017,
+      "layout_seed": 740017,
+      "precommitted_gate_score": -0.5226687625310104,
+      "prefix_controls": 60,
+      "scene_hash": "c3df07cf2a1fe3e2538ce77f88147107de53bb8b60ecee982bbfbb635f55673c",
+      "tape_sha256": "00f90736be71a2de6cf2345891a15f8de954641a62027875c091236d108de45f"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "1c16060059a26bc2f27c62b5e4bd6a0b2a737172c78b1b3c78fbf582c092277a"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.2430717520822419,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "d694ce73f27e3701237a4da7e0d37ca2f2faabca4428ed2c6e80f1cc332a8ca3",
+      "gated_reproduces": "off",
+      "layout_id": 1740018,
+      "layout_seed": 740018,
+      "precommitted_gate_score": -0.2430717520822419,
+      "prefix_controls": 60,
+      "scene_hash": "f2c66f3757f55393ae275650ae48648a397fbaf7f345b22418ffda6768150d45",
+      "tape_sha256": "f37c8cc4c892b5611303c0632b872c9199edf7d4ce5f3ad9904e167d266a3c2f"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": false,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": false,
+        "rewards_match": false,
+        "steps": 249,
+        "steps_match": false,
+        "success": true,
+        "tape_sha256": "324480b82dfff874765c1f7d812dc14f0d1645df62c3244a14b3347a42722e30"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 126,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.6279356824223411,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": [
+            85,
+            90,
+            115,
+            120,
+            125,
+            150,
+            155,
+            165,
+            180,
+            190,
+            195,
+            200,
+            205,
+            215
+          ]
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "9721816cf8946d301343af6c23bcf92b8418e2cefed7263ecd76651e6a42e399",
+      "gated_reproduces": "off",
+      "layout_id": 1740019,
+      "layout_seed": 740019,
+      "precommitted_gate_score": -0.6279356824223411,
+      "prefix_controls": 60,
+      "scene_hash": "96ce41920133d60fac12d53abe16540b603d5158aa10342584cc6caf54f6f819",
+      "tape_sha256": "c9e65079b27cd4442dcd1c7de0a72a4838517ddf0ed17f5196fcab6329eaa915"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "7dfeb86ae1a39f7db68e6cb9ee8b1a83cc1a99d5df9bd2f091527bb70bb8c554"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 93,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": 0.0921561263790992,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "b32f115ac971de8a5b0e8d49d8f11ff004f6e8dfe5e189df77b74b80f4294c80",
+      "gated_reproduces": "off",
+      "layout_id": 1740020,
+      "layout_seed": 740020,
+      "precommitted_gate_score": 0.0921561263790992,
+      "prefix_controls": 60,
+      "scene_hash": "7d356428a7e053ad9111bfb0111fa0a4c9073b7e6d9babfc3c5367dffea00f95",
+      "tape_sha256": "b81aa4fc54d9087e57079aaac46b03e0404f0bbf6c174f64d28393ef8d61c9a0"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 55,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "d59935d9e6d1508960c25cb2b9020eb76a2ecc1aaaf9983160cd925dfbfcca53"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 55,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 55,
+          "success": true
+        },
+        "off": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 55,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "0ee858cdf62fba463484b5fba431d4bce694593db8e6746ec44a38ba22e2b725",
+      "gated_reproduces": "off",
+      "layout_id": 1740021,
+      "layout_seed": 740021,
+      "precommitted_gate_score": null,
+      "prefix_controls": 55,
+      "scene_hash": "857fbf4f7dc52538ac2e6f1b1857f002a361ca75c74ac417abddb4ac23f078d7",
+      "tape_sha256": "a7915ea6731db6b81295d4b34ebb7f5a1ac27fbdcf54d82a4043525a795e3cfb"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "c914769db743d6d54d8642ff65a89f3950f5afbf5ad15427b451d5fdaa59b576"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 176,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.5463970802688054,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "862cf6886a0f69c9e3778e663970e530bb1c4e5149f6251a96438433647674fa",
+      "gated_reproduces": "off",
+      "layout_id": 1740022,
+      "layout_seed": 740022,
+      "precommitted_gate_score": -0.5463970802688054,
+      "prefix_controls": 60,
+      "scene_hash": "3e9e76d103f61f3f3930a0df973e8777da18e442f03d1f982592b225c51e9ec3",
+      "tape_sha256": "b721a88c541dad33f55ddb7afe4cab402c2d8ee325f13ff6660e9c66d7097163"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "cd6f6cd1b72f2f5c5507cd00b289edd363dd2f48f2c6325b68e6fb5cd33e9e03"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": 0.04774224804697105,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "876622bad04e05641cd0e377f9a19a5247a49a4d9012dc26f91825f509a9bfad",
+      "gated_reproduces": "off",
+      "layout_id": 1740023,
+      "layout_seed": 740023,
+      "precommitted_gate_score": 0.04774224804697105,
+      "prefix_controls": 60,
+      "scene_hash": "3813f4e46fe3cdd6643e342c22487d900d6449cd86778cee4bef66330f23cd31",
+      "tape_sha256": "cb63c8d07688749142f0b48ba8a2343bbf9481bb29283a058017be16ef28e001"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": false,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": false,
+        "outcome_match": false,
+        "rewards_match": false,
+        "steps": 66,
+        "steps_match": false,
+        "success": true,
+        "tape_sha256": "39302b19412ec6a75267214239c0eb46498f9291ce51a5a2dbef2bb02bdf137d"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.14414991010037412,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": [
+            35
+          ]
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": [
+            35
+          ]
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "900f62bc09b53324e95f38c77c1c2767df168e663df1f47fc5a969397dfcf472",
+      "gated_reproduces": "off",
+      "layout_id": 1740024,
+      "layout_seed": 740024,
+      "precommitted_gate_score": -0.14414991010037412,
+      "prefix_controls": 60,
+      "scene_hash": "02e6f13d0a6c7fc8906a7eddaabd42dc75c93dafd475887ab5772631a3745e42",
+      "tape_sha256": "4883d458deccd4f1eb8de5b718d35332ae308135f38837e67883b1ec2e2608a8"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "d13799d310a0f0bbe830250fbf98fb9c47767469b6de81142b971300b8d9f26f"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.18320620153060435,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "3e9f6542d1f3dcdaa67a7c206740ba19c4b13b219f250931a8d00fac2f844e52",
+      "gated_reproduces": "off",
+      "layout_id": 1740025,
+      "layout_seed": 740025,
+      "precommitted_gate_score": -0.18320620153060435,
+      "prefix_controls": 60,
+      "scene_hash": "9433e77e1c34056043c4445b193105d567002e5fae62e3c75d6a564a6cf5e818",
+      "tape_sha256": "4b902d33392c897cd94b8788f6326bbd4e970f2cf0a76efca9b398f352d2fdd2"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "4deefc802157081538eeda3dcee620d5e8fd09c93dcd8f5bed0a93986a2282c1"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 179,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.44218956986404756,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "d8e7ac692f882906c340f6a0e5aafa937cd5061ca27338d03920d2d8ad3d5c58",
+      "gated_reproduces": "off",
+      "layout_id": 1740026,
+      "layout_seed": 740026,
+      "precommitted_gate_score": -0.44218956986404756,
+      "prefix_controls": 60,
+      "scene_hash": "5999cc46e853cebd1623cfed2cc84a2a707ecfcd19531f87ed559848b95190d4",
+      "tape_sha256": "53e677d70cd20cd0b07de6b86de53f512ed35f76c830c040cc016560b6421e6c"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 71,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "ed16a5da6a6a9c9b3c18e03cdf22a812160ccbf72f13ca9b3dd16896a23ad2eb"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.4447258264734911,
+          "native_return": 1.0,
+          "steps": 71,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 71,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "1ffd3dca2eb9caaf036e15369fe14008a032af3c4d0e6837b08472c682fde7da",
+      "gated_reproduces": "off",
+      "layout_id": 1740027,
+      "layout_seed": 740027,
+      "precommitted_gate_score": -0.4447258264734911,
+      "prefix_controls": 60,
+      "scene_hash": "d5a20b550883f7171e3838af19ad50e088270346e3b6f04983b8fc3eee1ca18d",
+      "tape_sha256": "1f62961fde4534eaa6b95df5f7e1ab305cbda0e9ca1185f4c804c45616b765ae"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 60,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "779282b7c7ae3ea2113f9a2b37cf161b14ae6c8672f9f687e0e84af9f059eada"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 60,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 60,
+          "success": true
+        },
+        "off": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 60,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "9777559ca16441fe429fbb38e40fcda684405728519af5fc4543d45769397f01",
+      "gated_reproduces": "off",
+      "layout_id": 1740028,
+      "layout_seed": 740028,
+      "precommitted_gate_score": null,
+      "prefix_controls": 60,
+      "scene_hash": "0422a43ced5815d64d3ef475b15db2079d1b771b8f0c1087e994fe5776b860e0",
+      "tape_sha256": "336096b0e60534eff3bb6e9b92aad5ab459d6791d87f1fdb260d281add8ee240"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 96,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "4f6b515133feb8529a1b9a1f3a5fa575d6457035288bd8adbc6b960711989639"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 96,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.1569388814538691,
+          "native_return": 1.0,
+          "steps": 96,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 96,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "6aaf1b057038ecc233c531489c73e49473f981733aff31fd068290d313753978",
+      "gated_reproduces": "off",
+      "layout_id": 1740029,
+      "layout_seed": 740029,
+      "precommitted_gate_score": -0.1569388814538691,
+      "prefix_controls": 60,
+      "scene_hash": "1b5d68b08427a77b6c6d341b6562e027040ee1e92d21b57e999f032bab8deb72",
+      "tape_sha256": "1cfa3c63b47f10db60f225407758762f052cc1fb1524661c1d1c933e14d97162"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 70,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "c72e74d9b5782e7f3017223c7865e44064fd6092d5491c94094118c910b95d43"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": 0.27841652562590613,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 70,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": [
+            20
+          ]
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "22e39e2ca63888292b35fdfc688d14302a39ed5749709881a4534029b4b183b6",
+      "gated_reproduces": "always",
+      "layout_id": 1740030,
+      "layout_seed": 740030,
+      "precommitted_gate_score": 0.27841652562590613,
+      "prefix_controls": 60,
+      "scene_hash": "1bf09afb3610e7ca2a1804c2efb8375fb611f63347abeaf15ab09ce846c433ee",
+      "tape_sha256": "8da3d45a713d892aa4947dd4769306a1d47107aa696da072dfab8a6f2502f38f"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 58,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "8ea30d15cc07e15a2726e39e055873005415cb06d72499e8003b0cab3f2d0115"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 58,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 58,
+          "success": true
+        },
+        "off": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 58,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "8e987043dd2ea34f9c58a0e7dd5cc39f7d37f57a23b921e3f7916ef422ea08b4",
+      "gated_reproduces": "off",
+      "layout_id": 1740031,
+      "layout_seed": 740031,
+      "precommitted_gate_score": null,
+      "prefix_controls": 58,
+      "scene_hash": "6788f0f7af4d3660163f2e5203d696463b2cf612dd3e15714237fa0239147591",
+      "tape_sha256": "755243cdcaaaec05e588065c9ca2f4b1fe2c580a586e68ee683eba3fa3700bbb"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 63,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "40a6de1d3ae92c834ca435f71902026d89e347bf66cf1c741a33ea1995940913"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 65,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.255389574643786,
+          "native_return": 1.0,
+          "steps": 63,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 63,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "ce53e2e6cdc9533034d667edad4bd9bb6d14086687f3a69ad84aa9c88751f8d1",
+      "gated_reproduces": "off",
+      "layout_id": 1740032,
+      "layout_seed": 740032,
+      "precommitted_gate_score": -0.255389574643786,
+      "prefix_controls": 60,
+      "scene_hash": "343f1a181417152945b2818830b12c120852403e7f8886ba7f352326d9483b19",
+      "tape_sha256": "243101248d44dcae56a30ed6fd76993f8f7832802f64a0daa3fbbb184bfddd8b"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 64,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "6d8759c007841e2d03e36e5760fa7925d19007d622569159f2364ec6559cfaa7"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 65,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.35914122567898066,
+          "native_return": 1.0,
+          "steps": 64,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 64,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "7cea1e58f09b2955b595e4daa46abed44542c1583c4f81aad7635c1611ba185a",
+      "gated_reproduces": "off",
+      "layout_id": 1740033,
+      "layout_seed": 740033,
+      "precommitted_gate_score": -0.35914122567898066,
+      "prefix_controls": 60,
+      "scene_hash": "d2d6b93a0bfadb195b713faf4a0dd95bb7f96b1ed53659ac2ea8b9a9541757a6",
+      "tape_sha256": "b2fa05cab43ae74e12b8749fe873aa8fbad3e239c5347163bfc9e613759b36dc"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 246,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "51eae3e363026c1f00712e258b8480da5bfd07a065c5b5bd992893c6c911f328"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.43796664353609455,
+          "native_return": 1.0,
+          "steps": 246,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 246,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "b24a32c50fc5d13e351361cc9a9028577599606ab297a5507b1562e80aa09dae",
+      "gated_reproduces": "off",
+      "layout_id": 1740034,
+      "layout_seed": 740034,
+      "precommitted_gate_score": -0.43796664353609455,
+      "prefix_controls": 60,
+      "scene_hash": "24be864a63127879470308a0eee230449f924d34c689e52dd9a56ad464dd0df9",
+      "tape_sha256": "d7790e2ce25a76c60029559eb06952bc77c8dbe3c09dd9478565d3c899cc298e"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 54,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "df1bb6f2046aabb12c6c5e5998fb95552f24218465d432f7cc149c172fa69563"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 54,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 54,
+          "success": true
+        },
+        "off": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 54,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "8b1b1813d9303a80a5b286d4aeb348274ae33caf68f781952e30f146dd1d305e",
+      "gated_reproduces": "off",
+      "layout_id": 1740035,
+      "layout_seed": 740035,
+      "precommitted_gate_score": null,
+      "prefix_controls": 54,
+      "scene_hash": "aab3f1a550711c8d82d0c36e79842d4b2c59a8ab12ec377f1b8d77a976be2478",
+      "tape_sha256": "778fea944ae4c6e4d8e7229188dd05e5c8099917e50896660f08a2675ac8851c"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "ac749626829f6990ee3fc857198cf4fe463df48267df011c877f3493bc142869"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.17681780207889597,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "b30ef95fc697387f57d41cbd76f422d64e81536feadb244d805c95619dd1dce9",
+      "gated_reproduces": "off",
+      "layout_id": 1740036,
+      "layout_seed": 740036,
+      "precommitted_gate_score": -0.17681780207889597,
+      "prefix_controls": 60,
+      "scene_hash": "53c362c02d9a08ecf9f6dde2e62bf1e41d7602f8af48f0121ea60c731fd0d0c9",
+      "tape_sha256": "65b8d9476a45b796c61df1402f46502ad53b405fe79ef4451c55f2daa41524a0"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 69,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "1cdba04254f78086db7d68f5771508a2dad361dff2f63935a2eab214e939d3c4"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 66,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.018195335487135172,
+          "native_return": 1.0,
+          "steps": 69,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 69,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "96a56c12a360a1087d25edebb975a752a32c4a930ceac2e805a1087547f05d72",
+      "gated_reproduces": "off",
+      "layout_id": 1740037,
+      "layout_seed": 740037,
+      "precommitted_gate_score": -0.018195335487135172,
+      "prefix_controls": 60,
+      "scene_hash": "24b41ac61d32ab72335bac5640c7c925eca524d7839e33fa203a20303abf6f6d",
+      "tape_sha256": "b6ca3a5e4d11def03265476a0d17d01a39d0a961e7b9765e197b6a28506a7129"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": false,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": false,
+        "steps": 108,
+        "steps_match": false,
+        "success": true,
+        "tape_sha256": "68b41680c1e8e14a830c4616a8cf6e87a4fbaa93dd7ee1d3c3c7a5e847143aa3"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 100,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": 0.24076751627107007,
+          "native_return": 1.0,
+          "steps": 100,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 89,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": [
+            30
+          ]
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": [
+            30
+          ]
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "1edf3a5421f4d4e291375c40039fe2f8ba5dd07da232d337d2ccea514ba2a385",
+      "gated_reproduces": "always",
+      "layout_id": 1740038,
+      "layout_seed": 740038,
+      "precommitted_gate_score": 0.24076751627107007,
+      "prefix_controls": 60,
+      "scene_hash": "067d3ca10ff2bc4290d475be863791de5ae48c71e358675690ebf36e1310d91c",
+      "tape_sha256": "20e2e3d2fd234eb6df46ec89211f0a4c2b528021383b19bf11b086e02682f733"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 106,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "aee6ffbee222449babb6e18730ff640b798eb7b576c907857f339c1fd4dc4a40"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 126,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.938051940886591,
+          "native_return": 1.0,
+          "steps": 106,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 106,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "70faee0fc5c20424ff7fdd17664d4d423f034b6c32e12619b8152fcd359745b0",
+      "gated_reproduces": "off",
+      "layout_id": 1740039,
+      "layout_seed": 740039,
+      "precommitted_gate_score": -0.938051940886591,
+      "prefix_controls": 60,
+      "scene_hash": "edc43a1596e79bf5f22f1f80b2f34f47823ac00f89032157e8928d1a103e5a4e",
+      "tape_sha256": "0768c6767ceccd238e05a58295df3da98407f7bd2a773bef2276d2d0475fc740"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 285,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "05dfe988f07df6359fa30bbcd35d45e213ca69f0f58ea9da8fa10aff306357de"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.5670372248706402,
+          "native_return": 1.0,
+          "steps": 285,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 285,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "a2b78c780bfbcae64811d6697905e5be8b136eed43a8b1e307b6c615e962bc05",
+      "gated_reproduces": "off",
+      "layout_id": 1740040,
+      "layout_seed": 740040,
+      "precommitted_gate_score": -0.5670372248706402,
+      "prefix_controls": 60,
+      "scene_hash": "4a729c94fb66a62afd729814078b130f18ac44eb19cdc9fade4bbc62d720b662",
+      "tape_sha256": "611174325804aba5a6628b230d6bef428eec04c49db04a9c96e2e45a025aede1"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 64,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "111f277ab0bc3f1a134c1960d3923fba3d98bd581e8d3c5cf9057cfca38e3270"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 66,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.16139619319992288,
+          "native_return": 1.0,
+          "steps": 64,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 64,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "8d72851f0834d754a408c9145bf1984dd72dbd80a9bf35ee041ec351873ee27c",
+      "gated_reproduces": "off",
+      "layout_id": 1740041,
+      "layout_seed": 740041,
+      "precommitted_gate_score": -0.16139619319992288,
+      "prefix_controls": 60,
+      "scene_hash": "827690153f46dcea4aab6aefca7b2282e7c084e9927bb36b7fb45eddcc0a39aa",
+      "tape_sha256": "02f28c3f1e8b3724879b9d12ee9b5d22f94fa140d695f6329c41e992758d777d"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 133,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "637c1a9d79987daa7d88718434d81acf36699fec753548fc21170af8c3c34389"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 108,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.4067400495378878,
+          "native_return": 1.0,
+          "steps": 133,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 133,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "f4b52e6f52ab03caff68a8c1ffbb2b53e490b4384e656f2190db3ab05bcc5b5b",
+      "gated_reproduces": "off",
+      "layout_id": 1740042,
+      "layout_seed": 740042,
+      "precommitted_gate_score": -0.4067400495378878,
+      "prefix_controls": 60,
+      "scene_hash": "f9c2c8a2f746dc2b52118b313c4fbdb812fab32a7baf20cb91fbee403dbff22e",
+      "tape_sha256": "429d5bd6c7cf189b8818b5d3ae13f53455864a594a1b16e42502675f8ff14d82"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "02eff17d198b59a0271a55bbfc658dfe63ec582ea2740a8e7799b405c3a7128e"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 127,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.13729561526077022,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "6bf496b945a12c48f2e632f8ca35cda5f26d268e1b26a1ac72e7fc298928b797",
+      "gated_reproduces": "off",
+      "layout_id": 1740043,
+      "layout_seed": 740043,
+      "precommitted_gate_score": -0.13729561526077022,
+      "prefix_controls": 60,
+      "scene_hash": "09d8f74ee7994d4d74dc0a5f95b7d165974fb87e59bc991e1eb30f25357f4551",
+      "tape_sha256": "e9f629d1c2d91c782a15079ae07c69a6849c16b6751e2c87c61cf4caaae296d3"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 69,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "80f024bf391209bebad0154a1ff7cfc276f4539b24f97399310d460d19680b35"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 70,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.17077793461475183,
+          "native_return": 1.0,
+          "steps": 69,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 69,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "730cda9d984c6da802a83c5036dc005af2439ca4e84090e3f02707a0dba96b1b",
+      "gated_reproduces": "off",
+      "layout_id": 1740044,
+      "layout_seed": 740044,
+      "precommitted_gate_score": -0.17077793461475183,
+      "prefix_controls": 60,
+      "scene_hash": "1d185496ac13469cff38796e9d00e806e335c29e42376f9386051266f03a3e63",
+      "tape_sha256": "a8de1daaa2c2fd19672e73cede4a892735ceab7ac65db8d202753db6682b15e6"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "a9a741f3000b5947f31e9d188e4c93b4cb2ae0973c0ead88fdde944624c915f2"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": 0.17929447943428078,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "8c9d5341b353f8aa58b39224af5a2988c5366ef17ce5e0003905e692c637b82b",
+      "gated_reproduces": "always",
+      "layout_id": 1740045,
+      "layout_seed": 740045,
+      "precommitted_gate_score": 0.17929447943428078,
+      "prefix_controls": 60,
+      "scene_hash": "042fb85008881b7dba150b1b733d4a3a0484dfa0d7006bc85c43857f1e1652e3",
+      "tape_sha256": "5d7017d4f650efc2b7657bcceb320fa515c28563b0286f2b11e984476e221d1b"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 67,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "8cac39ae29598a31ee721352c519255312b21fac04795041760e6eac100b4513"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 72,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.3520824862594101,
+          "native_return": 1.0,
+          "steps": 67,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 67,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "9cfab698df1475e42efd07d2b5819b86202a64bd0cd602fa832950e63c3e832d",
+      "gated_reproduces": "off",
+      "layout_id": 1740046,
+      "layout_seed": 740046,
+      "precommitted_gate_score": -0.3520824862594101,
+      "prefix_controls": 60,
+      "scene_hash": "2bd0398c19e2e03cab26ab7212d3194bc1ed29cb30c647063d07bf242e945fb8",
+      "tape_sha256": "1d7036001dba246d86f52e319018e68836067bf5bfc3c69e7b2ce3b29c0859ef"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 66,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "3b0049dd50f6b1b17c756bb0aba40ad949aad2b478146e66c874e29921b8c97d"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 98,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": 0.021544374153110696,
+          "native_return": 1.0,
+          "steps": 66,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 66,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "37e7c2d2e2b5efb2897b14c63d7e92e85521a00ced675eda3bf7642ff725f116",
+      "gated_reproduces": "off",
+      "layout_id": 1740047,
+      "layout_seed": 740047,
+      "precommitted_gate_score": 0.021544374153110696,
+      "prefix_controls": 60,
+      "scene_hash": "189054f8354106b6d32835515b400fed3fbf0fc2083f19f147cd9b953ebacb0d",
+      "tape_sha256": "cb81beb84ba2c21623a47f3efef3cf39693b317ff27e8fa4788f0c2bdccb581f"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 82,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "5ccc5c448376ebc40e2244392ab818226891e8042fe4b0850baaa9904bace7e4"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.1387002207933997,
+          "native_return": 1.0,
+          "steps": 82,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 82,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "7c4cddc803d6d44f8102b13ef93b9e934e8b2d4e1d1d49bfadb04a8533a6a5c4",
+      "gated_reproduces": "off",
+      "layout_id": 1740048,
+      "layout_seed": 740048,
+      "precommitted_gate_score": -0.1387002207933997,
+      "prefix_controls": 60,
+      "scene_hash": "0293cab9b75fa0a4004aec17bda59addf46df01a87066ed55f7189a790786be4",
+      "tape_sha256": "486d9bf0941ca4560d41cf490f32ddad273a7d23cde4b88eb2a1c64a2d5cedcc"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 60,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "0dce1e3bba9c4a700ac92f1ceecd56dab1abb7f81c36c1bb7ebe4c993a5612ca"
+      },
+      "arm": "Panda",
+      "branches": {
+        "always": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 60,
+          "success": true
+        },
+        "gated": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 60,
+          "success": true
+        },
+        "off": {
+          "decision_reached": false,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 60,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "49812ada4a33dfcf71b2a7e34965da8baf73d0f600b7d9cc704717348bf591c1",
+      "gated_reproduces": "off",
+      "layout_id": 1740049,
+      "layout_seed": 740049,
+      "precommitted_gate_score": null,
+      "prefix_controls": 60,
+      "scene_hash": "a93e0c0c9a02f98337032bc5fde82e99787ebcd9b6cbcfa0b8dc8745a8155837",
+      "tape_sha256": "df65e1e02ca17e00a24bf9627be712b6254f326772b20b7b165dbd86c7505cef"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 89,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "5bae3907fb4c709af676ef9a47fd3fde635701674db680bef71862327ad4cec6"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.3133788735065287,
+          "native_return": 1.0,
+          "steps": 89,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 89,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "f440b09bae677c93e400bd6f93fb0b269a91044572e2ad0a4c937bd525d4a3bc",
+      "gated_reproduces": "off",
+      "layout_id": 1740000,
+      "layout_seed": 740000,
+      "precommitted_gate_score": -0.3133788735065287,
+      "prefix_controls": 60,
+      "scene_hash": "e681f735a7d07bb0ea6c1d3bcdde98eb22d1f413d2ece14512d85583e17bf578",
+      "tape_sha256": "25b4c1a704bf5284a27ccdffad47c58fbce026e53e3c254589e133d478345618"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "afabb1d104de8e6f0c8ebff46b8540e2f6dc5d289702994b968b982356632329"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.5498633558599986,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "753455a461b07e9d52f54166664090ab7b37709d2234c48be1d00e14710148f9",
+      "gated_reproduces": "off",
+      "layout_id": 1740001,
+      "layout_seed": 740001,
+      "precommitted_gate_score": -0.5498633558599986,
+      "prefix_controls": 60,
+      "scene_hash": "b9244f71da0611d4b8db5c2d65a8e999c22f452d66e0de2821fa2ea9befe14c8",
+      "tape_sha256": "b85c6d614c056029402eef0132d9c04fbd8f733ba3e192a683efbf9af935c9d4"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "978fd8c3b00b09c9925ae1323d1ae47dd39d95f7f7b0c64001cda83e2f22cd93"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.1581724878869519,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "b34f815171b6eeddb0ef8f02fa0812a694b211925c9d6decea81cac034b0895a",
+      "gated_reproduces": "off",
+      "layout_id": 1740002,
+      "layout_seed": 740002,
+      "precommitted_gate_score": -0.1581724878869519,
+      "prefix_controls": 60,
+      "scene_hash": "5abb408502c75e26518e1c8ad6d380409e18864e22590a295e885471f8a27b3d",
+      "tape_sha256": "789890f34f110e430186fff437f5a51b0f6bc2f6f4c3e03169074778047e24e6"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "5c19d769a462dda8e3168ea4bc5c69c77a5f40f28c8b44ba24802f330f1f1345"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.5005306497089781,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "1628ff5f80e9a18222e5b29e00f5fecb423d1faab3e209ccbc3f2b4c94aee3a0",
+      "gated_reproduces": "off",
+      "layout_id": 1740003,
+      "layout_seed": 740003,
+      "precommitted_gate_score": -0.5005306497089781,
+      "prefix_controls": 60,
+      "scene_hash": "c20753805fb5c0d184524e37c991acf2744b977501ceb917515ff8be16bafe19",
+      "tape_sha256": "6848dbffe67936c806c1847b1f6c6ebd777cfbe3c7fb9f3ae9b86353d4e547ec"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "2e763b43482d5c114deb69fc2afc861ae110acb2c0700f826a5cbd13a261cbc4"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": 0.595365419839949,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "cbdb05d6266f047f7d8bc0669f08e58334f1e97bbcb08dd006d01ef89fa19654",
+      "gated_reproduces": "always",
+      "layout_id": 1740004,
+      "layout_seed": 740004,
+      "precommitted_gate_score": 0.595365419839949,
+      "prefix_controls": 60,
+      "scene_hash": "de9b5a40776d4507bf10dfe875dcc010db0814299a60b9babf6d9edf4cc1089f",
+      "tape_sha256": "e926f4f351643eb3851fda61e67515e02cafc9ee874bf4e9f8ac9b29ebf2722d"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 101,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "e07ccc8f863745429d8416e6d992d7ffd709f6f55d2cfe8f472631b5a6f44e0a"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.04794283958077292,
+          "native_return": 1.0,
+          "steps": 101,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 101,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "72c127c8a76c0ac935f771649301c9f29b5aae029713de3b64ef8f72f908977b",
+      "gated_reproduces": "off",
+      "layout_id": 1740005,
+      "layout_seed": 740005,
+      "precommitted_gate_score": -0.04794283958077292,
+      "prefix_controls": 60,
+      "scene_hash": "213221d5df0a9747ec54e385ef10a674812b5e3fd7939a13a1fc2c714b0ee0f5",
+      "tape_sha256": "7b33668a5e8db8af2949cc6977a3d5d6f62ce100447f166df2fc930fd29e5ef4"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 175,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "534262dc506da2b9251146b93626d1d43261ca98bb640590b97d613db970f997"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.015665310160877605,
+          "native_return": 1.0,
+          "steps": 175,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 175,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "8fd0c3a277414836cc5ab6d10998886345506b32d882a313be5c1af4797ea474",
+      "gated_reproduces": "off",
+      "layout_id": 1740006,
+      "layout_seed": 740006,
+      "precommitted_gate_score": -0.015665310160877605,
+      "prefix_controls": 60,
+      "scene_hash": "94ee7d92e7acf16c199abeccaeb5caa0135f12761c177a9ebf8e7bc288e0bd74",
+      "tape_sha256": "ba11756ddf7349eedb03b87b731a5e501f81cd348fc56f12b425840c00c1fa14"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "fd2cd0235e8a6d62df1854ddb993d0f341b06e01cb7ad05b008832e23140c84e"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.3858336861234991,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "e54a7fb14fb21b396fdfe07e62593c9b2617e24e1135dfe043307f09fe916422",
+      "gated_reproduces": "off",
+      "layout_id": 1740007,
+      "layout_seed": 740007,
+      "precommitted_gate_score": -0.3858336861234991,
+      "prefix_controls": 60,
+      "scene_hash": "628e3b02c1d50abca0a6d914dae563ecbf57900bee1ac836b15d8e8cbca38aeb",
+      "tape_sha256": "4994999486343ecf5bcce2ed3e84a94aca39eff05bfc23759a229e09cb445a28"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "deee470726aa4a578161029de0e1db1cbd708a5fc40d0784bcb5aa2d9be259aa"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.05769016752473394,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "a24a25a2d39535cc76a9a6f935f2b56b95253220f739f748cf4533cc108a4033",
+      "gated_reproduces": "off",
+      "layout_id": 1740008,
+      "layout_seed": 740008,
+      "precommitted_gate_score": -0.05769016752473394,
+      "prefix_controls": 60,
+      "scene_hash": "aa7377e5f6fee459b014ea06752e49592da7d1b6a245bbc75bffcbccf33cb68c",
+      "tape_sha256": "10df42fe676705ef7918479edb3f4da66ece5b1b91dc8a5647168ab09d5fbb43"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "d9592c41c8c911fafeb470cf586254121725ca607f37f193ce2cc373684086bd"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.41832979303997564,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "c0ffd0037d861f913804358b33ca9c4faba9bbec1244760d5d395b8b2f71dd13",
+      "gated_reproduces": "off",
+      "layout_id": 1740009,
+      "layout_seed": 740009,
+      "precommitted_gate_score": -0.41832979303997564,
+      "prefix_controls": 60,
+      "scene_hash": "49ea46ecbe05e1aab55ce5a0c027ce908014dac671413c5895725b6b1df15c19",
+      "tape_sha256": "f67b2cf4821fc0f934f03117f8da9073567d3da8252c07e4182f0d706f91b6c0"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 101,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "a4d31c11c8c3f5399e2b32020ffb369251a0d5d512679a610a452f7ce97c5147"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.26865574535435355,
+          "native_return": 1.0,
+          "steps": 101,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 101,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "3abefeeef15dc7175877981c00e6e239a507a0ab9c32cc15192e007fe16992ce",
+      "gated_reproduces": "off",
+      "layout_id": 1740010,
+      "layout_seed": 740010,
+      "precommitted_gate_score": -0.26865574535435355,
+      "prefix_controls": 60,
+      "scene_hash": "db30e4ea39aff2d0142e648d8d983fbe9dbae27bb8840099bce6179a9afb05fe",
+      "tape_sha256": "a933b1dde0c317cc5d836eedbee651aa810981ca5f6a322f9364c4196384c948"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 85,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "cbbb3afcd998134e1e56e1a4ba7ec51e564238b5b55b8f400fd27c56c5852e9a"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.12270537898686104,
+          "native_return": 1.0,
+          "steps": 85,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 85,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "919da583b04fceb7a9ad38fe4f88b4a96eb5b98eaece0c86aedba6509d094ddf",
+      "gated_reproduces": "off",
+      "layout_id": 1740011,
+      "layout_seed": 740011,
+      "precommitted_gate_score": -0.12270537898686104,
+      "prefix_controls": 60,
+      "scene_hash": "ad60ef41159aabca84db26e1efac27d98b178b832a81382388bb4ebc31daa374",
+      "tape_sha256": "8c1625b63842fb2da1f222a2e9631db68945a0922d88717c2e91366255edfa18"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 184,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "b70dbc23e363f19b45aa43c9a60c164274ecc48afff58566ba710bbb35b4add4"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": 0.4329407629359889,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 184,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "4fba2ddb3b252adfca12b0dc90b4dec6ecb8fb0536b08347b333bdb46c5b798e",
+      "gated_reproduces": "always",
+      "layout_id": 1740012,
+      "layout_seed": 740012,
+      "precommitted_gate_score": 0.4329407629359889,
+      "prefix_controls": 60,
+      "scene_hash": "01d4bb866f4a2be0879003de3e0ffd7fa7d00b338dc7fcaaf630011e51eb9637",
+      "tape_sha256": "9a492f1bfd9a09c7355e3c841a0d1bd27b4c4f731a25f50d766611426ed38fec"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 130,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "b54e189e43f6ba2080eb6624054f412d9211706891d5b64cd4e669989fe3a042"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.3126160022719264,
+          "native_return": 1.0,
+          "steps": 130,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 130,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "9f3fff99ea00216b9a5545a0db644610652e6de48bec4e4bf648c0bc337f10e7",
+      "gated_reproduces": "off",
+      "layout_id": 1740013,
+      "layout_seed": 740013,
+      "precommitted_gate_score": -0.3126160022719264,
+      "prefix_controls": 60,
+      "scene_hash": "b70d32c147222765c15e78a69ba2a41de4fb42d168471bd203630f092878c456",
+      "tape_sha256": "9158ae6136ca7e6ba2a5d72bdb2581625725c1d0e8e602000745a3b558fcf2f2"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "37242572aa7591e21eddf08c614152cc0bd4c6dfefb6ae48b83404ffb71eed44"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": 0.5043820335177718,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "03503a3bb99e7fff59bdb117e01f1904438f4ba1e4f59b7078a60f3e7a802d00",
+      "gated_reproduces": "always",
+      "layout_id": 1740014,
+      "layout_seed": 740014,
+      "precommitted_gate_score": 0.5043820335177718,
+      "prefix_controls": 60,
+      "scene_hash": "bfb367af37f2d1c23b20bb94d5e7de435bcbd06ac1004c4d41bc021f235aebeb",
+      "tape_sha256": "58787b378a928815816943d5187c125c49c7f3e8b1a4a6c1e099971606619b74"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 85,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "e6173a09a3f5fa932192889444511934b148b13bea48eb6f286a292afd4e27da"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.5434865574871472,
+          "native_return": 1.0,
+          "steps": 85,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 85,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "df493daa68e50a5b65e9be2a1b0370c6189704421c5fede00f454d1eeb075fd2",
+      "gated_reproduces": "off",
+      "layout_id": 1740015,
+      "layout_seed": 740015,
+      "precommitted_gate_score": -0.5434865574871472,
+      "prefix_controls": 60,
+      "scene_hash": "492fa614e96118990b73c208f870a8c41469b89b4ab5e4f4471a31b6baae506d",
+      "tape_sha256": "14d23f5435b746d193311a178a543fd467d6e8a711ae834dda936d31934d03a6"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 100,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "8319a6f227d9322bf740957ce01951c2ee44f03622daf0c6acd806be9ead9fec"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.25079281838721823,
+          "native_return": 1.0,
+          "steps": 100,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 100,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "7345cb6ec4f1b8117bd6d4a3aa21bad99d03c17e5aa79d2ff2a2bc6d88840b8f",
+      "gated_reproduces": "off",
+      "layout_id": 1740016,
+      "layout_seed": 740016,
+      "precommitted_gate_score": -0.25079281838721823,
+      "prefix_controls": 60,
+      "scene_hash": "518adb0047c662909a042db48bad6f6ef7bd61a35a90b7f49f36c2b7f0c224ee",
+      "tape_sha256": "1d3d989435654ba6dcb8b676b2826179526725e6830dcdac9d26fa89a11ee663"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 123,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "5ad832ac24a28b10fcd429405600bfc8368bacd77cc033c9ee4162c9e0814721"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": 0.03386238457773147,
+          "native_return": 1.0,
+          "steps": 123,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 123,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "cd461b8d57000e039ea46e2d5ca6f1567f2d9fd86bb8911b9154500ea6576b7d",
+      "gated_reproduces": "off",
+      "layout_id": 1740017,
+      "layout_seed": 740017,
+      "precommitted_gate_score": 0.03386238457773147,
+      "prefix_controls": 60,
+      "scene_hash": "c3df07cf2a1fe3e2538ce77f88147107de53bb8b60ecee982bbfbb635f55673c",
+      "tape_sha256": "aa3df2d4324a4497eb4cd2cf5dfa6a14a6c2701a027b39ee8526d7b75025e784"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "442a1de377c0f9aed4cec15af02c37f87b5aa30eacf3e4702c2b375e02fdfe39"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.37440054400867784,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "d694ce73f27e3701237a4da7e0d37ca2f2faabca4428ed2c6e80f1cc332a8ca3",
+      "gated_reproduces": "off",
+      "layout_id": 1740018,
+      "layout_seed": 740018,
+      "precommitted_gate_score": -0.37440054400867784,
+      "prefix_controls": 60,
+      "scene_hash": "f2c66f3757f55393ae275650ae48648a397fbaf7f345b22418ffda6768150d45",
+      "tape_sha256": "de12a99d6c1db8c5347c129ecf5239d56f4a308eac289408ef15db53567eaa95"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "8952e869d899a30c754c687f002691fdbc4af184c0bc3fcbd6b7878abc2805e0"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.17139698208318732,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "9721816cf8946d301343af6c23bcf92b8418e2cefed7263ecd76651e6a42e399",
+      "gated_reproduces": "off",
+      "layout_id": 1740019,
+      "layout_seed": 740019,
+      "precommitted_gate_score": -0.17139698208318732,
+      "prefix_controls": 60,
+      "scene_hash": "96ce41920133d60fac12d53abe16540b603d5158aa10342584cc6caf54f6f819",
+      "tape_sha256": "a39d4ab1dbfdbf035e6ab4c517b233926a5552ccb9d66f79d6aab6e13883c52d"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "221181fb083ae162891a84d1a95c252a0987714204e6bdc2a45d6257260901b6"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.8243487103516514,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "b32f115ac971de8a5b0e8d49d8f11ff004f6e8dfe5e189df77b74b80f4294c80",
+      "gated_reproduces": "off",
+      "layout_id": 1740020,
+      "layout_seed": 740020,
+      "precommitted_gate_score": -0.8243487103516514,
+      "prefix_controls": 60,
+      "scene_hash": "7d356428a7e053ad9111bfb0111fa0a4c9073b7e6d9babfc3c5367dffea00f95",
+      "tape_sha256": "77f6f56af64728cbb607d58cb23dac880467ef466be3951b3de53d930310e8ca"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "5fdfb84c0bc7ef53fc7484bc0fc2c00e579c653edce8375096a82927b8e18ffb"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.03686733498587487,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "0ee858cdf62fba463484b5fba431d4bce694593db8e6746ec44a38ba22e2b725",
+      "gated_reproduces": "off",
+      "layout_id": 1740021,
+      "layout_seed": 740021,
+      "precommitted_gate_score": -0.03686733498587487,
+      "prefix_controls": 60,
+      "scene_hash": "857fbf4f7dc52538ac2e6f1b1857f002a361ca75c74ac417abddb4ac23f078d7",
+      "tape_sha256": "f0ca95e5128918c3e4a4816756d570f58517ab5ff04a82466e7f8b1a516fd569"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "95224fb4ce030951f7920340f76affbc5a57b2f0fe9a78cedc530f15fc1e5821"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": 0.09919880483836507,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "862cf6886a0f69c9e3778e663970e530bb1c4e5149f6251a96438433647674fa",
+      "gated_reproduces": "off",
+      "layout_id": 1740022,
+      "layout_seed": 740022,
+      "precommitted_gate_score": 0.09919880483836507,
+      "prefix_controls": 60,
+      "scene_hash": "3e9e76d103f61f3f3930a0df973e8777da18e442f03d1f982592b225c51e9ec3",
+      "tape_sha256": "d99ffd051265120f1f5834f0728857fb3d4b22121a72c6b1540706c84d1e313d"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 160,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "53606211e0b04b93a9669b31e06d3b59e9a918a6e098d00656d3189e8cee11d5"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.1424764157909855,
+          "native_return": 1.0,
+          "steps": 160,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 160,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "876622bad04e05641cd0e377f9a19a5247a49a4d9012dc26f91825f509a9bfad",
+      "gated_reproduces": "off",
+      "layout_id": 1740023,
+      "layout_seed": 740023,
+      "precommitted_gate_score": -0.1424764157909855,
+      "prefix_controls": 60,
+      "scene_hash": "3813f4e46fe3cdd6643e342c22487d900d6449cd86778cee4bef66330f23cd31",
+      "tape_sha256": "8479aec7a516e5a0193718bd11554d7a9c17854d6601e9a774402a41a2002295"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": false,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": false,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "f456829c9c3019f8772e221db79a7eaf200d53d3588462d264c1e02acac80d90"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": 0.19559087626439908,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "900f62bc09b53324e95f38c77c1c2767df168e663df1f47fc5a969397dfcf472",
+      "gated_reproduces": "always",
+      "layout_id": 1740024,
+      "layout_seed": 740024,
+      "precommitted_gate_score": 0.19559087626439908,
+      "prefix_controls": 60,
+      "scene_hash": "02e6f13d0a6c7fc8906a7eddaabd42dc75c93dafd475887ab5772631a3745e42",
+      "tape_sha256": "3ded272973699da11d56e6ad96776c1506470e43eba42dcca4968a8e205cee58"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "a15147c778a88f9219c6091697b59ba44eaaaa9f1f6740d2ed70d183c5053657"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": 0.2602574770364458,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "3e9f6542d1f3dcdaa67a7c206740ba19c4b13b219f250931a8d00fac2f844e52",
+      "gated_reproduces": "always",
+      "layout_id": 1740025,
+      "layout_seed": 740025,
+      "precommitted_gate_score": 0.2602574770364458,
+      "prefix_controls": 60,
+      "scene_hash": "9433e77e1c34056043c4445b193105d567002e5fae62e3c75d6a564a6cf5e818",
+      "tape_sha256": "b597a87d3877446940286e817a6805cbe9ddd9cc5dea6d221e1ebebcf67daec4"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "d8cae74c1470546dbfc8921398e023e58ffd68ddafe98976030c9d9b46f86c61"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": 0.297312072173169,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "d8e7ac692f882906c340f6a0e5aafa937cd5061ca27338d03920d2d8ad3d5c58",
+      "gated_reproduces": "always",
+      "layout_id": 1740026,
+      "layout_seed": 740026,
+      "precommitted_gate_score": 0.297312072173169,
+      "prefix_controls": 60,
+      "scene_hash": "5999cc46e853cebd1623cfed2cc84a2a707ecfcd19531f87ed559848b95190d4",
+      "tape_sha256": "2db0a0edc7501219e897c25e5149125f03724e9f3bd0b5f22046fb046e2346ea"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "c7b75c42f6293218679b951eeb414090be11245c6e92d2cebe628a191da93a80"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.5210951846467342,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "1ffd3dca2eb9caaf036e15369fe14008a032af3c4d0e6837b08472c682fde7da",
+      "gated_reproduces": "off",
+      "layout_id": 1740027,
+      "layout_seed": 740027,
+      "precommitted_gate_score": -0.5210951846467342,
+      "prefix_controls": 60,
+      "scene_hash": "d5a20b550883f7171e3838af19ad50e088270346e3b6f04983b8fc3eee1ca18d",
+      "tape_sha256": "e369382218838d789c5f04be434f7c9cb502d4ddd85067bd9dccefc78339fd76"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "cebee4ddce779e4d2ae19fbcb6db9d1e48f9e38471f640e92796a18cdad7475e"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": 0.11056386722281275,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "9777559ca16441fe429fbb38e40fcda684405728519af5fc4543d45769397f01",
+      "gated_reproduces": "always",
+      "layout_id": 1740028,
+      "layout_seed": 740028,
+      "precommitted_gate_score": 0.11056386722281275,
+      "prefix_controls": 60,
+      "scene_hash": "0422a43ced5815d64d3ef475b15db2079d1b771b8f0c1087e994fe5776b860e0",
+      "tape_sha256": "6fd57db305cf09da6219146b6b6833db71ce40dd7f9022ca1a5e9f8f3095a1e2"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "360be2166d9a0eb958909b933e06cf0a0ff621413f1786f96ab02cc1a6cf6e80"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.24975998221889417,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "6aaf1b057038ecc233c531489c73e49473f981733aff31fd068290d313753978",
+      "gated_reproduces": "off",
+      "layout_id": 1740029,
+      "layout_seed": 740029,
+      "precommitted_gate_score": -0.24975998221889417,
+      "prefix_controls": 60,
+      "scene_hash": "1b5d68b08427a77b6c6d341b6562e027040ee1e92d21b57e999f032bab8deb72",
+      "tape_sha256": "6420d7c4ac7d6eecf0a58b3f9a3a311d53da054af73654e8db46dff437abbb10"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 128,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "0e5f64ae26fcc1f163faa4334e4ba5a0d605f0ccf5df57d873fe797f78ab590a"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.036184584716335066,
+          "native_return": 1.0,
+          "steps": 128,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 128,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "22e39e2ca63888292b35fdfc688d14302a39ed5749709881a4534029b4b183b6",
+      "gated_reproduces": "off",
+      "layout_id": 1740030,
+      "layout_seed": 740030,
+      "precommitted_gate_score": -0.036184584716335066,
+      "prefix_controls": 60,
+      "scene_hash": "1bf09afb3610e7ca2a1804c2efb8375fb611f63347abeaf15ab09ce846c433ee",
+      "tape_sha256": "f99b122d9ffd8504dbf6880bb33381bca8c1a686ee9cedd56482962b791d3aaa"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 160,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "04d964a9a1f29c34f31d1a05655097d5859505a5717a9ec7bd0a0fc793188c81"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": 0.21505655488439357,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 160,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "8e987043dd2ea34f9c58a0e7dd5cc39f7d37f57a23b921e3f7916ef422ea08b4",
+      "gated_reproduces": "always",
+      "layout_id": 1740031,
+      "layout_seed": 740031,
+      "precommitted_gate_score": 0.21505655488439357,
+      "prefix_controls": 60,
+      "scene_hash": "6788f0f7af4d3660163f2e5203d696463b2cf612dd3e15714237fa0239147591",
+      "tape_sha256": "111a9a33b883451258183034250d0d8748558aad8bb393365fc0ed50dec77792"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 87,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "8c0be1e06a26cc436126d0cd152fefc2568c6b3a199b820ee1dcd3fdf1455bd9"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.2784390345482578,
+          "native_return": 1.0,
+          "steps": 87,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 87,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "ce53e2e6cdc9533034d667edad4bd9bb6d14086687f3a69ad84aa9c88751f8d1",
+      "gated_reproduces": "off",
+      "layout_id": 1740032,
+      "layout_seed": 740032,
+      "precommitted_gate_score": -0.2784390345482578,
+      "prefix_controls": 60,
+      "scene_hash": "343f1a181417152945b2818830b12c120852403e7f8886ba7f352326d9483b19",
+      "tape_sha256": "88a7652887c6b6afa06bda0b4cf43c09f2c378032a30bb6429702d2574b0c586"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 108,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "23c18767e8386158ecad0229df7ebd9aaab62ed2c36d214462febe4fef1b1a39"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.3155615129415793,
+          "native_return": 1.0,
+          "steps": 108,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 108,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "7cea1e58f09b2955b595e4daa46abed44542c1583c4f81aad7635c1611ba185a",
+      "gated_reproduces": "off",
+      "layout_id": 1740033,
+      "layout_seed": 740033,
+      "precommitted_gate_score": -0.3155615129415793,
+      "prefix_controls": 60,
+      "scene_hash": "d2d6b93a0bfadb195b713faf4a0dd95bb7f96b1ed53659ac2ea8b9a9541757a6",
+      "tape_sha256": "e1b85df463fa64c89539a0d64be84e1a8c0faeb2ad07f9c46080044249248b88"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "d8e8cfac5cb5791a57cce7497ab25fea134de6ef7857bd70823472bbf8c23c40"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.05779150987773994,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "b24a32c50fc5d13e351361cc9a9028577599606ab297a5507b1562e80aa09dae",
+      "gated_reproduces": "off",
+      "layout_id": 1740034,
+      "layout_seed": 740034,
+      "precommitted_gate_score": -0.05779150987773994,
+      "prefix_controls": 60,
+      "scene_hash": "24be864a63127879470308a0eee230449f924d34c689e52dd9a56ad464dd0df9",
+      "tape_sha256": "ad7ba674eb8c9d12bede5d481faf4579bc749a287853c45d0d4d59f9bb2b1304"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "d2129f8ca3ecf8dd7742322ee202f1ae8144a49c5f2a29e3252dadd68d1ff305"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.23097486672045758,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "8b1b1813d9303a80a5b286d4aeb348274ae33caf68f781952e30f146dd1d305e",
+      "gated_reproduces": "off",
+      "layout_id": 1740035,
+      "layout_seed": 740035,
+      "precommitted_gate_score": -0.23097486672045758,
+      "prefix_controls": 60,
+      "scene_hash": "aab3f1a550711c8d82d0c36e79842d4b2c59a8ab12ec377f1b8d77a976be2478",
+      "tape_sha256": "af00880ad20038df2bf6fcde5ca51f1ddcd6d2209877ec67b2c28d9827605148"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "c573db8b46850692bbd29d69d5b57049aca65b9495410cfba7c1da1bc9935ea8"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.42336439023450495,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "b30ef95fc697387f57d41cbd76f422d64e81536feadb244d805c95619dd1dce9",
+      "gated_reproduces": "off",
+      "layout_id": 1740036,
+      "layout_seed": 740036,
+      "precommitted_gate_score": -0.42336439023450495,
+      "prefix_controls": 60,
+      "scene_hash": "53c362c02d9a08ecf9f6dde2e62bf1e41d7602f8af48f0121ea60c731fd0d0c9",
+      "tape_sha256": "ccffebe16224458e16f2b2fd13ed83dd1718f38e38646187ab6cc5dddd7dba75"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "b3b8e3581e0854d638a613e69e5e1cdf485535747c0c4bf0ec4fb0a069811cba"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": 0.08439180119904821,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "96a56c12a360a1087d25edebb975a752a32c4a930ceac2e805a1087547f05d72",
+      "gated_reproduces": "off",
+      "layout_id": 1740037,
+      "layout_seed": 740037,
+      "precommitted_gate_score": 0.08439180119904821,
+      "prefix_controls": 60,
+      "scene_hash": "24b41ac61d32ab72335bac5640c7c925eca524d7839e33fa203a20303abf6f6d",
+      "tape_sha256": "c911b29fc34ffa20356d706912c2a178c660d92717222e1940a4ea7ed9fa4735"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "93d061568dd99cfb0e5dd3b5c890cf0fba005f73eb59ed94465c64f0689b6815"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": 0.08511872015859712,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "1edf3a5421f4d4e291375c40039fe2f8ba5dd07da232d337d2ccea514ba2a385",
+      "gated_reproduces": "off",
+      "layout_id": 1740038,
+      "layout_seed": 740038,
+      "precommitted_gate_score": 0.08511872015859712,
+      "prefix_controls": 60,
+      "scene_hash": "067d3ca10ff2bc4290d475be863791de5ae48c71e358675690ebf36e1310d91c",
+      "tape_sha256": "3a6da3bffe406ea342a95938ebdb8eeced6a8e8d5f82e28e401ecacbe15d6901"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 125,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "d2a13b2b27fb6654cabc50caac9fce0ea43a3eedbea2744f7388c01f4b6e07c1"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.011815900471154772,
+          "native_return": 1.0,
+          "steps": 125,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 125,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "70faee0fc5c20424ff7fdd17664d4d423f034b6c32e12619b8152fcd359745b0",
+      "gated_reproduces": "off",
+      "layout_id": 1740039,
+      "layout_seed": 740039,
+      "precommitted_gate_score": -0.011815900471154772,
+      "prefix_controls": 60,
+      "scene_hash": "edc43a1596e79bf5f22f1f80b2f34f47823ac00f89032157e8928d1a103e5a4e",
+      "tape_sha256": "1ffec13a6e52539d1dcced15ee34d1f1728a25296d5119d5a42d1765050af578"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 93,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "f52c324b510941d8095b1e0d3d9de6ed10eea33dfdf2c513d0c63f0bef47ecad"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.3923422443196486,
+          "native_return": 1.0,
+          "steps": 93,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 93,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "a2b78c780bfbcae64811d6697905e5be8b136eed43a8b1e307b6c615e962bc05",
+      "gated_reproduces": "off",
+      "layout_id": 1740040,
+      "layout_seed": 740040,
+      "precommitted_gate_score": -0.3923422443196486,
+      "prefix_controls": 60,
+      "scene_hash": "4a729c94fb66a62afd729814078b130f18ac44eb19cdc9fade4bbc62d720b662",
+      "tape_sha256": "a4df9fa52b684c21d8981257fef21ad9138f1bb72e3afbdf73d6b9d57793f21f"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "cfba2619b0cad890b93b0b7c3f1b67020f9549b61efc5925be2b6392868b4b2f"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": 0.0004063309189917541,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "8d72851f0834d754a408c9145bf1984dd72dbd80a9bf35ee041ec351873ee27c",
+      "gated_reproduces": "off",
+      "layout_id": 1740041,
+      "layout_seed": 740041,
+      "precommitted_gate_score": 0.0004063309189917541,
+      "prefix_controls": 60,
+      "scene_hash": "827690153f46dcea4aab6aefca7b2282e7c084e9927bb36b7fb45eddcc0a39aa",
+      "tape_sha256": "0894503419a5abba916e35768cf314178475f834ce8375855089dc3d4ff96e01"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "b45987e94373948bfbbc3e8b70ba94502bc9664c2d88a2b185dd56b700026973"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": 0.18261008005891943,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "f4b52e6f52ab03caff68a8c1ffbb2b53e490b4384e656f2190db3ab05bcc5b5b",
+      "gated_reproduces": "always",
+      "layout_id": 1740042,
+      "layout_seed": 740042,
+      "precommitted_gate_score": 0.18261008005891943,
+      "prefix_controls": 60,
+      "scene_hash": "f9c2c8a2f746dc2b52118b313c4fbdb812fab32a7baf20cb91fbee403dbff22e",
+      "tape_sha256": "4cc7ab0a55a680bb610c12f5946f66a6060975001d2fcd5c1dd5316a5181940e"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "131860beb33a7ed7d59f732e4d2e19ae8441d7a5e6b7a4dbdbd3cc3b066075f5"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": 0.05810571721889565,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "6bf496b945a12c48f2e632f8ca35cda5f26d268e1b26a1ac72e7fc298928b797",
+      "gated_reproduces": "off",
+      "layout_id": 1740043,
+      "layout_seed": 740043,
+      "precommitted_gate_score": 0.05810571721889565,
+      "prefix_controls": 60,
+      "scene_hash": "09d8f74ee7994d4d74dc0a5f95b7d165974fb87e59bc991e1eb30f25357f4551",
+      "tape_sha256": "6243d927abc2fe742c0a9e2f8bab9452cbb6b6f72c3d137f331b86c1b6963e1d"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 228,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "3f67eaeb85954558f99f64bb59ae91c7489770d6525a70e67ee3b17eb589d2f9"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.25113169367016025,
+          "native_return": 1.0,
+          "steps": 228,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 228,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "730cda9d984c6da802a83c5036dc005af2439ca4e84090e3f02707a0dba96b1b",
+      "gated_reproduces": "off",
+      "layout_id": 1740044,
+      "layout_seed": 740044,
+      "precommitted_gate_score": -0.25113169367016025,
+      "prefix_controls": 60,
+      "scene_hash": "1d185496ac13469cff38796e9d00e806e335c29e42376f9386051266f03a3e63",
+      "tape_sha256": "8b39738db3da2e9b68e494ad31f05c4d0c7c29aa304260d68b1ba7fd5cd8d640"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "b6924507fd6bb441a354ed4d095c6d8749f5296f152f685bde1834e9777ebcd5"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": 0.2633427996380522,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "8c9d5341b353f8aa58b39224af5a2988c5366ef17ce5e0003905e692c637b82b",
+      "gated_reproduces": "always",
+      "layout_id": 1740045,
+      "layout_seed": 740045,
+      "precommitted_gate_score": 0.2633427996380522,
+      "prefix_controls": 60,
+      "scene_hash": "042fb85008881b7dba150b1b733d4a3a0484dfa0d7006bc85c43857f1e1652e3",
+      "tape_sha256": "c10e6e55742b2d5d62d022d5b4f8f2f6d4844e83f11e3f670e2903f6f61339f0"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "0777e57eed0013096b0855f55fadeeaec272f0f4be70bf3cc1a7135cdaed8168"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": 0.0978399334292197,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "9cfab698df1475e42efd07d2b5819b86202a64bd0cd602fa832950e63c3e832d",
+      "gated_reproduces": "off",
+      "layout_id": 1740046,
+      "layout_seed": 740046,
+      "precommitted_gate_score": 0.0978399334292197,
+      "prefix_controls": 60,
+      "scene_hash": "2bd0398c19e2e03cab26ab7212d3194bc1ed29cb30c647063d07bf242e945fb8",
+      "tape_sha256": "80e9c28907c4915abe09072351db35f1fe332a306d49926cf3099619e97ba457"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 0.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 300,
+        "steps_match": true,
+        "success": false,
+        "tape_sha256": "0db3c5dd1c0718fa2e1794a45585f22a2f18da37d8df09f9f1d1b0f26cb305bf"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": 0.8554393579095636,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "37e7c2d2e2b5efb2897b14c63d7e92e85521a00ced675eda3bf7642ff725f116",
+      "gated_reproduces": "always",
+      "layout_id": 1740047,
+      "layout_seed": 740047,
+      "precommitted_gate_score": 0.8554393579095636,
+      "prefix_controls": 60,
+      "scene_hash": "189054f8354106b6d32835515b400fed3fbf0fc2083f19f147cd9b953ebacb0d",
+      "tape_sha256": "b41aca06bc829063dc3e29d4950a71e92b5fb7ec33e373ca18e54cb609cb8269"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 135,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "043465d651ea791d4f6e6229db7a419a97601dd1ff9e3553d08ca77454e97929"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.35533889658708573,
+          "native_return": 1.0,
+          "steps": 135,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 135,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "7c4cddc803d6d44f8102b13ef93b9e934e8b2d4e1d1d49bfadb04a8533a6a5c4",
+      "gated_reproduces": "off",
+      "layout_id": 1740048,
+      "layout_seed": 740048,
+      "precommitted_gate_score": -0.35533889658708573,
+      "prefix_controls": 60,
+      "scene_hash": "0293cab9b75fa0a4004aec17bda59addf46df01a87066ed55f7189a790786be4",
+      "tape_sha256": "991f70cd7640092aa4b9679d77b020161c67cf658c77411a333b89fd3e859e43"
+    },
+    {
+      "archived_raw": {
+        "issued_actions_match": true,
+        "layout_match": true,
+        "native_return": 1.0,
+        "opening_observation_match": true,
+        "outcome_match": true,
+        "rewards_match": true,
+        "steps": 100,
+        "steps_match": true,
+        "success": true,
+        "tape_sha256": "d779b7be98386aa40e814af842b063a2d7d0e8e9d81e65bf64c1317f7f4ba220"
+      },
+      "arm": "Sawyer",
+      "branches": {
+        "always": {
+          "decision_reached": true,
+          "enabled": true,
+          "gate_score": null,
+          "native_return": 0.0,
+          "steps": 300,
+          "success": false
+        },
+        "gated": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": -0.355543840639964,
+          "native_return": 1.0,
+          "steps": 100,
+          "success": true
+        },
+        "off": {
+          "decision_reached": true,
+          "enabled": false,
+          "gate_score": null,
+          "native_return": 1.0,
+          "steps": 100,
+          "success": true
+        }
+      },
+      "camera_replay_differences": {
+        "always": {
+          "rgb": [],
+          "wrist": []
+        },
+        "gated": {
+          "rgb": [],
+          "wrist": []
+        },
+        "off": {
+          "rgb": [],
+          "wrist": []
+        }
+      },
+      "contract_sha256": "c6cb025150c4d8fe774d6ba0b530038a47a1eb406b1d8f1c09ee77c1e26cf0ca",
+      "donor_sha256": "49812ada4a33dfcf71b2a7e34965da8baf73d0f600b7d9cc704717348bf591c1",
+      "gated_reproduces": "off",
+      "layout_id": 1740049,
+      "layout_seed": 740049,
+      "precommitted_gate_score": -0.355543840639964,
+      "prefix_controls": 60,
+      "scene_hash": "a93e0c0c9a02f98337032bc5fde82e99787ebcd9b6cbcfa0b8dc8745a8155837",
+      "tape_sha256": "3d3bc2774ba03d2b99fcea235f9399c1487d133fd0556ec306eaf3430d0d1954"
+    }
+  ],
+  "model_sha256": "7c164a76073adfe7f878232b74210923684cf427e1426bf7d46e58014b3a563a",
+  "panel_sha256": "663077ec7aad3621173d725d2cf1550e3859a7ca46a0de50727e25aec8c6bfc0"
+}

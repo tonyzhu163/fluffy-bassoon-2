@@ -1,0 +1,340 @@
+{
+  "pilot/train": {
+    "Panda": {
+      "paired_starts": 8,
+      "fork_reached": 8,
+      "native_episodes": 16,
+      "issued_controls": 4134,
+      "successes": {
+        "off": 2,
+        "teacher": 1
+      },
+      "rerecorded_camera_hash_mismatches": {
+        "off": {
+          "rgb": 0,
+          "wrist": 0
+        },
+        "teacher": {
+          "rgb": 0,
+          "wrist": 3
+        }
+      },
+      "cases_with_any_rerecorded_camera_difference": 2,
+      "both_outcomes": {
+        "10": 2,
+        "00": 5,
+        "01": 1
+      }
+    },
+    "Sawyer": {
+      "paired_starts": 8,
+      "fork_reached": 8,
+      "native_episodes": 16,
+      "issued_controls": 3894,
+      "successes": {
+        "off": 3,
+        "teacher": 3
+      },
+      "rerecorded_camera_hash_mismatches": {
+        "off": {
+          "rgb": 0,
+          "wrist": 0
+        },
+        "teacher": {
+          "rgb": 0,
+          "wrist": 0
+        }
+      },
+      "cases_with_any_rerecorded_camera_difference": 0,
+      "both_outcomes": {
+        "00": 3,
+        "11": 1,
+        "01": 2,
+        "10": 2
+      }
+    }
+  },
+  "pilot/eval": {
+    "Panda": {
+      "paired_starts": 8,
+      "fork_reached": 5,
+      "native_episodes": 24,
+      "issued_controls": 4117,
+      "successes": {
+        "off": 6,
+        "always": 3,
+        "gated": 4
+      },
+      "rerecorded_camera_hash_mismatches": {
+        "off": {
+          "rgb": 0,
+          "wrist": 0
+        },
+        "always": {
+          "rgb": 0,
+          "wrist": 0
+        },
+        "gated": {
+          "rgb": 0,
+          "wrist": 0
+        }
+      },
+      "cases_with_any_rerecorded_camera_difference": 0,
+      "both_outcomes": {
+        "000": 2,
+        "100": 2,
+        "111": 3,
+        "101": 1
+      },
+      "switch_count": 3,
+      "switch_rate_all": 0.375,
+      "switch_rate_actionable": 0.6,
+      "hindsight_successes": 6,
+      "available_rescues": {
+        "count": 0,
+        "switched": 0
+      },
+      "avoidable_losses": {
+        "count": 3,
+        "switched": 2
+      },
+      "both_succeeded": {
+        "count": 3,
+        "switched": 0
+      },
+      "both_failed": {
+        "count": 2,
+        "switched": 1
+      }
+    },
+    "Sawyer": {
+      "paired_starts": 8,
+      "fork_reached": 8,
+      "native_episodes": 24,
+      "issued_controls": 5480,
+      "successes": {
+        "off": 6,
+        "always": 0,
+        "gated": 3
+      },
+      "rerecorded_camera_hash_mismatches": {
+        "off": {
+          "rgb": 0,
+          "wrist": 0
+        },
+        "always": {
+          "rgb": 0,
+          "wrist": 0
+        },
+        "gated": {
+          "rgb": 0,
+          "wrist": 0
+        }
+      },
+      "cases_with_any_rerecorded_camera_difference": 0,
+      "both_outcomes": {
+        "101": 3,
+        "100": 3,
+        "000": 2
+      },
+      "switch_count": 5,
+      "switch_rate_all": 0.625,
+      "switch_rate_actionable": 0.625,
+      "hindsight_successes": 6,
+      "available_rescues": {
+        "count": 0,
+        "switched": 0
+      },
+      "avoidable_losses": {
+        "count": 6,
+        "switched": 3
+      },
+      "both_succeeded": {
+        "count": 0,
+        "switched": 0
+      },
+      "both_failed": {
+        "count": 2,
+        "switched": 2
+      }
+    }
+  },
+  "train": {
+    "Panda": {
+      "paired_starts": 64,
+      "fork_reached": 58,
+      "native_episodes": 128,
+      "issued_controls": 23226,
+      "successes": {
+        "off": 39,
+        "teacher": 29
+      },
+      "rerecorded_camera_hash_mismatches": {
+        "off": {
+          "rgb": 0,
+          "wrist": 0
+        },
+        "teacher": {
+          "rgb": 0,
+          "wrist": 3
+        }
+      },
+      "cases_with_any_rerecorded_camera_difference": 3,
+      "both_outcomes": {
+        "10": 15,
+        "00": 20,
+        "01": 5,
+        "11": 24
+      }
+    },
+    "Sawyer": {
+      "paired_starts": 64,
+      "fork_reached": 64,
+      "native_episodes": 128,
+      "issued_controls": 28692,
+      "successes": {
+        "off": 33,
+        "teacher": 24
+      },
+      "rerecorded_camera_hash_mismatches": {
+        "off": {
+          "rgb": 0,
+          "wrist": 0
+        },
+        "teacher": {
+          "rgb": 0,
+          "wrist": 0
+        }
+      },
+      "cases_with_any_rerecorded_camera_difference": 0,
+      "both_outcomes": {
+        "00": 18,
+        "11": 11,
+        "01": 13,
+        "10": 22
+      }
+    }
+  },
+  "eval": {
+    "Panda": {
+      "paired_starts": 50,
+      "fork_reached": 41,
+      "native_episodes": 150,
+      "issued_controls": 25189,
+      "successes": {
+        "off": 33,
+        "always": 30,
+        "gated": 30
+      },
+      "rerecorded_camera_hash_mismatches": {
+        "off": {
+          "rgb": 0,
+          "wrist": 0
+        },
+        "always": {
+          "rgb": 0,
+          "wrist": 5
+        },
+        "gated": {
+          "rgb": 0,
+          "wrist": 16
+        }
+      },
+      "cases_with_any_rerecorded_camera_difference": 6,
+      "both_outcomes": {
+        "111": 25,
+        "000": 12,
+        "100": 3,
+        "101": 5,
+        "010": 5
+      },
+      "switch_count": 5,
+      "switch_rate_all": 0.1,
+      "switch_rate_actionable": 0.12195121951219512,
+      "hindsight_successes": 38,
+      "available_rescues": {
+        "count": 5,
+        "switched": 0
+      },
+      "avoidable_losses": {
+        "count": 8,
+        "switched": 3
+      },
+      "both_succeeded": {
+        "count": 25,
+        "switched": 1
+      },
+      "both_failed": {
+        "count": 12,
+        "switched": 1
+      },
+      "archive_matches": {
+        "layout_match": 50,
+        "issued_actions_match": 46,
+        "rewards_match": 46,
+        "outcome_match": 47,
+        "steps_match": 46,
+        "opening_observation_match": 49
+      }
+    },
+    "Sawyer": {
+      "paired_starts": 50,
+      "fork_reached": 50,
+      "native_episodes": 150,
+      "issued_controls": 38250,
+      "successes": {
+        "off": 20,
+        "always": 0,
+        "gated": 18
+      },
+      "rerecorded_camera_hash_mismatches": {
+        "off": {
+          "rgb": 0,
+          "wrist": 0
+        },
+        "always": {
+          "rgb": 0,
+          "wrist": 0
+        },
+        "gated": {
+          "rgb": 0,
+          "wrist": 0
+        }
+      },
+      "cases_with_any_rerecorded_camera_difference": 0,
+      "both_outcomes": {
+        "101": 18,
+        "000": 30,
+        "100": 2
+      },
+      "switch_count": 11,
+      "switch_rate_all": 0.22,
+      "switch_rate_actionable": 0.22,
+      "hindsight_successes": 20,
+      "available_rescues": {
+        "count": 0,
+        "switched": 0
+      },
+      "avoidable_losses": {
+        "count": 20,
+        "switched": 2
+      },
+      "both_succeeded": {
+        "count": 0,
+        "switched": 0
+      },
+      "both_failed": {
+        "count": 30,
+        "switched": 9
+      },
+      "archive_matches": {
+        "layout_match": 50,
+        "issued_actions_match": 49,
+        "rewards_match": 50,
+        "outcome_match": 50,
+        "steps_match": 50,
+        "opening_observation_match": 49
+      }
+    }
+  }
+}
