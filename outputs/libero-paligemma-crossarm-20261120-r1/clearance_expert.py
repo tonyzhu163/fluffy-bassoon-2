@@ -171,6 +171,7 @@ class ClearanceExpert:
         self.i = 0
         self.phase = self.path[0][0] if self.chosen else "no_feasible_path"
         self.seat_low = None
+        self.integral_xyz = np.zeros(3)
         print(json.dumps(dict(candidates=self.scores, chosen=self.chosen)), flush=True)
 
     def measured_elbow_gap(self):
@@ -189,17 +190,21 @@ class ClearanceExpert:
             seated = (scene["finger_low"] <= scene["table_z"] + 0.004 or
                       (scene["contact"] and scene["finger_low"] <= scene["rim_z"] + 0.003))
             if self.phase == "seat":
-                reached = seated and np.linalg.norm(dp[:2]) < 0.008
+                reached = seated and np.linalg.norm(dp[:2]) < 0.015
             else:
-                reached = np.linalg.norm(dp) < 0.009
+                reached = np.linalg.norm(dp) < 0.016
             if self.seat_low is not None:
                 dp[2] = self.seat_low - scene["finger_low"]
-                reached = np.linalg.norm(dp[:2]) < 0.009
+                reached = np.linalg.norm(dp[:2]) < 0.015
             if not reached or np.linalg.norm(w) > 0.08 or self.i + 1 == len(self.path):
                 break
             if self.phase == "seat":
                 self.seat_low = max(scene["table_z"] + 0.001, scene["finger_low"] - 0.002)
             self.i += 1
-        linear = _bounded(dp, 0.014 if self.seat_low is not None else 0.035)
+            self.integral_xyz.fill(0)
+        # Native impedance produced a stationary 9.6 mm approach error on Sawyer.
+        # Limit the integral correction and reset it at every waypoint.
+        self.integral_xyz = np.clip(self.integral_xyz + 0.06 * dp, -0.014, 0.014)
+        linear = _bounded(dp + self.integral_xyz, 0.014 if self.seat_low is not None else 0.035)
         return np.clip(np.r_[1.5 * linear / 0.05, _bounded(w, 0.25) / 0.5, 1.],
                        -1., 1.).astype(np.float32)
