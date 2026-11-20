@@ -1,0 +1,43 @@
+job-q75q3hhfed45-master-0
+2026-11-20T06:41:46Z
+d2c7d4e9e9310ccdc1abc11109c4ad64c30d8d13
+Filesystem            Size  Used Avail Use% Mounted on
+mt-qyDyYS-pfs-xPQ6Bb  2.0T  1.6T  419G  80% /mowenjie
+Filesystem             Inodes   IUsed   IFree IUse% Mounted on
+mt-qyDyYS-pfs-xPQ6Bb 10000384 8277417 1722967   83% /mowenjie
+400000 100000
+17179869184
+torch 2.11.0+cu128 gpus 0
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+/mowenjie/fluffy-bassoon-2/setups/libero-meta-learning-20261117-r1/simulator-source/libero/libero/benchmark/__init__.py:273: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  init_states = torch.load(init_states_path)
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/setups/embodiment-command-frame-20261120-r1/source-d2c7d4e9/outputs/embodiment-command-frame-20261120-r1/collect.py", line 199, in <module>
+    collect(args.out)
+  File "/mowenjie/fluffy-bassoon-2/setups/embodiment-command-frame-20261120-r1/source-d2c7d4e9/outputs/embodiment-command-frame-20261120-r1/collect.py", line 144, in collect
+    with closing(make_sampler()) as sampler, partial.open("x", buffering=1) as stream:
+                 ^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/setups/embodiment-command-frame-20261120-r1/source-d2c7d4e9/outputs/libero-paligemma-dualarm-20261120-r2/generated_layouts.py", line 76, in make_sampler
+    native = native_module()
+             ^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/setups/embodiment-command-frame-20261120-r1/source-d2c7d4e9/outputs/libero-paligemma-dualarm-20261120-r2/generated_layouts.py", line 45, in native_module
+    return sys.modules[_arm_class("Panda").__module__]
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/setups/embodiment-command-frame-20261120-r1/source-d2c7d4e9/outputs/libero-paligemma-crossarm-20261120-r1/sim.py", line 31, in _arm_class
+    import arm_env
+  File "/mowenjie/fluffy-bassoon-2/setups/embodiment-command-frame-20261120-r1/source-d2c7d4e9/outputs/libero-crossarm-20261120-r1/arm_env.py", line 12, in <module>
+    import mujoco
+  File "/mowenjie/fluffy-bassoon-2/setups/libero-meta-learning-20261117-r1/env/lib/python3.11/site-packages/mujoco/__init__.py", line 48, in <module>
+    from mujoco.gl_context import *
+  File "/mowenjie/fluffy-bassoon-2/setups/libero-meta-learning-20261117-r1/env/lib/python3.11/site-packages/mujoco/gl_context.py", line 41, in <module>
+    from mujoco.egl import GLContext as _GLContext
+  File "/mowenjie/fluffy-bassoon-2/setups/libero-meta-learning-20261117-r1/env/lib/python3.11/site-packages/mujoco/egl/__init__.py", line 31, in <module>
+    from mujoco.egl import egl_ext as EGL
+  File "/mowenjie/fluffy-bassoon-2/setups/libero-meta-learning-20261117-r1/env/lib/python3.11/site-packages/mujoco/egl/egl_ext.py", line 27, in <module>
+    from OpenGL import EGL
+  File "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/OpenGL/EGL/__init__.py", line 2, in <module>
+    from OpenGL.raw.EGL._types import *
+  File "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/OpenGL/raw/EGL/_types.py", line 87, in <module>
+    raw_eglQueryString = _p.PLATFORM.EGL.eglQueryString
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'eglQueryString'

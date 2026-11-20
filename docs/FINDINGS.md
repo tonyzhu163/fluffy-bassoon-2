@@ -130,6 +130,8 @@ A randomized single-retry scorer averaged 19.0/32 development successes. Giving 
 
 ### Embodiment and calibration controls
 
+- At fixed training cost on simulated Panda and Sawyer, four source command settings per arm reduced the reader’s held-out motion MSE by 3.75% on a new angle and 4.01% on a new yaw–gain combination versus the two-setting fits. Both missed the registered 10% threshold. Matching versus swapped support gave 0.53594 versus 0.53591 across the two arms. The 256 native practice/query tapes and nine reader fits measured response prediction. The held-out-arm task-success question remains open. [Results and controls](../outputs/embodiment-command-frame-20261120-r1/RESULT.md)
+
 - An explicit hard bypass reproduced all 19,563 issued actions byte-for-byte from 100 native Panda/Sawyer source rollouts. The residual was never called on the closed branch. This is an archived-action check. Learned abstention and closed-loop gains remain open. [Identity audit](../outputs/embodiment-meta-factory-20261120-r1/identity-native.json)
 
 - On 50 new native Goal 5 tabletop placements, one dual-source PaliGemma SFT checkpoint completed 25/50 Panda and 6/50 Sawyer episodes. Extended action-regression SFT on a larger bank completed 34/50 and 20/50. Each row used identical frozen weights across both arms and each controller issued five controls per replan. These are source-motor results on one task. [Native counts and checkpoint evidence](../outputs/libero-paligemma-dualarm-20261120-r2/evidence/source50/native.json)
