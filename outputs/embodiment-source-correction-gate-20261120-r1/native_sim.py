@@ -192,7 +192,7 @@ class RenderedSession(Session):
         from multiprocessing import Pipe
         self.closed = False
         self.pipe, peer = Pipe()
-        runtime = dict(os.environ, OMP_NUM_THREADS="1", OPENBLAS_NUM_THREADS="1", MKL_NUM_THREADS="1")
+        runtime = dict(os.environ, PYTHONHASHSEED="0", OMP_NUM_THREADS="1", OPENBLAS_NUM_THREADS="1", MKL_NUM_THREADS="1")
         try:
             self.worker = subprocess.Popen([os.environ["CROSSARM_SIM_PYTHON"], "-Bu", str(Path(__file__).resolve()),
                 str(peer.fileno()), str(base), arm, split], pass_fds=(peer.fileno(),), env=runtime)

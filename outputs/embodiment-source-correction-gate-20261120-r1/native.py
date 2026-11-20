@@ -27,15 +27,17 @@ class Episode:
         self.successes = []
         self.observations = []
         self.proposals = []
+        self.proposal_source = []
         self.features = []
         self.fork_x = None
         self.score = None
         self.enabled = False
 
-    def command(self, public, raw, policy):
+    def command(self, public, raw, policy, hashes=None, source="live"):
         import model
         step = len(self.actions)
-        self.observations.append(observation_hashes(public))
+        self.observations.append(hashes if hashes is not None else observation_hashes(public))
+        self.proposal_source.append(source)
         self.proposals.append(raw.copy())
         if step == FORK:
             self.fork_x = model.features(public, raw, step)
@@ -82,6 +84,7 @@ class Episode:
     def evidence(self):
         return dict(actions=np.asarray(self.actions, np.float32), base=np.asarray(self.proposals, np.float32),
                     observations=np.asarray(json.dumps(self.observations, sort_keys=True)),
+                    proposal_source=np.asarray(self.proposal_source),
                     native_steps=np.arange(1, len(self.actions) + 1, dtype=np.int32),
                     rewards=np.asarray(self.rewards, np.float32), success=np.asarray(self.successes, bool),
                     terminated=np.asarray(self.terminated, bool), truncated=np.asarray(self.truncated, bool))
@@ -92,40 +95,83 @@ class Episode:
                     gate_score=self.score, enabled=bool(self.enabled))
 
 
-def rollout(pool, sessions, rows, mode, motor, policy, prompt):
-    resets = [pool.submit(env.start, row["layout_seed"], mode) for env, row in zip(sessions, rows)]
-    episodes = [Episode(*f.result(), mode) for f in resets]
-    active = list(range(len(episodes)))
-    while active:
-        observations = [public_observation(episodes[i].obs, prompt) for i in active]
-        raw = infer(motor, observations)
-        jobs = []
-        for i, obs, chunk in zip(active, observations, raw, strict=True):
-            command = episodes[i].command(obs, chunk, policy)
-            jobs.append((i, command, pool.submit(sessions[i].advance_native, command)))
-        active = []
-        for i, command, f in jobs:
-            observation, trace = f.result()
-            if not episodes[i].consume(observation, trace, command):
-                active.append(i)
-    return episodes
+def rollout(pool, base, arm, split, rows, mode, motor, policy, prompt, previous):
+    # All sibling episodes begin in fresh interpreters with the same native
+    # module state. Every physical branch resets, renders and actually steps.
+    with ExitStack() as stack:
+        sessions = [stack.enter_context(RenderedSession(base, arm, split)) for _ in rows]
+        resets = [pool.submit(env.start, row["layout_seed"], mode) for env, row in zip(sessions, rows)]
+        episodes = [Episode(*f.result(), mode) for f in resets]
+        active = list(range(len(episodes)))
+        while active:
+            observations = [public_observation(episodes[i].obs, prompt) for i in active]
+            hashes = [observation_hashes(obs) for obs in observations]
+            proposals = {}
+            sources = {}
+            for i, public_hash in zip(active, hashes, strict=True):
+                plan = len(episodes[i].proposals)
+                # Cache lookup is restricted to this layout, time, and exact
+                # rendered pixels, public state and prompt. No outcome is a key.
+                for label, branch in previous.items():
+                    other = branch[i]
+                    if plan < len(other.proposals) and public_hash == other.observations[plan]:
+                        proposals[i], sources[i] = other.proposals[plan], label
+                        break
+            if len(proposals) != len(active):
+                # Keep R2's original batch/padding on all live input images.
+                chunks = infer(motor, observations)
+                for i, chunk in zip(active, chunks, strict=True):
+                    if i not in proposals:
+                        proposals[i], sources[i] = chunk, "live"
+            jobs = []
+            for i, obs, public_hash in zip(active, observations, hashes, strict=True):
+                command = episodes[i].command(obs, proposals[i], policy, public_hash, sources[i])
+                jobs.append((i, command, pool.submit(sessions[i].advance_native, command)))
+            active = []
+            for i, command, f in jobs:
+                observation, trace = f.result()
+                if not episodes[i].consume(observation, trace, command):
+                    active.append(i)
+        return episodes
+
+
+class PairMismatch(ValueError):
+    def __init__(self, field, control, left, right, raw, other):
+        self.details = dict(reference=raw.mode, branch=other.mode, field=field, elapsed_control=control,
+                            expected=left, observed=right, lengths=[len(raw.actions), len(other.actions)])
+        super().__init__(json.dumps(self.details))
 
 
 def compare(raw, other, *, complete=False):
+    def same(field, control, a, b):
+        if a != b:
+            raise PairMismatch(field, control, a, b, raw, other)
+
+    def numeric(field, control, a, b):
+        if not np.array_equal(a, b):
+            actual, expected = np.asarray(b), np.asarray(a)
+            index = tuple(np.argwhere(actual != expected)[0])
+            axis = ",".join(str(int(j)) for j in index)
+            same(f"{field}[{axis}]", control, expected[index].item(), actual[index].item())
+
     steps = len(raw.actions) if complete else min(FORK, len(raw.actions))
-    require(len(other.actions) >= steps, "Branch terminated before its matched prefix")
-    if complete or steps < FORK or raw.fork_x is None:
-        require(len(other.actions) == len(raw.actions), "Different paired terminal steps")
-    # Include the pre-action proposal/observation at the fork when it was reached.
+    if complete or raw.fork_x is None or len(other.actions) < steps:
+        same("native length", steps, len(raw.actions), len(other.actions))
     plans = len(raw.proposals) if complete else (steps + 4) // 5 + int(raw.fork_x is not None)
-    require(raw.reset["admission"]["raw_state_sha256"] == other.reset["admission"]["raw_state_sha256"] and
-            raw.observations[:plans] == other.observations[:plans] and
-            np.array_equal(raw.proposals[:plans], other.proposals[:plans]) and
-            ((raw.fork_x is None and other.fork_x is None) or np.array_equal(raw.fork_x, other.fork_x)),
-            "Paired opening, public replans or fork proposal differ")
+    same("raw_state_sha256", 0, raw.reset["admission"]["raw_state_sha256"], other.reset["admission"]["raw_state_sha256"])
+    same("number of compared replans", steps, plans, min(len(other.proposals), plans))
+    for j in range(plans):
+        for k in ("rgb", "wrist", "state", "prompt"):
+            same(k, j * 5, raw.observations[j][k], other.observations[j][k])
+        numeric("base", j * 5, raw.proposals[j], other.proposals[j])
+    same("decision reached", FORK, raw.fork_x is not None, other.fork_x is not None)
+    if raw.fork_x is not None:
+        numeric("fork_x", FORK, raw.fork_x, other.fork_x)
     for field in ("actions", "rewards", "successes", "terminated", "truncated"):
-        require(np.array_equal(getattr(raw, field)[:steps], getattr(other, field)[:steps]),
-                f"Different paired {field} across {steps} native controls")
+        left, right = getattr(raw, field), getattr(other, field)
+        if not np.array_equal(left[:steps], right[:steps]):
+            for i in range(steps):
+                numeric(field, i, left[i], right[i])
 
 
 def training_arrays(row, arm, raw, teacher):
@@ -206,6 +252,8 @@ def run_stage(args, motor, prompt, rows, out, split, policy=None, archive=None, 
     contract = dict(checkpoint_sha256=CHECKPOINT, fit_sha256=FIT_SHA, r2_revision=PIN, split=split,
                     motor_prompt=prompt, fork=FORK, cadence=5, horizon=300, inference_batch=BATCH,
                     manifest_sha256=sha(base / "manifest.json"), arms=list(ARMS), branches=list(branch_names),
+                    proposal_reuse="exact same layout, control, full public input; bounded live native steps",
+                    simulator_lifetime="fresh interpreter per layout and condition, PYTHONHASHSEED=0",
                     seeds=[r["layout_seed"] for r in rows], model_sha256=None if collecting else sha(model_dir / "model.npz"),
                     files={f: sha(HERE / f) for f in ("native.py", "native_sim.py", "teacher.py", "model.py")})
     bind(dest / "contract.json", contract)
@@ -222,17 +270,31 @@ def run_stage(args, motor, prompt, rows, out, split, policy=None, archive=None, 
             else:
                 pending.append(row)
         if pending:
-            with ExitStack() as stack:
-                count = min(args.workers, len(pending))
-                sessions = [stack.enter_context(RenderedSession(base, arm, split)) for _ in range(count)]
-                pool = stack.enter_context(ThreadPoolExecutor(max_workers=count))
+            count = min(args.workers, len(pending))
+            with ThreadPoolExecutor(max_workers=count) as pool:
                 for i in range(0, len(pending), count):
                     group = pending[i:i + count]
-                    branches = {mode: rollout(pool, sessions, group, mode, motor, policy, prompt)
-                                for mode in branch_names}
+                    branches = {}
+                    for mode in branch_names:
+                        branches[mode] = rollout(pool, base, arm, split, group, mode, motor, policy, prompt, branches)
                     for j, row in enumerate(group):
                         cases = {mode: branch[j] for mode, branch in branches.items()}
-                        save_pair(args, dest / arm / str(row["layout_seed"]), row, arm, cases, identity, archive)
+                        path = dest / arm / str(row["layout_seed"])
+                        try:
+                            save_pair(args, path, row, arm, cases, identity, archive)
+                        except PairMismatch as exc:
+                            failure = dest / "errors" / arm / str(row["layout_seed"])
+                            arrays = {f"trace_{mode}_{k}": v for mode, case in cases.items()
+                                      for k, v in case.evidence().items()}
+                            for mode, case in cases.items():
+                                arrays[f"trace_{mode}_reset"] = json.dumps(case.reset, sort_keys=True)
+                                if case.fork_x is not None:
+                                    arrays[f"trace_{mode}_fork_x"] = case.fork_x
+                            with publish(failure.with_suffix(".npz")) as tmp, tmp.open("wb") as stream:
+                                np.savez_compressed(stream, **arrays)
+                            bind(failure.with_suffix(".json"), dict(arm=arm, layout_seed=row["layout_seed"],
+                                 contract_sha256=identity, tape_sha256=sha(failure.with_suffix(".npz")), **exc.details))
+                            raise
         results.extend(read(dest / arm / f"{r['layout_seed']}.json") for r in rows)
     return results
 
@@ -334,10 +396,10 @@ def main():
         run_stage(args, motor, prompt, rows, args.out, "train")
     elif args.command == "smoke":
         pilot = args.out / "pilot"
-        run_stage(args, motor, prompt, rows[:1], pilot, "train")
+        run_stage(args, motor, prompt, rows[:BATCH], pilot, "train")
         fitted = pilot / "fitted"
-        policy = fit_rows(pilot, rows[:1], fitted)
-        cases = run_stage(args, motor, prompt, rows[1:2], pilot, "train", policy, model_dir=fitted)
+        policy = fit_rows(pilot, rows[:BATCH], fitted)
+        cases = run_stage(args, motor, prompt, rows[BATCH:2 * BATCH], pilot, "train", policy, model_dir=fitted)
         bind(pilot / "evaluation.json", summary(cases))
     else:
         policy = model.load(args.model)
