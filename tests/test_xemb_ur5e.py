@@ -225,3 +225,30 @@ def test_run_episode_6dof_retarget_and_trace(monkeypatch):
     assert np.allclose(nom_phys, ora_phys, atol=1e-5)
     assert rec_nom["prefix_xy_disp_15_mm"] > 50.0
     assert rec_nom["prefix_xy_disp_30_mm"] > rec_nom["prefix_xy_disp_15_mm"]
+
+
+def test_luminance_flow_reader_is_rgb_permutation_invariant():
+    import jax
+    from fluffy_bassoon.xemb.readers import ReaderConfig, init_reader, predict_embodiment
+
+    cfg = ReaderConfig(model_type="factored_equiv", max_chunks=8, cnn_width=32, mlp_width=64, visual_mode="luminance_flow")
+    params = init_reader(jax.random.key(0), cfg)
+    rng = np.random.default_rng(123)
+    img_b = rng.integers(0, 256, size=(2, 3, 64, 64, 3), dtype=np.uint8)
+    img_a = rng.integers(0, 256, size=(2, 3, 64, 64, 3), dtype=np.uint8)
+    batch = dict(
+        img_before=img_b,
+        img_after=img_a,
+        issued_mean=rng.uniform(-0.6, 0.6, size=(2, 3, 7)).astype(np.float32),
+        delta_eef=rng.uniform(-0.04, 0.04, size=(2, 3, 3)).astype(np.float32),
+        delta_jaw=rng.uniform(-0.02, 0.02, size=(2, 3, 2)).astype(np.float32),
+        valid=np.ones((2, 3), dtype=bool),
+    )
+    # Permute RGB channels (simulating completely different arm color: red -> blue -> green).
+    perm = [2, 0, 1]
+    batch_perm = dict(batch, img_before=img_b[..., perm], img_after=img_a[..., perm])
+    y1, s1, g1 = predict_embodiment(params, cfg, batch)
+    y2, s2, g2 = predict_embodiment(params, cfg, batch_perm)
+    assert np.allclose(y1, y2, atol=1e-4)
+    assert np.allclose(s1, s2, atol=1e-5)
+    assert np.array_equal(g1, g2)

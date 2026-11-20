@@ -17,6 +17,9 @@ FRAME0_FIELDS = ("frame0_img", "frame0_state")
 HISTORY_FIELDS = ("img_before", "img_after", "issued_mean", "delta_eef", "delta_jaw", "valid")
 
 
+VISUAL_MODES = ("rgb", "luminance_flow")
+
+
 @dataclass(frozen=True)
 class ReaderConfig:
     """Hyperparameters shared across cross-embodiment neural history readers."""
@@ -28,10 +31,13 @@ class ReaderConfig:
     transformer_layers: int = 2
     transformer_heads: int = 4
     mlp_width: int = 128
+    visual_mode: str = "rgb"
 
     def __post_init__(self):
         if self.model_type not in MODEL_NAMES:
             raise ValueError(f"Unknown model_type {self.model_type!r}; expected one of {MODEL_NAMES}")
+        if self.visual_mode not in VISUAL_MODES:
+            raise ValueError(f"Unknown visual_mode {self.visual_mode!r}; expected one of {VISUAL_MODES}")
         if self.transformer_width % self.transformer_heads != 0:
             raise ValueError("transformer_width must be divisible by transformer_heads")
 
@@ -310,6 +316,7 @@ def init_reader(key, cfg: ReaderConfig):
     import jax
 
     k1, k2, k3, k4 = jax.random.split(key, 4)
+    vis_ch = 7 if cfg.visual_mode == "luminance_flow" else 8
     if cfg.model_type == "frame0_probe":
         return dict(
             cnn=_init_cnn(k1, 5, cfg.cnn_width),
@@ -317,7 +324,7 @@ def init_reader(key, cfg: ReaderConfig):
         )
     if cfg.model_type == "joint_transformer":
         return dict(
-            cnn=_init_cnn(k1, 8, cfg.cnn_width),
+            cnn=_init_cnn(k1, vis_ch, cfg.cnn_width),
             tx=_init_transformer(
                 k2,
                 cfg.cnn_width + 12,
@@ -331,14 +338,14 @@ def init_reader(key, cfg: ReaderConfig):
     grip_head = _init_mlp(k4, (4, 48, 48, 2))
     if cfg.model_type == "factored_no_equiv":
         return dict(
-            cnn=_init_cnn(k1, 8, cfg.cnn_width),
+            cnn=_init_cnn(k1, vis_ch, cfg.cnn_width),
             vis_head=_init_mlp(k2, (cfg.cnn_width + 2, cfg.mlp_width, 3)),
             scale_head=scale_head,
             grip_head=grip_head,
         )
     if cfg.model_type == "factored_equiv":
         return dict(
-            cnn=_init_cnn(k1, 8, cfg.cnn_width),
+            cnn=_init_cnn(k1, vis_ch, cfg.cnn_width),
             vis_vec=_init_mlp(k2, (cfg.cnn_width, cfg.mlp_width, 3)),
             scale_head=scale_head,
             grip_head=grip_head,
@@ -366,12 +373,22 @@ def _procrustes_yaw(commands, vectors, weights, has_valid):
     return _normalize_cs(dot, cross, has_valid)
 
 
-def _vis_inputs(img_before, img_after):
+def _vis_inputs(img_before, img_after, visual_mode: str = "rgb"):
     import jax.numpy as jnp
 
     b, k, h, w, _ = img_before.shape
     coords = jnp.broadcast_to(_coord_grid(h, w)[None, None], (b, k, h, w, 2))
     diff = img_after - img_before
+    if visual_mode == "luminance_flow":
+        luma_b = jnp.mean(img_before, axis=-1, keepdims=True)
+        luma_a = jnp.mean(img_after, axis=-1, keepdims=True)
+        dt = luma_a - luma_b
+        motion_mag = jnp.sqrt(jnp.mean(jnp.square(diff), axis=-1, keepdims=True) + 1e-6)
+        avg = 0.5 * (luma_b + luma_a)
+        gx = jnp.pad(0.5 * (avg[:, :, :, 2:, :] - avg[:, :, :, :-2, :]), ((0, 0), (0, 0), (0, 0), (1, 1), (0, 0)))
+        gy = jnp.pad(0.5 * (avg[:, :, 2:, :, :] - avg[:, :, :-2, :, :]), ((0, 0), (0, 0), (1, 1), (0, 0), (0, 0)))
+        x = jnp.concatenate((dt, motion_mag, gx, gy, luma_b, coords), axis=-1)
+        return x.reshape(b * k, h, w, 7), b, k
     x = jnp.concatenate((diff, img_before, coords), axis=-1)
     return x.reshape(b * k, h, w, 8), b, k
 
@@ -384,19 +401,19 @@ def _unit_rgb(value):
     return image.astype(jnp.float32) / 255.0 if image.dtype == jnp.uint8 else image.astype(jnp.float32)
 
 
-def _history_visual_features(params, batch):
+def _history_visual_features(params, batch, visual_mode: str = "rgb"):
     import jax.numpy as jnp
 
     mask = jnp.asarray(batch["valid"], dtype=bool)[..., None, None, None]
     before = jnp.where(mask, _unit_rgb(batch["img_before"]), 0.0)
     after = jnp.where(mask, _unit_rgb(batch["img_after"]), 0.0)
-    images, b, k = _vis_inputs(before, after)
+    images, b, k = _vis_inputs(before, after, visual_mode=visual_mode)
     return _apply_cnn(params["cnn"], images).reshape(b, k, -1)
 
 
-def visual_motion_vectors(params, batch):
+def visual_motion_vectors(params, batch, visual_mode: str = "rgb"):
     """Read the equivariant model's pre-contraction visual XY and confidence logit."""
-    return _apply_mlp(params["vis_vec"], _history_visual_features(params, batch))
+    return _apply_mlp(params["vis_vec"], _history_visual_features(params, batch, visual_mode=visual_mode))
 
 
 def _apply_scale_and_grip(params, issued_mean, delta_eef, delta_jaw, valid):
@@ -463,7 +480,7 @@ def apply_reader(params, cfg: ReaderConfig, batch):
     delta_eef = 100.0 * signal("delta_eef")
     delta_jaw = 100.0 * signal("delta_jaw")
     if cfg.model_type == "joint_transformer":
-        vis = _history_visual_features(params, batch)
+        vis = _history_visual_features(params, batch, visual_mode=cfg.visual_mode)
         tok = jnp.concatenate((vis, issued, delta_eef, delta_jaw), axis=-1)
         raw = _apply_transformer(params["tx"], tok, valid, cfg.transformer_heads)
         cos_hat, sin_hat = _normalize_cs(raw[:, 0], raw[:, 1], has_valid)
@@ -474,7 +491,7 @@ def apply_reader(params, cfg: ReaderConfig, batch):
     log_scale, grip_logit = _apply_scale_and_grip(params, issued, delta_eef, delta_jaw, valid)
 
     if cfg.model_type == "factored_no_equiv":
-        vis = _history_visual_features(params, batch)
+        vis = _history_visual_features(params, batch, visual_mode=cfg.visual_mode)
         vis_in_head = jnp.concatenate((vis, issued[..., :2]), axis=-1)
         v_out = _apply_mlp(params["vis_head"], vis_in_head)
         v_w = jnp.where(valid, jax.nn.softplus(v_out[..., 2]) + 1e-4, 0.0)
@@ -485,7 +502,7 @@ def apply_reader(params, cfg: ReaderConfig, batch):
 
     if cfg.model_type == "factored_equiv":
         # Purely visual motion vector [vx, vy] + confidence weight; NO action input before Procrustes.
-        vec_out = visual_motion_vectors(params, batch)
+        vec_out = visual_motion_vectors(params, batch, visual_mode=cfg.visual_mode)
         w = jnp.where(valid, jax.nn.softplus(vec_out[..., 2]) + 1e-4, 0.0)
         cos_hat, sin_hat = _procrustes_yaw(issued[..., :2], vec_out[..., :2], w, has_valid)
         return cos_hat, sin_hat, log_scale, grip_logit
