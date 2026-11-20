@@ -4,8 +4,6 @@ The controlled OpenDrawer reader used one probe to choose a useful correction on
 
 ## Synthetic learning histories
 
-- On 50 new native Goal 5 tabletop placements, one dual-source PaliGemma SFT checkpoint completed 25/50 Panda and 6/50 Sawyer episodes. Extended action-regression SFT on a larger bank completed 34/50 and 20/50. Each row used identical frozen weights across both arms and each controller issued five controls per replan. These are source-motor results on one task. [Native counts and checkpoint evidence](../outputs/libero-paligemma-dualarm-20261120-r2/evidence/source50/native.json)
-
 A five-condition, three-seed hidden-rule selection grid trained four-layer
 Transformers for 20,000 updates per fit, then evaluated frozen weights using
 each learner's own attempts on fresh scenes. Execution was perfect. On held-out
@@ -132,6 +130,7 @@ A randomized single-retry scorer averaged 19.0/32 development successes. Giving 
 
 ### Embodiment and calibration controls
 
+- On 50 new native Goal 5 tabletop placements, one dual-source PaliGemma SFT checkpoint completed 25/50 Panda and 6/50 Sawyer episodes. Extended action-regression SFT on a larger bank completed 34/50 and 20/50. Each row used identical frozen weights across both arms and each controller issued five controls per replan. These are source-motor results on one task. [Native counts and checkpoint evidence](../outputs/libero-paligemma-dualarm-20261120-r2/evidence/source50/native.json)
 - Shifting MuJoCo Panda finger collision geometries by 0.035 m in XY left all precontact 256×256 RGB and public proprioception bitwise identical across 104 CPU replays (0 anomalies, 8/8 BASE, 8/32 open-loop shifted, 8/8 tasks post-contact distinguishable), but failed closed-loop Gate 1 on frozen π0.5 across eight development tasks (`job-gmj5rsb0xd59`, 168 paired episodes): shifted success was 23/48 nominal versus 22/48 grasp-compensated and 20/48 grasp-and-release-compensated, with 8/8 BASE in all three arms (0.447 GPUh). [TCP falsification](../outputs/libero-xemb-tcp-20261120-r1/RESULT.md) · [Execution](../outputs/libero-xemb-tcp-20261120-r1/EXECUTION.md)
 - A reader and action adapter trained on simulated Panda and Sawyer reduced frozen π0.5's native success on a held-out UR5e from 4/4 to 2/4 on two development tasks. Empty history scored 4/4, wrong-arm history 0/4 and independent target calibration 3/4. A post hoc nearest-centroid probe identified 0/4 UR5e histories. The policy used history, but the correct history cost two successes against the unmodified motor. [Paired scores, latent readout and source controls](../outputs/libero-crossarm-20261120-r1/RESULT.md)
 - A general PaliGemma motor trained on simulated Panda demonstrations scored 0/2 on fresh Panda plate-pushing starts. After 100 source motion-reader updates on Panda/Sawyer and 150 joint reader–adapter updates with the motor frozen, correct practice, cleared practice, wrong-body practice, raw control and privileged calibration each scored 0/2 on UR5e. The joint embedding identified 2/8 independent arm histories, including 0/4 UR5e. The planned two-arm demonstration fit stopped at 11/16 Panda and 0/16 Sawyer native expert successes. [PaliGemma experiment and evidence](../outputs/libero-paligemma-crossarm-20261120-r1/RESULT.md)
