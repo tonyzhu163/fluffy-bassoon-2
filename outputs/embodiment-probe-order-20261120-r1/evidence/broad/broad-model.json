@@ -1,0 +1,195 @@
+{
+  "observed_utc": "2026-11-20T08:23:40.762945+00:00",
+  "base_identity": {
+    "repo": "google/paligemma-3b-mix-224",
+    "revision": "d1d8734c9c3ad0ccfeea4afc270faa356c2ba515",
+    "upstream_file_ids": {
+      "config.json": "9d4a7b496c93811f47247052b061dda435af2fed",
+      "model.safetensors.index.json": "242066c3d4e40edee88fc0e11671a5fd89336663",
+      "tokenizer.json": "ef6773c135b77b834de1d13c75a4c98ab7a3684ffd602d1831e1f1bf5467c563",
+      "tokenizer_config.json": "960dcec0bccc6e594d865eceb63c8078e164cfb2",
+      "model-00001-of-00003.safetensors": "63fd690cdad783794ce4c1d7893ef1f88bc26f4ae94b1925f5d3ad199dbbed87",
+      "model-00002-of-00003.safetensors": "c24cf160613c9fcf69641b4eace7de94d07aaabba88800815137453a5fc32f38",
+      "model-00003-of-00003.safetensors": "6222ec75c92d438886eaa3a2c5970c7e7973c213937a799ca6c5106f5fae829a",
+      "tokenizer.model": "8986bb4f423f07f8c7f70d0dbe3526fb2316056c17bae71b1ea975e77a168fc6",
+      "special_tokens_map.json": "0c18fdd94629ea652e2ef36ed9a422474ad0a8e8",
+      "added_tokens.json": "ff9246e420971b10c510b39a0de289132c2bf23f",
+      "generation_config.json": "6aae7ddfdfa0b117a9975bd2c4830d6222404131"
+    }
+  },
+  "parent_and_child_envelopes_verified": true,
+  "step": 6400,
+  "changed_tensor_count": 31,
+  "equal_tensor_count": 2,
+  "changed_tensor_names": [
+    "/vlm.language_model.layers.16.self_attn.q_proj.down.weight",
+    "/vlm.language_model.layers.16.self_attn.q_proj.up.weight",
+    "/vlm.language_model.layers.16.self_attn.v_proj.down.weight",
+    "/vlm.language_model.layers.16.self_attn.v_proj.up.weight",
+    "/vlm.language_model.layers.17.self_attn.q_proj.down.weight",
+    "/vlm.language_model.layers.17.self_attn.q_proj.up.weight",
+    "/vlm.language_model.layers.17.self_attn.v_proj.down.weight",
+    "/vlm.language_model.layers.17.self_attn.v_proj.up.weight",
+    "/head.time",
+    "/head.norm.weight",
+    "/head.norm.bias",
+    "/head.text.weight",
+    "/head.text.bias",
+    "/head.proprio.weight",
+    "/head.proprio.bias",
+    "/head.query.weight",
+    "/head.query.bias",
+    "/head.key.weight",
+    "/head.key.bias",
+    "/head.value.weight",
+    "/head.value.bias",
+    "/head.fusion.0.weight",
+    "/head.fusion.0.bias",
+    "/head.fusion.1.weight",
+    "/head.fusion.1.bias",
+    "/head.prior.weight",
+    "/head.prior.bias",
+    "/head.decoder.0.weight",
+    "/head.decoder.0.bias",
+    "/head.decoder.2.weight",
+    "/head.decoder.2.bias"
+  ],
+  "equal_tensor_names": [
+    "/state_mean",
+    "/state_scale"
+  ],
+  "raw_contiguous_tensor_sha256": {
+    "/vlm.language_model.layers.16.self_attn.q_proj.down.weight": {
+      "sft03": "7f6ee5b46134601c865bceb56f0af40f7bb35ddf78a7e028e9484a3c4f798cb1",
+      "broadfit01": "b3e0b0c73f43bc1b0cea3442e7c8f69045068141ac2ce07a23c75d816fadddbd"
+    },
+    "/vlm.language_model.layers.16.self_attn.q_proj.up.weight": {
+      "sft03": "d4425686698d069bff61082a64823e91c80876f5efc53861d0e362a51c04baad",
+      "broadfit01": "f0ce406d0fc008ebbc11ebb608ac5b4c0763fbd95a50eb435e428ab64ddea5b4"
+    },
+    "/vlm.language_model.layers.16.self_attn.v_proj.down.weight": {
+      "sft03": "7f8c2ef8438c73e1e9ac189d6cb3509b009392586fc1d50f668ffb4b093afeca",
+      "broadfit01": "17c812d0959fc9ffb78336e1daf85c613700eb8346da7bafbb0f19085879214f"
+    },
+    "/vlm.language_model.layers.16.self_attn.v_proj.up.weight": {
+      "sft03": "05ef6e12545be7d559738059044bd2af6753bd0f29aa687cf5ab1e8b5b57f001",
+      "broadfit01": "66c3c355553fa239311f1bd4be0c3001bae030b5ba763432dc0efbb1a1fc89a7"
+    },
+    "/vlm.language_model.layers.17.self_attn.q_proj.down.weight": {
+      "sft03": "b976db400cf89ca8785505014340471135fa84c62b5fc158df4a0445ff2b3281",
+      "broadfit01": "2ff8cde0b088873fd0a3486f9af701a023c51dc8ec2c46dbb989d3d7daa08a71"
+    },
+    "/vlm.language_model.layers.17.self_attn.q_proj.up.weight": {
+      "sft03": "f1932672ff892c3fc85cc80cdb20ede866f0cd8e9fddee0177901c6a44c0ec94",
+      "broadfit01": "d67a168ba2c40808a849258c3242de4af6be1dbd9d3f6c3975db93d40d0b9709"
+    },
+    "/vlm.language_model.layers.17.self_attn.v_proj.down.weight": {
+      "sft03": "7f15d71ffdc8863bc9c10b0f1ce22781d0f8046ce7384b69a9232b3f50c60a59",
+      "broadfit01": "65c8c66a282e7d65c4657b8fd0a6b8874700ddf66a167320eee0e73b0f89f080"
+    },
+    "/vlm.language_model.layers.17.self_attn.v_proj.up.weight": {
+      "sft03": "dbb59b0c1803ad9aa3829281c90e9c7481e8cc15e6c2b21785c1e83631a6a8d0",
+      "broadfit01": "d9e51f8eb26951ebaa839df2e4b836fe99a9d17da1efcf65930562580d3672bb"
+    },
+    "/head.time": {
+      "sft03": "ecb0853c4240f53e3cedc3f1b58e956a996f7ff9b12dd7431f2d07c542caaaa7",
+      "broadfit01": "9c805a3733f3f00fda285aaef497693339298aa45f6ffc4bf94abe45dab9eef2"
+    },
+    "/head.norm.weight": {
+      "sft03": "08dc94e614637efffebe12b44235e747a8ddcb6c3b645f881912fc9be757fe14",
+      "broadfit01": "6fb1ccf4cec0c54e599baabc2f018a31235f18a9bfe3721f2d1139470bdfae43"
+    },
+    "/head.norm.bias": {
+      "sft03": "cad41c974d45dc3c577341bcac246f43749c795c76fe6e731a4b2680a5ce4a1d",
+      "broadfit01": "896ff1b54c0c1fc13614ed60f5080764eac0b361c669c35f9932aff24359bd89"
+    },
+    "/head.text.weight": {
+      "sft03": "25a9fa36e149453eb8a8971fc180b815f34ae857fd575cfcaf9781d7bea04452",
+      "broadfit01": "253e2fbba8bdadf0f4e913777975e66009e77a7ffa24c9486d60ed90789de726"
+    },
+    "/head.text.bias": {
+      "sft03": "15f50733dc790a57b9711af21ed01ea1b12467b3e2d36a78989245263133e790",
+      "broadfit01": "fa91a7c3c49b319046c260b25933de7d316628a53289494368479950bf1f84f4"
+    },
+    "/head.proprio.weight": {
+      "sft03": "68b55c5367060a4d36c66e7acf68a922b9dabf8c569ca1930a33f9711b076331",
+      "broadfit01": "f4fe50540e851f8637efb3b44b65a1af0a07ed310e938b22b2f9d671f2b89b73"
+    },
+    "/head.proprio.bias": {
+      "sft03": "13eb461c231121213318206f840cfc38f693de84b9fca2db887d6a605b7a85e7",
+      "broadfit01": "c1ee296c5c07020a548fe818507b45f55ee8998ba8f27f7be21f653c1c31511e"
+    },
+    "/head.query.weight": {
+      "sft03": "0795c86564b054498f286819b20c49a66cb75b58d5ed398069bb999bb7d84efe",
+      "broadfit01": "a02aa0643e7cbfaca9e8e931f7e7a385ea031682bdd2893e241c376a43017e13"
+    },
+    "/head.query.bias": {
+      "sft03": "cec58660d0faf7c92fa68b70715482494ee6347e5445e2d3b12596facbe08100",
+      "broadfit01": "12648f25a0f528015f94cc2c4d7fbbe1983b098d6f16ee3c634aa68c30b04765"
+    },
+    "/head.key.weight": {
+      "sft03": "c2f66bcaa1daef769e9e631e712b1b1ad795b2e810983cca19f62a44e6dadb72",
+      "broadfit01": "f6133bee071ee35a6606d2eec4f99305961087cae0ba01ee9cf10505ce540801"
+    },
+    "/head.key.bias": {
+      "sft03": "7d687e546cd813f89fa32a6f78005538b3dadfccf751aa6f97c2e180f6618080",
+      "broadfit01": "f360816a7dc554e846eab51f33053a961e6bc24b7ce72d350c95751884c87fe1"
+    },
+    "/head.value.weight": {
+      "sft03": "eb3f4a058ef95be8028d12cced53ffb96433cdb2539e93c4e4eac6b9e98b6d70",
+      "broadfit01": "d01dd7aa44b9a1eee65a779106c3b05a73711fe40021ee3d6e6ec49a1a90f613"
+    },
+    "/head.value.bias": {
+      "sft03": "613956565cc93d1713da8953ea54b39f7b2014b1984be3f66352258e6d34e6e0",
+      "broadfit01": "f24848ed1e9f663cc4ed70452c798f92894a0a16be401ed5aaeeccba59a4cabf"
+    },
+    "/head.fusion.0.weight": {
+      "sft03": "979ae5a7c295beb5cf8c015b5ee05a22a42b251e50f9ad976abf3f9c769ea37e",
+      "broadfit01": "9dbff48bc1a2ef64761e7a480e39a45691b3bcc31d5feb45da69b1af37ee6271"
+    },
+    "/head.fusion.0.bias": {
+      "sft03": "2901ec7e067fb319dac2dddb597927c624e91f72e0b537c0468a893968b5594d",
+      "broadfit01": "9a4694c4db213fc9121ae0c0782ac9cd7748c9d2fcae170a542b348434b287ff"
+    },
+    "/head.fusion.1.weight": {
+      "sft03": "4f463427e465e2b6d4955f0d72460d91c0f63dedaf4beba9424ab46438115f37",
+      "broadfit01": "eda56c19f640403683b52a67fd697fce8fb86150238c3fc1993c9c5a562fc2c8"
+    },
+    "/head.fusion.1.bias": {
+      "sft03": "58306bb0880873a8e351c2702751a88e092cdeefbdbf8d0275aaaf761b5d93d7",
+      "broadfit01": "538f038c148be7fc33b5460ad33030d0037acaa83642472f1193d8c56c9c82fb"
+    },
+    "/head.prior.weight": {
+      "sft03": "d035299439bb66ddb548766c0dc285701ef3240890edcd886a12ada8f4e815c9",
+      "broadfit01": "018f489f41463a904305320ad8528571218a80d2467c67cda71c0c88279be73d"
+    },
+    "/head.prior.bias": {
+      "sft03": "e87000365cec051e971b1b378cf69c94627d98467f3e569dcb16c7e2fd621f8a",
+      "broadfit01": "f761ff648de844108923403556e4538689cc002023d12d8fb9f1ac7f20703057"
+    },
+    "/head.decoder.0.weight": {
+      "sft03": "ca7fed59b971d69452b1f30164917e7413da07696d68bb08dd00d868b98f4266",
+      "broadfit01": "88c2610441a1bc19ea16727cd64775b4850219e098ecc401f030b51f0e52c41f"
+    },
+    "/head.decoder.0.bias": {
+      "sft03": "8a79ca16ce0e0d071adb9aaeb9f5651ee79d0c492cdf0a1f8ff64ecffd6e6909",
+      "broadfit01": "747c1483fda2d8017d3069d6458a7e26011d2ae73ff61a8c84ec1cbb807fdb7c"
+    },
+    "/head.decoder.2.weight": {
+      "sft03": "c4ba2c11d9aa42788ebe40a8f6bfcf50f981e753b0b7a8bb437c5b3553789a84",
+      "broadfit01": "2f9755fc57f393eff79683bb114561df407029136b78728f2a900887fa5a19f1"
+    },
+    "/head.decoder.2.bias": {
+      "sft03": "52866c7a3aff73d46a07622ed2b6498810f94a8222dd0b2f84f0a1a6e8c12ab7",
+      "broadfit01": "9f3f6836abc1d3af98d911124cfa3a39c00f27d7fbd81493d37344a4ca80cf18"
+    },
+    "/state_mean": {
+      "sft03": "2a23bd9182a42b83c4f0274979885eb7fa756f846f455d058a0b6be39a521534",
+      "broadfit01": "2a23bd9182a42b83c4f0274979885eb7fa756f846f455d058a0b6be39a521534"
+    },
+    "/state_scale": {
+      "sft03": "ed020e64a18168f04cc7bbb7825c1b5f00a2ad65ba65a59ad0012e90ed23af24",
+      "broadfit01": "ed020e64a18168f04cc7bbb7825c1b5f00a2ad65ba65a59ad0012e90ed23af24"
+    }
+  }
+}

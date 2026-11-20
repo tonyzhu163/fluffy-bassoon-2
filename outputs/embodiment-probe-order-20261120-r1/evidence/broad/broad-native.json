@@ -1,0 +1,1382 @@
+{
+  "verified_utc": "2026-11-20T08:31:12.892357+00:00",
+  "job": "job-alhror6iloul",
+  "evaluator_revision": "e2f794c41c9141a7aadaf67339da919336362f22",
+  "run_sh_sha256": "8a259ccbed50e6f7cbce3800512cf0142648b998179704df955c52f57cf09169",
+  "git_checkout_clean": true,
+  "stage": "/mowenjie/fluffy-bassoon-2/outputs/libero-paligemma-dualarm-20261120-r2/large-panel-hostbroad01/dev/scores/4720a1910cd6fe6c2592a75ea92f782955bac5ea77f3125b791c0ea215c740ad/stride-5",
+  "registered_geometry": "3b7e9e274586ae622a37d9b5fa33381833d37d1e0e673965096653dd5fa71798",
+  "matching_rows": 50,
+  "report_sha256": "149513cb3e514ec908ddb9500fe1bdc7a1ce97ada893ff0637ff0227d7a42cc0",
+  "contract_sha256": "448b369908312a6b9f5b319758d06d6a9f34feeb10a57b72ba087a9a0dd8c8e6",
+  "panel_sha256": "6492662090c28905153f55814d54063f0bbbc3e788dad1678c54bd83e1fe2143",
+  "preparation_fit_sha256": "6d4fc40b60249fb19e09525890b315fa5dcb29cf4098ada459c1577ec2322f53",
+  "protocol_contract": {
+    "fit_id": "6d4fc40b60249fb19e09525890b315fa5dcb29cf4098ada459c1577ec2322f53",
+    "step": 6400,
+    "checkpoint_sha256": "4720a1910cd6fe6c2592a75ea92f782955bac5ea77f3125b791c0ea215c740ad",
+    "architecture": "spatial_bins_v1",
+    "prompt": "push the plate to the front of the stove",
+    "phase": "dev",
+    "stride": 5,
+    "panel_sha256": "6492662090c28905153f55814d54063f0bbbc3e788dad1678c54bd83e1fe2143",
+    "evaluator": {
+      "large_panel_rollout.py": "3d495e2af8c962db3570d605db7c01ed5285f7949541ec6f408720b7207eeaf3",
+      "large_panel_sim.py": "a9f6aa73c8af5604c893c906c1f25b73b85e3c1c84a5214abecf074bd94cb54d",
+      "large_panel.py": "2d1fa57eee31839a003563d45dfca7a2cbda33af11e2224b80c91b89d89d646b",
+      "large_panel_protocol.py": "a43cfe07b8b646fa2ec6f3f483be60f2bb4d77a825771a3b1bb5f2ef371682c2",
+      "generated_layouts.py": "8339a9dd8bf7815747efc008577f18d0c0127ac6dbc544ee7df4fe86837a2eaa",
+      "generated_split.py": "daf74f7578ed8b4c55391d8a5629e149383924de31d58dd16ca595245cdb109b",
+      "expert.py": "05a91ad9ddd225e5a9bae9cd9373dd28010a8a157b1ef7587f36bd8425f35727",
+      "servo_motor.py": "4f9febebeb057e829b2c14281d8f51d4c87ae692f4ead7e11d5f67efc1aa3cce",
+      "waypoint_motor.py": "888643b4bceee743a827d82e518c1664f9a4bb78f3f951e28cd58612cb9b3e19",
+      "sim.py": "e2009d4711ed9361f6218162b8975bcbe86407a236a324e1416adfbbbd3ceef7",
+      "motor.py": "eb9a83646aacdc0ebb5938f0841560814fa4d8faf4205b4f143a5b35c9310928",
+      "motor_data.py": "43b65e4579d01f49bbdf90176304051a5a403d9128c54ca677f19386ac6e4df8",
+      "motor_weights.py": "74a37c9b5ce92cb89e07be1df5f677079144ab839879281bd168bbc17859c2fe",
+      "arm_env.py": "16ec2d3cd367e975a65d5be49ce4a897ba56621889a0a3502a5a47d7cafff0eb",
+      "sim_reset.py": "010c2ef9d71e268cd81470a6aa6640e0e78d3151b4e95b5f5408c8831ca8eb10"
+    },
+    "horizon": 300,
+    "inference_batch_size": 8
+  },
+  "stages": {
+    "prep": {
+      "launch": [
+        "e2f794c41c9141a7aadaf67339da919336362f22",
+        "job-alhror6iloul-master-0",
+        "236",
+        "1795162881"
+      ],
+      "exit": [
+        "0",
+        "1795163030",
+        "1795162881"
+      ],
+      "log_sha256": "4857139d539110484772ec2217ca5cf9026e40c170fb4b38450a946531de0b87",
+      "gpu_sha256": "2e14933471d579d082c2fdd480647a044fc541de8c9ae709b4fd29116b7b089d",
+      "gpu_status": "passed",
+      "devices": [
+        {
+          "allocation_ordinal": 0,
+          "visibility_token": "0",
+          "cuda_uuid": "6bee9825-4ca5-9128-953b-1832414ba9e5",
+          "cuda_name": "NVIDIA RPBZZZ6",
+          "cuda_total_bytes": 101973950464,
+          "pci_bus_id": "0000:62:00.0",
+          "uuid": "GPU-ffc87f1b-c636-4503-c571-04317bd67401",
+          "inventory": {
+            "index": 0,
+            "uuid": "GPU-ffc87f1b-c636-4503-c571-04317bd67401",
+            "name": "NVIDIA RPBZZZ6",
+            "memory_total_mib": 97887.0,
+            "memory_used_mib": 0.0,
+            "utilization_percent": 0.0,
+            "pci_bus_id": "00000000:62:00.0"
+          },
+          "allocation_check": {
+            "elements": 1048576,
+            "result": 2097152.0,
+            "touched_gpu_uuids": [
+              "GPU-ffc87f1b-c636-4503-c571-04317bd67401"
+            ],
+            "own_pid_gpu_uuids": [
+              "GPU-ffc87f1b-c636-4503-c571-04317bd67401"
+            ]
+          }
+        }
+      ]
+    },
+    "score": {
+      "launch": [
+        "e2f794c41c9141a7aadaf67339da919336362f22",
+        "job-alhror6iloul-master-0",
+        "7254",
+        "1795163030"
+      ],
+      "exit": [
+        "0",
+        "1795163306",
+        "1795163030"
+      ],
+      "log_sha256": "127bfcd95d7ae652046c7cf5c45d67c4db6c882c0efbc87664b962fff3d89a24",
+      "gpu_sha256": "8dcab54ae4ee0ae7b25e4a2b15c20fae5d12ea43dcb36af372cf2cddc6771c73",
+      "gpu_status": "passed",
+      "devices": [
+        {
+          "allocation_ordinal": 0,
+          "visibility_token": "0",
+          "cuda_uuid": "6bee9825-4ca5-9128-953b-1832414ba9e5",
+          "cuda_name": "NVIDIA RPBZZZ6",
+          "cuda_total_bytes": 101973950464,
+          "pci_bus_id": "0000:62:00.0",
+          "uuid": "GPU-ffc87f1b-c636-4503-c571-04317bd67401",
+          "inventory": {
+            "index": 0,
+            "uuid": "GPU-ffc87f1b-c636-4503-c571-04317bd67401",
+            "name": "NVIDIA RPBZZZ6",
+            "memory_total_mib": 97887.0,
+            "memory_used_mib": 0.0,
+            "utilization_percent": 0.0,
+            "pci_bus_id": "00000000:62:00.0"
+          },
+          "allocation_check": {
+            "elements": 1048576,
+            "result": 2097152.0,
+            "touched_gpu_uuids": [
+              "GPU-ffc87f1b-c636-4503-c571-04317bd67401"
+            ],
+            "own_pid_gpu_uuids": [
+              "GPU-ffc87f1b-c636-4503-c571-04317bd67401"
+            ]
+          }
+        }
+      ]
+    },
+    "sum": {
+      "launch": [
+        "e2f794c41c9141a7aadaf67339da919336362f22",
+        "job-alhror6iloul-master-0",
+        "14318",
+        "1795163306"
+      ],
+      "exit": [
+        "0",
+        "1795163309",
+        "1795163306"
+      ],
+      "log_sha256": "d7841e9b6ab81b91a07ec088c63dab5b075ea3903e1485210e8fcee395fdac98",
+      "gpu_sha256": "0ab009738bd0d95745a735255f4f5e2d232f70bfa441005b438c77d997cff380",
+      "gpu_status": "passed",
+      "devices": [
+        {
+          "allocation_ordinal": 0,
+          "visibility_token": "0",
+          "cuda_uuid": "6bee9825-4ca5-9128-953b-1832414ba9e5",
+          "cuda_name": "NVIDIA RPBZZZ6",
+          "cuda_total_bytes": 101973950464,
+          "pci_bus_id": "0000:62:00.0",
+          "uuid": "GPU-ffc87f1b-c636-4503-c571-04317bd67401",
+          "inventory": {
+            "index": 0,
+            "uuid": "GPU-ffc87f1b-c636-4503-c571-04317bd67401",
+            "name": "NVIDIA RPBZZZ6",
+            "memory_total_mib": 97887.0,
+            "memory_used_mib": 0.0,
+            "utilization_percent": 0.0,
+            "pci_bus_id": "00000000:62:00.0"
+          },
+          "allocation_check": {
+            "elements": 1048576,
+            "result": 2097152.0,
+            "touched_gpu_uuids": [
+              "GPU-ffc87f1b-c636-4503-c571-04317bd67401"
+            ],
+            "own_pid_gpu_uuids": [
+              "GPU-ffc87f1b-c636-4503-c571-04317bd67401"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "renderers": [
+    [
+      "NVIDIA Corporation",
+      "NVIDIA RPBZZZ6/PCIe/SSE2"
+    ]
+  ],
+  "required_per_arm": 38,
+  "passed": false,
+  "arms": {
+    "Panda": {
+      "rate": 0.46,
+      "successes": 23,
+      "successful_layout_ids": [
+        1740003,
+        1740005,
+        1740007,
+        1740008,
+        1740011,
+        1740012,
+        1740015,
+        1740016,
+        1740018,
+        1740019,
+        1740020,
+        1740024,
+        1740025,
+        1740027,
+        1740028,
+        1740030,
+        1740031,
+        1740033,
+        1740034,
+        1740035,
+        1740037,
+        1740040,
+        1740048
+      ],
+      "total": 50,
+      "wilson95": [
+        0.3296965219222435,
+        0.5960112860084253
+      ]
+    },
+    "Sawyer": {
+      "rate": 0.32,
+      "successes": 16,
+      "successful_layout_ids": [
+        1740001,
+        1740005,
+        1740008,
+        1740016,
+        1740019,
+        1740020,
+        1740024,
+        1740027,
+        1740029,
+        1740032,
+        1740037,
+        1740039,
+        1740042,
+        1740043,
+        1740046,
+        1740047
+      ],
+      "total": 50,
+      "wilson95": [
+        0.20758216260656845,
+        0.45810297308144077
+      ]
+    }
+  },
+  "native_episodes": {
+    "Panda": [
+      {
+        "layout_seed": 740000,
+        "layout_id": 1740000,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "27601bec5fedc827658b9cbf00439189233b72af2dcffade72da741dd1930564"
+      },
+      {
+        "layout_seed": 740001,
+        "layout_id": 1740001,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "8e947f7f267446a66224a0bf71735323efe39066a986b2fd317dd3ff8c227cbb"
+      },
+      {
+        "layout_seed": 740002,
+        "layout_id": 1740002,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "e745535c1348869d3d16c614d8840f51b139c0e4237820ae30e2e32bc999276f"
+      },
+      {
+        "layout_seed": 740003,
+        "layout_id": 1740003,
+        "success": true,
+        "steps": 239,
+        "native_return": 1.0,
+        "tape_sha256": "aa57dbf02bf2f0cd6cac54704750102f603964295777ab9b206edad3db61ca39"
+      },
+      {
+        "layout_seed": 740004,
+        "layout_id": 1740004,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "3fa963c3946e46d4dfc8b72d4de6408776c1381c2dddb2c32ab2dfa3b43fae96"
+      },
+      {
+        "layout_seed": 740005,
+        "layout_id": 1740005,
+        "success": true,
+        "steps": 278,
+        "native_return": 1.0,
+        "tape_sha256": "814e88aec4daf142755266da9ba481faa3b0104a04590be90b3e24089e8f0da1"
+      },
+      {
+        "layout_seed": 740006,
+        "layout_id": 1740006,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "1dd6d238a5a8d2c9a629fcb56d6c0b8a2ced1ac65ffc206fdac8ac80188921ce"
+      },
+      {
+        "layout_seed": 740007,
+        "layout_id": 1740007,
+        "success": true,
+        "steps": 101,
+        "native_return": 1.0,
+        "tape_sha256": "4c28307380c64d095c37ae76b962d58efb2300f06d644c345a5ee3bddf674113"
+      },
+      {
+        "layout_seed": 740008,
+        "layout_id": 1740008,
+        "success": true,
+        "steps": 67,
+        "native_return": 1.0,
+        "tape_sha256": "6cb8f5acb5896476e36bda020dbfb59b5cdc27bf46e61b538624689dc52965a8"
+      },
+      {
+        "layout_seed": 740009,
+        "layout_id": 1740009,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "b18b328626130838b3317e929c3d6e0f07d82917600bacd89ab75c8d7185039f"
+      },
+      {
+        "layout_seed": 740010,
+        "layout_id": 1740010,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "964b18695e8d7568f1754ecfcfc7adc00b0ecd17e575ce2ef332865906d01425"
+      },
+      {
+        "layout_seed": 740011,
+        "layout_id": 1740011,
+        "success": true,
+        "steps": 79,
+        "native_return": 1.0,
+        "tape_sha256": "c8fafbf7f4a2c701ee4011fc8c5f2cee63c43fddac013e72efc9e029b7553c24"
+      },
+      {
+        "layout_seed": 740012,
+        "layout_id": 1740012,
+        "success": true,
+        "steps": 74,
+        "native_return": 1.0,
+        "tape_sha256": "e2a3a19b7c39537b82328532308a9f6cd7254559fbb9073002c0d3488d28ce96"
+      },
+      {
+        "layout_seed": 740013,
+        "layout_id": 1740013,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "57c66a10f789c7a097e36b4155e0aafcb964c59e8bda92b8b5fea0e20e950e2e"
+      },
+      {
+        "layout_seed": 740014,
+        "layout_id": 1740014,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "0f192dccb61501e23f291147ebfd835257fc3c0c34ed043b16c131ff0f53812b"
+      },
+      {
+        "layout_seed": 740015,
+        "layout_id": 1740015,
+        "success": true,
+        "steps": 76,
+        "native_return": 1.0,
+        "tape_sha256": "3ee1e328753137f6ad5e95ce0dacbb98e6a3470b05725ae4a9b807884af373c1"
+      },
+      {
+        "layout_seed": 740016,
+        "layout_id": 1740016,
+        "success": true,
+        "steps": 143,
+        "native_return": 1.0,
+        "tape_sha256": "1f961c32ade241e4fd07509f0be42ec6e51893de3b291dc245fe13a8041fa99e"
+      },
+      {
+        "layout_seed": 740017,
+        "layout_id": 1740017,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "a8ebbb2a05bcf73623290a4cd50fa54212bde751cfcacb642ee7f22b21e7a1b5"
+      },
+      {
+        "layout_seed": 740018,
+        "layout_id": 1740018,
+        "success": true,
+        "steps": 58,
+        "native_return": 1.0,
+        "tape_sha256": "1af86ad2cf0e8bb4b3270713f08a5ecdb52bb3d4a5c6e118c025139646fea237"
+      },
+      {
+        "layout_seed": 740019,
+        "layout_id": 1740019,
+        "success": true,
+        "steps": 73,
+        "native_return": 1.0,
+        "tape_sha256": "dcd0cff753a85faef11b9f0b329e59ad9e0096b668b5e8318fddbe238af461b8"
+      },
+      {
+        "layout_seed": 740020,
+        "layout_id": 1740020,
+        "success": true,
+        "steps": 81,
+        "native_return": 1.0,
+        "tape_sha256": "e95760458cfc7c40ddc72f2b5819c7baecdf4331c3b5ead27b39f3d6033d3bb2"
+      },
+      {
+        "layout_seed": 740021,
+        "layout_id": 1740021,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "40c22e1fc053b1147becc1c794f4964472ca766ad609f71689bc4e1961bd91a8"
+      },
+      {
+        "layout_seed": 740022,
+        "layout_id": 1740022,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "4db347011666402c152d627e8bbe9f25245d19375b885007b0623ff4a9bc1d51"
+      },
+      {
+        "layout_seed": 740023,
+        "layout_id": 1740023,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "802e6b2944c2e98de9e40891cc4f28c431189b44fd29dd6e481bcfa6dbc2df6b"
+      },
+      {
+        "layout_seed": 740024,
+        "layout_id": 1740024,
+        "success": true,
+        "steps": 64,
+        "native_return": 1.0,
+        "tape_sha256": "a0ebbba7c438609d980e94e42c9bc09f5b56b228bc0a929f3d3ab9fd55012fb1"
+      },
+      {
+        "layout_seed": 740025,
+        "layout_id": 1740025,
+        "success": true,
+        "steps": 75,
+        "native_return": 1.0,
+        "tape_sha256": "dce1fdfbb7fad4f6c503462bfef3a1d1060e4d6cf5962e5db28f2e0327370f65"
+      },
+      {
+        "layout_seed": 740026,
+        "layout_id": 1740026,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "511af163d6e980248286e8ed3f236071e14279a08beb2a0d4615c0ea672cb100"
+      },
+      {
+        "layout_seed": 740027,
+        "layout_id": 1740027,
+        "success": true,
+        "steps": 77,
+        "native_return": 1.0,
+        "tape_sha256": "918c64998af2a95d0c3ad5096c4c470cc306a639cc73b737b520b0bbb9a485b0"
+      },
+      {
+        "layout_seed": 740028,
+        "layout_id": 1740028,
+        "success": true,
+        "steps": 84,
+        "native_return": 1.0,
+        "tape_sha256": "5f30ba319f2563dac36ce2b86818764976c41c908ea9735794c847d65e7acdd9"
+      },
+      {
+        "layout_seed": 740029,
+        "layout_id": 1740029,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "2f7cc9a261b1c094d9218aa5971490c4d0146e19dc29b98c17b481c0dd7dc6e3"
+      },
+      {
+        "layout_seed": 740030,
+        "layout_id": 1740030,
+        "success": true,
+        "steps": 63,
+        "native_return": 1.0,
+        "tape_sha256": "8cd9e6dbde8a8e286269329c8ed8dcb9f75fcc446ad40ad72224354b4d58a3be"
+      },
+      {
+        "layout_seed": 740031,
+        "layout_id": 1740031,
+        "success": true,
+        "steps": 70,
+        "native_return": 1.0,
+        "tape_sha256": "84f2f96fa1e4d13e6785c628917165bb7a4ccbd61278337feed2d90221ee14d6"
+      },
+      {
+        "layout_seed": 740032,
+        "layout_id": 1740032,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "1034b8cb7e2cad460f08f47ed0018d9f835cb8e34cb7d8100f5185788a196e09"
+      },
+      {
+        "layout_seed": 740033,
+        "layout_id": 1740033,
+        "success": true,
+        "steps": 67,
+        "native_return": 1.0,
+        "tape_sha256": "544e58ff9fa82289f3ab7cfe42b77430803455a599874de983f04dcafbb2aa7a"
+      },
+      {
+        "layout_seed": 740034,
+        "layout_id": 1740034,
+        "success": true,
+        "steps": 131,
+        "native_return": 1.0,
+        "tape_sha256": "d9760af107da1e6f3c3aa7a0f63d36cfabb078ab9c7cc519490eb9cbaff09354"
+      },
+      {
+        "layout_seed": 740035,
+        "layout_id": 1740035,
+        "success": true,
+        "steps": 61,
+        "native_return": 1.0,
+        "tape_sha256": "3fcd47bca60376db99ba13af2e840ade15630a3494744842efab85c429481352"
+      },
+      {
+        "layout_seed": 740036,
+        "layout_id": 1740036,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "aa2b3c7c402dc164fb79c1e1a2fc1e07d635a43353efef76fc18df5e820f7386"
+      },
+      {
+        "layout_seed": 740037,
+        "layout_id": 1740037,
+        "success": true,
+        "steps": 140,
+        "native_return": 1.0,
+        "tape_sha256": "03d0e7da7ee7449e7dcf37f93afd8cff1e2d4c4af07bf459edd3a9177d508e00"
+      },
+      {
+        "layout_seed": 740038,
+        "layout_id": 1740038,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "ae82420fc63b113440fd68f60b747bd80310be7ded846b0658d82d6d4533d838"
+      },
+      {
+        "layout_seed": 740039,
+        "layout_id": 1740039,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "2d9b308834847dc22ae37b72445e3e1f511ad96acc87203870b5768221546495"
+      },
+      {
+        "layout_seed": 740040,
+        "layout_id": 1740040,
+        "success": true,
+        "steps": 71,
+        "native_return": 1.0,
+        "tape_sha256": "dd1b9ea13e7ee42317138d15742ebb158660a6aaaeeea57a89b06690cd33ce78"
+      },
+      {
+        "layout_seed": 740041,
+        "layout_id": 1740041,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "b39da847d4628e69dc45bb0ffb7d913288f539855650c364eaff659a835e749c"
+      },
+      {
+        "layout_seed": 740042,
+        "layout_id": 1740042,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "91d8a2d39817a5fae2529173d91b5fa43f27eb4489dc9b94a8b9dd6e4c7dfe6a"
+      },
+      {
+        "layout_seed": 740043,
+        "layout_id": 1740043,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "b7d274b5a9bb12dabeb6e85cf79dcbb9e4a5f82b0cfd87004e1775dc61c1803c"
+      },
+      {
+        "layout_seed": 740044,
+        "layout_id": 1740044,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "bea27cd7954cf318c9bb1ffa868e30152755c757e3c590fcbe14b67360dd87f2"
+      },
+      {
+        "layout_seed": 740045,
+        "layout_id": 1740045,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "db75990b1695fb65ad831a6bf0321eb7b46dee4ad2d5556445e004076f5ab8ae"
+      },
+      {
+        "layout_seed": 740046,
+        "layout_id": 1740046,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "86a23af6f9f09da210b3879a6657769a3f8a2a715610b41f5b5d78b37f23e072"
+      },
+      {
+        "layout_seed": 740047,
+        "layout_id": 1740047,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "489687be96ec4eb9b0e50ca44dd509027adebd4917f740c8659d05a4c10235ea"
+      },
+      {
+        "layout_seed": 740048,
+        "layout_id": 1740048,
+        "success": true,
+        "steps": 75,
+        "native_return": 1.0,
+        "tape_sha256": "28ecfa07d3c01c80a871461f86ac9a8826b420930b1281805a08bbaa62bbdd5e"
+      },
+      {
+        "layout_seed": 740049,
+        "layout_id": 1740049,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "8e4a7be8e1f3f41e9796a34ab0a2d578a8a3bfc3d027f12fd62feb02a7b05490"
+      }
+    ],
+    "Sawyer": [
+      {
+        "layout_seed": 740000,
+        "layout_id": 1740000,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "dccbe3ada597f5f4c3e7b43ff4d76bf8bc03e11dbb4e00955ed3eb3f430c3403"
+      },
+      {
+        "layout_seed": 740001,
+        "layout_id": 1740001,
+        "success": true,
+        "steps": 88,
+        "native_return": 1.0,
+        "tape_sha256": "926aedf25ccb94313cebb86c262e76a8132f2840d2f5019b1c55aedcb40c8374"
+      },
+      {
+        "layout_seed": 740002,
+        "layout_id": 1740002,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "66894b9ffe800e2ad53534a425b2f8e08aca22b85f13aa16637415ee92138c72"
+      },
+      {
+        "layout_seed": 740003,
+        "layout_id": 1740003,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "099d9537ad80973dfbb51709e30a1a52f48fa265eb6802365d2a188db7619048"
+      },
+      {
+        "layout_seed": 740004,
+        "layout_id": 1740004,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "2bc5dcd1ca92a9474d5f52b0ab2d4c2160fc78be2814b550a86676cb201c6bb9"
+      },
+      {
+        "layout_seed": 740005,
+        "layout_id": 1740005,
+        "success": true,
+        "steps": 98,
+        "native_return": 1.0,
+        "tape_sha256": "1b6ad1606e31e0535af0309be4cf96a6049d18be912934277c6672bdb4527523"
+      },
+      {
+        "layout_seed": 740006,
+        "layout_id": 1740006,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "e94b1b5be090ae53f600b751b3f052ec3df51dae4e8b25696a988e00c026ac99"
+      },
+      {
+        "layout_seed": 740007,
+        "layout_id": 1740007,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "0b02000a2d74f44ac81716e4b8286b9e56708bbc882f8cf2bb36f97411bfe77e"
+      },
+      {
+        "layout_seed": 740008,
+        "layout_id": 1740008,
+        "success": true,
+        "steps": 95,
+        "native_return": 1.0,
+        "tape_sha256": "0467e734c2ebf1291ac94abb7640b3c125407c84a8d2c2ecc21ae58715f1222f"
+      },
+      {
+        "layout_seed": 740009,
+        "layout_id": 1740009,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "27d45a9e5feef6e01275449b808f8ccce21c245369ac0c8b6c29b30cb61c49c1"
+      },
+      {
+        "layout_seed": 740010,
+        "layout_id": 1740010,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "67ee64eb6a95723bb496beb1ea36964a7f5f1f1d4c9ef5a6f2d90dd9930c30f5"
+      },
+      {
+        "layout_seed": 740011,
+        "layout_id": 1740011,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "207a76db96ab30cef6542c80c2ac799665e9a1a8ae75f2bcb3d96c8003c5d645"
+      },
+      {
+        "layout_seed": 740012,
+        "layout_id": 1740012,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "ca3dafd6c2c16d6d5986c8df9ffab5579c4e4c85ee57a305ff415f25cfce2431"
+      },
+      {
+        "layout_seed": 740013,
+        "layout_id": 1740013,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "06a5fc4751ab5d576676ffc91493604425e2e1df339190673479d59e5e17b6c4"
+      },
+      {
+        "layout_seed": 740014,
+        "layout_id": 1740014,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "fbeb2464e996da2f48950046c327f72b48a90a0443491f9fd781fb9582ec21ba"
+      },
+      {
+        "layout_seed": 740015,
+        "layout_id": 1740015,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "0cf20b063bf5923e58426156e797190219f0ccc53f3ed92983996e26bbcb78b9"
+      },
+      {
+        "layout_seed": 740016,
+        "layout_id": 1740016,
+        "success": true,
+        "steps": 84,
+        "native_return": 1.0,
+        "tape_sha256": "6a1b5c94949fc5cc53787a2a1f62521cc29d31762ee145a53fd8354e30f03739"
+      },
+      {
+        "layout_seed": 740017,
+        "layout_id": 1740017,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "5b9e801744d89920c71508fac3ac2462b56a0cc0f9912157bce2fcd066579f70"
+      },
+      {
+        "layout_seed": 740018,
+        "layout_id": 1740018,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "a1f562d629f2eee34b8df0ca0b81feb004339c9de34a4c8237d8876969af99c9"
+      },
+      {
+        "layout_seed": 740019,
+        "layout_id": 1740019,
+        "success": true,
+        "steps": 93,
+        "native_return": 1.0,
+        "tape_sha256": "b319a1e7b4f9805388a44a8254cd8e91d21a523ce73f2696eae2dbe859870050"
+      },
+      {
+        "layout_seed": 740020,
+        "layout_id": 1740020,
+        "success": true,
+        "steps": 137,
+        "native_return": 1.0,
+        "tape_sha256": "43f0b7b7a3564b2f1f8e66ec623499e99dc8507a42fb5fc219a483d3038bfca9"
+      },
+      {
+        "layout_seed": 740021,
+        "layout_id": 1740021,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "29e59a9e5874be67cd70fbc6d6574f341cb439a8ce5e0101f15cad6d6b9f3a98"
+      },
+      {
+        "layout_seed": 740022,
+        "layout_id": 1740022,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "20f9559b2e2060c8c126da177b1da70cfba0d63f133cd4820914f87f8d84c68e"
+      },
+      {
+        "layout_seed": 740023,
+        "layout_id": 1740023,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "ba9afbd189abbef93081dc16656e93ce27274b53e1978588235c7caf52faf66c"
+      },
+      {
+        "layout_seed": 740024,
+        "layout_id": 1740024,
+        "success": true,
+        "steps": 95,
+        "native_return": 1.0,
+        "tape_sha256": "06b88452e59f29cf2eb385f9c989a74335d815c37700dcda67a254292f65445e"
+      },
+      {
+        "layout_seed": 740025,
+        "layout_id": 1740025,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "babb77ae67b8d1d9ed32c78ef519676ff7de444bd52f97386e1716e61dd5bdae"
+      },
+      {
+        "layout_seed": 740026,
+        "layout_id": 1740026,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "0dfbd8e1b6f0aee70a896792b5be767acc8c64fb93b6a524849a9a4d278e1550"
+      },
+      {
+        "layout_seed": 740027,
+        "layout_id": 1740027,
+        "success": true,
+        "steps": 97,
+        "native_return": 1.0,
+        "tape_sha256": "2f0b34379fda9011c5139aeb6502c833438f9f04c4d54109da34867a56e64e9a"
+      },
+      {
+        "layout_seed": 740028,
+        "layout_id": 1740028,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "afd90f3988ee7c619fc859daee7bf5c8967fbda691a44fce074b9f3f501717de"
+      },
+      {
+        "layout_seed": 740029,
+        "layout_id": 1740029,
+        "success": true,
+        "steps": 83,
+        "native_return": 1.0,
+        "tape_sha256": "0e2addbdc4b81db293d7565cd8d467c74363b2cd7e50737c41a34c2587b57989"
+      },
+      {
+        "layout_seed": 740030,
+        "layout_id": 1740030,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "ca7585dbe8a0efc02028d06c5115ba5772bc0bdd15612fc6aa99dadb6a95f4fb"
+      },
+      {
+        "layout_seed": 740031,
+        "layout_id": 1740031,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "e7731c1f9b874a6e7a93d2b034e035d37da1452c9f23151d6d9e8b8024fd2430"
+      },
+      {
+        "layout_seed": 740032,
+        "layout_id": 1740032,
+        "success": true,
+        "steps": 96,
+        "native_return": 1.0,
+        "tape_sha256": "34a7563cd9198a7d8fe3b7f139a6b63e4cc76ed0b602fc4f529d00018288279c"
+      },
+      {
+        "layout_seed": 740033,
+        "layout_id": 1740033,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "3294721e263292225971c4179799a266bfa0f085a5712e46d6769b7a98259c7d"
+      },
+      {
+        "layout_seed": 740034,
+        "layout_id": 1740034,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "58f883df154c04f74bf0dfc17613efb0800e60815b5fb3472dfb68aeda420f06"
+      },
+      {
+        "layout_seed": 740035,
+        "layout_id": 1740035,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "0674caef98d877352d9a9ca6857feb775fd2842261ba17589eac28316457dd74"
+      },
+      {
+        "layout_seed": 740036,
+        "layout_id": 1740036,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "76777a9facc3893cb2965ee3e947f8144a09fb3b024a3a00fcb63485e7966b0d"
+      },
+      {
+        "layout_seed": 740037,
+        "layout_id": 1740037,
+        "success": true,
+        "steps": 76,
+        "native_return": 1.0,
+        "tape_sha256": "866e370a33ee832a4804eb49792816e4555f899f7b114ca272c367c032e9f61c"
+      },
+      {
+        "layout_seed": 740038,
+        "layout_id": 1740038,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "cff3b4f2b20d417fd7d1940442f53b61b0e7a49e1be8bbdd763fc4fb8af5eb88"
+      },
+      {
+        "layout_seed": 740039,
+        "layout_id": 1740039,
+        "success": true,
+        "steps": 128,
+        "native_return": 1.0,
+        "tape_sha256": "8a9d331c5b426df16f8044758bc905262890e679a01a54cb0aa2a168d98fcb07"
+      },
+      {
+        "layout_seed": 740040,
+        "layout_id": 1740040,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "f6e6971541aac405c8070bdc3b535be3af238f91758bc0539de027b222d63af3"
+      },
+      {
+        "layout_seed": 740041,
+        "layout_id": 1740041,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "310f300254dfea35b6e526fd460a036a12e95ca80166cbfe5649e041a8cf1cb6"
+      },
+      {
+        "layout_seed": 740042,
+        "layout_id": 1740042,
+        "success": true,
+        "steps": 99,
+        "native_return": 1.0,
+        "tape_sha256": "9c58b293b9442a0c2298685d7bde52abc81973e9bacfa36dff005268ea4b7701"
+      },
+      {
+        "layout_seed": 740043,
+        "layout_id": 1740043,
+        "success": true,
+        "steps": 80,
+        "native_return": 1.0,
+        "tape_sha256": "c031a772716831d83bfbb6e2aae7820d43933898f7a82a020322ed4bd5e1f8e7"
+      },
+      {
+        "layout_seed": 740044,
+        "layout_id": 1740044,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "5a35ad2dd24bec84232a584085a29bdb70be59694baf8c2a38a2ff82f094b2ab"
+      },
+      {
+        "layout_seed": 740045,
+        "layout_id": 1740045,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "ce51d37da2ba6a7ac69a25ad2a5d51984360d4d14701692a62b8f4b878fe8f9e"
+      },
+      {
+        "layout_seed": 740046,
+        "layout_id": 1740046,
+        "success": true,
+        "steps": 127,
+        "native_return": 1.0,
+        "tape_sha256": "b2554d7711347720eb34aa787a4e708f17ac1ef6b343a62998979604279ea6ca"
+      },
+      {
+        "layout_seed": 740047,
+        "layout_id": 1740047,
+        "success": true,
+        "steps": 83,
+        "native_return": 1.0,
+        "tape_sha256": "5107c0aee1ae42bf2b3782b9a56ac0ae4c9912859a18d92186a0fc6ca657a923"
+      },
+      {
+        "layout_seed": 740048,
+        "layout_id": 1740048,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "3e1687f074782a0786751898eee91595fc91e5fcdbe658523f717be82a620b6e"
+      },
+      {
+        "layout_seed": 740049,
+        "layout_id": 1740049,
+        "success": false,
+        "steps": 300,
+        "native_return": 0.0,
+        "tape_sha256": "fe2b1c26816368cd360067b13a1624b7ab5fb61ac2bd8d4dd0656a71770522e3"
+      }
+    ]
+  },
+  "references": {
+    "large-panel-v3": {
+      "checkpoint": "77d18c386b2cc176252cfb68449e4415748382f554046ca50367ed4592676d9f",
+      "report_sha256": "7e2122efbd976638680c8215c3830eeb974179c5944f5185b38771988a3d464a",
+      "counts": {
+        "Panda": {
+          "prior_successes": 34,
+          "broad_only": [
+            1740003,
+            1740018,
+            1740020,
+            1740025
+          ],
+          "prior_only": [
+            1740000,
+            1740009,
+            1740010,
+            1740013,
+            1740021,
+            1740029,
+            1740032,
+            1740038,
+            1740039,
+            1740041,
+            1740042,
+            1740044,
+            1740046,
+            1740047,
+            1740049
+          ],
+          "both": 19
+        },
+        "Sawyer": {
+          "prior_successes": 20,
+          "broad_only": [
+            1740001,
+            1740008,
+            1740019,
+            1740020,
+            1740024,
+            1740027,
+            1740029,
+            1740037,
+            1740042,
+            1740043,
+            1740046,
+            1740047
+          ],
+          "prior_only": [
+            1740000,
+            1740006,
+            1740010,
+            1740011,
+            1740012,
+            1740013,
+            1740015,
+            1740017,
+            1740023,
+            1740030,
+            1740031,
+            1740033,
+            1740040,
+            1740044,
+            1740048,
+            1740049
+          ],
+          "both": 4
+        }
+      }
+    },
+    "large-panel-hostway01": {
+      "checkpoint": "a0bfa49fbb2256d3a8a54f991dc6bdbdd04d4f47d4b13151038a056127036509",
+      "report_sha256": "ad3a08052ed7e410e9c98717c8495af05cc6fa4ce5c61382105e7511c0d3aa54",
+      "counts": {
+        "Panda": {
+          "prior_successes": 1,
+          "broad_only": [
+            1740003,
+            1740005,
+            1740007,
+            1740008,
+            1740011,
+            1740012,
+            1740015,
+            1740016,
+            1740018,
+            1740019,
+            1740020,
+            1740024,
+            1740025,
+            1740027,
+            1740028,
+            1740030,
+            1740031,
+            1740033,
+            1740034,
+            1740035,
+            1740040,
+            1740048
+          ],
+          "prior_only": [],
+          "both": 1
+        },
+        "Sawyer": {
+          "prior_successes": 1,
+          "broad_only": [
+            1740001,
+            1740005,
+            1740008,
+            1740016,
+            1740019,
+            1740020,
+            1740024,
+            1740027,
+            1740029,
+            1740032,
+            1740037,
+            1740039,
+            1740042,
+            1740043,
+            1740046,
+            1740047
+          ],
+          "prior_only": [
+            1740026
+          ],
+          "both": 0
+        }
+      }
+    },
+    "large-panel-host01": {
+      "checkpoint": "0d8353ace1d15b7c6fa6a10b2dd3022b8637f6d71bac5748cdd72b69924dccdd",
+      "report_sha256": "3581da494429df3eb8892276f493c7965d4afa9557eddc6e62ae5af0112cc607",
+      "counts": {
+        "Panda": {
+          "prior_successes": 25,
+          "broad_only": [
+            1740007,
+            1740008,
+            1740011,
+            1740015,
+            1740019,
+            1740020,
+            1740025,
+            1740027,
+            1740030,
+            1740033
+          ],
+          "prior_only": [
+            1740006,
+            1740009,
+            1740014,
+            1740017,
+            1740022,
+            1740023,
+            1740026,
+            1740038,
+            1740041,
+            1740043,
+            1740044,
+            1740046
+          ],
+          "both": 13
+        },
+        "Sawyer": {
+          "prior_successes": 6,
+          "broad_only": [
+            1740001,
+            1740005,
+            1740016,
+            1740020,
+            1740024,
+            1740027,
+            1740029,
+            1740032,
+            1740037,
+            1740039,
+            1740043,
+            1740046
+          ],
+          "prior_only": [
+            1740025,
+            1740034
+          ],
+          "both": 4
+        }
+      }
+    },
+    "large-panel-hostrecover01": {
+      "checkpoint": "071c280eb4b2faa031dc0b9c26270304f5639905afdf701e86579ddae9741191",
+      "report_sha256": "76737313e15bbfea22cea1745859777ffdf45eaba4f174b9077435ea8ce19a73",
+      "counts": {
+        "Panda": {
+          "prior_successes": 17,
+          "broad_only": [
+            1740005,
+            1740007,
+            1740008,
+            1740012,
+            1740015,
+            1740016,
+            1740027,
+            1740030,
+            1740031,
+            1740033,
+            1740034,
+            1740035,
+            1740037,
+            1740040,
+            1740048
+          ],
+          "prior_only": [
+            1740000,
+            1740001,
+            1740002,
+            1740004,
+            1740021,
+            1740029,
+            1740038,
+            1740045,
+            1740046
+          ],
+          "both": 8
+        },
+        "Sawyer": {
+          "prior_successes": 15,
+          "broad_only": [
+            1740005,
+            1740008,
+            1740019,
+            1740020,
+            1740024,
+            1740027,
+            1740029,
+            1740042,
+            1740047
+          ],
+          "prior_only": [
+            1740003,
+            1740004,
+            1740009,
+            1740012,
+            1740034,
+            1740036,
+            1740044,
+            1740049
+          ],
+          "both": 7
+        }
+      }
+    },
+    "large-panel-hostcat01": {
+      "checkpoint": "824c695f68dc5b8edaa37dae4e79c9f24756de39f5fddb420deca1c44cb1cf1a",
+      "report_sha256": "9e0dd7754ba86d09e7a64447ee9c580be60f85164eff430103740dd3403bed46",
+      "counts": {
+        "Panda": {
+          "prior_successes": 14,
+          "broad_only": [
+            1740005,
+            1740007,
+            1740008,
+            1740011,
+            1740012,
+            1740015,
+            1740019,
+            1740020,
+            1740025,
+            1740027,
+            1740028,
+            1740030,
+            1740033,
+            1740034,
+            1740035,
+            1740037,
+            1740040,
+            1740048
+          ],
+          "prior_only": [
+            1740002,
+            1740004,
+            1740009,
+            1740017,
+            1740022,
+            1740029,
+            1740042,
+            1740043,
+            1740049
+          ],
+          "both": 5
+        },
+        "Sawyer": {
+          "prior_successes": 15,
+          "broad_only": [
+            1740001,
+            1740005,
+            1740008,
+            1740016,
+            1740019,
+            1740032,
+            1740037,
+            1740039,
+            1740042,
+            1740043,
+            1740046
+          ],
+          "prior_only": [
+            1740003,
+            1740006,
+            1740013,
+            1740014,
+            1740015,
+            1740022,
+            1740023,
+            1740028,
+            1740033,
+            1740040
+          ],
+          "both": 5
+        }
+      }
+    }
+  }
+}
