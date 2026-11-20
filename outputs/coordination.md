@@ -4,6 +4,7 @@
 
 | Work | Cluster / job / source | Last check, progress and next action |
 | --- | --- | --- |
+| Command-frame observability from archived practice | Baige CPU, archived Panda/Sawyer tapes | Nov 20. Testing whether lag-aware physical estimation and direct factor supervision recover signals missed by the previous reader. [Plan](embodiment-tape-observability-20261120-r1/PLAN.md) |
 | Source-only command-frame breadth trial | Baige Pro6K queue, zero GPU cards, job `job-vp5n0hpy8jbj` succeeded | Nov 20. All 256 tapes and nine fits completed. Breadth gained 3.75% and 4.01% on the two held-out settings, below the 10% rule. Correct and swapped support scored 0.53594 and 0.53591. Scale expansion stopped before UR5e. [Result](embodiment-command-frame-20261120-r1/RESULT.md) |
 | Embodiment meta-pretraining scale and hidden-variable literature | Three local CLI evidence reviews, 0 GPUh | Nov 20. Reviewed task diversity, hidden dynamics, and cross-arm manipulation. [Evidence and conclusions](embodiment-meta-literature-20261120-r1/RESULT.md) |
 | Dual-arm PaliGemma source qualification | Baige Pro6K, `job-iticjkite8we`, `job-9zpwf7aapj3u`; additional source training | Nov 20. Native successes on 50 new layouts per arm were 25 Panda and 6 Sawyer for SFT-1600, and 34 Panda and 20 Sawyer for extended regression at 6400. Raw motor only. [Execution](libero-paligemma-dualarm-20261120-r2/EXECUTION.md) |

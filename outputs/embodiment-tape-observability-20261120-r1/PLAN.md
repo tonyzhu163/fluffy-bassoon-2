@@ -1,0 +1,18 @@
+# Can the original practice sequence distinguish two command mappings?
+
+Base revision `1967f2b31fd4f64c0c9771fb04df2a268c1e2e41`. This is an exploratory analysis of an already examined panel. H1's broad reader changed its inferred correction by a median 0.21° when the practice donor changed between two mappings with a 45° difference. Its predictive loss alone could reward motion features common to both settings. A second possibility is that the mixed 16-command practice sequence offers too little evidence. A third is that response timing and the choice of estimator obscure information present in that sequence. [Original experiment](../embodiment-command-frame-20261120-r1/RESULT.md)
+
+## Test fixed before the new fits
+
+Reuse the original 256 native tapes on the two source arm families. The input SHA-256 is `c1207da02bd988de7fb51cab00a894ed29f1a31ca7d7306bfe9c9c7fb05c3ebf`. Give each estimator only the public commands before the hidden mapping and the measured XY wrist motion. Inference gets one 16-step practice tape. The true setting, arm, issued commands and simulator state are unavailable as inputs. The analyst may use the source labels for calibration and held-out labels for scoring. No donor or query from the evaluation bank trains models or selects hyperparameters.
+
+| Workstream | Measurement |
+| --- | --- |
+| Physics-based estimator | Learn a shared four-tap causal response from nominal source tapes. Fit the planar rotation and gain of one new practice tape against that response. Compare one-tap and fixed common corrections. On the separately reset query, score motion using matching versus swapped practice with identical public query commands. |
+| Factor-supervised reader | Fit a small regularized readout of rotation and gain from command–motion correlations on the four source settings. Inspect transfer to the unseen angle and unseen combination. Compare four-lag, zero-lag and constant readouts. |
+| Independent validity review | Check what the comparison can distinguish, the status of the repeated panel and the evidence needed to make a physical-arm or task-success claim. |
+| Linux execution | Use the existing allocated Baige CPU and archive. No new simulator transitions or accelerator allocation. Keep the raw native tapes on the project volume. |
+
+The evaluation bank has eight matched layout indices, two settings and two arms. Report the results separately for each setting and arm. Layout indices are shared across cells. Assess continuous signed separation, circular angle error, gain error, and, for the physics-based estimator, same-query prediction under practice swaps. Forty-five degrees and ninety degrees are the two true forward rotations. Their 22.5° half-separation provides a geometric reference for distinguishing them. The training labels here intentionally give an easier identification target than H1's next-motion objective, and both arms are familiar. This is a test of whether the data contain usable information, with no claim of a matched retraining comparison.
+
+If the estimators distinguish settings and matching practice improves query prediction, prioritize the reader's representation and supervision. If angle decoding succeeds but matching practice provides little query benefit, separate physical identification from its value for control. If both methods struggle, qualify a deliberately informative probe before scaling data or moving to another robot. A failure of these estimators would still allow other interpretations of the same history. The previous command-frame breadth gate and UR5e evaluation protocol stay in force.
