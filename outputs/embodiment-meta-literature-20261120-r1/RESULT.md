@@ -1,0 +1,12 @@
+# Embodiment meta-learning literature review
+
+Three local research workers completed the [source review](PLAN.md). The two durable deliverables are [meta-pretraining scale](../../docs/literature/meta-pretraining-scale.md) and [identifying hidden variables from robot practice](../../docs/literature/hidden-latent-meta-learning.md). This was a desk study. It used zero GPU-hours and collected zero new robot or simulator episodes.
+
+| Research decision | Evidence and consequence |
+| --- | --- |
+| What to scale first | Published controlled comparisons make task diversity a plausible cause of better generalization. A close robot-arm comparison tests 1, 3 and 5 source arms, but also trains its motor. Compare broader source conditions with deeper sampling of each condition at equal interaction cost. [Scale evidence](SCALE.md) · [Robotics evidence](ROBOT.md) |
+| What a hidden variable means | A named physical parameter can be regressed against simulator truth. A control latent requires a repeated intervention that elicits the predicted correction. A high task return or an arm-ID probe alone leaves alternative explanations. [Mechanisms and counterexamples](LATENT.md) |
+| Whether the mechanism is novel | Prior work already conditions frozen locomotion controllers on inferred body parameters and corrects frozen VLAs after actuator shifts. The open question here is the joint requirement of a source-trained reader, an initially unconditioned PaliGemma motor, self-issued public practice, and a new manipulator family on a locked target panel. This review establishes precedents, without claiming an exhaustive novelty search. [Li et al.](https://arxiv.org/html/2608.01506v2) · [ReGround](https://arxiv.org/html/2611.20244v1) |
+| What would stop expansion | If swapped history works as well as matched history on held-out conditions, the body-specific interpretation fails that test. If a privileged same-interface correction cannot improve native success, the motor or action interface limits transfer. An analytic control tying the learner resolves the simple calibration case and leaves the benefit of learning open. [Pre-existing simulation plan](../embodiment-meta-factory-20261120-r1/DECISION.md) |
+
+The paper evidence is external. The eight-tape reader audit, 50-start motor counts and hard-bypass replay are historical repository measurements. The 96-tape-per-fit comparison is a proposal. This review adds no experimental finding to the repository's findings register.
