@@ -23,7 +23,8 @@ def load_inputs(args, report):
         raise ValueError("Expected a complete source-dynamics joint fit report")
     config = fit["config"]
     sources = set(ev.SOURCES)
-    if config["task"] != ev.TASK or sorted(config["bodies"]) != sorted(sources):
+    if (config["task"] != ev.TASK or sorted(fit["train_bodies"]) != sorted(sources)
+            or sorted(config["bodies"]) != sorted(sources)):
         raise ValueError("Expected a Goal 5 reader trained on exactly Panda and Sawyer")
     if ({row["body"] for row in fit["proposals"]} != sources or not fit["curve"]
             or any(set(row["motion_mse"]) != sources for row in fit["curve"])):
@@ -43,11 +44,14 @@ def load_inputs(args, report):
         if motor_receipt["sha256"] != fit["motor_sha256"]:
             raise ValueError("Motor checkpoint differs from the one used during joint training")
         motor = ev.load_motor(args)
-    report.update(fit_report_sha256=hashlib.sha256(fit_bytes).hexdigest(),
-                  checkpoint_sha256=reader_sha, motor_sha256=motor_receipt["sha256"],
-                  train_bodies=config["bodies"], motor={**motor_receipt, "prompt": prompt,
-                  "train_poses": audited["train_poses"], "holdout_poses": audited["holdout_poses"],
-                  "source_bodies": audited["source_bodies"]})
+    report.update(
+        fit_report_sha256=hashlib.sha256(fit_bytes).hexdigest(),
+        checkpoint_sha256=reader_sha,
+        motor_sha256=motor_receipt["sha256"],
+        train_bodies=fit["train_bodies"],
+        motor={**motor_receipt, "prompt": prompt, "train_poses": audited["train_poses"],
+               "holdout_poses": audited["holdout_poses"], "source_bodies": audited["source_bodies"]},
+    )
     if any(model.training or any(p.requires_grad for p in model.parameters()) for model in (reader, motor)):
         raise ValueError("Reader and motor must both be frozen in evaluation mode")
     return reader, motor

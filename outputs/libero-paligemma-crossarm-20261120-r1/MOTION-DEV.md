@@ -17,11 +17,11 @@ The fit directory supplies `reader-adapter.pt` in the version-1 `adapt_eval.load
 | --- | --- |
 | `stage` | `source_motion_joint_diagnostic` |
 | `status` | `complete` |
-| `config.bodies` | Exactly `["Panda", "Sawyer"]`, in either order |
+| `train_bodies` and `config.bodies` | Exactly `["Panda", "Sawyer"]`, in either order |
 | `checkpoint_sha256` | SHA-256 of the final serialized `$MOTION_JOINT_OUT/reader-adapter.pt` |
 | `motor_sha256` | SHA-256 of the actual frozen `$MOTOR_DIR/checkpoint.pt` used during joint training |
 
-The evaluator also checks the task ID, proposal receipts and every update’s per-arm motion-loss keys against the producer’s declared sources. The producer exports `motor_sha256` from the audited motor checkpoint digest and checks the same file again after joint training.
+The evaluator also checks the task ID, proposal receipts and every update’s per-arm motion-loss keys against the producer’s declared sources. The producer must set `report["motor_sha256"] = motor_id["sha256"]` from its audited checkpoint and check the same file again after joint training. A missing stable key fails the evaluation before any native reset.
 
 Before constructing any simulator session, the evaluator verifies both file hashes and audits the motor’s saved training and validation episode records, validation anchors, pose split and instruction. The motor loader verifies the original PaliGemma snapshot and restores the validation-selected update. Both modules must have gradients disabled and be in evaluation mode. Target practice supplies transient context to this fixed policy. Target pulse responses supply only the privileged comparator.
 
