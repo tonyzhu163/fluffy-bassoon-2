@@ -143,7 +143,15 @@ def collect_attempt(root, body, pose, seed, route, limit):
             obs = env.reset(pose, seed)
             record["reset"] = env.reset_info
             scene = env.expert_scene()
-            expert = RimExpert(scene) if route == "inner_rim" else PushExpert(scene, route)
+            if route == "clearance":
+                from clearance_expert import ClearanceExpert
+
+                expert = ClearanceExpert(env, scene)
+                record.update(candidates=expert.scores, selected=expert.chosen)
+                if expert.chosen is None:
+                    raise Stalled("No collision-free accurate source path found by the bounded IK search")
+            else:
+                expert = RimExpert(scene) if route == "inner_rim" else PushExpert(scene, route)
             record["waypoints_xy"] = [p.tolist() for p in expert.points]
             prompt = obs["prompt"]
             horizon = min(limit, env.reset_info["max_steps"])
@@ -213,7 +221,7 @@ def main():
     parser.add_argument("--routes", type=lambda x: split_values(x, str), default=ROUTES)
     parser.add_argument("--max-steps", type=int, default=300, help="Per-attempt ceiling, capped by native horizon")
     args = parser.parse_args()
-    if not set(args.routes) <= {*ROUTES, "inner_rim"}:
+    if not set(args.routes) <= {*ROUTES, "inner_rim", "clearance"}:
         parser.error("Unknown demonstration route")
     if any(body not in COLLECTION_BODIES for body in args.bodies):
         parser.error(f"Collection bodies are {COLLECTION_BODIES}. IIWA is reserved.")
