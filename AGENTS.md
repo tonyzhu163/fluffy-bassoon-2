@@ -55,7 +55,10 @@ the [documentation index](docs/README.md). Keep LycoReco work and runs pinned to
   Preserve local changes when reconciling divergent checkouts.
 - Use Git directly where available. On Macs requiring a proxy, run `proxy_on`
   or `proxy_on_clash` in the same shell as Git. If remote Git access fails,
-  transfer a Git bundle. Use `rsync` or `scp` for artifacts.
+  transfer a Git bundle via `scp`. Never use browser/WebIDE file upload to sync
+  with servers; keep code in Git and sync artifacts directly over SSH (`rsync`
+  or `scp`) using the local `~/.ssh/config` host aliases (e.g. `baige-dev` for
+  `mwj-dangerous-dogs`).
 
 ## Compute and storage
 
