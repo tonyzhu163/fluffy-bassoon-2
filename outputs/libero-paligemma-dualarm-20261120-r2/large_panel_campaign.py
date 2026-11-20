@@ -30,6 +30,8 @@ def main(argv=None):
     parser.add_argument("--step", type=int, required=True, help="registered candidate update")
     parser.add_argument("--root", type=Path, default=Path("large-panel-v3"),
                         help="shared panel directory, relative to the campaign if not absolute (default: %(default)s)")
+    parser.add_argument("--prepare-fit", type=Path,
+                        help="fit defining panel exclusions (registered trio uses sft01/fit)")
     parser.add_argument("--sim", default=os.environ.get("CROSSARM_SIM_PYTHON"),
                         help="native simulator Python (defaults to CROSSARM_SIM_PYTHON)")
     parser.add_argument("--workers", type=int, choices=range(1, 9), default=8,
@@ -47,6 +49,10 @@ def main(argv=None):
     campaign = Path(os.environ["DUAL_OUTPUT"]).resolve().parent
     root = (campaign / args.root).resolve()
     fit = (campaign / args.fit).resolve(strict=True)
+    registered = {campaign / name / "fit" for name in ("sft01", "sft02", "sft03")}
+    prepare_fit = campaign / "sft01/fit" if fit in registered else fit
+    if args.prepare_fit is not None:
+        prepare_fit = (campaign / args.prepare_fit).resolve(strict=True)
     pin = os.environ["MOTOR_CODE_REVISION"]
     manifest = root / "dev" / "manifest.json"
     common = ["--root", root, "--phase", "dev"]

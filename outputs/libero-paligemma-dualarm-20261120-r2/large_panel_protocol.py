@@ -126,15 +126,18 @@ def candidate(fit, step):
                 prompt=contract["episodes"][0]["prompt"]), fit / file
 
 
-def check_prepared(panel, seeds, hashes):
-    # Candidates may train on different source banks. Every realized start
-    # must be disjoint from both the preparation fit and the candidate fit.
-    blocked_seeds = set(panel["fitting_seeds"]) | seeds
-    blocked_hashes = set(panel["fitting_hashes"]) | hashes
-    require(all(r["layout_seed"] not in blocked_seeds and
-                all(r[k] not in blocked_hashes for k in HASH_FIELDS) for r in panel["layouts"]),
-            "Prepared layout overlaps training or offline validation")
-    require(panel["implementation"] == implementation(), "Prepared panel uses a different implementation")
+def split_identity(contract):
+    # All 50 released donor rows and placements are already in the native denylist.
+    # Registered fits may use different repeats/subsets of the same released split.
+    generated = {digest({k: o[k] for k in (*HASH_FIELDS, "layout_seed")})
+                 for r in contract["episodes"] if (o := r.get("layout_origin")) is not None}
+    return dict(released_train=[0, 27], released_validation=[28, 31], generated=sorted(generated))
+
+
+def check_prepared(panel, contract, seeds, hashes):
+    require(panel["fitting_split"] == split_identity(contract), "Prepared panel uses a different fitting split")
+    require(not any(r["layout_seed"] in seeds or any(r[k] in hashes for k in GEOMETRY_FIELDS)
+                    for r in panel["layouts"]), "Evaluation overlaps candidate fit exposure")
 
 
 def check_preflight(row):
@@ -161,7 +164,7 @@ def check_preflight(row):
 
 def manifest(root, phase, fit=None):
     import numpy as np
-    from large_panel_audit import audit_pair
+    from large_panel_audit import audit_pair, check_report
     from generated_split import BANK_SHA, TASK, expect, public_denylist, validate_origin
 
     path = root / phase / "manifest.json"
@@ -177,13 +180,12 @@ def manifest(root, phase, fit=None):
             sorted(seeds + rejected) == list(range(start, seeds[-1] + 1)), "Panel seed order or coverage changed")
     expect(data, TASK)
     require(read(path.parent / "prepare-contract.json") == {
-            k: data[k] for k in ("phase", "revision", "implementation", "fitting_seeds", "fitting_hashes",
+            k: data[k] for k in ("phase", "revision", "implementation", "fitting_split",
                                  "development_selection_sha256")}, "Panel differs from preparation contract")
+    require(data["implementation"] == implementation(), "Prepared evaluator differs")
     if fit is not None:
-        _, fit_seeds, fit_hashes = training(fit)
-        check_prepared(data, fit_seeds, fit_hashes)
-    else:
-        require(data["implementation"] == implementation(), "Prepared panel uses a different implementation")
+        require(data["revision"] == os.environ.get("MOTOR_CODE_REVISION"), "Source and prepare code pins differ")
+        check_prepared(data, *training(fit))
     public = data["released"]
     require(data["released_bank_sha256"] == BANK_SHA, "Unexpected released source bank")
     public_denylist([r["initial_state_sha256"] for r in public])
@@ -214,9 +216,8 @@ def manifest(root, phase, fit=None):
             for arm, ab in r["camera_ab"].items():
                 rendered = ab["rendered"]
                 vendor, renderer = rendered["renderer"]
-                require("NVIDIA" in vendor.upper() and renderer and
-                        audit_pair(r["preflight"][arm], rendered) == ab["comparison"],
-                        "Camera qualification differs from paired numerical readback")
+                require("NVIDIA" in vendor.upper() and renderer, "Invalid camera qualification renderer")
+                check_report(ab["comparison"], audit_pair(r["preflight"][arm], rendered))
     previous = manifest(root, "dev", fit=fit)["layouts"] if phase == "test" else []
     fitting = set(data["fitting_hashes"])
     for reserved, _, _ in PHASES.values():
@@ -295,7 +296,7 @@ def evidence(stage, arm, row):
 
 def check_opening(stage, arm, row, contract, observation, reset, *, create=True):
     """Pin the first rendered opening for an arm/layout and verify every candidate against it."""
-    from large_panel_audit import audit_pair, check_admission
+    from large_panel_audit import ResetMismatch, audit_pair, check_admission, check_report
     import struct
 
     check_admission(row, arm, reset)
@@ -317,7 +318,17 @@ def check_opening(stage, arm, row, contract, observation, reset, *, create=True)
     opening = read(path)
     require(opening["identity"] == identity, "Rendered opening differs across candidates")
     audit_pair(row["preflight"][arm], opening["admission"])
-    audit_pair(opening["admission"], reset["admission"])
+    try:
+        paired = audit_pair(opening["admission"], reset["admission"])
+    except ResetMismatch as exc:
+        if create:
+            from uuid import uuid4
+            bind(stage / "errors" / arm / f"{row['layout_seed']}-{uuid4().hex}.json", exc.report)
+        raise
+    if create:
+        reset["paired_rendered_audit"] = paired
+    else:
+        check_report(reset["paired_rendered_audit"], paired)
 
 
 def check_tape(stage, arm, row, contract, recover=False):

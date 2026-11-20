@@ -12,11 +12,11 @@ campaign=/mowenjie/fluffy-bassoon-2/$run
 fit=$campaign/sft01/fit
 panel=$campaign/large-panel-v3
 bash "$run/run.sh" "$PIN" lpbase03 vlm large_panel_campaign.py --fit "$fit" --step 1600
-bash "$run/run.sh" "$PIN" lpconv03 vlm large_panel_campaign.py --fit "$CONVENTIONAL_FIT" --step 6400
-bash "$run/run.sh" "$PIN" lpservo03 vlm large_panel_campaign.py --fit "$SERVO_FIT" --step 6400
+bash "$run/run.sh" "$PIN" lpconv03 vlm large_panel_campaign.py --fit sft02/fit --step 6400
+bash "$run/run.sh" "$PIN" lpservo03 vlm large_panel_campaign.py --fit sft03/fit --step 6400
 ```
 
-The wrapper invokes prepare with `CROSSARM_SIM_PYTHON` (or `--sim`), then invokes source and aggregate with the current VLM executable. The prepare lock covers generation and publication. A second fit with the same fitting split can reuse the panel. The manifest records which fit first prepared it. Each completed preflight row and rollout survives a restart. Retry with a fresh launcher attempt name and the same panel, pin, fit and step.
+The wrapper invokes prepare with `CROSSARM_SIM_PYTHON` (or `--sim`), then invokes source and aggregate with the current VLM executable. The prepare lock covers generation and publication. The released train/validation split and generated training geometries identify a compatible fit. Different repeats or subsets of the known released layouts can share the panel because all 50 released rows are already excluded. Each fit also undergoes its own exposure check. The wrapper uses `sft01/fit` as the common preparation fit for the registered trio so scheduling order cannot change its provenance. Other fit paths default to their own fit for preparation. Each completed preflight row and rollout survives a restart. Retry with a fresh launcher attempt name and the same panel, pin, fit and step.
 
 The prepare command publishes `dev/manifest.json` and `dev/rows/*.npy` before scoring. Source writes one native tape and digest per layout and arm beneath `dev/scores/<checkpoint-sha>/stride-5/`. Aggregate writes `report.json` there only after all 100 episodes validate. The default rollout uses eight independent native processes, one batched frozen motor, and five issued controls per replan. One arm or a zero-based layout shard can be selected with `--arm Panda` or `--shard-index I --shard-count N`.
 
@@ -63,7 +63,7 @@ Target initialization requires a fully audited passing sealed source panel. A ta
 
 ## Static review of the v2 reset failure
 
-At `e2f794c4`, the reported CPU prepare completed 50 layouts. The GPU failure occurred before a policy action. Both reset routes load the same donor and call the native stabilization procedure. The camera-free route substitutes a camera-free ControlEnv and public observation adapter. The rendered route constructs OffScreenRenderEnv and reads both cameras. The old equality check included `initial_state_fingerprint` (the **post-settle** time, qpos and qvel) and `post_settle_scene_fingerprint` (world poses). Either hash can change with a single floating-point bit. The error message alone cannot identify a joint, establish the size of a difference, or attribute it to rendering, threading or hardware.
+At `e2f794c4`, the reported CPU prepare completed 50 layouts. The GPU failure occurred before a policy action. Both reset routes load the same donor and call the native stabilization procedure. The camera-free route substitutes a camera-free ControlEnv and public observation adapter. The rendered route constructs OffScreenRenderEnv and reads both cameras. The old equality check included `initial_state_fingerprint` (the **post-settle** time, qpos and qvel) and `post_settle_scene_fingerprint` (world poses). Either hash can change with a single floating-point bit. On seed 740000 the independent Baige diagnostic measured zero same-host full-state and wrist-state differences with cameras enabled versus disabled on both arms. Both settled hashes changed relative to the CPU preparation. The maximum body displacement from the prepared Panda reference was 1.735 × 10⁻¹⁸ m. This isolates the observed failure to cross-host bitwise comparison for that seed. V2 did not retain the CPU per-joint values needed to measure cross-host velocity or joint errors. [Diagnostic receipt](evidence/phys01/diagnostic.json)
 
 V3 records each arm's full named joint coordinates and velocities, exact simulation time, public wrist/jaw state, and all named task-body poses. Reassembling the coordinates must reproduce both the raw little-endian float64 hash and the native framed hash. Object poses must reproduce their independent native fingerprint. Donor, pre-settle scene, seed, perturbation plan, compiled model identity, admission checks and renderer provenance remain explicit. Native admission still checks initial success, deep and non-support contacts, and welded fixture overlaps.
 
@@ -78,4 +78,6 @@ The same-arm position and angle limits are 1% of the native cross-arm limits. On
 
 On the first admitted seed, prepare runs a controlled camera-free/rendered A/B on **each** source arm using the identical donor in the native interpreter. The first layout's `camera_ab` entry retains both comparisons and rendered measurements. Every scored opening repeats the comparison against its own arm's camera-free reference. The shared per-arm, per-seed opening binds the exact RGB frames and prompt across candidates and checks the numerical state before inference. The target evaluator continues to require identical visible openings across conditions and to verify native reward tapes. [Native reset](large_panel_sim.py) · [Numerical audit](large_panel_audit.py) · [Tape readback](large_panel_protocol.py)
 
-This review covers the code paths and receipt formats. The live native error magnitudes and v3 source outcomes require the qualified runtime.
+The old trajectory audit compared the saved proposal prefix with an action array copied from that same proposal. V3 records the issued action and step index returned by ArmEnv. The scorer and tape reader require consecutive native step indices and check the issued controls against the selected prefix, including an early terminal step.
+
+Static checks cover module compilation, CLI routing and agreement between the native packet and tape reader. The v3 campaign and its source outcomes await execution on the qualified runtime.

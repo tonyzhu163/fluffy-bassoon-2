@@ -133,6 +133,20 @@ def audit_pair(reference, observed):
     return report
 
 
+def check_report(stored, measured):
+    # Re-read on a different CPU/libm. The admission decision above always uses
+    # the full unrounded values; this allowance is only for recomputing distances.
+    ensure(stored.keys() == measured.keys() and stored["hashes"] == measured["hashes"] and
+           stored["limits"] == measured["limits"], "Different reset audit identity or tolerances")
+    def equal_values(left, right):
+        return left.keys() == right.keys() and all(
+            math.isclose(left[k], right[k], rel_tol=1e-12, abs_tol=1e-15) for k in right)
+    ensure(equal_values(stored["max_errors"], measured["max_errors"]) and
+           stored["errors"].keys() == measured["errors"].keys() and
+           all(equal_values(stored["errors"][k], v) for k, v in measured["errors"].items()),
+           "Saved paired reset errors differ from numerical readback")
+
+
 def check_admission(row, arm, reset):
     a, p = reset["admission"], reset["environment_reproducibility"]
     ref = row["preflight"][arm]
@@ -142,5 +156,5 @@ def check_admission(row, arm, reset):
            and "NVIDIA" in a["renderer"][0].upper() and a["renderer"][1] and ref["renderer"] == [],
            "Rendered reset metadata differs from native receipt")
     report = audit_pair(ref, a)
-    ensure(reset["paired_reset_audit"] == report, "Saved paired reset errors differ from numerical readback")
+    check_report(reset["paired_reset_audit"], report)
     return report

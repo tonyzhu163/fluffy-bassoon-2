@@ -11,7 +11,7 @@ from uuid import uuid4
 from large_panel_audit import ResetMismatch, audit_pair, capture
 from large_panel_protocol import (
     ARMS, GEOMETRY_FIELDS, PHASES, audit_development, bind, directory, implementation,
-    lock, manifest, mobile_joints, publish, read, report_for, require, selection, sha, training,
+    lock, manifest, mobile_joints, publish, read, report_for, require, selection, sha, split_identity, training,
 )
 
 HERE = Path(__file__).resolve().parent
@@ -127,7 +127,8 @@ def prepare(args):
     from expert import session
     root, phase = args.root, args.phase
     first, count, threshold = PHASES[phase]
-    _, training_seeds, training_hashes = training(args.fit)
+    fit_contract, training_seeds, training_hashes = training(args.fit)
+    fitting_split = split_identity(fit_contract)
     seal_sha = None
     prior = []
     if phase == "test":
@@ -142,17 +143,21 @@ def prepare(args):
         versions = implementation()
         revision = os.environ.get("MOTOR_CODE_REVISION")
         bind(base / "prepare-contract.json", dict(phase=phase, revision=revision, implementation=versions,
-             fitting_seeds=sorted(training_seeds), fitting_hashes=sorted(training_hashes),
-             development_selection_sha256=seal_sha))
+             fitting_split=fitting_split, development_selection_sha256=seal_sha))
         if (base / "manifest.json").exists():
             # Publish the digest last. Recover a crash after atomic manifest publication.
             bind(base / "manifest.sha256.json", sha(base / "manifest.json"))
             existing = manifest(root, phase, fit=args.fit)
             require(existing["development_selection_sha256"] == seal_sha, "Prepared under another selection")
             return
+        provenance = base / "preparing-fit.json"
+        if not provenance.exists():
+            bind(provenance, dict(preparation_fit_sha256=sha(args.fit / "manifest.json"),
+                                  fitting_seeds=sorted(training_seeds), fitting_hashes=sorted(training_hashes)))
+        original_fit = read(provenance)
         public = released()
         fields = GEOMETRY_FIELDS
-        seen = {k: {r[k] for r in (*public, *prior) if k in r} | training_hashes for k in fields}
+        seen = {k: {r[k] for r in (*public, *prior) if k in r} | set(original_fit["fitting_hashes"]) for k in fields}
         layouts, rejected = [], []
         with closing(g.make_sampler()) as sampler:
             for seed in range(first, first + 10000):
@@ -212,11 +217,10 @@ def prepare(args):
         bind(base / "manifest.json", dict(phase=phase, size=count, required=threshold,
              seed_range=[first, first+9999], suite=g.SUITE, task_id=g.TASK, case=g.CASE,
              released_bank_sha256=g.BANK_SHA, released=public, layouts=layouts, rejected=rejected,
-             preparation_fit_sha256=sha(args.fit / "manifest.json"), development_selection_sha256=seal_sha,
-             fitting_seeds=sorted(training_seeds), fitting_hashes=sorted(training_hashes),
+             **original_fit, development_selection_sha256=seal_sha, fitting_split=fitting_split,
              revision=revision, implementation=versions))
         bind(base / "manifest.sha256.json", sha(base / "manifest.json"))
-        manifest(root, phase)
+        manifest(root, phase, fit=args.fit)
 
 
 def serve(fd, root, phase, arm):
