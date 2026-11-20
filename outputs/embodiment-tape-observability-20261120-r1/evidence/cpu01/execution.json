@@ -1,0 +1,59 @@
+{
+  "pin": "b1eb9dd72be6cff3dcedfb256ecd47e176dc25e6",
+  "detached": true,
+  "host": "aibox-r855e239307b-6bfb688cdd-lz2dx",
+  "allocation": "mwj-dangerous-dogs / dv-63739b1202",
+  "cpu_max": "800000 100000",
+  "memory_max": 34359738368,
+  "accelerator_cards": 0,
+  "thread_count": 1,
+  "python": "3.11.14",
+  "numpy": "1.26.4",
+  "started_utc": "2026-11-20T07:39:42.801+00:00",
+  "steps": [
+    {
+      "name": "self-test",
+      "argv": [
+        "/mowenjie/fluffy-bassoon-2/setups/libero-meta-learning-20261117-r1/env/bin/python",
+        "-B",
+        "/mowenjie/fluffy-bassoon-2/outputs/embodiment-tape-observability-20261120-r1/setup/source-b1eb9dd7/outputs/embodiment-tape-observability-20261120-r1/estimate.py",
+        "--self-test"
+      ],
+      "started_utc": "2026-11-20T07:39:42.801+00:00",
+      "elapsed_seconds": 0.247714,
+      "exit": 0
+    },
+    {
+      "name": "estimate",
+      "argv": [
+        "/mowenjie/fluffy-bassoon-2/setups/libero-meta-learning-20261117-r1/env/bin/python",
+        "-B",
+        "/mowenjie/fluffy-bassoon-2/outputs/embodiment-tape-observability-20261120-r1/setup/source-b1eb9dd7/outputs/embodiment-tape-observability-20261120-r1/estimate.py",
+        "--tapes",
+        "/mowenjie/fluffy-bassoon-2/outputs/embodiment-command-frame-20261120-r1/native02/collection/tapes.jsonl",
+        "--out",
+        "/mowenjie/fluffy-bassoon-2/outputs/embodiment-tape-observability-20261120-r1/cpu01/estimate"
+      ],
+      "started_utc": "2026-11-20T07:39:43.051+00:00",
+      "elapsed_seconds": 0.201253,
+      "exit": 0
+    },
+    {
+      "name": "factor",
+      "argv": [
+        "/mowenjie/fluffy-bassoon-2/setups/libero-meta-learning-20261117-r1/env/bin/python",
+        "-B",
+        "/mowenjie/fluffy-bassoon-2/outputs/embodiment-tape-observability-20261120-r1/setup/source-b1eb9dd7/outputs/embodiment-tape-observability-20261120-r1/factor.py",
+        "--tapes",
+        "/mowenjie/fluffy-bassoon-2/outputs/embodiment-command-frame-20261120-r1/native02/collection/tapes.jsonl",
+        "--out",
+        "/mowenjie/fluffy-bassoon-2/outputs/embodiment-tape-observability-20261120-r1/cpu01/factor"
+      ],
+      "started_utc": "2026-11-20T07:39:43.252+00:00",
+      "elapsed_seconds": 0.184642,
+      "exit": 0
+    }
+  ],
+  "elapsed_seconds": 0.635676,
+  "ended_utc": "2026-11-20T07:39:43.437+00:00"
+}

@@ -130,6 +130,8 @@ A randomized single-retry scorer averaged 19.0/32 development successes. Giving 
 
 ### Embodiment and calibration controls
 
+- On the archived Panda/Sawyer command-frame panel, a four-step physical estimator recovered the nearer hidden yaw in 27/32 practices versus 20/32 using the current step alone. On separate query resets its normalized XY motion MSE was 0.9508 with matching practice, 1.0988 with swapped practice and 0.9948 with a fixed common correction. The paired interval for the fixed-common comparison crossed zero. Mean absolute angle error was 30.3°, with yaw and gain coupled in the two tested settings. [Run and limitations](../outputs/embodiment-tape-observability-20261120-r1/RESULT.md)
+
 - At fixed training cost on simulated Panda and Sawyer, four source command settings per arm reduced the reader’s held-out motion MSE by 3.75% on a new angle and 4.01% on a new yaw–gain combination versus the two-setting fits. Both missed the registered 10% threshold. Matching versus swapped support gave 0.53594 versus 0.53591 across the two arms. The 256 native practice/query tapes and nine reader fits measured response prediction. The held-out-arm task-success question remains open. [Results and controls](../outputs/embodiment-command-frame-20261120-r1/RESULT.md)
 
 - An explicit hard bypass reproduced all 19,563 issued actions byte-for-byte from 100 native Panda/Sawyer source rollouts. The residual was never called on the closed branch. This is an archived-action check. Learned abstention and closed-loop gains remain open. [Identity audit](../outputs/embodiment-meta-factory-20261120-r1/identity-native.json)
