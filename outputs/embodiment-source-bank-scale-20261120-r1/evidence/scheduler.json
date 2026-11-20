@@ -1,0 +1,150 @@
+{
+  "cluster": "Baige Beijing Distributed Training",
+  "queue": "aihcq-rh0wwk9muei4",
+  "template_resources": {
+    "pool": "Pro6K",
+    "model": "NVIDIA RPBZZZ6",
+    "workers": 1,
+    "gpus": 1,
+    "cpu": 12,
+    "memory_gib": 96,
+    "shm_gib": 8,
+    "retries": 0,
+    "time_limit_minutes": 95,
+    "image": "ccr-registry.baidubce.com/aihc/nvcr.io/nvidia/pytorch:2.7.0-cu12.8.0-py3.12-ubuntu24.04"
+  },
+  "duplicate_checks": {
+    "before_fit": "All seven R2 fit manifests inspected on PFS. Zero with the 19 registered ordered indexes. Scheduler had no matching active or newer fit.",
+    "before_score": "Fresh all-pools scheduler list since fit submission, including concurrent sticks, held-out-arm and contact work. No matching scorer. Zero source dev scorer directories for the final checkpoint SHA. Checked again in score.sh."
+  },
+  "one_bank_native_recount": {
+    "pfs_readback": "/mowenjie/fluffy-bassoon-2/outputs/embodiment-source-bank-scale-20261120-r1/evidence/one-bank-verification.json",
+    "sha256": "ba9e69af45b01e709bfb6d369048e93b4d5b071e8a7880005ec883f2d8e1b5cc",
+    "utc": "2026-11-20T08:40:07.047000+00:00",
+    "original_aggregate_sha256": "149513cb3e514ec908ddb9500fe1bdc7a1ce97ada893ff0637ff0227d7a42cc0",
+    "recount": {
+      "Panda": 23,
+      "Sawyer": 16
+    },
+    "tapes_hashed": 100
+  },
+  "budget_gpu_hours": 3,
+  "jobs": [
+    {
+      "stage": "fit",
+      "job": "job-29i0nmouha71",
+      "display_name": "mwj_1120_paligemma_dual_scale3_fit01mwj_1120_sticks_phase0_gate_r1",
+      "copied_job": "job-l5dd256gvivo",
+      "status": "Succeeded",
+      "cards": 1,
+      "queue_free_at_submission": 72,
+      "personal_free_at_submission": 28,
+      "submitted": "2026-11-20T16:37:47+08:00",
+      "running": "2026-11-20T16:38:06+08:00",
+      "terminal": "2026-11-20T16:58:38+08:00",
+      "pod_created": "2026-11-20T16:37:50+08:00",
+      "pod_ended": "2026-11-20T16:58:34+08:00",
+      "pod_seconds": 1244,
+      "scheduler_running_seconds": 1232,
+      "submission_to_terminal_seconds": 1251,
+      "command": "set -eu\nr=/mowenjie/fluffy-bassoon-2\nn=libero-paligemma-dualarm-20261120-r2\np=29f1db5581f1a674002cebff2ef723342e8a6604\ne=$r/outputs/embodiment-source-bank-scale-20261120-r1/evidence\ntest ! -e \"$r/outputs/$n/scale3fit01\"\nsha256sum -c \"$e/fit-inputs.sha256\"\nexec bash \"$r/setups/$n/source-29f1db55/outputs/$n/run.sh\" \"$p\" scale3fit01 vlm expanded_source_fit.py --parent sft03 --banks gendemos01 gendemos02 gendemos03 --steps 6400"
+    },
+    {
+      "stage": "score",
+      "job": "job-q4ftsy8od11t",
+      "display_name": "mwj_1120_paligemma_dual_scale3_dev50",
+      "copied_job": "job-alhror6iloul",
+      "status": "Succeeded",
+      "cards": 1,
+      "queue_free_at_submission": 45,
+      "personal_free_at_submission": 29,
+      "submitted": "2026-11-20T16:59:41+08:00",
+      "running": "2026-11-20T16:59:56+08:00",
+      "terminal": "2026-11-20T17:06:48+08:00",
+      "pod_created": "2026-11-20T16:59:43+08:00",
+      "pod_ended": "2026-11-20T17:06:30+08:00",
+      "pod_seconds": 407,
+      "scheduler_running_seconds": 412,
+      "submission_to_terminal_seconds": 427,
+      "command": "set -eu\nf=/mowenjie/fluffy-bassoon-2/outputs/embodiment-source-bank-scale-20261120-r1/evidence/score.sh\nprintf '%s  %s\\n' 4e28e7244b8f1caacf6c0807244b169252417391136e9d66abfd847bb4ae7587 \"$f\" | sha256sum -c -\nexec bash \"$f\" 6e2f692b1f617e1430162dfc74d1c9044e8bee3932048d91084cf3ed352dd050 e3c07a2faa05a7fc69e60c2813c32c417173e70be3b7f2ba05bf2f821e60dea7 bfdb594d02cf7b45565b0dae8de83618de00d77e7e2324c4e41ec5a0318daef8"
+    }
+  ],
+  "pfs_stages": {
+    "scale3fit01": {
+      "revision": "29f1db5581f1a674002cebff2ef723342e8a6604",
+      "host": "job-29i0nmouha71-master-0",
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-paligemma-dualarm-20261120-r2/scale3fit01",
+      "exit": 0,
+      "start": 1795163889,
+      "end": 1795165114,
+      "seconds": 1225,
+      "probe_sha256": "f7a8f038000f6f16d4b9a9bb3bd53eef97956b115f7c9dcdc6ef1479dded4430",
+      "log_sha256": "90afa1bf1ec048ac2993e9b0cf8b9188a2b1ad78b473c2f867a44d04290aee62",
+      "gpu": "NVIDIA RPBZZZ6",
+      "gpu_uuid": "GPU-450328e3-4c26-dfb0-abe3-3e846e9c5aa3",
+      "gpu_bytes": 101973950464,
+      "allocation_type": "baige_container",
+      "exclusive": true
+    },
+    "scale3prep01": {
+      "revision": "e2f794c41c9141a7aadaf67339da919336362f22",
+      "host": "job-q4ftsy8od11t-master-0",
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-paligemma-dualarm-20261120-r2/scale3prep01",
+      "exit": 0,
+      "start": 1795165195,
+      "end": 1795165334,
+      "seconds": 139,
+      "probe_sha256": "a19041755749f82cf35e150ef1c94c2b3925dcfe6be138ae322ff8870a067d84",
+      "log_sha256": "75864f5e718f81cd3b2aa2135d996b32ae44151dead89034e577ae8ecc29eb01",
+      "gpu": "NVIDIA RPBZZZ6",
+      "gpu_uuid": "GPU-450328e3-4c26-dfb0-abe3-3e846e9c5aa3",
+      "gpu_bytes": 101973950464,
+      "allocation_type": "baige_container",
+      "exclusive": true
+    },
+    "scale3score01": {
+      "revision": "e2f794c41c9141a7aadaf67339da919336362f22",
+      "host": "job-q4ftsy8od11t-master-0",
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-paligemma-dualarm-20261120-r2/scale3score01",
+      "exit": 0,
+      "start": 1795165334,
+      "end": 1795165587,
+      "seconds": 253,
+      "probe_sha256": "553e58c80810390f0a998dff3003b20844a96c4df7d89f41ab34fa0e9e4e4449",
+      "log_sha256": "55a1b62ef08cd49ce659db1f258d1a4298ac2b78ac0a50297ba8da9d304d5c8d",
+      "gpu": "NVIDIA RPBZZZ6",
+      "gpu_uuid": "GPU-450328e3-4c26-dfb0-abe3-3e846e9c5aa3",
+      "gpu_bytes": 101973950464,
+      "allocation_type": "baige_container",
+      "exclusive": true
+    },
+    "scale3sum01": {
+      "revision": "e2f794c41c9141a7aadaf67339da919336362f22",
+      "host": "job-q4ftsy8od11t-master-0",
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-paligemma-dualarm-20261120-r2/scale3sum01",
+      "exit": 0,
+      "start": 1795165587,
+      "end": 1795165590,
+      "seconds": 3,
+      "probe_sha256": "16036fe806b76629b97f050d039e3926991c77cf077282b3c133c1431517117c",
+      "log_sha256": "8d662eadc1976eb30c6c7a24dbda5b0d596e76c53098b0d55b11acb1427011bd",
+      "gpu": "NVIDIA RPBZZZ6",
+      "gpu_uuid": "GPU-450328e3-4c26-dfb0-abe3-3e846e9c5aa3",
+      "gpu_bytes": 101973950464,
+      "allocation_type": "baige_container",
+      "exclusive": true
+    }
+  },
+  "total_seconds": {
+    "pod_seconds": 1651,
+    "scheduler_running_seconds": 1644,
+    "submission_to_terminal_seconds": 1678,
+    "in_launcher_seconds": 1620
+  },
+  "total_gpu_hours": {
+    "pod_seconds": 0.45861111111111114,
+    "scheduler_running_seconds": 0.45666666666666667,
+    "submission_to_terminal_seconds": 0.4661111111111111,
+    "in_launcher_seconds": 0.45
+  }
+}
