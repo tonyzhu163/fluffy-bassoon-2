@@ -22,7 +22,7 @@ def main():
                     "--bank",*map(str,args.banks)],check=True)
     receipt=capture/"capture.json"
     digest=hashlib.sha256(receipt.read_bytes()).hexdigest()
-    subprocess.run([os.environ["CROSSARM_SIM_PYTHON"],"-Bu",str(code),"teach","--capture",str(receipt),
+    subprocess.run([os.environ["CROSSARM_SIM_PYTHON"],"-Bu",str(code),"collect","--capture",str(receipt),
                     "--capture-sha256",digest,"--out",str(root/"bank")],check=True)
 
 
