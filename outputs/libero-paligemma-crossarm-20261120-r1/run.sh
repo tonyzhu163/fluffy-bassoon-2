@@ -2,12 +2,14 @@
 # Run inside a single exclusive Baige Distributed Training container.
 set -euo pipefail
 
-if [[ $# != 2 || ! $2 =~ ^[a-z0-9]+$ ]]; then
-    echo 'Usage: bash run.sh FULL_GIT_PIN FRESH_ATTEMPT' >&2
+if [[ $# -lt 2 || $# -gt 3 || ! $2 =~ ^[a-z0-9]+$ ]]; then
+    echo 'Usage: bash run.sh FULL_GIT_PIN FRESH_ATTEMPT [reader]' >&2
     exit 2
 fi
 pin=$1
 attempt=$2
+mode=${3:-pipeline}
+[[ $mode == pipeline || $mode == reader ]]
 here=$(cd "$(dirname "$0")" && pwd)
 code=$(git -C "$here" rev-parse --show-toplevel)
 root=/mowenjie/fluffy-bassoon-2
@@ -76,6 +78,10 @@ export LD_LIBRARY_PATH="$glvnd:$libs/prefix/lib/x86_64-linux-gnu$driver_paths"
 export __EGL_VENDOR_LIBRARY_FILENAMES="$libs/nvidia-vendor.json"
 "$probe_python" -Bu "$code/scripts/[train]gpu_probe.py" --expected-count 1 --purpose training \
     --baige-container --baige-exclusive-training --output "$out/gpu.json"
+if [[ $mode == reader ]]; then
+    "$probe_python" -Bu "$here/pretrain_reader.py" --out "$out/pretrain" --revision "$pin"
+    exit 0
+fi
 
 "$probe_python" - "$weights" "$out/weight-source.json" <<'PYCODE'
 import json
