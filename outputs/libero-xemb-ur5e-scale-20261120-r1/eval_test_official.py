@@ -16,7 +16,7 @@ BASE_DIR = Path(__file__).resolve().parents[1] / "libero-xemb-ur5e-sysid-2026112
 if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 
-from fluffy_bassoon.xemb.embodiment import ALL_EMBODIMENTS, EVAL_REGIMES, get_embodiment_spec
+from fluffy_bassoon.xemb.embodiment import EVAL_EMBODIMENTS, EVAL_REGIMES, get_embodiment_spec
 from fluffy_bassoon.xemb.readers import (
     ReaderConfig,
     analytic_proprio_sysid,
@@ -61,7 +61,7 @@ def build_test_plan():
     plan = []
     idx = 0
     for suite, tid in tasks:
-        for spec in ALL_EMBODIMENTS:
+        for spec in EVAL_EMBODIMENTS:
             plan.append(
                 dict(
                     index=idx,
