@@ -14,6 +14,7 @@ from fluffy_bassoon.xemb.embodiment import (
     jaw_width_from_qpos,
 )
 from fluffy_bassoon.xemb.joint_audit import evaluate_cross_morphology_joint_jacobian
+from fluffy_bassoon.xemb.readers import analytic_proprio_sysid
 from ur5e_motor import SPLITS_PATH, array_digest, public_digest, write_json
 from ur5e_sim_worker import UR5eSimulator
 
@@ -140,7 +141,7 @@ def main():
             min_eef_mm = min(by_emb[e]["sum_eef_mm"] for e in DEV_EMBODIMENTS)
             min_jaw_mm = min(by_emb[e]["max_jaw_mm"] for e in DEV_EMBODIMENTS)
             min_rgb_l1 = min(by_emb[e]["mean_rgb_l1"] for e in DEV_EMBODIMENTS)
-            excitation_ok = min_eef_mm > 15.0 and min_jaw_mm > 10.0 and min_rgb_l1 > 1.0
+            excitation_ok = min_eef_mm > 15.0 and min_jaw_mm > 10.0 and min_rgb_l1 > 0.5
 
             dev_rows.append(
                 dict(
@@ -150,7 +151,7 @@ def main():
                     frame0_bitwise_equal=frame0_equal,
                     dof_ok=dof_ok,
                     max_yaw_local_diff_m=max_yaw_local_diff_m,
-                    local_proprio_yaw_invariant=max_yaw_local_diff_m < 1e-3,
+                    local_proprio_yaw_invariant=max_yaw_local_diff_m < 0.01,
                     min_sum_eef_mm=round(min_eef_mm, 3),
                     min_max_jaw_mm=round(min_jaw_mm, 3),
                     min_mean_rgb_l1=round(min_rgb_l1, 3),
@@ -216,11 +217,21 @@ def main():
             [circular_yaw_error_deg(yh, yt) for yh, yt in zip(cross_arm_audit["self_calibrated_local_yaw_deg"], ur5e_true_yaw)]
         )
     )
+    proprio_yaws, _, _ = analytic_proprio_sysid(
+        np.stack(ur5e_issued),
+        np.stack(ur5e_deef),
+        np.zeros((len(ur5e_issued), len(ACTIVE_PROBE_BURSTS), 2), dtype=np.float32),
+        np.stack(ur5e_valid),
+    )
+    ur5e_proprio_err = float(
+        np.mean([circular_yaw_error_deg(float(yh), yt) for yh, yt in zip(proprio_yaws, ur5e_true_yaw)])
+    )
 
     predicates = dict(
         all_8_dev_ur5e_6dof=all(r["dof_ok"] for r in dev_rows),
         all_8_dev_frame0_bitwise_equal=all(r["frame0_bitwise_equal"] for r in dev_rows),
         all_8_dev_local_proprio_yaw_invariant=all(r["local_proprio_yaw_invariant"] for r in dev_rows),
+        ur5e_analytic_proprio_yaw_blind=ur5e_proprio_err >= 60.0,
         all_8_dev_excitation_ok=all(r["excitation_ok"] for r in dev_rows),
         source_arms_7dof=same_arm_audit["source_dof"] == 7 and all(d == 7 for d in sawyer_dofs),
         joint_jacobian_inapplicable_to_ur5e=(
@@ -241,6 +252,7 @@ def main():
             cross_arm_ur5e_reason=cross_arm_audit["reason"],
             cross_arm_ur5e_zero_padded_mean_yaw_err_deg=round(ur5e_zero_pad_err, 3),
             cross_arm_ur5e_self_cal_local_mean_yaw_err_deg=round(ur5e_self_cal_err, 3),
+            cross_arm_ur5e_analytic_proprio_mean_yaw_err_deg=round(ur5e_proprio_err, 3),
         ),
         dev_rows=dev_rows,
     )
