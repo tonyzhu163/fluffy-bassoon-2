@@ -20,19 +20,37 @@ IIWA_XML_SHA = "7eb9d87f431f7fbfcb0e028e608956aa2c2f7dc456abb0dfb6f234fd8044a5dd
 _BOX_SIGNS = np.array(list(product((-1, 1), repeat=3)))
 
 
-@lru_cache(maxsize=1)
-def _arm_class():
+@lru_cache(maxsize=None)
+def _arm_class(body):
     # Import only in the simulator interpreter. Share the prior module's registration
     # cache across direct Sessions, including an existing instance in this process.
+    write_setting = sys.dont_write_bytecode
+    sys.dont_write_bytecode = True  # The pinned sibling run is read-only, even for native callers.
     sys.path.insert(0, str(PRIOR))
     try:
         import arm_env
     finally:
         sys.path.remove(str(PRIOR))
+        sys.dont_write_bytecode = write_setting
     if Path(arm_env.__file__).resolve() != PRIOR / "arm_env.py":
         raise RuntimeError("Unexpected cross-arm simulator module")
+    from robosuite.models.robots import manipulators
+
+    stock = getattr(manipulators, body)
+    if (arm_env.REGISTERED_ROBOTS.setdefault(body, stock) is not stock or
+            arm_env.ROBOT_CLASS_MAPPING.setdefault(body, arm_env.SingleArm) is not arm_env.SingleArm):
+        raise RuntimeError(f"Conflicting robosuite factory for stock {body}")
     if arm_env.ARM_XML_SHA.setdefault("IIWA", IIWA_XML_SHA) != IIWA_XML_SHA:
         raise RuntimeError("Conflicting IIWA model identity")
+    arm_env._register_arm(body)
+    for placement in (arm_env.MountedPanda, arm_env.OnTheGroundPanda):
+        name = placement.__name__.removesuffix("Panda") + body
+        model = arm_env.REGISTERED_ROBOTS[name]
+        valid = model is placement if body == "Panda" else (
+            model.__bases__ == (stock,) and model.default_mount is placement.default_mount and
+            model.base_xpos_offset is placement.base_xpos_offset)
+        if not valid or arm_env.ROBOT_CLASS_MAPPING[name] is not arm_env.SingleArm:
+            raise RuntimeError(f"Incorrect registered placement or runtime for {name}")
     return arm_env.ArmEnv
 
 
@@ -40,7 +58,7 @@ def _public(packet):
     raw = packet["observation"]
     fingers = raw["robot0_gripper_qpos"]
     state = np.r_[raw["robot0_eef_pos"], raw["robot0_eef_quat_xyzw"], fingers[0] - fingers[1]]
-    return dict(rgb=raw["agentview_image"], wrist=raw["robot0_eye_in_hand_image"],
+    return dict(rgb=raw["agentview_image"].copy(), wrist=raw["robot0_eye_in_hand_image"].copy(),
                 state=state.astype(np.float32), prompt=packet["language_instruction"])
 
 
@@ -94,7 +112,7 @@ class _PushGeometry:
         obstacle = self._points("obstacle")
         fingers = self._points("fingers")
         center = self.data.body_xpos[self.plate_id]
-        contacts = [(c.geom1, c.geom2) for c in self.data.contact[:self.data.ncon]]
+        contacts = [(self.data.contact[i].geom1, self.data.contact[i].geom2) for i in range(self.data.ncon)]
         touching = any((a in self.ids["plate"] and b in self.ids["fingers"]) or
                        (b in self.ids["plate"] and a in self.ids["fingers"]) for a, b in contacts)
         return dict(plate=center.tolist(), plate_radius=float(np.linalg.norm(plate[:, :2] - center[:2], axis=1).max()),
@@ -109,13 +127,16 @@ class _PushGeometry:
 
 class _Native:
     def __init__(self, body, task_id):
-        self.arm = _arm_class()(arm=body, suite="libero_goal", task_id=task_id)
+        self.arm = _arm_class(body)(arm=body, suite="libero_goal", task_id=task_id)
         self.geometry = None
 
     def reset(self, pose, seed):
+        from OpenGL import GL
+
         self.geometry = None
         packet = self.arm.reset(init_state_id=pose, seed=seed)
         info = {k: packet[k] for k in ("model_identity", "environment_reproducibility", "max_steps")}
+        info["renderer"] = [(GL.glGetString(key) or b"").decode() for key in (GL.GL_VENDOR, GL.GL_RENDERER)]
         return _public(packet), info
 
     def step(self, action):
@@ -188,7 +209,9 @@ class Session:
         self.closed = False
         python = os.environ.get("CROSSARM_SIM_PYTHON")
         # Preserve the venv path: different environments can symlink the same binary.
-        if not python or os.path.abspath(shutil.which(python) or python) == os.path.abspath(sys.executable):
+        executable = Path(shutil.which(python) or python).absolute() if python else Path(sys.executable)
+        current = Path(sys.executable)
+        if executable.parent.resolve() == current.parent.resolve() and executable.samefile(current):
             self.native = _Native(body, task_id)
         else:
             self.pipe, peer = Pipe()
@@ -220,7 +243,8 @@ class Session:
 
     def step(self, action):
         action = np.asarray(action)
-        if action.shape != (7,) or action.dtype.kind not in "fiu" or not np.isfinite(action).all() or np.any(abs(action.astype(np.float64)) > 1):
+        if (action.shape != (7,) or action.dtype.kind not in "fiu" or not np.isfinite(action).all()
+                or np.any(abs(action.astype(np.float64)) > 1)):
             raise ValueError("Expected seven finite native actions in [-1, 1]")
         obs, motion, reward, done, success = self._call("step", action.astype(np.float32).tolist())
         if self.native is None:

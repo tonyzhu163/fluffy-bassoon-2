@@ -55,7 +55,7 @@ class PushExpert:
         clearance = s["finger_low"] - s["table_z"]
         # Place the lowest collision point within the vertical span of the rim.
         working_height = float(np.clip(0.24 * (s["rim_z"] - s["table_z"]), 0.0015, 0.004))
-        hover = 0.095
+        hover = 0.18
         offset = tcp[:2] - plate
         side_error = np.linalg.norm(offset - (offset @ direction) * direction)
         if self.phase == "lift" and clearance >= hover - 0.012:
@@ -76,8 +76,8 @@ class PushExpert:
                     raise Stalled("Plate stalled or finger slipped after two reseats")
                 self.phase_to("lift")
         self.ticks += 1
-        if self.phase != "push" and self.ticks > 65:
-            raise Stalled(f"Failed to reach {self.phase} waypoint in 65 controls")
+        if self.phase != "push" and self.ticks > 125:
+            raise Stalled(f"Failed to reach {self.phase} waypoint in 125 controls")
         xy = rear
         z = hover
         if self.phase == "lift":
@@ -107,10 +107,11 @@ def json_write(path, value):
     tmp.replace(path)
 
 
-def save_tape(path, frames, actions, motion, rewards, prompt, body, pose, seed):
+def save_tape(path, frames, actions, motion, rewards, terminal_state, prompt, body, pose, seed):
     arrays = {key: np.stack([obs[key] for obs in frames]) for key in ("rgb", "wrist", "state")}
     arrays.update(actions=np.stack(actions), motion=np.stack(motion), rewards=np.asarray(rewards, np.float32),
-                  prompt=np.asarray(prompt), body=np.asarray(body), pose=pose, seed=seed, native_success=True)
+                  terminal_state=terminal_state, prompt=np.asarray(prompt), body=np.asarray(body),
+                  pose=pose, seed=seed, native_success=True)
     n = len(actions)
     for key in ("rgb", "wrist"):
         if arrays[key].shape != (n, 256, 256, 3) or arrays[key].dtype != np.uint8:
@@ -135,6 +136,7 @@ def collect_attempt(root, body, pose, seed, route, limit):
     frames, actions, motion, rewards, trace = [], [], [], [], []
     stem = f"{body}-{pose}-{route}"
     failure = None
+    scene = None
     try:
         with Session(body, task_id=5) as env:
             obs = env.reset(pose, seed)
@@ -144,6 +146,7 @@ def collect_attempt(root, body, pose, seed, route, limit):
             record["waypoints_xy"] = [p.tolist() for p in expert.points]
             prompt = obs["prompt"]
             horizon = min(limit, env.reset_info["max_steps"])
+            done = False
             for _ in range(horizon):
                 a = expert.action(scene)
                 next_obs, measured, reward, done, success = env.step(a)
@@ -167,7 +170,7 @@ def collect_attempt(root, body, pose, seed, route, limit):
             if not record["native_success"]:
                 raise Stalled("Native termination without success" if done else "Collection step limit")
             path = Path(body) / f"{pose}.npz"
-            save_tape(root / path, frames, actions, motion, rewards, prompt, body, pose, seed)
+            save_tape(root / path, frames, actions, motion, rewards, obs["state"], prompt, body, pose, seed)
             record.update(accepted=True, file=str(path))
     except Stalled as exc:
         failure = str(exc)
@@ -176,7 +179,7 @@ def collect_attempt(root, body, pose, seed, route, limit):
         record["error"] = True
     record.update(steps=len(actions), native_return=float(sum(rewards)), terminal_reward=rewards[-1] if rewards else None,
                   phase_counts=dict(Counter(t["phase"] for t in trace)), contact_steps=sum(t["contact"] for t in trace))
-    if "scene" in locals():
+    if scene is not None:
         record["final_scene"] = scene
     if trace:
         record["initial_scene"] = trace[0]
