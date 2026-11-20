@@ -24,11 +24,11 @@ from fluffy_bassoon.xemb.readers import (
     image_motion,
     init_reader,
 )
-from collect_ur5e import DEV_ARM, SUPPORT_BUDGET, issued_exposure, run_active_probe_episode
+from collect_ur5e import CHUNK_SIZE, DEV_ARM, SUPPORT_BUDGET, issued_exposure, run_active_probe_episode
 from eval_live_ur5e import check_query_reset, infer_one, task_clustered_bootstrap
 from phase_a_hybrid import load_tagged_checkpoint
 from train_ur5e_readers import make_donor_permutation
-from ur5e_motor import CHUNK_SIZE, SPLITS_PATH, load_frozen_pi05, run_episode, write_json
+from ur5e_motor import SPLITS_PATH, load_frozen_pi05, run_episode, write_json
 from ur5e_sim_worker import UR5eSimulator
 
 
