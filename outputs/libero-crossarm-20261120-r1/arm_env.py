@@ -11,6 +11,7 @@ from pathlib import Path
 
 import mujoco
 import numpy as np
+from scipy.spatial.transform import Rotation
 
 from libero.libero import benchmark
 from libero.libero.envs import OffScreenRenderEnv
@@ -135,6 +136,13 @@ def _reset_wrapper(env, seed):
     env.reset()
 
 
+def _measured_pose(observation):
+    fingers = observation["robot0_gripper_qpos"]
+    return dict(tcp_xyz=observation["robot0_eef_pos"].copy(),
+                tcp_matrix=Rotation.from_quat(observation["robot0_eef_quat_xyzw"]).as_matrix(),
+                jaw_opening=float(fingers[0] - fingers[1]))
+
+
 class ArmEnv:
     """One real arm and task. A fresh compiled simulation is owned by each successful reset."""
 
@@ -155,6 +163,7 @@ class ArmEnv:
         self._env = None
         self._scratch = None
         self._tool = None
+        self._previous_public = None
         self.model_identity = None
         self._step = 0
         self._done = True
@@ -168,6 +177,7 @@ class ArmEnv:
     def close(self):
         self._done = True
         self._scratch = self._tool = self.model_identity = None
+        self._previous_public = None
         if self._env is not None:
             env, self._env = self._env, None
             env.close()
@@ -206,11 +216,18 @@ class ArmEnv:
             raw = env.begin_perturbation_rollout()
             _set_controller_mode(env, "relative")
             poses = scene_body_poses(env)
+            self._scratch = mujoco.MjData(env.sim.model._model)
+            self._tool = tool_state(env, self._scratch)
             if donor is not None:
                 _settle_environment(donor)
                 donor.set_perturbation_seed(seed)
                 donor.begin_perturbation_rollout()
                 errors = pose_errors(poses, scene_body_poses(donor))
+                donor_tool = tool_state(donor, mujoco.MjData(donor.sim.model._model))
+                settled_delta = tool_delta(donor_tool, self._tool)
+                alignment.update(settled_tcp_error_m=float(np.linalg.norm(settled_delta[:3])),
+                                 settled_rotation_error_rad=float(np.linalg.norm(settled_delta[3:6])),
+                                 settled_jaw_difference_m=float(settled_delta[6]))
             else:
                 errors = pose_errors(poses, poses)
             if not (errors["max_position_m"] <= POSITION_TOL_M and errors["max_rotation_rad"] <= ROTATION_TOL_RAD):
@@ -221,12 +238,12 @@ class ArmEnv:
             if plan["case_id"] != "BASE" or plan["seed"] != seed:
                 raise ValueError(f"Unexpected released perturbation plan {plan}")
             self._step = 0
-            self._scratch = mujoco.MjData(env.sim.model._model)
-            self._tool = tool_state(env, self._scratch)
             self.model_identity = identity
             self._done = False
+            obs = _public(raw, identity["joint_count"])
+            self._previous_public = _measured_pose(obs)
             return dict(
-                observation=_public(raw, identity["joint_count"]), language_instruction=str(env.language_instruction),
+                observation=obs, language_instruction=str(env.language_instruction),
                 model_identity=identity, tool_observation=self._copy_tool(), max_steps=self.entry["max_steps"],
                 worker_step_index=0, environment_reproducibility=dict(
                     source_pin=SOURCE_PIN, manifest_sha256=MANIFEST_SHA, bddl_sha256=self.entry["bddl_sha256"],
@@ -263,11 +280,13 @@ class ArmEnv:
         terminated = bool(done or success)
         truncated = self._step >= self.entry["max_steps"] and not terminated
         current = tool_state(self._env, self._scratch)
-        motion = tool_delta(self._tool, current)
+        obs = _public(raw, self.model_identity["joint_count"])
+        measured = _measured_pose(obs)
+        motion = tool_delta(self._previous_public, measured)
         if not np.isfinite(motion).all() or not np.isfinite(reward):
             raise RuntimeError("Nonfinite sensor response or task reward")
         self._tool = current
-        obs = _public(raw, self.model_identity["joint_count"])
+        self._previous_public = measured
         self._done = terminated or truncated
         return dict(observation=obs, language_instruction=str(self._env.language_instruction),
                     issued_action=issued, sensor_motion=motion, tool_observation=self._copy_tool(), reward=float(reward),

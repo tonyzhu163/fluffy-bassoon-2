@@ -57,12 +57,15 @@ def tool_state(env, scratch):
     robot = env.robots[0]
     site = robot.eef_site_id
     hand = env.sim.model.body_name2id(robot.robot_model.eef_name)
+    links = env.sim.model.jnt_bodyid[robot._ref_joint_indexes]
     fingers = scratch.qpos[robot._ref_gripper_joint_pos_indexes]
     return dict(
         tcp_xyz=scratch.site_xpos[site].copy(),
         tcp_matrix=scratch.site_xmat[site].reshape(3, 3).copy(),
         hand_xyz=scratch.xpos[hand].copy(),
         hand_quat_xyzw=scratch.xquat[hand, [1, 2, 3, 0]].copy(),
+        link_xyz=scratch.xpos[links].copy(),
+        link_quat_xyzw=scratch.xquat[links][:, [1, 2, 3, 0]].copy(),
         jaw_opening=float(fingers[0] - fingers[1]),
     )
 
@@ -133,9 +136,13 @@ def transfer_scene(donor, target, scene):
     target.env.perturbation_runtime.capture_model_baseline(target.env)
     target.set_init_state(target.get_sim_state())
     # The controller was built at the stock joint pose. A zero angular OSC action holds its last goal.
-    controller = robot.controller
-    controller.update(force=True)
-    controller.update_initial_joints(data.qpos[robot._ref_joint_pos_indexes])
+    robot.controller.update_initial_joints(data.qpos[robot._ref_joint_pos_indexes])
+    for name in robot.gripper_joints:
+        if (data.get_joint_qpos(name) != donor.sim.data.get_joint_qpos(name)
+                or data.get_joint_qvel(name) != donor.sim.data.get_joint_qvel(name)):
+            raise ValueError(f"Common finger state differs at {name}")
+    if data.time != donor.sim.data.time:
+        raise ValueError("Target simulation time differs from the released row")
     if scene_state(target) != scene:
         raise ValueError("Target readback differs from released scene before settling")
     return alignment
