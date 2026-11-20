@@ -1,0 +1,198 @@
+{
+  "argv": [
+    "/mowenjie/fluffy-bassoon-2/setups/libero-paligemma-crossarm-20261120-r1/source-19804c88/outputs/libero-paligemma-crossarm-20261120-r1/pretrain_reader.py",
+    "--out",
+    "/mowenjie/fluffy-bassoon-2/outputs/libero-paligemma-crossarm-20261120-r1/reader01/pretrain",
+    "--revision",
+    "19804c8895245dcbabd675f9992bf3dbf1dd360d"
+  ],
+  "batch_size": 32,
+  "checkpoint": "reader-stage1.pt",
+  "checkpoint_sha256": "f2add8aa19135a6841d0970bbeb496951714a6e03bd255579ed4664a95ac07e3",
+  "fit_seed": 41,
+  "from_stage": null,
+  "motion_check": {
+    "aggregate": {
+      "correct": 1.091921716928482,
+      "wrong": 1.0967616438865662,
+      "zero": 1.5550202131271362
+    },
+    "per_arm": {
+      "Panda": {
+        "correct": 1.1310710906982422,
+        "wrong": 1.1268224716186523,
+        "zero": 1.6188255548477173
+      },
+      "Sawyer": {
+        "correct": 1.052772343158722,
+        "wrong": 1.06670081615448,
+        "zero": 1.4912148714065552
+      }
+    },
+    "pose": 28,
+    "rows": [
+      {
+        "body": "Panda",
+        "correct": "practice-Panda-20.npz",
+        "normalized_mse": {
+          "correct": 1.1344554424285889,
+          "wrong": 1.1327073574066162,
+          "zero": 1.6188255548477173
+        },
+        "query": "practice-Panda-28.npz",
+        "support_pose": 20,
+        "wrong": "practice-Sawyer-20.npz"
+      },
+      {
+        "body": "Panda",
+        "correct": "practice-Panda-21.npz",
+        "normalized_mse": {
+          "correct": 1.1276867389678955,
+          "wrong": 1.1209375858306885,
+          "zero": 1.6188255548477173
+        },
+        "query": "practice-Panda-28.npz",
+        "support_pose": 21,
+        "wrong": "practice-Sawyer-21.npz"
+      },
+      {
+        "body": "Sawyer",
+        "correct": "practice-Sawyer-20.npz",
+        "normalized_mse": {
+          "correct": 1.063896894454956,
+          "wrong": 1.0735175609588623,
+          "zero": 1.4912148714065552
+        },
+        "query": "practice-Sawyer-28.npz",
+        "support_pose": 20,
+        "wrong": "practice-Panda-20.npz"
+      },
+      {
+        "body": "Sawyer",
+        "correct": "practice-Sawyer-21.npz",
+        "normalized_mse": {
+          "correct": 1.0416477918624878,
+          "wrong": 1.0598840713500977,
+          "zero": 1.4912148714065552
+        },
+        "query": "practice-Sawyer-28.npz",
+        "support_pose": 21,
+        "wrong": "practice-Panda-21.npz"
+      }
+    ]
+  },
+  "motion_query_poses": [
+    22,
+    23
+  ],
+  "motion_scale": [
+    0.0027513480745255947,
+    0.0033285191748291254,
+    0.002564373193308711,
+    0.01692487671971321,
+    0.009454037062823772,
+    0.01459424663335085,
+    0.0013955194735899568
+  ],
+  "numpy": "2.2.5",
+  "practice_transitions": 16,
+  "pretrain": {
+    "minibatch_mse": [
+      [
+        1,
+        1.5977057218551636
+      ],
+      [
+        50,
+        0.901370108127594
+      ],
+      [
+        100,
+        0.6413457989692688
+      ]
+    ],
+    "reader_change_l2": 3.667680501937866,
+    "sampled_training_mse_after": 0.7146607041358948,
+    "sampled_training_mse_before": 1.2512667179107666,
+    "steps": 100
+  },
+  "revision": "19804c8895245dcbabd675f9992bf3dbf1dd360d",
+  "source_histories": {
+    "Panda": {
+      "motion_queries": [
+        "practice-Panda-22.npz",
+        "practice-Panda-23.npz"
+      ],
+      "supports": [
+        "practice-Panda-20.npz",
+        "practice-Panda-21.npz"
+      ]
+    },
+    "Sawyer": {
+      "motion_queries": [
+        "practice-Sawyer-22.npz",
+        "practice-Sawyer-23.npz"
+      ],
+      "supports": [
+        "practice-Sawyer-20.npz",
+        "practice-Sawyer-21.npz"
+      ]
+    }
+  },
+  "stage": "source_motion",
+  "status": "complete",
+  "steps": 100,
+  "support_poses": [
+    20,
+    21
+  ],
+  "tapes": {
+    "practice-Panda-20.npz": {
+      "origin": "collected",
+      "sha256": "88db6c4e8ce0c4962f5095b2db209f82eab744fd8b77bd08e08bb49870683ad9"
+    },
+    "practice-Panda-21.npz": {
+      "origin": "collected",
+      "sha256": "c0c2238a165faa98f75920d6f05c7c5c37c0d64f86eacce5f09a34199302db2a"
+    },
+    "practice-Panda-22.npz": {
+      "origin": "collected",
+      "sha256": "9c7fc2ea476e182862718dd1e1a9f555bf23555b68356c8a73cb0a0a7517eca1"
+    },
+    "practice-Panda-23.npz": {
+      "origin": "collected",
+      "sha256": "a93c01287cb24b5c443939c2b3fc8b903bb089d5a7986713fca29e7511dd406c"
+    },
+    "practice-Panda-28.npz": {
+      "origin": "collected",
+      "sha256": "caf7580aa9aebcf8c4853775c4b1e552f8b2b9840f9b816bf21a2885f23d4232"
+    },
+    "practice-Sawyer-20.npz": {
+      "origin": "collected",
+      "sha256": "980afebfd61d27bbe91d768a713ad479f1b530777c285208d93db7ba19b802bd"
+    },
+    "practice-Sawyer-21.npz": {
+      "origin": "collected",
+      "sha256": "69a04bae25a6a5465238117b9f178ab2d8eb9e858516d8d58e9c7450cbfd0acd"
+    },
+    "practice-Sawyer-22.npz": {
+      "origin": "collected",
+      "sha256": "8e3ac09d2e2d5d1b1275c058f77f8e07ad71d682f89571a984d5227887a49f8f"
+    },
+    "practice-Sawyer-23.npz": {
+      "origin": "collected",
+      "sha256": "8027d9a528b0a72fd737b9e6c8ab1e02e563f81d61ce419cfe6d7415a740ea4c"
+    },
+    "practice-Sawyer-28.npz": {
+      "origin": "collected",
+      "sha256": "f13368dfa970ad347b1d8b6d0551c0d340f48c01d0212d3d911075b20c81294a"
+    }
+  },
+  "task_id": 5,
+  "torch": "2.11.0+cu128",
+  "train_bodies": [
+    "Panda",
+    "Sawyer"
+  ],
+  "validation_pose": 28
+}
