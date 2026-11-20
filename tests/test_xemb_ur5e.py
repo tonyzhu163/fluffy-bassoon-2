@@ -252,3 +252,29 @@ def test_luminance_flow_reader_is_rgb_permutation_invariant():
     assert np.allclose(y1, y2, atol=1e-4)
     assert np.allclose(s1, s2, atol=1e-5)
     assert np.array_equal(g1, g2)
+
+
+def test_hybrid_reader_forward_and_loss():
+    import jax
+    import jax.numpy as jnp
+    from fluffy_bassoon.xemb.readers import ReaderConfig, init_reader, predict_embodiment, reader_loss
+
+    cfg = ReaderConfig(model_type="factored_equiv", max_chunks=8, cnn_width=32, mlp_width=64, visual_mode="hybrid")
+    params = init_reader(jax.random.key(7), cfg)
+    assert params["cnn"]["c1_w"].shape == (3, 3, 10, 16)
+    rng = np.random.default_rng(7)
+    batch = dict(
+        img_before=rng.integers(0, 256, size=(2, 3, 64, 64, 3), dtype=np.uint8),
+        img_after=rng.integers(0, 256, size=(2, 3, 64, 64, 3), dtype=np.uint8),
+        issued_mean=rng.uniform(-0.6, 0.6, size=(2, 3, 7)).astype(np.float32),
+        delta_eef=rng.uniform(-0.04, 0.04, size=(2, 3, 3)).astype(np.float32),
+        delta_jaw=rng.uniform(-0.02, 0.02, size=(2, 3, 2)).astype(np.float32),
+        valid=np.ones((2, 3), dtype=bool),
+        yaw_deg=np.array([45.0, -90.0], dtype=np.float32),
+        xy_scale=np.array([1.0, 0.7], dtype=np.float32),
+        gripper_sign=np.array([1, -1], dtype=np.int32),
+    )
+    y, s, g = predict_embodiment(params, cfg, batch)
+    assert y.shape == (2,) and s.shape == (2,) and g.shape == (2,)
+    loss, _ = reader_loss(params, cfg, {k: jnp.asarray(v) for k, v in batch.items()})
+    assert np.isfinite(float(loss))

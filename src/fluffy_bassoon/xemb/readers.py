@@ -17,7 +17,7 @@ FRAME0_FIELDS = ("frame0_img", "frame0_state")
 HISTORY_FIELDS = ("img_before", "img_after", "issued_mean", "delta_eef", "delta_jaw", "valid")
 
 
-VISUAL_MODES = ("rgb", "luminance_flow")
+VISUAL_MODES = ("rgb", "luminance_flow", "hybrid")
 
 
 @dataclass(frozen=True)
@@ -316,7 +316,7 @@ def init_reader(key, cfg: ReaderConfig):
     import jax
 
     k1, k2, k3, k4 = jax.random.split(key, 4)
-    vis_ch = 7 if cfg.visual_mode == "luminance_flow" else 8
+    vis_ch = {"luminance_flow": 7, "rgb": 8, "hybrid": 10}[cfg.visual_mode]
     if cfg.model_type == "frame0_probe":
         return dict(
             cnn=_init_cnn(k1, 5, cfg.cnn_width),
@@ -379,7 +379,7 @@ def _vis_inputs(img_before, img_after, visual_mode: str = "rgb"):
     b, k, h, w, _ = img_before.shape
     coords = jnp.broadcast_to(_coord_grid(h, w)[None, None], (b, k, h, w, 2))
     diff = img_after - img_before
-    if visual_mode == "luminance_flow":
+    if visual_mode in ("luminance_flow", "hybrid"):
         luma_b = jnp.mean(img_before, axis=-1, keepdims=True)
         luma_a = jnp.mean(img_after, axis=-1, keepdims=True)
         dt = luma_a - luma_b
@@ -387,6 +387,9 @@ def _vis_inputs(img_before, img_after, visual_mode: str = "rgb"):
         avg = 0.5 * (luma_b + luma_a)
         gx = jnp.pad(0.5 * (avg[:, :, :, 2:, :] - avg[:, :, :, :-2, :]), ((0, 0), (0, 0), (0, 0), (1, 1), (0, 0)))
         gy = jnp.pad(0.5 * (avg[:, :, 2:, :, :] - avg[:, :, :-2, :, :]), ((0, 0), (0, 0), (1, 1), (0, 0), (0, 0)))
+        if visual_mode == "hybrid":
+            x = jnp.concatenate((dt, motion_mag, gx, gy, luma_b, diff, coords), axis=-1)
+            return x.reshape(b * k, h, w, 10), b, k
         x = jnp.concatenate((dt, motion_mag, gx, gy, luma_b, coords), axis=-1)
         return x.reshape(b * k, h, w, 7), b, k
     x = jnp.concatenate((diff, img_before, coords), axis=-1)
