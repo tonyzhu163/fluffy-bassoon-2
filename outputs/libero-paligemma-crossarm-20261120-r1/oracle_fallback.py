@@ -69,6 +69,7 @@ class TrajectoryExpert:
     def __init__(self, reference, scene):
         self.ref = reference
         self.i = 0
+        self.wait_controls = 0
         self.initial_offset = np.subtract(scene["plate"][:2], reference["plates"][0, :2])
         travel = reference["plates"][-1, :2] - reference["plates"][0, :2]
         self.travel = travel
@@ -91,17 +92,22 @@ class TrajectoryExpert:
         rotation = Rotation.from_quat(source[3:7]) * Rotation.from_quat(state[3:7]).inv()
         dr = rotation.as_rotvec()
         pos_error, angle_error = np.linalg.norm(dp), np.linalg.norm(dr)
-        ready = pos_error <= 0.012 and angle_error <= 0.12
+        # Impedance control has a residual tracking error near the cabinet.
+        # Keep moving along the demonstrated approach despite a small static error.
+        self.wait_controls += 1
+        ready = ((pos_error <= 0.030 and angle_error <= 0.17) or
+                 (self.wait_controls >= 4 and pos_error <= 0.06 and angle_error <= 0.30))
         a = self.ref["actions"][i].copy()
         if ready:
             # Compose the released world-axis orientation increment with the
             # measured frame error. Translation and gripper retain feedforward.
-            a[:3] += dp / 0.05
+            a[:3] += 2.0 * dp / 0.05
+            self.wait_controls = 0
             a[3:6] = (Rotation.from_rotvec(0.5 * a[3:6]) * rotation).as_rotvec() / 0.5
             self.i = min(i + 1, len(self.ref["actions"]) - 1)
         else:
             # A slow body catches the pre-action waypoint before time advances.
-            a[:3] = dp / 0.05
+            a[:3] = 2.0 * dp / 0.05
             a[3:6] = dr / 0.5
             if i:
                 a[6] = self.ref["actions"][i - 1, 6]
@@ -111,7 +117,7 @@ class TrajectoryExpert:
         return np.clip(a, -1, 1).astype(np.float32)
 
 
-def collect(reference, output, body, pose, seed):
+def collect(reference, output, body, pose, seed, raw=False, force_tracking=False):
     frames, actions, motions, rewards = [], [], [], []
     with Session(body, task_id=5) as session:
         obs = session.reset(pose, seed)
@@ -119,7 +125,7 @@ def collect(reference, output, body, pose, seed):
         tracker = TrajectoryExpert(reference, scene)
         lineage = session.reset_info["environment_reproducibility"]
         donor = reference["evidence"]["reset"]
-        replay = (body == "Panda" and pose == donor["init_state_id"] and
+        replay = raw or (not force_tracking and body == "Panda" and pose == donor["init_state_id"] and
                   lineage["initial_state_fingerprint"] == donor["initial_state_fingerprint"])
         route = "released_actions" if replay else "closed_loop_tracking"
         for _ in range(session.reset_info["max_steps"]):
@@ -146,7 +152,7 @@ def collect(reference, output, body, pose, seed):
                    reset=session.reset_info, route=route, reference_demo=reference["evidence"]["demo"])
         if accepted:
             row["file"] = f"{body}/{pose}.npz"
-        json_write(output / f"{body}-{pose}-trace.json",
+        json_write(output / f"{body}-{pose}-{route}-trace.json",
                    dict(attempt=row, trace=tracker.trace, actions=np.asarray(actions).tolist(), rewards=rewards))
         return row
 
@@ -155,16 +161,29 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--archive", type=Path, required=True)
     parser.add_argument("--demo", type=int, choices=range(30), default=22)
+    parser.add_argument("--matching", action="store_true", help="Use a verified published Panda example of the same training pose when available")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--poses", nargs="+", type=int, default=[0, 1])
     parser.add_argument("--bodies", nargs="+", choices=("Panda", "Sawyer"), default=["Panda", "Sawyer"])
     parser.add_argument("--seed", type=int, required=True, help="Use the parent bank's seed base plus pose")
     args = parser.parse_args()
+    if not all(0 <= pose < 50 and 0 <= args.seed + pose < 2**32 for pose in args.poses):
+        parser.error("Use released rows 0..49 and valid uint32 target seeds")
     if len(set(args.poses)) != len(args.poses) or len(set(args.bodies)) != len(args.bodies):
         parser.error("Duplicate target would overwrite a qualification tape")
     args.output.mkdir(parents=True, exist_ok=False)
     index = dict(suite="libero_goal", task_id=5, case="BASE", archive_sha256=ARCHIVE_SHA,
                  demo=args.demo, poses=args.poses, seed_base=args.seed, bodies=args.bodies, attempts=[])
+    if args.matching and any(p not in (*range(16), 24, 25, 26, 27) for p in args.poses):
+        parser.error("Production reference selection is restricted to registered source demonstration poses")
+    matching = {}
+    if args.matching:
+        with h5py.File(args.archive, "r") as archive:
+            for num in range(len(archive["data"])):
+                metadata = json.loads(archive[f"data/demo_{num}"].attrs["source_metadata"])
+                key = int(metadata["init_state_id"])
+                if key in args.poses:
+                    matching.setdefault(key, num)
     try:
         ref = panda_reference(args.archive, args.demo)
     except Exception as exc:
@@ -173,13 +192,32 @@ def main():
         raise
     index["reference"] = ref["evidence"]
     json_write(args.output / "index.json", index)
-    for body in args.bodies:
-        for pose in args.poses:
-            row = collect(ref, args.output, body, pose, args.seed + pose)
-            index["attempts"].append(row)
-            json_write(args.output / "index.json", index)
-            print(f"{body}/{pose}: accepted={row['accepted']} controls={row['steps']}", flush=True)
-    return 0 if all(r["accepted"] for r in index["attempts"]) else 1
+    references = {args.demo: ref}
+    index["references"] = {args.demo: ref["evidence"]}
+    for pose in args.poses:
+        num = matching.get(pose, args.demo)
+        if num not in references:
+            try:
+                references[num] = panda_reference(args.archive, num)
+                index["references"][num] = references[num]["evidence"]
+            except RuntimeError as exc:
+                index.setdefault("reference_misses", {})[num] = str(exc)
+                references[num] = ref
+        donor = references[num]
+        for body in args.bodies:
+            # A matched demonstration can provide commands directly. If those
+            # commands miss the goal, use measured feedback on a fresh reset.
+            try_raw = args.matching and pose == donor["evidence"]["pose"]
+            for raw in ((True, False) if try_raw else (False,)):
+                trial_seed = donor["evidence"]["seed"] if try_raw else args.seed + pose
+                row = collect(donor, args.output, body, pose, trial_seed, raw=raw,
+                              force_tracking=args.matching and not raw)
+                index["attempts"].append(row)
+                json_write(args.output / "index.json", index)
+                print(f"{body}/{pose} {row['route']} accepted={row['accepted']} controls={row['steps']}", flush=True)
+                if row["accepted"]:
+                    break
+    return int(sum(r["accepted"] for r in index["attempts"]) != len(args.poses) * len(args.bodies))
 
 
 if __name__ == "__main__":

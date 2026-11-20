@@ -22,7 +22,7 @@ host=$(hostname)
     exit 2
 }
 [[ $(git -C "$code" rev-parse HEAD) == "$pin" && -z $(git -C "$code" status --porcelain) ]]
-for file in motor.py motor_data.py motor_weights.py demos.py sim.py adapt_eval.py run.sh; do
+for file in motor.py motor_data.py motor_weights.py demos.py oracle_fallback.py sim.py adapt_eval.py run.sh; do
     git -C "$here" ls-files --error-unmatch -- "$file" >/dev/null
 done
 
@@ -40,7 +40,7 @@ if command -v quota >/dev/null; then quota -s >> "$out/storage.txt" 2>&1 || true
 [[ $(git -C "$release" rev-parse HEAD) == e5500c690c1498eca1b7050350654964190cdf70 ]]
 test -x "$setup/env/bin/python"
 test -x "$probe_python"
-weights=/mowenjie/.cache/huggingface/hub/models--google--paligemma-3b-mix-224/snapshots/d1d8734c9c3ad0ccfeea4afc270faa356c2ba515
+weights=${WEIGHTS:-/mowenjie/.cache/huggingface/hub/models--google--paligemma-3b-mix-224/snapshots/d1d8734c9c3ad0ccfeea4afc270faa356c2ba515}
 test -f "$weights/model.safetensors.index.json"
 
 export LIBERO_PRO_ROOT="$setup/simulator-source" LIBERO_CONFIG_PATH="$setup/libero-config"
@@ -77,9 +77,21 @@ export __EGL_VENDOR_LIBRARY_FILENAMES="$libs/nvidia-vendor.json"
 "$probe_python" -Bu "$code/scripts/[train]gpu_probe.py" --expected-count 1 --purpose training \
     --baige-container --baige-exclusive-training --output "$out/gpu.json"
 
+"$probe_python" - "$weights" "$out/weight-source.json" <<'PYCODE'
+import json
+import sys
+from pathlib import Path
+from motor_weights import verified_snapshot
+with verified_snapshot(sys.argv[1]) as (_, receipt):
+    Path(sys.argv[2]).write_text(json.dumps(receipt, indent=2))
+PYCODE
+archive="$run/assets01/goal5-base.hdf5"
 collect() {
     local bank=$1 poses=$2 rc=0
-    "$setup/env/bin/python" -Bu "$here/demos.py" --output "$out/$bank" --poses "$poses" --bodies Panda,Sawyer || rc=$?
+    local -a ids
+    IFS=, read -ra ids <<< "$poses"
+    "$setup/env/bin/python" -Bu "$here/oracle_fallback.py" --matching --archive "$archive" \
+        --output "$out/$bank" --poses "${ids[@]}" --bodies Panda Sawyer --seed 20261120 || rc=$?
     if (( rc )); then
         # The collector also signals individually unsuccessful contacts. Inspect the complete bank.
         "$probe_python" - "$out/$bank/index.json" <<'PYCODE'

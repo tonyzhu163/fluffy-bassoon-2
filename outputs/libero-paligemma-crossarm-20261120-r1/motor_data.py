@@ -59,6 +59,8 @@ def read_episodes(root, scratch):
         if len(relative.parts) != 2 or relative.parts[0].capitalize() not in BODIES:
             raise ValueError(f"Unexpected source archive {relative}; expected Panda/Sawyer/<pose>.npz")
         body, pose = relative.parts[0].capitalize(), pose_key(path.stem)
+        if not pose.isdecimal() or int(pose) not in range(16):
+            raise ValueError(f"Motor archive outside registered poses 0–15: {relative}")
         if (body, pose) in seen:
             raise ValueError(f"Duplicate source body/pose {relative}")
         seen.add((body, pose))

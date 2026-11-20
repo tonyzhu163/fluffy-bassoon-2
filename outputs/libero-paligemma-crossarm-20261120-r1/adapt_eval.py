@@ -121,7 +121,7 @@ def reset(env, body, pose):
         raise ValueError(f"simulator instantiated the wrong arm for {body}/{pose}")
     keys = ("source_pin", "manifest_sha256", "bddl_sha256", "released_row_fingerprint",
             "scene_fingerprint", "post_settle_scene_fingerprint", "initial_state_fingerprint")
-    return public_obs(obs), {k: physics[k] for k in keys if k in physics}, int(info.get("max_steps", HORIZON))
+    return public_obs(obs), {**{k: physics[k] for k in keys if k in physics}, "renderer": info["renderer"]}, int(info["max_steps"])
 
 
 def session(body):
@@ -289,7 +289,19 @@ class Query:
 
 def demo_query(args, motor, body, pose):
     path = args.demos / body / f"{pose}.npz"
+    index = json.loads((args.demos / "index.json").read_text())
+    receipts = [r for r in index["attempts"] if r["accepted"] and r["body"] == body and r["pose"] == pose]
+    if len(receipts) != 1:
+        raise ValueError(f"Missing unique accepted demonstration receipt for {body}/{pose}")
+    row = receipts[0]
+    reset = row["reset"]
+    lineage = reset["environment_reproducibility"]
+    if (reset["model_identity"]["arm"] != body or lineage["init_state_id"] != pose or
+            lineage["seed"] != row["seed"] or not (row["done"] and row["native_success"])):
+        raise ValueError(f"Invalid native demonstration receipt for {body}/{pose}")
     with np.load(path, allow_pickle=False) as archive:
+        if int(archive["seed"].item()) != row["seed"]:
+            raise ValueError("Joint tape seed disagrees with native reset")
         for key, expected in (("body", body), ("pose", pose), ("native_success", True)):
             if key in archive and archive[key].item() != expected:
                 raise ValueError(f"{path} disagrees with expected {key}={expected}")
@@ -510,6 +522,8 @@ def fit(args, report):
     q = read_stage(args.qualification, "qualify", report)
     if q["status"] != "complete" or not q.get("source_gate"):
         return stop(report, "source motor qualification did not pass")
+    if not set(args.demo_poses) <= {24, 25, 26, 27}:
+        raise ValueError("Joint demonstration poses must be in the registered 24–27 range")
     fit_partition(args.demo_poses)
     if set(args.demo_poses) & set(SUPPORT + MOTION_QUERY):
         raise ValueError("demonstration queries must use different poses from source motion episodes")

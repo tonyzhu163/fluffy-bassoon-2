@@ -137,6 +137,10 @@ class _Native:
         packet = self.arm.reset(init_state_id=pose, seed=seed)
         info = {k: packet[k] for k in ("model_identity", "environment_reproducibility", "max_steps")}
         info["renderer"] = [(GL.glGetString(key) or b"").decode() for key in (GL.GL_VENDOR, GL.GL_RENDERER)]
+        if os.environ.get("FLUFFY_GPU_EXECUTION") == "baige":
+            vendor, renderer = info["renderer"]
+            if "NVIDIA" not in vendor.upper() or not renderer:
+                raise RuntimeError(f"Unexpected allocated simulator renderer: {vendor}, {renderer}")
         return _public(packet), info
 
     def step(self, action):
