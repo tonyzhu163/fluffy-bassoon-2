@@ -1,0 +1,220 @@
+{
+  "archive_sha256": "de38968d542c2b400bce589b238b2b9a2b006f66ca076b0ab85b08e9adb43d90",
+  "joint": {
+    "by_arm": {
+      "Panda": {
+        "correct": 2,
+        "total": 2
+      },
+      "Sawyer": {
+        "correct": 0,
+        "total": 2
+      },
+      "UR5e": {
+        "correct": 0,
+        "total": 4
+      }
+    },
+    "checkpoint_sha256": "7f9bc064de1ca95fbd203081b9f80ece7211779f80d05b3e88cc4b71ec7998bc",
+    "correct": 2,
+    "queries": [
+      {
+        "body": "UR5e",
+        "distances": {
+          "Panda": 0.6662921905517578,
+          "Sawyer": 1.4273993968963623,
+          "UR5e": 1.0430513620376587
+        },
+        "nearest": "Panda",
+        "tape": "gpu01/pilot/eval_support/libero_goal-1-i11-s20261231/UR5e/prescribed/tape.npz"
+      },
+      {
+        "body": "Panda",
+        "distances": {
+          "Panda": 0.764252781867981,
+          "Sawyer": 1.5351412296295166,
+          "UR5e": 1.148923397064209
+        },
+        "nearest": "Panda",
+        "tape": "gpu01/pilot/eval_support/libero_goal-1-i11-s20261231/Panda/prescribed/tape.npz"
+      },
+      {
+        "body": "UR5e",
+        "distances": {
+          "Panda": 0.6224642395973206,
+          "Sawyer": 1.4175106287002563,
+          "UR5e": 1.0228193998336792
+        },
+        "nearest": "Panda",
+        "tape": "gpu01/pilot/eval_support/libero_goal-1-i12-s20261232/UR5e/prescribed/tape.npz"
+      },
+      {
+        "body": "Sawyer",
+        "distances": {
+          "Panda": 0.40389296412467957,
+          "Sawyer": 1.1988062858581543,
+          "UR5e": 0.8041609525680542
+        },
+        "nearest": "Panda",
+        "tape": "gpu01/pilot/eval_support/libero_goal-1-i12-s20261232/Sawyer/prescribed/tape.npz"
+      },
+      {
+        "body": "UR5e",
+        "distances": {
+          "Panda": 0.7593233585357666,
+          "Sawyer": 1.531782865524292,
+          "UR5e": 1.1463359594345093
+        },
+        "nearest": "Panda",
+        "tape": "gpu01/pilot/eval_support/libero_spatial-1-i11-s20271231/UR5e/prescribed/tape.npz"
+      },
+      {
+        "body": "Sawyer",
+        "distances": {
+          "Panda": 0.4608132839202881,
+          "Sawyer": 1.1836917400360107,
+          "UR5e": 0.8081299066543579
+        },
+        "nearest": "Panda",
+        "tape": "gpu01/pilot/eval_support/libero_spatial-1-i11-s20271231/Sawyer/prescribed/tape.npz"
+      },
+      {
+        "body": "UR5e",
+        "distances": {
+          "Panda": 0.9887915849685669,
+          "Sawyer": 1.7854501008987427,
+          "UR5e": 1.3926050662994385
+        },
+        "nearest": "Panda",
+        "tape": "gpu01/pilot/eval_support/libero_spatial-1-i12-s20271232/UR5e/prescribed/tape.npz"
+      },
+      {
+        "body": "Panda",
+        "distances": {
+          "Panda": 1.4422310590744019,
+          "Sawyer": 2.25345516204834,
+          "UR5e": 1.8570207357406616
+        },
+        "nearest": "Panda",
+        "tape": "gpu01/pilot/eval_support/libero_spatial-1-i12-s20271232/Panda/prescribed/tape.npz"
+      }
+    ],
+    "total": 8
+  },
+  "method": "Euclidean nearest mean, two labelled reference probes per arm, no tuning",
+  "pretrained": {
+    "by_arm": {
+      "Panda": {
+        "correct": 0,
+        "total": 2
+      },
+      "Sawyer": {
+        "correct": 0,
+        "total": 2
+      },
+      "UR5e": {
+        "correct": 3,
+        "total": 4
+      }
+    },
+    "checkpoint_sha256": "f2add8aa19135a6841d0970bbeb496951714a6e03bd255579ed4664a95ac07e3",
+    "correct": 3,
+    "queries": [
+      {
+        "body": "UR5e",
+        "distances": {
+          "Panda": 1.1155661344528198,
+          "Sawyer": 1.0326436758041382,
+          "UR5e": 1.0318084955215454
+        },
+        "nearest": "UR5e",
+        "tape": "gpu01/pilot/eval_support/libero_goal-1-i11-s20261231/UR5e/prescribed/tape.npz"
+      },
+      {
+        "body": "Panda",
+        "distances": {
+          "Panda": 1.0648725032806396,
+          "Sawyer": 0.9851053953170776,
+          "UR5e": 0.983126699924469
+        },
+        "nearest": "UR5e",
+        "tape": "gpu01/pilot/eval_support/libero_goal-1-i11-s20261231/Panda/prescribed/tape.npz"
+      },
+      {
+        "body": "UR5e",
+        "distances": {
+          "Panda": 0.6277228593826294,
+          "Sawyer": 0.7222121953964233,
+          "UR5e": 0.7165620923042297
+        },
+        "nearest": "Panda",
+        "tape": "gpu01/pilot/eval_support/libero_goal-1-i12-s20261232/UR5e/prescribed/tape.npz"
+      },
+      {
+        "body": "Sawyer",
+        "distances": {
+          "Panda": 0.28446006774902344,
+          "Sawyer": 0.36985310912132263,
+          "UR5e": 0.36555078625679016
+        },
+        "nearest": "Panda",
+        "tape": "gpu01/pilot/eval_support/libero_goal-1-i12-s20261232/Sawyer/prescribed/tape.npz"
+      },
+      {
+        "body": "UR5e",
+        "distances": {
+          "Panda": 0.9671532511711121,
+          "Sawyer": 0.9072763919830322,
+          "UR5e": 0.9003247022628784
+        },
+        "nearest": "UR5e",
+        "tape": "gpu01/pilot/eval_support/libero_spatial-1-i11-s20271231/UR5e/prescribed/tape.npz"
+      },
+      {
+        "body": "Sawyer",
+        "distances": {
+          "Panda": 1.018012523651123,
+          "Sawyer": 0.9529343843460083,
+          "UR5e": 0.9475812911987305
+        },
+        "nearest": "UR5e",
+        "tape": "gpu01/pilot/eval_support/libero_spatial-1-i11-s20271231/Sawyer/prescribed/tape.npz"
+      },
+      {
+        "body": "UR5e",
+        "distances": {
+          "Panda": 0.587110698223114,
+          "Sawyer": 0.5273711085319519,
+          "UR5e": 0.5193774700164795
+        },
+        "nearest": "UR5e",
+        "tape": "gpu01/pilot/eval_support/libero_spatial-1-i12-s20271232/UR5e/prescribed/tape.npz"
+      },
+      {
+        "body": "Panda",
+        "distances": {
+          "Panda": 0.5585652589797974,
+          "Sawyer": 0.5048806071281433,
+          "UR5e": 0.497045636177063
+        },
+        "nearest": "UR5e",
+        "tape": "gpu01/pilot/eval_support/libero_spatial-1-i12-s20271232/Panda/prescribed/tape.npz"
+      }
+    ],
+    "total": 8
+  },
+  "references": {
+    "Panda": [
+      "gpu01/pilot/calibration_check/libero_goal-4-i9-s20261529/Panda/prescribed/tape.npz",
+      "gpu01/pilot/calibration_check/libero_goal-5-i9-s20261629/Panda/prescribed/tape.npz"
+    ],
+    "Sawyer": [
+      "gpu01/pilot/calibration_check/libero_goal-4-i9-s20261529/Sawyer/prescribed/tape.npz",
+      "gpu01/pilot/calibration_check/libero_goal-5-i9-s20261629/Sawyer/prescribed/tape.npz"
+    ],
+    "UR5e": [
+      "gpu01/pilot/calibration_check/libero_goal-4-i9-s20261529/UR5e/prescribed/tape.npz",
+      "gpu01/pilot/calibration_check/libero_goal-5-i9-s20261629/UR5e/prescribed/tape.npz"
+    ]
+  }
+}

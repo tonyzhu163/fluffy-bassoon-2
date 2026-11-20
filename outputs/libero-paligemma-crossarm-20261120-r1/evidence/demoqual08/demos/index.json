@@ -1,0 +1,636 @@
+{
+  "task_id": 5,
+  "suite": "libero_goal",
+  "case": "BASE",
+  "poses": [
+    0
+  ],
+  "bodies": [
+    "Sawyer"
+  ],
+  "seed_base": 20261120,
+  "max_steps": 300,
+  "command": [
+    "/mowenjie/fluffy-bassoon-2/setups/libero-paligemma-crossarm-20261120-r1/source-6cf1a3aa/outputs/libero-paligemma-crossarm-20261120-r1/demos.py",
+    "--output",
+    "/mowenjie/fluffy-bassoon-2/outputs/libero-paligemma-crossarm-20261120-r1/demoqual08/demos",
+    "--poses",
+    "0",
+    "--bodies",
+    "Sawyer",
+    "--routes",
+    "clearance",
+    "--task-id",
+    "5"
+  ],
+  "routes": [
+    "clearance"
+  ],
+  "code_sha256": {
+    "rim_expert.py": "d7490e2f1da20a59545d93ac6177096300f3c68ccaed59489d5e143953cdd7aa",
+    "demos.py": "5a4684e0a9460b16fa4069d7e186ab6e2fc5772a721fcf3717171dfad87bc0ab",
+    "sim.py": "e2009d4711ed9361f6218162b8975bcbe86407a236a324e1416adfbbbd3ceef7",
+    "arm_env.py": "16ec2d3cd367e975a65d5be49ce4a897ba56621889a0a3502a5a47d7cafff0eb",
+    "sim_reset.py": "010c2ef9d71e268cd81470a6aa6640e0e78d3151b4e95b5f5408c8831ca8eb10"
+  },
+  "attempts": [
+    {
+      "body": "Sawyer",
+      "pose": 0,
+      "seed": 20261120,
+      "route": "clearance",
+      "native_success": false,
+      "accepted": false,
+      "reset": {
+        "model_identity": {
+          "arm": "Sawyer",
+          "model_class": "MountedSawyer",
+          "joint_count": 7,
+          "joint_names": [
+            "robot0_right_j0",
+            "robot0_right_j1",
+            "robot0_right_j2",
+            "robot0_right_j3",
+            "robot0_right_j4",
+            "robot0_right_j5",
+            "robot0_right_j6"
+          ],
+          "joint_links": [
+            "robot0_right_l0",
+            "robot0_right_l1",
+            "robot0_right_l2",
+            "robot0_right_l3",
+            "robot0_right_l4",
+            "robot0_right_l5",
+            "robot0_right_l6"
+          ],
+          "model_nq": 41,
+          "model_nv": 37,
+          "xml_sha256": "a0a9743d868c23e157e57b3415c582c2223379aefaebf54c5dbff3653998fbaf",
+          "arm_meshes": [
+            "robot0_base_0",
+            "robot0_base_1",
+            "robot0_head_0",
+            "robot0_head_1",
+            "robot0_head_2",
+            "robot0_head_3",
+            "robot0_head_4",
+            "robot0_head_5",
+            "robot0_head_6",
+            "robot0_head_7",
+            "robot0_head_8",
+            "robot0_head_9",
+            "robot0_l0_0",
+            "robot0_l0_1",
+            "robot0_l0_2",
+            "robot0_l0_3",
+            "robot0_l0_4",
+            "robot0_l0_5",
+            "robot0_l0_6",
+            "robot0_l1_0",
+            "robot0_l1_1",
+            "robot0_l1_2",
+            "robot0_l2_0",
+            "robot0_l2_1",
+            "robot0_l2_2",
+            "robot0_l2_3",
+            "robot0_l2_4",
+            "robot0_l3_0",
+            "robot0_l3_1",
+            "robot0_l3_2",
+            "robot0_l3_3",
+            "robot0_l4_0",
+            "robot0_l4_1",
+            "robot0_l4_2",
+            "robot0_l4_3",
+            "robot0_l4_4",
+            "robot0_l4_5",
+            "robot0_l4_6",
+            "robot0_l4_7",
+            "robot0_l5_0",
+            "robot0_l5_1",
+            "robot0_l5_2",
+            "robot0_l5_3",
+            "robot0_l5_4",
+            "robot0_l6_0",
+            "robot0_l6_1",
+            "robot0_l6_2",
+            "robot0_l6_3",
+            "robot0_l6_4",
+            "robot0_l6_5"
+          ],
+          "mount": "RethinkMount",
+          "base_xyz": [
+            -0.66,
+            0.0,
+            0.912
+          ],
+          "gripper": "PandaGripper",
+          "gripper_xml_sha256": "d9d68123909d6910488310d0fae4e358ed4ac831c6d0957f3e30893a5412baac",
+          "gripper_joints": [
+            "gripper0_finger_joint1",
+            "gripper0_finger_joint2"
+          ],
+          "tcp_site": "gripper0_grip_site",
+          "hand_link": "robot0_right_hand",
+          "cameras": [
+            "agentview",
+            "robot0_eye_in_hand"
+          ],
+          "wrist_parent": "robot0_right_hand",
+          "wrist_fovy_deg": 75.0,
+          "controller": "OSC_POSE",
+          "control_freq": 20,
+          "osc_output_max": [
+            0.05,
+            0.05,
+            0.05,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "robosuite": "1.4.0",
+          "mujoco": "3.2.3"
+        },
+        "environment_reproducibility": {
+          "source_pin": "e5500c690c1498eca1b7050350654964190cdf70",
+          "manifest_sha256": "71a6e4e25a2a4a162844d77136e7bff8e6f69c839d2d8194620c4afeabde2bba",
+          "bddl_sha256": "c2db20071f58fd43fe029e5bf9176f3c7371ee62cadc311f2b8682c089174c0d",
+          "suite": "libero_goal",
+          "task_id": 5,
+          "init_state_id": 0,
+          "seed": 20261120,
+          "released_row_fingerprint": "97132a888b65a23826e0fc9e5c7ae7e44163f1402650e58a782bcadaa8b8912b",
+          "scene_fingerprint": "bec9f92d1977a603af9913852a6b82a5c50ecb7a58289280f8a5cf4861ee8051",
+          "post_settle_scene_fingerprint": "20cd2c194e35f95658f8f1a076ae123dcf3acbc46e535ac0de823108fae7183e",
+          "post_settle_scene_errors": {
+            "max_position_m": 0.0,
+            "position_body": "akita_black_bowl_1_main",
+            "max_rotation_rad": 2.2924612489908358e-17,
+            "rotation_body": "akita_black_bowl_1_main"
+          },
+          "initial_state_fingerprint": "91f23d493fe1922987d6033a72d79cbb2e5504588e2919da0c2bffbe78d71d18",
+          "alignment": {
+            "method": "joint_limited_grip_site_ik",
+            "seed_qpos": [
+              0.0,
+              -1.18,
+              0.0,
+              2.18,
+              0.0,
+              0.57,
+              -1.57
+            ],
+            "qpos": [
+              -0.23371683583722538,
+              -1.421579794651289,
+              -0.17575842459098373,
+              2.0331015812994666,
+              0.003101724249013376,
+              1.0727901784075993,
+              -1.7953209368185645
+            ],
+            "position_error_m": 2.462551733965511e-11,
+            "rotation_error_rad": 1.3695347962635675e-09,
+            "settled_tcp_error_m": 0.00596247985959053,
+            "settled_rotation_error_rad": 0.05881642922759056,
+            "settled_jaw_difference_m": -7.153270198401174e-10
+          },
+          "perturbation_plan": {
+            "version": "libero_nonphysical_plan_v2",
+            "case_id": "BASE",
+            "schedule": "base",
+            "operator": "none",
+            "variant": "identity",
+            "trigger": "none",
+            "targets": [],
+            "disturbance_targets": [],
+            "references": [],
+            "mechanisms": [
+              "base"
+            ],
+            "assets": [],
+            "params": {},
+            "constraints": [],
+            "seed": 20261120,
+            "event_duration_steps": 24
+          },
+          "perturbation_plan_fingerprint": "0924ea53456bc1d86ecb1a0a9e8ef5f3b35ac0902b23102ab2b3eac34c5be280"
+        },
+        "max_steps": 300,
+        "renderer": [
+          "Mesa",
+          "llvmpipe (LLVM 15.0.7, 256 bits)"
+        ]
+      },
+      "candidates": [
+        {
+          "tilt_deg": 48,
+          "yaw_deg": -90,
+          "feasible": true,
+          "score": [
+            0,
+            0,
+            0.0,
+            -0.1,
+            0.34850776236486447
+          ],
+          "elbow_clearance_m": 0.1,
+          "cabinet_contact_samples": 0,
+          "contact_pairs": [],
+          "max_xyz_error_m": 0.001394031049459458,
+          "max_angle_error_rad": 0.0010521258750127
+        },
+        {
+          "tilt_deg": 48,
+          "yaw_deg": 0,
+          "feasible": true,
+          "score": [
+            0,
+            0,
+            0.0,
+            -0.1,
+            0.44325423419376114
+          ],
+          "elbow_clearance_m": 0.1,
+          "cabinet_contact_samples": 0,
+          "contact_pairs": [],
+          "max_xyz_error_m": 0.0017730169367750446,
+          "max_angle_error_rad": 0.0039934750454339975
+        },
+        {
+          "tilt_deg": 48,
+          "yaw_deg": 90,
+          "feasible": true,
+          "score": [
+            0,
+            0,
+            0.0,
+            -0.1,
+            0.46242499745631827
+          ],
+          "elbow_clearance_m": 0.1,
+          "cabinet_contact_samples": 0,
+          "contact_pairs": [],
+          "max_xyz_error_m": 0.0018496999898252732,
+          "max_angle_error_rad": 0.00836516006709529
+        },
+        {
+          "tilt_deg": 32,
+          "yaw_deg": 0,
+          "feasible": true,
+          "score": [
+            0,
+            0,
+            0.0,
+            -0.08455232884311373,
+            0.3295907619651291
+          ],
+          "elbow_clearance_m": 0.08455232884311373,
+          "cabinet_contact_samples": 0,
+          "contact_pairs": [],
+          "max_xyz_error_m": 0.0013183630478605165,
+          "max_angle_error_rad": 0.0015344720888000403
+        },
+        {
+          "tilt_deg": 32,
+          "yaw_deg": 180,
+          "feasible": true,
+          "score": [
+            0,
+            0,
+            0.0,
+            -0.08412340484694916,
+            0.33588670211288724
+          ],
+          "elbow_clearance_m": 0.08412340484694916,
+          "cabinet_contact_samples": 0,
+          "contact_pairs": [],
+          "max_xyz_error_m": 0.001343546808451549,
+          "max_angle_error_rad": 0.005025404513637656
+        },
+        {
+          "tilt_deg": 32,
+          "yaw_deg": -90,
+          "feasible": true,
+          "score": [
+            0,
+            0,
+            0.0,
+            -0.0830882699987388,
+            0.35396339361614987
+          ],
+          "elbow_clearance_m": 0.0830882699987388,
+          "cabinet_contact_samples": 0,
+          "contact_pairs": [],
+          "max_xyz_error_m": 0.0014158535744645995,
+          "max_angle_error_rad": 0.004109718543573589
+        },
+        {
+          "tilt_deg": 32,
+          "yaw_deg": 90,
+          "feasible": true,
+          "score": [
+            0,
+            0,
+            0.0,
+            -0.08220975476470846,
+            0.33340415843284177
+          ],
+          "elbow_clearance_m": 0.08220975476470846,
+          "cabinet_contact_samples": 0,
+          "contact_pairs": [],
+          "max_xyz_error_m": 0.001333616633731367,
+          "max_angle_error_rad": 0.00151008111993498
+        },
+        {
+          "tilt_deg": 18,
+          "yaw_deg": 0,
+          "feasible": true,
+          "score": [
+            0,
+            0,
+            0.0,
+            -0.037386108256272116,
+            0.31914320099426624
+          ],
+          "elbow_clearance_m": 0.037386108256272116,
+          "cabinet_contact_samples": 0,
+          "contact_pairs": [],
+          "max_xyz_error_m": 0.001276572803977065,
+          "max_angle_error_rad": 0.0026976190089091838
+        },
+        {
+          "tilt_deg": 0,
+          "yaw_deg": 0,
+          "feasible": false,
+          "score": [
+            1,
+            3,
+            0.0,
+            0.02771379809030302,
+            0.3149062569524735
+          ],
+          "elbow_clearance_m": -0.02771379809030302,
+          "cabinet_contact_samples": 3,
+          "contact_pairs": [
+            [
+              "robot0_right_l4_2",
+              "wooden_cabinet_1_g9"
+            ],
+            [
+              "robot0_right_l4_2",
+              "wooden_cabinet_1_g11"
+            ],
+            [
+              "robot0_right_l4_2",
+              "wooden_cabinet_1_g12"
+            ],
+            [
+              "robot0_right_l4_2",
+              "wooden_cabinet_1_g18"
+            ]
+          ],
+          "max_xyz_error_m": 0.001259625027809894,
+          "max_angle_error_rad": 0.0011125028134318048
+        },
+        {
+          "tilt_deg": -25,
+          "yaw_deg": 0,
+          "feasible": false,
+          "score": [
+            1,
+            8,
+            0.0,
+            0.07492212835172402,
+            0.4238790885031445
+          ],
+          "elbow_clearance_m": -0.07492212835172402,
+          "cabinet_contact_samples": 8,
+          "contact_pairs": [
+            [
+              "robot0_link4_collision",
+              "wooden_cabinet_1_g4"
+            ],
+            [
+              "robot0_link4_collision",
+              "wooden_cabinet_1_g9"
+            ],
+            [
+              "robot0_link4_collision",
+              "wooden_cabinet_1_g11"
+            ],
+            [
+              "robot0_link4_collision",
+              "wooden_cabinet_1_g12"
+            ],
+            [
+              "robot0_link4_collision",
+              "wooden_cabinet_1_g15"
+            ],
+            [
+              "robot0_link5_collision",
+              "wooden_cabinet_1_g9"
+            ],
+            [
+              "robot0_link5_collision",
+              "wooden_cabinet_1_g11"
+            ],
+            [
+              "robot0_link5_collision",
+              "wooden_cabinet_1_g12"
+            ],
+            [
+              "robot0_link5_collision",
+              "wooden_cabinet_1_g18"
+            ],
+            [
+              "robot0_link5_collision",
+              "wooden_cabinet_1_g19"
+            ],
+            [
+              "robot0_link5_collision",
+              "wooden_cabinet_1_g20"
+            ],
+            [
+              "robot0_link6_collision",
+              "wooden_cabinet_1_g18"
+            ],
+            [
+              "robot0_link6_collision",
+              "wooden_cabinet_1_g20"
+            ],
+            [
+              "robot0_link6_collision",
+              "wooden_cabinet_1_g29"
+            ],
+            [
+              "robot0_link6_collision",
+              "wooden_cabinet_1_g31"
+            ],
+            [
+              "robot0_right_l4_2",
+              "wooden_cabinet_1_g4"
+            ],
+            [
+              "robot0_right_l4_2",
+              "wooden_cabinet_1_g6"
+            ],
+            [
+              "robot0_right_l4_2",
+              "wooden_cabinet_1_g9"
+            ],
+            [
+              "robot0_right_l4_2",
+              "wooden_cabinet_1_g11"
+            ],
+            [
+              "robot0_right_l4_2",
+              "wooden_cabinet_1_g12"
+            ],
+            [
+              "robot0_right_l4_2",
+              "wooden_cabinet_1_g15"
+            ],
+            [
+              "robot0_right_l4_2",
+              "wooden_cabinet_1_g16"
+            ],
+            [
+              "robot0_right_l4_2",
+              "wooden_cabinet_1_g18"
+            ],
+            [
+              "robot0_right_l4_2",
+              "wooden_cabinet_1_g22"
+            ],
+            [
+              "robot0_right_l4_2",
+              "wooden_cabinet_1_g24"
+            ],
+            [
+              "robot0_right_l4_2",
+              "wooden_cabinet_1_g25"
+            ]
+          ],
+          "max_xyz_error_m": 0.001695516354012578,
+          "max_angle_error_rad": 0.002862418387484304
+        }
+      ],
+      "selected": {
+        "tilt_deg": 48,
+        "yaw_deg": -90,
+        "feasible": true,
+        "score": [
+          0,
+          0,
+          0.0,
+          -0.1,
+          0.34850776236486447
+        ],
+        "elbow_clearance_m": 0.1,
+        "cabinet_contact_samples": 0,
+        "contact_pairs": [],
+        "max_xyz_error_m": 0.001394031049459458,
+        "max_angle_error_rad": 0.0010521258750127
+      },
+      "waypoints_xy": [
+        [
+          -0.028000000000000004,
+          0.23199999999999998
+        ]
+      ],
+      "done": true,
+      "steps": 300,
+      "native_return": 0.0,
+      "terminal_reward": 0.0,
+      "phase_counts": {
+        "approach": 33,
+        "align": 33,
+        "descend": 11,
+        "preseat": 3,
+        "seat": 1,
+        "engage": 219
+      },
+      "contact_steps": 1,
+      "final_scene": {
+        "plate": [
+          0.05159287464096836,
+          -0.03540826428187172,
+          0.9024998346667837
+        ],
+        "plate_radius": 0.0731632087221153,
+        "rim_z": 0.9189367959039688,
+        "obstacle_max": [
+          0.001541050877589524,
+          0.15134408605279795,
+          0.9178429548372153
+        ],
+        "goal": [
+          -0.05,
+          0.21,
+          0.895
+        ],
+        "goal_half": [
+          0.039999999999999994,
+          0.04000000000000001,
+          0.007
+        ],
+        "table_z": 0.9,
+        "finger_low": 0.9317235904038079,
+        "contact": false,
+        "tcp": [
+          0.028870869225017564,
+          -0.03373842338625763,
+          0.949147771489477
+        ],
+        "tool_z": [
+          -0.0018747376916654068,
+          -0.7138556596399102,
+          -0.7002903558943634
+        ]
+      },
+      "initial_scene": {
+        "phase": "approach",
+        "plate": [
+          0.051859218497561976,
+          -0.028493060366741783,
+          0.9024995808477997
+        ],
+        "plate_radius": 0.07316320871008294,
+        "rim_z": 0.9189365411061404,
+        "obstacle_max": [
+          0.001541050877589524,
+          0.15134408605279795,
+          0.9178428886029357
+        ],
+        "goal": [
+          -0.05,
+          0.21,
+          0.895
+        ],
+        "goal_half": [
+          0.039999999999999994,
+          0.04000000000000001,
+          0.007
+        ],
+        "table_z": 0.9,
+        "finger_low": 1.156468882782361,
+        "contact": false,
+        "tcp": [
+          -0.21816422203108649,
+          -0.005125677964793844,
+          1.1674031907860336
+        ],
+        "tool_z": [
+          -0.1110917446195599,
+          0.022790066089515955,
+          -0.9935488096540689
+        ]
+      },
+      "plate_travel_xy_m": 0.006920331223126072,
+      "failure": "Native termination without success",
+      "evidence": "failures/Sawyer-0-clearance.json"
+    }
+  ]
+}

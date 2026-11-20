@@ -1,0 +1,540 @@
+{
+  "contract": {
+    "schema": 1,
+    "seed": 20261120,
+    "microbatch": 4,
+    "recipe": {
+      "horizon": 5,
+      "global_batch": 8,
+      "lora_rank": 8,
+      "lora_alpha": 16,
+      "lora_layers": [
+        16,
+        17
+      ],
+      "lora_projections": [
+        "q_proj",
+        "v_proj"
+      ],
+      "head_lr": 0.0003,
+      "lora_lr": 0.0001,
+      "weight_decay": 0.01,
+      "grad_clip": 1.0,
+      "huber_beta": 0.1,
+      "validate_every": 50,
+      "checkpoint_every": 25
+    },
+    "source_bodies": [
+      "Panda"
+    ],
+    "weights": {
+      "repo": "google/paligemma-3b-mix-224",
+      "revision": "d1d8734c9c3ad0ccfeea4afc270faa356c2ba515",
+      "upstream_file_ids": {
+        "config.json": "9d4a7b496c93811f47247052b061dda435af2fed",
+        "model.safetensors.index.json": "242066c3d4e40edee88fc0e11671a5fd89336663",
+        "tokenizer.json": "ef6773c135b77b834de1d13c75a4c98ab7a3684ffd602d1831e1f1bf5467c563",
+        "tokenizer_config.json": "960dcec0bccc6e594d865eceb63c8078e164cfb2",
+        "model-00001-of-00003.safetensors": "63fd690cdad783794ce4c1d7893ef1f88bc26f4ae94b1925f5d3ad199dbbed87",
+        "model-00002-of-00003.safetensors": "c24cf160613c9fcf69641b4eace7de94d07aaabba88800815137453a5fc32f38",
+        "model-00003-of-00003.safetensors": "6222ec75c92d438886eaa3a2c5970c7e7973c213937a799ca6c5106f5fae829a",
+        "tokenizer.model": "8986bb4f423f07f8c7f70d0dbe3526fb2316056c17bae71b1ea975e77a168fc6",
+        "special_tokens_map.json": "0c18fdd94629ea652e2ef36ed9a422474ad0a8e8",
+        "added_tokens.json": "ff9246e420971b10c510b39a0de289132c2bf23f",
+        "generation_config.json": "6aae7ddfdfa0b117a9975bd2c4830d6222404131"
+      }
+    },
+    "episodes": [
+      {
+        "file": "Panda/0.npz",
+        "sha256": "3e860ccc8c936431ab00e05fc27e42f3184c01889d3e04e91d473e01f978c280",
+        "body": "Panda",
+        "pose": "0",
+        "frames": 120,
+        "rgb_shape": [
+          120,
+          256,
+          256,
+          3
+        ],
+        "wrist_shape": [
+          120,
+          256,
+          256,
+          3
+        ],
+        "prompt": "push the plate to the front of the stove",
+        "seed": 628050,
+        "native_terminal_reward": 1.0,
+        "split": "train"
+      },
+      {
+        "file": "Panda/1.npz",
+        "sha256": "e6e360c547b425b4157b040430356e887380849b389c691fff07659c4f84543d",
+        "body": "Panda",
+        "pose": "1",
+        "frames": 120,
+        "rgb_shape": [
+          120,
+          256,
+          256,
+          3
+        ],
+        "wrist_shape": [
+          120,
+          256,
+          256,
+          3
+        ],
+        "prompt": "push the plate to the front of the stove",
+        "seed": 20261121,
+        "native_terminal_reward": 1.0,
+        "split": "train"
+      },
+      {
+        "file": "Panda/10.npz",
+        "sha256": "56723d84c9447f20e9c763db00fe8956b6dccff1c6d9fc94ab54a4475df2a78a",
+        "body": "Panda",
+        "pose": "10",
+        "frames": 120,
+        "rgb_shape": [
+          120,
+          256,
+          256,
+          3
+        ],
+        "wrist_shape": [
+          120,
+          256,
+          256,
+          3
+        ],
+        "prompt": "push the plate to the front of the stove",
+        "seed": 20261130,
+        "native_terminal_reward": 1.0,
+        "split": "train"
+      },
+      {
+        "file": "Panda/11.npz",
+        "sha256": "34146731958a02d5881d2d8c6e2e3e83b1af969a34546fc57c6219140ee582f7",
+        "body": "Panda",
+        "pose": "11",
+        "frames": 114,
+        "rgb_shape": [
+          114,
+          256,
+          256,
+          3
+        ],
+        "wrist_shape": [
+          114,
+          256,
+          256,
+          3
+        ],
+        "prompt": "push the plate to the front of the stove",
+        "seed": 628011,
+        "native_terminal_reward": 1.0,
+        "split": "validation"
+      },
+      {
+        "file": "Panda/13.npz",
+        "sha256": "3d17eae9a7922ffdd39b312ac99c0f3f2388a20a78e5695c527c8997cf8a6507",
+        "body": "Panda",
+        "pose": "13",
+        "frames": 117,
+        "rgb_shape": [
+          117,
+          256,
+          256,
+          3
+        ],
+        "wrist_shape": [
+          117,
+          256,
+          256,
+          3
+        ],
+        "prompt": "push the plate to the front of the stove",
+        "seed": 20261133,
+        "native_terminal_reward": 1.0,
+        "split": "train"
+      },
+      {
+        "file": "Panda/14.npz",
+        "sha256": "b46435941d88d159d5bd2ddf149c4967ba3cd2e89b22bb61eac0aefaef9fb308",
+        "body": "Panda",
+        "pose": "14",
+        "frames": 120,
+        "rgb_shape": [
+          120,
+          256,
+          256,
+          3
+        ],
+        "wrist_shape": [
+          120,
+          256,
+          256,
+          3
+        ],
+        "prompt": "push the plate to the front of the stove",
+        "seed": 628014,
+        "native_terminal_reward": 1.0,
+        "split": "train"
+      },
+      {
+        "file": "Panda/15.npz",
+        "sha256": "6651f3d9c55eb9980dbecb1b190245e8c7cb7eeb9ff733a0ba46162a6b34ca09",
+        "body": "Panda",
+        "pose": "15",
+        "frames": 122,
+        "rgb_shape": [
+          122,
+          256,
+          256,
+          3
+        ],
+        "wrist_shape": [
+          122,
+          256,
+          256,
+          3
+        ],
+        "prompt": "push the plate to the front of the stove",
+        "seed": 20261135,
+        "native_terminal_reward": 1.0,
+        "split": "train"
+      },
+      {
+        "file": "Panda/4.npz",
+        "sha256": "7e0add44d5db834bb5192c1cae146f70e04235564b24c5c4fa6ca216a148f009",
+        "body": "Panda",
+        "pose": "4",
+        "frames": 117,
+        "rgb_shape": [
+          117,
+          256,
+          256,
+          3
+        ],
+        "wrist_shape": [
+          117,
+          256,
+          256,
+          3
+        ],
+        "prompt": "push the plate to the front of the stove",
+        "seed": 20261124,
+        "native_terminal_reward": 1.0,
+        "split": "train"
+      },
+      {
+        "file": "Panda/6.npz",
+        "sha256": "a32b1d3969283c16dd5ace61b885d8b3fe506fb0361932f720bd9209d9dd1779",
+        "body": "Panda",
+        "pose": "6",
+        "frames": 116,
+        "rgb_shape": [
+          116,
+          256,
+          256,
+          3
+        ],
+        "wrist_shape": [
+          116,
+          256,
+          256,
+          3
+        ],
+        "prompt": "push the plate to the front of the stove",
+        "seed": 628006,
+        "native_terminal_reward": 1.0,
+        "split": "validation"
+      },
+      {
+        "file": "Panda/7.npz",
+        "sha256": "e912faeac41f08ce9e00c0ecac0cfb7494874ecd7b93357ddf7a9744291aa20e",
+        "body": "Panda",
+        "pose": "7",
+        "frames": 116,
+        "rgb_shape": [
+          116,
+          256,
+          256,
+          3
+        ],
+        "wrist_shape": [
+          116,
+          256,
+          256,
+          3
+        ],
+        "prompt": "push the plate to the front of the stove",
+        "seed": 20261127,
+        "native_terminal_reward": 1.0,
+        "split": "train"
+      },
+      {
+        "file": "Panda/9.npz",
+        "sha256": "81a870d7f4148af84d85b22d194e3c117f314718ada1d90d69b63d5de082ff27",
+        "body": "Panda",
+        "pose": "9",
+        "frames": 121,
+        "rgb_shape": [
+          121,
+          256,
+          256,
+          3
+        ],
+        "wrist_shape": [
+          121,
+          256,
+          256,
+          3
+        ],
+        "prompt": "push the plate to the front of the stove",
+        "seed": 20261129,
+        "native_terminal_reward": 1.0,
+        "split": "train"
+      }
+    ],
+    "holdout_poses": [
+      "11",
+      "6"
+    ],
+    "train_poses": [
+      "0",
+      "1",
+      "10",
+      "13",
+      "14",
+      "15",
+      "4",
+      "7",
+      "9"
+    ],
+    "all_motor_poses": [
+      "0",
+      "1",
+      "10",
+      "11",
+      "13",
+      "14",
+      "15",
+      "4",
+      "6",
+      "7",
+      "9"
+    ],
+    "collector_index_sha256": "28d398579bbfa5378c8f3109347b020fc0025d8dc381975e25ddcc81a1b3d2b7",
+    "validation_anchors": [
+      [
+        "Panda",
+        "11",
+        0
+      ],
+      [
+        "Panda",
+        "11",
+        7
+      ],
+      [
+        "Panda",
+        "11",
+        15
+      ],
+      [
+        "Panda",
+        "11",
+        22
+      ],
+      [
+        "Panda",
+        "11",
+        30
+      ],
+      [
+        "Panda",
+        "11",
+        37
+      ],
+      [
+        "Panda",
+        "11",
+        45
+      ],
+      [
+        "Panda",
+        "11",
+        52
+      ],
+      [
+        "Panda",
+        "11",
+        60
+      ],
+      [
+        "Panda",
+        "11",
+        67
+      ],
+      [
+        "Panda",
+        "11",
+        75
+      ],
+      [
+        "Panda",
+        "11",
+        82
+      ],
+      [
+        "Panda",
+        "11",
+        90
+      ],
+      [
+        "Panda",
+        "11",
+        97
+      ],
+      [
+        "Panda",
+        "11",
+        105
+      ],
+      [
+        "Panda",
+        "11",
+        113
+      ],
+      [
+        "Panda",
+        "6",
+        0
+      ],
+      [
+        "Panda",
+        "6",
+        7
+      ],
+      [
+        "Panda",
+        "6",
+        15
+      ],
+      [
+        "Panda",
+        "6",
+        23
+      ],
+      [
+        "Panda",
+        "6",
+        30
+      ],
+      [
+        "Panda",
+        "6",
+        38
+      ],
+      [
+        "Panda",
+        "6",
+        46
+      ],
+      [
+        "Panda",
+        "6",
+        53
+      ],
+      [
+        "Panda",
+        "6",
+        61
+      ],
+      [
+        "Panda",
+        "6",
+        69
+      ],
+      [
+        "Panda",
+        "6",
+        76
+      ],
+      [
+        "Panda",
+        "6",
+        84
+      ],
+      [
+        "Panda",
+        "6",
+        92
+      ],
+      [
+        "Panda",
+        "6",
+        99
+      ],
+      [
+        "Panda",
+        "6",
+        107
+      ],
+      [
+        "Panda",
+        "6",
+        115
+      ]
+    ],
+    "sources": {
+      "motor.py": "eb9a83646aacdc0ebb5938f0841560814fa4d8faf4205b4f143a5b35c9310928",
+      "motor_data.py": "43b65e4579d01f49bbdf90176304051a5a403d9128c54ca677f19386ac6e4df8",
+      "motor_weights.py": "74a37c9b5ce92cb89e07be1df5f677079144ab839879281bd168bbc17859c2fe"
+    },
+    "runtime": {
+      "python": "3.11.14",
+      "torch": "2.11.0+cu128",
+      "transformers": "4.53.2",
+      "numpy": "2.2.5",
+      "cuda": "12.8",
+      "gpu": "NVIDIA RPBZZZ6",
+      "capability": [
+        12,
+        0
+      ]
+    },
+    "trainable": {
+      "lora": 102400,
+      "head": 1151435
+    }
+  },
+  "demos_path": "/mowenjie/fluffy-bassoon-2/outputs/libero-paligemma-crossarm-20261120-r1/gpu01/demos_motor",
+  "weights_path": "/mowenjie/.cache/huggingface/hub/models--google--paligemma-3b-mix-224/snapshots/d1d8734c9c3ad0ccfeea4afc270faa356c2ba515",
+  "requested_steps": 300,
+  "argv": [
+    "/mowenjie/fluffy-bassoon-2/setups/libero-paligemma-crossarm-20261120-r1/source-c310b56e/outputs/libero-paligemma-crossarm-20261120-r1/motor.py",
+    "train",
+    "--source-bodies",
+    "Panda",
+    "--weights",
+    "/mowenjie/.cache/huggingface/hub/models--google--paligemma-3b-mix-224/snapshots/d1d8734c9c3ad0ccfeea4afc270faa356c2ba515",
+    "--demos",
+    "/mowenjie/fluffy-bassoon-2/outputs/libero-paligemma-crossarm-20261120-r1/gpu01/demos_motor",
+    "--output",
+    "/mowenjie/fluffy-bassoon-2/outputs/libero-paligemma-crossarm-20261120-r1/panda01/motor",
+    "--steps",
+    "300",
+    "--seed",
+    "20261120",
+    "--microbatch",
+    "4"
+  ],
+  "allocated_gpu_bytes": 101973950464,
+  "source_revision": "c310b56efb4174c73a46a6c767ad3d30947a791b",
+  "episode_count": 11,
+  "setup_seconds": 27.749171532690525
+}
