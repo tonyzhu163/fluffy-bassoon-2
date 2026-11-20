@@ -1,0 +1,81 @@
+{
+  "source_bodies": [
+    "Panda",
+    "Sawyer"
+  ],
+  "target_body": "UR5e",
+  "fit_tasks": [
+    [
+      "libero_goal",
+      4
+    ],
+    [
+      "libero_goal",
+      5
+    ]
+  ],
+  "development_tasks": [
+    [
+      "libero_goal",
+      1
+    ],
+    [
+      "libero_spatial",
+      1
+    ]
+  ],
+  "source_poses": {
+    "calibration": [
+      0,
+      1
+    ],
+    "pretrain": [
+      2,
+      3,
+      4
+    ],
+    "joint_support": [
+      5,
+      6
+    ],
+    "joint_queries": [
+      7,
+      8
+    ]
+  },
+  "calibration_check_pose": 9,
+  "admission_pose": 10,
+  "evaluation_pairs": [
+    [
+      11,
+      13
+    ],
+    [
+      12,
+      14
+    ]
+  ],
+  "fit": {
+    "train_bodies": [
+      "Panda",
+      "Sawyer"
+    ],
+    "reference_body": "Panda",
+    "seed": 41,
+    "pretrain_steps": 300,
+    "joint_steps": 400,
+    "batch_size": 32,
+    "support_size": 16
+  },
+  "checkpoint": "/mowenjie/fluffy-bassoon/inputs/pi05-libero-openpi-20261027-r1",
+  "manifest_sha256": "71a6e4e25a2a4a162844d77136e7bff8e6f69c839d2d8194620c4afeabde2bba",
+  "conditions": [
+    "unadapted",
+    "learned",
+    "cleared",
+    "wrong_body",
+    "action_oracle"
+  ],
+  "primary_metric": "native_success",
+  "native_variant": "BASE"
+}

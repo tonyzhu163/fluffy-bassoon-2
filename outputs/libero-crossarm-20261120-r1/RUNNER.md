@@ -4,6 +4,8 @@ This pilot asks whether 16 measured control transitions from a simulated UR5e im
 
 ## Fixed panel
 
+The table groups measurements by purpose. Both source training stages finish and the runner saves and reloads the source checkpoint before collecting any UR5e calibration or native admission outcomes. The native admission outcomes constrain interpretation and never select runs or starts. [Completed run](RESULT.md)
+
 | Stage | Bodies and tasks | Released BASE reset IDs | Evidence |
 | --- | --- | --- | --- |
 | Action calibration | All three bodies on Goal 4 and Goal 5 | 0, 1 | 72 measured control intervals per episode. Two independently permuted signed sweeps excite all six Cartesian components. Each pulse lasts three controls. Gripper excitation is independent. UR5e calibration is privileged oracle data. |

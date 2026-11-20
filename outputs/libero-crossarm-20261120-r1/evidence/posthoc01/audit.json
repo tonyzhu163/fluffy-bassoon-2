@@ -1,0 +1,255 @@
+{
+  "checkpoint": "507305af964d8796621455009123106ed6953e95c08a535cd087bae72edca496",
+  "method": "Euclidean distance to the mean of two labelled, held-apart 16-transition calibration-check histories per body (Goal 4 and Goal 5, start 9). Frozen reader, no classifier tuning.",
+  "reference_tapes": {
+    "Panda": [
+      "calibration_check/libero_goal-4-i9-s20261529/Panda/prescribed/tape.npz",
+      "calibration_check/libero_goal-5-i9-s20261629/Panda/prescribed/tape.npz"
+    ],
+    "Sawyer": [
+      "calibration_check/libero_goal-4-i9-s20261529/Sawyer/prescribed/tape.npz",
+      "calibration_check/libero_goal-5-i9-s20261629/Sawyer/prescribed/tape.npz"
+    ],
+    "UR5e": [
+      "calibration_check/libero_goal-4-i9-s20261529/UR5e/prescribed/tape.npz",
+      "calibration_check/libero_goal-5-i9-s20261629/UR5e/prescribed/tape.npz"
+    ]
+  },
+  "queries": [
+    {
+      "path": "eval_support/libero_goal-1-i11-s20261231/UR5e/prescribed/tape.npz",
+      "body": "UR5e",
+      "nearest": "Panda",
+      "distances": {
+        "Panda": 0.7705444097518921,
+        "Sawyer": 1.0896179676055908,
+        "UR5e": 0.8712809085845947
+      }
+    },
+    {
+      "path": "eval_support/libero_goal-1-i11-s20261231/Panda/prescribed/tape.npz",
+      "body": "Panda",
+      "nearest": "Panda",
+      "distances": {
+        "Panda": 0.7914989590644836,
+        "Sawyer": 1.0027101039886475,
+        "UR5e": 0.8348408937454224
+      }
+    },
+    {
+      "path": "eval_support/libero_goal-1-i12-s20261232/UR5e/prescribed/tape.npz",
+      "body": "UR5e",
+      "nearest": "Sawyer",
+      "distances": {
+        "Panda": 1.2006138563156128,
+        "Sawyer": 0.9525899887084961,
+        "UR5e": 1.0827770233154297
+      }
+    },
+    {
+      "path": "eval_support/libero_goal-1-i12-s20261232/Sawyer/prescribed/tape.npz",
+      "body": "Sawyer",
+      "nearest": "Sawyer",
+      "distances": {
+        "Panda": 0.9542421102523804,
+        "Sawyer": 0.5914714932441711,
+        "UR5e": 0.7811931371688843
+      }
+    },
+    {
+      "path": "eval_support/libero_spatial-1-i11-s20271231/UR5e/prescribed/tape.npz",
+      "body": "UR5e",
+      "nearest": "Panda",
+      "distances": {
+        "Panda": 1.0911725759506226,
+        "Sawyer": 1.6669821739196777,
+        "UR5e": 1.3383731842041016
+      }
+    },
+    {
+      "path": "eval_support/libero_spatial-1-i11-s20271231/Sawyer/prescribed/tape.npz",
+      "body": "Sawyer",
+      "nearest": "Panda",
+      "distances": {
+        "Panda": 0.9103779792785645,
+        "Sawyer": 1.3555524349212646,
+        "UR5e": 1.1002916097640991
+      }
+    },
+    {
+      "path": "eval_support/libero_spatial-1-i12-s20271232/UR5e/prescribed/tape.npz",
+      "body": "UR5e",
+      "nearest": "Panda",
+      "distances": {
+        "Panda": 0.7934470772743225,
+        "Sawyer": 1.3447668552398682,
+        "UR5e": 0.9839429259300232
+      }
+    },
+    {
+      "path": "eval_support/libero_spatial-1-i12-s20271232/Panda/prescribed/tape.npz",
+      "body": "Panda",
+      "nearest": "Panda",
+      "distances": {
+        "Panda": 0.8957741260528564,
+        "Sawyer": 1.4826552867889404,
+        "UR5e": 1.10779869556427
+      }
+    }
+  ],
+  "nearest_correct": 3,
+  "cases": [
+    {
+      "case": {
+        "body": "UR5e",
+        "suite": "libero_goal",
+        "task_id": 1,
+        "init_state_id": 13,
+        "seed": 20261233
+      },
+      "prompt": "put the bowl on the stove",
+      "outcomes": {
+        "unadapted": true,
+        "learned": false,
+        "cleared": true,
+        "wrong_body": false,
+        "action_oracle": true
+      },
+      "controls": {
+        "unadapted": 83,
+        "learned": 300,
+        "cleared": 149,
+        "wrong_body": 300,
+        "action_oracle": 82
+      },
+      "opening_rms_vs_learned": {
+        "unadapted": 0.038714449852705,
+        "learned": 0.0,
+        "cleared": 0.021984387189149857,
+        "wrong_body": 0.0068963379599153996,
+        "action_oracle": 0.07975025475025177
+      },
+      "opening_rms_vs_calibrated": {
+        "unadapted": 0.09234417229890823,
+        "learned": 0.07975025475025177,
+        "cleared": 0.09375827014446259,
+        "wrong_body": 0.08046052604913712,
+        "action_oracle": 0.0
+      }
+    },
+    {
+      "case": {
+        "body": "UR5e",
+        "suite": "libero_goal",
+        "task_id": 1,
+        "init_state_id": 14,
+        "seed": 20261234
+      },
+      "prompt": "put the bowl on the stove",
+      "outcomes": {
+        "unadapted": true,
+        "learned": false,
+        "cleared": true,
+        "wrong_body": false,
+        "action_oracle": true
+      },
+      "controls": {
+        "unadapted": 95,
+        "learned": 300,
+        "cleared": 174,
+        "wrong_body": 300,
+        "action_oracle": 110
+      },
+      "opening_rms_vs_learned": {
+        "unadapted": 0.051023975014686584,
+        "learned": 0.0,
+        "cleared": 0.027888305485248566,
+        "wrong_body": 0.00859397929161787,
+        "action_oracle": 0.07144065201282501
+      },
+      "opening_rms_vs_calibrated": {
+        "unadapted": 0.03224409744143486,
+        "learned": 0.07144065201282501,
+        "cleared": 0.0522659607231617,
+        "wrong_body": 0.07792988419532776,
+        "action_oracle": 0.0
+      }
+    },
+    {
+      "case": {
+        "body": "UR5e",
+        "suite": "libero_spatial",
+        "task_id": 1,
+        "init_state_id": 13,
+        "seed": 20271233
+      },
+      "prompt": "pick the akita black bowl next to the ramekin and place it on the plate",
+      "outcomes": {
+        "unadapted": true,
+        "learned": true,
+        "cleared": true,
+        "wrong_body": false,
+        "action_oracle": true
+      },
+      "controls": {
+        "unadapted": 115,
+        "learned": 214,
+        "cleared": 203,
+        "wrong_body": 220,
+        "action_oracle": 160
+      },
+      "opening_rms_vs_learned": {
+        "unadapted": 0.06455991417169571,
+        "learned": 0.0,
+        "cleared": 0.016756637021899223,
+        "wrong_body": 0.0452038049697876,
+        "action_oracle": 0.09472004324197769
+      },
+      "opening_rms_vs_calibrated": {
+        "unadapted": 0.13402339816093445,
+        "learned": 0.09472004324197769,
+        "cleared": 0.09097650647163391,
+        "wrong_body": 0.08689139783382416,
+        "action_oracle": 0.0
+      }
+    },
+    {
+      "case": {
+        "body": "UR5e",
+        "suite": "libero_spatial",
+        "task_id": 1,
+        "init_state_id": 14,
+        "seed": 20271234
+      },
+      "prompt": "pick the akita black bowl next to the ramekin and place it on the plate",
+      "outcomes": {
+        "unadapted": true,
+        "learned": true,
+        "cleared": true,
+        "wrong_body": false,
+        "action_oracle": false
+      },
+      "controls": {
+        "unadapted": 109,
+        "learned": 132,
+        "cleared": 121,
+        "wrong_body": 220,
+        "action_oracle": 220
+      },
+      "opening_rms_vs_learned": {
+        "unadapted": 0.10620591044425964,
+        "learned": 0.0,
+        "cleared": 0.04506098851561546,
+        "wrong_body": 0.014953960664570332,
+        "action_oracle": 0.07986462861299515
+      },
+      "opening_rms_vs_calibrated": {
+        "unadapted": 0.12469734251499176,
+        "learned": 0.07986462861299515,
+        "cleared": 0.08697162568569183,
+        "wrong_body": 0.07879473268985748,
+        "action_oracle": 0.0
+      }
+    }
+  ]
+}
