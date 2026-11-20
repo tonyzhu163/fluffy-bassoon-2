@@ -1,20 +1,22 @@
 # Generated Goal 5 BASE source qualification
 
-Development uses 50 distinct layouts paired across Panda and Sawyer. Update 1600 from the existing `sft01/fit` is the first candidate. Each arm contributes 50 fresh closed-loop episodes. The separate sealed panel has 100 new layouts and 100 episodes per arm. The full manifests and outcome tapes live on project NVMe.
+Development uses 50 distinct layouts paired across Panda and Sawyer. Update 1600 from the existing `sft01/fit` is the first candidate. Each arm contributes 50 fresh closed-loop episodes. The separate sealed panel has 100 new layouts and 100 episodes per arm. The CLI writes manifests and outcome tapes to project NVMe.
 
 ## Development CLI
 
-From the repository root on allocated Baige, set `PIN` to the deployed revision. Each invocation of the existing launcher needs a fresh attempt name. All stages share the same persistent `panel` directory.
+Use one Distributed Training job per fit. All three commands may start concurrently at the same deployed code pin. Relative fit and panel paths resolve against the parent of the launcher attempt directory. The shared panel defaults to `large-panel-v3`.
 
 ```bash
 run=outputs/libero-paligemma-dualarm-20261120-r2
 campaign=/mowenjie/fluffy-bassoon-2/$run
 fit=$campaign/sft01/fit
-panel=$campaign/large-panel-v1
-bash "$run/run.sh" "$PIN" lpdevprep01 sim large_panel.py prepare --root "$panel" --phase dev --fit "$fit"
-bash "$run/run.sh" "$PIN" lpdevscore01 vlm large_panel.py source --root "$panel" --phase dev --fit "$fit" --step 1600
-bash "$run/run.sh" "$PIN" lpdevsum01 sim large_panel.py aggregate --root "$panel" --phase dev --fit "$fit" --step 1600
+panel=$campaign/large-panel-v3
+bash "$run/run.sh" "$PIN" lpbase03 vlm large_panel_campaign.py --fit "$fit" --step 1600
+bash "$run/run.sh" "$PIN" lpconv03 vlm large_panel_campaign.py --fit "$CONVENTIONAL_FIT" --step 6400
+bash "$run/run.sh" "$PIN" lpservo03 vlm large_panel_campaign.py --fit "$SERVO_FIT" --step 6400
 ```
+
+The wrapper invokes prepare with `CROSSARM_SIM_PYTHON` (or `--sim`), then invokes source and aggregate with the current VLM executable. The prepare lock covers generation and publication. A second fit with the same fitting split can reuse the panel. The manifest records which fit first prepared it. Each completed preflight row and rollout survives a restart. Retry with a fresh launcher attempt name and the same panel, pin, fit and step.
 
 The prepare command publishes `dev/manifest.json` and `dev/rows/*.npy` before scoring. Source writes one native tape and digest per layout and arm beneath `dev/scores/<checkpoint-sha>/stride-5/`. Aggregate writes `report.json` there only after all 100 episodes validate. The default rollout uses eight independent native processes, one batched frozen motor, and five issued controls per replan. One arm or a zero-based layout shard can be selected with `--arm Panda` or `--shard-index I --shard-count N`.
 
@@ -37,7 +39,7 @@ bash "$run/run.sh" "$PIN" lptestsum01 sim large_panel.py aggregate --root "$pane
     --fit "$WINNER_FIT" --step "$WINNER_STEP"
 ```
 
-Only complete 100/100 or 200/200 episode panels produce a report. A completed evaluation writes its counts and returns zero even when a gate fails. Read `passed` for the gate decision. The test requires at least 75/100 separately on Panda and Sawyer before a target reset. The Wilson intervals describe uncertainty for each arm separately. Each episode lists the native seed, layout ID, scene and movable-placement fingerprints, native return and tape SHA-256.
+Aggregation requires all 100 development episodes or all 200 sealed episodes for the checkpoint. A completed evaluation writes its counts and returns zero even when a gate fails. Read `passed` for the gate decision. The test requires at least 75/100 separately on Panda and Sawyer before a target reset. The Wilson intervals describe uncertainty for each arm separately. Each episode lists the native seed, layout ID, scene and movable-placement fingerprints, native return and tape SHA-256.
 
 ## Layouts and native controls
 
@@ -58,3 +60,22 @@ with Session(panel_root, "test", "UR5e") as env:
 ```
 
 Target initialization requires a fully audited passing sealed source panel. A target reset reloads the exact saved Panda donor array, checks the pre-settle scene fingerprint and compares the settled body poses with the paired Panda reference. A target that cannot reproduce the recorded layout raises an error on that ID. The caller can repeat a layout for paired conditions. [Native bridge](large_panel_sim.py) · [Evidence checks](large_panel_protocol.py)
+
+## Static review of the v2 reset failure
+
+At `e2f794c4`, the reported CPU prepare completed 50 layouts. The GPU failure occurred before a policy action. Both reset routes load the same donor and call the native stabilization procedure. The camera-free route substitutes a camera-free ControlEnv and public observation adapter. The rendered route constructs OffScreenRenderEnv and reads both cameras. The old equality check included `initial_state_fingerprint` (the **post-settle** time, qpos and qvel) and `post_settle_scene_fingerprint` (world poses). Either hash can change with a single floating-point bit. The error message alone cannot identify a joint, establish the size of a difference, or attribute it to rendering, threading or hardware.
+
+V3 records each arm's full named joint coordinates and velocities, exact simulation time, public wrist/jaw state, and all named task-body poses. Reassembling the coordinates must reproduce both the raw little-endian float64 hash and the native framed hash. Object poses must reproduce their independent native fingerprint. Donor, pre-settle scene, seed, perturbation plan, compiled model identity, admission checks and renderer provenance remain explicit. Native admission still checks initial success, deep and non-support contacts, and welded fixture overlaps.
+
+| Same-arm measurement | Maximum accepted error |
+| --- | --- |
+| Translation and slide position | 0.00001 m |
+| Hinge or quaternion angle | 0.0001 rad |
+| Linear velocity | 0.0001 m/s |
+| Angular velocity | 0.001 rad/s |
+
+The same-arm position and angle limits are 1% of the native cross-arm limits. One 20 Hz control interval at either velocity limit adds half the corresponding pose allowance. Free joints use Euclidean translation and quaternion geodesic angle. Quaternion sign changes represent the same rotation. These limits are fixed independently of policy outcomes.
+
+On the first admitted seed, prepare runs a controlled camera-free/rendered A/B on **each** source arm using the identical donor in the native interpreter. The first layout's `camera_ab` entry retains both comparisons and rendered measurements. Every scored opening repeats the comparison against its own arm's camera-free reference. The shared per-arm, per-seed opening binds the exact RGB frames and prompt across candidates and checks the numerical state before inference. The target evaluator continues to require identical visible openings across conditions and to verify native reward tapes. [Native reset](large_panel_sim.py) · [Numerical audit](large_panel_audit.py) · [Tape readback](large_panel_protocol.py)
+
+This review covers the code paths and receipt formats. The live native error magnitudes and v3 source outcomes require the qualified runtime.

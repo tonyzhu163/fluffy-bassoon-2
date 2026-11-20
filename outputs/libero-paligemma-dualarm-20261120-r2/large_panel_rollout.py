@@ -11,8 +11,8 @@ from uuid import uuid4
 
 import numpy as np
 
-from large_panel_protocol import (ARMS, PUBLIC, bind, check_tape, digest, evidence, inputs,
-                                 lock, publish, read, require, sha, training)
+from large_panel_protocol import (ARMS, PUBLIC, bind, check_opening, check_tape, digest, evidence,
+                                 inputs, lock, publish, require, sha, training)
 from large_panel_sim import Session
 
 HERE = Path(__file__).resolve().parent
@@ -90,7 +90,7 @@ def run_group(pool, sessions, rows, model, stage, arm, contract):
             if path.exists() or receipt.exists():
                 check_tape(stage, arm, row, contract, recover=True)
                 continue
-            history = {k: [] for k in ("observations", "chunks", "actions", "motion", "done", "success", "rewards")}
+            history = {k: [] for k in ("observations", "chunks", "actions", "motion", "done", "success", "rewards", "native_steps")}
             active[env] = (row, history)
         # A receipt precedes each native reset. A process death leaves an identifiable
         # interrupted attempt; a retry still owes this exact arm and layout.
@@ -106,21 +106,30 @@ def run_group(pool, sessions, rows, model, stage, arm, contract):
         while active:
             envs = list(active)
             obs = [public_observation(observations[env], contract["prompt"]) for env in envs]
+            for env, public in zip(envs, obs):
+                row, history = active[env]
+                hashes = observation_hashes(public)
+                if not history["observations"]:
+                    check_opening(stage, arm, row, contract, hashes, env.reset_info)
+                history["observations"].append(hashes)
             proposals = infer(model, obs)
             pending = []
-            for env, public, chunk in zip(envs, obs, proposals):
+            for env, chunk in zip(envs, proposals):
                 _, history = active[env]
-                history["observations"].append(observation_hashes(public))
                 history["chunks"].append(chunk.copy())
                 left = 300 - len(history["actions"])
                 require(left > 0, "Native session exceeded horizon")
                 prefix = chunk[:min(left, contract["stride"])]
-                pending.append((env, prefix, pool.submit(env.advance, prefix)))
+                pending.append((env, prefix, pool.submit(env.advance_native, prefix)))
             for env, prefix, future in pending:
                 observations[env], trace = future.result()
                 require(0 < len(trace) <= len(prefix), "Missing native steps")
                 row, history = active[env]
-                for action, (motion, reward, done, success) in zip(prefix, trace):
+                for proposed, (motion, reward, done, success, issued, index) in zip(prefix, trace):
+                    action = np.asarray(issued, dtype=np.float32)
+                    require(index == len(history["actions"]) + 1 and np.array_equal(action, proposed),
+                            "Simulator issued a different action or skipped a native step")
+                    history["native_steps"].append(index)
                     require(reward in (0, 1) and success == (reward == 1) and (not success or done),
                             "Native reward, terminal and success flags differ")
                     history["actions"].append(action.copy())

@@ -8,18 +8,14 @@ import sys
 import traceback
 from uuid import uuid4
 
-from large_panel_protocol import (ARMS, HASH_FIELDS, PHASES, bind, digest, directory, implementation,
-                                 lock, manifest, publish, read, report_for, require, selection, sha, training)
+from large_panel_audit import ResetMismatch, audit_pair, capture
+from large_panel_protocol import (
+    ARMS, GEOMETRY_FIELDS, PHASES, audit_development, bind, directory, implementation,
+    lock, manifest, mobile_joints, publish, read, report_for, require, selection, sha, training,
+)
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(1, str(HERE.parent / "libero-paligemma-crossarm-20261120-r1"))
-
-
-def mobile_joints(scene):
-    """Translation of every free movable joint, independent of robot qpos, time and fixture seeds."""
-    free = {k: v["qpos"][:2] for k, v in scene["joints"].items() if v["type"] == 0}
-    require(len(free) == 4, "Expected all four free Goal 5 movable joints")
-    return digest(free)
 
 
 def released():
@@ -48,6 +44,7 @@ _authorized_target_rows = set()
 def target_gate(root, phase):
     require(phase == "test", "Held-out body requires the identical sealed test layouts")
     seal = selection(root)
+    audit_development(root, seal)
     panel = manifest(root, phase)
     require(panel["development_selection_sha256"] == sha(root / "accepted/selection.json"),
             "Test manifest does not bind the saved selection")
@@ -97,16 +94,19 @@ def physical_reset(env, arm, camera, state, row):
             p["perturbation_plan"]["seed"] == row["layout_seed"] and
             all(p[k] == row[k] for k in ("source_pin", "manifest_sha256", "bddl_sha256")),
             "Physical reset receipt differs from the fixed panel")
-    info["admission"] = {k: p[k] for k in ("scene_fingerprint", "post_settle_scene_fingerprint",
-                         "initial_state_fingerprint", "generated_row_fingerprint", "seed", "init_state_id")}
     poses = native.scene_body_poses(target._env)
+    info["admission"] = capture(target._env, info, poses, obs["state"])
+    if camera:
+        renderer = info["renderer"]
+        require(len(renderer) == 2 and "NVIDIA" in renderer[0].upper() and renderer[1],
+                "Rendered reset requires a qualified NVIDIA renderer")
     if "panda_settled_poses" in row:
         errors = native.pose_errors(poses, row["panda_settled_poses"])
         require(errors["max_position_m"] <= native.POSITION_TOL_M and
                 errors["max_rotation_rad"] <= native.ROTATION_TOL_RAD, "Post-settle scene differs from paired Panda")
         info["paired_scene_errors"] = errors
     if arm in row.get("preflight", {}):
-        require(info["admission"] == row["preflight"][arm], "Rendered reset differs from physical preflight")
+        info["paired_reset_audit"] = audit_pair(row["preflight"][arm], info["admission"])
     return obs, info, poses
 
 
@@ -116,7 +116,8 @@ def preparing(base, seed):
         yield
     except Exception as exc:
         bind(base / "errors" / f"{seed}-{uuid4().hex}.json",
-             dict(layout_seed=seed, error=type(exc).__name__, reason=str(exc)))
+             dict(layout_seed=seed, error=type(exc).__name__, reason=str(exc),
+                  paired_reset=getattr(exc, "report", None)))
         raise
 
 
@@ -126,25 +127,31 @@ def prepare(args):
     from expert import session
     root, phase = args.root, args.phase
     first, count, threshold = PHASES[phase]
-    _, _, training_hashes = training(args.fit)
+    _, training_seeds, training_hashes = training(args.fit)
     seal_sha = None
     prior = []
     if phase == "test":
         accepted = selection(root)
         require(accepted["fit_id"] == sha(args.fit / "manifest.json") and accepted["evaluator"] == implementation(),
                 "Sealed preparation requires the same accepted fit and evaluator")
+        audit_development(root, accepted)
         seal_sha = sha(root / "accepted/selection.json")
         prior = manifest(root, "dev")["layouts"]
     base = root / phase
     with lock(base / ".prepare.lock"):
+        versions = implementation()
+        revision = os.environ.get("MOTOR_CODE_REVISION")
+        bind(base / "prepare-contract.json", dict(phase=phase, revision=revision, implementation=versions,
+             fitting_seeds=sorted(training_seeds), fitting_hashes=sorted(training_hashes),
+             development_selection_sha256=seal_sha))
         if (base / "manifest.json").exists():
             # Publish the digest last. Recover a crash after atomic manifest publication.
             bind(base / "manifest.sha256.json", sha(base / "manifest.json"))
-            existing = manifest(root, phase)
+            existing = manifest(root, phase, fit=args.fit)
             require(existing["development_selection_sha256"] == seal_sha, "Prepared under another selection")
             return
         public = released()
-        fields = (*HASH_FIELDS, "mobile_joint_xy_hash")
+        fields = GEOMETRY_FIELDS
         seen = {k: {r[k] for r in (*public, *prior) if k in r} | training_hashes for k in fields}
         layouts, rejected = [], []
         with closing(g.make_sampler()) as sampler:
@@ -152,6 +159,17 @@ def prepare(args):
                 # Membership filtering lives here so every skip records the actual matched hash.
                 # Other sampler, geometry, pairing or runtime exceptions abort this seed.
                 with preparing(base, seed):
+                    saved = base / "preflight" / f"{seed}.json"
+                    if saved.exists():
+                        row = read(saved)
+                        require(row["layout_seed"] == seed and sha(base / row["state_file"]) == row["file_sha256"]
+                                and all(row[k] not in seen[k] for k in fields), "Invalid resumed preflight")
+                        for k in fields:
+                            seen[k].add(row[k])
+                        layouts.append(row)
+                        if len(layouts) == count:
+                            break
+                        continue
                     state, origin = g.sample_layout(sampler, seed, frozenset())
                     row = dict(origin, split=phase, layout_id=origin["source_index"],
                                mobile_joint_xy_hash=mobile_joints(origin["sampled_scene"]),
@@ -170,10 +188,20 @@ def prepare(args):
                             row["panda_settled_poses"] = poses
                         else:
                             row["source_pair_errors"] = info["paired_scene_errors"]
+                    if not layouts:
+                        # Matched A/B in the prepare interpreter before any motor action.
+                        # The original serialized state is identical on both reset paths.
+                        row["camera_ab"] = {}
+                        for arm in ARMS:
+                            with session(arm, True) as env:
+                                _, info, _ = physical_reset(env, arm, True, state, row)
+                            row["camera_ab"][arm] = dict(rendered=info["admission"],
+                                                        comparison=info["paired_reset_audit"])
                     path = base / row["state_file"]
                     with publish(path) as tmp, tmp.open("wb") as stream:
                         np.save(stream, state, allow_pickle=False)
                     row["file_sha256"] = sha(path)
+                    bind(saved, row)
                     for k in fields:
                         seen[k].add(row[k])
                     layouts.append(row)
@@ -185,7 +213,8 @@ def prepare(args):
              seed_range=[first, first+9999], suite=g.SUITE, task_id=g.TASK, case=g.CASE,
              released_bank_sha256=g.BANK_SHA, released=public, layouts=layouts, rejected=rejected,
              preparation_fit_sha256=sha(args.fit / "manifest.json"), development_selection_sha256=seal_sha,
-             revision=os.environ.get("MOTOR_CODE_REVISION"), implementation=implementation()))
+             fitting_seeds=sorted(training_seeds), fitting_hashes=sorted(training_hashes),
+             revision=revision, implementation=versions))
         bind(base / "manifest.sha256.json", sha(base / "manifest.json"))
         manifest(root, phase)
 
@@ -194,7 +223,7 @@ def serve(fd, root, phase, arm):
     from multiprocessing.connection import Connection
     import numpy as np
     from expert import session
-    from sim import _pack
+    from sim import _pack, _public
     with Connection(fd) as channel:
         try:
             require(arm in (*ARMS, "UR5e"), "Unknown panel arm")
@@ -214,15 +243,25 @@ def serve(fd, root, phase, arm):
                         row = rows[value]
                         file = root / phase / row["state_file"]
                         require(sha(file) == row["file_sha256"], "Panel array changed")
-                        obs, info, _ = physical_reset(env, arm, True, np.load(file, allow_pickle=False), row)
+                        try:
+                            obs, info, _ = physical_reset(env, arm, True, np.load(file, allow_pickle=False), row)
+                        except ResetMismatch as exc:
+                            bind(root / phase / "errors" / f"{arm}-{row['layout_seed']}-{uuid4().hex}.json",
+                                 dict(arm=arm, layout_seed=row["layout_seed"], paired_reset=exc.report))
+                            raise
                         result = _pack(obs), info
                     elif op == "advance":
                         require(1 <= len(value) <= 5, "Expected a bounded action prefix")
                         trace = []
                         for action in value:
-                            obs, motion, reward, done, success = env.step(action)
-                            trace.append((motion.tolist(), reward, done, success))
-                            if done or success:
+                            # Preserve what ArmEnv actually issued and its native step counter.
+                            packet = env.native.arm.step(action)
+                            obs = _public(packet)
+                            done = packet["terminated"] or packet["truncated"]
+                            trace.append((packet["sensor_motion"].tolist(), packet["reward"], done,
+                                          packet["success"], packet["issued_action"].tolist(),
+                                          packet["worker_step_index"]))
+                            if done:
                                 break
                         result = _pack(obs), trace
                     else:
@@ -249,9 +288,10 @@ class Session:
         self.pipe, peer = Pipe()
         self.closed = False
         try:
+            runtime = {**os.environ, "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1"}
             self.worker = subprocess.Popen(
                 [os.environ["CROSSARM_SIM_PYTHON"], "-Bu", str(Path(__file__).resolve()),
-                 str(peer.fileno()), str(self.root), phase, arm], pass_fds=(peer.fileno(),))
+                 str(peer.fileno()), str(self.root), phase, arm], pass_fds=(peer.fileno(),), env=runtime)
         except BaseException:
             self.pipe.close()
             raise
@@ -271,11 +311,15 @@ class Session:
         packet, self.reset_info = self._call("reset", int(layout_id))
         return _unpack(packet)
 
-    def advance(self, actions):
+    def advance_native(self, actions):
         from sim import _unpack
         import numpy as np
         packet, trace = self._call("advance", np.asarray(actions).tolist())
         return _unpack(packet), trace
+
+    def advance(self, actions):
+        obs, trace = self.advance_native(actions)
+        return obs, [entry[:4] for entry in trace]
 
     def step(self, action):
         import numpy as np
