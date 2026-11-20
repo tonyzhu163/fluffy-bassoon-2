@@ -16,6 +16,8 @@ ACTUAL_COMMIT="$(git -C "$REPO" rev-parse HEAD)"
 test "$ACTUAL_COMMIT" = "$COMMIT"
 
 export PYTHONUNBUFFERED=1
+LIBS="$BASE/setups/libero90-full-action-20261119-r1/desktop-libs02/prefix/usr/lib/x86_64-linux-gnu"
+export LD_LIBRARY_PATH="$LIBS:${LD_LIBRARY_PATH:-}"
 START_TS="$(date +%s)"
 echo "$COMMIT $(hostname) $$ ms3-gate0-qual" > "$OUT/launch.txt"
 date -u +"%Y-%m-%dT%H:%M:%SZ" > "$OUT/gpu-start.txt"
