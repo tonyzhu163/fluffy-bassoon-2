@@ -123,11 +123,17 @@ def evaluate_cross_morphology_joint_jacobian(
         iss_tgt, dq_tgt, val_tgt, jac_src, pad_or_truncate=True
     ).tolist()
 
-    # Self-calibrated local Jacobian fitted solely on target's own local proprioception.
-    jac_local = fit_joint_jacobian(dq_tgt, deef_loc, val_tgt, ridge=ridge)
-    self_cal_local_yaw = predict_yaw_from_joint_jacobian(
-        iss_tgt, dq_tgt, val_tgt, jac_local, pad_or_truncate=False
-    ).tolist()
+    # Self-calibrated local Jacobian fitted per episode solely on that robot's own local proprioception.
+    self_cal_local_yaw = []
+    for i in range(dq_tgt.shape[0]):
+        try:
+            jac_local = fit_joint_jacobian(dq_tgt[i : i + 1], deef_loc[i : i + 1], val_tgt[i : i + 1], ridge=ridge)
+            yh = predict_yaw_from_joint_jacobian(
+                iss_tgt[i : i + 1], dq_tgt[i : i + 1], val_tgt[i : i + 1], jac_local, pad_or_truncate=False
+            )
+            self_cal_local_yaw.append(float(yh[0]))
+        except ValueError:
+            self_cal_local_yaw.append(0.0)
 
     return dict(
         source_dof=d_src,
