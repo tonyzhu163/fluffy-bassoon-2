@@ -22,7 +22,7 @@ date -u +"%Y-%m-%dT%H:%M:%SZ" > "$OUT/gpu-start.txt"
 
 export CUDA_VISIBLE_DEVICES=0
 PYTHONPATH="$REPO/src" "$PROBE_PY" -Bu "$REPO/scripts/[train]gpu_probe.py" \
-  --expected-count 1 --purpose evaluation --baige-container --baige-exclusive-training \
+  --expected-count 1 --purpose training --baige-container --baige-exclusive-training \
   --output "$OUT/gpu.json" > "$OUT/probe.log" 2>&1
 
 "$PY" "$SCRIPT" --out "$OUT/ms3-qual-summary.json" > "$OUT/run.log" 2>&1
