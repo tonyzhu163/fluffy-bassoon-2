@@ -1,0 +1,5935 @@
+{
+  "complete": true,
+  "panel": "full",
+  "train_arms": [
+    "Panda",
+    "Sawyer"
+  ],
+  "dev_arm": "UR5e",
+  "archive": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-sysid-20261120-r1/gpu02col/archive/archive.json",
+  "archive_sha256": "65c079f1051e347d781d950643113be9d4de6b92e952e373503d78d0eeb3b82e",
+  "matched_support_cap": 15,
+  "steps": 1500,
+  "batch_size": 32,
+  "seeds": [
+    41,
+    42,
+    43
+  ],
+  "runtime": {
+    "packages": {
+      "jax": "0.5.3",
+      "jaxlib": "0.5.3",
+      "flax": "0.10.2",
+      "optax": "0.2.4",
+      "numpy": "1.26.4"
+    },
+    "devices": [
+      "cuda:0"
+    ],
+    "backend": "gpu"
+  },
+  "modes": {
+    "active_probe": {
+      "nominal_gain": 0.04564449716988982,
+      "analytic_proprio_sysid": {
+        "retained": {
+          "familiar": {
+            "trials": 32,
+            "yaw_err_deg": 74.11612197756767,
+            "scale_rel_err": 0.06330202147364616,
+            "grip_acc": 1.0,
+            "all_correct": 0.5
+          },
+          "compositional_ood": {
+            "trials": 32,
+            "yaw_err_deg": 107.80484333634377,
+            "scale_rel_err": 0.0764318145164485,
+            "grip_acc": 1.0,
+            "all_correct": 0.0
+          },
+          "continuous_angle_ood": {
+            "trials": 32,
+            "yaw_err_deg": 90.8631674349308,
+            "scale_rel_err": 0.054726231498298826,
+            "grip_acc": 1.0,
+            "all_correct": 0.0
+          },
+          "overall": {
+            "trials": 96,
+            "yaw_err_deg": 90.92804424961408,
+            "scale_rel_err": 0.06482002249613117,
+            "grip_acc": 1.0,
+            "all_correct": 0.16666666666666666
+          }
+        },
+        "cleared": {
+          "familiar": {
+            "trials": 32,
+            "yaw_err_deg": 67.5,
+            "scale_rel_err": 0.0,
+            "grip_acc": 0.75,
+            "all_correct": 0.25
+          },
+          "compositional_ood": {
+            "trials": 32,
+            "yaw_err_deg": 112.5,
+            "scale_rel_err": 0.4466501240694789,
+            "grip_acc": 0.0,
+            "all_correct": 0.0
+          },
+          "continuous_angle_ood": {
+            "trials": 32,
+            "yaw_err_deg": 90.0,
+            "scale_rel_err": 0.23148148148148145,
+            "grip_acc": 0.5,
+            "all_correct": 0.0
+          },
+          "overall": {
+            "trials": 96,
+            "yaw_err_deg": 90.0,
+            "scale_rel_err": 0.2260438685169868,
+            "grip_acc": 0.4166666666666667,
+            "all_correct": 0.08333333333333333
+          }
+        },
+        "swapped_donor": {
+          "familiar": {
+            "trials": 32,
+            "yaw_err_deg": 72.72512128949165,
+            "scale_rel_err": 0.2924158200621605,
+            "grip_acc": 0.375,
+            "all_correct": 0.03125
+          },
+          "compositional_ood": {
+            "trials": 32,
+            "yaw_err_deg": 106.71500039100647,
+            "scale_rel_err": 0.4425330014700629,
+            "grip_acc": 0.5625,
+            "all_correct": 0.0
+          },
+          "continuous_angle_ood": {
+            "trials": 32,
+            "yaw_err_deg": 89.7702921628952,
+            "scale_rel_err": 0.2354472640349909,
+            "grip_acc": 0.5625,
+            "all_correct": 0.0
+          },
+          "overall": {
+            "trials": 96,
+            "yaw_err_deg": 89.73680461446445,
+            "scale_rel_err": 0.3234653618557381,
+            "grip_acc": 0.5,
+            "all_correct": 0.010416666666666666
+          }
+        }
+      },
+      "analytic_visual_sysid": {
+        "available": true,
+        "projection": [
+          [
+            -8.502856065021303,
+            68.76115147895602
+          ],
+          [
+            -84.83372364589505,
+            -4.984803016020486
+          ],
+          [
+            -19.86550802467545,
+            -29.656030611513312
+          ]
+        ],
+        "retained": {
+          "familiar": {
+            "trials": 32,
+            "yaw_err_deg": 17.34057022308238,
+            "scale_rel_err": 0.06330202147364616,
+            "grip_acc": 1.0,
+            "all_correct": 0.59375
+          },
+          "compositional_ood": {
+            "trials": 32,
+            "yaw_err_deg": 21.283798446173737,
+            "scale_rel_err": 0.0764318145164485,
+            "grip_acc": 1.0,
+            "all_correct": 0.46875
+          },
+          "continuous_angle_ood": {
+            "trials": 32,
+            "yaw_err_deg": 18.344805157331372,
+            "scale_rel_err": 0.054726231498298826,
+            "grip_acc": 1.0,
+            "all_correct": 0.375
+          },
+          "overall": {
+            "trials": 96,
+            "yaw_err_deg": 18.9897246088625,
+            "scale_rel_err": 0.06482002249613117,
+            "grip_acc": 1.0,
+            "all_correct": 0.4791666666666667
+          }
+        },
+        "cleared": {
+          "familiar": {
+            "trials": 32,
+            "yaw_err_deg": 67.5,
+            "scale_rel_err": 0.0,
+            "grip_acc": 0.75,
+            "all_correct": 0.25
+          },
+          "compositional_ood": {
+            "trials": 32,
+            "yaw_err_deg": 112.5,
+            "scale_rel_err": 0.4466501240694789,
+            "grip_acc": 0.0,
+            "all_correct": 0.0
+          },
+          "continuous_angle_ood": {
+            "trials": 32,
+            "yaw_err_deg": 90.0,
+            "scale_rel_err": 0.23148148148148145,
+            "grip_acc": 0.5,
+            "all_correct": 0.0
+          },
+          "overall": {
+            "trials": 96,
+            "yaw_err_deg": 90.0,
+            "scale_rel_err": 0.2260438685169868,
+            "grip_acc": 0.4166666666666667,
+            "all_correct": 0.08333333333333333
+          }
+        },
+        "swapped_donor": {
+          "familiar": {
+            "trials": 32,
+            "yaw_err_deg": 91.99216779514342,
+            "scale_rel_err": 0.2924158200621605,
+            "grip_acc": 0.375,
+            "all_correct": 0.0
+          },
+          "compositional_ood": {
+            "trials": 32,
+            "yaw_err_deg": 102.35097777994687,
+            "scale_rel_err": 0.4425330014700629,
+            "grip_acc": 0.5625,
+            "all_correct": 0.0
+          },
+          "continuous_angle_ood": {
+            "trials": 32,
+            "yaw_err_deg": 99.01275160907326,
+            "scale_rel_err": 0.2354472640349909,
+            "grip_acc": 0.5625,
+            "all_correct": 0.0
+          },
+          "overall": {
+            "trials": 96,
+            "yaw_err_deg": 97.78529906138783,
+            "scale_rel_err": 0.3234653618557381,
+            "grip_acc": 0.5,
+            "all_correct": 0.0
+          }
+        }
+      },
+      "analytic_visual_sysid_clean_proj": null,
+      "analytic_joint_jacobian": {
+        "source_arm": "Panda",
+        "source_dof": 7,
+        "target_arm": "UR5e",
+        "target_dof": 6,
+        "applicable": false,
+        "reason": "joint_dim_mismatch:7!=6",
+        "zero_padded": {
+          "retained": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": 82.22710227966309,
+              "scale_rel_err": 0.06330202147364616,
+              "grip_acc": 1.0,
+              "all_correct": 0.0
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": 94.19028401374817,
+              "scale_rel_err": 0.0764318145164485,
+              "grip_acc": 1.0,
+              "all_correct": 0.0
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": 86.31866742670536,
+              "scale_rel_err": 0.054726231498298826,
+              "grip_acc": 1.0,
+              "all_correct": 0.0
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": 87.5786845733722,
+              "scale_rel_err": 0.06482002249613117,
+              "grip_acc": 1.0,
+              "all_correct": 0.0
+            }
+          },
+          "cleared": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": 67.5,
+              "scale_rel_err": 0.0,
+              "grip_acc": 0.75,
+              "all_correct": 0.25
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": 112.5,
+              "scale_rel_err": 0.4466501240694789,
+              "grip_acc": 0.0,
+              "all_correct": 0.0
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": 90.0,
+              "scale_rel_err": 0.23148148148148145,
+              "grip_acc": 0.5,
+              "all_correct": 0.0
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": 90.0,
+              "scale_rel_err": 0.2260438685169868,
+              "grip_acc": 0.4166666666666667,
+              "all_correct": 0.08333333333333333
+            }
+          },
+          "swapped_donor": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": 95.17121194675565,
+              "scale_rel_err": 0.2924158200621605,
+              "grip_acc": 0.375,
+              "all_correct": 0.0
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": 100.878776229918,
+              "scale_rel_err": 0.4425330014700629,
+              "grip_acc": 0.5625,
+              "all_correct": 0.0
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": 91.24876407906413,
+              "scale_rel_err": 0.2354472640349909,
+              "grip_acc": 0.5625,
+              "all_correct": 0.0
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": 95.7662507519126,
+              "scale_rel_err": 0.3234653618557381,
+              "grip_acc": 0.5,
+              "all_correct": 0.0
+            }
+          }
+        },
+        "self_calibrated_local": {
+          "retained": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": 74.11729690432549,
+              "scale_rel_err": 0.06330202147364616,
+              "grip_acc": 1.0,
+              "all_correct": 0.5
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": 107.80496817827225,
+              "scale_rel_err": 0.0764318145164485,
+              "grip_acc": 1.0,
+              "all_correct": 0.0
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": 90.86347767710686,
+              "scale_rel_err": 0.054726231498298826,
+              "grip_acc": 1.0,
+              "all_correct": 0.0
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": 90.92858091990153,
+              "scale_rel_err": 0.06482002249613117,
+              "grip_acc": 1.0,
+              "all_correct": 0.16666666666666666
+            }
+          },
+          "cleared": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": 67.5,
+              "scale_rel_err": 0.0,
+              "grip_acc": 0.75,
+              "all_correct": 0.25
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": 112.5,
+              "scale_rel_err": 0.4466501240694789,
+              "grip_acc": 0.0,
+              "all_correct": 0.0
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": 90.0,
+              "scale_rel_err": 0.23148148148148145,
+              "grip_acc": 0.5,
+              "all_correct": 0.0
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": 90.0,
+              "scale_rel_err": 0.2260438685169868,
+              "grip_acc": 0.4166666666666667,
+              "all_correct": 0.08333333333333333
+            }
+          },
+          "swapped_donor": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": 72.72537884116173,
+              "scale_rel_err": 0.2924158200621605,
+              "grip_acc": 0.375,
+              "all_correct": 0.03125
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": 106.71432495117188,
+              "scale_rel_err": 0.4425330014700629,
+              "grip_acc": 0.5625,
+              "all_correct": 0.0
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": 89.7702787220478,
+              "scale_rel_err": 0.2354472640349909,
+              "grip_acc": 0.5625,
+              "all_correct": 0.0
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": 89.73666083812714,
+              "scale_rel_err": 0.3234653618557381,
+              "grip_acc": 0.5,
+              "all_correct": 0.010416666666666666
+            }
+          }
+        }
+      },
+      "models": {
+        "frame0_probe": {
+          "retained": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 111.45042673746745,
+                "std": 1.484320742577712,
+                "values": [
+                  112.5,
+                  109.35128021240234,
+                  112.5
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.07756115247805913,
+                "std": 0.06172868471020183,
+                "values": [
+                  0.028430968523025513,
+                  0.03963372856378555,
+                  0.16461876034736633
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.25,
+                "std": 0.0,
+                "values": [
+                  0.25,
+                  0.25,
+                  0.25
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 68.54957326253255,
+                "std": 1.484320742577712,
+                "values": [
+                  67.5,
+                  70.64871978759766,
+                  67.5
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.4204732227709986,
+                "std": 0.035707888563115596,
+                "values": [
+                  0.4593488196877037,
+                  0.42894771428912803,
+                  0.3731231343361639
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 90.0,
+                "std": 0.0,
+                "values": [
+                  90.0,
+                  90.0,
+                  90.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.22265350089672908,
+                "std": 0.02404826513051192,
+                "values": [
+                  0.2522782084566576,
+                  0.2223070072769015,
+                  0.19337528695662817
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5,
+                "std": 0.0,
+                "values": [
+                  0.5,
+                  0.5,
+                  0.5
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": {
+                "mean": 90.0,
+                "std": 0.0,
+                "values": [
+                  90.0,
+                  90.0,
+                  90.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.24022929204859556,
+                "std": 0.007128393338789915,
+                "values": [
+                  0.24668599888912893,
+                  0.23029615004327164,
+                  0.24370572721338613
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5833333333333334,
+                "std": 0.0,
+                "values": [
+                  0.5833333333333334,
+                  0.5833333333333334,
+                  0.5833333333333334
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          },
+          "cleared": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 111.45042673746745,
+                "std": 1.484320742577712,
+                "values": [
+                  112.5,
+                  109.35128021240234,
+                  112.5
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.07756115247805913,
+                "std": 0.06172868471020183,
+                "values": [
+                  0.028430968523025513,
+                  0.03963372856378555,
+                  0.16461876034736633
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.25,
+                "std": 0.0,
+                "values": [
+                  0.25,
+                  0.25,
+                  0.25
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 68.54957326253255,
+                "std": 1.484320742577712,
+                "values": [
+                  67.5,
+                  70.64871978759766,
+                  67.5
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.4204732227709986,
+                "std": 0.035707888563115596,
+                "values": [
+                  0.4593488196877037,
+                  0.42894771428912803,
+                  0.3731231343361639
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 90.0,
+                "std": 0.0,
+                "values": [
+                  90.0,
+                  90.0,
+                  90.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.22265350089672908,
+                "std": 0.02404826513051192,
+                "values": [
+                  0.2522782084566576,
+                  0.2223070072769015,
+                  0.19337528695662817
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5,
+                "std": 0.0,
+                "values": [
+                  0.5,
+                  0.5,
+                  0.5
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": {
+                "mean": 90.0,
+                "std": 0.0,
+                "values": [
+                  90.0,
+                  90.0,
+                  90.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.24022929204859556,
+                "std": 0.007128393338789915,
+                "values": [
+                  0.24668599888912893,
+                  0.23029615004327164,
+                  0.24370572721338613
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5833333333333334,
+                "std": 0.0,
+                "values": [
+                  0.5833333333333334,
+                  0.5833333333333334,
+                  0.5833333333333334
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          },
+          "swapped_donor": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 111.45042673746745,
+                "std": 1.484320742577712,
+                "values": [
+                  112.5,
+                  109.35128021240234,
+                  112.5
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.07756115247805913,
+                "std": 0.06172868471020183,
+                "values": [
+                  0.028430968523025513,
+                  0.03963372856378555,
+                  0.16461876034736633
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.25,
+                "std": 0.0,
+                "values": [
+                  0.25,
+                  0.25,
+                  0.25
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 68.54957326253255,
+                "std": 1.484320742577712,
+                "values": [
+                  67.5,
+                  70.64871978759766,
+                  67.5
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.4204732227709986,
+                "std": 0.035707888563115596,
+                "values": [
+                  0.4593488196877037,
+                  0.42894771428912803,
+                  0.3731231343361639
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 90.0,
+                "std": 0.0,
+                "values": [
+                  90.0,
+                  90.0,
+                  90.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.22265350089672908,
+                "std": 0.02404826513051192,
+                "values": [
+                  0.2522782084566576,
+                  0.2223070072769015,
+                  0.19337528695662817
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5,
+                "std": 0.0,
+                "values": [
+                  0.5,
+                  0.5,
+                  0.5
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": {
+                "mean": 90.0,
+                "std": 0.0,
+                "values": [
+                  90.0,
+                  90.0,
+                  90.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.24022929204859556,
+                "std": 0.007128393338789915,
+                "values": [
+                  0.24668599888912893,
+                  0.23029615004327164,
+                  0.24370572721338613
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5833333333333334,
+                "std": 0.0,
+                "values": [
+                  0.5833333333333334,
+                  0.5833333333333334,
+                  0.5833333333333334
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          },
+          "training": [
+            {
+              "seed": 41,
+              "seconds": 111.188,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-sysid-20261120-r1/gpu02fit/train/checkpoints/active_probe-frame0_probe-seed41.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 1.337726354598999,
+                  "yaw_loss": 0.6145157217979431,
+                  "scale_loss": 0.06404783576726913,
+                  "grip_loss": 0.6591627597808838
+                },
+                {
+                  "step": 300,
+                  "loss": 1.1859952211380005,
+                  "yaw_loss": 0.6536517143249512,
+                  "scale_loss": 0.04928041249513626,
+                  "grip_loss": 0.48306310176849365
+                },
+                {
+                  "step": 600,
+                  "loss": 0.8931199312210083,
+                  "yaw_loss": 0.4962983727455139,
+                  "scale_loss": 0.07871708273887634,
+                  "grip_loss": 0.31810450553894043
+                },
+                {
+                  "step": 900,
+                  "loss": 0.9002231955528259,
+                  "yaw_loss": 0.5647011995315552,
+                  "scale_loss": 0.06197233498096466,
+                  "grip_loss": 0.2735496759414673
+                },
+                {
+                  "step": 1200,
+                  "loss": 1.162427306175232,
+                  "yaw_loss": 0.5308233499526978,
+                  "scale_loss": 0.05656110867857933,
+                  "grip_loss": 0.5750428438186646
+                },
+                {
+                  "step": 1500,
+                  "loss": 1.027586579322815,
+                  "yaw_loss": 0.5850343108177185,
+                  "scale_loss": 0.06190718710422516,
+                  "grip_loss": 0.3806450664997101
+                }
+              ]
+            },
+            {
+              "seed": 42,
+              "seconds": 4.043,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-sysid-20261120-r1/gpu02fit/train/checkpoints/active_probe-frame0_probe-seed42.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 2.1377205848693848,
+                  "yaw_loss": 1.3427772521972656,
+                  "scale_loss": 0.04649100452661514,
+                  "grip_loss": 0.7484521865844727
+                },
+                {
+                  "step": 300,
+                  "loss": 1.0510141849517822,
+                  "yaw_loss": 0.5626897215843201,
+                  "scale_loss": 0.054669417440891266,
+                  "grip_loss": 0.4336550533771515
+                },
+                {
+                  "step": 600,
+                  "loss": 1.2764308452606201,
+                  "yaw_loss": 0.7499595880508423,
+                  "scale_loss": 0.04101333022117615,
+                  "grip_loss": 0.4854578971862793
+                },
+                {
+                  "step": 900,
+                  "loss": 0.7574759721755981,
+                  "yaw_loss": 0.4682494103908539,
+                  "scale_loss": 0.060586266219615936,
+                  "grip_loss": 0.22864030301570892
+                },
+                {
+                  "step": 1200,
+                  "loss": 1.1620404720306396,
+                  "yaw_loss": 0.5279240608215332,
+                  "scale_loss": 0.04741896688938141,
+                  "grip_loss": 0.5866974592208862
+                },
+                {
+                  "step": 1500,
+                  "loss": 1.0044128894805908,
+                  "yaw_loss": 0.4805748462677002,
+                  "scale_loss": 0.036031946539878845,
+                  "grip_loss": 0.48780614137649536
+                }
+              ]
+            },
+            {
+              "seed": 43,
+              "seconds": 3.905,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-sysid-20261120-r1/gpu02fit/train/checkpoints/active_probe-frame0_probe-seed43.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 1.9616384506225586,
+                  "yaw_loss": 1.1646745204925537,
+                  "scale_loss": 0.056025512516498566,
+                  "grip_loss": 0.7409384250640869
+                },
+                {
+                  "step": 300,
+                  "loss": 0.9035792350769043,
+                  "yaw_loss": 0.46905553340911865,
+                  "scale_loss": 0.058249689638614655,
+                  "grip_loss": 0.3762739896774292
+                },
+                {
+                  "step": 600,
+                  "loss": 1.10565185546875,
+                  "yaw_loss": 0.7469525933265686,
+                  "scale_loss": 0.04277656972408295,
+                  "grip_loss": 0.31592264771461487
+                },
+                {
+                  "step": 900,
+                  "loss": 0.9341281652450562,
+                  "yaw_loss": 0.5033996105194092,
+                  "scale_loss": 0.053807761520147324,
+                  "grip_loss": 0.37692081928253174
+                },
+                {
+                  "step": 1200,
+                  "loss": 1.0105671882629395,
+                  "yaw_loss": 0.5572589635848999,
+                  "scale_loss": 0.07723666727542877,
+                  "grip_loss": 0.37607163190841675
+                },
+                {
+                  "step": 1500,
+                  "loss": 1.091916799545288,
+                  "yaw_loss": 0.6223359704017639,
+                  "scale_loss": 0.035008881241083145,
+                  "grip_loss": 0.4345719814300537
+                }
+              ]
+            }
+          ]
+        },
+        "joint_transformer": {
+          "retained": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 6.291128226245443,
+                "std": 6.040319958723633,
+                "values": [
+                  14.80631971359253,
+                  1.4446069728583097,
+                  2.62245799228549
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.03180373770495256,
+                "std": 0.01007224147204473,
+                "values": [
+                  0.04559631273150444,
+                  0.027989450842142105,
+                  0.021825449541211128
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.8333333333333334,
+                "std": 0.23570226039551584,
+                "values": [
+                  0.5,
+                  1.0,
+                  1.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 105.98169385968747,
+                "std": 4.128693217176051,
+                "values": [
+                  110.30095418542624,
+                  107.2245854382927,
+                  100.41954195534345
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.3218631779449947,
+                "std": 0.05970561977094086,
+                "values": [
+                  0.25870446781292744,
+                  0.30491033185356603,
+                  0.4019747341684905
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 82.85211984347552,
+                "std": 2.503775131181552,
+                "values": [
+                  86.33466072380543,
+                  80.55653304606676,
+                  81.66516576055437
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.14180371919531884,
+                "std": 0.02542244075793121,
+                "values": [
+                  0.10752945165667271,
+                  0.14953837033223222,
+                  0.16834333559705153
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.010416666666666666,
+                "std": 0.01473139127471974,
+                "values": [
+                  0.0,
+                  0.03125,
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": {
+                "mean": 65.04164730980281,
+                "std": 3.8947974175353095,
+                "values": [
+                  70.48064487427473,
+                  63.075241819072595,
+                  61.569055236061104
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.16515687828175532,
+                "std": 0.024729057077844157,
+                "values": [
+                  0.13727674406703486,
+                  0.16081271767598013,
+                  0.19738117310225103
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.28125,
+                "std": 0.0811341767051939,
+                "values": [
+                  0.16666666666666666,
+                  0.34375,
+                  0.3333333333333333
+                ]
+              }
+            }
+          },
+          "cleared": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 67.5,
+                "std": 0.0,
+                "values": [
+                  67.5,
+                  67.5,
+                  67.5
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.75,
+                "std": 0.0,
+                "values": [
+                  0.75,
+                  0.75,
+                  0.75
+                ]
+              },
+              "all_correct": {
+                "mean": 0.25,
+                "std": 0.0,
+                "values": [
+                  0.25,
+                  0.25,
+                  0.25
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 112.5,
+                "std": 0.0,
+                "values": [
+                  112.5,
+                  112.5,
+                  112.5
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.4466501240694789,
+                "std": 0.0,
+                "values": [
+                  0.4466501240694789,
+                  0.4466501240694789,
+                  0.4466501240694789
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 90.0,
+                "std": 0.0,
+                "values": [
+                  90.0,
+                  90.0,
+                  90.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.23148148148148148,
+                "std": 2.7755575615628914e-17,
+                "values": [
+                  0.23148148148148145,
+                  0.23148148148148145,
+                  0.23148148148148145
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5,
+                "std": 0.0,
+                "values": [
+                  0.5,
+                  0.5,
+                  0.5
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": {
+                "mean": 90.0,
+                "std": 0.0,
+                "values": [
+                  90.0,
+                  90.0,
+                  90.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.2260438685169868,
+                "std": 0.0,
+                "values": [
+                  0.2260438685169868,
+                  0.2260438685169868,
+                  0.2260438685169868
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.4166666666666667,
+                "std": 0.0,
+                "values": [
+                  0.4166666666666667,
+                  0.4166666666666667,
+                  0.4166666666666667
+                ]
+              },
+              "all_correct": {
+                "mean": 0.08333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.08333333333333333,
+                  0.08333333333333333,
+                  0.08333333333333333
+                ]
+              }
+            }
+          },
+          "swapped_donor": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 61.34813926694915,
+                "std": 3.786806398550627,
+                "values": [
+                  65.40697476640344,
+                  62.3443197789602,
+                  56.293123255483806
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.0984789381424586,
+                "std": 0.044141339271774854,
+                "values": [
+                  0.1522768884897232,
+                  0.09900298528373241,
+                  0.044156940653920174
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.375,
+                "std": 0.0,
+                "values": [
+                  0.375,
+                  0.375,
+                  0.375
+                ]
+              },
+              "all_correct": {
+                "mean": 0.11458333333333333,
+                "std": 0.01473139127471974,
+                "values": [
+                  0.09375,
+                  0.125,
+                  0.125
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 104.07692171994131,
+                "std": 2.305671508277367,
+                "values": [
+                  102.20070569217205,
+                  102.70547529216856,
+                  107.32458417548332
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.43517459886467486,
+                "std": 0.0075934296870945155,
+                "values": [
+                  0.43154571491938365,
+                  0.42823611774826165,
+                  0.4457419639263792
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5625,
+                "std": 0.0,
+                "values": [
+                  0.5625,
+                  0.5625,
+                  0.5625
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 103.05111838957721,
+                "std": 0.9522166566460377,
+                "values": [
+                  104.21694557741284,
+                  103.05190854574903,
+                  101.88450104556978
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.18830627876759312,
+                "std": 0.019152985579849895,
+                "values": [
+                  0.17786933440301156,
+                  0.1718785519953127,
+                  0.2151709499044551
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5625,
+                "std": 0.0,
+                "values": [
+                  0.5625,
+                  0.5625,
+                  0.5625
+                ]
+              },
+              "all_correct": {
+                "mean": 0.010416666666666666,
+                "std": 0.01473139127471974,
+                "values": [
+                  0.03125,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": {
+                "mean": 89.4920597921559,
+                "std": 0.8648877049740039,
+                "values": [
+                  90.60820867866278,
+                  89.36723453895927,
+                  88.50073615884564
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.2406532719249089,
+                "std": 0.009399914541735123,
+                "values": [
+                  0.2538973126040395,
+                  0.2330392183424356,
+                  0.2350232848282515
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5,
+                "std": 0.0,
+                "values": [
+                  0.5,
+                  0.5,
+                  0.5
+                ]
+              },
+              "all_correct": {
+                "mean": 0.041666666666666664,
+                "std": 0.0,
+                "values": [
+                  0.041666666666666664,
+                  0.041666666666666664,
+                  0.041666666666666664
+                ]
+              }
+            }
+          },
+          "training": [
+            {
+              "seed": 41,
+              "seconds": 26.086,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-sysid-20261120-r1/gpu02fit/train/checkpoints/active_probe-joint_transformer-seed41.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 3.554865837097168,
+                  "yaw_loss": 1.1323139667510986,
+                  "scale_loss": 0.5467027425765991,
+                  "grip_loss": 1.8758492469787598
+                },
+                {
+                  "step": 300,
+                  "loss": 0.004940338432788849,
+                  "yaw_loss": 0.003084838390350342,
+                  "scale_loss": 0.0016657873056828976,
+                  "grip_loss": 0.00018971254758071154
+                },
+                {
+                  "step": 600,
+                  "loss": 0.0019489043625071645,
+                  "yaw_loss": 0.0014576874673366547,
+                  "scale_loss": 0.0004288125492166728,
+                  "grip_loss": 6.240436050575227e-05
+                },
+                {
+                  "step": 900,
+                  "loss": 0.0008417239296250045,
+                  "yaw_loss": 0.0006866808980703354,
+                  "scale_loss": 0.00012673879973590374,
+                  "grip_loss": 2.8304211809881963e-05
+                },
+                {
+                  "step": 1200,
+                  "loss": 0.0008644326007924974,
+                  "yaw_loss": 0.0003993771970272064,
+                  "scale_loss": 0.00044631570926867425,
+                  "grip_loss": 1.873964174592402e-05
+                },
+                {
+                  "step": 1500,
+                  "loss": 0.000244573166128248,
+                  "yaw_loss": 0.0001365896314382553,
+                  "scale_loss": 9.227251575794071e-05,
+                  "grip_loss": 1.571102620800957e-05
+                }
+              ]
+            },
+            {
+              "seed": 42,
+              "seconds": 9.96,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-sysid-20261120-r1/gpu02fit/train/checkpoints/active_probe-joint_transformer-seed42.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 3.89290714263916,
+                  "yaw_loss": 0.6330941915512085,
+                  "scale_loss": 1.9016180038452148,
+                  "grip_loss": 1.3581948280334473
+                },
+                {
+                  "step": 300,
+                  "loss": 0.0008684878703206778,
+                  "yaw_loss": 0.00016028806567192078,
+                  "scale_loss": 0.0005452480399981141,
+                  "grip_loss": 0.0001629517792025581
+                },
+                {
+                  "step": 600,
+                  "loss": 0.000550457916688174,
+                  "yaw_loss": 0.00013913027942180634,
+                  "scale_loss": 0.000356360076693818,
+                  "grip_loss": 5.4967556934570894e-05
+                },
+                {
+                  "step": 900,
+                  "loss": 0.00021652274881489575,
+                  "yaw_loss": 6.865710020065308e-05,
+                  "scale_loss": 0.00011449291923781857,
+                  "grip_loss": 3.337272210046649e-05
+                },
+                {
+                  "step": 1200,
+                  "loss": 0.0004098998033441603,
+                  "yaw_loss": 2.7047470211982727e-05,
+                  "scale_loss": 0.0003639525384642184,
+                  "grip_loss": 1.8899794667959213e-05
+                },
+                {
+                  "step": 1500,
+                  "loss": 0.0002034914359683171,
+                  "yaw_loss": 8.611194789409637e-05,
+                  "scale_loss": 0.00010425895743537694,
+                  "grip_loss": 1.3120535186317284e-05
+                }
+              ]
+            },
+            {
+              "seed": 43,
+              "seconds": 9.942,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-sysid-20261120-r1/gpu02fit/train/checkpoints/active_probe-joint_transformer-seed43.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 1.937515377998352,
+                  "yaw_loss": 0.41314050555229187,
+                  "scale_loss": 0.5612229108810425,
+                  "grip_loss": 0.9631519317626953
+                },
+                {
+                  "step": 300,
+                  "loss": 0.0024437657557427883,
+                  "yaw_loss": 0.00048397108912467957,
+                  "scale_loss": 0.0018196312012150884,
+                  "grip_loss": 0.00014016346540302038
+                },
+                {
+                  "step": 600,
+                  "loss": 0.0003628325939644128,
+                  "yaw_loss": 0.00017250142991542816,
+                  "scale_loss": 0.00014400533109437674,
+                  "grip_loss": 4.632581112673506e-05
+                },
+                {
+                  "step": 900,
+                  "loss": 0.00019349715148564428,
+                  "yaw_loss": 7.130391895771027e-05,
+                  "scale_loss": 9.529080125503242e-05,
+                  "grip_loss": 2.6902436729869805e-05
+                },
+                {
+                  "step": 1200,
+                  "loss": 0.0008290281984955072,
+                  "yaw_loss": 3.583356738090515e-05,
+                  "scale_loss": 0.0007761454326100647,
+                  "grip_loss": 1.7049209418473765e-05
+                },
+                {
+                  "step": 1500,
+                  "loss": 0.00015902105951681733,
+                  "yaw_loss": 5.7423487305641174e-05,
+                  "scale_loss": 8.322775829583406e-05,
+                  "grip_loss": 1.8369813915342093e-05
+                }
+              ]
+            }
+          ]
+        },
+        "factored_no_equiv": {
+          "retained": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 48.464777706889436,
+                "std": 11.41947593749173,
+                "values": [
+                  64.46408702805638,
+                  42.36859933054075,
+                  38.56164676207118
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.07254445552825928,
+                "std": 0.0045573252690218925,
+                "values": [
+                  0.06632557325065136,
+                  0.07418830879032612,
+                  0.07711948454380035
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.5208333333333334,
+                "std": 0.13093546968725556,
+                "values": [
+                  0.34375,
+                  0.5625,
+                  0.65625
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 63.48744448119154,
+                "std": 9.573421120642042,
+                "values": [
+                  60.456449538469315,
+                  53.575545478612185,
+                  76.43033842649311
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.1952654375972779,
+                "std": 0.05617575316846132,
+                "values": [
+                  0.14741024820517667,
+                  0.1642750616257007,
+                  0.27411100296095636
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.1875,
+                "std": 0.07654655446197431,
+                "values": [
+                  0.1875,
+                  0.28125,
+                  0.09375
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 61.714571011563145,
+                "std": 2.617530908844743,
+                "values": [
+                  65.02866236120462,
+                  61.4857413507998,
+                  58.629309322685
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.08688190222982271,
+                "std": 0.014858511575344239,
+                "values": [
+                  0.06647307439534751,
+                  0.09275355038267594,
+                  0.10141908191144465
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.10416666666666667,
+                "std": 0.01473139127471974,
+                "values": [
+                  0.09375,
+                  0.125,
+                  0.09375
+                ]
+              }
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": {
+                "mean": 57.88893106654803,
+                "std": 4.425330942385951,
+                "values": [
+                  63.316399642576776,
+                  52.47662871998424,
+                  57.873764837083094
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.11823059845178663,
+                "std": 0.024109701100314827,
+                "values": [
+                  0.09340296528372517,
+                  0.11040564026623424,
+                  0.15088318980540047
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.2708333333333333,
+                "std": 0.04735479755897867,
+                "values": [
+                  0.20833333333333334,
+                  0.3229166666666667,
+                  0.28125
+                ]
+              }
+            }
+          },
+          "cleared": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 67.5,
+                "std": 0.0,
+                "values": [
+                  67.5,
+                  67.5,
+                  67.5
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.75,
+                "std": 0.0,
+                "values": [
+                  0.75,
+                  0.75,
+                  0.75
+                ]
+              },
+              "all_correct": {
+                "mean": 0.25,
+                "std": 0.0,
+                "values": [
+                  0.25,
+                  0.25,
+                  0.25
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 112.5,
+                "std": 0.0,
+                "values": [
+                  112.5,
+                  112.5,
+                  112.5
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.4466501240694789,
+                "std": 0.0,
+                "values": [
+                  0.4466501240694789,
+                  0.4466501240694789,
+                  0.4466501240694789
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 90.0,
+                "std": 0.0,
+                "values": [
+                  90.0,
+                  90.0,
+                  90.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.23148148148148148,
+                "std": 2.7755575615628914e-17,
+                "values": [
+                  0.23148148148148145,
+                  0.23148148148148145,
+                  0.23148148148148145
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5,
+                "std": 0.0,
+                "values": [
+                  0.5,
+                  0.5,
+                  0.5
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": {
+                "mean": 90.0,
+                "std": 0.0,
+                "values": [
+                  90.0,
+                  90.0,
+                  90.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.2260438685169868,
+                "std": 0.0,
+                "values": [
+                  0.2260438685169868,
+                  0.2260438685169868,
+                  0.2260438685169868
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.4166666666666667,
+                "std": 0.0,
+                "values": [
+                  0.4166666666666667,
+                  0.4166666666666667,
+                  0.4166666666666667
+                ]
+              },
+              "all_correct": {
+                "mean": 0.08333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.08333333333333333,
+                  0.08333333333333333,
+                  0.08333333333333333
+                ]
+              }
+            }
+          },
+          "swapped_donor": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 81.19285863793145,
+                "std": 8.363228071332781,
+                "values": [
+                  88.82902398519218,
+                  85.19667533412576,
+                  69.5528765944764
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.33900052805741626,
+                "std": 0.023879363023041045,
+                "values": [
+                  0.3277038410305977,
+                  0.3170875832438469,
+                  0.37221015989780426
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.375,
+                "std": 0.0,
+                "values": [
+                  0.375,
+                  0.375,
+                  0.375
+                ]
+              },
+              "all_correct": {
+                "mean": 0.010416666666666666,
+                "std": 0.01473139127471974,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.03125
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 104.16665049704413,
+                "std": 11.223095446562972,
+                "values": [
+                  93.1173724476248,
+                  99.8235695194453,
+                  119.55900952406228
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.5228606404919974,
+                "std": 0.028431241178969027,
+                "values": [
+                  0.5015403331989982,
+                  0.5039981488443486,
+                  0.5630434394326458
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5625,
+                "std": 0.0,
+                "values": [
+                  0.5625,
+                  0.5625,
+                  0.5625
+                ]
+              },
+              "all_correct": {
+                "mean": 0.010416666666666666,
+                "std": 0.01473139127471974,
+                "values": [
+                  0.0,
+                  0.03125,
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 93.1857456213329,
+                "std": 1.8808496285184653,
+                "values": [
+                  90.57473722845316,
+                  94.93098765658215,
+                  94.05151197896339
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.266186277853486,
+                "std": 0.004057436565079669,
+                "values": [
+                  0.26550560292822345,
+                  0.26159237794302126,
+                  0.2714608526892133
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5625,
+                "std": 0.0,
+                "values": [
+                  0.5625,
+                  0.5625,
+                  0.5625
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": {
+                "mean": 92.84841825210282,
+                "std": 1.4856605505795268,
+                "values": [
+                  90.84037788709004,
+                  93.3170775033844,
+                  94.38779936583403
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.37601581546763324,
+                "std": 0.018614619138043898,
+                "values": [
+                  0.3649165923859398,
+                  0.36089270334373885,
+                  0.4022381506732211
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5,
+                "std": 0.0,
+                "values": [
+                  0.5,
+                  0.5,
+                  0.5
+                ]
+              },
+              "all_correct": {
+                "mean": 0.006944444444444444,
+                "std": 0.004910463758239913,
+                "values": [
+                  0.0,
+                  0.010416666666666666,
+                  0.010416666666666666
+                ]
+              }
+            }
+          },
+          "training": [
+            {
+              "seed": 41,
+              "seconds": 15.442,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-sysid-20261120-r1/gpu02fit/train/checkpoints/active_probe-factored_no_equiv-seed41.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 2.441765069961548,
+                  "yaw_loss": 1.309187889099121,
+                  "scale_loss": 0.1462859809398651,
+                  "grip_loss": 0.9862911105155945
+                },
+                {
+                  "step": 300,
+                  "loss": 0.6631584763526917,
+                  "yaw_loss": 0.6535796523094177,
+                  "scale_loss": 0.009405233897268772,
+                  "grip_loss": 0.00017358694458380342
+                },
+                {
+                  "step": 600,
+                  "loss": 0.008665990084409714,
+                  "yaw_loss": 0.003999818116426468,
+                  "scale_loss": 0.004620878957211971,
+                  "grip_loss": 4.5292814320418984e-05
+                },
+                {
+                  "step": 900,
+                  "loss": 0.006148191634565592,
+                  "yaw_loss": 0.00040438584983348846,
+                  "scale_loss": 0.005724187009036541,
+                  "grip_loss": 1.9618915757746436e-05
+                },
+                {
+                  "step": 1200,
+                  "loss": 0.0032384369987994432,
+                  "yaw_loss": 0.0005107186734676361,
+                  "scale_loss": 0.002712592715397477,
+                  "grip_loss": 1.5125564459594898e-05
+                },
+                {
+                  "step": 1500,
+                  "loss": 0.0030431493651121855,
+                  "yaw_loss": 7.389113306999207e-05,
+                  "scale_loss": 0.002961535472422838,
+                  "grip_loss": 7.722872396698222e-06
+                }
+              ]
+            },
+            {
+              "seed": 42,
+              "seconds": 8.025,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-sysid-20261120-r1/gpu02fit/train/checkpoints/active_probe-factored_no_equiv-seed42.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 1.7858600616455078,
+                  "yaw_loss": 0.8410869240760803,
+                  "scale_loss": 0.20638850331306458,
+                  "grip_loss": 0.7383845448493958
+                },
+                {
+                  "step": 300,
+                  "loss": 0.5647251009941101,
+                  "yaw_loss": 0.5615506172180176,
+                  "scale_loss": 0.0030368242878466845,
+                  "grip_loss": 0.00013771429075859487
+                },
+                {
+                  "step": 600,
+                  "loss": 0.008458823896944523,
+                  "yaw_loss": 0.0038244351744651794,
+                  "scale_loss": 0.0045937299728393555,
+                  "grip_loss": 4.065880784764886e-05
+                },
+                {
+                  "step": 900,
+                  "loss": 0.0070225028321146965,
+                  "yaw_loss": 0.0003775060176849365,
+                  "scale_loss": 0.006633416749536991,
+                  "grip_loss": 1.158006489276886e-05
+                },
+                {
+                  "step": 1200,
+                  "loss": 0.003893231973052025,
+                  "yaw_loss": 9.697489440441132e-05,
+                  "scale_loss": 0.0037858886644244194,
+                  "grip_loss": 1.0368506991653703e-05
+                },
+                {
+                  "step": 1500,
+                  "loss": 0.0025000288151204586,
+                  "yaw_loss": 9.269639849662781e-05,
+                  "scale_loss": 0.0024022082798182964,
+                  "grip_loss": 5.124051313032396e-06
+                }
+              ]
+            },
+            {
+              "seed": 43,
+              "seconds": 8.097,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-sysid-20261120-r1/gpu02fit/train/checkpoints/active_probe-factored_no_equiv-seed43.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 2.20717191696167,
+                  "yaw_loss": 1.5388178825378418,
+                  "scale_loss": 0.17772895097732544,
+                  "grip_loss": 0.4906250834465027
+                },
+                {
+                  "step": 300,
+                  "loss": 0.4747616946697235,
+                  "yaw_loss": 0.46803948283195496,
+                  "scale_loss": 0.006603902205824852,
+                  "grip_loss": 0.00011830820585601032
+                },
+                {
+                  "step": 600,
+                  "loss": 0.7533633708953857,
+                  "yaw_loss": 0.7474728226661682,
+                  "scale_loss": 0.005859200842678547,
+                  "grip_loss": 3.132752681267448e-05
+                },
+                {
+                  "step": 900,
+                  "loss": 0.4591805040836334,
+                  "yaw_loss": 0.45630180835723877,
+                  "scale_loss": 0.002861997112631798,
+                  "grip_loss": 1.6686668459442444e-05
+                },
+                {
+                  "step": 1200,
+                  "loss": 0.006059745326638222,
+                  "yaw_loss": 0.002437066286802292,
+                  "scale_loss": 0.00361312972381711,
+                  "grip_loss": 9.549135029374156e-06
+                },
+                {
+                  "step": 1500,
+                  "loss": 0.0019809012301266193,
+                  "yaw_loss": 0.000702153891324997,
+                  "scale_loss": 0.0012715382035821676,
+                  "grip_loss": 7.209082923509413e-06
+                }
+              ]
+            }
+          ]
+        },
+        "factored_equiv": {
+          "retained": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 11.13119282387197,
+                "std": 1.3683022915464698,
+                "values": [
+                  13.01269257441163,
+                  10.582036817446351,
+                  9.798849079757929
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.07325988945861657,
+                "std": 0.005034574663445884,
+                "values": [
+                  0.06690166145563126,
+                  0.0736640952527523,
+                  0.07921391166746616
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.7083333333333334,
+                "std": 0.0820209153542897,
+                "values": [
+                  0.59375,
+                  0.78125,
+                  0.75
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 22.220117112000782,
+                "std": 3.621723818212049,
+                "values": [
+                  22.504292905330658,
+                  26.506884396076202,
+                  17.64917403459549
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.19500508478621592,
+                "std": 0.05479266053207157,
+                "values": [
+                  0.1477862099559964,
+                  0.1654060936669262,
+                  0.27182295073572516
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.40625,
+                "std": 0.05103103630798288,
+                "values": [
+                  0.34375,
+                  0.40625,
+                  0.46875
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 21.980376380185287,
+                "std": 2.5225599713287004,
+                "values": [
+                  25.455717124044895,
+                  19.545233249664307,
+                  20.940178766846657
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.08721312990895023,
+                "std": 0.014112334650916365,
+                "values": [
+                  0.06770738552289979,
+                  0.09330793759889072,
+                  0.10062406660506017
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.4583333333333333,
+                "std": 0.03897559777889522,
+                "values": [
+                  0.40625,
+                  0.5,
+                  0.46875
+                ]
+              }
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": {
+                "mean": 18.443895438686013,
+                "std": 1.7398325177997853,
+                "values": [
+                  20.324234201262396,
+                  18.878051487728953,
+                  16.12940062706669
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.11849270138459422,
+                "std": 0.023668894512830004,
+                "values": [
+                  0.09413175231150912,
+                  0.11079270883952308,
+                  0.1505536430027505
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.5243055555555556,
+                "std": 0.05401510134063904,
+                "values": [
+                  0.4479166666666667,
+                  0.5625,
+                  0.5625
+                ]
+              }
+            }
+          },
+          "cleared": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 67.5,
+                "std": 0.0,
+                "values": [
+                  67.5,
+                  67.5,
+                  67.5
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.75,
+                "std": 0.0,
+                "values": [
+                  0.75,
+                  0.75,
+                  0.75
+                ]
+              },
+              "all_correct": {
+                "mean": 0.25,
+                "std": 0.0,
+                "values": [
+                  0.25,
+                  0.25,
+                  0.25
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 112.5,
+                "std": 0.0,
+                "values": [
+                  112.5,
+                  112.5,
+                  112.5
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.4466501240694789,
+                "std": 0.0,
+                "values": [
+                  0.4466501240694789,
+                  0.4466501240694789,
+                  0.4466501240694789
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 90.0,
+                "std": 0.0,
+                "values": [
+                  90.0,
+                  90.0,
+                  90.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.23148148148148148,
+                "std": 2.7755575615628914e-17,
+                "values": [
+                  0.23148148148148145,
+                  0.23148148148148145,
+                  0.23148148148148145
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5,
+                "std": 0.0,
+                "values": [
+                  0.5,
+                  0.5,
+                  0.5
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": {
+                "mean": 90.0,
+                "std": 0.0,
+                "values": [
+                  90.0,
+                  90.0,
+                  90.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.2260438685169868,
+                "std": 0.0,
+                "values": [
+                  0.2260438685169868,
+                  0.2260438685169868,
+                  0.2260438685169868
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.4166666666666667,
+                "std": 0.0,
+                "values": [
+                  0.4166666666666667,
+                  0.4166666666666667,
+                  0.4166666666666667
+                ]
+              },
+              "all_correct": {
+                "mean": 0.08333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.08333333333333333,
+                  0.08333333333333333,
+                  0.08333333333333333
+                ]
+              }
+            }
+          },
+          "swapped_donor": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 79.65298789987962,
+                "std": 1.9917549456300154,
+                "values": [
+                  82.24286752939224,
+                  79.31722704321146,
+                  77.39886912703514
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.3396781962364912,
+                "std": 0.02467668991563523,
+                "values": [
+                  0.3277928773313761,
+                  0.31720496341586113,
+                  0.3740367479622364
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.375,
+                "std": 0.0,
+                "values": [
+                  0.375,
+                  0.375,
+                  0.375
+                ]
+              },
+              "all_correct": {
+                "mean": 0.020833333333333332,
+                "std": 0.01473139127471974,
+                "values": [
+                  0.0,
+                  0.03125,
+                  0.03125
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 96.49457470793277,
+                "std": 0.9743672333022881,
+                "values": [
+                  97.77422633301467,
+                  95.41207966580987,
+                  96.29741812497377
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.5227161726557686,
+                "std": 0.027816781681746318,
+                "values": [
+                  0.5020233816085915,
+                  0.5040881602699052,
+                  0.562036976088809
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5625,
+                "std": 0.0,
+                "values": [
+                  0.5625,
+                  0.5625,
+                  0.5625
+                ]
+              },
+              "all_correct": {
+                "mean": 0.020833333333333332,
+                "std": 0.01473139127471974,
+                "values": [
+                  0.03125,
+                  0.0,
+                  0.03125
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 102.44278622822215,
+                "std": 1.1832519609439298,
+                "values": [
+                  104.10238513257354,
+                  101.79853033460677,
+                  101.42744321748614
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.265795103561731,
+                "std": 0.00373578170340709,
+                "values": [
+                  0.266153154204841,
+                  0.2610512181978535,
+                  0.2701809382824986
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5625,
+                "std": 0.0,
+                "values": [
+                  0.5625,
+                  0.5625,
+                  0.5625
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": {
+                "mean": 92.86344961201151,
+                "std": 1.3171613431867593,
+                "values": [
+                  94.70649299832682,
+                  92.17594568120937,
+                  91.70791015649836
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.37606315748466357,
+                "std": 0.018493324210756657,
+                "values": [
+                  0.3653231377149362,
+                  0.3607814472945399,
+                  0.40208488744451465
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5,
+                "std": 0.0,
+                "values": [
+                  0.5,
+                  0.5,
+                  0.5
+                ]
+              },
+              "all_correct": {
+                "mean": 0.013888888888888888,
+                "std": 0.004910463758239913,
+                "values": [
+                  0.010416666666666666,
+                  0.010416666666666666,
+                  0.020833333333333332
+                ]
+              }
+            }
+          },
+          "training": [
+            {
+              "seed": 41,
+              "seconds": 10.585,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-sysid-20261120-r1/gpu02fit/train/checkpoints/active_probe-factored_equiv-seed41.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 2.233941078186035,
+                  "yaw_loss": 1.1013638973236084,
+                  "scale_loss": 0.1462859809398651,
+                  "grip_loss": 0.9862911105155945
+                },
+                {
+                  "step": 300,
+                  "loss": 0.011478545144200325,
+                  "yaw_loss": 0.0017074663192033768,
+                  "scale_loss": 0.009580769576132298,
+                  "grip_loss": 0.00019030889961868525
+                },
+                {
+                  "step": 600,
+                  "loss": 0.004993373993784189,
+                  "yaw_loss": 0.00036380067467689514,
+                  "scale_loss": 0.004584179259836674,
+                  "grip_loss": 4.539399378700182e-05
+                },
+                {
+                  "step": 900,
+                  "loss": 0.006100572180002928,
+                  "yaw_loss": 0.00022193975746631622,
+                  "scale_loss": 0.005859054625034332,
+                  "grip_loss": 1.9577772036427632e-05
+                },
+                {
+                  "step": 1200,
+                  "loss": 0.002860267646610737,
+                  "yaw_loss": 0.00012460723519325256,
+                  "scale_loss": 0.002720597665756941,
+                  "grip_loss": 1.5062702004797757e-05
+                },
+                {
+                  "step": 1500,
+                  "loss": 0.0030067660845816135,
+                  "yaw_loss": 5.237385630607605e-05,
+                  "scale_loss": 0.0029466995038092136,
+                  "grip_loss": 7.69264079281129e-06
+                }
+              ]
+            },
+            {
+              "seed": 42,
+              "seconds": 8.34,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-sysid-20261120-r1/gpu02fit/train/checkpoints/active_probe-factored_equiv-seed42.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 1.5847878456115723,
+                  "yaw_loss": 0.6400148868560791,
+                  "scale_loss": 0.20638850331306458,
+                  "grip_loss": 0.7383845448493958
+                },
+                {
+                  "step": 300,
+                  "loss": 0.0070794932544231415,
+                  "yaw_loss": 0.0038693640381097794,
+                  "scale_loss": 0.003064068965613842,
+                  "grip_loss": 0.00014606006152462214
+                },
+                {
+                  "step": 600,
+                  "loss": 0.004916881676763296,
+                  "yaw_loss": 0.0004329606890678406,
+                  "scale_loss": 0.004442665260285139,
+                  "grip_loss": 4.125560008105822e-05
+                },
+                {
+                  "step": 900,
+                  "loss": 0.0067949616350233555,
+                  "yaw_loss": 0.0002845153212547302,
+                  "scale_loss": 0.006497946567833424,
+                  "grip_loss": 1.2499724107328802e-05
+                },
+                {
+                  "step": 1200,
+                  "loss": 0.0038782572373747826,
+                  "yaw_loss": 0.00011407770216464996,
+                  "scale_loss": 0.0037538022734224796,
+                  "grip_loss": 1.0377188118582126e-05
+                },
+                {
+                  "step": 1500,
+                  "loss": 0.002614477416500449,
+                  "yaw_loss": 0.00016224384307861328,
+                  "scale_loss": 0.0024463431909680367,
+                  "grip_loss": 5.890450665901881e-06
+                }
+              ]
+            },
+            {
+              "seed": 43,
+              "seconds": 8.146,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-sysid-20261120-r1/gpu02fit/train/checkpoints/active_probe-factored_equiv-seed43.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 1.8016607761383057,
+                  "yaw_loss": 1.133306860923767,
+                  "scale_loss": 0.17772892117500305,
+                  "grip_loss": 0.4906250834465027
+                },
+                {
+                  "step": 300,
+                  "loss": 0.008657785132527351,
+                  "yaw_loss": 0.0018390454351902008,
+                  "scale_loss": 0.006690049543976784,
+                  "grip_loss": 0.00012868977501057088
+                },
+                {
+                  "step": 600,
+                  "loss": 0.006189598236232996,
+                  "yaw_loss": 0.00024184398353099823,
+                  "scale_loss": 0.005915114190429449,
+                  "grip_loss": 3.264009137637913e-05
+                },
+                {
+                  "step": 900,
+                  "loss": 0.00300958170555532,
+                  "yaw_loss": 0.00016669929027557373,
+                  "scale_loss": 0.002825833158567548,
+                  "grip_loss": 1.7049285816028714e-05
+                },
+                {
+                  "step": 1200,
+                  "loss": 0.003570287488400936,
+                  "yaw_loss": 5.7542696595191956e-05,
+                  "scale_loss": 0.003502680454403162,
+                  "grip_loss": 1.0064274647447746e-05
+                },
+                {
+                  "step": 1500,
+                  "loss": 0.0014533153735101223,
+                  "yaw_loss": 0.00020787306129932404,
+                  "scale_loss": 0.0012381533160805702,
+                  "grip_loss": 7.288977940334007e-06
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "passive_attempt1": {
+      "nominal_gain": 0.05380261094421068,
+      "analytic_proprio_sysid": {
+        "retained": {
+          "familiar": {
+            "trials": 32,
+            "yaw_err_deg": 66.82334855070803,
+            "scale_rel_err": 0.0770790372043848,
+            "grip_acc": 1.0,
+            "all_correct": 0.5
+          },
+          "compositional_ood": {
+            "trials": 32,
+            "yaw_err_deg": 111.95543070929125,
+            "scale_rel_err": 0.09153919012537663,
+            "grip_acc": 1.0,
+            "all_correct": 0.0
+          },
+          "continuous_angle_ood": {
+            "trials": 32,
+            "yaw_err_deg": 89.03805652575102,
+            "scale_rel_err": 0.07811600983970693,
+            "grip_acc": 1.0,
+            "all_correct": 0.0
+          },
+          "overall": {
+            "trials": 96,
+            "yaw_err_deg": 89.2722785952501,
+            "scale_rel_err": 0.08224474572315614,
+            "grip_acc": 1.0,
+            "all_correct": 0.16666666666666666
+          }
+        },
+        "cleared": {
+          "familiar": {
+            "trials": 32,
+            "yaw_err_deg": 67.5,
+            "scale_rel_err": 0.0,
+            "grip_acc": 0.75,
+            "all_correct": 0.25
+          },
+          "compositional_ood": {
+            "trials": 32,
+            "yaw_err_deg": 112.5,
+            "scale_rel_err": 0.4466501240694789,
+            "grip_acc": 0.0,
+            "all_correct": 0.0
+          },
+          "continuous_angle_ood": {
+            "trials": 32,
+            "yaw_err_deg": 90.0,
+            "scale_rel_err": 0.23148148148148145,
+            "grip_acc": 0.5,
+            "all_correct": 0.0
+          },
+          "overall": {
+            "trials": 96,
+            "yaw_err_deg": 90.0,
+            "scale_rel_err": 0.2260438685169868,
+            "grip_acc": 0.4166666666666667,
+            "all_correct": 0.08333333333333333
+          }
+        },
+        "swapped_donor": {
+          "familiar": {
+            "trials": 32,
+            "yaw_err_deg": 67.83717889571562,
+            "scale_rel_err": 0.28850684501230717,
+            "grip_acc": 0.375,
+            "all_correct": 0.03125
+          },
+          "compositional_ood": {
+            "trials": 32,
+            "yaw_err_deg": 112.0693369746441,
+            "scale_rel_err": 0.46772467566852827,
+            "grip_acc": 0.5625,
+            "all_correct": 0.0
+          },
+          "continuous_angle_ood": {
+            "trials": 32,
+            "yaw_err_deg": 90.05820941121783,
+            "scale_rel_err": 0.24640207696292138,
+            "grip_acc": 0.5625,
+            "all_correct": 0.0
+          },
+          "overall": {
+            "trials": 96,
+            "yaw_err_deg": 89.98824176052585,
+            "scale_rel_err": 0.3342111992145856,
+            "grip_acc": 0.5,
+            "all_correct": 0.010416666666666666
+          }
+        }
+      },
+      "analytic_visual_sysid": {
+        "available": true,
+        "projection": [
+          [
+            3.183383806038952,
+            35.51312444120753
+          ],
+          [
+            -65.5499884406762,
+            6.486105805925192
+          ],
+          [
+            11.780106527038498,
+            -81.7174893950596
+          ]
+        ],
+        "retained": {
+          "familiar": {
+            "trials": 32,
+            "yaw_err_deg": 8.679591637451068,
+            "scale_rel_err": 0.0770790372043848,
+            "grip_acc": 1.0,
+            "all_correct": 0.78125
+          },
+          "compositional_ood": {
+            "trials": 32,
+            "yaw_err_deg": 15.0226458902951,
+            "scale_rel_err": 0.09153919012537663,
+            "grip_acc": 1.0,
+            "all_correct": 0.65625
+          },
+          "continuous_angle_ood": {
+            "trials": 32,
+            "yaw_err_deg": 11.940415535530143,
+            "scale_rel_err": 0.07811600983970693,
+            "grip_acc": 1.0,
+            "all_correct": 0.6875
+          },
+          "overall": {
+            "trials": 96,
+            "yaw_err_deg": 11.880884354425438,
+            "scale_rel_err": 0.08224474572315614,
+            "grip_acc": 1.0,
+            "all_correct": 0.7083333333333334
+          }
+        },
+        "cleared": {
+          "familiar": {
+            "trials": 32,
+            "yaw_err_deg": 67.5,
+            "scale_rel_err": 0.0,
+            "grip_acc": 0.75,
+            "all_correct": 0.25
+          },
+          "compositional_ood": {
+            "trials": 32,
+            "yaw_err_deg": 112.5,
+            "scale_rel_err": 0.4466501240694789,
+            "grip_acc": 0.0,
+            "all_correct": 0.0
+          },
+          "continuous_angle_ood": {
+            "trials": 32,
+            "yaw_err_deg": 90.0,
+            "scale_rel_err": 0.23148148148148145,
+            "grip_acc": 0.5,
+            "all_correct": 0.0
+          },
+          "overall": {
+            "trials": 96,
+            "yaw_err_deg": 90.0,
+            "scale_rel_err": 0.2260438685169868,
+            "grip_acc": 0.4166666666666667,
+            "all_correct": 0.08333333333333333
+          }
+        },
+        "swapped_donor": {
+          "familiar": {
+            "trials": 32,
+            "yaw_err_deg": 78.77274731914409,
+            "scale_rel_err": 0.28850684501230717,
+            "grip_acc": 0.375,
+            "all_correct": 0.0
+          },
+          "compositional_ood": {
+            "trials": 32,
+            "yaw_err_deg": 100.56611602559721,
+            "scale_rel_err": 0.46772467566852827,
+            "grip_acc": 0.5625,
+            "all_correct": 0.0
+          },
+          "continuous_angle_ood": {
+            "trials": 32,
+            "yaw_err_deg": 103.4088276609512,
+            "scale_rel_err": 0.24640207696292138,
+            "grip_acc": 0.5625,
+            "all_correct": 0.0
+          },
+          "overall": {
+            "trials": 96,
+            "yaw_err_deg": 94.24923033523082,
+            "scale_rel_err": 0.3342111992145856,
+            "grip_acc": 0.5,
+            "all_correct": 0.0
+          }
+        }
+      },
+      "analytic_visual_sysid_clean_proj": {
+        "available": true,
+        "projection": [
+          [
+            -8.502856065021303,
+            68.76115147895602
+          ],
+          [
+            -84.83372364589505,
+            -4.984803016020486
+          ],
+          [
+            -19.86550802467545,
+            -29.656030611513312
+          ]
+        ],
+        "retained": {
+          "familiar": {
+            "trials": 32,
+            "yaw_err_deg": 10.03111443666743,
+            "scale_rel_err": 0.0770790372043848,
+            "grip_acc": 1.0,
+            "all_correct": 0.71875
+          },
+          "compositional_ood": {
+            "trials": 32,
+            "yaw_err_deg": 12.176542118877382,
+            "scale_rel_err": 0.09153919012537663,
+            "grip_acc": 1.0,
+            "all_correct": 0.625
+          },
+          "continuous_angle_ood": {
+            "trials": 32,
+            "yaw_err_deg": 10.353769001853948,
+            "scale_rel_err": 0.07811600983970693,
+            "grip_acc": 1.0,
+            "all_correct": 0.75
+          },
+          "overall": {
+            "trials": 96,
+            "yaw_err_deg": 10.85380851913292,
+            "scale_rel_err": 0.08224474572315614,
+            "grip_acc": 1.0,
+            "all_correct": 0.6979166666666666
+          }
+        },
+        "cleared": {
+          "familiar": {
+            "trials": 32,
+            "yaw_err_deg": 67.5,
+            "scale_rel_err": 0.0,
+            "grip_acc": 0.75,
+            "all_correct": 0.25
+          },
+          "compositional_ood": {
+            "trials": 32,
+            "yaw_err_deg": 112.5,
+            "scale_rel_err": 0.4466501240694789,
+            "grip_acc": 0.0,
+            "all_correct": 0.0
+          },
+          "continuous_angle_ood": {
+            "trials": 32,
+            "yaw_err_deg": 90.0,
+            "scale_rel_err": 0.23148148148148145,
+            "grip_acc": 0.5,
+            "all_correct": 0.0
+          },
+          "overall": {
+            "trials": 96,
+            "yaw_err_deg": 90.0,
+            "scale_rel_err": 0.2260438685169868,
+            "grip_acc": 0.4166666666666667,
+            "all_correct": 0.08333333333333333
+          }
+        },
+        "swapped_donor": {
+          "familiar": {
+            "trials": 32,
+            "yaw_err_deg": 81.49971129710565,
+            "scale_rel_err": 0.28850684501230717,
+            "grip_acc": 0.375,
+            "all_correct": 0.0
+          },
+          "compositional_ood": {
+            "trials": 32,
+            "yaw_err_deg": 102.74597516601133,
+            "scale_rel_err": 0.46772467566852827,
+            "grip_acc": 0.5625,
+            "all_correct": 0.0
+          },
+          "continuous_angle_ood": {
+            "trials": 32,
+            "yaw_err_deg": 101.26605180015426,
+            "scale_rel_err": 0.24640207696292138,
+            "grip_acc": 0.5625,
+            "all_correct": 0.0
+          },
+          "overall": {
+            "trials": 96,
+            "yaw_err_deg": 95.17057942109041,
+            "scale_rel_err": 0.3342111992145856,
+            "grip_acc": 0.5,
+            "all_correct": 0.0
+          }
+        }
+      },
+      "analytic_joint_jacobian": {
+        "source_arm": "Panda",
+        "source_dof": 7,
+        "target_arm": "UR5e",
+        "target_dof": 6,
+        "applicable": false,
+        "reason": "joint_dim_mismatch:7!=6",
+        "zero_padded": {
+          "retained": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": 64.64838470518589,
+              "scale_rel_err": 0.0770790372043848,
+              "grip_acc": 1.0,
+              "all_correct": 0.03125
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": 91.7119625210762,
+              "scale_rel_err": 0.09153919012537663,
+              "grip_acc": 1.0,
+              "all_correct": 0.0625
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": 71.97882631793618,
+              "scale_rel_err": 0.07811600983970693,
+              "grip_acc": 1.0,
+              "all_correct": 0.0625
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": 76.11305784806609,
+              "scale_rel_err": 0.08224474572315614,
+              "grip_acc": 1.0,
+              "all_correct": 0.052083333333333336
+            }
+          },
+          "cleared": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": 67.5,
+              "scale_rel_err": 0.0,
+              "grip_acc": 0.75,
+              "all_correct": 0.25
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": 112.5,
+              "scale_rel_err": 0.4466501240694789,
+              "grip_acc": 0.0,
+              "all_correct": 0.0
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": 90.0,
+              "scale_rel_err": 0.23148148148148145,
+              "grip_acc": 0.5,
+              "all_correct": 0.0
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": 90.0,
+              "scale_rel_err": 0.2260438685169868,
+              "grip_acc": 0.4166666666666667,
+              "all_correct": 0.08333333333333333
+            }
+          },
+          "swapped_donor": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": 84.70276849716902,
+              "scale_rel_err": 0.28850684501230717,
+              "grip_acc": 0.375,
+              "all_correct": 0.0
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": 101.83582654967904,
+              "scale_rel_err": 0.46772467566852827,
+              "grip_acc": 0.5625,
+              "all_correct": 0.03125
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": 100.09560990333557,
+              "scale_rel_err": 0.24640207696292138,
+              "grip_acc": 0.5625,
+              "all_correct": 0.0
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": 95.54473498339455,
+              "scale_rel_err": 0.3342111992145856,
+              "grip_acc": 0.5,
+              "all_correct": 0.010416666666666666
+            }
+          }
+        },
+        "self_calibrated_local": {
+          "retained": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": 66.82344548869878,
+              "scale_rel_err": 0.0770790372043848,
+              "grip_acc": 1.0,
+              "all_correct": 0.5
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": 111.95588256092742,
+              "scale_rel_err": 0.09153919012537663,
+              "grip_acc": 1.0,
+              "all_correct": 0.0
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": 89.0387202432612,
+              "scale_rel_err": 0.07811600983970693,
+              "grip_acc": 1.0,
+              "all_correct": 0.0
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": 89.2726827642958,
+              "scale_rel_err": 0.08224474572315614,
+              "grip_acc": 1.0,
+              "all_correct": 0.16666666666666666
+            }
+          },
+          "cleared": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": 67.5,
+              "scale_rel_err": 0.0,
+              "grip_acc": 0.75,
+              "all_correct": 0.25
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": 112.5,
+              "scale_rel_err": 0.4466501240694789,
+              "grip_acc": 0.0,
+              "all_correct": 0.0
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": 90.0,
+              "scale_rel_err": 0.23148148148148145,
+              "grip_acc": 0.5,
+              "all_correct": 0.0
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": 90.0,
+              "scale_rel_err": 0.2260438685169868,
+              "grip_acc": 0.4166666666666667,
+              "all_correct": 0.08333333333333333
+            }
+          },
+          "swapped_donor": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": 67.83712601987645,
+              "scale_rel_err": 0.28850684501230717,
+              "grip_acc": 0.375,
+              "all_correct": 0.03125
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": 112.06870810105465,
+              "scale_rel_err": 0.46772467566852827,
+              "grip_acc": 0.5625,
+              "all_correct": 0.0
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": 90.05839549179655,
+              "scale_rel_err": 0.24640207696292138,
+              "grip_acc": 0.5625,
+              "all_correct": 0.0
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": 89.98807653757588,
+              "scale_rel_err": 0.3342111992145856,
+              "grip_acc": 0.5,
+              "all_correct": 0.010416666666666666
+            }
+          }
+        }
+      },
+      "models": {
+        "frame0_probe": {
+          "retained": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 111.45071029663086,
+                "std": 1.4839197293630806,
+                "values": [
+                  112.5,
+                  109.35213088989258,
+                  112.5
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.07769021391868591,
+                "std": 0.06186115058022697,
+                "values": [
+                  0.028494328260421753,
+                  0.03963812440633774,
+                  0.16493818908929825
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.25,
+                "std": 0.0,
+                "values": [
+                  0.25,
+                  0.25,
+                  0.25
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 68.54928970336914,
+                "std": 1.4839197293630806,
+                "values": [
+                  67.5,
+                  70.64786911010742,
+                  67.5
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.42043444388557605,
+                "std": 0.03578106932495037,
+                "values": [
+                  0.45937711932227276,
+                  0.42894575088550674,
+                  0.37298046144894864
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 90.0,
+                "std": 0.0,
+                "values": [
+                  90.0,
+                  90.0,
+                  90.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.22264396325673586,
+                "std": 0.02409730958345223,
+                "values": [
+                  0.25232455493123446,
+                  0.22230598972075516,
+                  0.193301345118218
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5,
+                "std": 0.0,
+                "values": [
+                  0.5,
+                  0.5,
+                  0.5
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": {
+                "mean": 90.0,
+                "std": 0.0,
+                "values": [
+                  90.0,
+                  90.0,
+                  90.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.2402562070203326,
+                "std": 0.0071476347915267,
+                "values": [
+                  0.2467320008379763,
+                  0.23029662167086654,
+                  0.24373999855215497
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5833333333333334,
+                "std": 0.0,
+                "values": [
+                  0.5833333333333334,
+                  0.5833333333333334,
+                  0.5833333333333334
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          },
+          "cleared": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 111.45071029663086,
+                "std": 1.4839197293630806,
+                "values": [
+                  112.5,
+                  109.35213088989258,
+                  112.5
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.07769021391868591,
+                "std": 0.06186115058022697,
+                "values": [
+                  0.028494328260421753,
+                  0.03963812440633774,
+                  0.16493818908929825
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.25,
+                "std": 0.0,
+                "values": [
+                  0.25,
+                  0.25,
+                  0.25
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 68.54928970336914,
+                "std": 1.4839197293630806,
+                "values": [
+                  67.5,
+                  70.64786911010742,
+                  67.5
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.42043444388557605,
+                "std": 0.03578106932495037,
+                "values": [
+                  0.45937711932227276,
+                  0.42894575088550674,
+                  0.37298046144894864
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 90.0,
+                "std": 0.0,
+                "values": [
+                  90.0,
+                  90.0,
+                  90.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.22264396325673586,
+                "std": 0.02409730958345223,
+                "values": [
+                  0.25232455493123446,
+                  0.22230598972075516,
+                  0.193301345118218
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5,
+                "std": 0.0,
+                "values": [
+                  0.5,
+                  0.5,
+                  0.5
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": {
+                "mean": 90.0,
+                "std": 0.0,
+                "values": [
+                  90.0,
+                  90.0,
+                  90.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.2402562070203326,
+                "std": 0.0071476347915267,
+                "values": [
+                  0.2467320008379763,
+                  0.23029662167086654,
+                  0.24373999855215497
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5833333333333334,
+                "std": 0.0,
+                "values": [
+                  0.5833333333333334,
+                  0.5833333333333334,
+                  0.5833333333333334
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          },
+          "swapped_donor": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 111.45071029663086,
+                "std": 1.4839197293630806,
+                "values": [
+                  112.5,
+                  109.35213088989258,
+                  112.5
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.07769021391868591,
+                "std": 0.06186115058022697,
+                "values": [
+                  0.028494328260421753,
+                  0.03963812440633774,
+                  0.16493818908929825
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.25,
+                "std": 0.0,
+                "values": [
+                  0.25,
+                  0.25,
+                  0.25
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 68.54928970336914,
+                "std": 1.4839197293630806,
+                "values": [
+                  67.5,
+                  70.64786911010742,
+                  67.5
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.42043444388557605,
+                "std": 0.03578106932495037,
+                "values": [
+                  0.45937711932227276,
+                  0.42894575088550674,
+                  0.37298046144894864
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 90.0,
+                "std": 0.0,
+                "values": [
+                  90.0,
+                  90.0,
+                  90.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.22264396325673586,
+                "std": 0.02409730958345223,
+                "values": [
+                  0.25232455493123446,
+                  0.22230598972075516,
+                  0.193301345118218
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5,
+                "std": 0.0,
+                "values": [
+                  0.5,
+                  0.5,
+                  0.5
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": {
+                "mean": 90.0,
+                "std": 0.0,
+                "values": [
+                  90.0,
+                  90.0,
+                  90.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.2402562070203326,
+                "std": 0.0071476347915267,
+                "values": [
+                  0.2467320008379763,
+                  0.23029662167086654,
+                  0.24373999855215497
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5833333333333334,
+                "std": 0.0,
+                "values": [
+                  0.5833333333333334,
+                  0.5833333333333334,
+                  0.5833333333333334
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          },
+          "training": [
+            {
+              "seed": 41,
+              "seconds": 4.073,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-sysid-20261120-r1/gpu02fit/train/checkpoints/passive_attempt1-frame0_probe-seed41.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 1.337726354598999,
+                  "yaw_loss": 0.6145157217979431,
+                  "scale_loss": 0.06404783576726913,
+                  "grip_loss": 0.6591627597808838
+                },
+                {
+                  "step": 300,
+                  "loss": 1.1859993934631348,
+                  "yaw_loss": 0.6536486148834229,
+                  "scale_loss": 0.049295470118522644,
+                  "grip_loss": 0.48305535316467285
+                },
+                {
+                  "step": 600,
+                  "loss": 0.8931270241737366,
+                  "yaw_loss": 0.496296226978302,
+                  "scale_loss": 0.07872769981622696,
+                  "grip_loss": 0.3181030750274658
+                },
+                {
+                  "step": 900,
+                  "loss": 0.9002169370651245,
+                  "yaw_loss": 0.5647017955780029,
+                  "scale_loss": 0.061976492404937744,
+                  "grip_loss": 0.27353861927986145
+                },
+                {
+                  "step": 1200,
+                  "loss": 1.1624350547790527,
+                  "yaw_loss": 0.5308259725570679,
+                  "scale_loss": 0.056563884019851685,
+                  "grip_loss": 0.5750451683998108
+                },
+                {
+                  "step": 1500,
+                  "loss": 1.0276051759719849,
+                  "yaw_loss": 0.5850412845611572,
+                  "scale_loss": 0.061913542449474335,
+                  "grip_loss": 0.3806503713130951
+                }
+              ]
+            },
+            {
+              "seed": 42,
+              "seconds": 4.107,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-sysid-20261120-r1/gpu02fit/train/checkpoints/passive_attempt1-frame0_probe-seed42.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 2.1377205848693848,
+                  "yaw_loss": 1.3427772521972656,
+                  "scale_loss": 0.04649100452661514,
+                  "grip_loss": 0.7484521865844727
+                },
+                {
+                  "step": 300,
+                  "loss": 1.0510225296020508,
+                  "yaw_loss": 0.5626924633979797,
+                  "scale_loss": 0.054677464067935944,
+                  "grip_loss": 0.4336525797843933
+                },
+                {
+                  "step": 600,
+                  "loss": 1.276436448097229,
+                  "yaw_loss": 0.7499591112136841,
+                  "scale_loss": 0.04101935029029846,
+                  "grip_loss": 0.48545801639556885
+                },
+                {
+                  "step": 900,
+                  "loss": 0.7574889659881592,
+                  "yaw_loss": 0.46824753284454346,
+                  "scale_loss": 0.06059874966740608,
+                  "grip_loss": 0.22864273190498352
+                },
+                {
+                  "step": 1200,
+                  "loss": 1.1620442867279053,
+                  "yaw_loss": 0.5279219746589661,
+                  "scale_loss": 0.04742107540369034,
+                  "grip_loss": 0.5867012143135071
+                },
+                {
+                  "step": 1500,
+                  "loss": 1.0044156312942505,
+                  "yaw_loss": 0.4805733561515808,
+                  "scale_loss": 0.03603377193212509,
+                  "grip_loss": 0.4878085255622864
+                }
+              ]
+            },
+            {
+              "seed": 43,
+              "seconds": 4.032,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-sysid-20261120-r1/gpu02fit/train/checkpoints/passive_attempt1-frame0_probe-seed43.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 1.9616384506225586,
+                  "yaw_loss": 1.1646745204925537,
+                  "scale_loss": 0.056025512516498566,
+                  "grip_loss": 0.7409384250640869
+                },
+                {
+                  "step": 300,
+                  "loss": 0.9035871028900146,
+                  "yaw_loss": 0.4690607190132141,
+                  "scale_loss": 0.058250024914741516,
+                  "grip_loss": 0.3762764036655426
+                },
+                {
+                  "step": 600,
+                  "loss": 1.1056592464447021,
+                  "yaw_loss": 0.7469501495361328,
+                  "scale_loss": 0.042778946459293365,
+                  "grip_loss": 0.3159300982952118
+                },
+                {
+                  "step": 900,
+                  "loss": 0.9341221451759338,
+                  "yaw_loss": 0.5033948421478271,
+                  "scale_loss": 0.05380857363343239,
+                  "grip_loss": 0.3769187331199646
+                },
+                {
+                  "step": 1200,
+                  "loss": 1.010564923286438,
+                  "yaw_loss": 0.5572588443756104,
+                  "scale_loss": 0.07723964750766754,
+                  "grip_loss": 0.3760664165019989
+                },
+                {
+                  "step": 1500,
+                  "loss": 1.091930866241455,
+                  "yaw_loss": 0.6223374605178833,
+                  "scale_loss": 0.035022955387830734,
+                  "grip_loss": 0.43457040190696716
+                }
+              ]
+            }
+          ]
+        },
+        "joint_transformer": {
+          "retained": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 29.78006527289593,
+                "std": 4.922478058539663,
+                "values": [
+                  28.23904710635543,
+                  24.67136245209258,
+                  36.42978626023978
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.11605648199717204,
+                "std": 0.01134458056360679,
+                "values": [
+                  0.10736641846597195,
+                  0.13208104111254215,
+                  0.10872198641300201
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.4166666666666667,
+                "std": 0.03897559777889522,
+                "values": [
+                  0.46875,
+                  0.375,
+                  0.40625
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 95.64461688573162,
+                "std": 8.075631856630384,
+                "values": [
+                  104.7647368509788,
+                  85.13129698182456,
+                  97.03781682439148
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.3703940943425799,
+                "std": 0.014047581391108037,
+                "values": [
+                  0.3845016991086396,
+                  0.3512269344467383,
+                  0.37545364947236204
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.9166666666666666,
+                "std": 0.05311478659992484,
+                "values": [
+                  0.96875,
+                  0.84375,
+                  0.9375
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 84.84495146526024,
+                "std": 7.612158302513575,
+                "values": [
+                  92.99421993643045,
+                  74.6785606215708,
+                  86.86207383777946
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.25021591499723767,
+                "std": 0.02803016428690996,
+                "values": [
+                  0.22350571953036166,
+                  0.23820451398690543,
+                  0.288937511474446
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.9479166666666666,
+                "std": 0.05311478659992484,
+                "values": [
+                  0.96875,
+                  0.875,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.010416666666666666,
+                "std": 0.01473139127471974,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.03125
+                ]
+              }
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": {
+                "mean": 70.08987787462927,
+                "std": 6.127135687794254,
+                "values": [
+                  75.33266796458823,
+                  61.49374001849598,
+                  73.44322564080358
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.24555549711232993,
+                "std": 0.008631079992861451,
+                "values": [
+                  0.2384579457016578,
+                  0.240504163182062,
+                  0.25770438245327004
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.954861111111111,
+                "std": 0.03437324630767938,
+                "values": [
+                  0.9791666666666666,
+                  0.90625,
+                  0.9791666666666666
+                ]
+              },
+              "all_correct": {
+                "mean": 0.14236111111111113,
+                "std": 0.012991865926298408,
+                "values": [
+                  0.15625,
+                  0.125,
+                  0.14583333333333334
+                ]
+              }
+            }
+          },
+          "cleared": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 67.5,
+                "std": 0.0,
+                "values": [
+                  67.5,
+                  67.5,
+                  67.5
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.75,
+                "std": 0.0,
+                "values": [
+                  0.75,
+                  0.75,
+                  0.75
+                ]
+              },
+              "all_correct": {
+                "mean": 0.25,
+                "std": 0.0,
+                "values": [
+                  0.25,
+                  0.25,
+                  0.25
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 112.5,
+                "std": 0.0,
+                "values": [
+                  112.5,
+                  112.5,
+                  112.5
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.4466501240694789,
+                "std": 0.0,
+                "values": [
+                  0.4466501240694789,
+                  0.4466501240694789,
+                  0.4466501240694789
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 90.0,
+                "std": 0.0,
+                "values": [
+                  90.0,
+                  90.0,
+                  90.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.23148148148148148,
+                "std": 2.7755575615628914e-17,
+                "values": [
+                  0.23148148148148145,
+                  0.23148148148148145,
+                  0.23148148148148145
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5,
+                "std": 0.0,
+                "values": [
+                  0.5,
+                  0.5,
+                  0.5
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": {
+                "mean": 90.0,
+                "std": 0.0,
+                "values": [
+                  90.0,
+                  90.0,
+                  90.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.2260438685169868,
+                "std": 0.0,
+                "values": [
+                  0.2260438685169868,
+                  0.2260438685169868,
+                  0.2260438685169868
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.4166666666666667,
+                "std": 0.0,
+                "values": [
+                  0.4166666666666667,
+                  0.4166666666666667,
+                  0.4166666666666667
+                ]
+              },
+              "all_correct": {
+                "mean": 0.08333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.08333333333333333,
+                  0.08333333333333333,
+                  0.08333333333333333
+                ]
+              }
+            }
+          },
+          "swapped_donor": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 76.43845837307163,
+                "std": 2.5891070222557877,
+                "values": [
+                  73.97904034447856,
+                  80.01735021965578,
+                  75.31898455508053
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.12272010805706184,
+                "std": 0.023577967184970395,
+                "values": [
+                  0.0954896155744791,
+                  0.15300136804580688,
+                  0.1196693405508995
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.375,
+                "std": 0.0,
+                "values": [
+                  0.375,
+                  0.375,
+                  0.375
+                ]
+              },
+              "all_correct": {
+                "mean": 0.14583333333333334,
+                "std": 0.01473139127471974,
+                "values": [
+                  0.15625,
+                  0.125,
+                  0.15625
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 92.99909952919309,
+                "std": 7.009240616191878,
+                "values": [
+                  102.58989670686424,
+                  86.03422216745093,
+                  90.37317971326411
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.4314438526644206,
+                "std": 0.021714548275471132,
+                "values": [
+                  0.4115440072514875,
+                  0.4211384174471753,
+                  0.4616491332945989
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.4791666666666667,
+                "std": 0.05311478659992484,
+                "values": [
+                  0.53125,
+                  0.40625,
+                  0.5
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 93.32862954272423,
+                "std": 3.0275264021604356,
+                "values": [
+                  97.18138310872018,
+                  93.01968641940039,
+                  89.78481910005212
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.24861839588409593,
+                "std": 0.01380627776265445,
+                "values": [
+                  0.2599467824178714,
+                  0.2291821039247292,
+                  0.25672630130968715
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.53125,
+                "std": 0.02551551815399144,
+                "values": [
+                  0.53125,
+                  0.5,
+                  0.5625
+                ]
+              },
+              "all_correct": {
+                "mean": 0.010416666666666666,
+                "std": 0.01473139127471974,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.03125
+                ]
+              }
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": {
+                "mean": 87.58872914832965,
+                "std": 2.634782760150582,
+                "values": [
+                  91.250106720021,
+                  86.3570862688357,
+                  85.15899445613225
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.2675941188685261,
+                "std": 0.009671471945368732,
+                "values": [
+                  0.2556601350812793,
+                  0.2677739631392371,
+                  0.27934825838506183
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.4618055555555556,
+                "std": 0.024552318791199585,
+                "values": [
+                  0.4791666666666667,
+                  0.4270833333333333,
+                  0.4791666666666667
+                ]
+              },
+              "all_correct": {
+                "mean": 0.052083333333333336,
+                "std": 0.008505172717997146,
+                "values": [
+                  0.052083333333333336,
+                  0.041666666666666664,
+                  0.0625
+                ]
+              }
+            }
+          },
+          "training": [
+            {
+              "seed": 41,
+              "seconds": 10.082,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-sysid-20261120-r1/gpu02fit/train/checkpoints/passive_attempt1-joint_transformer-seed41.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 3.8633553981781006,
+                  "yaw_loss": 1.2433594465255737,
+                  "scale_loss": 0.5638808608055115,
+                  "grip_loss": 2.05611515045166
+                },
+                {
+                  "step": 300,
+                  "loss": 0.6689321398735046,
+                  "yaw_loss": 0.6511703133583069,
+                  "scale_loss": 0.017482534050941467,
+                  "grip_loss": 0.00027930981013923883
+                },
+                {
+                  "step": 600,
+                  "loss": 0.39214685559272766,
+                  "yaw_loss": 0.3674946427345276,
+                  "scale_loss": 0.024253813549876213,
+                  "grip_loss": 0.0003984071663580835
+                },
+                {
+                  "step": 900,
+                  "loss": 0.008343446999788284,
+                  "yaw_loss": 0.006132438778877258,
+                  "scale_loss": 0.0021226471289992332,
+                  "grip_loss": 8.836077904561535e-05
+                },
+                {
+                  "step": 1200,
+                  "loss": 0.0007636072696186602,
+                  "yaw_loss": 0.00032458268105983734,
+                  "scale_loss": 0.0004013500874862075,
+                  "grip_loss": 3.767447924474254e-05
+                },
+                {
+                  "step": 1500,
+                  "loss": 0.00016443028289359063,
+                  "yaw_loss": 7.81230628490448e-05,
+                  "scale_loss": 7.29083621990867e-05,
+                  "grip_loss": 1.3398869668890256e-05
+                }
+              ]
+            },
+            {
+              "seed": 42,
+              "seconds": 10.283,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-sysid-20261120-r1/gpu02fit/train/checkpoints/passive_attempt1-joint_transformer-seed42.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 3.9939074516296387,
+                  "yaw_loss": 0.6759998798370361,
+                  "scale_loss": 1.7798320055007935,
+                  "grip_loss": 1.5380754470825195
+                },
+                {
+                  "step": 300,
+                  "loss": 0.5947016477584839,
+                  "yaw_loss": 0.5668820142745972,
+                  "scale_loss": 0.027502000331878662,
+                  "grip_loss": 0.00031765634776093066
+                },
+                {
+                  "step": 600,
+                  "loss": 0.20821672677993774,
+                  "yaw_loss": 0.19384706020355225,
+                  "scale_loss": 0.014323843643069267,
+                  "grip_loss": 4.582533802022226e-05
+                },
+                {
+                  "step": 900,
+                  "loss": 0.002935714554041624,
+                  "yaw_loss": 0.0009803641587495804,
+                  "scale_loss": 0.0018574227578938007,
+                  "grip_loss": 9.792764467420056e-05
+                },
+                {
+                  "step": 1200,
+                  "loss": 0.00040737006929703057,
+                  "yaw_loss": 0.0003340505063533783,
+                  "scale_loss": 5.770943243987858e-05,
+                  "grip_loss": 1.5610139598720707e-05
+                },
+                {
+                  "step": 1500,
+                  "loss": 0.0001574943889863789,
+                  "yaw_loss": 6.619468331336975e-05,
+                  "scale_loss": 7.981148519320413e-05,
+                  "grip_loss": 1.1488220479805022e-05
+                }
+              ]
+            },
+            {
+              "seed": 43,
+              "seconds": 10.312,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-sysid-20261120-r1/gpu02fit/train/checkpoints/passive_attempt1-joint_transformer-seed43.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 1.6450111865997314,
+                  "yaw_loss": 0.5866653919219971,
+                  "scale_loss": 0.3378015160560608,
+                  "grip_loss": 0.7205443382263184
+                },
+                {
+                  "step": 300,
+                  "loss": 0.49208536744117737,
+                  "yaw_loss": 0.46909382939338684,
+                  "scale_loss": 0.02253623865544796,
+                  "grip_loss": 0.0004552839673124254
+                },
+                {
+                  "step": 600,
+                  "loss": 0.14771857857704163,
+                  "yaw_loss": 0.13607430458068848,
+                  "scale_loss": 0.011586002074182034,
+                  "grip_loss": 5.827897257404402e-05
+                },
+                {
+                  "step": 900,
+                  "loss": 0.0011405996046960354,
+                  "yaw_loss": 0.00035827234387397766,
+                  "scale_loss": 0.0007702100556343794,
+                  "grip_loss": 1.211723247251939e-05
+                },
+                {
+                  "step": 1200,
+                  "loss": 0.00029176753014326096,
+                  "yaw_loss": 0.00012674741446971893,
+                  "scale_loss": 0.0001510799047537148,
+                  "grip_loss": 1.39401990963961e-05
+                },
+                {
+                  "step": 1500,
+                  "loss": 0.0006042357417754829,
+                  "yaw_loss": 0.0004021208733320236,
+                  "scale_loss": 0.00019601653912104666,
+                  "grip_loss": 6.098350695538102e-06
+                }
+              ]
+            }
+          ]
+        },
+        "factored_no_equiv": {
+          "retained": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 58.52951434828962,
+                "std": 8.107536455237856,
+                "values": [
+                  47.96085058525205,
+                  67.66426578583196,
+                  59.96342667378485
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.059358915934960045,
+                "std": 0.009992371891066373,
+                "values": [
+                  0.06350787356495857,
+                  0.04558568261563778,
+                  0.06898319162428379
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.3020833333333333,
+                "std": 0.0820209153542897,
+                "values": [
+                  0.375,
+                  0.1875,
+                  0.34375
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 68.02359960259248,
+                "std": 7.73291894823269,
+                "values": [
+                  69.70418668258935,
+                  57.82495292276144,
+                  76.54165920242667
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.10591933209482945,
+                "std": 0.004198892646847501,
+                "values": [
+                  0.10092879162532814,
+                  0.10562768134822323,
+                  0.111201523310937
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.09375,
+                "std": 0.05103103630798288,
+                "values": [
+                  0.09375,
+                  0.15625,
+                  0.03125
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 68.46469427489986,
+                "std": 7.118669131609407,
+                "values": [
+                  68.313133363612,
+                  59.822909286245704,
+                  77.25804017484188
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.08344442086915176,
+                "std": 0.008284637331768754,
+                "values": [
+                  0.08367891361316045,
+                  0.0731826398383688,
+                  0.093471709155926
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.041666666666666664,
+                "std": 0.02946278254943948,
+                "values": [
+                  0.0625,
+                  0.0625,
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": {
+                "mean": 65.00593607526065,
+                "std": 4.41924334462173,
+                "values": [
+                  61.992723543817796,
+                  61.770709331613034,
+                  71.25437535035114
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.08290755629964708,
+                "std": 0.006705021172934339,
+                "values": [
+                  0.08270519293448238,
+                  0.07479866793407661,
+                  0.09121880803038225
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.14583333333333334,
+                "std": 0.022502571869471744,
+                "values": [
+                  0.17708333333333334,
+                  0.13541666666666666,
+                  0.125
+                ]
+              }
+            }
+          },
+          "cleared": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 67.5,
+                "std": 0.0,
+                "values": [
+                  67.5,
+                  67.5,
+                  67.5
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.75,
+                "std": 0.0,
+                "values": [
+                  0.75,
+                  0.75,
+                  0.75
+                ]
+              },
+              "all_correct": {
+                "mean": 0.25,
+                "std": 0.0,
+                "values": [
+                  0.25,
+                  0.25,
+                  0.25
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 112.5,
+                "std": 0.0,
+                "values": [
+                  112.5,
+                  112.5,
+                  112.5
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.4466501240694789,
+                "std": 0.0,
+                "values": [
+                  0.4466501240694789,
+                  0.4466501240694789,
+                  0.4466501240694789
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 90.0,
+                "std": 0.0,
+                "values": [
+                  90.0,
+                  90.0,
+                  90.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.23148148148148148,
+                "std": 2.7755575615628914e-17,
+                "values": [
+                  0.23148148148148145,
+                  0.23148148148148145,
+                  0.23148148148148145
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5,
+                "std": 0.0,
+                "values": [
+                  0.5,
+                  0.5,
+                  0.5
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": {
+                "mean": 90.0,
+                "std": 0.0,
+                "values": [
+                  90.0,
+                  90.0,
+                  90.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.2260438685169868,
+                "std": 0.0,
+                "values": [
+                  0.2260438685169868,
+                  0.2260438685169868,
+                  0.2260438685169868
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.4166666666666667,
+                "std": 0.0,
+                "values": [
+                  0.4166666666666667,
+                  0.4166666666666667,
+                  0.4166666666666667
+                ]
+              },
+              "all_correct": {
+                "mean": 0.08333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.08333333333333333,
+                  0.08333333333333333,
+                  0.08333333333333333
+                ]
+              }
+            }
+          },
+          "swapped_donor": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 91.89149637411658,
+                "std": 10.45125973085491,
+                "values": [
+                  78.97795633226633,
+                  104.57511211605743,
+                  92.12142067402601
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.24528557434678078,
+                "std": 0.010069291103019563,
+                "values": [
+                  0.2520625479519367,
+                  0.23105087131261826,
+                  0.25274330377578735
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.375,
+                "std": 0.0,
+                "values": [
+                  0.375,
+                  0.375,
+                  0.375
+                ]
+              },
+              "all_correct": {
+                "mean": 0.03125,
+                "std": 0.0,
+                "values": [
+                  0.03125,
+                  0.03125,
+                  0.03125
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 99.38363909410934,
+                "std": 1.9649059183433413,
+                "values": [
+                  96.65646737068892,
+                  101.20894315466285,
+                  100.28550675697625
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.45409222237451496,
+                "std": 0.0052499578311816725,
+                "values": [
+                  0.4557568076119825,
+                  0.4469937544602614,
+                  0.459526105051301
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5625,
+                "std": 0.0,
+                "values": [
+                  0.5625,
+                  0.5625,
+                  0.5625
+                ]
+              },
+              "all_correct": {
+                "mean": 0.010416666666666666,
+                "std": 0.01473139127471974,
+                "values": [
+                  0.03125,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 89.83492761602004,
+                "std": 4.6161182084736,
+                "values": [
+                  86.97595085389912,
+                  86.18184677697718,
+                  96.34698521718383
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.22746934065664257,
+                "std": 0.009956308927393425,
+                "values": [
+                  0.23009076079836596,
+                  0.21417788567918317,
+                  0.2381393754923785
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5625,
+                "std": 0.0,
+                "values": [
+                  0.5625,
+                  0.5625,
+                  0.5625
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": {
+                "mean": 93.70335436141532,
+                "std": 4.382271317762406,
+                "values": [
+                  87.53679151895146,
+                  97.32196734923248,
+                  96.25130421606202
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.3089490457926461,
+                "std": 0.008336455928546519,
+                "values": [
+                  0.31263670545409505,
+                  0.29740750381735426,
+                  0.31680292810648897
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5,
+                "std": 0.0,
+                "values": [
+                  0.5,
+                  0.5,
+                  0.5
+                ]
+              },
+              "all_correct": {
+                "mean": 0.013888888888888888,
+                "std": 0.004910463758239913,
+                "values": [
+                  0.020833333333333332,
+                  0.010416666666666666,
+                  0.010416666666666666
+                ]
+              }
+            }
+          },
+          "training": [
+            {
+              "seed": 41,
+              "seconds": 8.089,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-sysid-20261120-r1/gpu02fit/train/checkpoints/passive_attempt1-factored_no_equiv-seed41.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 2.890681743621826,
+                  "yaw_loss": 1.1758593320846558,
+                  "scale_loss": 0.22076278924942017,
+                  "grip_loss": 1.4940595626831055
+                },
+                {
+                  "step": 300,
+                  "loss": 0.6708215475082397,
+                  "yaw_loss": 0.6538776755332947,
+                  "scale_loss": 0.01685251109302044,
+                  "grip_loss": 9.136614971794188e-05
+                },
+                {
+                  "step": 600,
+                  "loss": 0.5090291500091553,
+                  "yaw_loss": 0.4959765672683716,
+                  "scale_loss": 0.013025790452957153,
+                  "grip_loss": 2.6837773475563154e-05
+                },
+                {
+                  "step": 900,
+                  "loss": 0.5735334753990173,
+                  "yaw_loss": 0.5655578374862671,
+                  "scale_loss": 0.007965928874909878,
+                  "grip_loss": 9.710398444440216e-06
+                },
+                {
+                  "step": 1200,
+                  "loss": 0.09890792518854141,
+                  "yaw_loss": 0.09282241016626358,
+                  "scale_loss": 0.006076035555452108,
+                  "grip_loss": 9.475382285017986e-06
+                },
+                {
+                  "step": 1500,
+                  "loss": 0.008294446393847466,
+                  "yaw_loss": 0.00054217129945755,
+                  "scale_loss": 0.007747587747871876,
+                  "grip_loss": 4.68773487227736e-06
+                }
+              ]
+            },
+            {
+              "seed": 42,
+              "seconds": 7.956,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-sysid-20261120-r1/gpu02fit/train/checkpoints/passive_attempt1-factored_no_equiv-seed42.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 2.098026990890503,
+                  "yaw_loss": 0.7851173877716064,
+                  "scale_loss": 0.1532108187675476,
+                  "grip_loss": 1.159698724746704
+                },
+                {
+                  "step": 300,
+                  "loss": 0.575362503528595,
+                  "yaw_loss": 0.5630921125411987,
+                  "scale_loss": 0.012171125039458275,
+                  "grip_loss": 9.926603524945676e-05
+                },
+                {
+                  "step": 600,
+                  "loss": 0.7557961344718933,
+                  "yaw_loss": 0.749394416809082,
+                  "scale_loss": 0.006372924894094467,
+                  "grip_loss": 2.8789831048925407e-05
+                },
+                {
+                  "step": 900,
+                  "loss": 0.05207950621843338,
+                  "yaw_loss": 0.04228895902633667,
+                  "scale_loss": 0.009780658408999443,
+                  "grip_loss": 9.88627925835317e-06
+                },
+                {
+                  "step": 1200,
+                  "loss": 0.00857026968151331,
+                  "yaw_loss": 0.0007091797888278961,
+                  "scale_loss": 0.00785369984805584,
+                  "grip_loss": 7.390404789475724e-06
+                },
+                {
+                  "step": 1500,
+                  "loss": 0.010136138647794724,
+                  "yaw_loss": 0.0002051815390586853,
+                  "scale_loss": 0.009926382452249527,
+                  "grip_loss": 4.574806553137023e-06
+                }
+              ]
+            },
+            {
+              "seed": 43,
+              "seconds": 8.034,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-sysid-20261120-r1/gpu02fit/train/checkpoints/passive_attempt1-factored_no_equiv-seed43.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 1.5821236371994019,
+                  "yaw_loss": 1.053364634513855,
+                  "scale_loss": 0.13754487037658691,
+                  "grip_loss": 0.39121413230895996
+                },
+                {
+                  "step": 300,
+                  "loss": 0.48051831126213074,
+                  "yaw_loss": 0.4685470461845398,
+                  "scale_loss": 0.011882659047842026,
+                  "grip_loss": 8.858865476213396e-05
+                },
+                {
+                  "step": 600,
+                  "loss": 0.757675051689148,
+                  "yaw_loss": 0.7465087175369263,
+                  "scale_loss": 0.011140461079776287,
+                  "grip_loss": 2.58776344708167e-05
+                },
+                {
+                  "step": 900,
+                  "loss": 0.3206637501716614,
+                  "yaw_loss": 0.31342798471450806,
+                  "scale_loss": 0.007220673840492964,
+                  "grip_loss": 1.5073236681928392e-05
+                },
+                {
+                  "step": 1200,
+                  "loss": 0.014747897163033485,
+                  "yaw_loss": 0.005306735634803772,
+                  "scale_loss": 0.009433893486857414,
+                  "grip_loss": 7.267746241268469e-06
+                },
+                {
+                  "step": 1500,
+                  "loss": 0.007580683100968599,
+                  "yaw_loss": 0.0005979184061288834,
+                  "scale_loss": 0.0069747488014400005,
+                  "grip_loss": 8.015905223146547e-06
+                }
+              ]
+            }
+          ]
+        },
+        "factored_equiv": {
+          "retained": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 42.15668731803695,
+                "std": 20.508076668769647,
+                "values": [
+                  26.552527770400047,
+                  28.786746248602867,
+                  71.13078793510795
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.059727681800723076,
+                "std": 0.009274706462242014,
+                "values": [
+                  0.06292006373405457,
+                  0.047113923355937004,
+                  0.06914905831217766
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.3125,
+                "std": 0.15934435979977452,
+                "values": [
+                  0.375,
+                  0.46875,
+                  0.09375
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 65.12214754863332,
+                "std": 33.83339241185717,
+                "values": [
+                  38.68882471323013,
+                  43.798871994018555,
+                  112.87874593865126
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.10596133802452788,
+                "std": 0.0043254110825362985,
+                "values": [
+                  0.10058898349331861,
+                  0.1061143104735734,
+                  0.11118072010669161
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.1875,
+                "std": 0.11121956512532616,
+                "values": [
+                  0.25,
+                  0.28125,
+                  0.03125
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 51.4397919451197,
+                "std": 25.939917732006585,
+                "values": [
+                  35.11486152559519,
+                  31.151572048664093,
+                  88.05294226109982
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.08390631547404659,
+                "std": 0.007618369629628559,
+                "values": [
+                  0.08333842780579018,
+                  0.07487267048822509,
+                  0.09350784812812452
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.25,
+                "std": 0.13501543121683043,
+                "values": [
+                  0.3125,
+                  0.375,
+                  0.0625
+                ]
+              }
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": {
+                "mean": 52.90620893726333,
+                "std": 26.719363050573694,
+                "values": [
+                  33.45207133640846,
+                  34.579063430428505,
+                  90.687492044953
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.08319844509976586,
+                "std": 0.006257587939635883,
+                "values": [
+                  0.08228249167772113,
+                  0.0760336347725785,
+                  0.09127920884899794
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.25,
+                "std": 0.13501543121683043,
+                "values": [
+                  0.3125,
+                  0.375,
+                  0.0625
+                ]
+              }
+            }
+          },
+          "cleared": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 67.5,
+                "std": 0.0,
+                "values": [
+                  67.5,
+                  67.5,
+                  67.5
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.75,
+                "std": 0.0,
+                "values": [
+                  0.75,
+                  0.75,
+                  0.75
+                ]
+              },
+              "all_correct": {
+                "mean": 0.25,
+                "std": 0.0,
+                "values": [
+                  0.25,
+                  0.25,
+                  0.25
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 112.5,
+                "std": 0.0,
+                "values": [
+                  112.5,
+                  112.5,
+                  112.5
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.4466501240694789,
+                "std": 0.0,
+                "values": [
+                  0.4466501240694789,
+                  0.4466501240694789,
+                  0.4466501240694789
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 90.0,
+                "std": 0.0,
+                "values": [
+                  90.0,
+                  90.0,
+                  90.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.23148148148148148,
+                "std": 2.7755575615628914e-17,
+                "values": [
+                  0.23148148148148145,
+                  0.23148148148148145,
+                  0.23148148148148145
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5,
+                "std": 0.0,
+                "values": [
+                  0.5,
+                  0.5,
+                  0.5
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": {
+                "mean": 90.0,
+                "std": 0.0,
+                "values": [
+                  90.0,
+                  90.0,
+                  90.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.2260438685169868,
+                "std": 0.0,
+                "values": [
+                  0.2260438685169868,
+                  0.2260438685169868,
+                  0.2260438685169868
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.4166666666666667,
+                "std": 0.0,
+                "values": [
+                  0.4166666666666667,
+                  0.4166666666666667,
+                  0.4166666666666667
+                ]
+              },
+              "all_correct": {
+                "mean": 0.08333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.08333333333333333,
+                  0.08333333333333333,
+                  0.08333333333333333
+                ]
+              }
+            }
+          },
+          "swapped_donor": {
+            "familiar": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 81.44552591443062,
+                "std": 6.175997872202071,
+                "values": [
+                  89.2211811542511,
+                  81.00281277298927,
+                  74.11258381605148
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.2455337798843781,
+                "std": 0.009272204357578865,
+                "values": [
+                  0.2515513151884079,
+                  0.2324352841824293,
+                  0.25261474028229713
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.375,
+                "std": 0.0,
+                "values": [
+                  0.375,
+                  0.375,
+                  0.375
+                ]
+              },
+              "all_correct": {
+                "mean": 0.010416666666666666,
+                "std": 0.01473139127471974,
+                "values": [
+                  0.0,
+                  0.0,
+                  0.03125
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 101.4235253346463,
+                "std": 1.0411527882762497,
+                "values": [
+                  101.24503029882908,
+                  100.2470306456089,
+                  102.77851505950093
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.45434814377867355,
+                "std": 0.004688062051183023,
+                "values": [
+                  0.4551973246574106,
+                  0.4482291650868231,
+                  0.4596179415917869
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5625,
+                "std": 0.0,
+                "values": [
+                  0.5625,
+                  0.5625,
+                  0.5625
+                ]
+              },
+              "all_correct": {
+                "mean": 0.010416666666666666,
+                "std": 0.01473139127471974,
+                "values": [
+                  0.0,
+                  0.03125,
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 32,
+              "yaw_err_deg": {
+                "mean": 92.40994726524998,
+                "std": 7.064775826114394,
+                "values": [
+                  100.48495439440012,
+                  93.46776323020458,
+                  83.27712417114526
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.22821505050416344,
+                "std": 0.00882789504522621,
+                "values": [
+                  0.22949241563953734,
+                  0.21682119010775175,
+                  0.23833154576520127
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5625,
+                "std": 0.0,
+                "values": [
+                  0.5625,
+                  0.5625,
+                  0.5625
+                ]
+              },
+              "all_correct": {
+                "mean": 0.020833333333333332,
+                "std": 0.01473139127471974,
+                "values": [
+                  0.0,
+                  0.03125,
+                  0.03125
+                ]
+              }
+            },
+            "overall": {
+              "trials": 96,
+              "yaw_err_deg": {
+                "mean": 91.75966617144229,
+                "std": 4.191117260120428,
+                "values": [
+                  96.9837219491601,
+                  91.57253554960091,
+                  86.72274101556589
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.3093656580557384,
+                "std": 0.007473799561066957,
+                "values": [
+                  0.31208035182845195,
+                  0.2991618797923347,
+                  0.3168547425464285
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.5,
+                "std": 0.0,
+                "values": [
+                  0.5,
+                  0.5,
+                  0.5
+                ]
+              },
+              "all_correct": {
+                "mean": 0.013888888888888888,
+                "std": 0.009820927516479826,
+                "values": [
+                  0.0,
+                  0.020833333333333332,
+                  0.020833333333333332
+                ]
+              }
+            }
+          },
+          "training": [
+            {
+              "seed": 41,
+              "seconds": 8.367,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-sysid-20261120-r1/gpu02fit/train/checkpoints/passive_attempt1-factored_equiv-seed41.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 2.918581962585449,
+                  "yaw_loss": 1.2037596702575684,
+                  "scale_loss": 0.22076278924942017,
+                  "grip_loss": 1.4940595626831055
+                },
+                {
+                  "step": 300,
+                  "loss": 0.4135560989379883,
+                  "yaw_loss": 0.39685332775115967,
+                  "scale_loss": 0.01660667173564434,
+                  "grip_loss": 9.611641144147143e-05
+                },
+                {
+                  "step": 600,
+                  "loss": 0.0171000137925148,
+                  "yaw_loss": 0.003961523994803429,
+                  "scale_loss": 0.013109292834997177,
+                  "grip_loss": 2.9196286050137132e-05
+                },
+                {
+                  "step": 900,
+                  "loss": 0.008557409979403019,
+                  "yaw_loss": 0.0006778091192245483,
+                  "scale_loss": 0.007869835942983627,
+                  "grip_loss": 9.764799870026764e-06
+                },
+                {
+                  "step": 1200,
+                  "loss": 0.006475463975220919,
+                  "yaw_loss": 0.0004085749387741089,
+                  "scale_loss": 0.00605745567008853,
+                  "grip_loss": 9.433199011255056e-06
+                },
+                {
+                  "step": 1500,
+                  "loss": 0.008132768794894218,
+                  "yaw_loss": 0.00038415566086769104,
+                  "scale_loss": 0.007743944879621267,
+                  "grip_loss": 4.6674635996168945e-06
+                }
+              ]
+            },
+            {
+              "seed": 42,
+              "seconds": 8.529,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-sysid-20261120-r1/gpu02fit/train/checkpoints/passive_attempt1-factored_equiv-seed42.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 2.045822858810425,
+                  "yaw_loss": 0.7329133749008179,
+                  "scale_loss": 0.1532108336687088,
+                  "grip_loss": 1.159698724746704
+                },
+                {
+                  "step": 300,
+                  "loss": 0.15969492495059967,
+                  "yaw_loss": 0.147116020321846,
+                  "scale_loss": 0.012462455779314041,
+                  "grip_loss": 0.00011645820632111281
+                },
+                {
+                  "step": 600,
+                  "loss": 0.009479437954723835,
+                  "yaw_loss": 0.0029203686863183975,
+                  "scale_loss": 0.006526419892907143,
+                  "grip_loss": 3.264945189584978e-05
+                },
+                {
+                  "step": 900,
+                  "loss": 0.011030890047550201,
+                  "yaw_loss": 0.0011317823082208633,
+                  "scale_loss": 0.009889170527458191,
+                  "grip_loss": 9.937635695678182e-06
+                },
+                {
+                  "step": 1200,
+                  "loss": 0.008049444295465946,
+                  "yaw_loss": 0.0003593284636735916,
+                  "scale_loss": 0.007682485971599817,
+                  "grip_loss": 7.630233994859736e-06
+                },
+                {
+                  "step": 1500,
+                  "loss": 0.009851447306573391,
+                  "yaw_loss": 0.00020456872880458832,
+                  "scale_loss": 0.009642189368605614,
+                  "grip_loss": 4.688903572969139e-06
+                }
+              ]
+            },
+            {
+              "seed": 43,
+              "seconds": 8.312,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-sysid-20261120-r1/gpu02fit/train/checkpoints/passive_attempt1-factored_equiv-seed43.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 2.0110976696014404,
+                  "yaw_loss": 1.4823386669158936,
+                  "scale_loss": 0.13754487037658691,
+                  "grip_loss": 0.39121413230895996
+                },
+                {
+                  "step": 300,
+                  "loss": 0.5008853673934937,
+                  "yaw_loss": 0.48890504240989685,
+                  "scale_loss": 0.011886605992913246,
+                  "grip_loss": 9.367131860926747e-05
+                },
+                {
+                  "step": 600,
+                  "loss": 0.5978918075561523,
+                  "yaw_loss": 0.5870044231414795,
+                  "scale_loss": 0.010859939269721508,
+                  "grip_loss": 2.743512231973e-05
+                },
+                {
+                  "step": 900,
+                  "loss": 0.4363247752189636,
+                  "yaw_loss": 0.428891122341156,
+                  "scale_loss": 0.00741735752671957,
+                  "grip_loss": 1.6299058188451454e-05
+                },
+                {
+                  "step": 1200,
+                  "loss": 0.542946994304657,
+                  "yaw_loss": 0.5335440635681152,
+                  "scale_loss": 0.009394734166562557,
+                  "grip_loss": 8.217590220738202e-06
+                },
+                {
+                  "step": 1500,
+                  "loss": 0.6125488877296448,
+                  "yaw_loss": 0.6055763959884644,
+                  "scale_loss": 0.006964243948459625,
+                  "grip_loss": 8.227775651903357e-06
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  },
+  "full_file_sha256": "a5d5ae20021680f1ee439b9e6ee504939e598ab1b36c41cdc23f4ba93383945d"
+}

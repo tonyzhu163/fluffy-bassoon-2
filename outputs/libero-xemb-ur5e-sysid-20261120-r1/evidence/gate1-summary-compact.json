@@ -1,0 +1,107 @@
+{
+  "arm": "UR5e",
+  "panel": "development",
+  "passed": true,
+  "thresholds": {
+    "min_shifted_oracle_rate": 0.7,
+    "min_overall_oracle_rate": 0.7,
+    "min_shifted_gain": 0.5,
+    "min_base_nominal_successes": 6,
+    "no_base_regression": true
+  },
+  "predicates": {
+    "shifted_oracle_rate": true,
+    "overall_oracle_rate": true,
+    "shifted_gain": true,
+    "base_nominal_min": true,
+    "no_base_regression": true
+  },
+  "by_regime": {
+    "familiar": {
+      "trials": 16,
+      "nominal_successes": 7,
+      "oracle_successes": 14,
+      "nominal_rate": 0.4375,
+      "oracle_rate": 0.875,
+      "oracle_minus_nominal": 0.4375
+    },
+    "compositional_ood": {
+      "trials": 16,
+      "nominal_successes": 0,
+      "oracle_successes": 15,
+      "nominal_rate": 0.0,
+      "oracle_rate": 0.9375,
+      "oracle_minus_nominal": 0.9375
+    },
+    "continuous_angle_ood": {
+      "trials": 16,
+      "nominal_successes": 0,
+      "oracle_successes": 15,
+      "nominal_rate": 0.0,
+      "oracle_rate": 0.9375,
+      "oracle_minus_nominal": 0.9375
+    },
+    "shifted": {
+      "trials": 40,
+      "nominal_successes": 0,
+      "oracle_successes": 37,
+      "nominal_rate": 0.0,
+      "oracle_rate": 0.925,
+      "oracle_minus_nominal": 0.925
+    },
+    "overall": {
+      "trials": 48,
+      "nominal_successes": 7,
+      "oracle_successes": 44,
+      "nominal_rate": 0.14583333333333334,
+      "oracle_rate": 0.9166666666666666,
+      "oracle_minus_nominal": 0.7708333333333334
+    }
+  },
+  "by_embodiment": {
+    "fam_nom": {
+      "trials": 8,
+      "nominal_successes": 7,
+      "oracle_successes": 7,
+      "nominal_rate": 0.875,
+      "oracle_rate": 0.875
+    },
+    "fam_yaw90": {
+      "trials": 8,
+      "nominal_successes": 0,
+      "oracle_successes": 7,
+      "nominal_rate": 0.0,
+      "oracle_rate": 0.875
+    },
+    "comp_180_lo_inv": {
+      "trials": 8,
+      "nominal_successes": 0,
+      "oracle_successes": 7,
+      "nominal_rate": 0.0,
+      "oracle_rate": 0.875
+    },
+    "comp_m90_hi_inv": {
+      "trials": 8,
+      "nominal_successes": 0,
+      "oracle_successes": 8,
+      "nominal_rate": 0.0,
+      "oracle_rate": 1.0
+    },
+    "cont_45_nom": {
+      "trials": 8,
+      "nominal_successes": 0,
+      "oracle_successes": 8,
+      "nominal_rate": 0.0,
+      "oracle_rate": 1.0
+    },
+    "cont_135_075_inv": {
+      "trials": 8,
+      "nominal_successes": 0,
+      "oracle_successes": 7,
+      "nominal_rate": 0.0,
+      "oracle_rate": 0.875
+    }
+  },
+  "full_file_sha256": "5d9bd697b5138ba190d723832f3030ea115a0a6cd2d4081282cb5192a1014ed0",
+  "rows_count": 48
+}

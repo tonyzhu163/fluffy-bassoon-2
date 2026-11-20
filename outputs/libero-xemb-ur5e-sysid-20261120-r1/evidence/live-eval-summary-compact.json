@@ -1,0 +1,376 @@
+{
+  "arm": "UR5e",
+  "panel": "development",
+  "arms": [
+    "nominal",
+    "privileged_oracle",
+    "analytic_proprio_sysid",
+    "analytic_visual_sysid_active",
+    "analytic_visual_sysid_passive",
+    "joint_transformer_active",
+    "factored_no_equiv_active",
+    "ours_retained_active",
+    "ours_retained_passive",
+    "ours_cleared",
+    "ours_swapped_donor"
+  ],
+  "archive_sha256": "65c079f1051e347d781d950643113be9d4de6b92e952e373503d78d0eeb3b82e",
+  "matched_support_cap": 15,
+  "seed_ckpt": 41,
+  "trials": 48,
+  "by_regime": {
+    "familiar": {
+      "trials": 16,
+      "successes": {
+        "nominal": 6,
+        "privileged_oracle": 12,
+        "analytic_proprio_sysid": 6,
+        "analytic_visual_sysid_active": 7,
+        "analytic_visual_sysid_passive": 12,
+        "joint_transformer_active": 7,
+        "factored_no_equiv_active": 5,
+        "ours_retained_active": 10,
+        "ours_retained_passive": 6,
+        "ours_cleared": 6,
+        "ours_swapped_donor": 0
+      },
+      "rates": {
+        "nominal": 0.375,
+        "privileged_oracle": 0.75,
+        "analytic_proprio_sysid": 0.375,
+        "analytic_visual_sysid_active": 0.4375,
+        "analytic_visual_sysid_passive": 0.75,
+        "joint_transformer_active": 0.4375,
+        "factored_no_equiv_active": 0.3125,
+        "ours_retained_active": 0.625,
+        "ours_retained_passive": 0.375,
+        "ours_cleared": 0.375,
+        "ours_swapped_donor": 0.0
+      }
+    },
+    "compositional_ood": {
+      "trials": 16,
+      "successes": {
+        "nominal": 0,
+        "privileged_oracle": 13,
+        "analytic_proprio_sysid": 0,
+        "analytic_visual_sysid_active": 9,
+        "analytic_visual_sysid_passive": 11,
+        "joint_transformer_active": 0,
+        "factored_no_equiv_active": 6,
+        "ours_retained_active": 7,
+        "ours_retained_passive": 3,
+        "ours_cleared": 0,
+        "ours_swapped_donor": 0
+      },
+      "rates": {
+        "nominal": 0.0,
+        "privileged_oracle": 0.8125,
+        "analytic_proprio_sysid": 0.0,
+        "analytic_visual_sysid_active": 0.5625,
+        "analytic_visual_sysid_passive": 0.6875,
+        "joint_transformer_active": 0.0,
+        "factored_no_equiv_active": 0.375,
+        "ours_retained_active": 0.4375,
+        "ours_retained_passive": 0.1875,
+        "ours_cleared": 0.0,
+        "ours_swapped_donor": 0.0
+      }
+    },
+    "continuous_angle_ood": {
+      "trials": 16,
+      "successes": {
+        "nominal": 1,
+        "privileged_oracle": 14,
+        "analytic_proprio_sysid": 0,
+        "analytic_visual_sysid_active": 1,
+        "analytic_visual_sysid_passive": 10,
+        "joint_transformer_active": 1,
+        "factored_no_equiv_active": 3,
+        "ours_retained_active": 6,
+        "ours_retained_passive": 5,
+        "ours_cleared": 1,
+        "ours_swapped_donor": 0
+      },
+      "rates": {
+        "nominal": 0.0625,
+        "privileged_oracle": 0.875,
+        "analytic_proprio_sysid": 0.0,
+        "analytic_visual_sysid_active": 0.0625,
+        "analytic_visual_sysid_passive": 0.625,
+        "joint_transformer_active": 0.0625,
+        "factored_no_equiv_active": 0.1875,
+        "ours_retained_active": 0.375,
+        "ours_retained_passive": 0.3125,
+        "ours_cleared": 0.0625,
+        "ours_swapped_donor": 0.0
+      }
+    },
+    "shifted": {
+      "trials": 40,
+      "successes": {
+        "nominal": 1,
+        "privileged_oracle": 33,
+        "analytic_proprio_sysid": 0,
+        "analytic_visual_sysid_active": 11,
+        "analytic_visual_sysid_passive": 25,
+        "joint_transformer_active": 7,
+        "factored_no_equiv_active": 9,
+        "ours_retained_active": 16,
+        "ours_retained_passive": 11,
+        "ours_cleared": 1,
+        "ours_swapped_donor": 0
+      },
+      "rates": {
+        "nominal": 0.025,
+        "privileged_oracle": 0.825,
+        "analytic_proprio_sysid": 0.0,
+        "analytic_visual_sysid_active": 0.275,
+        "analytic_visual_sysid_passive": 0.625,
+        "joint_transformer_active": 0.175,
+        "factored_no_equiv_active": 0.225,
+        "ours_retained_active": 0.4,
+        "ours_retained_passive": 0.275,
+        "ours_cleared": 0.025,
+        "ours_swapped_donor": 0.0
+      }
+    },
+    "overall": {
+      "trials": 48,
+      "successes": {
+        "nominal": 7,
+        "privileged_oracle": 39,
+        "analytic_proprio_sysid": 6,
+        "analytic_visual_sysid_active": 17,
+        "analytic_visual_sysid_passive": 33,
+        "joint_transformer_active": 8,
+        "factored_no_equiv_active": 14,
+        "ours_retained_active": 23,
+        "ours_retained_passive": 14,
+        "ours_cleared": 7,
+        "ours_swapped_donor": 0
+      },
+      "rates": {
+        "nominal": 0.14583333333333334,
+        "privileged_oracle": 0.8125,
+        "analytic_proprio_sysid": 0.125,
+        "analytic_visual_sysid_active": 0.3541666666666667,
+        "analytic_visual_sysid_passive": 0.6875,
+        "joint_transformer_active": 0.16666666666666666,
+        "factored_no_equiv_active": 0.2916666666666667,
+        "ours_retained_active": 0.4791666666666667,
+        "ours_retained_passive": 0.2916666666666667,
+        "ours_cleared": 0.14583333333333334,
+        "ours_swapped_donor": 0.0
+      }
+    }
+  },
+  "paired_contrasts_overall": {
+    "ours_retained_passive": {
+      "nominal": {
+        "mean_diff": 0.14583333333333334,
+        "ci95": [
+          0.0,
+          0.3125
+        ],
+        "wins": 10,
+        "losses": 3,
+        "ties": 35
+      },
+      "privileged_oracle": {
+        "mean_diff": -0.5208333333333334,
+        "ci95": [
+          -0.7291666666666666,
+          -0.2916666666666667
+        ],
+        "wins": 0,
+        "losses": 25,
+        "ties": 23
+      },
+      "analytic_proprio_sysid": {
+        "mean_diff": 0.16666666666666666,
+        "ci95": [
+          -0.020833333333333332,
+          0.375
+        ],
+        "wins": 11,
+        "losses": 3,
+        "ties": 34
+      },
+      "analytic_visual_sysid_active": {
+        "mean_diff": -0.0625,
+        "ci95": [
+          -0.16666666666666666,
+          0.041666666666666664
+        ],
+        "wins": 7,
+        "losses": 10,
+        "ties": 31
+      },
+      "analytic_visual_sysid_passive": {
+        "mean_diff": -0.3958333333333333,
+        "ci95": [
+          -0.5208333333333334,
+          -0.2916666666666667
+        ],
+        "wins": 1,
+        "losses": 20,
+        "ties": 27
+      },
+      "joint_transformer_active": {
+        "mean_diff": 0.125,
+        "ci95": [
+          0.0,
+          0.2708333333333333
+        ],
+        "wins": 9,
+        "losses": 3,
+        "ties": 36
+      },
+      "factored_no_equiv_active": {
+        "mean_diff": 0.0,
+        "ci95": [
+          -0.16666666666666666,
+          0.14583333333333334
+        ],
+        "wins": 8,
+        "losses": 8,
+        "ties": 32
+      },
+      "ours_retained_active": {
+        "mean_diff": -0.1875,
+        "ci95": [
+          -0.3333333333333333,
+          -0.041666666666666664
+        ],
+        "wins": 6,
+        "losses": 15,
+        "ties": 27
+      },
+      "ours_cleared": {
+        "mean_diff": 0.14583333333333334,
+        "ci95": [
+          0.0,
+          0.3125
+        ],
+        "wins": 10,
+        "losses": 3,
+        "ties": 35
+      },
+      "ours_swapped_donor": {
+        "mean_diff": 0.2916666666666667,
+        "ci95": [
+          0.10416666666666667,
+          0.5208333333333334
+        ],
+        "wins": 14,
+        "losses": 0,
+        "ties": 34
+      }
+    },
+    "ours_retained_active": {
+      "nominal": {
+        "mean_diff": 0.3333333333333333,
+        "ci95": [
+          0.22916666666666666,
+          0.4375
+        ],
+        "wins": 17,
+        "losses": 1,
+        "ties": 30
+      },
+      "privileged_oracle": {
+        "mean_diff": -0.3333333333333333,
+        "ci95": [
+          -0.5,
+          -0.14583333333333334
+        ],
+        "wins": 1,
+        "losses": 17,
+        "ties": 30
+      },
+      "analytic_proprio_sysid": {
+        "mean_diff": 0.3541666666666667,
+        "ci95": [
+          0.22916666666666666,
+          0.4791666666666667
+        ],
+        "wins": 18,
+        "losses": 1,
+        "ties": 29
+      },
+      "analytic_visual_sysid_active": {
+        "mean_diff": 0.125,
+        "ci95": [
+          0.041666666666666664,
+          0.22916666666666666
+        ],
+        "wins": 10,
+        "losses": 4,
+        "ties": 34
+      },
+      "analytic_visual_sysid_passive": {
+        "mean_diff": -0.20833333333333334,
+        "ci95": [
+          -0.3125,
+          -0.10416666666666667
+        ],
+        "wins": 5,
+        "losses": 15,
+        "ties": 28
+      },
+      "joint_transformer_active": {
+        "mean_diff": 0.3125,
+        "ci95": [
+          0.22916666666666666,
+          0.3958333333333333
+        ],
+        "wins": 19,
+        "losses": 4,
+        "ties": 25
+      },
+      "factored_no_equiv_active": {
+        "mean_diff": 0.1875,
+        "ci95": [
+          0.0625,
+          0.3125
+        ],
+        "wins": 12,
+        "losses": 3,
+        "ties": 33
+      },
+      "ours_retained_passive": {
+        "mean_diff": 0.1875,
+        "ci95": [
+          0.041666666666666664,
+          0.3333333333333333
+        ],
+        "wins": 15,
+        "losses": 6,
+        "ties": 27
+      },
+      "ours_cleared": {
+        "mean_diff": 0.3333333333333333,
+        "ci95": [
+          0.22916666666666666,
+          0.4375
+        ],
+        "wins": 17,
+        "losses": 1,
+        "ties": 30
+      },
+      "ours_swapped_donor": {
+        "mean_diff": 0.4791666666666667,
+        "ci95": [
+          0.3333333333333333,
+          0.625
+        ],
+        "wins": 23,
+        "losses": 0,
+        "ties": 25
+      }
+    }
+  },
+  "full_file_sha256": "9f7a2780fea5f53215fb4e1f7224149d615b8dc570ea067e8e6e6b65350dff51",
+  "rows_count": 48
+}

@@ -1,0 +1,129 @@
+{
+  "gate0_passed": true,
+  "elapsed_s": 440.68,
+  "init_state_id": 13,
+  "predicates": {
+    "all_8_dev_ur5e_6dof": true,
+    "all_8_dev_frame0_bitwise_equal": true,
+    "all_8_dev_local_proprio_yaw_invariant": true,
+    "ur5e_analytic_proprio_yaw_blind": true,
+    "all_8_dev_excitation_ok": true,
+    "source_arms_7dof": true,
+    "joint_jacobian_inapplicable_to_ur5e": true
+  },
+  "joint_jacobian_audit": {
+    "same_arm_panda_applicable": true,
+    "same_arm_panda_mean_yaw_err_deg": 11.173,
+    "cross_arm_ur5e_applicable": false,
+    "cross_arm_ur5e_reason": "joint_dim_mismatch:7!=6",
+    "cross_arm_ur5e_zero_padded_mean_yaw_err_deg": 66.005,
+    "cross_arm_ur5e_self_cal_local_mean_yaw_err_deg": 85.331,
+    "cross_arm_ur5e_analytic_proprio_mean_yaw_err_deg": 85.329
+  },
+  "dev_rows": [
+    {
+      "task": "libero_10-0",
+      "model_class": "OnTheGroundUR5e",
+      "joint_count": 6,
+      "frame0_bitwise_equal": true,
+      "dof_ok": true,
+      "max_yaw_local_diff_m": 0.004483923316001892,
+      "local_proprio_yaw_invariant": true,
+      "min_sum_eef_mm": 53.021,
+      "min_max_jaw_mm": 26.402,
+      "min_mean_rgb_l1": 1.935,
+      "excitation_ok": true
+    },
+    {
+      "task": "libero_10-3",
+      "model_class": "MountedUR5e",
+      "joint_count": 6,
+      "frame0_bitwise_equal": true,
+      "dof_ok": true,
+      "max_yaw_local_diff_m": 0.004735738039016724,
+      "local_proprio_yaw_invariant": true,
+      "min_sum_eef_mm": 53.054,
+      "min_max_jaw_mm": 26.402,
+      "min_mean_rgb_l1": 1.517,
+      "excitation_ok": true
+    },
+    {
+      "task": "libero_goal-0",
+      "model_class": "MountedUR5e",
+      "joint_count": 6,
+      "frame0_bitwise_equal": true,
+      "dof_ok": true,
+      "max_yaw_local_diff_m": 0.004690676927566528,
+      "local_proprio_yaw_invariant": true,
+      "min_sum_eef_mm": 53.068,
+      "min_max_jaw_mm": 26.403,
+      "min_mean_rgb_l1": 0.958,
+      "excitation_ok": true
+    },
+    {
+      "task": "libero_goal-1",
+      "model_class": "MountedUR5e",
+      "joint_count": 6,
+      "frame0_bitwise_equal": true,
+      "dof_ok": true,
+      "max_yaw_local_diff_m": 0.004462927579879761,
+      "local_proprio_yaw_invariant": true,
+      "min_sum_eef_mm": 52.788,
+      "min_max_jaw_mm": 26.402,
+      "min_mean_rgb_l1": 0.969,
+      "excitation_ok": true
+    },
+    {
+      "task": "libero_object-0",
+      "model_class": "OnTheGroundUR5e",
+      "joint_count": 6,
+      "frame0_bitwise_equal": true,
+      "dof_ok": true,
+      "max_yaw_local_diff_m": 0.004462704062461853,
+      "local_proprio_yaw_invariant": true,
+      "min_sum_eef_mm": 53.008,
+      "min_max_jaw_mm": 26.402,
+      "min_mean_rgb_l1": 1.081,
+      "excitation_ok": true
+    },
+    {
+      "task": "libero_object-7",
+      "model_class": "OnTheGroundUR5e",
+      "joint_count": 6,
+      "frame0_bitwise_equal": true,
+      "dof_ok": true,
+      "max_yaw_local_diff_m": 0.004672907292842865,
+      "local_proprio_yaw_invariant": true,
+      "min_sum_eef_mm": 52.88,
+      "min_max_jaw_mm": 26.402,
+      "min_mean_rgb_l1": 0.953,
+      "excitation_ok": true
+    },
+    {
+      "task": "libero_spatial-1",
+      "model_class": "MountedUR5e",
+      "joint_count": 6,
+      "frame0_bitwise_equal": true,
+      "dof_ok": true,
+      "max_yaw_local_diff_m": 0.00466369092464447,
+      "local_proprio_yaw_invariant": true,
+      "min_sum_eef_mm": 52.889,
+      "min_max_jaw_mm": 26.403,
+      "min_mean_rgb_l1": 0.946,
+      "excitation_ok": true
+    },
+    {
+      "task": "libero_spatial-7",
+      "model_class": "MountedUR5e",
+      "joint_count": 6,
+      "frame0_bitwise_equal": true,
+      "dof_ok": true,
+      "max_yaw_local_diff_m": 0.0044556111097335815,
+      "local_proprio_yaw_invariant": true,
+      "min_sum_eef_mm": 52.686,
+      "min_max_jaw_mm": 26.402,
+      "min_mean_rgb_l1": 1.061,
+      "excitation_ok": true
+    }
+  ]
+}
