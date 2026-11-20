@@ -100,7 +100,7 @@ def cmd_train_hybrid(archive_path: Path, out_dir: Path, steps: int, batch_size: 
             aud = audit_model(params, cfg, dev_data, dev_rows, donor_perm)
             seed_retained.append(aud["retained"])
             seed_cleared.append(aud["cleared"])
-            seed_swapped.append(aud["swapped"])
+            seed_swapped.append(aud["swapped_donor"])
             curves.append(meta)
         agg = dict(
             retained=aggregate_seeds(seed_retained),
