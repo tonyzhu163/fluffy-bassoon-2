@@ -67,22 +67,20 @@ def cmd_train_hybrid(archive_path: Path, out_dir: Path, steps: int, batch_size: 
     archive = json.loads(raw_archive)
     validate_scale_archive(archive)
 
-    train_rows = [r for r in archive["trials"] if r["split"] == "train" and r["arm"] in TRAIN_ARMS]
-    dev_rows = [r for r in archive["trials"] if r["split"] == "dev" and r["arm"] == DEV_ARM]
-    donors = make_donor_permutation(dev_rows, np.random.default_rng(20261120))
     archive_dir = archive_path.parent
     ckpt_dir = out_dir / "checkpoints"
     ckpt_dir.mkdir(parents=True, exist_ok=True)
 
     modes_out = {}
     for mode in ("active_probe", "passive_attempt1"):
-        train_data = load_mode_split(archive_dir, train_rows, mode)
-        dev_data = load_mode_split(archive_dir, dev_rows, mode)
+        train_data, _ = load_mode_split(archive_dir, archive["trials"], mode, "train")
+        dev_data, dev_rows = load_mode_split(archive_dir, archive["trials"], mode, "dev")
+        donor_perm = make_donor_permutation(dev_rows, np.random.default_rng(20261120))
         nom_mask = np.isclose(train_data["xy_scale"], 1.0)
         nominal_gain = fit_nominal_gain(
             train_data["issued_mean"][nom_mask], train_data["delta_eef"][nom_mask], train_data["valid"][nom_mask]
         )
-        per_seed = []
+        seed_retained, seed_cleared, seed_swapped, curves = [], [], [], []
         for seed in seeds:
             params, cfg, meta = train_one(
                 mode,
@@ -99,10 +97,17 @@ def cmd_train_hybrid(archive_path: Path, out_dir: Path, steps: int, batch_size: 
                 mlp_width=mlp_width,
                 tag_prefix="hybrid-",
             )
-            audit = audit_model(params, cfg, dev_data, donors)
-            per_seed.append(dict(meta, audit=audit))
-        agg = aggregate_seeds(per_seed)
-        modes_out[mode] = dict(nominal_gain=nominal_gain, seeds=per_seed, aggregate=agg)
+            aud = audit_model(params, cfg, dev_data, dev_rows, donor_perm)
+            seed_retained.append(aud["retained"])
+            seed_cleared.append(aud["cleared"])
+            seed_swapped.append(aud["swapped"])
+            curves.append(meta)
+        agg = dict(
+            retained=aggregate_seeds(seed_retained),
+            cleared=aggregate_seeds(seed_cleared),
+            swapped=aggregate_seeds(seed_swapped),
+        )
+        modes_out[mode] = dict(nominal_gain=nominal_gain, seeds=curves, aggregate=agg)
         ov = agg["retained"]["overall"]
         br = agg["retained"]
         print(
