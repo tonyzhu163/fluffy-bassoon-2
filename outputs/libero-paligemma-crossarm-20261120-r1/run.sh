@@ -3,13 +3,13 @@
 set -euo pipefail
 
 if [[ $# -lt 2 || $# -gt 3 || ! $2 =~ ^[a-z0-9]+$ ]]; then
-    echo 'Usage: bash run.sh FULL_GIT_PIN FRESH_ATTEMPT [reader]' >&2
+    echo 'Usage: bash run.sh FULL_GIT_PIN FRESH_ATTEMPT [reader|panda]' >&2
     exit 2
 fi
 pin=$1
 attempt=$2
 mode=${3:-pipeline}
-[[ $mode == pipeline || $mode == reader ]]
+[[ $mode == pipeline || $mode == reader || $mode == panda ]]
 here=$(cd "$(dirname "$0")" && pwd)
 code=$(git -C "$here" rev-parse --show-toplevel)
 root=/mowenjie/fluffy-bassoon-2
@@ -91,6 +91,15 @@ from motor_weights import verified_snapshot
 with verified_snapshot(sys.argv[1]) as (_, receipt):
     Path(sys.argv[2]).write_text(json.dumps(receipt, indent=2))
 PYCODE
+if [[ $mode == panda ]]; then
+    source_bank="$run/gpu01/demos_motor"
+    test -f "$source_bank/index.json"
+    "$probe_python" -Bu "$here/motor.py" train --source-bodies Panda --weights "$weights" \
+        --demos "$source_bank" --output "$out/motor" --steps 300 --seed 20261120 --microbatch 4
+    "$probe_python" -Bu "$here/source_control.py" --motor-output "$out/motor" --weights "$weights" \
+        --revision "$pin" --out "$out/panda_native"
+    exit 0
+fi
 archive="$run/assets01/goal5-base.hdf5"
 collect() {
     local bank=$1 poses=$2 rc=0

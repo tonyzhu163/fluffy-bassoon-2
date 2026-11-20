@@ -17,6 +17,10 @@ from time import perf_counter
 import numpy as np
 import torch
 import transformers
+from torch import nn
+from torch.nn import functional as F
+from transformers import AutoTokenizer, PaliGemmaForConditionalGeneration
+
 from motor_data import (
     BODIES,
     HORIZON,
@@ -27,9 +31,6 @@ from motor_data import (
     valid_anchors,
 )
 from motor_weights import sha256, verified_snapshot
-from torch import nn
-from torch.nn import functional as F
-from transformers import AutoTokenizer, PaliGemmaForConditionalGeneration
 
 GLOBAL_BATCH = 8
 RANK = 8
@@ -229,7 +230,7 @@ def collate(batch):
 
 
 @torch.inference_mode()
-def validate(motor, anchors, micro):
+def validate(motor, anchors, micro, source_bodies=BODIES):
     by_body = defaultdict(list)
     for start in range(0, len(anchors), micro):
         group = anchors[start : start + micro]
@@ -238,11 +239,15 @@ def validate(motor, anchors, micro):
         per_axis = (err * mask[..., None]).sum(1) / mask.sum(1, keepdim=True)
         for (ep, _), row in zip(group, per_axis.cpu().numpy()):
             by_body[ep.body].append(row)
-    axes = {b: np.mean(by_body[b], axis=0).tolist() for b in BODIES}
+    axes = {b: np.mean(by_body[b], axis=0).tolist() for b in source_bodies}
     score = float(np.mean(list(axes.values())))
     if not math.isfinite(score):
         raise FloatingPointError("Nonfinite held-out action error")
-    return {"mae": score, "axis_mae_by_body": axes, "anchors_by_body": {b: len(by_body[b]) for b in BODIES}}
+    return {
+        "mae": score,
+        "axis_mae_by_body": axes,
+        "anchors_by_body": {b: len(by_body[b]) for b in source_bodies},
+    }
 
 
 def rng_state(sampler):
@@ -310,9 +315,10 @@ def train(args):
             raise ValueError("Use --resume for an existing checkpoint and a fresh output for a new fit")
         scratch = Path(stack.enter_context(TemporaryDirectory(dir=output, prefix="raw-frames-")))
         start_time = perf_counter()
-        episodes, records = read_episodes(args.demos, scratch)
-        train_eps, valid_eps, held = split_poses(episodes, args.seed)
-        groups = {b: [ep for ep in train_eps if ep.body == b] for b in BODIES}
+        source_bodies = tuple(args.source_bodies.split(","))
+        episodes, records = read_episodes(args.demos, scratch, source_bodies)
+        train_eps, valid_eps, held = split_poses(episodes, args.seed, source_bodies)
+        groups = {b: [ep for ep in train_eps if ep.body == b] for b in source_bodies}
         anchors = valid_anchors(valid_eps)
         for r in records:
             r["split"] = "validation" if r["pose"] in held else "train"
@@ -333,6 +339,7 @@ def train(args):
             "seed": args.seed,
             "microbatch": args.microbatch,
             "recipe": recipe(),
+            "source_bodies": list(source_bodies),
             "weights": motor.identity,
             "episodes": records,
             "holdout_poses": held,
@@ -424,7 +431,7 @@ def train(args):
                 if step == 1:
                     item["lora_grad_norm"] = lora_norm
                 val_start = perf_counter()
-                item["validation"] = validate(motor, anchors, args.microbatch)
+                item["validation"] = validate(motor, anchors, args.microbatch, source_bodies)
                 item["validation_seconds"] = perf_counter() - val_start
                 if best is None or item["validation"]["mae"] < best["mae"]:
                     best = {"step": step, "mae": item["validation"]["mae"], "model": motor.delta()}
@@ -470,6 +477,7 @@ def main():
     fit.add_argument(
         "--steps", type=int, default=300, help="Total optimizer updates, including resumed updates"
     )
+    fit.add_argument("--source-bodies", choices=("Panda", ",".join(BODIES)), default=",".join(BODIES))
     fit.add_argument("--seed", type=int, default=20261120)
     fit.add_argument("--microbatch", type=int, choices=(1, 2, 4, 8), default=4)
     fit.add_argument("--resume", action="store_true")

@@ -8,6 +8,7 @@ from pathlib import Path
 from zipfile import ZipFile
 
 import numpy as np
+
 from motor_weights import sha256
 
 BODIES = ("Panda", "Sawyer")
@@ -50,10 +51,26 @@ class Episode:
         return self.observation(t), target, np.arange(HORIZON) < count
 
 
-def read_episodes(root, scratch):
+def checked_sources(source_bodies):
+    bodies = tuple(source_bodies)
+    if bodies not in (("Panda",), BODIES):
+        raise ValueError("Expected Panda or Panda,Sawyer as source bodies")
+    return bodies
+
+
+def read_episodes(root, scratch, source_bodies=BODIES):
+    source_bodies = checked_sources(source_bodies)
     root = Path(root).resolve(strict=True)
     episodes, records, seen = [], [], set()
-    paths = sorted(root.rglob("*.npz"))
+    if source_bodies == BODIES:
+        paths = sorted(root.rglob("*.npz"))
+    else:
+        paths = sorted(
+            path
+            for arm in root.iterdir()
+            if arm.name.capitalize() in source_bodies
+            for path in arm.rglob("*.npz")
+        )
     for path in paths:
         relative = path.relative_to(root)
         if len(relative.parts) != 2 or relative.parts[0].capitalize() not in BODIES:
@@ -64,7 +81,7 @@ def read_episodes(root, scratch):
         if (body, pose) in seen:
             raise ValueError(f"Duplicate source body/pose {relative}")
         seen.add((body, pose))
-        if not path.resolve().is_relative_to(root):
+        if not path.resolve().is_relative_to(root / relative.parts[0]) or path.parent.is_symlink():
             raise ValueError(f"Archive outside source directory: {relative}")
         with np.load(path, allow_pickle=False) as data:
             state, actions, motion = (data[k] for k in ("state", "actions", "motion"))
@@ -134,32 +151,46 @@ def read_episodes(root, scratch):
                 "native_terminal_reward": float(rewards[-1]),
             }
         )
-    if {e.body for e in episodes} != set(BODIES):
-        raise ValueError("Need successful episodes from both Panda and Sawyer")
+    if {e.body for e in episodes} != set(source_bodies):
+        raise ValueError("Need successful episodes from every requested source body")
     if len({e.prompt for e in episodes}) != 1:
-        raise ValueError("This run studies one instruction shared by both bodies")
+        raise ValueError("This run studies one instruction across the selected demonstrations")
     index_path = root / "index.json"
-    if index_path.is_file():
-        verify_collector_index(index_path, records)
+    if index_path.is_file() or source_bodies != BODIES:
+        verify_collector_index(index_path, records, source_bodies)
     return episodes, records
 
 
-def verify_collector_index(path, records):
+def verify_collector_index(path, records, source_bodies=BODIES):
     """Corroborate the tape against demos.py's simulator receipts when supplied."""
     index = json.loads(path.read_text())
     if (index["suite"], index["task_id"], index["case"]) != ("libero_goal", 5, "BASE"):
         raise ValueError("Collector index is not the registered native BASE task")
-    accepted = [a for a in index["attempts"] if a["accepted"]]
+    declared = set(index["bodies"])
+    if not set(source_bodies) <= declared:
+        raise ValueError("Collector index omits a requested source arm")
+    if source_bodies == BODIES and (
+        declared - set(BODIES) or any(a["body"] not in declared for a in index["attempts"])
+    ):
+        raise ValueError("Collector index includes an unauthorized source")
+    accepted = [a for a in index["attempts"] if a["body"] in source_bodies and a["accepted"]]
     by_file = {a["file"]: a for a in accepted}
     if len(by_file) != len(accepted) or set(by_file) != {r["file"] for r in records}:
         raise ValueError("Source tapes disagree with the collector's accepted episodes")
     for record in records:
         attempt = by_file[record["file"]]
+        if source_bodies == ("Panda",) and "reference_demo" in attempt:
+            donor = index["references"][str(attempt["reference_demo"])]
+            if int(donor["pose"]) not in range(16):
+                raise ValueError("Motor demonstration used a reference outside released poses 0–15")
         reset = attempt["reset"]
         repro = reset["environment_reproducibility"]
         if (
             not attempt["native_success"]
             or not attempt["done"]
+            or attempt["body"] != record["body"]
+            or str(attempt["pose"]) != record["pose"]
+            or attempt["seed"] != repro["seed"]
             or reset["model_identity"]["arm"] != record["body"]
             or str(repro["init_state_id"]) != record["pose"]
             or attempt["steps"] != record["frames"]
@@ -169,9 +200,10 @@ def verify_collector_index(path, records):
             raise ValueError(f"{record['file']}: tape conflicts with native reset or success receipt")
 
 
-def split_poses(episodes, seed):
+def split_poses(episodes, seed, source_bodies=BODIES):
+    source_bodies = checked_sources(source_bodies)
     rng = np.random.default_rng(seed)
-    poses = {b: {e.pose for e in episodes if e.body == b} for b in BODIES}
+    poses = {b: {e.pose for e in episodes if e.body == b} for b in source_bodies}
     if any(len(p) < 2 for p in poses.values()):
         raise ValueError("Need at least two successful distinct poses on each arm for holdout")
     shared = set.intersection(*poses.values())
@@ -194,8 +226,11 @@ def split_poses(episodes, seed):
 
 def select_batch(groups, rng, size):
     batch = []
-    for body in BODIES:
-        for _ in range(size // len(BODIES)):
+    bodies = checked_sources(sorted(groups))
+    if size % len(bodies):
+        raise ValueError("Global batch must divide equally among source bodies")
+    for body in bodies:
+        for _ in range(size // len(bodies)):
             ep = groups[body][rng.integers(len(groups[body]))]
             batch.append(ep.sample(rng.integers(len(ep.actions))))
     order = rng.permutation(size)
