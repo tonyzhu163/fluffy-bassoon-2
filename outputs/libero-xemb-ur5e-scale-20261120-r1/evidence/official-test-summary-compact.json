@@ -1,0 +1,674 @@
+{
+  "split": "official_test",
+  "job_id": "job-7uccgsa8ktmi",
+  "commit": "c282615aefd71efe61f69a29ef834fa6e4654c34",
+  "trials": 93,
+  "planned_trials": 96,
+  "note": "7/8 shards 12/12 complete; shard-3 (libero_goal-6) completed 9/12 before transient EGL frame-hash check on query 10.",
+  "arms": [
+    "nominal",
+    "privileged_oracle",
+    "analytic_proprio_sysid",
+    "analytic_visual_sysid_active",
+    "analytic_visual_sysid_passive",
+    "joint_transformer_active",
+    "factored_no_equiv_active",
+    "ours_lumaflow_active",
+    "ours_rgb_active",
+    "ours_rgb_passive",
+    "ours_cleared",
+    "ours_swapped_donor"
+  ],
+  "by_regime": {
+    "familiar": {
+      "trials": 32,
+      "successes": {
+        "nominal": 7,
+        "privileged_oracle": 28,
+        "analytic_proprio_sysid": 13,
+        "analytic_visual_sysid_active": 18,
+        "analytic_visual_sysid_passive": 22,
+        "joint_transformer_active": 27,
+        "factored_no_equiv_active": 15,
+        "ours_lumaflow_active": 19,
+        "ours_rgb_active": 17,
+        "ours_rgb_passive": 19,
+        "ours_cleared": 7,
+        "ours_swapped_donor": 0
+      },
+      "rates": {
+        "nominal": 0.21875,
+        "privileged_oracle": 0.875,
+        "analytic_proprio_sysid": 0.40625,
+        "analytic_visual_sysid_active": 0.5625,
+        "analytic_visual_sysid_passive": 0.6875,
+        "joint_transformer_active": 0.84375,
+        "factored_no_equiv_active": 0.46875,
+        "ours_lumaflow_active": 0.59375,
+        "ours_rgb_active": 0.53125,
+        "ours_rgb_passive": 0.59375,
+        "ours_cleared": 0.21875,
+        "ours_swapped_donor": 0.0
+      }
+    },
+    "compositional_ood": {
+      "trials": 32,
+      "successes": {
+        "nominal": 0,
+        "privileged_oracle": 26,
+        "analytic_proprio_sysid": 0,
+        "analytic_visual_sysid_active": 13,
+        "analytic_visual_sysid_passive": 18,
+        "joint_transformer_active": 0,
+        "factored_no_equiv_active": 0,
+        "ours_lumaflow_active": 19,
+        "ours_rgb_active": 14,
+        "ours_rgb_passive": 16,
+        "ours_cleared": 0,
+        "ours_swapped_donor": 2
+      },
+      "rates": {
+        "nominal": 0.0,
+        "privileged_oracle": 0.8125,
+        "analytic_proprio_sysid": 0.0,
+        "analytic_visual_sysid_active": 0.40625,
+        "analytic_visual_sysid_passive": 0.5625,
+        "joint_transformer_active": 0.0,
+        "factored_no_equiv_active": 0.0,
+        "ours_lumaflow_active": 0.59375,
+        "ours_rgb_active": 0.4375,
+        "ours_rgb_passive": 0.5,
+        "ours_cleared": 0.0,
+        "ours_swapped_donor": 0.0625
+      }
+    },
+    "continuous_angle_ood": {
+      "trials": 29,
+      "successes": {
+        "nominal": 0,
+        "privileged_oracle": 25,
+        "analytic_proprio_sysid": 1,
+        "analytic_visual_sysid_active": 9,
+        "analytic_visual_sysid_passive": 20,
+        "joint_transformer_active": 2,
+        "factored_no_equiv_active": 0,
+        "ours_lumaflow_active": 14,
+        "ours_rgb_active": 8,
+        "ours_rgb_passive": 13,
+        "ours_cleared": 0,
+        "ours_swapped_donor": 1
+      },
+      "rates": {
+        "nominal": 0.0,
+        "privileged_oracle": 0.8620689655172413,
+        "analytic_proprio_sysid": 0.034482758620689655,
+        "analytic_visual_sysid_active": 0.3103448275862069,
+        "analytic_visual_sysid_passive": 0.6896551724137931,
+        "joint_transformer_active": 0.06896551724137931,
+        "factored_no_equiv_active": 0.0,
+        "ours_lumaflow_active": 0.4827586206896552,
+        "ours_rgb_active": 0.27586206896551724,
+        "ours_rgb_passive": 0.4482758620689655,
+        "ours_cleared": 0.0,
+        "ours_swapped_donor": 0.034482758620689655
+      }
+    },
+    "ood_combined": {
+      "trials": 61,
+      "successes": {
+        "nominal": 0,
+        "privileged_oracle": 51,
+        "analytic_proprio_sysid": 1,
+        "analytic_visual_sysid_active": 22,
+        "analytic_visual_sysid_passive": 38,
+        "joint_transformer_active": 2,
+        "factored_no_equiv_active": 0,
+        "ours_lumaflow_active": 33,
+        "ours_rgb_active": 22,
+        "ours_rgb_passive": 29,
+        "ours_cleared": 0,
+        "ours_swapped_donor": 3
+      },
+      "rates": {
+        "nominal": 0.0,
+        "privileged_oracle": 0.8360655737704918,
+        "analytic_proprio_sysid": 0.01639344262295082,
+        "analytic_visual_sysid_active": 0.36065573770491804,
+        "analytic_visual_sysid_passive": 0.6229508196721312,
+        "joint_transformer_active": 0.03278688524590164,
+        "factored_no_equiv_active": 0.0,
+        "ours_lumaflow_active": 0.5409836065573771,
+        "ours_rgb_active": 0.36065573770491804,
+        "ours_rgb_passive": 0.47540983606557374,
+        "ours_cleared": 0.0,
+        "ours_swapped_donor": 0.04918032786885246
+      }
+    },
+    "shifted": {
+      "trials": 85,
+      "successes": {
+        "nominal": 0,
+        "privileged_oracle": 72,
+        "analytic_proprio_sysid": 8,
+        "analytic_visual_sysid_active": 33,
+        "analytic_visual_sysid_passive": 54,
+        "joint_transformer_active": 22,
+        "factored_no_equiv_active": 8,
+        "ours_lumaflow_active": 46,
+        "ours_rgb_active": 34,
+        "ours_rgb_passive": 44,
+        "ours_cleared": 0,
+        "ours_swapped_donor": 3
+      },
+      "rates": {
+        "nominal": 0.0,
+        "privileged_oracle": 0.8470588235294118,
+        "analytic_proprio_sysid": 0.09411764705882353,
+        "analytic_visual_sysid_active": 0.38823529411764707,
+        "analytic_visual_sysid_passive": 0.6352941176470588,
+        "joint_transformer_active": 0.25882352941176473,
+        "factored_no_equiv_active": 0.09411764705882353,
+        "ours_lumaflow_active": 0.5411764705882353,
+        "ours_rgb_active": 0.4,
+        "ours_rgb_passive": 0.5176470588235295,
+        "ours_cleared": 0.0,
+        "ours_swapped_donor": 0.03529411764705882
+      }
+    },
+    "overall": {
+      "trials": 93,
+      "successes": {
+        "nominal": 7,
+        "privileged_oracle": 79,
+        "analytic_proprio_sysid": 14,
+        "analytic_visual_sysid_active": 40,
+        "analytic_visual_sysid_passive": 60,
+        "joint_transformer_active": 29,
+        "factored_no_equiv_active": 15,
+        "ours_lumaflow_active": 52,
+        "ours_rgb_active": 39,
+        "ours_rgb_passive": 48,
+        "ours_cleared": 7,
+        "ours_swapped_donor": 3
+      },
+      "rates": {
+        "nominal": 0.07526881720430108,
+        "privileged_oracle": 0.8494623655913979,
+        "analytic_proprio_sysid": 0.15053763440860216,
+        "analytic_visual_sysid_active": 0.43010752688172044,
+        "analytic_visual_sysid_passive": 0.6451612903225806,
+        "joint_transformer_active": 0.3118279569892473,
+        "factored_no_equiv_active": 0.16129032258064516,
+        "ours_lumaflow_active": 0.5591397849462365,
+        "ours_rgb_active": 0.41935483870967744,
+        "ours_rgb_passive": 0.5161290322580645,
+        "ours_cleared": 0.07526881720430108,
+        "ours_swapped_donor": 0.03225806451612903
+      }
+    }
+  },
+  "by_suite": {
+    "libero_10": {
+      "trials": 24,
+      "successes": {
+        "nominal": 1,
+        "privileged_oracle": 12,
+        "analytic_proprio_sysid": 2,
+        "analytic_visual_sysid_active": 3,
+        "analytic_visual_sysid_passive": 6,
+        "joint_transformer_active": 4,
+        "factored_no_equiv_active": 3,
+        "ours_lumaflow_active": 6,
+        "ours_rgb_active": 0,
+        "ours_rgb_passive": 4,
+        "ours_cleared": 1,
+        "ours_swapped_donor": 0
+      },
+      "rates": {
+        "nominal": 0.041666666666666664,
+        "privileged_oracle": 0.5,
+        "analytic_proprio_sysid": 0.08333333333333333,
+        "analytic_visual_sysid_active": 0.125,
+        "analytic_visual_sysid_passive": 0.25,
+        "joint_transformer_active": 0.16666666666666666,
+        "factored_no_equiv_active": 0.125,
+        "ours_lumaflow_active": 0.25,
+        "ours_rgb_active": 0.0,
+        "ours_rgb_passive": 0.16666666666666666,
+        "ours_cleared": 0.041666666666666664,
+        "ours_swapped_donor": 0.0
+      }
+    },
+    "libero_goal": {
+      "trials": 21,
+      "successes": {
+        "nominal": 2,
+        "privileged_oracle": 19,
+        "analytic_proprio_sysid": 4,
+        "analytic_visual_sysid_active": 11,
+        "analytic_visual_sysid_passive": 14,
+        "joint_transformer_active": 8,
+        "factored_no_equiv_active": 4,
+        "ours_lumaflow_active": 16,
+        "ours_rgb_active": 14,
+        "ours_rgb_passive": 16,
+        "ours_cleared": 2,
+        "ours_swapped_donor": 0
+      },
+      "rates": {
+        "nominal": 0.09523809523809523,
+        "privileged_oracle": 0.9047619047619048,
+        "analytic_proprio_sysid": 0.19047619047619047,
+        "analytic_visual_sysid_active": 0.5238095238095238,
+        "analytic_visual_sysid_passive": 0.6666666666666666,
+        "joint_transformer_active": 0.38095238095238093,
+        "factored_no_equiv_active": 0.19047619047619047,
+        "ours_lumaflow_active": 0.7619047619047619,
+        "ours_rgb_active": 0.6666666666666666,
+        "ours_rgb_passive": 0.7619047619047619,
+        "ours_cleared": 0.09523809523809523,
+        "ours_swapped_donor": 0.0
+      }
+    },
+    "libero_object": {
+      "trials": 24,
+      "successes": {
+        "nominal": 2,
+        "privileged_oracle": 24,
+        "analytic_proprio_sysid": 5,
+        "analytic_visual_sysid_active": 12,
+        "analytic_visual_sysid_passive": 20,
+        "joint_transformer_active": 8,
+        "factored_no_equiv_active": 4,
+        "ours_lumaflow_active": 10,
+        "ours_rgb_active": 10,
+        "ours_rgb_passive": 13,
+        "ours_cleared": 2,
+        "ours_swapped_donor": 1
+      },
+      "rates": {
+        "nominal": 0.08333333333333333,
+        "privileged_oracle": 1.0,
+        "analytic_proprio_sysid": 0.20833333333333334,
+        "analytic_visual_sysid_active": 0.5,
+        "analytic_visual_sysid_passive": 0.8333333333333334,
+        "joint_transformer_active": 0.3333333333333333,
+        "factored_no_equiv_active": 0.16666666666666666,
+        "ours_lumaflow_active": 0.4166666666666667,
+        "ours_rgb_active": 0.4166666666666667,
+        "ours_rgb_passive": 0.5416666666666666,
+        "ours_cleared": 0.08333333333333333,
+        "ours_swapped_donor": 0.041666666666666664
+      }
+    },
+    "libero_spatial": {
+      "trials": 24,
+      "successes": {
+        "nominal": 2,
+        "privileged_oracle": 24,
+        "analytic_proprio_sysid": 3,
+        "analytic_visual_sysid_active": 14,
+        "analytic_visual_sysid_passive": 20,
+        "joint_transformer_active": 9,
+        "factored_no_equiv_active": 4,
+        "ours_lumaflow_active": 20,
+        "ours_rgb_active": 15,
+        "ours_rgb_passive": 15,
+        "ours_cleared": 2,
+        "ours_swapped_donor": 2
+      },
+      "rates": {
+        "nominal": 0.08333333333333333,
+        "privileged_oracle": 1.0,
+        "analytic_proprio_sysid": 0.125,
+        "analytic_visual_sysid_active": 0.5833333333333334,
+        "analytic_visual_sysid_passive": 0.8333333333333334,
+        "joint_transformer_active": 0.375,
+        "factored_no_equiv_active": 0.16666666666666666,
+        "ours_lumaflow_active": 0.8333333333333334,
+        "ours_rgb_active": 0.625,
+        "ours_rgb_passive": 0.625,
+        "ours_cleared": 0.08333333333333333,
+        "ours_swapped_donor": 0.08333333333333333
+      }
+    }
+  },
+  "paired_contrasts_overall": {
+    "ours_lumaflow_active": {
+      "nominal": {
+        "mean_diff": 0.4838709677419355,
+        "ci95": [
+          0.2916666666666667,
+          0.6781609195402298
+        ],
+        "wins": 46,
+        "losses": 1,
+        "ties": 46
+      },
+      "privileged_oracle": {
+        "mean_diff": -0.2903225806451613,
+        "ci95": [
+          -0.5268817204301075,
+          -0.05555555555555555
+        ],
+        "wins": 5,
+        "losses": 32,
+        "ties": 56
+      },
+      "analytic_proprio_sysid": {
+        "mean_diff": 0.40860215053763443,
+        "ci95": [
+          0.21875,
+          0.6021505376344086
+        ],
+        "wins": 43,
+        "losses": 5,
+        "ties": 45
+      },
+      "analytic_visual_sysid_active": {
+        "mean_diff": 0.12903225806451613,
+        "ci95": [
+          -0.03333333333333333,
+          0.26881720430107525
+        ],
+        "wins": 29,
+        "losses": 17,
+        "ties": 47
+      },
+      "analytic_visual_sysid_passive": {
+        "mean_diff": -0.08602150537634409,
+        "ci95": [
+          -0.25,
+          0.04597701149425287
+        ],
+        "wins": 14,
+        "losses": 22,
+        "ties": 57
+      },
+      "joint_transformer_active": {
+        "mean_diff": 0.24731182795698925,
+        "ci95": [
+          0.07291666666666667,
+          0.41379310344827586
+        ],
+        "wins": 32,
+        "losses": 9,
+        "ties": 52
+      },
+      "factored_no_equiv_active": {
+        "mean_diff": 0.3978494623655914,
+        "ci95": [
+          0.20833333333333334,
+          0.5914566532258062
+        ],
+        "wins": 42,
+        "losses": 5,
+        "ties": 46
+      },
+      "ours_rgb_active": {
+        "mean_diff": 0.13978494623655913,
+        "ci95": [
+          0.05742337164750958,
+          0.2111111111111111
+        ],
+        "wins": 20,
+        "losses": 7,
+        "ties": 66
+      },
+      "ours_rgb_passive": {
+        "mean_diff": 0.043010752688172046,
+        "ci95": [
+          -0.0625,
+          0.13541666666666666
+        ],
+        "wins": 19,
+        "losses": 15,
+        "ties": 59
+      },
+      "ours_cleared": {
+        "mean_diff": 0.4838709677419355,
+        "ci95": [
+          0.2916666666666667,
+          0.6781609195402298
+        ],
+        "wins": 46,
+        "losses": 1,
+        "ties": 46
+      },
+      "ours_swapped_donor": {
+        "mean_diff": 0.5268817204301075,
+        "ci95": [
+          0.3333333333333333,
+          0.7311827956989247
+        ],
+        "wins": 50,
+        "losses": 1,
+        "ties": 42
+      }
+    },
+    "ours_rgb_passive": {
+      "nominal": {
+        "mean_diff": 0.44086021505376344,
+        "ci95": [
+          0.2902867383512545,
+          0.6071428571428571
+        ],
+        "wins": 44,
+        "losses": 3,
+        "ties": 46
+      },
+      "privileged_oracle": {
+        "mean_diff": -0.3333333333333333,
+        "ci95": [
+          -0.5268817204301075,
+          -0.12903225806451613
+        ],
+        "wins": 3,
+        "losses": 34,
+        "ties": 56
+      },
+      "analytic_proprio_sysid": {
+        "mean_diff": 0.3655913978494624,
+        "ci95": [
+          0.21875,
+          0.5172413793103449
+        ],
+        "wins": 39,
+        "losses": 5,
+        "ties": 49
+      },
+      "analytic_visual_sysid_active": {
+        "mean_diff": 0.08602150537634409,
+        "ci95": [
+          -0.010752688172043012,
+          0.1839080459770115
+        ],
+        "wins": 25,
+        "losses": 17,
+        "ties": 51
+      },
+      "analytic_visual_sysid_passive": {
+        "mean_diff": -0.12903225806451613,
+        "ci95": [
+          -0.22916666666666666,
+          -0.011484674329501968
+        ],
+        "wins": 9,
+        "losses": 21,
+        "ties": 63
+      },
+      "joint_transformer_active": {
+        "mean_diff": 0.20430107526881722,
+        "ci95": [
+          0.06661290322580646,
+          0.3333333333333333
+        ],
+        "wins": 29,
+        "losses": 10,
+        "ties": 54
+      },
+      "factored_no_equiv_active": {
+        "mean_diff": 0.3548387096774194,
+        "ci95": [
+          0.2041935483870968,
+          0.5161290322580645
+        ],
+        "wins": 40,
+        "losses": 7,
+        "ties": 46
+      },
+      "ours_lumaflow_active": {
+        "mean_diff": -0.043010752688172046,
+        "ci95": [
+          -0.13541666666666666,
+          0.0625
+        ],
+        "wins": 15,
+        "losses": 19,
+        "ties": 59
+      },
+      "ours_rgb_active": {
+        "mean_diff": 0.0967741935483871,
+        "ci95": [
+          0.020833333333333332,
+          0.1875
+        ],
+        "wins": 20,
+        "losses": 11,
+        "ties": 62
+      },
+      "ours_cleared": {
+        "mean_diff": 0.44086021505376344,
+        "ci95": [
+          0.2902867383512545,
+          0.6071428571428571
+        ],
+        "wins": 44,
+        "losses": 3,
+        "ties": 46
+      },
+      "ours_swapped_donor": {
+        "mean_diff": 0.4838709677419355,
+        "ci95": [
+          0.3229166666666667,
+          0.6666666666666666
+        ],
+        "wins": 47,
+        "losses": 2,
+        "ties": 44
+      }
+    },
+    "ours_rgb_active": {
+      "nominal": {
+        "mean_diff": 0.34408602150537637,
+        "ci95": [
+          0.125,
+          0.5596161740558288
+        ],
+        "wins": 34,
+        "losses": 2,
+        "ties": 57
+      },
+      "privileged_oracle": {
+        "mean_diff": -0.43010752688172044,
+        "ci95": [
+          -0.6666666666666666,
+          -0.21505376344086022
+        ],
+        "wins": 1,
+        "losses": 41,
+        "ties": 51
+      },
+      "analytic_proprio_sysid": {
+        "mean_diff": 0.26881720430107525,
+        "ci95": [
+          0.0625,
+          0.4731182795698925
+        ],
+        "wins": 30,
+        "losses": 5,
+        "ties": 58
+      },
+      "analytic_visual_sysid_active": {
+        "mean_diff": -0.010752688172043012,
+        "ci95": [
+          -0.16680107526881718,
+          0.13333333333333333
+        ],
+        "wins": 15,
+        "losses": 16,
+        "ties": 62
+      },
+      "analytic_visual_sysid_passive": {
+        "mean_diff": -0.22580645161290322,
+        "ci95": [
+          -0.375,
+          -0.1
+        ],
+        "wins": 5,
+        "losses": 26,
+        "ties": 62
+      },
+      "joint_transformer_active": {
+        "mean_diff": 0.10752688172043011,
+        "ci95": [
+          -0.08333333333333333,
+          0.2903225806451613
+        ],
+        "wins": 22,
+        "losses": 12,
+        "ties": 59
+      },
+      "factored_no_equiv_active": {
+        "mean_diff": 0.25806451612903225,
+        "ci95": [
+          0.041666666666666664,
+          0.4713107156099367
+        ],
+        "wins": 30,
+        "losses": 6,
+        "ties": 57
+      },
+      "ours_lumaflow_active": {
+        "mean_diff": -0.13978494623655913,
+        "ci95": [
+          -0.2111111111111111,
+          -0.05742337164750984
+        ],
+        "wins": 7,
+        "losses": 20,
+        "ties": 66
+      },
+      "ours_rgb_passive": {
+        "mean_diff": -0.0967741935483871,
+        "ci95": [
+          -0.1875,
+          -0.020833333333333332
+        ],
+        "wins": 11,
+        "losses": 20,
+        "ties": 62
+      },
+      "ours_cleared": {
+        "mean_diff": 0.34408602150537637,
+        "ci95": [
+          0.125,
+          0.5596161740558288
+        ],
+        "wins": 34,
+        "losses": 2,
+        "ties": 57
+      },
+      "ours_swapped_donor": {
+        "mean_diff": 0.3870967741935484,
+        "ci95": [
+          0.16116431451612903,
+          0.6236559139784946
+        ],
+        "wins": 37,
+        "losses": 1,
+        "ties": 55
+      }
+    }
+  }
+}
