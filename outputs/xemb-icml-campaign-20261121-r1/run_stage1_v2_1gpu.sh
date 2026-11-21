@@ -27,6 +27,15 @@ export JAX_PLATFORMS=cuda FLUFFY_GPU_EXECUTION=baige XLA_PYTHON_CLIENT_PREALLOCA
 export PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSERSITE=1 PYTHONUNBUFFERED=1
 export CUDA_VISIBLE_DEVICES=0
 
+libs="$root/setups/libero90-full-action-20261119-r1/desktop-libs02"
+glvnd="$libs/prefix/usr/lib/x86_64-linux-gnu"
+IFS=: read -ra paths <<< "${LD_LIBRARY_PATH:-}"
+driver_paths=""
+for path in "${paths[@]}"; do
+    if [[ -n "$path" && ! -f "$path/libtorch_python.so" ]]; then driver_paths+=":$path"; fi
+done
+export LD_LIBRARY_PATH="$glvnd$driver_paths"
+
 date +%s > "$out/gpu-start.txt"
 "$root/setups/robocasa365-native-20261101-r1/env/bin/python" -Bu "$code/scripts/[train]gpu_probe.py" \
     --expected-count 1 --purpose training --baige-container --baige-exclusive-training \
