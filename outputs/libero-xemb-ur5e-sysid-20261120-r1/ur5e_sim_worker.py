@@ -110,8 +110,8 @@ def serve(fd: int):
                     if arm not in ALLOWED_ARMS:
                         raise ValueError(f"Unknown arm {arm!r}; expected one of {ALLOWED_ARMS}")
                     variant = str(value.get("variant", "BASE"))
-                    if variant != "BASE":
-                        raise ValueError(f"Multi-arm worker only supports BASE variant, got {variant!r}")
+                    if variant not in ("BASE", "S15"):
+                        raise ValueError(f"Expected BASE or S15 variant, got {variant!r}")
                     suite = str(value["suite"])
                     task_id = int(value["task_id"])
                     init_state_id = int(value["init_state_id"])
@@ -120,7 +120,7 @@ def serve(fd: int):
                     spec = get_embodiment_spec(spec_name)
                     nominal_wire = (spec.yaw_deg, spec.xy_scale, spec.gripper_sign) == (0.0, 1.0, 1)
 
-                    env = ArmEnv(arm=arm, suite=suite, task_id=task_id)
+                    env = ArmEnv(arm=arm, suite=suite, task_id=task_id, case_id=variant)
                     first = env.reset(init_state_id=init_state_id, seed=seed)
                     identity = first["model_identity"]
                     expected_dof = 6 if arm == "UR5e" else 7
