@@ -38,7 +38,7 @@ date +%s > "$out/gpu-start.txt"
     --output "$out/gpu.json" > "$out/probe.log" 2>&1
 
 "$python" -Bu "$here/train_rma_gru_and_farneback.py" \
-    --archive "$src/collect/archive.json" \
+    --archive "$src/archive/archive.json" \
     --output "$out/train" \
     --steps 3000 --batch-size 64 --cnn-width 96 --mlp-width 192 --seeds 41,42,43 \
     > "$out/train.log" 2>&1
