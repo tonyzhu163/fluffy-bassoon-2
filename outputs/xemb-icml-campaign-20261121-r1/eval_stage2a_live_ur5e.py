@@ -115,6 +115,23 @@ def load_v2_checkpoint(ckpt_path: Path):
     return params, cfg, meta
 
 
+_STREAMING_JIT_CACHE: dict = {}
+
+
+def _get_streaming_step_fn(reader_cfg: ReaderV2Config):
+    if reader_cfg not in _STREAMING_JIT_CACHE:
+        import jax
+
+        @jax.jit
+        def _step(params, batch):
+            v_planar, vis_w = extract_visual_vectors_v2(params, reader_cfg, batch)
+            _, _, log_s, g_logit = apply_reader_v2(params, reader_cfg, batch)
+            return v_planar, vis_w, log_s, g_logit
+
+        _STREAMING_JIT_CACHE[reader_cfg] = _step
+    return _STREAMING_JIT_CACHE[reader_cfg]
+
+
 def run_online_streaming_episode(
     simulator,
     policy,
@@ -145,8 +162,11 @@ def run_online_streaming_episode(
     low = np.asarray(bounds["low"], dtype=np.float32)
     high = np.asarray(bounds["high"], dtype=np.float32)
 
+    model_obj = getattr(policy, "_model", None)
+    action_horizon = int(getattr(model_obj, "action_horizon", 10))
+    action_dim = int(getattr(model_obj, "action_dim", 32))
     rng = np.random.default_rng(int(case["seed"]) + NOISE_SEED_OFFSET)
-    noise_bank = rng.standard_normal(((horizon + 4) // 5, 10, 32)).astype(np.float32)
+    noise_bank = rng.standard_normal(((horizon + 4) // 5, action_horizon, action_dim)).astype(np.float32)
     frame0_img = initial["agentview_64"]
     first_item = to_openpi_observation(raw, prompt)
     frame0_state = first_item["observation/state"].astype(np.float32)
@@ -195,8 +215,14 @@ def run_online_streaming_episode(
             item = to_openpi_observation(motor_obs, prompt)
         noise = noise_bank[controls // 5]
         proposal = np.asarray(policy.infer(item, noise=noise)["actions"], dtype=np.float32)
+        if proposal.shape != (action_horizon, 7) or not np.isfinite(proposal).all():
+            raise ValueError(f"Invalid policy proposal shape {proposal.shape} on {case} / {spec.name}")
         count = min(5, horizon - controls)
-        issued = retarget_action_from_motor(proposal[:count], cur_yaw, cur_scale, cur_grip, low, high)
+        canonical = np.clip(proposal[:count], low, high)
+        if (cur_yaw, cur_scale, cur_grip) == (0.0, 1.0, 1):
+            issued = canonical
+        else:
+            issued = retarget_action_from_motor(canonical, cur_yaw, cur_scale, cur_grip, low, high)
         bounded = np.clip(issued, low, high).astype(np.float32)
 
         step = simulator.call("chunk", bounded)
@@ -226,8 +252,7 @@ def run_online_streaming_episode(
                 delta_jaw=djaw[None, None],
                 valid=val,
             )
-            v_planar, vis_w = extract_visual_vectors_v2(reader_params, reader_cfg, single)
-            _, _, log_s, g_logit = apply_reader_v2(reader_params, reader_cfg, single)
+            v_planar, vis_w, log_s, g_logit = _get_streaming_step_fn(reader_cfg)(reader_params, single)
             est.update(
                 iss_mean[:2],
                 np.asarray(v_planar)[0, 0],
@@ -349,7 +374,7 @@ def run_shard(
                 pas_npz = support_dir / f"{local_i:02d}-{spec.name}-passive.npz"
                 np.savez_compressed(act_npz, **act_trace)
                 np.savez_compressed(pas_npz, **pas_trace)
-                support_rows.append(dict(embodiment=spec.name, active_npz=str(act_npz), passive_npz=str(pas_npz)))
+                support_rows.append(dict(embodiment=spec.name, physics=act_meta["physics"], active_npz=str(act_npz), passive_npz=str(pas_npz)))
             write_json(shard_dir / "support-meta.json", support_rows)
 
         progress_path = shard_dir / "live-progress.json"
@@ -419,22 +444,23 @@ def run_shard(
                 arms={},
             )
             q_key = (suite, tid, init_state_id)
+            sup_physics = sup_row.get("physics")
             for arm_name in STAGE2A_ARMS:
                 if arm_name == "ours_equiv_v2_online":
                     rec = run_online_streaming_episode(
                         simulator, policy, case, spec, prompt=prompts.get(key),
                         reader_params=p_v2_pas, reader_cfg=c_v2_pas,
-                        check_reset=lambda r: check_query_reset(query_resets, q_key, r),
+                        check_reset=lambda r: check_query_reset(query_resets, q_key, sup_physics, r),
                     )
                     row["arms"][arm_name] = rec
                 else:
                     yh, sh, gh = arm_preds[arm_name]
-                    rec, _ = run_episode(
+                    rec = run_episode(
                         simulator, policy, case, spec, prompt=prompts.get(key),
                         yaw_hat=yh, scale_hat=sh, grip_hat=gh,
-                        check_reset=lambda r: check_query_reset(query_resets, q_key, r),
+                        check_reset=lambda r: check_query_reset(query_resets, q_key, sup_physics, r),
                     )
-                    prompts.setdefault(key, rec["prompt"])
+                    prompts.setdefault(key, rec["released_prompt"])
                     row["arms"][arm_name] = dict(
                         success=bool(rec["success"]), controls=int(rec["controls"]),
                         yaw_hat=round(yh, 2), scale_hat=round(sh, 3), grip_hat=int(gh),

@@ -103,8 +103,11 @@ def run_episode(
     low = np.asarray(bounds["low"], dtype=np.float32)
     high = np.asarray(bounds["high"], dtype=np.float32)
 
+    model_obj = getattr(policy, "_model", None)
+    action_horizon = int(getattr(model_obj, "action_horizon", 10))
+    action_dim = int(getattr(model_obj, "action_dim", 32))
     rng = np.random.default_rng(int(case["seed"]) + NOISE_SEED_OFFSET)
-    noise_bank = rng.standard_normal(((horizon + 4) // 5, 10, 32)).astype(np.float32)
+    noise_bank = rng.standard_normal(((horizon + 4) // 5, action_horizon, action_dim)).astype(np.float32)
     frame0_img = initial["agentview_64"]
     first_item = to_openpi_observation(raw, prompt)
     frame0_state = first_item["observation/state"].astype(np.float32)
@@ -239,8 +242,8 @@ def run_episode(
             item = to_openpi_observation(motor_obs, prompt)
         noise = noise_bank[controls // 5]
         proposal = np.asarray(policy.infer(item, noise=noise)["actions"], dtype=np.float32)
-        if proposal.shape != (10, 7) or not np.isfinite(proposal).all():
-            raise ValueError(f"Invalid pi0.5 proposal on {case} / {spec.name}")
+        if proposal.shape != (action_horizon, 7) or not np.isfinite(proposal).all():
+            raise ValueError(f"Invalid policy proposal shape {proposal.shape} (expected ({action_horizon}, 7)) on {case} / {spec.name}")
         if controls == 0:
             opening_proposal_sha256 = array_digest(proposal)
         count = min(5, limit - controls)
