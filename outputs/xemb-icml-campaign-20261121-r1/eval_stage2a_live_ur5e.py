@@ -285,8 +285,11 @@ def run_shard(
     reuse_support_dir: Path | None,
 ):
     tasks, plan = build_test_plan()
+    if num_shards != len(tasks):
+        raise ValueError(f"Expected num_shards == {len(tasks)}, got {num_shards}")
     suites = sorted({s for s, _ in tasks})
-    my_entries = [e for e in plan if int(e["index"]) % num_shards == shard_idx]
+    my_suite, my_tid = tasks[shard_idx]
+    my_entries = [e for e in plan if e["suite"] == my_suite and int(e["task_id"]) == my_tid]
     donors_local = make_donor_permutation(my_entries, np.random.default_rng(20261121 + shard_idx))
 
     shard_dir = output_dir / f"shard-{shard_idx}"
