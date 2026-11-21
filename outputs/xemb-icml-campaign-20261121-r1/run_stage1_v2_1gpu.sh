@@ -10,6 +10,7 @@ python="$legacy/envs/openpi-215abfb/bin/python"
 
 pin=$1
 attempt=$2
+only_models=${3:-}
 host=$(hostname)
 [[ "$attempt" =~ ^[a-z0-9]+$ ]]
 [[ "$host" == job-* ]] || { echo "Require Baige Distributed Training container" >&2; exit 2; }
@@ -43,11 +44,16 @@ date +%s > "$out/gpu-start.txt"
     --output "$out/gpu.json" > "$out/probe.log" 2>&1
 
 archive="$root/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu01/archive/archive.json"
+EXTRA_ARGS=()
+if [[ -n "$only_models" ]]; then
+    EXTRA_ARGS=(--only-models "$only_models")
+fi
 "$python" -Bu "$here/stage1_offline_gate.py" \
     --archive "$archive" \
     --output "$out/stage1" \
     --steps 3500 \
     --batch-size 64 \
     --seeds 41,42,43 \
+    "${EXTRA_ARGS[@]}" \
     > "$out/stage1.log" 2>&1
 date +%s > "$out/gpu-end.txt"

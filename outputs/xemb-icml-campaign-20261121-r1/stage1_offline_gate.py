@@ -245,6 +245,7 @@ def main():
     parser.add_argument("--steps", type=int, default=3500)
     parser.add_argument("--batch-size", type=int, default=64)
     parser.add_argument("--seeds", type=str, default="41,42,43")
+    parser.add_argument("--only-models", type=str, default="")
     args = parser.parse_args()
 
     raw = args.archive.read_bytes()
@@ -299,6 +300,9 @@ def main():
                 ("no_equiv_v2_dis", ReaderV2Config(model_type="factored_no_equiv_v2", visual_mode="dis_lumaflow", max_chunks=max(max_chunks, 32))),
                 ("perceiver_icba_dis", ReaderV2Config(model_type="perceiver_icba", visual_mode="dis_lumaflow", max_chunks=max(max_chunks, 32))),
             ]
+            only = {s.strip() for s in args.only_models.split(",") if s.strip()}
+            if only:
+                specs = [(t, c) for t, c in specs if t in only]
             for tag, cfg in specs:
                 res = train_and_audit_v2(
                     mode, tag, cfg, train_data, dev_data, dev_rows, donor_perm,
