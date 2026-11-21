@@ -265,22 +265,6 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     t0 = time.monotonic()
 
-    # Probe extra held-out morphologies on GPU Vulkan for Stage 2 planning (fast sanity check, local assets only)
-    extra_arm_probe = {}
-    for arm in ("xarm6_robotiq", "xarm6_nogripper", "widowxai", "panda", "fetch"):
-        for task in ("PickCube-v1", "PushCube-v1", "StackCube-v1"):
-            try:
-                env = gym.make(task, num_envs=1, obs_mode="rgbd", control_mode="pd_ee_delta_pose", robot_uids=arm, sim_backend="cpu")
-                obs, _ = env.reset(seed=0)
-                qdim = int(env.unwrapped.agent.robot.get_qpos().shape[-1])
-                adim = int(env.action_space.shape[-1])
-                cams = list(obs.get("sensor_data", {}).keys())
-                env.close()
-                extra_arm_probe[f"{arm}:{task}"] = dict(ok=True, qdim=qdim, adim=adim, cams=cams)
-            except Exception as e:
-                extra_arm_probe[f"{arm}:{task}"] = dict(ok=False, err=f"{type(e).__name__}: {str(e)[:120]}")
-    print("EXTRA_MS3_ARMS:", json.dumps(extra_arm_probe), flush=True)
-
     # 1. Collect training probes on 7-DoF Panda + Fetch (12 seeds/task x 3 tasks x 2 robots x 7 emb = 504 trials)
     train_traces = []
     train_meta = []
@@ -290,7 +274,10 @@ def main():
             for s_idx in range(12):
                 seed = 1000 * TRAIN_ROBOTS.index(robot) + 100 * TASKS.index(task) + s_idx
                 for spec in TRAIN_EMBODIMENTS:
-                    tr, _, _ = collect_probe_trace(env, spec, seed)
+                    tr = collect_probe_trace(env, spec, seed)
+                    tr["yaw_deg"] = np.float32(spec.yaw_deg)
+                    tr["xy_scale"] = np.float32(spec.xy_scale)
+                    tr["gripper_sign"] = np.int32(spec.gripper_sign)
                     train_traces.append(tr)
                     train_meta.append(dict(robot=robot, task=task, seed=seed, emb=spec.name, regime=spec.regime))
             env.close()
@@ -305,8 +292,11 @@ def main():
             seed = 500 * TASKS.index(task) + 100 + s_idx
             shas = set()
             for spec in EVAL_EMBODIMENTS:
-                tr, sha, _ = collect_probe_trace(env, spec, seed)
-                shas.add(sha)
+                tr = collect_probe_trace(env, spec, seed)
+                tr["yaw_deg"] = np.float32(spec.yaw_deg)
+                tr["xy_scale"] = np.float32(spec.xy_scale)
+                tr["gripper_sign"] = np.int32(spec.gripper_sign)
+                shas.add(tr["frame0_sha256"])
                 eval_traces.append(tr)
                 eval_meta.append(dict(robot=TARGET_ROBOT, task=task, seed=seed, emb=spec.name, regime=spec.regime))
             if len(shas) != 1:
@@ -438,7 +428,6 @@ def main():
     summary = dict(
         simulator="ManiSkill3-SAPIEN",
         target_robot=TARGET_ROBOT,
-        extra_arm_probe=extra_arm_probe,
         gate0_frame0_bitwise_equal=f0_ok,
         offline_yaw_err_deg=offline,
         live_by_regime=by_regime,
