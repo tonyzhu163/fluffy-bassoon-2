@@ -1,0 +1,136 @@
+{
+  "simulator": "ManiSkill3-SAPIEN",
+  "target_robot": "xarm6_robotiq",
+  "gate0_frame0_bitwise_equal": true,
+  "offline_yaw_err_deg": {
+    "equiv_flow_homog_nodz": {
+      "familiar": 81.13,
+      "compositional_ood": 62.54,
+      "continuous_angle_ood": 96.86,
+      "ood_combined": 79.71,
+      "overall": 80.18
+    },
+    "equiv_flow_homog_dz_m": {
+      "familiar": 81.43,
+      "compositional_ood": 54.68,
+      "continuous_angle_ood": 100.36,
+      "ood_combined": 77.52,
+      "overall": 78.82
+    },
+    "equiv_flow_homog_panda_only": {
+      "familiar": 80.82,
+      "compositional_ood": 63.34,
+      "continuous_angle_ood": 98.69,
+      "ood_combined": 81.02,
+      "overall": 80.95
+    }
+  },
+  "live_by_regime": {
+    "familiar": {
+      "trials": 24,
+      "successes": {
+        "privileged_oracle": 16,
+        "equiv_flow_homog_nodz": 6,
+        "equiv_flow_homog_dz_m": 2,
+        "equiv_flow_homog_panda_only": 0,
+        "nominal": 4,
+        "ours_cleared": 4,
+        "ours_swapped_donor": 0
+      },
+      "rates": {
+        "privileged_oracle": 0.6667,
+        "equiv_flow_homog_nodz": 0.25,
+        "equiv_flow_homog_dz_m": 0.0833,
+        "equiv_flow_homog_panda_only": 0.0,
+        "nominal": 0.1667,
+        "ours_cleared": 0.1667,
+        "ours_swapped_donor": 0.0
+      }
+    },
+    "compositional_ood": {
+      "trials": 24,
+      "successes": {
+        "privileged_oracle": 16,
+        "equiv_flow_homog_nodz": 5,
+        "equiv_flow_homog_dz_m": 3,
+        "equiv_flow_homog_panda_only": 3,
+        "nominal": 0,
+        "ours_cleared": 0,
+        "ours_swapped_donor": 0
+      },
+      "rates": {
+        "privileged_oracle": 0.6667,
+        "equiv_flow_homog_nodz": 0.2083,
+        "equiv_flow_homog_dz_m": 0.125,
+        "equiv_flow_homog_panda_only": 0.125,
+        "nominal": 0.0,
+        "ours_cleared": 0.0,
+        "ours_swapped_donor": 0.0
+      }
+    },
+    "continuous_angle_ood": {
+      "trials": 24,
+      "successes": {
+        "privileged_oracle": 16,
+        "equiv_flow_homog_nodz": 0,
+        "equiv_flow_homog_dz_m": 0,
+        "equiv_flow_homog_panda_only": 0,
+        "nominal": 0,
+        "ours_cleared": 0,
+        "ours_swapped_donor": 1
+      },
+      "rates": {
+        "privileged_oracle": 0.6667,
+        "equiv_flow_homog_nodz": 0.0,
+        "equiv_flow_homog_dz_m": 0.0,
+        "equiv_flow_homog_panda_only": 0.0,
+        "nominal": 0.0,
+        "ours_cleared": 0.0,
+        "ours_swapped_donor": 0.0417
+      }
+    },
+    "ood_combined": {
+      "trials": 48,
+      "successes": {
+        "privileged_oracle": 32,
+        "equiv_flow_homog_nodz": 5,
+        "equiv_flow_homog_dz_m": 3,
+        "equiv_flow_homog_panda_only": 3,
+        "nominal": 0,
+        "ours_cleared": 0,
+        "ours_swapped_donor": 1
+      },
+      "rates": {
+        "privileged_oracle": 0.6667,
+        "equiv_flow_homog_nodz": 0.1042,
+        "equiv_flow_homog_dz_m": 0.0625,
+        "equiv_flow_homog_panda_only": 0.0625,
+        "nominal": 0.0,
+        "ours_cleared": 0.0,
+        "ours_swapped_donor": 0.0208
+      }
+    },
+    "overall": {
+      "trials": 72,
+      "successes": {
+        "privileged_oracle": 48,
+        "equiv_flow_homog_nodz": 11,
+        "equiv_flow_homog_dz_m": 5,
+        "equiv_flow_homog_panda_only": 3,
+        "nominal": 4,
+        "ours_cleared": 4,
+        "ours_swapped_donor": 1
+      },
+      "rates": {
+        "privileged_oracle": 0.6667,
+        "equiv_flow_homog_nodz": 0.1528,
+        "equiv_flow_homog_dz_m": 0.0694,
+        "equiv_flow_homog_panda_only": 0.0417,
+        "nominal": 0.0556,
+        "ours_cleared": 0.0556,
+        "ours_swapped_donor": 0.0139
+      }
+    }
+  },
+  "seconds": 372.4
+}

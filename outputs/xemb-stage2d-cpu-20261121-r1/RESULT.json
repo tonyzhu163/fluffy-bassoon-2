@@ -1,0 +1,214 @@
+{
+  "revision": "437da7f677632e9495c813aaa52071e207ba834e",
+  "python": "3.11.17",
+  "checks": {
+    "15_control_xyz": true,
+    "3_chunk_mean_xyz": true,
+    "prefix_and_jaw_excitation": true,
+    "clean_identity": true,
+    "oracle_vs_nominal": true,
+    "inverse_order_negative_control": true,
+    "wrist_passthrough": true,
+    "identified_map_on_held_out_commands": true,
+    "cpu_backend": true,
+    "raw_kernel_matches_polar_factor": true,
+    "gain_aware_kernel_reference": true,
+    "raw_kernel_recovers_compound_rotation": false,
+    "unmodified_reader_forward": true,
+    "reader_output_contract": true,
+    "reader_matches_raw_kernel": true,
+    "reader_compound_rotation": false,
+    "reader_clean_rotation": true,
+    "reader_cleared_identity": true,
+    "public_so3_decoder": false
+  },
+  "metrics": {
+    "15_control_xyz": {
+      "rank": 3,
+      "singular_values": [
+        1.903223393607039,
+        1.3863621567122724,
+        0.7329670171456409
+      ],
+      "condition": 2.5966016875065847
+    },
+    "3_chunk_mean_xyz": {
+      "rank": 3,
+      "singular_values": [
+        0.8511473768946356,
+        0.6200000047683716,
+        0.32779281512058145
+      ],
+      "condition": 2.5966016875065843
+    },
+    "prefix_and_jaw_excitation": {
+      "prefix_ranks": [
+        1,
+        2,
+        3
+      ],
+      "jaw_levels": [
+        -1.0,
+        1.0
+      ],
+      "joint_xyz_jaw_rank": 3
+    },
+    "clean_identity": {},
+    "oracle_vs_nominal": {
+      "oracle_max_error": 5.551115123125783e-17,
+      "inverse_after_forward_error": 8.326672684688674e-17,
+      "nominal_xyz_max_error": 0.2896911108498565,
+      "nominal_jaw_max_error": 0.39457162681481367,
+      "max_abs_issued": 0.40907987305945587
+    },
+    "inverse_order_negative_control": {
+      "xyz_max_error": 0.15663372802202474
+    },
+    "wrist_passthrough": {},
+    "identified_map_on_held_out_commands": {
+      "fitted_rotation": [
+        [
+          0.5845866933780389,
+          -0.8104609423166642,
+          -0.037569387864525544
+        ],
+        [
+          0.6268924782754021,
+          0.48060415166005627,
+          -0.6132091568860019
+        ],
+        [
+          0.5150380749100546,
+          0.3349219467074413,
+          0.789026660517022
+        ]
+      ],
+      "fitted_gains": [
+        0.6499999999999999,
+        1.2499999999999998,
+        1.5500000000000007
+      ],
+      "fitted_jaw_sign": -1,
+      "rotation_error_deg": 1.827766340596665e-14,
+      "held_out_max_error": 1.942890293094024e-16
+    },
+    "cpu_backend": {
+      "backend": "cpu"
+    },
+    "raw_kernel_matches_polar_factor": {
+      "max_matrix_error": 1.9802025373605314e-07,
+      "polar_to_truth_deg": 11.728635980107011
+    },
+    "gain_aware_kernel_reference": {
+      "max_matrix_error": 2.2120414877591088e-07,
+      "compound_error_deg": 7.594258389272105e-06
+    },
+    "raw_kernel_recovers_compound_rotation": {
+      "max_matrix_error": 0.15603697484673018,
+      "rotation_error_deg": 11.7286435520106
+    },
+    "unmodified_reader_forward": {
+      "input": "constant images, noiseless local proprioception, initialization seed 5"
+    },
+    "reader_output_contract": {
+      "shapes": [
+        [
+          3,
+          3,
+          3
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3
+        ]
+      ]
+    },
+    "reader_matches_raw_kernel": {
+      "max_matrix_error": 2.980232238769531e-07
+    },
+    "reader_compound_rotation": {
+      "rotation_error_deg": 11.728644744304395,
+      "max_matrix_error": 0.15603697484673018
+    },
+    "reader_clean_rotation": {},
+    "reader_cleared_identity": {},
+    "public_so3_decoder": {
+      "exception": "ValueError: not enough values to unpack (expected 4, got 3)"
+    }
+  },
+  "numpy": "1.26.4",
+  "fixture": {
+    "roll_pitch_yaw_deg": [
+      23,
+      -31,
+      47
+    ],
+    "xyz_gains": [
+      0.65,
+      1.25,
+      1.55
+    ],
+    "jaw_sign": -1,
+    "order": "Rz Ry Rx diag(g)",
+    "probe_shape": [
+      3,
+      5,
+      7
+    ]
+  },
+  "jax": "0.5.3",
+  "untrained_heads": {
+    "log_gains": [
+      [
+        0.03284536302089691,
+        -0.006001036148518324,
+        0.017358610406517982
+      ],
+      [
+        0.012324804440140724,
+        0.012324804440140724,
+        0.022552290931344032
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ],
+    "target_log_gains": [
+      [
+        -0.4307829160924542,
+        0.22314355131420974,
+        0.43825493093115525
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ],
+    "jaw_logits": [
+      -1.6321412324905396,
+      -1.1129645109176636,
+      10.0
+    ],
+    "target_jaw_signs": [
+      -1,
+      1
+    ],
+    "rows": [
+      "compound",
+      "clean",
+      "cleared"
+    ]
+  },
+  "failures": [
+    "raw_kernel_recovers_compound_rotation",
+    "reader_compound_rotation",
+    "public_so3_decoder"
+  ],
+  "status": "FAIL"
+}
