@@ -265,9 +265,9 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     t0 = time.monotonic()
 
-    # Probe extra held-out morphologies on GPU Vulkan for Stage 2 planning (fast sanity check)
+    # Probe extra held-out morphologies on GPU Vulkan for Stage 2 planning (fast sanity check, local assets only)
     extra_arm_probe = {}
-    for arm in ("ur_10e", "widowx250s", "so100"):
+    for arm in ("xarm6_robotiq", "xarm6_nogripper", "widowxai", "panda", "fetch"):
         for task in ("PickCube-v1", "PushCube-v1", "StackCube-v1"):
             try:
                 env = gym.make(task, num_envs=1, obs_mode="rgbd", control_mode="pd_ee_delta_pose", robot_uids=arm, sim_backend="cpu")
@@ -290,7 +290,7 @@ def main():
             for s_idx in range(12):
                 seed = 1000 * TRAIN_ROBOTS.index(robot) + 100 * TASKS.index(task) + s_idx
                 for spec in TRAIN_EMBODIMENTS:
-                    tr, _ = collect_probe_trace(env, spec, seed)
+                    tr, _, _ = collect_probe_trace(env, spec, seed)
                     train_traces.append(tr)
                     train_meta.append(dict(robot=robot, task=task, seed=seed, emb=spec.name, regime=spec.regime))
             env.close()
@@ -305,7 +305,7 @@ def main():
             seed = 500 * TASKS.index(task) + 100 + s_idx
             shas = set()
             for spec in EVAL_EMBODIMENTS:
-                tr, sha = collect_probe_trace(env, spec, seed)
+                tr, sha, _ = collect_probe_trace(env, spec, seed)
                 shas.add(sha)
                 eval_traces.append(tr)
                 eval_meta.append(dict(robot=TARGET_ROBOT, task=task, seed=seed, emb=spec.name, regime=spec.regime))
