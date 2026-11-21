@@ -84,9 +84,18 @@ def _match_tool_pose(env, reference):
     fresh_kinematics(env, scratch)
     indices = robot._ref_joint_pos_indexes
     ids = robot._ref_joint_indexes
-    if not np.all(model.jnt_limited[ids]):
+    limited = np.asarray(model.jnt_limited[ids], dtype=bool)
+    limits = model.jnt_range[ids].copy()
+    if type(robot.robot_model).__name__ in ("MountedKinova3", "OnTheGroundKinova3"):
+        # Stock Gen3 joints 1, 3, 5 and 7 are continuous hinges; their MJCF
+        # range slots are zero placeholders. Leave the three hardware bounds intact.
+        continuous = {name for name, has_limit in zip(robot.robot_joints, limited) if not has_limit}
+        if continuous != {f"robot0_Actuator{i}" for i in (1, 3, 5, 7)} or not np.all(
+                model.jnt_type[ids] == mujoco.mjtJoint.mjJNT_HINGE):
+            raise ValueError("Unexpected Kinova3 hinge or limit identity")
+        limits[~limited] = [-np.inf, np.inf]
+    elif not np.all(limited):
         raise ValueError("Expected physical joint limits on the alternate arm")
-    limits = model.jnt_range[ids]
     site = robot.eef_site_id
 
     def error(q):

@@ -1,4 +1,4 @@
-"""Physical Panda, Sawyer and UR5e arms in released LIBERO-Pro2 BASE tasks.
+"""Physical stock arms in released LIBERO-Pro2 tasks (BASE by default).
 
 Import in the LIBERO interpreter. The motor and the learned reader run in their own process.
 """
@@ -21,6 +21,7 @@ from libero_remote.environment import task_manifest
 from libero_remote.environment.libero import _set_controller_mode, _settle_environment
 from libero_remote.environment.observations import normalize_standard_observation
 from libero_remote.reproducibility import canonical_fingerprint, numerical_state_fingerprint
+from robosuite.models.robots import manipulators
 from robosuite.models.robots.robot_model import REGISTERED_ROBOTS
 from robosuite.robots import ROBOT_CLASS_MAPPING, SingleArm
 
@@ -37,6 +38,8 @@ ARM_XML_SHA = {
     "Panda": "51e3a4a6d54bcaf77e9d36a27372b871728590eedf53d4fd0e195525950eb988",
     "Sawyer": "a0a9743d868c23e157e57b3415c582c2223379aefaebf54c5dbff3653998fbaf",
     "UR5e": "1c9818566a7bbba89a2c848523e6e1eb72db204d91b8a05d0bff5bbb2a4ad316",
+    "IIWA": "7eb9d87f431f7fbfcb0e028e608956aa2c2f7dc456abb0dfb6f234fd8044a5dd",
+    "Kinova3": "2884d72a0427223d333dc00fa2c199c3f86406184c234f436436c7d149002cd7",
 }
 GRIPPER_XML_SHA = "d9d68123909d6910488310d0fae4e358ed4ac831c6d0957f3e30893a5412baac"
 OSC_SCALE = np.array([0.05, 0.05, 0.05, 0.5, 0.5, 0.5])
@@ -54,6 +57,12 @@ def _manifest(path):
 def _register_arm(arm):
     if arm == "Panda":
         return  # LIBERO registered its two physical Panda variants during import.
+    if arm in ("IIWA", "Kinova3"):
+        # LIBERO integrations can expose only a subset of the wheel's stock factory.
+        expected = getattr(manipulators, arm)
+        if (REGISTERED_ROBOTS.setdefault(arm, expected) is not expected
+                or ROBOT_CLASS_MAPPING.setdefault(arm, SingleArm) is not SingleArm):
+            raise RuntimeError(f"Conflicting robosuite factory for stock {arm}")
     stock = REGISTERED_ROBOTS.get(arm)
     if stock is None or ROBOT_CLASS_MAPPING.get(arm) is not SingleArm:
         raise RuntimeError(f"Missing stock single arm {arm} in robosuite 1.4.0")
@@ -67,7 +76,7 @@ def _register_arm(arm):
         ROBOT_CLASS_MAPPING[name] = SingleArm
 
 
-def _identity(env, arm):
+def _identity(env, arm, case_id="BASE"):
     robot = env.robots[0]
     model = env.sim.model
     arm_model = robot.robot_model
@@ -85,7 +94,12 @@ def _identity(env, arm):
     hand_id = model.body_name2id(arm_model.eef_name)
     wrist_id = model.camera_name2id(CAMERAS[1])
     view_id = model.camera_name2id(CAMERAS[0])
-    if (model.cam_bodyid[wrist_id] != hand_id or not np.isclose(model.cam_fovy[wrist_id], 75)
+    wrist_fovy = 75.0
+    if case_id == "S16":
+        plan = env.get_perturbation_plan()
+        if CAMERAS[1] in plan["targets"]:
+            wrist_fovy = np.clip(wrist_fovy * float(plan["params"]["fov_scale"]), 20, 100)
+    if (model.cam_bodyid[wrist_id] != hand_id or not np.isclose(model.cam_fovy[wrist_id], wrist_fovy)
             or model.cam_bodyid[view_id] == hand_id):
         raise RuntimeError("Camera parent or field of view differs from the physical LIBERO camera contract")
     c = robot.controller
@@ -146,7 +160,7 @@ def _measured_pose(observation):
 class ArmEnv:
     """One real arm and task. A fresh compiled simulation is owned by each successful reset."""
 
-    def __init__(self, arm, suite, task_id):
+    def __init__(self, arm, suite, task_id, *, case_id="BASE"):
         if arm not in ARM_XML_SHA:
             raise ValueError(f"Unknown study arm {arm!r}, expected one of {tuple(ARM_XML_SHA)}")
         if version("robosuite") != "1.4.0" or version("mujoco") != "3.2.3":
@@ -154,8 +168,12 @@ class ArmEnv:
         _register_arm(arm)
         release = Path(os.environ.get("CROSSARM_RELEASE", Path(task_manifest.__file__).resolve().parents[2]))
         manifest = _manifest(release / "assets/task_manifest.json")
-        self.entry = manifest.require(suite, task_id, "BASE")
-        self.bddl = manifest.resolve_bddl(suite, task_id, "BASE")
+        if case_id not in ("BASE", "S13", "S14", "S15", "S16", "S19"):
+            raise ValueError(f"Unsupported cross-arm case {case_id!r}")
+        self.case_id = case_id
+        self.entry = manifest.require(suite, task_id, case_id)
+        self.bddl = manifest.resolve_bddl(suite, task_id, case_id)
+        self.base_bddl = manifest.resolve_bddl(suite, task_id, "BASE")
         self.arm = arm
         self.task_id = int(task_id)
         self.suite = suite
@@ -199,18 +217,23 @@ class ArmEnv:
             if self.arm == "Panda":
                 source = env
             else:
-                donor = ControlEnv(robots=["Panda"], use_camera_obs=False, has_offscreen_renderer=False, **common)
+                donor_config = dict(common, bddl_file_name=str(self.base_bddl))
+                donor = ControlEnv(robots=["Panda"], use_camera_obs=False, has_offscreen_renderer=False, **donor_config)
                 _reset_wrapper(donor, seed)
                 source = donor
             load_panda_row(source, row)
             scene = scene_state(source)
             alignment = dict(method="released_panda_state")
             if donor is not None:
+                if self.case_id != "BASE":
+                    # transfer_scene captures the transferred fixture baseline. Restore clean
+                    # visual model arrays first so native set_init_state applies the case once.
+                    env.env.perturbation_runtime.prepare_reset(env.env)
                 alignment = transfer_scene(donor, env, scene)
             initial_scene_hash = canonical_fingerprint(scene_state(env))
             if initial_scene_hash != canonical_fingerprint(scene):
                 raise RuntimeError("Pre-settle target scene does not match the donor")
-            identity = _identity(env, self.arm)
+            identity = _identity(env, self.arm, self.case_id)
             _settle_environment(env)
             env.set_perturbation_seed(seed)
             raw = env.begin_perturbation_rollout()
@@ -235,7 +258,7 @@ class ArmEnv:
             if env.check_success():
                 raise ValueError("Task already successful at the first policy observation")
             plan = env.get_perturbation_plan()
-            if plan["case_id"] != "BASE" or plan["seed"] != seed:
+            if plan["case_id"] != self.case_id or plan["seed"] != seed:
                 raise ValueError(f"Unexpected released perturbation plan {plan}")
             self._step = 0
             self.model_identity = identity
