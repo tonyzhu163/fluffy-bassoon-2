@@ -11,17 +11,36 @@ run="$root/outputs/$(basename "$here")"
 python="$legacy/envs/openpi-215abfb/bin/python"
 cv2_overlay="$root/setups/xemb-icml-campaign-20261121-r1/cv2-headless-overlay"
 
+# PIN ATTEMPT CKPT_ATTEMPT HOMOG_ATTEMPT [POLICY [LOGICAL_SHARD [PHYSICAL_DEVICE]]]
+if (( $# < 4 || $# > 7 )); then
+    echo "Usage: $0 PIN ATTEMPT CKPT_ATTEMPT HOMOG_ATTEMPT [POLICY [LOGICAL_SHARD [PHYSICAL_DEVICE]]]" >&2
+    exit 2
+fi
 pin=$1
 attempt=$2
 ckpt_attempt=$3
 homog_attempt=$4
 policy_name=${5:-pi05}
+shards=(0 1 2 3 4 5 6 7)
+devices=(0 1 2 3 4 5 6 7)
+probe_devices=0,1,2,3,4,5,6,7
+reset_args=()
+if (( $# >= 6 )); then
+    [[ "$6" =~ ^[0-7]$ && "${7:-0}" =~ ^(0|[1-9][0-9]*)$ ]] || { echo "Invalid shard or device" >&2; exit 2; }
+    shards=("$6")
+    devices=("${7:-0}")
+    probe_devices=${devices[0]}
+    reset_args=(--warmup-create --reset-create-attempts 3)
+fi
 host=$(hostname)
 [[ "$attempt" =~ ^[a-z0-9]+$ ]]
 [[ "$host" == job-* ]] || { echo "Require Baige Distributed Training container" >&2; exit 2; }
 [[ $(git -C "$code" rev-parse HEAD) == "$pin" && -z $(git -C "$code" status --porcelain) ]]
 
 out="$run/$attempt"
+if (( ${#shards[@]} == 1 )); then
+    mkdir "$out" || { echo "Selected shard requires a fresh attempt: $out" >&2; exit 2; }
+fi
 mkdir -p "$out/logs" "$out/live"
 df -h "$out" > "$out/storage.txt"
 printf '%s %s %s stage2a-live-ur5e\n' "$pin" "$host" "$$" > "$out/launch.txt"
@@ -48,10 +67,10 @@ done
 export LD_LIBRARY_PATH="$glvnd$driver_paths"
 export __EGL_VENDOR_LIBRARY_FILENAMES="$libs/nvidia-vendor.json"
 
-export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+export CUDA_VISIBLE_DEVICES="$probe_devices"
 date +%s > "$out/gpu-start.txt"
 "$root/setups/robocasa365-native-20261101-r1/env/bin/python" -Bu "$code/scripts/[train]gpu_probe.py" \
-    --expected-count 8 --purpose training --baige-container --baige-exclusive-training \
+    --expected-count "${#devices[@]}" --purpose training --baige-container --baige-exclusive-training \
     --output "$out/gpu.json" > "$out/probe.log" 2>&1
 
 archive="$root/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu01/archive/archive.json"
@@ -60,13 +79,19 @@ homog_ckpts="$run/$homog_attempt/stage1/checkpoints"
 reuse="$root/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live"
 
 REUSE_ARGS=()
-if [[ "$policy_name" == "pi05" ]]; then
+if [[ -n "${STAGE2_SUPPORT_DIR:-}" ]]; then
+    REUSE_ARGS=(--reuse-support-dir "$STAGE2_SUPPORT_DIR")
+elif [[ "$policy_name" == "pi05" ]]; then
     REUSE_ARGS=(--reuse-support-dir "$reuse")
 fi
+printf 'policy=%s seed=41 shards=%s checkpoints=%s,%s support=%s\n' \
+    "$policy_name" "${shards[*]}" "$ckpts" "$homog_ckpts" "${REUSE_ARGS[1]:-fresh}" > "$out/config.txt"
 
 pids=()
-for s in 0 1 2 3 4 5 6 7; do
-    CUDA_VISIBLE_DEVICES="$s" MUJOCO_EGL_DEVICE_ID="$s" \
+for i in "${!shards[@]}"; do
+    s=${shards[i]}
+    device=${devices[i]}
+    CUDA_VISIBLE_DEVICES="$device" MUJOCO_EGL_DEVICE_ID="$device" \
         timeout --kill-after=20s 75m "$python" -Bu "$here/eval_stage2a_live_ur5e.py" run-shard \
         --train-archive "$archive" \
         --ckpt-dir "$ckpts" \
@@ -76,12 +101,15 @@ for s in 0 1 2 3 4 5 6 7; do
         --num-shards 8 \
         --seed-ckpt 41 \
         --policy "$policy_name" \
+        "${reset_args[@]}" \
         "${REUSE_ARGS[@]}" \
         > "$out/logs/shard-$s.log" 2>&1 &
     pids+=($!)
 done
 for p in "${pids[@]}"; do wait "$p"; done
 
-CUDA_VISIBLE_DEVICES=0 "$python" -Bu "$here/eval_stage2a_live_ur5e.py" merge \
-    --output-dir "$out/live" --num-shards 8 > "$out/logs/merge.log" 2>&1
+if (( ${#shards[@]} == 8 )); then
+    CUDA_VISIBLE_DEVICES=0 "$python" -Bu "$here/eval_stage2a_live_ur5e.py" merge \
+        --output-dir "$out/live" --num-shards 8 > "$out/logs/merge.log" 2>&1
+fi
 date +%s > "$out/gpu-end.txt"

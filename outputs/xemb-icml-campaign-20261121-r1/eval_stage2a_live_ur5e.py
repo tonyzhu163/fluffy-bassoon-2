@@ -15,8 +15,8 @@ against the complete competitive baseline suite:
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
+import math
 from pathlib import Path
 import sys
 import time
@@ -37,7 +37,6 @@ from fluffy_bassoon.xemb.baselines import (
     reground_babbling_sysid,
 )
 from fluffy_bassoon.xemb.embodiment import (
-    EVAL_EMBODIMENTS,
     EVAL_REGIMES,
     get_embodiment_spec,
     jaw_width_from_qpos,
@@ -317,6 +316,59 @@ def load_frozen_policy(policy_name: str):
     raise ValueError(f"Unknown policy_name {policy_name!r}; expected 'pi05' or 'pi0'")
 
 
+def reset_differences(expected, observed):
+    differences = {}
+    for key in sorted(expected.keys() | observed.keys()):
+        if key not in expected or key not in observed:
+            differences[key] = dict(expected=expected.get(key, "<missing>"), observed=observed.get(key, "<missing>"))
+        elif isinstance(expected[key], dict) and isinstance(observed[key], dict):
+            nested = reset_differences(expected[key], observed[key])
+            if nested:
+                differences[key] = nested
+        elif expected[key] != observed[key]:
+            differences[key] = dict(expected=expected[key], observed=observed[key])
+    return differences
+
+
+def run_paired_query(
+    episode, simulator, policy, case, spec, *,
+    arm_name, resets, key, support_physics, expected_prompt, create_attempts, **kwargs,
+):
+    # Only the pre-inference reset callback can raise this local exception.
+    class RejectedCreate(ValueError):
+        pass
+
+    def check(reset):
+        expected = resets.get(key)
+        try:
+            if expected_prompt is not None and reset["prompt"] != expected_prompt:
+                raise ValueError(f"Expected paired prompt {expected_prompt!r}")
+            check_query_reset(resets, key, support_physics, reset)
+        except ValueError as exc:
+            diff = reset_differences(expected, reset) if expected is not None else {}
+            if expected_prompt is not None and reset["prompt"] != expected_prompt:
+                diff["prompt"] = dict(expected=expected_prompt, observed=reset["prompt"])
+            if reset["physics"] == support_physics:
+                diff["support_collision"] = dict(support_physics=support_physics, query_physics=reset["physics"])
+            print(
+                f"Rejected query create {attempt}/{create_attempts} {key} {spec.name} {arm_name}: "
+                f"{exc}; differences={json.dumps(diff, sort_keys=True)}",
+                flush=True,
+            )
+            raise RejectedCreate(str(exc)) from exc
+        if expected is None:
+            print(f"Paired reset reference {key}: {json.dumps(reset, sort_keys=True)}", flush=True)
+
+    for attempt in range(1, create_attempts + 1):
+        try:
+            # Both runners use the native released prompt. Check its equality in
+            # the callback alongside the other fingerprints, before any action.
+            return episode(simulator, policy, case, spec, prompt=None, check_reset=check, **kwargs)
+        except RejectedCreate:
+            if attempt == create_attempts:
+                raise
+
+
 def run_shard(
     train_archive: Path,
     ckpt_dir: Path,
@@ -327,16 +379,23 @@ def run_shard(
     seed_ckpt: int,
     reuse_support_dir: Path | None,
     policy_name: str = "pi05",
+    reset_create_attempts: int = 1,
+    warmup_create: bool = False,
 ):
     tasks, plan = build_test_plan()
     if num_shards != len(tasks):
         raise ValueError(f"Expected num_shards == {len(tasks)}, got {num_shards}")
+    if not 0 <= shard_idx < num_shards or not 1 <= reset_create_attempts <= 3:
+        raise ValueError("Invalid logical shard index or reset create limit")
     suites = sorted({s for s, _ in tasks})
     my_suite, my_tid = tasks[shard_idx]
     my_entries = [e for e in plan if e["suite"] == my_suite and int(e["task_id"]) == my_tid]
     donors_local = make_donor_permutation(my_entries, np.random.default_rng(20261121 + shard_idx))
 
     shard_dir = output_dir / f"shard-{shard_idx}"
+    # Existing progress has no durable reset reference or partial-arm ledger.
+    # Re-entering it could replay an outcome or change the paired reference.
+    shard_dir.mkdir(parents=True, exist_ok=False)
     support_dir = shard_dir / "support"
     support_dir.mkdir(parents=True, exist_ok=True)
 
@@ -351,9 +410,9 @@ def run_shard(
 
     reused_meta = (reuse_support_dir / f"shard-{shard_idx}" / "support-meta.json") if reuse_support_dir else None
     with UR5eSimulator() as simulator:
-        if reused_meta is not None and reused_meta.exists():
+        if reused_meta is not None:
             support_rows = json.loads(reused_meta.read_text())
-            if len(support_rows) != len(my_entries):
+            if [r["embodiment"] for r in support_rows] != [e["embodiment"] for e in my_entries]:
                 raise ValueError(f"Reused support-meta mismatch on shard {shard_idx}")
         else:
             support_rows = []
@@ -378,13 +437,10 @@ def run_shard(
             write_json(shard_dir / "support-meta.json", support_rows)
 
         progress_path = shard_dir / "live-progress.json"
-        rows = json.loads(progress_path.read_text()) if progress_path.exists() else []
-        done_indices = {int(r["index"]) for r in rows}
+        rows = []
         query_resets = {}
 
         for local_i, entry in enumerate(my_entries):
-            if int(entry["index"]) in done_indices:
-                continue
             sup_row = support_rows[local_i]
             donor_row = support_rows[donors_local[local_i]]
             suite, tid = entry["suite"], int(entry["task_id"])
@@ -392,6 +448,10 @@ def run_shard(
             init_state_id = entry["query_init_state_id"]
             q_seed = 41800000 + 10_000 * suites.index(suite) + 100 * tid + init_state_id
             case = dict(arm=DEV_ARM, suite=suite, task_id=tid, variant="BASE", init_state_id=init_state_id, seed=q_seed)
+            if warmup_create and local_i == 0:
+                warmup_case = dict(case, embodiment=spec.name)
+                print(f"Unscored query create (zero actions): {warmup_case}", flush=True)
+                simulator.call("create", warmup_case)
 
             def _load_npz(path_str: str):
                 with np.load(path_str) as z:
@@ -444,21 +504,22 @@ def run_shard(
                 arms={},
             )
             q_key = (suite, tid, init_state_id)
-            sup_physics = sup_row.get("physics")
             for arm_name in STAGE2A_ARMS:
+                pairing = dict(
+                    arm_name=arm_name, resets=query_resets, key=q_key, support_physics=sup_row["physics"],
+                    expected_prompt=prompts.get(key), create_attempts=reset_create_attempts,
+                )
                 if arm_name == "ours_equiv_v2_online":
-                    rec = run_online_streaming_episode(
-                        simulator, policy, case, spec, prompt=prompts.get(key),
-                        reader_params=p_v2_pas, reader_cfg=c_v2_pas,
-                        check_reset=lambda r: check_query_reset(query_resets, q_key, sup_physics, r),
+                    rec = run_paired_query(
+                        run_online_streaming_episode, simulator, policy, case, spec,
+                        reader_params=p_v2_pas, reader_cfg=c_v2_pas, **pairing,
                     )
                     row["arms"][arm_name] = rec
                 else:
                     yh, sh, gh = arm_preds[arm_name]
-                    rec = run_episode(
-                        simulator, policy, case, spec, prompt=prompts.get(key),
-                        yaw_hat=yh, scale_hat=sh, grip_hat=gh,
-                        check_reset=lambda r: check_query_reset(query_resets, q_key, sup_physics, r),
+                    rec = run_paired_query(
+                        run_episode, simulator, policy, case, spec,
+                        yaw_hat=yh, scale_hat=sh, grip_hat=gh, **pairing,
                     )
                     prompts.setdefault(key, rec["released_prompt"])
                     row["arms"][arm_name] = dict(
@@ -473,16 +534,70 @@ def run_shard(
     write_json(shard_dir / "live-shard.json", dict(shard_idx=shard_idx, rows=rows))
 
 
+def unique_json_keys(pairs):
+    obj = {}
+    for key, value in pairs:
+        if key in obj:
+            raise ValueError(f"Duplicate JSON key {key!r} in shard results")
+        obj[key] = value
+    return obj
+
+
+def validate_arm_results(row):
+    arms = row["arms"]
+    if not isinstance(arms, dict) or arms.keys() != set(STAGE2A_ARMS):
+        raise ValueError(f"Index {row['index']} has the wrong arm set")
+    for arm, result in arms.items():
+        label = f"index {row['index']} arm {arm}"
+        if not isinstance(result, dict) or type(result.get("success")) is not bool:
+            raise ValueError(f"Invalid success for {label}")
+        if type(result.get("controls")) is not int or result["controls"] <= 0:
+            raise ValueError(f"Invalid controls for {label}")
+        fields = ("yaw_hat", "scale_hat", "grip_hat")
+        if arm == "ours_equiv_v2_online":
+            fields = ("final_yaw_hat", "final_scale_hat", "final_grip_hat", "seconds")
+        for field in fields:
+            value = result.get(field)
+            if type(value) not in (int, float) or not math.isfinite(value):
+                raise ValueError(f"Missing or invalid {field} for {label}")
+
+
 def merge_shards(output_dir: Path, num_shards: int):
+    tasks, plan = build_test_plan()
+    if num_shards != len(tasks) or len(set(tasks)) != 8:
+        raise ValueError("Merge requires all eight distinct task shards")
+    if len(plan) != 96 or {e["index"] for e in plan} != set(range(96)):
+        raise ValueError("Merge requires all eight shards of the locked 96-query plan")
+    expected_dirs = {f"shard-{s}" for s in range(num_shards)}
+    extra_dirs = {p.name for p in output_dir.glob("shard-*") if p.is_dir()} - expected_dirs
+    if extra_dirs:
+        raise ValueError(f"Unexpected shard directories: {sorted(extra_dirs)}")
     all_rows = []
-    for s in range(num_shards):
+    for s, task in enumerate(tasks):
+        expected = {e["index"]: e for e in plan if (e["suite"], e["task_id"]) == task}
         p = output_dir / f"shard-{s}" / "live-shard.json"
-        if not p.exists():
-            p = output_dir / f"shard-{s}" / "live-progress.json"
-            data = json.loads(p.read_text())
-            all_rows.extend(data)
+        if p.exists():
+            data = json.loads(p.read_text(), object_pairs_hook=unique_json_keys)
+            if type(data["shard_idx"]) is not int or data["shard_idx"] != s:
+                raise ValueError(f"Wrong shard_idx in {p}")
+            rows = data["rows"]
         else:
-            all_rows.extend(json.loads(p.read_text())["rows"])
+            p = p.with_name("live-progress.json")
+            rows = json.loads(p.read_text(), object_pairs_hook=unique_json_keys)
+        if not isinstance(rows, list):
+            raise ValueError(f"Expected a list of rows in {p}")
+        for row in rows:
+            idx = row["index"]
+            if type(idx) is not int or idx not in expected:
+                raise ValueError(f"Duplicate or unexpected index {idx!r} in {p}")
+            entry = expected.pop(idx)
+            for field in ("suite", "task_id", "embodiment", "regime"):
+                if type(row.get(field)) is not type(entry[field]) or row[field] != entry[field]:
+                    raise ValueError(f"Index {idx} in {p}: expected {field}={entry[field]!r}, got {row.get(field)!r}")
+            validate_arm_results(row)
+        if expected:
+            raise ValueError(f"Missing indices {sorted(expected)} in {p}")
+        all_rows.extend(rows)
     all_rows.sort(key=lambda r: int(r["index"]))
 
     by_regime = {}
@@ -526,6 +641,10 @@ def main():
     p_run.add_argument("--seed-ckpt", type=int, default=41)
     p_run.add_argument("--reuse-support-dir", type=Path, default=None)
     p_run.add_argument("--policy", type=str, default="pi05", choices=("pi05", "pi0"))
+    p_run.add_argument("--reset-create-attempts", type=int, choices=(1, 2, 3), default=1,
+                       help="Maximum native query creates per arm, including the first")
+    p_run.add_argument("--warmup-create", action="store_true",
+                       help="Discard one native create of the first query before establishing its paired reference")
 
     p_m = sub.add_parser("merge")
     p_m.add_argument("--output-dir", type=Path, required=True)
@@ -533,7 +652,9 @@ def main():
 
     args = parser.parse_args()
     if args.cmd == "run-shard":
-        run_shard(args.train_archive, args.ckpt_dir, args.homog_ckpt_dir, args.output_dir, args.shard_idx, args.num_shards, args.seed_ckpt, args.reuse_support_dir, policy_name=args.policy)
+        run_shard(args.train_archive, args.ckpt_dir, args.homog_ckpt_dir, args.output_dir, args.shard_idx,
+                  args.num_shards, args.seed_ckpt, args.reuse_support_dir, policy_name=args.policy,
+                  reset_create_attempts=args.reset_create_attempts, warmup_create=args.warmup_create)
     else:
         merge_shards(args.output_dir, args.num_shards)
 
