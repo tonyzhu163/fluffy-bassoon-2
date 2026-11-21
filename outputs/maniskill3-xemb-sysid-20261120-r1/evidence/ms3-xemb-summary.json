@@ -14,69 +14,69 @@
   "gate0_frame0_bitwise_equal": true,
   "offline_yaw_err_deg": {
     "analytic_proprio_sysid": {
-      "familiar": 67.54,
-      "compositional_ood": 112.61,
-      "continuous_angle_ood": 90.03,
-      "overall": 90.06
+      "familiar": 67.53,
+      "compositional_ood": 112.63,
+      "continuous_angle_ood": 89.86,
+      "overall": 90.01
     },
     "analytic_visual_sysid": {
-      "familiar": 64.87,
-      "compositional_ood": 64.09,
-      "continuous_angle_ood": 73.4,
-      "overall": 67.45
+      "familiar": 69.36,
+      "compositional_ood": 60.01,
+      "continuous_angle_ood": 84.38,
+      "overall": 71.25
     },
     "joint_transformer": {
-      "familiar": 68.24,
-      "compositional_ood": 112.21,
-      "continuous_angle_ood": 104.77,
-      "overall": 95.08
+      "familiar": 81.2,
+      "compositional_ood": 95.92,
+      "continuous_angle_ood": 91.2,
+      "overall": 89.44
     },
     "factored_no_equiv": {
-      "familiar": 54.93,
-      "compositional_ood": 82.9,
-      "continuous_angle_ood": 77.36,
-      "overall": 71.73
+      "familiar": 78.54,
+      "compositional_ood": 84.2,
+      "continuous_angle_ood": 78.77,
+      "overall": 80.5
     },
     "factored_equiv": {
-      "familiar": 35.3,
-      "compositional_ood": 35.14,
-      "continuous_angle_ood": 43.6,
-      "overall": 38.02
+      "familiar": 26.35,
+      "compositional_ood": 31.54,
+      "continuous_angle_ood": 40.97,
+      "overall": 32.95
     }
   },
   "live_by_regime": {
     "familiar": {
       "trials": 24,
       "successes": {
-        "privileged_oracle": 0,
+        "privileged_oracle": 16,
         "analytic_visual_sysid": 0,
-        "ours_factored_equiv": 2,
-        "factored_no_equiv": 0,
-        "joint_transformer": 0,
-        "analytic_proprio_sysid": 8,
+        "ours_factored_equiv": 6,
+        "factored_no_equiv": 8,
+        "joint_transformer": 4,
+        "analytic_proprio_sysid": 0,
         "nominal": 4,
         "ours_cleared": 4,
-        "ours_swapped_donor": 2
+        "ours_swapped_donor": 1
       },
       "rates": {
-        "privileged_oracle": 0.0,
+        "privileged_oracle": 0.6667,
         "analytic_visual_sysid": 0.0,
-        "ours_factored_equiv": 0.0833,
-        "factored_no_equiv": 0.0,
-        "joint_transformer": 0.0,
-        "analytic_proprio_sysid": 0.3333,
+        "ours_factored_equiv": 0.25,
+        "factored_no_equiv": 0.3333,
+        "joint_transformer": 0.1667,
+        "analytic_proprio_sysid": 0.0,
         "nominal": 0.1667,
         "ours_cleared": 0.1667,
-        "ours_swapped_donor": 0.0833
+        "ours_swapped_donor": 0.0417
       }
     },
     "compositional_ood": {
       "trials": 24,
       "successes": {
-        "privileged_oracle": 0,
-        "analytic_visual_sysid": 3,
+        "privileged_oracle": 16,
+        "analytic_visual_sysid": 0,
         "ours_factored_equiv": 8,
-        "factored_no_equiv": 0,
+        "factored_no_equiv": 4,
         "joint_transformer": 0,
         "analytic_proprio_sysid": 0,
         "nominal": 0,
@@ -84,10 +84,10 @@
         "ours_swapped_donor": 2
       },
       "rates": {
-        "privileged_oracle": 0.0,
-        "analytic_visual_sysid": 0.125,
+        "privileged_oracle": 0.6667,
+        "analytic_visual_sysid": 0.0,
         "ours_factored_equiv": 0.3333,
-        "factored_no_equiv": 0.0,
+        "factored_no_equiv": 0.1667,
         "joint_transformer": 0.0,
         "analytic_proprio_sysid": 0.0,
         "nominal": 0.0,
@@ -98,78 +98,78 @@
     "continuous_angle_ood": {
       "trials": 24,
       "successes": {
-        "privileged_oracle": 0,
-        "analytic_visual_sysid": 0,
-        "ours_factored_equiv": 4,
-        "factored_no_equiv": 0,
-        "joint_transformer": 0,
+        "privileged_oracle": 16,
+        "analytic_visual_sysid": 1,
+        "ours_factored_equiv": 3,
+        "factored_no_equiv": 1,
+        "joint_transformer": 3,
         "analytic_proprio_sysid": 0,
-        "nominal": 5,
-        "ours_cleared": 5,
-        "ours_swapped_donor": 7
+        "nominal": 0,
+        "ours_cleared": 0,
+        "ours_swapped_donor": 2
       },
       "rates": {
-        "privileged_oracle": 0.0,
-        "analytic_visual_sysid": 0.0,
-        "ours_factored_equiv": 0.1667,
-        "factored_no_equiv": 0.0,
-        "joint_transformer": 0.0,
+        "privileged_oracle": 0.6667,
+        "analytic_visual_sysid": 0.0417,
+        "ours_factored_equiv": 0.125,
+        "factored_no_equiv": 0.0417,
+        "joint_transformer": 0.125,
         "analytic_proprio_sysid": 0.0,
-        "nominal": 0.2083,
-        "ours_cleared": 0.2083,
-        "ours_swapped_donor": 0.2917
+        "nominal": 0.0,
+        "ours_cleared": 0.0,
+        "ours_swapped_donor": 0.0833
       }
     },
     "ood_combined": {
       "trials": 48,
       "successes": {
-        "privileged_oracle": 0,
-        "analytic_visual_sysid": 3,
-        "ours_factored_equiv": 12,
-        "factored_no_equiv": 0,
-        "joint_transformer": 0,
+        "privileged_oracle": 32,
+        "analytic_visual_sysid": 1,
+        "ours_factored_equiv": 11,
+        "factored_no_equiv": 5,
+        "joint_transformer": 3,
         "analytic_proprio_sysid": 0,
-        "nominal": 5,
-        "ours_cleared": 5,
-        "ours_swapped_donor": 9
+        "nominal": 0,
+        "ours_cleared": 0,
+        "ours_swapped_donor": 4
       },
       "rates": {
-        "privileged_oracle": 0.0,
-        "analytic_visual_sysid": 0.0625,
-        "ours_factored_equiv": 0.25,
-        "factored_no_equiv": 0.0,
-        "joint_transformer": 0.0,
+        "privileged_oracle": 0.6667,
+        "analytic_visual_sysid": 0.0208,
+        "ours_factored_equiv": 0.2292,
+        "factored_no_equiv": 0.1042,
+        "joint_transformer": 0.0625,
         "analytic_proprio_sysid": 0.0,
-        "nominal": 0.1042,
-        "ours_cleared": 0.1042,
-        "ours_swapped_donor": 0.1875
+        "nominal": 0.0,
+        "ours_cleared": 0.0,
+        "ours_swapped_donor": 0.0833
       }
     },
     "overall": {
       "trials": 72,
       "successes": {
-        "privileged_oracle": 0,
-        "analytic_visual_sysid": 3,
-        "ours_factored_equiv": 14,
-        "factored_no_equiv": 0,
-        "joint_transformer": 0,
-        "analytic_proprio_sysid": 8,
-        "nominal": 9,
-        "ours_cleared": 9,
-        "ours_swapped_donor": 11
+        "privileged_oracle": 48,
+        "analytic_visual_sysid": 1,
+        "ours_factored_equiv": 17,
+        "factored_no_equiv": 13,
+        "joint_transformer": 7,
+        "analytic_proprio_sysid": 0,
+        "nominal": 4,
+        "ours_cleared": 4,
+        "ours_swapped_donor": 5
       },
       "rates": {
-        "privileged_oracle": 0.0,
-        "analytic_visual_sysid": 0.0417,
-        "ours_factored_equiv": 0.1944,
-        "factored_no_equiv": 0.0,
-        "joint_transformer": 0.0,
-        "analytic_proprio_sysid": 0.1111,
-        "nominal": 0.125,
-        "ours_cleared": 0.125,
-        "ours_swapped_donor": 0.1528
+        "privileged_oracle": 0.6667,
+        "analytic_visual_sysid": 0.0139,
+        "ours_factored_equiv": 0.2361,
+        "factored_no_equiv": 0.1806,
+        "joint_transformer": 0.0972,
+        "analytic_proprio_sysid": 0.0,
+        "nominal": 0.0556,
+        "ours_cleared": 0.0556,
+        "ours_swapped_donor": 0.0694
       }
     }
   },
-  "seconds": 316.7
+  "seconds": 356.7
 }
