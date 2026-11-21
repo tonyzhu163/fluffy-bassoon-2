@@ -182,9 +182,14 @@ def rollout(sim, policy, row, method):
     reference = row["query_reset"]
 
     def check(reset):
-        if (sim.start != row["query_start"] or reset != reference
-                or reset["noise_seed"] != case["seed"] + NOISE_SEED_OFFSET):
-            raise ValueError(f"Unpaired native query for {method} on {case}")
+        native = sim.start["repro"]
+        original = row["query_start"]["repro"]
+        differences = stage.reset_differences(reference, reset)
+        for key in PHYSICS:
+            if native[key] != original[key]:
+                differences[key] = dict(expected=original[key], observed=native[key])
+        if differences or reset["noise_seed"] != case["seed"] + NOISE_SEED_OFFSET:
+            raise ValueError(f"Unpaired native query for {method} on {case}: {differences}")
 
     record = run_episode(sim, OpeningPolicy(policy, row["opening_sha256"]), case,
                          stage.get_embodiment_spec(row["embodiment"]), prompt=reference["prompt"],
@@ -202,7 +207,7 @@ def paired(left, right):
 
 
 def summary(rows):
-    report = {"by_camera": {}, "S15_vs_BASE": {}}
+    report = {"by_camera": {}, "S15_vs_BASE": {}, "matched_yaw_error_gap_change_deg": {}}
     for camera in CAMERAS:
         group = [r for r in rows if r["camera"] == camera]
         successes = {m: [r["episodes"][m]["success"] for r in group] for m in METHODS}
@@ -216,6 +221,13 @@ def summary(rows):
     for m in METHODS:
         vals = {c: [r["episodes"][m]["success"] for r in rows if r["camera"] == c] for c in CAMERAS}
         report["S15_vs_BASE"][m] = paired(vals["S15"], vals["BASE"])
+    # Difference of absolute errors (EquivFlow minus DIS), S15 minus BASE.
+    changes = report["matched_yaw_error_gap_change_deg"]
+    for base, shifted in zip(rows[::2], rows[1::2], strict=True):
+        gaps = [r["predictions"][METHODS[0]]["abs_circular_yaw_error_deg"]
+                - r["predictions"][METHODS[1]]["abs_circular_yaw_error_deg"] for r in (base, shifted)]
+        changes[f"{base['query_case']['init_state_id']}-{base['embodiment']}"] = gaps[1] - gaps[0]
+    report["mean_yaw_error_gap_change_deg"] = float(np.mean(list(changes.values())))
     return report
 
 
@@ -227,7 +239,9 @@ def main(out, archive, checkpoint):
         sim = ObservedSimulator(worker)
         for (support, query), transform, camera in itertools.product(LAYOUTS, TRANSFORMS, CAMERAS):
             case = dict(arm="UR5e", suite="libero_goal", task_id=1, variant=camera)
+            truth = stage.get_embodiment_spec(transform)
             row = dict(id=f"{query}-{transform}-{camera}", camera=camera, embodiment=transform,
+                       truth=dict(yaw_deg=truth.yaw_deg, xy_scale=truth.xy_scale, gripper_sign=truth.gripper_sign),
                        support_case=dict(case, init_state_id=support, seed=31810100 + support),
                        query_case=dict(case, init_state_id=query, seed=41810100 + query), episodes={})
             if not rows:
