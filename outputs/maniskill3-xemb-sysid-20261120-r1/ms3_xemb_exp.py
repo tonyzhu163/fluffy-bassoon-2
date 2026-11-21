@@ -95,6 +95,10 @@ def format_env_action(env, cmd7: np.ndarray) -> np.ndarray:
             mat = mat.cpu().numpy()
         r_ee = np.asarray(mat[0, :3, :3] if mat.ndim == 3 else mat[:3, :3], dtype=np.float32)
         c[:3] = np.clip(r_ee.T @ c[:3], -1.0, 1.0)
+    # XArm6Robotiq pd_ee_delta_pose uses unnormalized Robotiq joint pos: 0.0=open, 0.81=closed.
+    # Map canonical normalized gripper cmd (+1=open, -1=closed) to physical Robotiq target [0.0, 0.81].
+    if getattr(env.unwrapped.agent, "uid", "") == "xarm6_robotiq":
+        c[6] = float(0.405 * (1.0 - c[6]))
     act_dim = int(env.action_space.shape[-1])
     if act_dim == 7:
         return c
@@ -142,33 +146,33 @@ def frozen_task_policy(env, task_id: str, step_idx: int) -> np.ndarray:
     goal = _np3(unw.goal_site.pose.p) if hasattr(unw, "goal_site") else _np3(unw.goal_region.pose.p)
 
     if task_id == "PickCube-v1":
-        if step_idx < 18:
-            target = obj + np.array([0.0, 0.0, 0.06], dtype=np.float32)
+        if step_idx < 22:
+            target = obj + np.array([0.0, 0.0, 0.08], dtype=np.float32)
             grip = 1.0  # open
-        elif step_idx < 34:
-            target = obj + np.array([0.0, 0.0, 0.005], dtype=np.float32)
+        elif step_idx < 40:
+            target = obj + np.array([0.0, 0.0, 0.0], dtype=np.float32)
             grip = 1.0
-        elif step_idx < 46:
-            target = obj + np.array([0.0, 0.0, 0.005], dtype=np.float32)
+        elif step_idx < 56:
+            target = obj + np.array([0.0, 0.0, 0.0], dtype=np.float32)
             grip = -1.0  # close
         else:
             target = goal
             grip = -1.0
-        delta = np.clip((target - eef) * 14.0, -0.9, 0.9)
+        delta = np.clip((target - eef) * 6.0, -0.6, 0.6)
         cmd[:3] = delta
         cmd[6] = grip
     elif task_id in ("PushCube-v1", "PullCube-v1"):
         direction = goal[:2] - obj[:2]
         norm = float(np.linalg.norm(direction)) + 1e-6
         u = direction / norm
-        behind = np.array([obj[0] - 0.075 * u[0], obj[1] - 0.075 * u[1], obj[2] + 0.015], dtype=np.float32)
-        if step_idx < 20:
-            target = behind + np.array([0.0, 0.0, 0.06], dtype=np.float32)
-        elif step_idx < 34:
+        behind = np.array([obj[0] - 0.085 * u[0], obj[1] - 0.085 * u[1], obj[2]], dtype=np.float32)
+        if step_idx < 24:
+            target = behind + np.array([0.0, 0.0, 0.08], dtype=np.float32)
+        elif step_idx < 42:
             target = behind
         else:
-            target = np.array([goal[0], goal[1], obj[2] + 0.015], dtype=np.float32)
-        delta = np.clip((target - eef) * 14.0, -0.9, 0.9)
+            target = np.array([goal[0] + 0.02 * u[0], goal[1] + 0.02 * u[1], obj[2]], dtype=np.float32)
+        delta = np.clip((target - eef) * 6.0, -0.6, 0.6)
         cmd[:3] = delta
         cmd[6] = -1.0  # closed finger for pushing/pulling
     return cmd
@@ -221,7 +225,7 @@ def collect_probe_trace(env, spec: EmbodimentSpec, seed: int):
     )
 
 
-def run_live_episode(env, task_id: str, spec: EmbodimentSpec, seed: int, yaw_hat=0.0, scale_hat=1.0, grip_hat=1, horizon=90) -> bool:
+def run_live_episode(env, task_id: str, spec: EmbodimentSpec, seed: int, yaw_hat=0.0, scale_hat=1.0, grip_hat=1, horizon=110) -> bool:
     env.reset(seed=seed)
     success = False
     for t in range(horizon):

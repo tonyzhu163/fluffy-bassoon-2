@@ -189,10 +189,18 @@ def run_shard(train_dir: Path, output_dir: Path, shard_idx: int, num_shards: int
             write_json(shard_dir / "support-meta.json", support_rows)
 
         # Step 2: Live closed-loop evaluation on query reset (init_state_id=13) across all 12 arms.
-        rows = []
+        progress_path = shard_dir / "live-progress.json"
+        if progress_path.exists():
+            rows = json.loads(progress_path.read_text())
+            print(f"RESUMING shard {shard_idx} from {len(rows)}/{len(my_entries)} completed queries", flush=True)
+        else:
+            rows = []
+        done_indices = {int(r["index"]) for r in rows}
         query_resets = {}
         opening_proposals = {}
         for local_i, entry in enumerate(my_entries):
+            if int(entry["index"]) in done_indices:
+                continue
             sup_row = support_rows[local_i]
             donor_row = support_rows[donors_local[local_i]]
             suite = entry["suite"]
