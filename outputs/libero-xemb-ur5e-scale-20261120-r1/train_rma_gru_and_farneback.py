@@ -16,9 +16,9 @@ from fluffy_bassoon.xemb.readers import (
     analytic_visual_yaw,
     farneback_image_motion,
     fit_visual_projection,
-    issued_exposure,
 )
 from collect_scale import validate_scale_archive
+from collect_ur5e import issued_exposure
 from train_scale import train_one
 from train_ur5e_readers import aggregate_seeds, audit_model, load_mode_split, make_donor_permutation
 from ur5e_motor import write_json
