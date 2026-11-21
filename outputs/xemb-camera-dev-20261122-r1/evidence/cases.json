@@ -1,0 +1,754 @@
+[
+  {
+    "id": "13-cont_45_nom-BASE",
+    "camera": "BASE",
+    "embodiment": "cont_45_nom",
+    "truth": {
+      "yaw_deg": 45.0,
+      "xy_scale": 1.0,
+      "gripper_sign": 1
+    },
+    "support_case": {
+      "arm": "UR5e",
+      "suite": "libero_goal",
+      "task_id": 1,
+      "variant": "BASE",
+      "init_state_id": 11,
+      "seed": 31810111
+    },
+    "query_case": {
+      "arm": "UR5e",
+      "suite": "libero_goal",
+      "task_id": 1,
+      "variant": "BASE",
+      "init_state_id": 13,
+      "seed": 41810113
+    },
+    "predictions": {
+      "ours_equiv_homog_active": {
+        "yaw_hat": 28.386085510253906,
+        "scale_hat": 0.9604410529136658,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 16.613914489746094
+      },
+      "dense_flow_dis_active": {
+        "yaw_hat": 55.24734787051876,
+        "scale_hat": 0.9804153442382812,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 10.247347870518752
+      },
+      "nominal": {
+        "yaw_hat": 0.0,
+        "scale_hat": 1.0,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 45.0
+      },
+      "privileged_oracle": {
+        "yaw_hat": 45.0,
+        "scale_hat": 1.0,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 0.0
+      }
+    },
+    "opening_sha256": "fd995a4ff0e4b041a24a69209d43737cd61bad3131e556e92686e23337f27d54",
+    "query_physics": "9258ef5fe657040f908061adafa2541bf28e80fe14594b419578ff621a1358cf",
+    "noise_sha256": "c37b84e7844e72a31f62f3db4391238ca4b0edbe39dc88fcd07d0edf5321e68c",
+    "query_public": {
+      "agentview_image": "f44936d54cf462db8a44896040a6157612a0cf4dcdbb531daf1e7a0e1a5a41b3",
+      "robot0_eye_in_hand_image": "ad0f922f2bbf17cc4300463d952db5d002fb7bc99e4d1d8c42eb34afb3246d6f",
+      "robot0_joint_pos": "0e2f7c8ce5fe48d85cd68bff044c7abdabb506cbdf5fc0da343abc9f3a8c402e",
+      "robot0_joint_vel": "74aeab106d362079b21a576d3e7a9e0eb46650514b7c14a4291f78e32af739eb",
+      "robot0_eef_pos": "821029b920e5266a6aaf21a28bca2386a0629c39a14997bb9e2adcb94ce1a6d5",
+      "robot0_eef_quat_xyzw": "d8d526c107ef550addfc07813e69ceb4a80c9c1cc97631e23bab3622bbd87c5c",
+      "robot0_gripper_qpos": "4535689f9e153894a9edf40bb361971919f6c8e87182516fb0544789fdedf758"
+    },
+    "episodes": {
+      "ours_equiv_homog_active": {
+        "success": true,
+        "native_return": 1.0,
+        "controls": 95,
+        "terminated": true,
+        "truncated": false
+      },
+      "dense_flow_dis_active": {
+        "success": true,
+        "native_return": 1.0,
+        "controls": 84,
+        "terminated": true,
+        "truncated": false
+      },
+      "nominal": {
+        "success": false,
+        "native_return": 0.0,
+        "controls": 300,
+        "terminated": false,
+        "truncated": true
+      },
+      "privileged_oracle": {
+        "success": true,
+        "native_return": 1.0,
+        "controls": 86,
+        "terminated": true,
+        "truncated": false
+      }
+    }
+  },
+  {
+    "id": "13-cont_45_nom-S15",
+    "camera": "S15",
+    "embodiment": "cont_45_nom",
+    "truth": {
+      "yaw_deg": 45.0,
+      "xy_scale": 1.0,
+      "gripper_sign": 1
+    },
+    "support_case": {
+      "arm": "UR5e",
+      "suite": "libero_goal",
+      "task_id": 1,
+      "variant": "S15",
+      "init_state_id": 11,
+      "seed": 31810111
+    },
+    "query_case": {
+      "arm": "UR5e",
+      "suite": "libero_goal",
+      "task_id": 1,
+      "variant": "S15",
+      "init_state_id": 13,
+      "seed": 41810113
+    },
+    "predictions": {
+      "ours_equiv_homog_active": {
+        "yaw_hat": 41.003639221191406,
+        "scale_hat": 0.9604410529136658,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 3.9963607788085938
+      },
+      "dense_flow_dis_active": {
+        "yaw_hat": 65.41038087256699,
+        "scale_hat": 0.9804153442382812,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 20.410380872566975
+      },
+      "nominal": {
+        "yaw_hat": 0.0,
+        "scale_hat": 1.0,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 45.0
+      },
+      "privileged_oracle": {
+        "yaw_hat": 45.0,
+        "scale_hat": 1.0,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 0.0
+      }
+    },
+    "opening_sha256": "d6728e9cf770e82c50bfb45dc9544fc0f6710ea44d7394c377cfe630f6cf74ac",
+    "query_physics": "9258ef5fe657040f908061adafa2541bf28e80fe14594b419578ff621a1358cf",
+    "noise_sha256": "c37b84e7844e72a31f62f3db4391238ca4b0edbe39dc88fcd07d0edf5321e68c",
+    "query_public": {
+      "agentview_image": "c48b019614f508c8d178646fee980ee1628e5ff3be937a1fa75a71e9af3bd4bc",
+      "robot0_eye_in_hand_image": "97a679d74fd4c31efc466a722f45a1d2097b6031011d2f37027366d587f0b56b",
+      "robot0_joint_pos": "0e2f7c8ce5fe48d85cd68bff044c7abdabb506cbdf5fc0da343abc9f3a8c402e",
+      "robot0_joint_vel": "74aeab106d362079b21a576d3e7a9e0eb46650514b7c14a4291f78e32af739eb",
+      "robot0_eef_pos": "821029b920e5266a6aaf21a28bca2386a0629c39a14997bb9e2adcb94ce1a6d5",
+      "robot0_eef_quat_xyzw": "d8d526c107ef550addfc07813e69ceb4a80c9c1cc97631e23bab3622bbd87c5c",
+      "robot0_gripper_qpos": "4535689f9e153894a9edf40bb361971919f6c8e87182516fb0544789fdedf758"
+    },
+    "episodes": {
+      "ours_equiv_homog_active": {
+        "success": false,
+        "native_return": 0.0,
+        "controls": 300,
+        "terminated": false,
+        "truncated": true
+      },
+      "dense_flow_dis_active": {
+        "success": false,
+        "native_return": 0.0,
+        "controls": 300,
+        "terminated": false,
+        "truncated": true
+      },
+      "nominal": {
+        "success": false,
+        "native_return": 0.0,
+        "controls": 300,
+        "terminated": false,
+        "truncated": true
+      },
+      "privileged_oracle": {
+        "success": false,
+        "native_return": 0.0,
+        "controls": 300,
+        "terminated": false,
+        "truncated": true
+      }
+    }
+  },
+  {
+    "id": "13-cont_m45_075-BASE",
+    "camera": "BASE",
+    "embodiment": "cont_m45_075",
+    "truth": {
+      "yaw_deg": -45.0,
+      "xy_scale": 0.75,
+      "gripper_sign": 1
+    },
+    "support_case": {
+      "arm": "UR5e",
+      "suite": "libero_goal",
+      "task_id": 1,
+      "variant": "BASE",
+      "init_state_id": 11,
+      "seed": 31810111
+    },
+    "query_case": {
+      "arm": "UR5e",
+      "suite": "libero_goal",
+      "task_id": 1,
+      "variant": "BASE",
+      "init_state_id": 13,
+      "seed": 41810113
+    },
+    "predictions": {
+      "ours_equiv_homog_active": {
+        "yaw_hat": -15.97172737121582,
+        "scale_hat": 0.867222011089325,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 29.02827262878418
+      },
+      "dense_flow_dis_active": {
+        "yaw_hat": -61.369590455754,
+        "scale_hat": 0.8011994957923889,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 16.369590455754008
+      },
+      "nominal": {
+        "yaw_hat": 0.0,
+        "scale_hat": 1.0,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 45.0
+      },
+      "privileged_oracle": {
+        "yaw_hat": -45.0,
+        "scale_hat": 0.75,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 0.0
+      }
+    },
+    "opening_sha256": "fd995a4ff0e4b041a24a69209d43737cd61bad3131e556e92686e23337f27d54",
+    "query_physics": "9258ef5fe657040f908061adafa2541bf28e80fe14594b419578ff621a1358cf",
+    "noise_sha256": "c37b84e7844e72a31f62f3db4391238ca4b0edbe39dc88fcd07d0edf5321e68c",
+    "query_public": {
+      "agentview_image": "f44936d54cf462db8a44896040a6157612a0cf4dcdbb531daf1e7a0e1a5a41b3",
+      "robot0_eye_in_hand_image": "ad0f922f2bbf17cc4300463d952db5d002fb7bc99e4d1d8c42eb34afb3246d6f",
+      "robot0_joint_pos": "0e2f7c8ce5fe48d85cd68bff044c7abdabb506cbdf5fc0da343abc9f3a8c402e",
+      "robot0_joint_vel": "74aeab106d362079b21a576d3e7a9e0eb46650514b7c14a4291f78e32af739eb",
+      "robot0_eef_pos": "821029b920e5266a6aaf21a28bca2386a0629c39a14997bb9e2adcb94ce1a6d5",
+      "robot0_eef_quat_xyzw": "d8d526c107ef550addfc07813e69ceb4a80c9c1cc97631e23bab3622bbd87c5c",
+      "robot0_gripper_qpos": "4535689f9e153894a9edf40bb361971919f6c8e87182516fb0544789fdedf758"
+    },
+    "episodes": {
+      "ours_equiv_homog_active": {
+        "success": true,
+        "native_return": 1.0,
+        "controls": 222,
+        "terminated": true,
+        "truncated": false
+      },
+      "dense_flow_dis_active": {
+        "success": true,
+        "native_return": 1.0,
+        "controls": 98,
+        "terminated": true,
+        "truncated": false
+      },
+      "nominal": {
+        "success": true,
+        "native_return": 1.0,
+        "controls": 151,
+        "terminated": true,
+        "truncated": false
+      },
+      "privileged_oracle": {
+        "success": true,
+        "native_return": 1.0,
+        "controls": 89,
+        "terminated": true,
+        "truncated": false
+      }
+    }
+  },
+  {
+    "id": "13-cont_m45_075-S15",
+    "camera": "S15",
+    "embodiment": "cont_m45_075",
+    "truth": {
+      "yaw_deg": -45.0,
+      "xy_scale": 0.75,
+      "gripper_sign": 1
+    },
+    "support_case": {
+      "arm": "UR5e",
+      "suite": "libero_goal",
+      "task_id": 1,
+      "variant": "S15",
+      "init_state_id": 11,
+      "seed": 31810111
+    },
+    "query_case": {
+      "arm": "UR5e",
+      "suite": "libero_goal",
+      "task_id": 1,
+      "variant": "S15",
+      "init_state_id": 13,
+      "seed": 41810113
+    },
+    "predictions": {
+      "ours_equiv_homog_active": {
+        "yaw_hat": -12.49457836151123,
+        "scale_hat": 0.867222011089325,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 32.50542163848877
+      },
+      "dense_flow_dis_active": {
+        "yaw_hat": -51.84252066326366,
+        "scale_hat": 0.8011994957923889,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 6.842520663263656
+      },
+      "nominal": {
+        "yaw_hat": 0.0,
+        "scale_hat": 1.0,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 45.0
+      },
+      "privileged_oracle": {
+        "yaw_hat": -45.0,
+        "scale_hat": 0.75,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 0.0
+      }
+    },
+    "opening_sha256": "d6728e9cf770e82c50bfb45dc9544fc0f6710ea44d7394c377cfe630f6cf74ac",
+    "query_physics": "9258ef5fe657040f908061adafa2541bf28e80fe14594b419578ff621a1358cf",
+    "noise_sha256": "c37b84e7844e72a31f62f3db4391238ca4b0edbe39dc88fcd07d0edf5321e68c",
+    "query_public": {
+      "agentview_image": "c48b019614f508c8d178646fee980ee1628e5ff3be937a1fa75a71e9af3bd4bc",
+      "robot0_eye_in_hand_image": "97a679d74fd4c31efc466a722f45a1d2097b6031011d2f37027366d587f0b56b",
+      "robot0_joint_pos": "0e2f7c8ce5fe48d85cd68bff044c7abdabb506cbdf5fc0da343abc9f3a8c402e",
+      "robot0_joint_vel": "74aeab106d362079b21a576d3e7a9e0eb46650514b7c14a4291f78e32af739eb",
+      "robot0_eef_pos": "821029b920e5266a6aaf21a28bca2386a0629c39a14997bb9e2adcb94ce1a6d5",
+      "robot0_eef_quat_xyzw": "d8d526c107ef550addfc07813e69ceb4a80c9c1cc97631e23bab3622bbd87c5c",
+      "robot0_gripper_qpos": "4535689f9e153894a9edf40bb361971919f6c8e87182516fb0544789fdedf758"
+    },
+    "episodes": {
+      "ours_equiv_homog_active": {
+        "success": false,
+        "native_return": 0.0,
+        "controls": 300,
+        "terminated": false,
+        "truncated": true
+      },
+      "dense_flow_dis_active": {
+        "success": false,
+        "native_return": 0.0,
+        "controls": 300,
+        "terminated": false,
+        "truncated": true
+      },
+      "nominal": {
+        "success": false,
+        "native_return": 0.0,
+        "controls": 300,
+        "terminated": false,
+        "truncated": true
+      },
+      "privileged_oracle": {
+        "success": false,
+        "native_return": 0.0,
+        "controls": 300,
+        "terminated": false,
+        "truncated": true
+      }
+    }
+  },
+  {
+    "id": "14-cont_45_nom-BASE",
+    "camera": "BASE",
+    "embodiment": "cont_45_nom",
+    "truth": {
+      "yaw_deg": 45.0,
+      "xy_scale": 1.0,
+      "gripper_sign": 1
+    },
+    "support_case": {
+      "arm": "UR5e",
+      "suite": "libero_goal",
+      "task_id": 1,
+      "variant": "BASE",
+      "init_state_id": 12,
+      "seed": 31810112
+    },
+    "query_case": {
+      "arm": "UR5e",
+      "suite": "libero_goal",
+      "task_id": 1,
+      "variant": "BASE",
+      "init_state_id": 14,
+      "seed": 41810114
+    },
+    "predictions": {
+      "ours_equiv_homog_active": {
+        "yaw_hat": 33.073490142822266,
+        "scale_hat": 0.9699522852897644,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 11.926509857177734
+      },
+      "dense_flow_dis_active": {
+        "yaw_hat": 41.84823582297785,
+        "scale_hat": 0.9795098900794983,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 3.1517641770221587
+      },
+      "nominal": {
+        "yaw_hat": 0.0,
+        "scale_hat": 1.0,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 45.0
+      },
+      "privileged_oracle": {
+        "yaw_hat": 45.0,
+        "scale_hat": 1.0,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 0.0
+      }
+    },
+    "opening_sha256": "c3202ddc61c7af09ca56df57fac7f6ab2c50a9ae85a37bf60f73324c87380091",
+    "query_physics": "8d20f142b7e8dc54b9cb469c7851b809b51f9f13449e12744b12e2f4402dede3",
+    "noise_sha256": "02331251877dcce6a587261e18c11635b0fd089da405ec2e1699e9c93eec9d22",
+    "query_public": {
+      "agentview_image": "c81e57f72ceee66c5bf117f201b3dd40555fec617d2d03380893b1efd07fdf5c",
+      "robot0_eye_in_hand_image": "76ac8d1367a724e3d69f8bdaaa4e6610969f5db464ff9146cb842b6ca91c3e64",
+      "robot0_joint_pos": "a6c5d2d33412e267848e51e8b990d130fb13814073bb54dde832a5c9dc0b05fe",
+      "robot0_joint_vel": "6cab63e63496a31af8c2e74dbdabccbe8b0e47cd62b6873adc86fdcb7b2b6f4c",
+      "robot0_eef_pos": "10f3f7070b1a9063ee589063ba62544dc4266b72d35a9b638d8619ddb93683fe",
+      "robot0_eef_quat_xyzw": "cdc793857518bff329d1c7e4feab8915eaa85bee58b49f36e9074a4e3f01cca1",
+      "robot0_gripper_qpos": "783a5afa3f49330960fad91e3e4965ca7eeae113842a855f91c2c2658de0cf49"
+    },
+    "episodes": {
+      "ours_equiv_homog_active": {
+        "success": true,
+        "native_return": 1.0,
+        "controls": 89,
+        "terminated": true,
+        "truncated": false
+      },
+      "dense_flow_dis_active": {
+        "success": true,
+        "native_return": 1.0,
+        "controls": 90,
+        "terminated": true,
+        "truncated": false
+      },
+      "nominal": {
+        "success": false,
+        "native_return": 0.0,
+        "controls": 300,
+        "terminated": false,
+        "truncated": true
+      },
+      "privileged_oracle": {
+        "success": true,
+        "native_return": 1.0,
+        "controls": 90,
+        "terminated": true,
+        "truncated": false
+      }
+    }
+  },
+  {
+    "id": "14-cont_45_nom-S15",
+    "camera": "S15",
+    "embodiment": "cont_45_nom",
+    "truth": {
+      "yaw_deg": 45.0,
+      "xy_scale": 1.0,
+      "gripper_sign": 1
+    },
+    "support_case": {
+      "arm": "UR5e",
+      "suite": "libero_goal",
+      "task_id": 1,
+      "variant": "S15",
+      "init_state_id": 12,
+      "seed": 31810112
+    },
+    "query_case": {
+      "arm": "UR5e",
+      "suite": "libero_goal",
+      "task_id": 1,
+      "variant": "S15",
+      "init_state_id": 14,
+      "seed": 41810114
+    },
+    "predictions": {
+      "ours_equiv_homog_active": {
+        "yaw_hat": 42.112548828125,
+        "scale_hat": 0.9699522852897644,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 2.887451171875
+      },
+      "dense_flow_dis_active": {
+        "yaw_hat": 51.1298187496081,
+        "scale_hat": 0.9795098900794983,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 6.129818749608091
+      },
+      "nominal": {
+        "yaw_hat": 0.0,
+        "scale_hat": 1.0,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 45.0
+      },
+      "privileged_oracle": {
+        "yaw_hat": 45.0,
+        "scale_hat": 1.0,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 0.0
+      }
+    },
+    "opening_sha256": "98adf8cdda29cbb138e7116ac28ca59ffb4e5819746ff38ba8b764acfa1f5d78",
+    "query_physics": "8d20f142b7e8dc54b9cb469c7851b809b51f9f13449e12744b12e2f4402dede3",
+    "noise_sha256": "02331251877dcce6a587261e18c11635b0fd089da405ec2e1699e9c93eec9d22",
+    "query_public": {
+      "agentview_image": "a5c7775610fcff9a6a654e904c11149d3caa4f2fc2ee6705f619f8128eb234e1",
+      "robot0_eye_in_hand_image": "0414d7fefeb10e572125a9ee3707035615a5e5022bb5cf5e7c14f09a3d75a29f",
+      "robot0_joint_pos": "a6c5d2d33412e267848e51e8b990d130fb13814073bb54dde832a5c9dc0b05fe",
+      "robot0_joint_vel": "6cab63e63496a31af8c2e74dbdabccbe8b0e47cd62b6873adc86fdcb7b2b6f4c",
+      "robot0_eef_pos": "10f3f7070b1a9063ee589063ba62544dc4266b72d35a9b638d8619ddb93683fe",
+      "robot0_eef_quat_xyzw": "cdc793857518bff329d1c7e4feab8915eaa85bee58b49f36e9074a4e3f01cca1",
+      "robot0_gripper_qpos": "783a5afa3f49330960fad91e3e4965ca7eeae113842a855f91c2c2658de0cf49"
+    },
+    "episodes": {
+      "ours_equiv_homog_active": {
+        "success": false,
+        "native_return": 0.0,
+        "controls": 300,
+        "terminated": false,
+        "truncated": true
+      },
+      "dense_flow_dis_active": {
+        "success": false,
+        "native_return": 0.0,
+        "controls": 300,
+        "terminated": false,
+        "truncated": true
+      },
+      "nominal": {
+        "success": false,
+        "native_return": 0.0,
+        "controls": 300,
+        "terminated": false,
+        "truncated": true
+      },
+      "privileged_oracle": {
+        "success": false,
+        "native_return": 0.0,
+        "controls": 300,
+        "terminated": false,
+        "truncated": true
+      }
+    }
+  },
+  {
+    "id": "14-cont_m45_075-BASE",
+    "camera": "BASE",
+    "embodiment": "cont_m45_075",
+    "truth": {
+      "yaw_deg": -45.0,
+      "xy_scale": 0.75,
+      "gripper_sign": 1
+    },
+    "support_case": {
+      "arm": "UR5e",
+      "suite": "libero_goal",
+      "task_id": 1,
+      "variant": "BASE",
+      "init_state_id": 12,
+      "seed": 31810112
+    },
+    "query_case": {
+      "arm": "UR5e",
+      "suite": "libero_goal",
+      "task_id": 1,
+      "variant": "BASE",
+      "init_state_id": 14,
+      "seed": 41810114
+    },
+    "predictions": {
+      "ours_equiv_homog_active": {
+        "yaw_hat": -12.934581756591797,
+        "scale_hat": 0.8682510852813721,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 32.0654182434082
+      },
+      "dense_flow_dis_active": {
+        "yaw_hat": -48.082003366901745,
+        "scale_hat": 0.8015069365501404,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 3.082003366901745
+      },
+      "nominal": {
+        "yaw_hat": 0.0,
+        "scale_hat": 1.0,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 45.0
+      },
+      "privileged_oracle": {
+        "yaw_hat": -45.0,
+        "scale_hat": 0.75,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 0.0
+      }
+    },
+    "opening_sha256": "c3202ddc61c7af09ca56df57fac7f6ab2c50a9ae85a37bf60f73324c87380091",
+    "query_physics": "8d20f142b7e8dc54b9cb469c7851b809b51f9f13449e12744b12e2f4402dede3",
+    "noise_sha256": "02331251877dcce6a587261e18c11635b0fd089da405ec2e1699e9c93eec9d22",
+    "query_public": {
+      "agentview_image": "c81e57f72ceee66c5bf117f201b3dd40555fec617d2d03380893b1efd07fdf5c",
+      "robot0_eye_in_hand_image": "76ac8d1367a724e3d69f8bdaaa4e6610969f5db464ff9146cb842b6ca91c3e64",
+      "robot0_joint_pos": "a6c5d2d33412e267848e51e8b990d130fb13814073bb54dde832a5c9dc0b05fe",
+      "robot0_joint_vel": "6cab63e63496a31af8c2e74dbdabccbe8b0e47cd62b6873adc86fdcb7b2b6f4c",
+      "robot0_eef_pos": "10f3f7070b1a9063ee589063ba62544dc4266b72d35a9b638d8619ddb93683fe",
+      "robot0_eef_quat_xyzw": "cdc793857518bff329d1c7e4feab8915eaa85bee58b49f36e9074a4e3f01cca1",
+      "robot0_gripper_qpos": "783a5afa3f49330960fad91e3e4965ca7eeae113842a855f91c2c2658de0cf49"
+    },
+    "episodes": {
+      "ours_equiv_homog_active": {
+        "success": true,
+        "native_return": 1.0,
+        "controls": 223,
+        "terminated": true,
+        "truncated": false
+      },
+      "dense_flow_dis_active": {
+        "success": true,
+        "native_return": 1.0,
+        "controls": 97,
+        "terminated": true,
+        "truncated": false
+      },
+      "nominal": {
+        "success": false,
+        "native_return": 0.0,
+        "controls": 300,
+        "terminated": false,
+        "truncated": true
+      },
+      "privileged_oracle": {
+        "success": true,
+        "native_return": 1.0,
+        "controls": 93,
+        "terminated": true,
+        "truncated": false
+      }
+    }
+  },
+  {
+    "id": "14-cont_m45_075-S15",
+    "camera": "S15",
+    "embodiment": "cont_m45_075",
+    "truth": {
+      "yaw_deg": -45.0,
+      "xy_scale": 0.75,
+      "gripper_sign": 1
+    },
+    "support_case": {
+      "arm": "UR5e",
+      "suite": "libero_goal",
+      "task_id": 1,
+      "variant": "S15",
+      "init_state_id": 12,
+      "seed": 31810112
+    },
+    "query_case": {
+      "arm": "UR5e",
+      "suite": "libero_goal",
+      "task_id": 1,
+      "variant": "S15",
+      "init_state_id": 14,
+      "seed": 41810114
+    },
+    "predictions": {
+      "ours_equiv_homog_active": {
+        "yaw_hat": -12.254744529724121,
+        "scale_hat": 0.8682510852813721,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 32.74525547027588
+      },
+      "dense_flow_dis_active": {
+        "yaw_hat": -63.111566000222744,
+        "scale_hat": 0.8015069365501404,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 18.11156600022275
+      },
+      "nominal": {
+        "yaw_hat": 0.0,
+        "scale_hat": 1.0,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 45.0
+      },
+      "privileged_oracle": {
+        "yaw_hat": -45.0,
+        "scale_hat": 0.75,
+        "grip_hat": 1,
+        "abs_circular_yaw_error_deg": 0.0
+      }
+    },
+    "opening_sha256": "98adf8cdda29cbb138e7116ac28ca59ffb4e5819746ff38ba8b764acfa1f5d78",
+    "query_physics": "8d20f142b7e8dc54b9cb469c7851b809b51f9f13449e12744b12e2f4402dede3",
+    "noise_sha256": "02331251877dcce6a587261e18c11635b0fd089da405ec2e1699e9c93eec9d22",
+    "query_public": {
+      "agentview_image": "a5c7775610fcff9a6a654e904c11149d3caa4f2fc2ee6705f619f8128eb234e1",
+      "robot0_eye_in_hand_image": "0414d7fefeb10e572125a9ee3707035615a5e5022bb5cf5e7c14f09a3d75a29f",
+      "robot0_joint_pos": "a6c5d2d33412e267848e51e8b990d130fb13814073bb54dde832a5c9dc0b05fe",
+      "robot0_joint_vel": "6cab63e63496a31af8c2e74dbdabccbe8b0e47cd62b6873adc86fdcb7b2b6f4c",
+      "robot0_eef_pos": "10f3f7070b1a9063ee589063ba62544dc4266b72d35a9b638d8619ddb93683fe",
+      "robot0_eef_quat_xyzw": "cdc793857518bff329d1c7e4feab8915eaa85bee58b49f36e9074a4e3f01cca1",
+      "robot0_gripper_qpos": "783a5afa3f49330960fad91e3e4965ca7eeae113842a855f91c2c2658de0cf49"
+    },
+    "episodes": {
+      "ours_equiv_homog_active": {
+        "success": false,
+        "native_return": 0.0,
+        "controls": 300,
+        "terminated": false,
+        "truncated": true
+      },
+      "dense_flow_dis_active": {
+        "success": false,
+        "native_return": 0.0,
+        "controls": 300,
+        "terminated": false,
+        "truncated": true
+      },
+      "nominal": {
+        "success": false,
+        "native_return": 0.0,
+        "controls": 300,
+        "terminated": false,
+        "truncated": true
+      },
+      "privileged_oracle": {
+        "success": false,
+        "native_return": 0.0,
+        "controls": 300,
+        "terminated": false,
+        "truncated": true
+      }
+    }
+  }
+]
