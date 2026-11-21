@@ -41,7 +41,7 @@ PROBE_BURSTS = (
     np.array([0.0, -0.75, 0.0, 0.0, 0.0, 0.0, -1.0], dtype=np.float32),
     np.array([0.0, 0.0, 0.55, 0.0, 0.0, 0.0, 1.0], dtype=np.float32),
 )
-BURST_STEPS = 4
+BURST_STEPS = 6
 
 
 def rot2d(deg: float) -> np.ndarray:
@@ -81,8 +81,12 @@ def get_jaw_width(env) -> float:
     if hasattr(q, "cpu"):
         q = q.cpu().numpy()
     q = np.asarray(q, dtype=np.float32).ravel()
-    # Last 2 qpos entries reflect finger opening across panda/fetch/xarm6_robotiq
-    return float(np.mean(np.abs(q[-2:])))
+    # Canonical physical opening width: larger = more open.
+    # Panda/Fetch q[-2:] increases on open; xarm6_robotiq Robotiq knuckle q[-2:] is 0.0=open, 0.81=closed.
+    val = float(np.mean(np.abs(q[-2:])))
+    if getattr(env.unwrapped.agent, "uid", "") == "xarm6_robotiq":
+        return float(0.81 - val)
+    return val
 
 
 def format_env_action(env, cmd7: np.ndarray) -> np.ndarray:
