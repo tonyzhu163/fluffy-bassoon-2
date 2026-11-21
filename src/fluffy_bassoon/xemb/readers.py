@@ -143,6 +143,36 @@ def analytic_visual_yaw(issued, motion, local_dz, valid, projection):
     return np.where(np.hypot(dot, cross) > 1e-10, np.degrees(np.arctan2(cross, dot)), 0.0)
 
 
+def farneback_image_motion(img_before, img_after, valid) -> np.ndarray:
+    """Dense OpenCV Farneback optical flow magnitude-weighted mean [B, K, 2]."""
+    import cv2
+
+    b_arr = np.asarray(img_before)
+    a_arr = np.asarray(img_after)
+    v_arr = np.asarray(valid, dtype=bool)
+    bsz, n_k = v_arr.shape
+    out = np.zeros((bsz, n_k, 2), dtype=np.float32)
+    for bi in range(bsz):
+        for ki in range(n_k):
+            if not v_arr[bi, ki]:
+                continue
+            ib = b_arr[bi, ki]
+            ia = a_arr[bi, ki]
+            if ib.dtype != np.uint8:
+                ib = np.clip(ib * 255.0, 0, 255).astype(np.uint8)
+                ia = np.clip(ia * 255.0, 0, 255).astype(np.uint8)
+            gb = cv2.cvtColor(ib, cv2.COLOR_RGB2GRAY) if ib.ndim == 3 else ib
+            ga = cv2.cvtColor(ia, cv2.COLOR_RGB2GRAY) if ia.ndim == 3 else ia
+            flow = cv2.calcOpticalFlowFarneback(gb, ga, None, 0.5, 3, 15, 3, 5, 1.2, 0)
+            mag = np.hypot(flow[..., 0], flow[..., 1])
+            w = np.where(mag > 0.15, mag, 0.0)
+            w_sum = float(w.sum())
+            if w_sum > 1e-6:
+                out[bi, ki, 0] = float((w * flow[..., 0]).sum() / w_sum)
+                out[bi, ki, 1] = float((w * flow[..., 1]).sum() / w_sum)
+    return out
+
+
 def _coord_grid(height: int, width: int):
     import jax.numpy as jnp
 
@@ -311,8 +341,48 @@ def _apply_transformer(params, tokens, valid, heads: int):
     return pooled @ params["head_w"] + params["head_b"]
 
 
+def _init_gru(key, in_dim: int, hidden_dim: int, out_dim: int):
+    import jax
+    import jax.numpy as jnp
+
+    k1, k2, k3 = jax.random.split(key, 3)
+    init = jax.nn.initializers.lecun_normal()
+    return dict(
+        wx=init(k1, (in_dim, 3 * hidden_dim), dtype=jnp.float32),
+        wh=init(k2, (hidden_dim, 3 * hidden_dim), dtype=jnp.float32),
+        b=jnp.zeros((3 * hidden_dim,), dtype=jnp.float32),
+        head=_init_mlp(k3, (hidden_dim, hidden_dim, out_dim)),
+    )
+
+
+def _apply_gru(params, tokens, valid):
+    """RMA-style GRU history encoder over valid steps [B, K, D] -> [B, out_dim]."""
+    import jax
+    import jax.numpy as jnp
+
+    bsz, _, _ = tokens.shape
+    h_dim = params["wh"].shape[0]
+    h0 = jnp.zeros((bsz, h_dim), dtype=jnp.float32)
+
+    def step_fn(h, inp):
+        x_t, v_t = inp
+        gx = x_t @ params["wx"] + params["b"]
+        gh = h @ params["wh"]
+        xz, xr, xn = jnp.split(gx, 3, axis=-1)
+        hz, hr, hn = jnp.split(gh, 3, axis=-1)
+        z = jax.nn.sigmoid(xz + hz)
+        r = jax.nn.sigmoid(xr + hr)
+        n = jnp.tanh(xn + r * hn)
+        h_new = (1.0 - z) * n + z * h
+        h_out = jnp.where(v_t[:, None], h_new, h)
+        return h_out, None
+
+    h_final, _ = jax.lax.scan(step_fn, h0, (jnp.swapaxes(tokens, 0, 1), jnp.swapaxes(valid, 0, 1)))
+    return _apply_mlp(params["head"], h_final)
+
+
 def init_reader(key, cfg: ReaderConfig):
-    """Initialize parameters for any of the four reader architectures."""
+    """Initialize parameters for any of the reader architectures."""
     import jax
 
     k1, k2, k3, k4 = jax.random.split(key, 4)
@@ -333,6 +403,11 @@ def init_reader(key, cfg: ReaderConfig):
                 cfg.transformer_layers,
                 4,
             ),
+        )
+    if cfg.model_type == "rma_gru":
+        return dict(
+            cnn=_init_cnn(k1, vis_ch, cfg.cnn_width),
+            gru=_init_gru(k2, cfg.cnn_width + 12, cfg.mlp_width, 4),
         )
     scale_head = _init_mlp(k3, (5, 64, 64, 2))
     grip_head = _init_mlp(k4, (4, 48, 48, 2))
@@ -486,6 +561,15 @@ def apply_reader(params, cfg: ReaderConfig, batch):
         vis = _history_visual_features(params, batch, visual_mode=cfg.visual_mode)
         tok = jnp.concatenate((vis, issued, delta_eef, delta_jaw), axis=-1)
         raw = _apply_transformer(params["tx"], tok, valid, cfg.transformer_heads)
+        cos_hat, sin_hat = _normalize_cs(raw[:, 0], raw[:, 1], has_valid)
+        log_scale = jnp.where(has_valid, raw[:, 2], 0.0)
+        grip_logit = jnp.where(has_valid, raw[:, 3], 10.0)
+        return cos_hat, sin_hat, log_scale, grip_logit
+
+    if cfg.model_type == "rma_gru":
+        vis = _history_visual_features(params, batch, visual_mode=cfg.visual_mode)
+        tok = jnp.concatenate((vis, issued, delta_eef, delta_jaw), axis=-1)
+        raw = _apply_gru(params["gru"], tok, valid)
         cos_hat, sin_hat = _normalize_cs(raw[:, 0], raw[:, 1], has_valid)
         log_scale = jnp.where(has_valid, raw[:, 2], 0.0)
         grip_logit = jnp.where(has_valid, raw[:, 3], 10.0)
