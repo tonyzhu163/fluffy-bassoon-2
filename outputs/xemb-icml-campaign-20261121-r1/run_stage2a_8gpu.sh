@@ -14,6 +14,8 @@ cv2_overlay="$root/setups/xemb-icml-campaign-20261121-r1/cv2-headless-overlay"
 pin=$1
 attempt=$2
 ckpt_attempt=$3
+homog_attempt=$4
+policy_name=${5:-pi05}
 host=$(hostname)
 [[ "$attempt" =~ ^[a-z0-9]+$ ]]
 [[ "$host" == job-* ]] || { echo "Require Baige Distributed Training container" >&2; exit 2; }
@@ -54,7 +56,13 @@ date +%s > "$out/gpu-start.txt"
 
 archive="$root/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu01/archive/archive.json"
 ckpts="$run/$ckpt_attempt/stage1/checkpoints"
+homog_ckpts="$run/$homog_attempt/stage1/checkpoints"
 reuse="$root/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live"
+
+REUSE_ARGS=()
+if [[ "$policy_name" == "pi05" ]]; then
+    REUSE_ARGS=(--reuse-support-dir "$reuse")
+fi
 
 pids=()
 for s in 0 1 2 3 4 5 6 7; do
@@ -62,11 +70,13 @@ for s in 0 1 2 3 4 5 6 7; do
         timeout --kill-after=20s 75m "$python" -Bu "$here/eval_stage2a_live_ur5e.py" run-shard \
         --train-archive "$archive" \
         --ckpt-dir "$ckpts" \
+        --homog-ckpt-dir "$homog_ckpts" \
         --output-dir "$out/live" \
         --shard-idx "$s" \
         --num-shards 8 \
         --seed-ckpt 41 \
-        --reuse-support-dir "$reuse" \
+        --policy "$policy_name" \
+        "${REUSE_ARGS[@]}" \
         > "$out/logs/shard-$s.log" 2>&1 &
     pids+=($!)
 done

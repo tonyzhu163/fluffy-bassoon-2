@@ -78,7 +78,8 @@ from ur5e_sim_worker import UR5eSimulator
 STAGE2A_ARMS = (
     "privileged_oracle",
     "ours_equiv_v2_passive",
-    "ours_equiv_v2_active_luma",
+    "ours_equiv_homog_active",
+    "ours_equiv_homog_passive",
     "ours_equiv_v2_online",
     "analytic_visual_hs_passive",
     "dense_flow_dis_active",
@@ -86,7 +87,6 @@ STAGE2A_ARMS = (
     "broyden_uvs_dis_active",
     "reground_babbling",
     "perceiver_icba_passive",
-    "perceiver_icba_active",
     "ours_v2_swapped",
 )
 
@@ -275,14 +275,33 @@ def fit_source_calibrators(train_archive_path: Path):
     return cals
 
 
+PI0_CKPT = Path("/mowenjie/fluffy-bassoon-2/inputs/pi0-libero-openpi-g1748456809412170-20261029-r1")
+
+
+def load_frozen_policy(policy_name: str):
+    if policy_name == "pi05":
+        return load_frozen_pi05()
+    if policy_name == "pi0":
+        import jax
+        from openpi.policies import policy_config
+        from openpi.training import config
+
+        if len(jax.devices()) != 1 or jax.devices()[0].platform != "gpu":
+            raise RuntimeError("Expected exactly one allocated GPU for frozen OpenPI pi0")
+        return policy_config.create_trained_policy(config.get_config("pi0_libero"), str(PI0_CKPT))
+    raise ValueError(f"Unknown policy_name {policy_name!r}; expected 'pi05' or 'pi0'")
+
+
 def run_shard(
     train_archive: Path,
     ckpt_dir: Path,
+    homog_ckpt_dir: Path,
     output_dir: Path,
     shard_idx: int,
     num_shards: int,
     seed_ckpt: int,
     reuse_support_dir: Path | None,
+    policy_name: str = "pi05",
 ):
     tasks, plan = build_test_plan()
     if num_shards != len(tasks):
@@ -298,11 +317,11 @@ def run_shard(
 
     cals = fit_source_calibrators(train_archive)
     p_v2_pas, c_v2_pas, _ = load_v2_checkpoint(ckpt_dir / f"equiv_v2_dis_dz-passive_attempt1-seed{seed_ckpt}.msgpack")
-    p_luma_act, c_luma_act, _ = load_v2_checkpoint(ckpt_dir / f"equiv_v2_luma_dz-active_probe-seed{seed_ckpt}.msgpack")
+    p_homog_act, c_homog_act, _ = load_v2_checkpoint(homog_ckpt_dir / f"equiv_flow_homog_nodz-active_probe-seed{seed_ckpt}.msgpack")
+    p_homog_pas, c_homog_pas, _ = load_v2_checkpoint(homog_ckpt_dir / f"equiv_flow_homog_nodz-passive_attempt1-seed{seed_ckpt}.msgpack")
     p_perc_pas, c_perc_pas, _ = load_v2_checkpoint(ckpt_dir / f"perceiver_icba_dis-passive_attempt1-seed{seed_ckpt}.msgpack")
-    p_perc_act, c_perc_act, _ = load_v2_checkpoint(ckpt_dir / f"perceiver_icba_dis-active_probe-seed{seed_ckpt}.msgpack")
 
-    policy = load_frozen_pi05()
+    policy = load_frozen_policy(policy_name)
     prompts = {}
 
     reused_meta = (reuse_support_dir / f"shard-{shard_idx}" / "support-meta.json") if reuse_support_dir else None
@@ -381,14 +400,14 @@ def run_shard(
             arm_preds = {
                 "privileged_oracle": (spec.yaw_deg, spec.xy_scale, spec.gripper_sign),
                 "ours_equiv_v2_passive": _pred(p_v2_pas, c_v2_pas, pas_b),
-                "ours_equiv_v2_active_luma": _pred(p_luma_act, c_luma_act, act_b),
+                "ours_equiv_homog_active": _pred(p_homog_act, c_homog_act, act_b),
+                "ours_equiv_homog_passive": _pred(p_homog_pas, c_homog_pas, pas_b),
                 "analytic_visual_hs_passive": (yaw_hs_p, float(sp[0]), int(gp[0])),
                 "dense_flow_dis_active": (yaw_dis_a, float(sa[0]), int(ga[0])),
                 "dense_flow_dis_passive": (yaw_dis_p, float(sp[0]), int(gp[0])),
                 "broyden_uvs_dis_active": (yaw_broy_a, float(sa[0]), int(ga[0])),
                 "reground_babbling": (float(yr[0]), float(sr[0]), int(gr[0])),
                 "perceiver_icba_passive": _pred(p_perc_pas, c_perc_pas, pas_b),
-                "perceiver_icba_active": _pred(p_perc_act, c_perc_act, act_b),
                 "ours_v2_swapped": _pred(p_v2_pas, c_v2_pas, don_b),
             }
 
@@ -455,7 +474,7 @@ def merge_shards(output_dir: Path, num_shards: int):
         by_regime[reg] = dict(trials=n, successes=sc, rates={a: round(sc[a] / max(n, 1), 4) for a in STAGE2A_ARMS})
 
     contrasts = {}
-    for hero in ("ours_equiv_v2_passive", "ours_equiv_v2_active_luma", "ours_equiv_v2_online"):
+    for hero in ("ours_equiv_v2_passive", "ours_equiv_homog_active", "ours_equiv_homog_passive", "ours_equiv_v2_online"):
         contrasts[hero] = {}
         for comp in STAGE2A_ARMS:
             if comp == hero:
@@ -474,11 +493,13 @@ def main():
     p_run = sub.add_parser("run-shard")
     p_run.add_argument("--train-archive", type=Path, required=True)
     p_run.add_argument("--ckpt-dir", type=Path, required=True)
+    p_run.add_argument("--homog-ckpt-dir", type=Path, required=True)
     p_run.add_argument("--output-dir", type=Path, required=True)
     p_run.add_argument("--shard-idx", type=int, required=True)
     p_run.add_argument("--num-shards", type=int, default=8)
     p_run.add_argument("--seed-ckpt", type=int, default=41)
     p_run.add_argument("--reuse-support-dir", type=Path, default=None)
+    p_run.add_argument("--policy", type=str, default="pi05", choices=("pi05", "pi0"))
 
     p_m = sub.add_parser("merge")
     p_m.add_argument("--output-dir", type=Path, required=True)
@@ -486,7 +507,7 @@ def main():
 
     args = parser.parse_args()
     if args.cmd == "run-shard":
-        run_shard(args.train_archive, args.ckpt_dir, args.output_dir, args.shard_idx, args.num_shards, args.seed_ckpt, args.reuse_support_dir)
+        run_shard(args.train_archive, args.ckpt_dir, args.homog_ckpt_dir, args.output_dir, args.shard_idx, args.num_shards, args.seed_ckpt, args.reuse_support_dir, policy_name=args.policy)
     else:
         merge_shards(args.output_dir, args.num_shards)
 
