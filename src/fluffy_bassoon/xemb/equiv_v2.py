@@ -41,6 +41,7 @@ V2_MODEL_NAMES = (
     "factored_no_equiv_v2",
     "perceiver_icba",
     "factored_equiv_so3",
+    "equiv_flow_homography",
 )
 
 V2_VISUAL_MODES = ("luminance_flow", "rgb", "dis_lumaflow")
@@ -308,6 +309,86 @@ def procrustes_so3(commands_3d, vectors_3d, weights, has_valid):
     return jnp.where(has_valid[:, None, None], r_hat, eye)
 
 
+def _init_flow_mask_cnn(key, in_channels: int = 7, width: int = 48):
+    """Direction-blind pixel segmentation CNN for EquivFlow-Procrustes.
+
+    Sees ONLY scalar motion magnitude / luminance / spatial coordinates (NEVER flow
+    direction or action commands), predicting:
+      1. Spatial attention logits over the 32x32 flow grid (end-effector segmentation).
+      2. Per-chunk scalar confidence weight for weighted Procrustes.
+    """
+    import jax
+    import jax.numpy as jnp
+
+    keys = jax.random.split(key, 6)
+    init = jax.nn.initializers.lecun_normal()
+    return dict(
+        c1_w=init(keys[0], (3, 3, in_channels, width), dtype=jnp.float32),
+        c1_b=jnp.zeros((width,), dtype=jnp.float32),
+        c2_w=init(keys[1], (3, 3, width, width), dtype=jnp.float32),
+        c2_b=jnp.zeros((width,), dtype=jnp.float32),
+        c3_w=init(keys[2], (3, 3, width, width), dtype=jnp.float32),
+        c3_b=jnp.zeros((width,), dtype=jnp.float32),
+        mask_w=init(keys[3], (1, 1, width, 1), dtype=jnp.float32),
+        mask_b=jnp.zeros((1,), dtype=jnp.float32),
+        conf_w=init(keys[4], (width, 1), dtype=jnp.float32),
+        conf_b=jnp.zeros((1,), dtype=jnp.float32),
+        flow_mag_beta=jnp.asarray(1.5, dtype=jnp.float32),
+    )
+
+
+def _apply_flow_mask_pooling(p, batch):
+    """Linearly pool 2D optical flow with a direction-blind learned spatial attention mask."""
+    import jax
+    import jax.numpy as jnp
+
+    valid = jnp.asarray(batch["valid"], dtype=bool)
+    mask = valid[..., None, None, None]
+    before = jnp.where(mask, _unit_rgb(batch["img_before"]), 0.0)
+    after = jnp.where(mask, _unit_rgb(batch["img_after"]), 0.0)
+    b, k, h, w, _ = before.shape
+    if "dis_flow" in batch:
+        flow = jnp.where(mask, jnp.asarray(batch["dis_flow"], dtype=jnp.float32), 0.0)
+    else:
+        flow = jnp.zeros((b, k, h, w, 2), dtype=jnp.float32)
+
+    # Strictly direction-blind scalar pixel features: [||f||, |dt|, ||dRGB||, ||grad||, luma_b, x, y]
+    diff = after - before
+    luma_b = jnp.mean(before, axis=-1, keepdims=True)
+    luma_a = jnp.mean(after, axis=-1, keepdims=True)
+    abs_dt = jnp.abs(luma_a - luma_b)
+    d_rgb = jnp.sqrt(jnp.mean(jnp.square(diff), axis=-1, keepdims=True) + 1e-6)
+    avg = 0.5 * (luma_b + luma_a)
+    gx = jnp.pad(0.5 * (avg[:, :, :, 2:, :] - avg[:, :, :, :-2, :]), ((0, 0), (0, 0), (0, 0), (1, 1), (0, 0)))
+    gy = jnp.pad(0.5 * (avg[:, :, 2:, :, :] - avg[:, :, :-2, :, :]), ((0, 0), (0, 0), (1, 1), (0, 0), (0, 0)))
+    grad_mag = jnp.sqrt(jnp.square(gx) + jnp.square(gy) + 1e-6)
+    flow_mag = jnp.sqrt(jnp.sum(jnp.square(flow), axis=-1, keepdims=True) + 1e-6)
+    coords = jnp.broadcast_to(_coord_grid(h, w)[None, None], (b, k, h, w, 2))
+    x = jnp.concatenate((flow_mag, abs_dt, d_rgb, grad_mag, luma_b, coords), axis=-1)
+    x_flat = x.reshape(b * k, h, w, 7)
+
+    # Stride-2 -> H/2 x W/2 (32x32 for 64x64)
+    feat = jax.nn.silu(_conv2d_nhwc(x_flat, p["c1_w"], p["c1_b"], stride=2))
+    feat = jax.nn.silu(_conv2d_nhwc(feat, p["c2_w"], p["c2_b"], stride=1))
+    feat = jax.nn.silu(feat + _conv2d_nhwc(feat, p["c3_w"], p["c3_b"], stride=1))
+    logits = _conv2d_nhwc(feat, p["mask_w"], p["mask_b"], stride=1)[..., 0]  # [BK, H/2, W/2]
+
+    # Exact 2x2 average-pooled dense flow on the same H/2 x W/2 grid.
+    flow_flat = flow.reshape(b * k, h // 2, 2, w // 2, 2, 2).mean(axis=(2, 4))  # [BK, H/2, W/2, 2]
+    fmag_ds = jnp.sqrt(jnp.sum(jnp.square(flow_flat), axis=-1) + 1e-6)
+    # Soft motion prior focuses initial attention on moving pixels while CNN suppresses non-EEF motion.
+    beta = jax.nn.softplus(p["flow_mag_beta"])
+    attn_logits = (logits + beta * jnp.log(fmag_ds + 1e-3)).reshape(b * k, -1)
+    attn = jax.nn.softmax(attn_logits, axis=-1)  # [BK, HW/4]
+    flow_vec = jnp.einsum("ns,nsc->nc", attn, flow_flat.reshape(b * k, -1, 2)).reshape(b, k, 2)
+
+    # Per-chunk confidence weight (direction-blind)
+    gfeat = jnp.einsum("ns,nsc->nc", attn, feat.reshape(b * k, -1, feat.shape[-1]))
+    conf_logit = (gfeat @ p["conf_w"] + p["conf_b"]).reshape(b, k)
+    conf_w = jnp.where(valid, jax.nn.softplus(conf_logit) + 1e-4, 0.0)
+    return flow_vec, conf_w
+
+
 def init_reader_v2(key, cfg: ReaderV2Config):
     """Initialize parameters for any V2 architecture."""
     import jax
@@ -364,6 +445,17 @@ def init_reader_v2(key, cfg: ReaderV2Config):
             grip_head=grip_head,
         )
 
+    if cfg.model_type == "equiv_flow_homography":
+        # Direction-blind spatial attention mask over dense flow + linear 2x2 camera homography
+        # + exact SO(2)-invariant local_dz vertical parallax cancellation -> zero cardinal quantization!
+        return dict(
+            mask_cnn=_init_flow_mask_cnn(k1, in_channels=7, width=max(32, cfg.cnn_width // 2)),
+            homography=jnp.eye(2, dtype=jnp.float32),
+            uz=jnp.zeros((2,), dtype=jnp.float32),
+            scale_head=scale_head,
+            grip_head=grip_head,
+        )
+
     raise ValueError(cfg.model_type)
 
 
@@ -373,6 +465,17 @@ def extract_visual_vectors_v2(params, cfg: ReaderV2Config, batch):
     import jax.numpy as jnp
 
     valid = jnp.asarray(batch["valid"], dtype=bool)
+    if cfg.model_type == "equiv_flow_homography":
+        flow_vec, w = _apply_flow_mask_pooling(params["mask_cnn"], batch)
+        # Linear 2x2 camera homography: strictly preserves all continuous 2D flow directions!
+        v_raw = jnp.einsum("ij,bkj->bki", params["homography"], flow_vec)
+        if cfg.use_dz_parallax:
+            local_dz = jnp.where(valid, 100.0 * jnp.asarray(batch["delta_eef"], dtype=jnp.float32)[..., 2], 0.0)
+            v_planar = v_raw - local_dz[..., None] * params["uz"][None, None, :]
+        else:
+            v_planar = v_raw
+        return v_planar, w
+
     images, b, k = _vis_inputs_v2(batch, cfg.visual_mode)
     vis = _apply_res_cnn(params["cnn"], images).reshape(b, k, -1)
     vec_out = _apply_mlp(params["vis_vec"], vis)
@@ -419,7 +522,7 @@ def apply_reader_v2(params, cfg: ReaderV2Config, batch):
 
     log_scale, grip_logit = _apply_scale_and_grip(params, issued, delta_eef, delta_jaw, valid)
 
-    if cfg.model_type == "factored_equiv_v2":
+    if cfg.model_type in ("factored_equiv_v2", "equiv_flow_homography"):
         v_planar, w = extract_visual_vectors_v2(params, cfg, batch)
         cos_hat, sin_hat = _procrustes_yaw(issued[..., :2], v_planar, w, has_valid)
         return cos_hat, sin_hat, log_scale, grip_logit

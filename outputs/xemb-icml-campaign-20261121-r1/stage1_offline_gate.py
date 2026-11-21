@@ -290,6 +290,8 @@ def main():
 
             max_chunks = int(train_data["valid"].shape[1])
             specs = [
+                ("equiv_flow_homog_dz", ReaderV2Config(model_type="equiv_flow_homography", visual_mode="dis_lumaflow", max_chunks=max(max_chunks, 32), use_dz_parallax=True)),
+                ("equiv_flow_homog_nodz", ReaderV2Config(model_type="equiv_flow_homography", visual_mode="dis_lumaflow", max_chunks=max(max_chunks, 32), use_dz_parallax=False)),
                 ("equiv_v2_dis_dz", ReaderV2Config(model_type="factored_equiv_v2", visual_mode="dis_lumaflow", max_chunks=max(max_chunks, 32), use_dz_parallax=True)),
                 ("equiv_v2_dis_nodz", ReaderV2Config(model_type="factored_equiv_v2", visual_mode="dis_lumaflow", max_chunks=max(max_chunks, 32), use_dz_parallax=False)),
                 ("equiv_v2_luma_dz", ReaderV2Config(model_type="factored_equiv_v2", visual_mode="luminance_flow", max_chunks=max(max_chunks, 32), use_dz_parallax=True)),

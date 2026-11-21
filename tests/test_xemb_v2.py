@@ -193,3 +193,36 @@ def test_perceiver_icba_cleared_and_grads():
     clr = dict(batch, valid=np.zeros_like(batch["valid"]))
     yc, sc, gc = predict_embodiment_v2(params, cfg, clr)
     assert np.allclose(yc, 0.0) and np.allclose(sc, 1.0) and np.all(gc == 1)
+
+
+def test_equiv_flow_homography_exact_so2_and_zero_cardinal_quantization():
+    jax = pytest.importorskip("jax")
+    cfg = ReaderV2Config(
+        model_type="equiv_flow_homography",
+        visual_mode="dis_lumaflow",
+        cnn_width=32,
+        use_dz_parallax=True,
+    )
+    params = init_reader_v2(jax.random.key(7), cfg)
+    batch = _synthetic_batch(bsz=3, k=5, h=16, w=16, seed=19)
+
+    yaw0, _, _ = predict_embodiment_v2(params, cfg, batch)
+    for delta in (45.0, -135.0, 29.3):
+        b_rot = dict(batch)
+        iss = batch["issued_mean"].copy()
+        iss[..., :2] = iss[..., :2] @ rot2(delta).T
+        b_rot["issued_mean"] = iss
+        yaw1, _, _ = predict_embodiment_v2(params, cfg, b_rot)
+        for y0, y1 in zip(yaw0, yaw1, strict=True):
+            assert circular_yaw_error_deg(float(y1), float(y0) - delta) < 1e-3
+
+    # Verify finite gradients through direction-blind mask CNN + homography + Procrustes.
+    (loss, _), grads = jax.value_and_grad(lambda p: reader_loss_v2(p, cfg, batch), has_aux=True)(params)
+    assert np.isfinite(float(loss))
+    for leaf in jax.tree_util.tree_leaves(grads):
+        assert np.isfinite(np.asarray(leaf)).all()
+
+    clr = dict(batch, valid=np.zeros_like(batch["valid"]))
+    yc, sc, gc = predict_embodiment_v2(params, cfg, clr)
+    assert np.allclose(yc, 0.0) and np.allclose(sc, 1.0) and np.all(gc == 1)
+
