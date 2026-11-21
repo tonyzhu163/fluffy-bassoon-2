@@ -1,5 +1,7 @@
 # Verified findings
 
+On one LIBERO Goal 1 development layout, all 14 CPU simulator checks passed across simulated UR5e, IIWA and Kinova3. UR5e and IIWA each exercised BASE and all five visual perturbations. Kinova3 exercised BASE and S15. The checks verified robot identity, matching initial scenes, native camera or appearance changes and measured response to 15 controls. [Scope and simulator evidence](../outputs/xemb-stage2c-cpu-20261121-r1/RESULT.md)
+
 On simulated ManiSkill3 xArm6, the active EquivFlow reader without vertical parallax correction scored 5/48 on held-out OOD native task queries. The corrected and Panda-only variants each scored 3/48. All three scored 0/24 on continuous angles, where the oracle scored 16/24. The earlier V2 reader with vertical correction scored 11/48 on the same seed schedule. Each run retained aggregate counts, so the cross-run comparison has no per-query win/loss estimate. [EquivFlow results](../outputs/xemb-live-wave-20261121-r1/evidence/ms3-equiv-flow-summary.json) · [V2 results](../outputs/xemb-live-wave-20261121-r1/evidence/ms3-v2-summary.json)
 
 With exact 3D motion on the actual 15-control probe schedule and unequal axis gains, the committed SO(3) reader missed the injected rotation by 11.73°. A full linear solve recovered the transform to numerical precision. [CPU reference and controls](../outputs/xemb-stage2d-cpu-20261121-r1/RESULT.md)

@@ -1,0 +1,5 @@
+# Multi-arm and camera qualification
+
+All 14 combinations in the development panel passed on Baige Linux CPU at `33b4a312`. The test used LIBERO Goal 1, layout 13, seed 20500101. UR5e and IIWA each passed BASE and the five released S13, S14, S15, S16 and S19 variants. Kinova3 passed BASE and S15. The 15-control probes moved the IIWA tool 8.9 cm and the Kinova3 tool 8.6 cm along their measured paths on BASE. Both robot models reported seven joints.
+
+Each case reproduced its initial scene, views and robot state on an independent reset. For each camera comparison the paired BASE and shifted scenes agreed on physics. S15 moved the agent and wrist cameras by (0.10, −0.10, 0.07) m in their parent frames. S16 changed field of view and image geometry. S19's released RGB intensity and noise transform reproduced the observed pixels. These checks establish simulator and signal availability on one development layout. Native task success under a frozen policy is a separate endpoint. [All cell receipts](evidence/results.json) · [UR5e S15 readback](evidence/UR5e-S15/cell.json)

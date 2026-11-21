@@ -1,0 +1,756 @@
+{
+  "arm": "Kinova3",
+  "case": "S15",
+  "status": "passed",
+  "stage": "independent_query_reset",
+  "renderer": "llvmpipe (LLVM 15.0.7, 256 bits)",
+  "checks": {
+    "released_row_13": true,
+    "bddl_and_plan": true,
+    "compiled_arm": true,
+    "paired_released_row_fingerprint": true,
+    "paired_scene_fingerprint": true,
+    "paired_post_settle_scene_fingerprint": true,
+    "paired_initial_state_fingerprint": true,
+    "paired_tcp_jaw": true,
+    "paired_prompt": true,
+    "visible_change": true,
+    "camera_indices": true,
+    "extrinsics": true,
+    "both_views_changed": true,
+    "complete_probe": true,
+    "tool_motion": true,
+    "jaw_motion": true,
+    "image_motion": true,
+    "same_case_support_query": true
+  },
+  "support": {
+    "model": {
+      "arm": "Kinova3",
+      "model_class": "MountedKinova3",
+      "joint_count": 7,
+      "joint_names": [
+        "robot0_Actuator1",
+        "robot0_Actuator2",
+        "robot0_Actuator3",
+        "robot0_Actuator4",
+        "robot0_Actuator5",
+        "robot0_Actuator6",
+        "robot0_Actuator7"
+      ],
+      "joint_links": [
+        "robot0_shoulder_link",
+        "robot0_HalfArm1_Link",
+        "robot0_HalfArm2_Link",
+        "robot0_forearm_link",
+        "robot0_SphericalWrist1_Link",
+        "robot0_SphericalWrist2_Link",
+        "robot0_Bracelet_Link"
+      ],
+      "model_nq": 41,
+      "model_nv": 37,
+      "xml_sha256": "2884d72a0427223d333dc00fa2c199c3f86406184c234f436436c7d149002cd7",
+      "arm_meshes": [
+        "robot0_base_link",
+        "robot0_bracelet_with_vision_link",
+        "robot0_forearm_link",
+        "robot0_half_arm_1_link",
+        "robot0_half_arm_2_link",
+        "robot0_shoulder_link",
+        "robot0_spherical_wrist_1_link",
+        "robot0_spherical_wrist_2_link"
+      ],
+      "mount": "RethinkMount",
+      "base_xyz": [
+        -0.66,
+        0.0,
+        0.912
+      ],
+      "gripper": "PandaGripper",
+      "gripper_xml_sha256": "d9d68123909d6910488310d0fae4e358ed4ac831c6d0957f3e30893a5412baac",
+      "gripper_joints": [
+        "gripper0_finger_joint1",
+        "gripper0_finger_joint2"
+      ],
+      "tcp_site": "gripper0_grip_site",
+      "hand_link": "robot0_right_hand",
+      "cameras": [
+        "agentview",
+        "robot0_eye_in_hand"
+      ],
+      "wrist_parent": "robot0_right_hand",
+      "wrist_fovy_deg": 75.0,
+      "controller": "OSC_POSE",
+      "control_freq": 20,
+      "osc_output_max": [
+        0.05,
+        0.05,
+        0.05,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "robosuite": "1.4.0",
+      "mujoco": "3.2.3"
+    },
+    "reset": {
+      "source_pin": "e5500c690c1498eca1b7050350654964190cdf70",
+      "manifest_sha256": "71a6e4e25a2a4a162844d77136e7bff8e6f69c839d2d8194620c4afeabde2bba",
+      "bddl_sha256": "f5b6d5c0511cab56f88bc80859c6a0ddc4d78aa23144591744c04636d71b61e7",
+      "suite": "libero_goal",
+      "task_id": 1,
+      "init_state_id": 13,
+      "seed": 20500101,
+      "released_row_fingerprint": "2c47daced5bfc02f1f7451ee2c2e49931834b053bafee7c3999683c8170e5c30",
+      "scene_fingerprint": "2479bd56de2aa8e0ae62811b1f3e5e5898d54532e0d4ea0c1247198169de316c",
+      "post_settle_scene_fingerprint": "0aea2c822080c59460162d4807ab779b6e9793b40fbf8c530efb7831cb0a0504",
+      "post_settle_scene_errors": {
+        "max_position_m": 2.168404344971009e-19,
+        "position_body": "akita_black_bowl_1_main",
+        "max_rotation_rad": 2.4871859878844908e-17,
+        "rotation_body": "akita_black_bowl_1_main"
+      },
+      "initial_state_fingerprint": "c7abba34b00e70860d3d4b38be9d2eb6b676105e8ed4916a29752e7b382ea788",
+      "alignment": {
+        "method": "joint_limited_grip_site_ik",
+        "seed_qpos": [
+          0.0,
+          0.65,
+          0.0,
+          1.89,
+          0.0,
+          0.6,
+          -1.5707963267948966
+        ],
+        "qpos": [
+          -0.20836183412350906,
+          0.4658539699228828,
+          0.1782629803880039,
+          1.5958613002895863,
+          -0.09548532550084515,
+          1.1595519307789297,
+          -1.5368244388287033
+        ],
+        "position_error_m": 1.5385305441268577e-15,
+        "rotation_error_rad": 1.0086932208662962e-14,
+        "settled_tcp_error_m": 0.006449954118579626,
+        "settled_rotation_error_rad": 0.039447590708732605,
+        "settled_jaw_difference_m": 5.3010040801382274e-08
+      },
+      "perturbation_plan": {
+        "version": "libero_nonphysical_plan_v2",
+        "case_id": "S15",
+        "schedule": "static",
+        "operator": "camera_transform",
+        "variant": "fixed_extrinsics_or_cross_camera_calibration",
+        "trigger": "reset",
+        "targets": [
+          "agentview",
+          "robot0_eye_in_hand"
+        ],
+        "disturbance_targets": [],
+        "references": [],
+        "mechanisms": [
+          "camera"
+        ],
+        "assets": [],
+        "params": {
+          "interaction_mode": "placement",
+          "camera_offset_xyz": [
+            0.1,
+            -0.1,
+            0.07
+          ],
+          "camera_rotation_rpy": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "constraints": [],
+        "seed": 20500101,
+        "event_duration_steps": 24
+      },
+      "perturbation_plan_fingerprint": "6308fe091f68be203fbf4730553e6ce4e7d1285068459d3d7de866aadef01651"
+    },
+    "instruction": "put the bowl on the stove",
+    "tool": {
+      "tcp_xyz": [
+        -0.21280563489961843,
+        0.01766759689225448,
+        1.1605432950116537
+      ],
+      "tcp_matrix": [
+        [
+          -0.03820145806667327,
+          0.9967024367105835,
+          -0.07158841566040736
+        ],
+        [
+          0.9992437267787755,
+          0.038622369571416876,
+          0.00450411611246878
+        ],
+        [
+          0.00725417775119349,
+          -0.07136221145589552,
+          -0.9974240881797872
+        ]
+      ],
+      "jaw_opening": 0.07745834282484224
+    },
+    "public_sha256": {
+      "agentview_image": "46bc83e5eaac7eaefcd5609a55b324468f9ffc40d72789d7028b7c41c149fd0a",
+      "robot0_eye_in_hand_image": "27791833f94c44acf487ddf98de25e94fade3ff66fc6adcc5d1bd596fa87f3a1",
+      "robot0_joint_pos": "6920eb0118f0f78b791a9be92faf63c1f9b7c0d3d012128273d942623fcbf613",
+      "robot0_joint_vel": "a3b09335cf0ae96f67024b5e3f483874e29847506c5bc99ca07de821d38848af",
+      "robot0_eef_pos": "e1887fc7f9133da9ade8240992d907e039cde45b4d58361345b7294e395aac43",
+      "robot0_eef_quat_xyzw": "57391fd990ad63b0c8bd4c07cc68a514b6d8a264fb6cbbebeb5aafd36dd39a74",
+      "robot0_gripper_qpos": "bbf5a420c5139c5b31906291618520d42387338a3b5ebe9b6a5aa1ecdfd36c78"
+    }
+  },
+  "operator_measurements": {
+    "base_to_case_rgb_l1": {
+      "agentview_image": 27.9908504486084,
+      "robot0_eye_in_hand_image": 53.76093673706055
+    },
+    "camera_xyz_offset": [
+      [
+        0.09999999999999998,
+        -0.1,
+        0.07000000000000006
+      ],
+      [
+        0.10000000000000002,
+        -0.1,
+        0.07
+      ]
+    ]
+  },
+  "controls": [
+    {
+      "index": 1,
+      "issued": [
+        0.6200000047683716,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "tcp_xyz": [
+        -0.20958205347940562,
+        0.017737741372432114,
+        1.1601861825455386
+      ],
+      "jaw_opening": 0.07710680953326829,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 2,
+      "issued": [
+        0.6200000047683716,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "tcp_xyz": [
+        -0.20470975903123018,
+        0.017949967039051173,
+        1.1591072078783917
+      ],
+      "jaw_opening": 0.0734688011892321,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 3,
+      "issued": [
+        0.6200000047683716,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "tcp_xyz": [
+        -0.19962964447114265,
+        0.01823156298228589,
+        1.157799193047322
+      ],
+      "jaw_opening": 0.06706692459797209,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 4,
+      "issued": [
+        0.6200000047683716,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "tcp_xyz": [
+        -0.1943947635736732,
+        0.018538278366194948,
+        1.1564716826452508
+      ],
+      "jaw_opening": 0.059086971148300776,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 5,
+      "issued": [
+        0.6200000047683716,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "tcp_xyz": [
+        -0.18895758057864145,
+        0.018849682418830664,
+        1.1551699105738764
+      ],
+      "jaw_opening": 0.05022164739187119,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 6,
+      "issued": [
+        0.0,
+        0.6200000047683716,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "tcp_xyz": [
+        -0.1865583266658019,
+        0.02242662030156402,
+        1.1542800398399091
+      ],
+      "jaw_opening": 0.04407036251340396,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 7,
+      "issued": [
+        0.0,
+        0.6200000047683716,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "tcp_xyz": [
+        -0.18554959213480812,
+        0.027798395873166713,
+        1.1541918219404472
+      ],
+      "jaw_opening": 0.04372473996299528,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 8,
+      "issued": [
+        0.0,
+        0.6200000047683716,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "tcp_xyz": [
+        -0.1844885588576818,
+        0.03359498401142171,
+        1.1544209266566512
+      ],
+      "jaw_opening": 0.04698918387004175,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 9,
+      "issued": [
+        0.0,
+        0.6200000047683716,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "tcp_xyz": [
+        -0.18335417303870402,
+        0.039804750898469646,
+        1.1547586038521556
+      ],
+      "jaw_opening": 0.05315466219704464,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 10,
+      "issued": [
+        0.0,
+        0.6200000047683716,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "tcp_xyz": [
+        -0.18220958396020148,
+        0.04639438122679314,
+        1.1551360640400696
+      ],
+      "jaw_opening": 0.06099053998891116,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 11,
+      "issued": [
+        -0.3499999940395355,
+        -0.3499999940395355,
+        0.44999998807907104,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "tcp_xyz": [
+        -0.18299266638228753,
+        0.047964068284087016,
+        1.1583676474526707
+      ],
+      "jaw_opening": 0.06660001355910411,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 12,
+      "issued": [
+        -0.3499999940395355,
+        -0.3499999940395355,
+        0.44999998807907104,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "tcp_xyz": [
+        -0.18520257413468755,
+        0.04656293126219163,
+        1.1646869225171124
+      ],
+      "jaw_opening": 0.06674393268190118,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 13,
+      "issued": [
+        -0.3499999940395355,
+        -0.3499999940395355,
+        0.44999998807907104,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "tcp_xyz": [
+        -0.18779096162700923,
+        0.04457987829200937,
+        1.1716252615111977
+      ],
+      "jaw_opening": 0.0632685829567291,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 14,
+      "issued": [
+        -0.3499999940395355,
+        -0.3499999940395355,
+        0.44999998807907104,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "tcp_xyz": [
+        -0.1905974930759307,
+        0.04217594289003623,
+        1.1785796507953434
+      ],
+      "jaw_opening": 0.056961648385863504,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 15,
+      "issued": [
+        -0.3499999940395355,
+        -0.3499999940395355,
+        0.44999998807907104,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "tcp_xyz": [
+        -0.1936142023230685,
+        0.03938254722196227,
+        1.1854223012738794
+      ],
+      "jaw_opening": 0.049037444795444377,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    }
+  ],
+  "support_motion": {
+    "tcp_path_m": 0.08594698146612434,
+    "max_jaw_delta_m": 0.027236695432971046,
+    "rgb_l1": {
+      "agentview_image": 1.7638516028722127,
+      "robot0_eye_in_hand_image": 19.90123176574707
+    }
+  },
+  "query": {
+    "model": {
+      "arm": "Kinova3",
+      "model_class": "MountedKinova3",
+      "joint_count": 7,
+      "joint_names": [
+        "robot0_Actuator1",
+        "robot0_Actuator2",
+        "robot0_Actuator3",
+        "robot0_Actuator4",
+        "robot0_Actuator5",
+        "robot0_Actuator6",
+        "robot0_Actuator7"
+      ],
+      "joint_links": [
+        "robot0_shoulder_link",
+        "robot0_HalfArm1_Link",
+        "robot0_HalfArm2_Link",
+        "robot0_forearm_link",
+        "robot0_SphericalWrist1_Link",
+        "robot0_SphericalWrist2_Link",
+        "robot0_Bracelet_Link"
+      ],
+      "model_nq": 41,
+      "model_nv": 37,
+      "xml_sha256": "2884d72a0427223d333dc00fa2c199c3f86406184c234f436436c7d149002cd7",
+      "arm_meshes": [
+        "robot0_base_link",
+        "robot0_bracelet_with_vision_link",
+        "robot0_forearm_link",
+        "robot0_half_arm_1_link",
+        "robot0_half_arm_2_link",
+        "robot0_shoulder_link",
+        "robot0_spherical_wrist_1_link",
+        "robot0_spherical_wrist_2_link"
+      ],
+      "mount": "RethinkMount",
+      "base_xyz": [
+        -0.66,
+        0.0,
+        0.912
+      ],
+      "gripper": "PandaGripper",
+      "gripper_xml_sha256": "d9d68123909d6910488310d0fae4e358ed4ac831c6d0957f3e30893a5412baac",
+      "gripper_joints": [
+        "gripper0_finger_joint1",
+        "gripper0_finger_joint2"
+      ],
+      "tcp_site": "gripper0_grip_site",
+      "hand_link": "robot0_right_hand",
+      "cameras": [
+        "agentview",
+        "robot0_eye_in_hand"
+      ],
+      "wrist_parent": "robot0_right_hand",
+      "wrist_fovy_deg": 75.0,
+      "controller": "OSC_POSE",
+      "control_freq": 20,
+      "osc_output_max": [
+        0.05,
+        0.05,
+        0.05,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "robosuite": "1.4.0",
+      "mujoco": "3.2.3"
+    },
+    "reset": {
+      "source_pin": "e5500c690c1498eca1b7050350654964190cdf70",
+      "manifest_sha256": "71a6e4e25a2a4a162844d77136e7bff8e6f69c839d2d8194620c4afeabde2bba",
+      "bddl_sha256": "f5b6d5c0511cab56f88bc80859c6a0ddc4d78aa23144591744c04636d71b61e7",
+      "suite": "libero_goal",
+      "task_id": 1,
+      "init_state_id": 13,
+      "seed": 20500101,
+      "released_row_fingerprint": "2c47daced5bfc02f1f7451ee2c2e49931834b053bafee7c3999683c8170e5c30",
+      "scene_fingerprint": "2479bd56de2aa8e0ae62811b1f3e5e5898d54532e0d4ea0c1247198169de316c",
+      "post_settle_scene_fingerprint": "0aea2c822080c59460162d4807ab779b6e9793b40fbf8c530efb7831cb0a0504",
+      "post_settle_scene_errors": {
+        "max_position_m": 2.168404344971009e-19,
+        "position_body": "akita_black_bowl_1_main",
+        "max_rotation_rad": 2.4871859878844908e-17,
+        "rotation_body": "akita_black_bowl_1_main"
+      },
+      "initial_state_fingerprint": "c7abba34b00e70860d3d4b38be9d2eb6b676105e8ed4916a29752e7b382ea788",
+      "alignment": {
+        "method": "joint_limited_grip_site_ik",
+        "seed_qpos": [
+          0.0,
+          0.65,
+          0.0,
+          1.89,
+          0.0,
+          0.6,
+          -1.5707963267948966
+        ],
+        "qpos": [
+          -0.20836183412350906,
+          0.4658539699228828,
+          0.1782629803880039,
+          1.5958613002895863,
+          -0.09548532550084515,
+          1.1595519307789297,
+          -1.5368244388287033
+        ],
+        "position_error_m": 1.5385305441268577e-15,
+        "rotation_error_rad": 1.0086932208662962e-14,
+        "settled_tcp_error_m": 0.006449954118579626,
+        "settled_rotation_error_rad": 0.039447590708732605,
+        "settled_jaw_difference_m": 5.3010040801382274e-08
+      },
+      "perturbation_plan": {
+        "version": "libero_nonphysical_plan_v2",
+        "case_id": "S15",
+        "schedule": "static",
+        "operator": "camera_transform",
+        "variant": "fixed_extrinsics_or_cross_camera_calibration",
+        "trigger": "reset",
+        "targets": [
+          "agentview",
+          "robot0_eye_in_hand"
+        ],
+        "disturbance_targets": [],
+        "references": [],
+        "mechanisms": [
+          "camera"
+        ],
+        "assets": [],
+        "params": {
+          "interaction_mode": "placement",
+          "camera_offset_xyz": [
+            0.1,
+            -0.1,
+            0.07
+          ],
+          "camera_rotation_rpy": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "constraints": [],
+        "seed": 20500101,
+        "event_duration_steps": 24
+      },
+      "perturbation_plan_fingerprint": "6308fe091f68be203fbf4730553e6ce4e7d1285068459d3d7de866aadef01651"
+    },
+    "instruction": "put the bowl on the stove",
+    "tool": {
+      "tcp_xyz": [
+        -0.21280563489961843,
+        0.01766759689225448,
+        1.1605432950116537
+      ],
+      "tcp_matrix": [
+        [
+          -0.03820145806667327,
+          0.9967024367105835,
+          -0.07158841566040736
+        ],
+        [
+          0.9992437267787755,
+          0.038622369571416876,
+          0.00450411611246878
+        ],
+        [
+          0.00725417775119349,
+          -0.07136221145589552,
+          -0.9974240881797872
+        ]
+      ],
+      "jaw_opening": 0.07745834282484224
+    },
+    "public_sha256": {
+      "agentview_image": "46bc83e5eaac7eaefcd5609a55b324468f9ffc40d72789d7028b7c41c149fd0a",
+      "robot0_eye_in_hand_image": "27791833f94c44acf487ddf98de25e94fade3ff66fc6adcc5d1bd596fa87f3a1",
+      "robot0_joint_pos": "6920eb0118f0f78b791a9be92faf63c1f9b7c0d3d012128273d942623fcbf613",
+      "robot0_joint_vel": "a3b09335cf0ae96f67024b5e3f483874e29847506c5bc99ca07de821d38848af",
+      "robot0_eef_pos": "e1887fc7f9133da9ade8240992d907e039cde45b4d58361345b7294e395aac43",
+      "robot0_eef_quat_xyzw": "57391fd990ad63b0c8bd4c07cc68a514b6d8a264fb6cbbebeb5aafd36dd39a74",
+      "robot0_gripper_qpos": "bbf5a420c5139c5b31906291618520d42387338a3b5ebe9b6a5aa1ecdfd36c78"
+    }
+  },
+  "error": ""
+}

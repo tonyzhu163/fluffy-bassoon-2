@@ -1,0 +1,778 @@
+{
+  "arm": "UR5e",
+  "case": "S16",
+  "status": "passed",
+  "stage": "independent_query_reset",
+  "renderer": "llvmpipe (LLVM 15.0.7, 256 bits)",
+  "checks": {
+    "released_row_13": true,
+    "bddl_and_plan": true,
+    "compiled_arm": true,
+    "paired_released_row_fingerprint": true,
+    "paired_scene_fingerprint": true,
+    "paired_post_settle_scene_fingerprint": true,
+    "paired_initial_state_fingerprint": true,
+    "paired_tcp_jaw": true,
+    "paired_prompt": true,
+    "visible_change": true,
+    "camera_indices": true,
+    "fov": true,
+    "image_operator_agentview_image": true,
+    "image_operator_robot0_eye_in_hand_image": true,
+    "both_raw_views": true,
+    "complete_probe": true,
+    "tool_motion": true,
+    "jaw_motion": true,
+    "image_motion": true,
+    "same_case_support_query": true
+  },
+  "support": {
+    "model": {
+      "arm": "UR5e",
+      "model_class": "MountedUR5e",
+      "joint_count": 6,
+      "joint_names": [
+        "robot0_shoulder_pan_joint",
+        "robot0_shoulder_lift_joint",
+        "robot0_elbow_joint",
+        "robot0_wrist_1_joint",
+        "robot0_wrist_2_joint",
+        "robot0_wrist_3_joint"
+      ],
+      "joint_links": [
+        "robot0_shoulder_link",
+        "robot0_upper_arm_link",
+        "robot0_forearm_link",
+        "robot0_wrist_1_link",
+        "robot0_wrist_2_link",
+        "robot0_wrist_3_link"
+      ],
+      "model_nq": 40,
+      "model_nv": 36,
+      "xml_sha256": "1c9818566a7bbba89a2c848523e6e1eb72db204d91b8a05d0bff5bbb2a4ad316",
+      "arm_meshes": [
+        "robot0_base",
+        "robot0_base_vis_0",
+        "robot0_base_vis_1",
+        "robot0_forearm",
+        "robot0_forearm_vis_0",
+        "robot0_forearm_vis_1",
+        "robot0_forearm_vis_2",
+        "robot0_forearm_vis_3",
+        "robot0_shoulder",
+        "robot0_shoulder_vis_0",
+        "robot0_shoulder_vis_1",
+        "robot0_shoulder_vis_2",
+        "robot0_upperarm",
+        "robot0_upperarm_vis_0",
+        "robot0_upperarm_vis_1",
+        "robot0_upperarm_vis_2",
+        "robot0_upperarm_vis_3",
+        "robot0_wrist1",
+        "robot0_wrist1_vis_0",
+        "robot0_wrist1_vis_1",
+        "robot0_wrist1_vis_2",
+        "robot0_wrist2",
+        "robot0_wrist2_vis_0",
+        "robot0_wrist2_vis_1",
+        "robot0_wrist2_vis_2",
+        "robot0_wrist3",
+        "robot0_wrist3_vis"
+      ],
+      "mount": "RethinkMount",
+      "base_xyz": [
+        -0.66,
+        0.0,
+        0.912
+      ],
+      "gripper": "PandaGripper",
+      "gripper_xml_sha256": "d9d68123909d6910488310d0fae4e358ed4ac831c6d0957f3e30893a5412baac",
+      "gripper_joints": [
+        "gripper0_finger_joint1",
+        "gripper0_finger_joint2"
+      ],
+      "tcp_site": "gripper0_grip_site",
+      "hand_link": "robot0_right_hand",
+      "cameras": [
+        "agentview",
+        "robot0_eye_in_hand"
+      ],
+      "wrist_parent": "robot0_right_hand",
+      "wrist_fovy_deg": 100.0,
+      "controller": "OSC_POSE",
+      "control_freq": 20,
+      "osc_output_max": [
+        0.05,
+        0.05,
+        0.05,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "robosuite": "1.4.0",
+      "mujoco": "3.2.3"
+    },
+    "reset": {
+      "source_pin": "e5500c690c1498eca1b7050350654964190cdf70",
+      "manifest_sha256": "71a6e4e25a2a4a162844d77136e7bff8e6f69c839d2d8194620c4afeabde2bba",
+      "bddl_sha256": "60d8c2ef188659aea3ad2f2d36208a9ca1f40314d7eafb6f3464526c4f8f5e40",
+      "suite": "libero_goal",
+      "task_id": 1,
+      "init_state_id": 13,
+      "seed": 20500101,
+      "released_row_fingerprint": "2c47daced5bfc02f1f7451ee2c2e49931834b053bafee7c3999683c8170e5c30",
+      "scene_fingerprint": "2479bd56de2aa8e0ae62811b1f3e5e5898d54532e0d4ea0c1247198169de316c",
+      "post_settle_scene_fingerprint": "3a75c440511bc8324ccdb318826d82100da3988505c32350ca168623e256170e",
+      "post_settle_scene_errors": {
+        "max_position_m": 0.0,
+        "position_body": "akita_black_bowl_1_main",
+        "max_rotation_rad": 1.8280224792497665e-17,
+        "rotation_body": "plate_1_main"
+      },
+      "initial_state_fingerprint": "1ea99e86a84faf81bdc0411232e784e8015b1cadb85eaa77b4148edde16576e9",
+      "alignment": {
+        "method": "joint_limited_grip_site_ik",
+        "seed_qpos": [
+          -0.47,
+          -1.735,
+          2.48,
+          -2.275,
+          -1.59,
+          -1.991
+        ],
+        "qpos": [
+          -0.25823593948823037,
+          -1.6305883060643491,
+          1.9880568925157254,
+          -1.857834950492508,
+          -1.5847239289871204,
+          -1.86701253362669
+        ],
+        "position_error_m": 1.1631705747361534e-16,
+        "rotation_error_rad": 8.255877954375458e-17,
+        "settled_tcp_error_m": 0.006449953652918339,
+        "settled_rotation_error_rad": 0.039447590708732605,
+        "settled_jaw_difference_m": 5.2943605055588705e-08
+      },
+      "perturbation_plan": {
+        "version": "libero_nonphysical_plan_v2",
+        "case_id": "S16",
+        "schedule": "static",
+        "operator": "camera_transform",
+        "variant": "intrinsics_fov_resolution_crop_or_distortion",
+        "trigger": "reset",
+        "targets": [
+          "agentview",
+          "robot0_eye_in_hand"
+        ],
+        "disturbance_targets": [],
+        "references": [],
+        "mechanisms": [
+          "camera_intrinsics",
+          "observation"
+        ],
+        "assets": [],
+        "params": {
+          "interaction_mode": "placement",
+          "fov_scale": 1.35,
+          "image_shift_xy": [
+            0.1,
+            -0.1
+          ],
+          "crop_ratio": 0.04,
+          "distortion_strength": 0.04
+        },
+        "constraints": [],
+        "seed": 20500101,
+        "event_duration_steps": 24
+      },
+      "perturbation_plan_fingerprint": "a89fc9f84e4ca8d4c71b4699ba1682df15af111b9929cd709b6772e4bd6773f7"
+    },
+    "instruction": "put the bowl on the stove",
+    "tool": {
+      "tcp_xyz": [
+        -0.21280563496730381,
+        0.017667596205748384,
+        1.1605432948972076
+      ],
+      "tcp_matrix": [
+        [
+          -0.03820145732666513,
+          0.996702436729679,
+          -0.07158841578942134
+        ],
+        [
+          0.9992437268115418,
+          0.038622368789851265,
+          0.00450411554484767
+        ],
+        [
+          0.0072541771345619455,
+          -0.07136221161217474,
+          -0.9974240881730897
+        ]
+      ],
+      "jaw_opening": 0.07745834275840542
+    },
+    "public_sha256": {
+      "agentview_image": "e314ad72ceea7f0cc97318dc1c9872647e626da88512e8911b89d4e88d63e8d1",
+      "robot0_eye_in_hand_image": "d6ce063ab3a601023523240f94f815ab4970f85290a881c4d2c4011acdd16738",
+      "robot0_joint_pos": "fb53d73099453b0b3b736814f0965054d5d8b1c3ab7bc4892f086f5e93f0f490",
+      "robot0_joint_vel": "73e9bb39dfbaeeb511c822befdeb08c160685855e4942f9be9ccf0e6451fa8c7",
+      "robot0_eef_pos": "01ac741b60d4e2bf366f0326639e74e758948c522c47f23402b25ea0c13f101b",
+      "robot0_eef_quat_xyzw": "6468ec0d8550bf6a8c8cc487d9887851fa89c8d3b48f9c1b18804b0d6fd298d1",
+      "robot0_gripper_qpos": "bbf5a420c5139c5b31906291618520d42387338a3b5ebe9b6a5aa1ecdfd36c78"
+    }
+  },
+  "operator_measurements": {
+    "base_to_case_rgb_l1": {
+      "agentview_image": 38.77949905395508,
+      "robot0_eye_in_hand_image": 63.806819915771484
+    },
+    "fovy_deg": [
+      60.75000000000001,
+      100.0
+    ],
+    "image_space_l1_agentview_image": 34.01356506347656,
+    "image_space_l1_robot0_eye_in_hand_image": 51.968807220458984
+  },
+  "controls": [
+    {
+      "index": 1,
+      "issued": [
+        0.6200000047683716,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "tcp_xyz": [
+        -0.20915038498348063,
+        0.01754955065400902,
+        1.160064515174025
+      ],
+      "jaw_opening": 0.07710688656608941,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 2,
+      "issued": [
+        0.6200000047683716,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "tcp_xyz": [
+        -0.20301083794164726,
+        0.017234791136900674,
+        1.1586445362841025
+      ],
+      "jaw_opening": 0.07346919574123807,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 3,
+      "issued": [
+        0.6200000047683716,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "tcp_xyz": [
+        -0.19636052087089584,
+        0.016940642161989868,
+        1.1569880945690167
+      ],
+      "jaw_opening": 0.06706759190836717,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 4,
+      "issued": [
+        0.6200000047683716,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "tcp_xyz": [
+        -0.18946944418835024,
+        0.01674866948858616,
+        1.1553963767207729
+      ],
+      "jaw_opening": 0.05908768806585235,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 5,
+      "issued": [
+        0.6200000047683716,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "tcp_xyz": [
+        -0.18238273482790152,
+        0.016666625141372363,
+        1.1539546390745195
+      ],
+      "jaw_opening": 0.05022226763065895,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 6,
+      "issued": [
+        0.0,
+        0.6200000047683716,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "tcp_xyz": [
+        -0.17884717325353564,
+        0.020328175561577535,
+        1.153271295382571
+      ],
+      "jaw_opening": 0.044070553508130404,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 7,
+      "issued": [
+        0.0,
+        0.6200000047683716,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "tcp_xyz": [
+        -0.17777026558244002,
+        0.02658757559149909,
+        1.153876243437648
+      ],
+      "jaw_opening": 0.04372480683899306,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 8,
+      "issued": [
+        0.0,
+        0.6200000047683716,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "tcp_xyz": [
+        -0.177068284935418,
+        0.033537435876933204,
+        1.1548621359761775
+      ],
+      "jaw_opening": 0.04698540299715154,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 9,
+      "issued": [
+        0.0,
+        0.6200000047683716,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "tcp_xyz": [
+        -0.17645252113333498,
+        0.04089429387978797,
+        1.1558438673938933
+      ],
+      "jaw_opening": 0.05314367471820332,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 10,
+      "issued": [
+        0.0,
+        0.6200000047683716,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "tcp_xyz": [
+        -0.1759020112698093,
+        0.04855874246781724,
+        1.1567136717803126
+      ],
+      "jaw_opening": 0.060972971479056864,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 11,
+      "issued": [
+        -0.3499999940395355,
+        -0.3499999940395355,
+        0.44999998807907104,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "tcp_xyz": [
+        -0.17761649955756995,
+        0.05103164545115035,
+        1.160346485797522
+      ],
+      "jaw_opening": 0.0665828482327687,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 12,
+      "issued": [
+        -0.3499999940395355,
+        -0.3499999940395355,
+        0.44999998807907104,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "tcp_xyz": [
+        -0.18108132989412645,
+        0.05015547470050265,
+        1.1661477331258956
+      ],
+      "jaw_opening": 0.06673164155709123,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 13,
+      "issued": [
+        -0.3499999940395355,
+        -0.3499999940395355,
+        0.44999998807907104,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "tcp_xyz": [
+        -0.18497901775046896,
+        0.048295284598648416,
+        1.1723549373711895
+      ],
+      "jaw_opening": 0.06326119981565204,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 14,
+      "issued": [
+        -0.3499999940395355,
+        -0.3499999940395355,
+        0.44999998807907104,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "tcp_xyz": [
+        -0.18907124999654182,
+        0.04571726480707883,
+        1.1786158877225827
+      ],
+      "jaw_opening": 0.056958448399135206,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    },
+    {
+      "index": 15,
+      "issued": [
+        -0.3499999940395355,
+        -0.3499999940395355,
+        0.44999998807907104,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "tcp_xyz": [
+        -0.19331586901696884,
+        0.04256229908177861,
+        1.1848384722436485
+      ],
+      "jaw_opening": 0.049038239698936954,
+      "reward": 0.0,
+      "success": false,
+      "terminated": false,
+      "truncated": false
+    }
+  ],
+  "support_motion": {
+    "tcp_path_m": 0.0974234407239779,
+    "max_jaw_delta_m": 0.02723607512774647,
+    "rgb_l1": {
+      "agentview_image": 1.9306064049402873,
+      "robot0_eye_in_hand_image": 14.530993779500326
+    }
+  },
+  "query": {
+    "model": {
+      "arm": "UR5e",
+      "model_class": "MountedUR5e",
+      "joint_count": 6,
+      "joint_names": [
+        "robot0_shoulder_pan_joint",
+        "robot0_shoulder_lift_joint",
+        "robot0_elbow_joint",
+        "robot0_wrist_1_joint",
+        "robot0_wrist_2_joint",
+        "robot0_wrist_3_joint"
+      ],
+      "joint_links": [
+        "robot0_shoulder_link",
+        "robot0_upper_arm_link",
+        "robot0_forearm_link",
+        "robot0_wrist_1_link",
+        "robot0_wrist_2_link",
+        "robot0_wrist_3_link"
+      ],
+      "model_nq": 40,
+      "model_nv": 36,
+      "xml_sha256": "1c9818566a7bbba89a2c848523e6e1eb72db204d91b8a05d0bff5bbb2a4ad316",
+      "arm_meshes": [
+        "robot0_base",
+        "robot0_base_vis_0",
+        "robot0_base_vis_1",
+        "robot0_forearm",
+        "robot0_forearm_vis_0",
+        "robot0_forearm_vis_1",
+        "robot0_forearm_vis_2",
+        "robot0_forearm_vis_3",
+        "robot0_shoulder",
+        "robot0_shoulder_vis_0",
+        "robot0_shoulder_vis_1",
+        "robot0_shoulder_vis_2",
+        "robot0_upperarm",
+        "robot0_upperarm_vis_0",
+        "robot0_upperarm_vis_1",
+        "robot0_upperarm_vis_2",
+        "robot0_upperarm_vis_3",
+        "robot0_wrist1",
+        "robot0_wrist1_vis_0",
+        "robot0_wrist1_vis_1",
+        "robot0_wrist1_vis_2",
+        "robot0_wrist2",
+        "robot0_wrist2_vis_0",
+        "robot0_wrist2_vis_1",
+        "robot0_wrist2_vis_2",
+        "robot0_wrist3",
+        "robot0_wrist3_vis"
+      ],
+      "mount": "RethinkMount",
+      "base_xyz": [
+        -0.66,
+        0.0,
+        0.912
+      ],
+      "gripper": "PandaGripper",
+      "gripper_xml_sha256": "d9d68123909d6910488310d0fae4e358ed4ac831c6d0957f3e30893a5412baac",
+      "gripper_joints": [
+        "gripper0_finger_joint1",
+        "gripper0_finger_joint2"
+      ],
+      "tcp_site": "gripper0_grip_site",
+      "hand_link": "robot0_right_hand",
+      "cameras": [
+        "agentview",
+        "robot0_eye_in_hand"
+      ],
+      "wrist_parent": "robot0_right_hand",
+      "wrist_fovy_deg": 100.0,
+      "controller": "OSC_POSE",
+      "control_freq": 20,
+      "osc_output_max": [
+        0.05,
+        0.05,
+        0.05,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "robosuite": "1.4.0",
+      "mujoco": "3.2.3"
+    },
+    "reset": {
+      "source_pin": "e5500c690c1498eca1b7050350654964190cdf70",
+      "manifest_sha256": "71a6e4e25a2a4a162844d77136e7bff8e6f69c839d2d8194620c4afeabde2bba",
+      "bddl_sha256": "60d8c2ef188659aea3ad2f2d36208a9ca1f40314d7eafb6f3464526c4f8f5e40",
+      "suite": "libero_goal",
+      "task_id": 1,
+      "init_state_id": 13,
+      "seed": 20500101,
+      "released_row_fingerprint": "2c47daced5bfc02f1f7451ee2c2e49931834b053bafee7c3999683c8170e5c30",
+      "scene_fingerprint": "2479bd56de2aa8e0ae62811b1f3e5e5898d54532e0d4ea0c1247198169de316c",
+      "post_settle_scene_fingerprint": "3a75c440511bc8324ccdb318826d82100da3988505c32350ca168623e256170e",
+      "post_settle_scene_errors": {
+        "max_position_m": 0.0,
+        "position_body": "akita_black_bowl_1_main",
+        "max_rotation_rad": 1.8280224792497665e-17,
+        "rotation_body": "plate_1_main"
+      },
+      "initial_state_fingerprint": "1ea99e86a84faf81bdc0411232e784e8015b1cadb85eaa77b4148edde16576e9",
+      "alignment": {
+        "method": "joint_limited_grip_site_ik",
+        "seed_qpos": [
+          -0.47,
+          -1.735,
+          2.48,
+          -2.275,
+          -1.59,
+          -1.991
+        ],
+        "qpos": [
+          -0.25823593948823037,
+          -1.6305883060643491,
+          1.9880568925157254,
+          -1.857834950492508,
+          -1.5847239289871204,
+          -1.86701253362669
+        ],
+        "position_error_m": 1.1631705747361534e-16,
+        "rotation_error_rad": 8.255877954375458e-17,
+        "settled_tcp_error_m": 0.006449953652918339,
+        "settled_rotation_error_rad": 0.039447590708732605,
+        "settled_jaw_difference_m": 5.2943605055588705e-08
+      },
+      "perturbation_plan": {
+        "version": "libero_nonphysical_plan_v2",
+        "case_id": "S16",
+        "schedule": "static",
+        "operator": "camera_transform",
+        "variant": "intrinsics_fov_resolution_crop_or_distortion",
+        "trigger": "reset",
+        "targets": [
+          "agentview",
+          "robot0_eye_in_hand"
+        ],
+        "disturbance_targets": [],
+        "references": [],
+        "mechanisms": [
+          "camera_intrinsics",
+          "observation"
+        ],
+        "assets": [],
+        "params": {
+          "interaction_mode": "placement",
+          "fov_scale": 1.35,
+          "image_shift_xy": [
+            0.1,
+            -0.1
+          ],
+          "crop_ratio": 0.04,
+          "distortion_strength": 0.04
+        },
+        "constraints": [],
+        "seed": 20500101,
+        "event_duration_steps": 24
+      },
+      "perturbation_plan_fingerprint": "a89fc9f84e4ca8d4c71b4699ba1682df15af111b9929cd709b6772e4bd6773f7"
+    },
+    "instruction": "put the bowl on the stove",
+    "tool": {
+      "tcp_xyz": [
+        -0.21280563496730381,
+        0.017667596205748384,
+        1.1605432948972076
+      ],
+      "tcp_matrix": [
+        [
+          -0.03820145732666513,
+          0.996702436729679,
+          -0.07158841578942134
+        ],
+        [
+          0.9992437268115418,
+          0.038622368789851265,
+          0.00450411554484767
+        ],
+        [
+          0.0072541771345619455,
+          -0.07136221161217474,
+          -0.9974240881730897
+        ]
+      ],
+      "jaw_opening": 0.07745834275840542
+    },
+    "public_sha256": {
+      "agentview_image": "e314ad72ceea7f0cc97318dc1c9872647e626da88512e8911b89d4e88d63e8d1",
+      "robot0_eye_in_hand_image": "d6ce063ab3a601023523240f94f815ab4970f85290a881c4d2c4011acdd16738",
+      "robot0_joint_pos": "fb53d73099453b0b3b736814f0965054d5d8b1c3ab7bc4892f086f5e93f0f490",
+      "robot0_joint_vel": "73e9bb39dfbaeeb511c822befdeb08c160685855e4942f9be9ccf0e6451fa8c7",
+      "robot0_eef_pos": "01ac741b60d4e2bf366f0326639e74e758948c522c47f23402b25ea0c13f101b",
+      "robot0_eef_quat_xyzw": "6468ec0d8550bf6a8c8cc487d9887851fa89c8d3b48f9c1b18804b0d6fd298d1",
+      "robot0_gripper_qpos": "bbf5a420c5139c5b31906291618520d42387338a3b5ebe9b6a5aa1ecdfd36c78"
+    }
+  },
+  "error": ""
+}
