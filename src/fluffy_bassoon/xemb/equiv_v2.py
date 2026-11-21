@@ -293,7 +293,7 @@ def procrustes_so3(commands_3d, vectors_3d, weights, has_valid):
     eye = jnp.eye(3, dtype=jnp.float32)[None]
     h_norm = jnp.sqrt(jnp.sum(jnp.square(h_mat), axis=(-1, -2), keepdims=True) + 1e-12)
     h_safe = jnp.where(has_valid[:, None, None] & (h_norm > 1e-6), h_mat, eye)
-    u, _, vt = jnp.linalg.svd(h_safe, full_matrices=True)
+    u, _, vt = jnp.linalg.svd(h_safe, full_matrices=False)
     uvt = jnp.matmul(u, vt)
     det_sign = jnp.where(jnp.linalg.det(uvt) >= 0.0, 1.0, -1.0)
     d = jnp.stack(
