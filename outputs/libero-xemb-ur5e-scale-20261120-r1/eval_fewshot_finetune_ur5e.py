@@ -85,7 +85,7 @@ def collect_oracle_demo(simulator, policy, suite: str, task_id: int, init_state_
         step = simulator.call("chunk", issued)
         raw = step["observation"]
         controls += int(step["steps"])
-        done = bool(step["done"])
+        done = bool(step["terminated"] or step["truncated"])
         success = bool(step["success"])
     return success, np.asarray(a_vlas, dtype=np.float32), np.asarray(states, dtype=np.float32), np.asarray(a_targets, dtype=np.float32)
 
@@ -176,7 +176,7 @@ def eval_with_adapter(simulator, policy, suite: str, task_id: int, init_state_id
         step = simulator.call("chunk", issued)
         raw = step["observation"]
         controls += int(step["steps"])
-        done = bool(step["done"])
+        done = bool(step["terminated"] or step["truncated"])
         success = bool(step["success"])
     return success
 
