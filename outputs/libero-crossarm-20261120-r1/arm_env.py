@@ -98,7 +98,7 @@ def _identity(env, arm, case_id="BASE"):
     if case_id == "S16":
         plan = env.get_perturbation_plan()
         if CAMERAS[1] in plan["targets"]:
-            wrist_fovy = np.clip(wrist_fovy * float(plan["params"]["fov_scale"]), 20, 100)
+            wrist_fovy = np.clip(wrist_fovy * float(plan["params"].get("fov_scale", 1.12)), 20, 100)
     if (model.cam_bodyid[wrist_id] != hand_id or not np.isclose(model.cam_fovy[wrist_id], wrist_fovy)
             or model.cam_bodyid[view_id] == hand_id):
         raise RuntimeError("Camera parent or field of view differs from the physical LIBERO camera contract")

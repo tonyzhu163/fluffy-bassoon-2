@@ -1,0 +1,657 @@
+{
+  "split": "official_test",
+  "arm": "IIWA",
+  "trials": 96,
+  "arms": [
+    "privileged_oracle",
+    "ours_equiv_v2_passive",
+    "ours_equiv_homog_active",
+    "ours_equiv_homog_passive",
+    "ours_equiv_v2_online",
+    "analytic_visual_hs_passive",
+    "dense_flow_dis_active",
+    "dense_flow_dis_passive",
+    "broyden_uvs_dis_active",
+    "reground_babbling",
+    "perceiver_icba_passive",
+    "ours_v2_swapped"
+  ],
+  "by_regime": {
+    "familiar": {
+      "trials": 32,
+      "successes": {
+        "privileged_oracle": 28,
+        "ours_equiv_v2_passive": 24,
+        "ours_equiv_homog_active": 27,
+        "ours_equiv_homog_passive": 18,
+        "ours_equiv_v2_online": 16,
+        "analytic_visual_hs_passive": 16,
+        "dense_flow_dis_active": 9,
+        "dense_flow_dis_passive": 13,
+        "broyden_uvs_dis_active": 9,
+        "reground_babbling": 5,
+        "perceiver_icba_passive": 29,
+        "ours_v2_swapped": 0
+      },
+      "rates": {
+        "privileged_oracle": 0.875,
+        "ours_equiv_v2_passive": 0.75,
+        "ours_equiv_homog_active": 0.8438,
+        "ours_equiv_homog_passive": 0.5625,
+        "ours_equiv_v2_online": 0.5,
+        "analytic_visual_hs_passive": 0.5,
+        "dense_flow_dis_active": 0.2812,
+        "dense_flow_dis_passive": 0.4062,
+        "broyden_uvs_dis_active": 0.2812,
+        "reground_babbling": 0.1562,
+        "perceiver_icba_passive": 0.9062,
+        "ours_v2_swapped": 0.0
+      }
+    },
+    "compositional_ood": {
+      "trials": 32,
+      "successes": {
+        "privileged_oracle": 28,
+        "ours_equiv_v2_passive": 25,
+        "ours_equiv_homog_active": 22,
+        "ours_equiv_homog_passive": 19,
+        "ours_equiv_v2_online": 2,
+        "analytic_visual_hs_passive": 17,
+        "dense_flow_dis_active": 14,
+        "dense_flow_dis_passive": 3,
+        "broyden_uvs_dis_active": 11,
+        "reground_babbling": 0,
+        "perceiver_icba_passive": 0,
+        "ours_v2_swapped": 0
+      },
+      "rates": {
+        "privileged_oracle": 0.875,
+        "ours_equiv_v2_passive": 0.7812,
+        "ours_equiv_homog_active": 0.6875,
+        "ours_equiv_homog_passive": 0.5938,
+        "ours_equiv_v2_online": 0.0625,
+        "analytic_visual_hs_passive": 0.5312,
+        "dense_flow_dis_active": 0.4375,
+        "dense_flow_dis_passive": 0.0938,
+        "broyden_uvs_dis_active": 0.3438,
+        "reground_babbling": 0.0,
+        "perceiver_icba_passive": 0.0,
+        "ours_v2_swapped": 0.0
+      }
+    },
+    "continuous_angle_ood": {
+      "trials": 32,
+      "successes": {
+        "privileged_oracle": 29,
+        "ours_equiv_v2_passive": 27,
+        "ours_equiv_homog_active": 9,
+        "ours_equiv_homog_passive": 22,
+        "ours_equiv_v2_online": 8,
+        "analytic_visual_hs_passive": 19,
+        "dense_flow_dis_active": 11,
+        "dense_flow_dis_passive": 14,
+        "broyden_uvs_dis_active": 6,
+        "reground_babbling": 1,
+        "perceiver_icba_passive": 5,
+        "ours_v2_swapped": 1
+      },
+      "rates": {
+        "privileged_oracle": 0.9062,
+        "ours_equiv_v2_passive": 0.8438,
+        "ours_equiv_homog_active": 0.2812,
+        "ours_equiv_homog_passive": 0.6875,
+        "ours_equiv_v2_online": 0.25,
+        "analytic_visual_hs_passive": 0.5938,
+        "dense_flow_dis_active": 0.3438,
+        "dense_flow_dis_passive": 0.4375,
+        "broyden_uvs_dis_active": 0.1875,
+        "reground_babbling": 0.0312,
+        "perceiver_icba_passive": 0.1562,
+        "ours_v2_swapped": 0.0312
+      }
+    },
+    "ood_combined": {
+      "trials": 64,
+      "successes": {
+        "privileged_oracle": 57,
+        "ours_equiv_v2_passive": 52,
+        "ours_equiv_homog_active": 31,
+        "ours_equiv_homog_passive": 41,
+        "ours_equiv_v2_online": 10,
+        "analytic_visual_hs_passive": 36,
+        "dense_flow_dis_active": 25,
+        "dense_flow_dis_passive": 17,
+        "broyden_uvs_dis_active": 17,
+        "reground_babbling": 1,
+        "perceiver_icba_passive": 5,
+        "ours_v2_swapped": 1
+      },
+      "rates": {
+        "privileged_oracle": 0.8906,
+        "ours_equiv_v2_passive": 0.8125,
+        "ours_equiv_homog_active": 0.4844,
+        "ours_equiv_homog_passive": 0.6406,
+        "ours_equiv_v2_online": 0.1562,
+        "analytic_visual_hs_passive": 0.5625,
+        "dense_flow_dis_active": 0.3906,
+        "dense_flow_dis_passive": 0.2656,
+        "broyden_uvs_dis_active": 0.2656,
+        "reground_babbling": 0.0156,
+        "perceiver_icba_passive": 0.0781,
+        "ours_v2_swapped": 0.0156
+      }
+    },
+    "shifted": {
+      "trials": 88,
+      "successes": {
+        "privileged_oracle": 78,
+        "ours_equiv_v2_passive": 71,
+        "ours_equiv_homog_active": 51,
+        "ours_equiv_homog_passive": 55,
+        "ours_equiv_v2_online": 22,
+        "analytic_visual_hs_passive": 48,
+        "dense_flow_dis_active": 32,
+        "dense_flow_dis_passive": 26,
+        "broyden_uvs_dis_active": 25,
+        "reground_babbling": 5,
+        "perceiver_icba_passive": 27,
+        "ours_v2_swapped": 1
+      },
+      "rates": {
+        "privileged_oracle": 0.8864,
+        "ours_equiv_v2_passive": 0.8068,
+        "ours_equiv_homog_active": 0.5795,
+        "ours_equiv_homog_passive": 0.625,
+        "ours_equiv_v2_online": 0.25,
+        "analytic_visual_hs_passive": 0.5455,
+        "dense_flow_dis_active": 0.3636,
+        "dense_flow_dis_passive": 0.2955,
+        "broyden_uvs_dis_active": 0.2841,
+        "reground_babbling": 0.0568,
+        "perceiver_icba_passive": 0.3068,
+        "ours_v2_swapped": 0.0114
+      }
+    },
+    "overall": {
+      "trials": 96,
+      "successes": {
+        "privileged_oracle": 85,
+        "ours_equiv_v2_passive": 76,
+        "ours_equiv_homog_active": 58,
+        "ours_equiv_homog_passive": 59,
+        "ours_equiv_v2_online": 26,
+        "analytic_visual_hs_passive": 52,
+        "dense_flow_dis_active": 34,
+        "dense_flow_dis_passive": 30,
+        "broyden_uvs_dis_active": 26,
+        "reground_babbling": 6,
+        "perceiver_icba_passive": 34,
+        "ours_v2_swapped": 1
+      },
+      "rates": {
+        "privileged_oracle": 0.8854,
+        "ours_equiv_v2_passive": 0.7917,
+        "ours_equiv_homog_active": 0.6042,
+        "ours_equiv_homog_passive": 0.6146,
+        "ours_equiv_v2_online": 0.2708,
+        "analytic_visual_hs_passive": 0.5417,
+        "dense_flow_dis_active": 0.3542,
+        "dense_flow_dis_passive": 0.3125,
+        "broyden_uvs_dis_active": 0.2708,
+        "reground_babbling": 0.0625,
+        "perceiver_icba_passive": 0.3542,
+        "ours_v2_swapped": 0.0104
+      }
+    }
+  },
+  "paired_contrasts_overall": {
+    "ours_equiv_v2_passive": {
+      "privileged_oracle": {
+        "mean_diff": -0.09375,
+        "ci95": [
+          -0.1875,
+          -0.010416666666666666
+        ],
+        "wins": 3,
+        "losses": 12,
+        "ties": 81
+      },
+      "ours_equiv_homog_active": {
+        "mean_diff": 0.1875,
+        "ci95": [
+          0.08333333333333333,
+          0.28151041666666526
+        ],
+        "wins": 28,
+        "losses": 10,
+        "ties": 58
+      },
+      "ours_equiv_homog_passive": {
+        "mean_diff": 0.17708333333333334,
+        "ci95": [
+          0.09375,
+          0.2604166666666667
+        ],
+        "wins": 22,
+        "losses": 5,
+        "ties": 69
+      },
+      "ours_equiv_v2_online": {
+        "mean_diff": 0.5208333333333334,
+        "ci95": [
+          0.3854166666666667,
+          0.6666666666666666
+        ],
+        "wins": 54,
+        "losses": 4,
+        "ties": 38
+      },
+      "analytic_visual_hs_passive": {
+        "mean_diff": 0.25,
+        "ci95": [
+          0.18723958333333335,
+          0.3125
+        ],
+        "wins": 27,
+        "losses": 3,
+        "ties": 66
+      },
+      "dense_flow_dis_active": {
+        "mean_diff": 0.4375,
+        "ci95": [
+          0.3125,
+          0.5729166666666666
+        ],
+        "wins": 48,
+        "losses": 6,
+        "ties": 42
+      },
+      "dense_flow_dis_passive": {
+        "mean_diff": 0.4791666666666667,
+        "ci95": [
+          0.4375,
+          0.5
+        ],
+        "wins": 49,
+        "losses": 3,
+        "ties": 44
+      },
+      "broyden_uvs_dis_active": {
+        "mean_diff": 0.5208333333333334,
+        "ci95": [
+          0.375,
+          0.6458333333333334
+        ],
+        "wins": 53,
+        "losses": 3,
+        "ties": 40
+      },
+      "reground_babbling": {
+        "mean_diff": 0.7291666666666666,
+        "ci95": [
+          0.5833333333333334,
+          0.84375
+        ],
+        "wins": 70,
+        "losses": 0,
+        "ties": 26
+      },
+      "perceiver_icba_passive": {
+        "mean_diff": 0.4375,
+        "ci95": [
+          0.34375,
+          0.53125
+        ],
+        "wins": 48,
+        "losses": 6,
+        "ties": 42
+      },
+      "ours_v2_swapped": {
+        "mean_diff": 0.78125,
+        "ci95": [
+          0.6145833333333334,
+          0.9166666666666666
+        ],
+        "wins": 75,
+        "losses": 0,
+        "ties": 21
+      }
+    },
+    "ours_equiv_homog_active": {
+      "privileged_oracle": {
+        "mean_diff": -0.28125,
+        "ci95": [
+          -0.3958333333333333,
+          -0.17708333333333334
+        ],
+        "wins": 2,
+        "losses": 29,
+        "ties": 65
+      },
+      "ours_equiv_v2_passive": {
+        "mean_diff": -0.1875,
+        "ci95": [
+          -0.28151041666666665,
+          -0.08333333333333333
+        ],
+        "wins": 10,
+        "losses": 28,
+        "ties": 58
+      },
+      "ours_equiv_homog_passive": {
+        "mean_diff": -0.010416666666666666,
+        "ci95": [
+          -0.1356770833333333,
+          0.10416666666666667
+        ],
+        "wins": 20,
+        "losses": 21,
+        "ties": 55
+      },
+      "ours_equiv_v2_online": {
+        "mean_diff": 0.3333333333333333,
+        "ci95": [
+          0.22916666666666666,
+          0.4375
+        ],
+        "wins": 37,
+        "losses": 5,
+        "ties": 54
+      },
+      "analytic_visual_hs_passive": {
+        "mean_diff": 0.0625,
+        "ci95": [
+          -0.010416666666666666,
+          0.14583333333333334
+        ],
+        "wins": 25,
+        "losses": 19,
+        "ties": 52
+      },
+      "dense_flow_dis_active": {
+        "mean_diff": 0.25,
+        "ci95": [
+          0.15625,
+          0.34375
+        ],
+        "wins": 39,
+        "losses": 15,
+        "ties": 42
+      },
+      "dense_flow_dis_passive": {
+        "mean_diff": 0.2916666666666667,
+        "ci95": [
+          0.1875,
+          0.40625
+        ],
+        "wins": 40,
+        "losses": 12,
+        "ties": 44
+      },
+      "broyden_uvs_dis_active": {
+        "mean_diff": 0.3333333333333333,
+        "ci95": [
+          0.17708333333333334,
+          0.4895833333333333
+        ],
+        "wins": 43,
+        "losses": 11,
+        "ties": 42
+      },
+      "reground_babbling": {
+        "mean_diff": 0.5416666666666666,
+        "ci95": [
+          0.39557291666666666,
+          0.6875
+        ],
+        "wins": 53,
+        "losses": 1,
+        "ties": 42
+      },
+      "perceiver_icba_passive": {
+        "mean_diff": 0.25,
+        "ci95": [
+          0.14583333333333334,
+          0.3645833333333333
+        ],
+        "wins": 31,
+        "losses": 7,
+        "ties": 58
+      },
+      "ours_v2_swapped": {
+        "mean_diff": 0.59375,
+        "ci95": [
+          0.4270833333333333,
+          0.7395833333333334
+        ],
+        "wins": 58,
+        "losses": 1,
+        "ties": 37
+      }
+    },
+    "ours_equiv_homog_passive": {
+      "privileged_oracle": {
+        "mean_diff": -0.2708333333333333,
+        "ci95": [
+          -0.34375,
+          -0.17708333333333334
+        ],
+        "wins": 0,
+        "losses": 26,
+        "ties": 70
+      },
+      "ours_equiv_v2_passive": {
+        "mean_diff": -0.17708333333333334,
+        "ci95": [
+          -0.2604166666666667,
+          -0.09375
+        ],
+        "wins": 5,
+        "losses": 22,
+        "ties": 69
+      },
+      "ours_equiv_homog_active": {
+        "mean_diff": 0.010416666666666666,
+        "ci95": [
+          -0.10416666666666667,
+          0.1356770833333319
+        ],
+        "wins": 21,
+        "losses": 20,
+        "ties": 55
+      },
+      "ours_equiv_v2_online": {
+        "mean_diff": 0.34375,
+        "ci95": [
+          0.1768229166666667,
+          0.5416666666666666
+        ],
+        "wins": 41,
+        "losses": 8,
+        "ties": 47
+      },
+      "analytic_visual_hs_passive": {
+        "mean_diff": 0.07291666666666667,
+        "ci95": [
+          -0.03125,
+          0.17734374999999858
+        ],
+        "wins": 20,
+        "losses": 13,
+        "ties": 63
+      },
+      "dense_flow_dis_active": {
+        "mean_diff": 0.2604166666666667,
+        "ci95": [
+          0.11458333333333333,
+          0.4166666666666667
+        ],
+        "wins": 36,
+        "losses": 11,
+        "ties": 49
+      },
+      "dense_flow_dis_passive": {
+        "mean_diff": 0.3020833333333333,
+        "ci95": [
+          0.1875,
+          0.40625
+        ],
+        "wins": 36,
+        "losses": 7,
+        "ties": 53
+      },
+      "broyden_uvs_dis_active": {
+        "mean_diff": 0.34375,
+        "ci95": [
+          0.14583333333333334,
+          0.5104166666666666
+        ],
+        "wins": 41,
+        "losses": 8,
+        "ties": 47
+      },
+      "reground_babbling": {
+        "mean_diff": 0.5520833333333334,
+        "ci95": [
+          0.375,
+          0.6875
+        ],
+        "wins": 55,
+        "losses": 2,
+        "ties": 39
+      },
+      "perceiver_icba_passive": {
+        "mean_diff": 0.2604166666666667,
+        "ci95": [
+          0.13541666666666666,
+          0.3645833333333333
+        ],
+        "wins": 36,
+        "losses": 11,
+        "ties": 49
+      },
+      "ours_v2_swapped": {
+        "mean_diff": 0.6041666666666666,
+        "ci95": [
+          0.3958333333333333,
+          0.7708333333333334
+        ],
+        "wins": 58,
+        "losses": 0,
+        "ties": 38
+      }
+    },
+    "ours_equiv_v2_online": {
+      "privileged_oracle": {
+        "mean_diff": -0.6145833333333334,
+        "ci95": [
+          -0.7708333333333334,
+          -0.46875
+        ],
+        "wins": 0,
+        "losses": 59,
+        "ties": 37
+      },
+      "ours_equiv_v2_passive": {
+        "mean_diff": -0.5208333333333334,
+        "ci95": [
+          -0.6666666666666666,
+          -0.3854166666666667
+        ],
+        "wins": 4,
+        "losses": 54,
+        "ties": 38
+      },
+      "ours_equiv_homog_active": {
+        "mean_diff": -0.3333333333333333,
+        "ci95": [
+          -0.4375,
+          -0.22916666666666666
+        ],
+        "wins": 5,
+        "losses": 37,
+        "ties": 54
+      },
+      "ours_equiv_homog_passive": {
+        "mean_diff": -0.34375,
+        "ci95": [
+          -0.5416666666666666,
+          -0.1768229166666681
+        ],
+        "wins": 8,
+        "losses": 41,
+        "ties": 47
+      },
+      "analytic_visual_hs_passive": {
+        "mean_diff": -0.2708333333333333,
+        "ci95": [
+          -0.4166666666666667,
+          -0.12473958333333475
+        ],
+        "wins": 9,
+        "losses": 35,
+        "ties": 52
+      },
+      "dense_flow_dis_active": {
+        "mean_diff": -0.08333333333333333,
+        "ci95": [
+          -0.19791666666666666,
+          0.041666666666666664
+        ],
+        "wins": 16,
+        "losses": 24,
+        "ties": 56
+      },
+      "dense_flow_dis_passive": {
+        "mean_diff": -0.041666666666666664,
+        "ci95": [
+          -0.17708333333333334,
+          0.08333333333333333
+        ],
+        "wins": 15,
+        "losses": 19,
+        "ties": 62
+      },
+      "broyden_uvs_dis_active": {
+        "mean_diff": 0.0,
+        "ci95": [
+          -0.125,
+          0.13541666666666666
+        ],
+        "wins": 17,
+        "losses": 17,
+        "ties": 62
+      },
+      "reground_babbling": {
+        "mean_diff": 0.20833333333333334,
+        "ci95": [
+          0.07291666666666667,
+          0.3333333333333333
+        ],
+        "wins": 24,
+        "losses": 4,
+        "ties": 68
+      },
+      "perceiver_icba_passive": {
+        "mean_diff": -0.08333333333333333,
+        "ci95": [
+          -0.20859375,
+          0.03125
+        ],
+        "wins": 7,
+        "losses": 15,
+        "ties": 74
+      },
+      "ours_v2_swapped": {
+        "mean_diff": 0.2604166666666667,
+        "ci95": [
+          0.13541666666666666,
+          0.3854166666666667
+        ],
+        "wins": 26,
+        "losses": 1,
+        "ties": 69
+      }
+    }
+  }
+}
