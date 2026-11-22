@@ -81,7 +81,10 @@ STRESS_ARMS = (
 
 def load_split_tasks(split_name: str) -> list[tuple[str, int]]:
     splits = json.loads(SPLITS_PATH.read_text())
-    return [(str(s), int(t)) for s, t in splits[split_name]]
+    block = splits[split_name]
+    if isinstance(block, dict):
+        return [(str(s), int(t)) for s in sorted(block) for t in block[s]]
+    return [(str(s), int(t)) for s, t in block]
 
 
 def collect_train_shard(out_dir: Path, shard_idx: int, num_shards: int):

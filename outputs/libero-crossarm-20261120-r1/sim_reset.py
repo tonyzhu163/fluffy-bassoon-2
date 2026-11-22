@@ -106,9 +106,28 @@ def _match_tool_pose(env, reference):
         return np.r_[dp / POSITION_TOL_M, Rotation.from_matrix(dr).as_rotvec() / ROTATION_TOL_RAD]
 
     rest = scratch.qpos[indices].copy()
-    result = least_squares(error, rest, bounds=(limits[:, 0], limits[:, 1]), max_nfev=200)
-    dp = float(np.linalg.norm(result.fun[:3]) * POSITION_TOL_M)
-    dr = float(np.linalg.norm(result.fun[3:]) * ROTATION_TOL_RAD)
+    best = least_squares(error, rest, bounds=(limits[:, 0], limits[:, 1]), max_nfev=600)
+    dp = float(np.linalg.norm(best.fun[:3]) * POSITION_TOL_M)
+    dr = float(np.linalg.norm(best.fun[3:]) * ROTATION_TOL_RAD)
+    if not (dp <= POSITION_TOL_M and dr <= ROTATION_TOL_RAD):
+        # Deterministic multi-start fallback around stock rest pose for alternate 7-DoF arms (e.g. IIWA)
+        # when single-start TRF hits a local joint-limit boundary while staying within exact tolerances.
+        rng = np.random.default_rng(20261122)
+        lo, hi = limits[:, 0], limits[:, 1]
+        finite = np.isfinite(lo) & np.isfinite(hi)
+        span = np.where(finite, np.minimum(hi - lo, 2.0), 1.0)
+        for _ in range(8):
+            q0 = rest + rng.normal(0.0, 0.25, size=rest.shape) * span
+            q0 = np.clip(q0, lo + 1e-4, hi - 1e-4)
+            cand = least_squares(error, q0, bounds=(lo, hi), max_nfev=600)
+            cdp = float(np.linalg.norm(cand.fun[:3]) * POSITION_TOL_M)
+            cdr = float(np.linalg.norm(cand.fun[3:]) * ROTATION_TOL_RAD)
+            if cdp <= POSITION_TOL_M and cdr <= ROTATION_TOL_RAD:
+                best, dp, dr = cand, cdp, cdr
+                break
+            if (cdp / POSITION_TOL_M + cdr / ROTATION_TOL_RAD) < (dp / POSITION_TOL_M + dr / ROTATION_TOL_RAD):
+                best, dp, dr = cand, cdp, cdr
+    result = best
     if not (dp <= POSITION_TOL_M and dr <= ROTATION_TOL_RAD):
         raise ValueError(f"Released grip-site pose unreachable from stock IK seed: {dp:.6g} m, {dr:.6g} rad")
     env.sim.data.qpos[indices] = result.x

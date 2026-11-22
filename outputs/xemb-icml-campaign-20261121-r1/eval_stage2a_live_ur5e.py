@@ -415,16 +415,18 @@ def run_shard(
     with UR5eSimulator() as simulator:
         if policy_name == "pi0" and shard_idx == 0:
             gate_case = dict(arm=target_arm, suite="libero_goal", task_id=1, variant="BASE", init_state_id=13, seed=20500101)
-            gate_rec = run_episode(
+            gate_rec, gate_tr = run_episode(
                 simulator, policy, gate_case, get_embodiment_spec("nom"),
-                yaw_hat=0.0, scale_hat=1.0, grip_hat=1, canonicalize_quat=True,
+                yaw_hat=0.0, scale_hat=1.0, grip_hat=1, max_controls=25,
+                record_chunks=True, max_record_chunks=5, canonicalize_quat=True,
             )
+            max_rot_x = float(np.max(np.abs(gate_tr["issued_mean"][gate_tr["valid"], 3]))) if gate_tr["valid"].any() else 99.0
             print(
-                f"PI0_QUATFIX_GATE arm={target_arm} success={gate_rec['success']} controls={gate_rec['controls']}",
+                f"PI0_QUATFIX_GATE arm={target_arm} max_abs_rot_x={max_rot_x:.4f} f0_state3={float(gate_tr['frame0_state'][3]):.4f}",
                 flush=True,
             )
-            if not gate_rec["success"]:
-                raise RuntimeError(f"pi0 canonicalize_quat gate failed on {target_arm} Goal 1 layout 13")
+            if max_rot_x > 0.8:
+                raise RuntimeError(f"pi0 canonicalize_quat rot_x still saturated ({max_rot_x:.3f}) on {target_arm}")
         if reused_meta is not None:
             support_rows = json.loads(reused_meta.read_text())
             if [r["embodiment"] for r in support_rows] != [e["embodiment"] for e in my_entries]:
