@@ -144,32 +144,55 @@ def analytic_visual_yaw(issued, motion, local_dz, valid, projection):
 
 
 def farneback_image_motion(img_before, img_after, valid) -> np.ndarray:
-    """Dense OpenCV Farneback optical flow magnitude-weighted mean [B, K, 2]."""
-    import cv2
-
+    """Pure-NumPy dense windowed Lucas-Kanade optical flow magnitude-weighted mean [B, K, 2]."""
     b_arr = np.asarray(img_before)
     a_arr = np.asarray(img_after)
     v_arr = np.asarray(valid, dtype=bool)
     bsz, n_k = v_arr.shape
     out = np.zeros((bsz, n_k, 2), dtype=np.float32)
+
+    def _box_sum(x: np.ndarray, r: int = 3) -> np.ndarray:
+        # Separable (2r+1)x(2r+1) box filter via edge-padded cumsum (pure NumPy, fast).
+        w = 2 * r + 1
+        p = np.pad(x, ((r, r), (r, r)), mode="edge")
+        cs = np.cumsum(p, axis=0)
+        s0 = np.vstack([cs[w - 1 : w], cs[w:] - cs[:-w]])
+        cs2 = np.cumsum(s0, axis=1)
+        return np.hstack([cs2[:, w - 1 : w], cs2[:, w:] - cs2[:, :-w]])
+
     for bi in range(bsz):
         for ki in range(n_k):
             if not v_arr[bi, ki]:
                 continue
-            ib = b_arr[bi, ki]
-            ia = a_arr[bi, ki]
-            if ib.dtype != np.uint8:
-                ib = np.clip(ib * 255.0, 0, 255).astype(np.uint8)
-                ia = np.clip(ia * 255.0, 0, 255).astype(np.uint8)
-            gb = cv2.cvtColor(ib, cv2.COLOR_RGB2GRAY) if ib.ndim == 3 else ib
-            ga = cv2.cvtColor(ia, cv2.COLOR_RGB2GRAY) if ia.ndim == 3 else ia
-            flow = cv2.calcOpticalFlowFarneback(gb, ga, None, 0.5, 3, 15, 3, 5, 1.2, 0)
-            mag = np.hypot(flow[..., 0], flow[..., 1])
-            w = np.where(mag > 0.15, mag, 0.0)
+            ib = b_arr[bi, ki].astype(np.float32)
+            ia = a_arr[bi, ki].astype(np.float32)
+            if ib.max() > 1.5:
+                ib = ib / 255.0
+                ia = ia / 255.0
+            gb = ib.mean(axis=-1) if ib.ndim == 3 else ib
+            ga = ia.mean(axis=-1) if ia.ndim == 3 else ia
+            avg = 0.5 * (gb + ga)
+            ix = np.zeros_like(avg)
+            iy = np.zeros_like(avg)
+            ix[:, 1:-1] = 0.5 * (avg[:, 2:] - avg[:, :-2])
+            iy[1:-1, :] = 0.5 * (avg[2:, :] - avg[:-2, :])
+            it = ga - gb
+            sxx = _box_sum(ix * ix, 3) + 1e-4
+            syy = _box_sum(iy * iy, 3) + 1e-4
+            sxy = _box_sum(ix * iy, 3)
+            sxt = _box_sum(ix * it, 3)
+            syt = _box_sum(iy * it, 3)
+            det = sxx * syy - sxy * sxy + 1e-8
+            u = -(syy * sxt - sxy * syt) / det
+            v = -(-sxy * sxt + sxx * syt) / det
+            mag = np.hypot(u, v)
+            # Clip extreme outlier flow vectors and weight by motion magnitude
+            valid_px = (mag > 0.08) & (mag < 12.0) & (np.abs(it) > 0.015)
+            w = np.where(valid_px, mag, 0.0)
             w_sum = float(w.sum())
             if w_sum > 1e-6:
-                out[bi, ki, 0] = float((w * flow[..., 0]).sum() / w_sum)
-                out[bi, ki, 1] = float((w * flow[..., 1]).sum() / w_sum)
+                out[bi, ki, 0] = float((w * u).sum() / w_sum)
+                out[bi, ki, 1] = float((w * v).sum() / w_sum)
     return out
 
 

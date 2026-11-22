@@ -46,6 +46,7 @@ SEED_INDEP_ARMS = (
 LEARNED_ARMS = (
     "ours_lumaflow_active",
     "ours_rgb_passive",
+    "joint_transformer_aug_active",
     "joint_transformer_active",
     "rma_gru_active",
     "factored_no_equiv_active",
@@ -127,6 +128,7 @@ def run_shard(
         readers[("joint_transformer_active", s)] = load_tagged_checkpoint(ckpt_dir, "", "active_probe", "joint_transformer", s, archive_sha, steps)
         readers[("factored_no_equiv_active", s)] = load_tagged_checkpoint(ckpt_dir, "", "active_probe", "factored_no_equiv", s, archive_sha, steps)
         readers[("rma_gru_active", s)] = load_tagged_checkpoint(base_ckpt_dir, "", "active_probe", "rma_gru", s, archive_sha, steps)
+        readers[("joint_transformer_aug_active", s)] = load_tagged_checkpoint(base_ckpt_dir, "aug-", "active_probe", "joint_transformer", s, archive_sha, 6000)
 
     shard_dir = output_dir / f"shard-{shard_idx:02d}"
     shard_dir.mkdir(parents=True, exist_ok=True)
