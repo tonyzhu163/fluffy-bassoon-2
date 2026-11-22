@@ -34,8 +34,8 @@ class ReaderConfig:
     visual_mode: str = "rgb"
 
     def __post_init__(self):
-        if self.model_type not in MODEL_NAMES:
-            raise ValueError(f"Unknown model_type {self.model_type!r}; expected one of {MODEL_NAMES}")
+        if self.model_type not in (*MODEL_NAMES, "rma_gru"):
+            raise ValueError(f"Unknown model_type {self.model_type!r}; expected one of {(*MODEL_NAMES, 'rma_gru')}")
         if self.visual_mode not in VISUAL_MODES:
             raise ValueError(f"Unknown visual_mode {self.visual_mode!r}; expected one of {VISUAL_MODES}")
         if self.transformer_width % self.transformer_heads != 0:
