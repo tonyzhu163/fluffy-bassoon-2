@@ -1,0 +1,308 @@
+{
+  "split": "official_test",
+  "arm": "UR5e",
+  "policy": "pi05",
+  "trials_per_seed": 96,
+  "zero_shot_unshifted": {
+    "trials": 8,
+    "successes": 8,
+    "rate": 1.0,
+    "rows": [
+      {
+        "suite": "libero_10",
+        "task_id": 5,
+        "init_state_id": 13,
+        "arm": "UR5e",
+        "policy": "pi05",
+        "success": true,
+        "controls": 173
+      },
+      {
+        "suite": "libero_10",
+        "task_id": 8,
+        "init_state_id": 13,
+        "arm": "UR5e",
+        "policy": "pi05",
+        "success": true,
+        "controls": 517
+      },
+      {
+        "suite": "libero_goal",
+        "task_id": 3,
+        "init_state_id": 13,
+        "arm": "UR5e",
+        "policy": "pi05",
+        "success": true,
+        "controls": 179
+      },
+      {
+        "suite": "libero_goal",
+        "task_id": 6,
+        "init_state_id": 13,
+        "arm": "UR5e",
+        "policy": "pi05",
+        "success": true,
+        "controls": 88
+      },
+      {
+        "suite": "libero_object",
+        "task_id": 1,
+        "init_state_id": 13,
+        "arm": "UR5e",
+        "policy": "pi05",
+        "success": true,
+        "controls": 125
+      },
+      {
+        "suite": "libero_object",
+        "task_id": 8,
+        "init_state_id": 13,
+        "arm": "UR5e",
+        "policy": "pi05",
+        "success": true,
+        "controls": 148
+      },
+      {
+        "suite": "libero_spatial",
+        "task_id": 0,
+        "init_state_id": 13,
+        "arm": "UR5e",
+        "policy": "pi05",
+        "success": true,
+        "controls": 80
+      },
+      {
+        "suite": "libero_spatial",
+        "task_id": 8,
+        "init_state_id": 13,
+        "arm": "UR5e",
+        "policy": "pi05",
+        "success": true,
+        "controls": 99
+      }
+    ]
+  },
+  "by_regime": {
+    "familiar": {
+      "trials": 32,
+      "successes": {
+        "ours_equiv_v2_passive_s42": 24,
+        "ours_equiv_v2_passive_s43": 25,
+        "perceiver_icba_passive_s42": 27,
+        "perceiver_icba_passive_s43": 28,
+        "zero_shot_shifted": 8
+      },
+      "rates": {
+        "ours_equiv_v2_passive_s42": 0.75,
+        "ours_equiv_v2_passive_s43": 0.7812,
+        "perceiver_icba_passive_s42": 0.8438,
+        "perceiver_icba_passive_s43": 0.875,
+        "zero_shot_shifted": 0.25
+      }
+    },
+    "compositional_ood": {
+      "trials": 32,
+      "successes": {
+        "ours_equiv_v2_passive_s42": 24,
+        "ours_equiv_v2_passive_s43": 25,
+        "perceiver_icba_passive_s42": 0,
+        "perceiver_icba_passive_s43": 0,
+        "zero_shot_shifted": 0
+      },
+      "rates": {
+        "ours_equiv_v2_passive_s42": 0.75,
+        "ours_equiv_v2_passive_s43": 0.7812,
+        "perceiver_icba_passive_s42": 0.0,
+        "perceiver_icba_passive_s43": 0.0,
+        "zero_shot_shifted": 0.0
+      }
+    },
+    "continuous_angle_ood": {
+      "trials": 32,
+      "successes": {
+        "ours_equiv_v2_passive_s42": 24,
+        "ours_equiv_v2_passive_s43": 27,
+        "perceiver_icba_passive_s42": 4,
+        "perceiver_icba_passive_s43": 2,
+        "zero_shot_shifted": 0
+      },
+      "rates": {
+        "ours_equiv_v2_passive_s42": 0.75,
+        "ours_equiv_v2_passive_s43": 0.8438,
+        "perceiver_icba_passive_s42": 0.125,
+        "perceiver_icba_passive_s43": 0.0625,
+        "zero_shot_shifted": 0.0
+      }
+    },
+    "ood_combined": {
+      "trials": 64,
+      "successes": {
+        "ours_equiv_v2_passive_s42": 48,
+        "ours_equiv_v2_passive_s43": 52,
+        "perceiver_icba_passive_s42": 4,
+        "perceiver_icba_passive_s43": 2,
+        "zero_shot_shifted": 0
+      },
+      "rates": {
+        "ours_equiv_v2_passive_s42": 0.75,
+        "ours_equiv_v2_passive_s43": 0.8125,
+        "perceiver_icba_passive_s42": 0.0625,
+        "perceiver_icba_passive_s43": 0.0312,
+        "zero_shot_shifted": 0.0
+      }
+    },
+    "overall": {
+      "trials": 96,
+      "successes": {
+        "ours_equiv_v2_passive_s42": 72,
+        "ours_equiv_v2_passive_s43": 77,
+        "perceiver_icba_passive_s42": 31,
+        "perceiver_icba_passive_s43": 30,
+        "zero_shot_shifted": 8
+      },
+      "rates": {
+        "ours_equiv_v2_passive_s42": 0.75,
+        "ours_equiv_v2_passive_s43": 0.8021,
+        "perceiver_icba_passive_s42": 0.3229,
+        "perceiver_icba_passive_s43": 0.3125,
+        "zero_shot_shifted": 0.0833
+      }
+    }
+  },
+  "multiseed": {
+    "ours_equiv_v2_passive": {
+      "familiar": {
+        "seeds": [
+          "ours_equiv_v2_passive_s42",
+          "ours_equiv_v2_passive_s43"
+        ],
+        "per_seed": [
+          0.75,
+          0.7812
+        ],
+        "mean": 0.7656,
+        "std": 0.0156,
+        "total_trials": 64
+      },
+      "compositional_ood": {
+        "seeds": [
+          "ours_equiv_v2_passive_s42",
+          "ours_equiv_v2_passive_s43"
+        ],
+        "per_seed": [
+          0.75,
+          0.7812
+        ],
+        "mean": 0.7656,
+        "std": 0.0156,
+        "total_trials": 64
+      },
+      "continuous_angle_ood": {
+        "seeds": [
+          "ours_equiv_v2_passive_s42",
+          "ours_equiv_v2_passive_s43"
+        ],
+        "per_seed": [
+          0.75,
+          0.8438
+        ],
+        "mean": 0.7969,
+        "std": 0.0469,
+        "total_trials": 64
+      },
+      "ood_combined": {
+        "seeds": [
+          "ours_equiv_v2_passive_s42",
+          "ours_equiv_v2_passive_s43"
+        ],
+        "per_seed": [
+          0.75,
+          0.8125
+        ],
+        "mean": 0.7812,
+        "std": 0.0312,
+        "total_trials": 128
+      },
+      "overall": {
+        "seeds": [
+          "ours_equiv_v2_passive_s42",
+          "ours_equiv_v2_passive_s43"
+        ],
+        "per_seed": [
+          0.75,
+          0.8021
+        ],
+        "mean": 0.7761,
+        "std": 0.0261,
+        "total_trials": 192
+      }
+    },
+    "perceiver_icba_passive": {
+      "familiar": {
+        "seeds": [
+          "perceiver_icba_passive_s42",
+          "perceiver_icba_passive_s43"
+        ],
+        "per_seed": [
+          0.8438,
+          0.875
+        ],
+        "mean": 0.8594,
+        "std": 0.0156,
+        "total_trials": 64
+      },
+      "compositional_ood": {
+        "seeds": [
+          "perceiver_icba_passive_s42",
+          "perceiver_icba_passive_s43"
+        ],
+        "per_seed": [
+          0.0,
+          0.0
+        ],
+        "mean": 0.0,
+        "std": 0.0,
+        "total_trials": 64
+      },
+      "continuous_angle_ood": {
+        "seeds": [
+          "perceiver_icba_passive_s42",
+          "perceiver_icba_passive_s43"
+        ],
+        "per_seed": [
+          0.125,
+          0.0625
+        ],
+        "mean": 0.0938,
+        "std": 0.0312,
+        "total_trials": 64
+      },
+      "ood_combined": {
+        "seeds": [
+          "perceiver_icba_passive_s42",
+          "perceiver_icba_passive_s43"
+        ],
+        "per_seed": [
+          0.0625,
+          0.0312
+        ],
+        "mean": 0.0469,
+        "std": 0.0157,
+        "total_trials": 128
+      },
+      "overall": {
+        "seeds": [
+          "perceiver_icba_passive_s42",
+          "perceiver_icba_passive_s43"
+        ],
+        "per_seed": [
+          0.3229,
+          0.3125
+        ],
+        "mean": 0.3177,
+        "std": 0.0052,
+        "total_trials": 192
+      }
+    }
+  }
+}

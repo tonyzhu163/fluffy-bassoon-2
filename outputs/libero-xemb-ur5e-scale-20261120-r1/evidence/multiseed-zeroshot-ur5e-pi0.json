@@ -1,0 +1,378 @@
+{
+  "split": "official_test",
+  "arm": "UR5e",
+  "policy": "pi0",
+  "trials_per_seed": 96,
+  "zero_shot_unshifted": {
+    "trials": 8,
+    "successes": 6,
+    "rate": 0.75,
+    "rows": [
+      {
+        "suite": "libero_10",
+        "task_id": 5,
+        "init_state_id": 13,
+        "arm": "UR5e",
+        "policy": "pi0",
+        "success": true,
+        "controls": 209
+      },
+      {
+        "suite": "libero_10",
+        "task_id": 8,
+        "init_state_id": 13,
+        "arm": "UR5e",
+        "policy": "pi0",
+        "success": true,
+        "controls": 445
+      },
+      {
+        "suite": "libero_goal",
+        "task_id": 3,
+        "init_state_id": 13,
+        "arm": "UR5e",
+        "policy": "pi0",
+        "success": false,
+        "controls": 300
+      },
+      {
+        "suite": "libero_goal",
+        "task_id": 6,
+        "init_state_id": 13,
+        "arm": "UR5e",
+        "policy": "pi0",
+        "success": true,
+        "controls": 82
+      },
+      {
+        "suite": "libero_object",
+        "task_id": 1,
+        "init_state_id": 13,
+        "arm": "UR5e",
+        "policy": "pi0",
+        "success": true,
+        "controls": 121
+      },
+      {
+        "suite": "libero_object",
+        "task_id": 8,
+        "init_state_id": 13,
+        "arm": "UR5e",
+        "policy": "pi0",
+        "success": true,
+        "controls": 156
+      },
+      {
+        "suite": "libero_spatial",
+        "task_id": 0,
+        "init_state_id": 13,
+        "arm": "UR5e",
+        "policy": "pi0",
+        "success": true,
+        "controls": 80
+      },
+      {
+        "suite": "libero_spatial",
+        "task_id": 8,
+        "init_state_id": 13,
+        "arm": "UR5e",
+        "policy": "pi0",
+        "success": false,
+        "controls": 220
+      }
+    ]
+  },
+  "by_regime": {
+    "familiar": {
+      "trials": 32,
+      "successes": {
+        "analytic_visual_hs_passive": 18,
+        "ours_equiv_v2_passive_s41": 19,
+        "ours_equiv_v2_passive_s42": 21,
+        "ours_equiv_v2_passive_s43": 23,
+        "perceiver_icba_passive_s41": 20,
+        "perceiver_icba_passive_s42": 19,
+        "perceiver_icba_passive_s43": 18,
+        "privileged_oracle": 18,
+        "reground_babbling": 2,
+        "zero_shot_shifted": 6
+      },
+      "rates": {
+        "analytic_visual_hs_passive": 0.5625,
+        "ours_equiv_v2_passive_s41": 0.5938,
+        "ours_equiv_v2_passive_s42": 0.6562,
+        "ours_equiv_v2_passive_s43": 0.7188,
+        "perceiver_icba_passive_s41": 0.625,
+        "perceiver_icba_passive_s42": 0.5938,
+        "perceiver_icba_passive_s43": 0.5625,
+        "privileged_oracle": 0.5625,
+        "reground_babbling": 0.0625,
+        "zero_shot_shifted": 0.1875
+      }
+    },
+    "compositional_ood": {
+      "trials": 32,
+      "successes": {
+        "analytic_visual_hs_passive": 14,
+        "ours_equiv_v2_passive_s41": 18,
+        "ours_equiv_v2_passive_s42": 12,
+        "ours_equiv_v2_passive_s43": 14,
+        "perceiver_icba_passive_s41": 0,
+        "perceiver_icba_passive_s42": 0,
+        "perceiver_icba_passive_s43": 0,
+        "privileged_oracle": 18,
+        "reground_babbling": 0,
+        "zero_shot_shifted": 0
+      },
+      "rates": {
+        "analytic_visual_hs_passive": 0.4375,
+        "ours_equiv_v2_passive_s41": 0.5625,
+        "ours_equiv_v2_passive_s42": 0.375,
+        "ours_equiv_v2_passive_s43": 0.4375,
+        "perceiver_icba_passive_s41": 0.0,
+        "perceiver_icba_passive_s42": 0.0,
+        "perceiver_icba_passive_s43": 0.0,
+        "privileged_oracle": 0.5625,
+        "reground_babbling": 0.0,
+        "zero_shot_shifted": 0.0
+      }
+    },
+    "continuous_angle_ood": {
+      "trials": 32,
+      "successes": {
+        "analytic_visual_hs_passive": 12,
+        "ours_equiv_v2_passive_s41": 17,
+        "ours_equiv_v2_passive_s42": 16,
+        "ours_equiv_v2_passive_s43": 20,
+        "perceiver_icba_passive_s41": 2,
+        "perceiver_icba_passive_s42": 1,
+        "perceiver_icba_passive_s43": 1,
+        "privileged_oracle": 16,
+        "reground_babbling": 2,
+        "zero_shot_shifted": 0
+      },
+      "rates": {
+        "analytic_visual_hs_passive": 0.375,
+        "ours_equiv_v2_passive_s41": 0.5312,
+        "ours_equiv_v2_passive_s42": 0.5,
+        "ours_equiv_v2_passive_s43": 0.625,
+        "perceiver_icba_passive_s41": 0.0625,
+        "perceiver_icba_passive_s42": 0.0312,
+        "perceiver_icba_passive_s43": 0.0312,
+        "privileged_oracle": 0.5,
+        "reground_babbling": 0.0625,
+        "zero_shot_shifted": 0.0
+      }
+    },
+    "ood_combined": {
+      "trials": 64,
+      "successes": {
+        "analytic_visual_hs_passive": 26,
+        "ours_equiv_v2_passive_s41": 35,
+        "ours_equiv_v2_passive_s42": 28,
+        "ours_equiv_v2_passive_s43": 34,
+        "perceiver_icba_passive_s41": 2,
+        "perceiver_icba_passive_s42": 1,
+        "perceiver_icba_passive_s43": 1,
+        "privileged_oracle": 34,
+        "reground_babbling": 2,
+        "zero_shot_shifted": 0
+      },
+      "rates": {
+        "analytic_visual_hs_passive": 0.4062,
+        "ours_equiv_v2_passive_s41": 0.5469,
+        "ours_equiv_v2_passive_s42": 0.4375,
+        "ours_equiv_v2_passive_s43": 0.5312,
+        "perceiver_icba_passive_s41": 0.0312,
+        "perceiver_icba_passive_s42": 0.0156,
+        "perceiver_icba_passive_s43": 0.0156,
+        "privileged_oracle": 0.5312,
+        "reground_babbling": 0.0312,
+        "zero_shot_shifted": 0.0
+      }
+    },
+    "overall": {
+      "trials": 96,
+      "successes": {
+        "analytic_visual_hs_passive": 44,
+        "ours_equiv_v2_passive_s41": 54,
+        "ours_equiv_v2_passive_s42": 49,
+        "ours_equiv_v2_passive_s43": 57,
+        "perceiver_icba_passive_s41": 22,
+        "perceiver_icba_passive_s42": 20,
+        "perceiver_icba_passive_s43": 19,
+        "privileged_oracle": 52,
+        "reground_babbling": 4,
+        "zero_shot_shifted": 6
+      },
+      "rates": {
+        "analytic_visual_hs_passive": 0.4583,
+        "ours_equiv_v2_passive_s41": 0.5625,
+        "ours_equiv_v2_passive_s42": 0.5104,
+        "ours_equiv_v2_passive_s43": 0.5938,
+        "perceiver_icba_passive_s41": 0.2292,
+        "perceiver_icba_passive_s42": 0.2083,
+        "perceiver_icba_passive_s43": 0.1979,
+        "privileged_oracle": 0.5417,
+        "reground_babbling": 0.0417,
+        "zero_shot_shifted": 0.0625
+      }
+    }
+  },
+  "multiseed": {
+    "ours_equiv_v2_passive": {
+      "familiar": {
+        "seeds": [
+          "ours_equiv_v2_passive_s41",
+          "ours_equiv_v2_passive_s42",
+          "ours_equiv_v2_passive_s43"
+        ],
+        "per_seed": [
+          0.5938,
+          0.6562,
+          0.7188
+        ],
+        "mean": 0.6563,
+        "std": 0.051,
+        "total_trials": 96
+      },
+      "compositional_ood": {
+        "seeds": [
+          "ours_equiv_v2_passive_s41",
+          "ours_equiv_v2_passive_s42",
+          "ours_equiv_v2_passive_s43"
+        ],
+        "per_seed": [
+          0.5625,
+          0.375,
+          0.4375
+        ],
+        "mean": 0.4583,
+        "std": 0.078,
+        "total_trials": 96
+      },
+      "continuous_angle_ood": {
+        "seeds": [
+          "ours_equiv_v2_passive_s41",
+          "ours_equiv_v2_passive_s42",
+          "ours_equiv_v2_passive_s43"
+        ],
+        "per_seed": [
+          0.5312,
+          0.5,
+          0.625
+        ],
+        "mean": 0.5521,
+        "std": 0.0531,
+        "total_trials": 96
+      },
+      "ood_combined": {
+        "seeds": [
+          "ours_equiv_v2_passive_s41",
+          "ours_equiv_v2_passive_s42",
+          "ours_equiv_v2_passive_s43"
+        ],
+        "per_seed": [
+          0.5469,
+          0.4375,
+          0.5312
+        ],
+        "mean": 0.5052,
+        "std": 0.0483,
+        "total_trials": 192
+      },
+      "overall": {
+        "seeds": [
+          "ours_equiv_v2_passive_s41",
+          "ours_equiv_v2_passive_s42",
+          "ours_equiv_v2_passive_s43"
+        ],
+        "per_seed": [
+          0.5625,
+          0.5104,
+          0.5938
+        ],
+        "mean": 0.5556,
+        "std": 0.0344,
+        "total_trials": 288
+      }
+    },
+    "perceiver_icba_passive": {
+      "familiar": {
+        "seeds": [
+          "perceiver_icba_passive_s41",
+          "perceiver_icba_passive_s42",
+          "perceiver_icba_passive_s43"
+        ],
+        "per_seed": [
+          0.625,
+          0.5938,
+          0.5625
+        ],
+        "mean": 0.5938,
+        "std": 0.0255,
+        "total_trials": 96
+      },
+      "compositional_ood": {
+        "seeds": [
+          "perceiver_icba_passive_s41",
+          "perceiver_icba_passive_s42",
+          "perceiver_icba_passive_s43"
+        ],
+        "per_seed": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean": 0.0,
+        "std": 0.0,
+        "total_trials": 96
+      },
+      "continuous_angle_ood": {
+        "seeds": [
+          "perceiver_icba_passive_s41",
+          "perceiver_icba_passive_s42",
+          "perceiver_icba_passive_s43"
+        ],
+        "per_seed": [
+          0.0625,
+          0.0312,
+          0.0312
+        ],
+        "mean": 0.0416,
+        "std": 0.0148,
+        "total_trials": 96
+      },
+      "ood_combined": {
+        "seeds": [
+          "perceiver_icba_passive_s41",
+          "perceiver_icba_passive_s42",
+          "perceiver_icba_passive_s43"
+        ],
+        "per_seed": [
+          0.0312,
+          0.0156,
+          0.0156
+        ],
+        "mean": 0.0208,
+        "std": 0.0074,
+        "total_trials": 192
+      },
+      "overall": {
+        "seeds": [
+          "perceiver_icba_passive_s41",
+          "perceiver_icba_passive_s42",
+          "perceiver_icba_passive_s43"
+        ],
+        "per_seed": [
+          0.2292,
+          0.2083,
+          0.1979
+        ],
+        "mean": 0.2118,
+        "std": 0.013,
+        "total_trials": 288
+      }
+    }
+  }
+}
