@@ -114,7 +114,7 @@ def run_episode(
     rng = np.random.default_rng(int(case["seed"]) + NOISE_SEED_OFFSET)
     noise_bank = rng.standard_normal(((horizon + 4) // 5, action_horizon, action_dim)).astype(np.float32)
     frame0_img = initial["agentview_64"]
-    first_item = to_openpi_observation(raw, prompt, canonicalize_quat=canonicalize_quat)
+    first_item = to_openpi_observation(raw, prompt, canonicalize_quat=True) if canonicalize_quat else to_openpi_observation(raw, prompt)
     frame0_state = first_item["observation/state"].astype(np.float32)
     repro = initial["environment_reproducibility"]
     model_id = initial["model_identity"]
@@ -244,7 +244,7 @@ def run_episode(
             item = first_item
         else:
             motor_obs = raw if cur_yaw == 0 else retarget_observation_for_motor(raw, anchor, cur_yaw)
-            item = to_openpi_observation(motor_obs, prompt, canonicalize_quat=canonicalize_quat)
+            item = to_openpi_observation(motor_obs, prompt, canonicalize_quat=True) if canonicalize_quat else to_openpi_observation(motor_obs, prompt)
         noise = noise_bank[controls // 5]
         proposal = np.asarray(policy.infer(item, noise=noise)["actions"], dtype=np.float32)
         if proposal.shape != (action_horizon, 7) or not np.isfinite(proposal).all():

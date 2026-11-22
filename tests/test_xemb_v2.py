@@ -160,9 +160,9 @@ def test_v2_so3_exact_equivariance_and_finite_grads():
     # Zero scale_head output layer -> isotropic g_hat = 1.0 -> exact right SO(3) equivariance.
     iso_params = dict(params)
     iso_scale = list(params["scale_head"])
-    w_last, b_last = iso_scale[-1]
-    iso_scale[-1] = (jnp.zeros_like(w_last), jnp.zeros_like(b_last))
-    iso_params["scale_head"] = tuple(iso_scale)
+    last = iso_scale[-1]
+    iso_scale[-1] = dict(w=jnp.zeros_like(last["w"]), b=jnp.zeros_like(last["b"]))
+    iso_params["scale_head"] = iso_scale
 
     r0, _, _ = apply_reader_v2(iso_params, cfg, batch)
     q = _random_so3(rng)

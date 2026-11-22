@@ -42,6 +42,7 @@ V2_MODEL_NAMES = (
     "perceiver_icba",
     "factored_equiv_so3",
     "equiv_flow_homography",
+    "equiv_flow_cam_homog",
 )
 
 V2_VISUAL_MODES = ("luminance_flow", "rgb", "dis_lumaflow")
