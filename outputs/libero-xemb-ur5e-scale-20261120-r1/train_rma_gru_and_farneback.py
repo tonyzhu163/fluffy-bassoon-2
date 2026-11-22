@@ -157,14 +157,14 @@ def main():
     act_dev, act_dev_rows = load_mode_split(archive_dir, archive["trials"], "active_probe", "dev")
     pas_dev, pas_dev_rows = load_mode_split(archive_dir, archive["trials"], "passive_attempt1", "dev")
 
-    # 1. Calibrate pure-NumPy dense windowed Lucas-Kanade optical flow
+    # 1. Calibrate pure-NumPy dense windowed Lucas-Kanade optical flow on nominal (yaw=0) 7-DoF Panda/Sawyer traces
     print("Computing dense windowed Lucas-Kanade optical flow on train active_probe...", flush=True)
-    tr_fb = farneback_image_motion(act_train["img_before"], act_train["img_after"], act_train["valid"])
-    tr_iss = issued_exposure(act_train)
-    fb_proj_info = fit_visual_projection(
-        tr_iss, tr_fb, act_train["delta_eef"][..., 2], act_train["valid"], act_train["yaw_deg"], act_train["xy_scale"]
+    nom_mask = np.abs(act_train["yaw_deg"]) < 1e-3
+    tr_fb = farneback_image_motion(act_train["img_before"][nom_mask], act_train["img_after"][nom_mask], act_train["valid"][nom_mask])
+    fb_proj = np.asarray(
+        fit_visual_projection(tr_fb, act_train["delta_eef"][nom_mask], act_train["valid"][nom_mask]),
+        dtype=np.float32,
     )
-    fb_proj = np.asarray(fb_proj_info["projection"], dtype=np.float32)
 
     dev_act_fb = farneback_image_motion(act_dev["img_before"], act_dev["img_after"], act_dev["valid"])
     y_fb_act = analytic_visual_yaw(issued_exposure(act_dev), dev_act_fb, act_dev["delta_eef"][..., 2], act_dev["valid"], fb_proj)
@@ -174,7 +174,7 @@ def main():
     fb_summary = dict(
         method="dense_windowed_lucas_kanade",
         projection=fb_proj.tolist(),
-        available=bool(fb_proj_info.get("available", True)),
+        available=True,
         dev_active_yaw_err=summarize_yaw_by_regime(y_fb_act, act_dev, act_dev_rows),
         dev_passive_yaw_err=summarize_yaw_by_regime(y_fb_pas, pas_dev, pas_dev_rows),
     )
