@@ -1,0 +1,1462 @@
+{
+  "split": "official_test_3seed_576",
+  "arm": "UR5e",
+  "seeds": [
+    41,
+    42,
+    43
+  ],
+  "query_init_states": [
+    13,
+    14
+  ],
+  "queries": 192,
+  "episodes_per_method": 576,
+  "by_regime": {
+    "familiar": {
+      "episodes": 192,
+      "successes": {
+        "nominal": 39,
+        "privileged_oracle": 156,
+        "analytic_visual_sysid_passive": 141,
+        "farneback_flow_passive": 126,
+        "ours_lumaflow_active": 112,
+        "ours_rgb_passive": 100,
+        "joint_transformer_aug_active": 151,
+        "joint_transformer_active": 155,
+        "rma_gru_active": 119,
+        "factored_no_equiv_active": 103
+      },
+      "rates": {
+        "nominal": 0.2031,
+        "privileged_oracle": 0.8125,
+        "analytic_visual_sysid_passive": 0.7344,
+        "farneback_flow_passive": 0.6562,
+        "ours_lumaflow_active": 0.5833,
+        "ours_rgb_passive": 0.5208,
+        "joint_transformer_aug_active": 0.7865,
+        "joint_transformer_active": 0.8073,
+        "rma_gru_active": 0.6198,
+        "factored_no_equiv_active": 0.5365
+      },
+      "per_seed": {
+        "nominal": {
+          "mean": 0.2031,
+          "std": 0.0,
+          "seeds": [
+            0.2031,
+            0.2031,
+            0.2031
+          ]
+        },
+        "privileged_oracle": {
+          "mean": 0.8125,
+          "std": 0.0,
+          "seeds": [
+            0.8125,
+            0.8125,
+            0.8125
+          ]
+        },
+        "analytic_visual_sysid_passive": {
+          "mean": 0.7344,
+          "std": 0.0,
+          "seeds": [
+            0.7344,
+            0.7344,
+            0.7344
+          ]
+        },
+        "farneback_flow_passive": {
+          "mean": 0.6562,
+          "std": 0.0,
+          "seeds": [
+            0.6562,
+            0.6562,
+            0.6562
+          ]
+        },
+        "ours_lumaflow_active": {
+          "mean": 0.5833,
+          "std": 0.0266,
+          "seeds": [
+            0.6094,
+            0.5938,
+            0.5469
+          ]
+        },
+        "ours_rgb_passive": {
+          "mean": 0.5208,
+          "std": 0.041,
+          "seeds": [
+            0.5781,
+            0.4844,
+            0.5
+          ]
+        },
+        "joint_transformer_aug_active": {
+          "mean": 0.7865,
+          "std": 0.0516,
+          "seeds": [
+            0.7969,
+            0.7188,
+            0.8438
+          ]
+        },
+        "joint_transformer_active": {
+          "mean": 0.8073,
+          "std": 0.0483,
+          "seeds": [
+            0.875,
+            0.7812,
+            0.7656
+          ]
+        },
+        "rma_gru_active": {
+          "mean": 0.6198,
+          "std": 0.0074,
+          "seeds": [
+            0.6094,
+            0.625,
+            0.625
+          ]
+        },
+        "factored_no_equiv_active": {
+          "mean": 0.5365,
+          "std": 0.0974,
+          "seeds": [
+            0.4062,
+            0.5625,
+            0.6406
+          ]
+        }
+      }
+    },
+    "compositional_ood": {
+      "episodes": 192,
+      "successes": {
+        "nominal": 0,
+        "privileged_oracle": 156,
+        "analytic_visual_sysid_passive": 123,
+        "farneback_flow_passive": 75,
+        "ours_lumaflow_active": 100,
+        "ours_rgb_passive": 62,
+        "joint_transformer_aug_active": 11,
+        "joint_transformer_active": 0,
+        "rma_gru_active": 0,
+        "factored_no_equiv_active": 45
+      },
+      "rates": {
+        "nominal": 0.0,
+        "privileged_oracle": 0.8125,
+        "analytic_visual_sysid_passive": 0.6406,
+        "farneback_flow_passive": 0.3906,
+        "ours_lumaflow_active": 0.5208,
+        "ours_rgb_passive": 0.3229,
+        "joint_transformer_aug_active": 0.0573,
+        "joint_transformer_active": 0.0,
+        "rma_gru_active": 0.0,
+        "factored_no_equiv_active": 0.2344
+      },
+      "per_seed": {
+        "nominal": {
+          "mean": 0.0,
+          "std": 0.0,
+          "seeds": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "privileged_oracle": {
+          "mean": 0.8125,
+          "std": 0.0,
+          "seeds": [
+            0.8125,
+            0.8125,
+            0.8125
+          ]
+        },
+        "analytic_visual_sysid_passive": {
+          "mean": 0.6406,
+          "std": 0.0,
+          "seeds": [
+            0.6406,
+            0.6406,
+            0.6406
+          ]
+        },
+        "farneback_flow_passive": {
+          "mean": 0.3906,
+          "std": 0.0,
+          "seeds": [
+            0.3906,
+            0.3906,
+            0.3906
+          ]
+        },
+        "ours_lumaflow_active": {
+          "mean": 0.5208,
+          "std": 0.0575,
+          "seeds": [
+            0.5156,
+            0.4531,
+            0.5938
+          ]
+        },
+        "ours_rgb_passive": {
+          "mean": 0.3229,
+          "std": 0.0849,
+          "seeds": [
+            0.4375,
+            0.2344,
+            0.2969
+          ]
+        },
+        "joint_transformer_aug_active": {
+          "mean": 0.0573,
+          "std": 0.0266,
+          "seeds": [
+            0.0469,
+            0.0938,
+            0.0312
+          ]
+        },
+        "joint_transformer_active": {
+          "mean": 0.0,
+          "std": 0.0,
+          "seeds": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "rma_gru_active": {
+          "mean": 0.0,
+          "std": 0.0,
+          "seeds": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "factored_no_equiv_active": {
+          "mean": 0.2344,
+          "std": 0.1754,
+          "seeds": [
+            0.0,
+            0.2812,
+            0.4219
+          ]
+        }
+      }
+    },
+    "continuous_angle_ood": {
+      "episodes": 192,
+      "successes": {
+        "nominal": 0,
+        "privileged_oracle": 171,
+        "analytic_visual_sysid_passive": 129,
+        "farneback_flow_passive": 111,
+        "ours_lumaflow_active": 81,
+        "ours_rgb_passive": 92,
+        "joint_transformer_aug_active": 42,
+        "joint_transformer_active": 16,
+        "rma_gru_active": 44,
+        "factored_no_equiv_active": 26
+      },
+      "rates": {
+        "nominal": 0.0,
+        "privileged_oracle": 0.8906,
+        "analytic_visual_sysid_passive": 0.6719,
+        "farneback_flow_passive": 0.5781,
+        "ours_lumaflow_active": 0.4219,
+        "ours_rgb_passive": 0.4792,
+        "joint_transformer_aug_active": 0.2188,
+        "joint_transformer_active": 0.0833,
+        "rma_gru_active": 0.2292,
+        "factored_no_equiv_active": 0.1354
+      },
+      "per_seed": {
+        "nominal": {
+          "mean": 0.0,
+          "std": 0.0,
+          "seeds": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "privileged_oracle": {
+          "mean": 0.8906,
+          "std": 0.0,
+          "seeds": [
+            0.8906,
+            0.8906,
+            0.8906
+          ]
+        },
+        "analytic_visual_sysid_passive": {
+          "mean": 0.6719,
+          "std": 0.0,
+          "seeds": [
+            0.6719,
+            0.6719,
+            0.6719
+          ]
+        },
+        "farneback_flow_passive": {
+          "mean": 0.5781,
+          "std": 0.0,
+          "seeds": [
+            0.5781,
+            0.5781,
+            0.5781
+          ]
+        },
+        "ours_lumaflow_active": {
+          "mean": 0.4219,
+          "std": 0.092,
+          "seeds": [
+            0.4531,
+            0.5156,
+            0.2969
+          ]
+        },
+        "ours_rgb_passive": {
+          "mean": 0.4792,
+          "std": 0.0368,
+          "seeds": [
+            0.4531,
+            0.4531,
+            0.5312
+          ]
+        },
+        "joint_transformer_aug_active": {
+          "mean": 0.2188,
+          "std": 0.1593,
+          "seeds": [
+            0.0625,
+            0.4375,
+            0.1562
+          ]
+        },
+        "joint_transformer_active": {
+          "mean": 0.0833,
+          "std": 0.0195,
+          "seeds": [
+            0.0625,
+            0.0781,
+            0.1094
+          ]
+        },
+        "rma_gru_active": {
+          "mean": 0.2292,
+          "std": 0.0147,
+          "seeds": [
+            0.2188,
+            0.2188,
+            0.25
+          ]
+        },
+        "factored_no_equiv_active": {
+          "mean": 0.1354,
+          "std": 0.1151,
+          "seeds": [
+            0.0,
+            0.125,
+            0.2812
+          ]
+        }
+      }
+    },
+    "ood_combined": {
+      "episodes": 384,
+      "successes": {
+        "nominal": 0,
+        "privileged_oracle": 327,
+        "analytic_visual_sysid_passive": 252,
+        "farneback_flow_passive": 186,
+        "ours_lumaflow_active": 181,
+        "ours_rgb_passive": 154,
+        "joint_transformer_aug_active": 53,
+        "joint_transformer_active": 16,
+        "rma_gru_active": 44,
+        "factored_no_equiv_active": 71
+      },
+      "rates": {
+        "nominal": 0.0,
+        "privileged_oracle": 0.8516,
+        "analytic_visual_sysid_passive": 0.6562,
+        "farneback_flow_passive": 0.4844,
+        "ours_lumaflow_active": 0.4714,
+        "ours_rgb_passive": 0.401,
+        "joint_transformer_aug_active": 0.138,
+        "joint_transformer_active": 0.0417,
+        "rma_gru_active": 0.1146,
+        "factored_no_equiv_active": 0.1849
+      },
+      "per_seed": {
+        "nominal": {
+          "mean": 0.0,
+          "std": 0.0,
+          "seeds": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "privileged_oracle": {
+          "mean": 0.8516,
+          "std": 0.0,
+          "seeds": [
+            0.8516,
+            0.8516,
+            0.8516
+          ]
+        },
+        "analytic_visual_sysid_passive": {
+          "mean": 0.6562,
+          "std": 0.0,
+          "seeds": [
+            0.6562,
+            0.6562,
+            0.6562
+          ]
+        },
+        "farneback_flow_passive": {
+          "mean": 0.4844,
+          "std": 0.0,
+          "seeds": [
+            0.4844,
+            0.4844,
+            0.4844
+          ]
+        },
+        "ours_lumaflow_active": {
+          "mean": 0.4714,
+          "std": 0.0184,
+          "seeds": [
+            0.4844,
+            0.4844,
+            0.4453
+          ]
+        },
+        "ours_rgb_passive": {
+          "mean": 0.401,
+          "std": 0.0425,
+          "seeds": [
+            0.4453,
+            0.3438,
+            0.4141
+          ]
+        },
+        "joint_transformer_aug_active": {
+          "mean": 0.138,
+          "std": 0.0916,
+          "seeds": [
+            0.0547,
+            0.2656,
+            0.0938
+          ]
+        },
+        "joint_transformer_active": {
+          "mean": 0.0417,
+          "std": 0.0097,
+          "seeds": [
+            0.0312,
+            0.0391,
+            0.0547
+          ]
+        },
+        "rma_gru_active": {
+          "mean": 0.1146,
+          "std": 0.0074,
+          "seeds": [
+            0.1094,
+            0.1094,
+            0.125
+          ]
+        },
+        "factored_no_equiv_active": {
+          "mean": 0.1849,
+          "std": 0.1441,
+          "seeds": [
+            0.0,
+            0.2031,
+            0.3516
+          ]
+        }
+      }
+    },
+    "overall": {
+      "episodes": 576,
+      "successes": {
+        "nominal": 39,
+        "privileged_oracle": 483,
+        "analytic_visual_sysid_passive": 393,
+        "farneback_flow_passive": 312,
+        "ours_lumaflow_active": 293,
+        "ours_rgb_passive": 254,
+        "joint_transformer_aug_active": 204,
+        "joint_transformer_active": 171,
+        "rma_gru_active": 163,
+        "factored_no_equiv_active": 174
+      },
+      "rates": {
+        "nominal": 0.0677,
+        "privileged_oracle": 0.8385,
+        "analytic_visual_sysid_passive": 0.6823,
+        "farneback_flow_passive": 0.5417,
+        "ours_lumaflow_active": 0.5087,
+        "ours_rgb_passive": 0.441,
+        "joint_transformer_aug_active": 0.3542,
+        "joint_transformer_active": 0.2969,
+        "rma_gru_active": 0.283,
+        "factored_no_equiv_active": 0.3021
+      },
+      "per_seed": {
+        "nominal": {
+          "mean": 0.0677,
+          "std": 0.0,
+          "seeds": [
+            0.0677,
+            0.0677,
+            0.0677
+          ]
+        },
+        "privileged_oracle": {
+          "mean": 0.8385,
+          "std": 0.0,
+          "seeds": [
+            0.8385,
+            0.8385,
+            0.8385
+          ]
+        },
+        "analytic_visual_sysid_passive": {
+          "mean": 0.6823,
+          "std": 0.0,
+          "seeds": [
+            0.6823,
+            0.6823,
+            0.6823
+          ]
+        },
+        "farneback_flow_passive": {
+          "mean": 0.5417,
+          "std": 0.0,
+          "seeds": [
+            0.5417,
+            0.5417,
+            0.5417
+          ]
+        },
+        "ours_lumaflow_active": {
+          "mean": 0.5087,
+          "std": 0.021,
+          "seeds": [
+            0.526,
+            0.5208,
+            0.4792
+          ]
+        },
+        "ours_rgb_passive": {
+          "mean": 0.441,
+          "std": 0.0404,
+          "seeds": [
+            0.4896,
+            0.3906,
+            0.4427
+          ]
+        },
+        "joint_transformer_aug_active": {
+          "mean": 0.3542,
+          "std": 0.0474,
+          "seeds": [
+            0.3021,
+            0.4167,
+            0.3438
+          ]
+        },
+        "joint_transformer_active": {
+          "mean": 0.2969,
+          "std": 0.0113,
+          "seeds": [
+            0.3125,
+            0.2865,
+            0.2917
+          ]
+        },
+        "rma_gru_active": {
+          "mean": 0.283,
+          "std": 0.0065,
+          "seeds": [
+            0.276,
+            0.2812,
+            0.2917
+          ]
+        },
+        "factored_no_equiv_active": {
+          "mean": 0.3021,
+          "std": 0.1284,
+          "seeds": [
+            0.1354,
+            0.3229,
+            0.4479
+          ]
+        }
+      }
+    }
+  },
+  "by_suite": {
+    "libero_10": {
+      "episodes": 144,
+      "successes": {
+        "nominal": 6,
+        "privileged_oracle": 93,
+        "analytic_visual_sysid_passive": 69,
+        "farneback_flow_passive": 51,
+        "ours_lumaflow_active": 24,
+        "ours_rgb_passive": 21,
+        "joint_transformer_aug_active": 27,
+        "joint_transformer_active": 28,
+        "rma_gru_active": 13,
+        "factored_no_equiv_active": 10
+      },
+      "rates": {
+        "nominal": 0.0417,
+        "privileged_oracle": 0.6458,
+        "analytic_visual_sysid_passive": 0.4792,
+        "farneback_flow_passive": 0.3542,
+        "ours_lumaflow_active": 0.1667,
+        "ours_rgb_passive": 0.1458,
+        "joint_transformer_aug_active": 0.1875,
+        "joint_transformer_active": 0.1944,
+        "rma_gru_active": 0.0903,
+        "factored_no_equiv_active": 0.0694
+      },
+      "per_seed": {
+        "nominal": {
+          "mean": 0.0417,
+          "std": 0.0,
+          "seeds": [
+            0.0417,
+            0.0417,
+            0.0417
+          ]
+        },
+        "privileged_oracle": {
+          "mean": 0.6458,
+          "std": 0.0,
+          "seeds": [
+            0.6458,
+            0.6458,
+            0.6458
+          ]
+        },
+        "analytic_visual_sysid_passive": {
+          "mean": 0.4792,
+          "std": 0.0,
+          "seeds": [
+            0.4792,
+            0.4792,
+            0.4792
+          ]
+        },
+        "farneback_flow_passive": {
+          "mean": 0.3542,
+          "std": 0.0,
+          "seeds": [
+            0.3542,
+            0.3542,
+            0.3542
+          ]
+        },
+        "ours_lumaflow_active": {
+          "mean": 0.1667,
+          "std": 0.045,
+          "seeds": [
+            0.2083,
+            0.1875,
+            0.1042
+          ]
+        },
+        "ours_rgb_passive": {
+          "mean": 0.1458,
+          "std": 0.017,
+          "seeds": [
+            0.1667,
+            0.125,
+            0.1458
+          ]
+        },
+        "joint_transformer_aug_active": {
+          "mean": 0.1875,
+          "std": 0.017,
+          "seeds": [
+            0.1875,
+            0.1667,
+            0.2083
+          ]
+        },
+        "joint_transformer_active": {
+          "mean": 0.1944,
+          "std": 0.0428,
+          "seeds": [
+            0.25,
+            0.1875,
+            0.1458
+          ]
+        },
+        "rma_gru_active": {
+          "mean": 0.0903,
+          "std": 0.0196,
+          "seeds": [
+            0.1042,
+            0.0625,
+            0.1042
+          ]
+        },
+        "factored_no_equiv_active": {
+          "mean": 0.0694,
+          "std": 0.0196,
+          "seeds": [
+            0.0833,
+            0.0417,
+            0.0833
+          ]
+        }
+      }
+    },
+    "libero_goal": {
+      "episodes": 144,
+      "successes": {
+        "nominal": 9,
+        "privileged_oracle": 102,
+        "analytic_visual_sysid_passive": 78,
+        "farneback_flow_passive": 75,
+        "ours_lumaflow_active": 83,
+        "ours_rgb_passive": 71,
+        "joint_transformer_aug_active": 44,
+        "joint_transformer_active": 34,
+        "rma_gru_active": 25,
+        "factored_no_equiv_active": 42
+      },
+      "rates": {
+        "nominal": 0.0625,
+        "privileged_oracle": 0.7083,
+        "analytic_visual_sysid_passive": 0.5417,
+        "farneback_flow_passive": 0.5208,
+        "ours_lumaflow_active": 0.5764,
+        "ours_rgb_passive": 0.4931,
+        "joint_transformer_aug_active": 0.3056,
+        "joint_transformer_active": 0.2361,
+        "rma_gru_active": 0.1736,
+        "factored_no_equiv_active": 0.2917
+      },
+      "per_seed": {
+        "nominal": {
+          "mean": 0.0625,
+          "std": 0.0,
+          "seeds": [
+            0.0625,
+            0.0625,
+            0.0625
+          ]
+        },
+        "privileged_oracle": {
+          "mean": 0.7083,
+          "std": 0.0,
+          "seeds": [
+            0.7083,
+            0.7083,
+            0.7083
+          ]
+        },
+        "analytic_visual_sysid_passive": {
+          "mean": 0.5417,
+          "std": 0.0,
+          "seeds": [
+            0.5417,
+            0.5417,
+            0.5417
+          ]
+        },
+        "farneback_flow_passive": {
+          "mean": 0.5208,
+          "std": 0.0,
+          "seeds": [
+            0.5208,
+            0.5208,
+            0.5208
+          ]
+        },
+        "ours_lumaflow_active": {
+          "mean": 0.5764,
+          "std": 0.0354,
+          "seeds": [
+            0.625,
+            0.5625,
+            0.5417
+          ]
+        },
+        "ours_rgb_passive": {
+          "mean": 0.4931,
+          "std": 0.1195,
+          "seeds": [
+            0.6458,
+            0.4792,
+            0.3542
+          ]
+        },
+        "joint_transformer_aug_active": {
+          "mean": 0.3056,
+          "std": 0.0687,
+          "seeds": [
+            0.2292,
+            0.3958,
+            0.2917
+          ]
+        },
+        "joint_transformer_active": {
+          "mean": 0.2361,
+          "std": 0.026,
+          "seeds": [
+            0.2708,
+            0.2083,
+            0.2292
+          ]
+        },
+        "rma_gru_active": {
+          "mean": 0.1736,
+          "std": 0.026,
+          "seeds": [
+            0.1458,
+            0.2083,
+            0.1667
+          ]
+        },
+        "factored_no_equiv_active": {
+          "mean": 0.2917,
+          "std": 0.1227,
+          "seeds": [
+            0.125,
+            0.3333,
+            0.4167
+          ]
+        }
+      }
+    },
+    "libero_object": {
+      "episodes": 144,
+      "successes": {
+        "nominal": 12,
+        "privileged_oracle": 144,
+        "analytic_visual_sysid_passive": 126,
+        "farneback_flow_passive": 84,
+        "ours_lumaflow_active": 64,
+        "ours_rgb_passive": 73,
+        "joint_transformer_aug_active": 63,
+        "joint_transformer_active": 57,
+        "rma_gru_active": 72,
+        "factored_no_equiv_active": 54
+      },
+      "rates": {
+        "nominal": 0.0833,
+        "privileged_oracle": 1.0,
+        "analytic_visual_sysid_passive": 0.875,
+        "farneback_flow_passive": 0.5833,
+        "ours_lumaflow_active": 0.4444,
+        "ours_rgb_passive": 0.5069,
+        "joint_transformer_aug_active": 0.4375,
+        "joint_transformer_active": 0.3958,
+        "rma_gru_active": 0.5,
+        "factored_no_equiv_active": 0.375
+      },
+      "per_seed": {
+        "nominal": {
+          "mean": 0.0833,
+          "std": 0.0,
+          "seeds": [
+            0.0833,
+            0.0833,
+            0.0833
+          ]
+        },
+        "privileged_oracle": {
+          "mean": 1.0,
+          "std": 0.0,
+          "seeds": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "analytic_visual_sysid_passive": {
+          "mean": 0.875,
+          "std": 0.0,
+          "seeds": [
+            0.875,
+            0.875,
+            0.875
+          ]
+        },
+        "farneback_flow_passive": {
+          "mean": 0.5833,
+          "std": 0.0,
+          "seeds": [
+            0.5833,
+            0.5833,
+            0.5833
+          ]
+        },
+        "ours_lumaflow_active": {
+          "mean": 0.4444,
+          "std": 0.0597,
+          "seeds": [
+            0.375,
+            0.4375,
+            0.5208
+          ]
+        },
+        "ours_rgb_passive": {
+          "mean": 0.5069,
+          "std": 0.0873,
+          "seeds": [
+            0.4792,
+            0.4167,
+            0.625
+          ]
+        },
+        "joint_transformer_aug_active": {
+          "mean": 0.4375,
+          "std": 0.0613,
+          "seeds": [
+            0.375,
+            0.5208,
+            0.4167
+          ]
+        },
+        "joint_transformer_active": {
+          "mean": 0.3958,
+          "std": 0.034,
+          "seeds": [
+            0.3542,
+            0.3958,
+            0.4375
+          ]
+        },
+        "rma_gru_active": {
+          "mean": 0.5,
+          "std": 0.0,
+          "seeds": [
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        "factored_no_equiv_active": {
+          "mean": 0.375,
+          "std": 0.2005,
+          "seeds": [
+            0.1667,
+            0.3125,
+            0.6458
+          ]
+        }
+      }
+    },
+    "libero_spatial": {
+      "episodes": 144,
+      "successes": {
+        "nominal": 12,
+        "privileged_oracle": 144,
+        "analytic_visual_sysid_passive": 120,
+        "farneback_flow_passive": 102,
+        "ours_lumaflow_active": 122,
+        "ours_rgb_passive": 89,
+        "joint_transformer_aug_active": 70,
+        "joint_transformer_active": 52,
+        "rma_gru_active": 53,
+        "factored_no_equiv_active": 68
+      },
+      "rates": {
+        "nominal": 0.0833,
+        "privileged_oracle": 1.0,
+        "analytic_visual_sysid_passive": 0.8333,
+        "farneback_flow_passive": 0.7083,
+        "ours_lumaflow_active": 0.8472,
+        "ours_rgb_passive": 0.6181,
+        "joint_transformer_aug_active": 0.4861,
+        "joint_transformer_active": 0.3611,
+        "rma_gru_active": 0.3681,
+        "factored_no_equiv_active": 0.4722
+      },
+      "per_seed": {
+        "nominal": {
+          "mean": 0.0833,
+          "std": 0.0,
+          "seeds": [
+            0.0833,
+            0.0833,
+            0.0833
+          ]
+        },
+        "privileged_oracle": {
+          "mean": 1.0,
+          "std": 0.0,
+          "seeds": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "analytic_visual_sysid_passive": {
+          "mean": 0.8333,
+          "std": 0.0,
+          "seeds": [
+            0.8333,
+            0.8333,
+            0.8333
+          ]
+        },
+        "farneback_flow_passive": {
+          "mean": 0.7083,
+          "std": 0.0,
+          "seeds": [
+            0.7083,
+            0.7083,
+            0.7083
+          ]
+        },
+        "ours_lumaflow_active": {
+          "mean": 0.8472,
+          "std": 0.0687,
+          "seeds": [
+            0.8958,
+            0.8958,
+            0.75
+          ]
+        },
+        "ours_rgb_passive": {
+          "mean": 0.6181,
+          "std": 0.0547,
+          "seeds": [
+            0.6667,
+            0.5417,
+            0.6458
+          ]
+        },
+        "joint_transformer_aug_active": {
+          "mean": 0.4861,
+          "std": 0.0708,
+          "seeds": [
+            0.4167,
+            0.5833,
+            0.4583
+          ]
+        },
+        "joint_transformer_active": {
+          "mean": 0.3611,
+          "std": 0.0098,
+          "seeds": [
+            0.375,
+            0.3542,
+            0.3542
+          ]
+        },
+        "rma_gru_active": {
+          "mean": 0.3681,
+          "std": 0.0196,
+          "seeds": [
+            0.3542,
+            0.3542,
+            0.3958
+          ]
+        },
+        "factored_no_equiv_active": {
+          "mean": 0.4722,
+          "std": 0.2167,
+          "seeds": [
+            0.1667,
+            0.6042,
+            0.6458
+          ]
+        }
+      }
+    }
+  },
+  "paired_contrasts_overall": {
+    "ours_lumaflow_active": {
+      "nominal": {
+        "mean_diff": 0.441,
+        "ci95": [
+          0.2326,
+          0.6632
+        ],
+        "wins": 263,
+        "losses": 9,
+        "ties": 304
+      },
+      "privileged_oracle": {
+        "mean_diff": -0.3299,
+        "ci95": [
+          -0.5279,
+          -0.1632
+        ],
+        "wins": 9,
+        "losses": 199,
+        "ties": 368
+      },
+      "analytic_visual_sysid_passive": {
+        "mean_diff": -0.1736,
+        "ci95": [
+          -0.3316,
+          -0.0278
+        ],
+        "wins": 54,
+        "losses": 154,
+        "ties": 368
+      },
+      "farneback_flow_passive": {
+        "mean_diff": -0.033,
+        "ci95": [
+          -0.1562,
+          0.0833
+        ],
+        "wins": 91,
+        "losses": 110,
+        "ties": 375
+      },
+      "ours_rgb_passive": {
+        "mean_diff": 0.0677,
+        "ci95": [
+          -0.0347,
+          0.1615
+        ],
+        "wins": 122,
+        "losses": 83,
+        "ties": 371
+      },
+      "joint_transformer_aug_active": {
+        "mean_diff": 0.1545,
+        "ci95": [
+          0.0122,
+          0.2951
+        ],
+        "wins": 154,
+        "losses": 65,
+        "ties": 357
+      },
+      "joint_transformer_active": {
+        "mean_diff": 0.2118,
+        "ci95": [
+          0.0434,
+          0.3906
+        ],
+        "wins": 181,
+        "losses": 59,
+        "ties": 336
+      },
+      "rma_gru_active": {
+        "mean_diff": 0.2257,
+        "ci95": [
+          0.0347,
+          0.4132
+        ],
+        "wins": 189,
+        "losses": 59,
+        "ties": 328
+      },
+      "factored_no_equiv_active": {
+        "mean_diff": 0.2066,
+        "ci95": [
+          0.0868,
+          0.3212
+        ],
+        "wins": 159,
+        "losses": 40,
+        "ties": 377
+      }
+    },
+    "ours_rgb_passive": {
+      "nominal": {
+        "mean_diff": 0.3733,
+        "ci95": [
+          0.2153,
+          0.5348
+        ],
+        "wins": 230,
+        "losses": 15,
+        "ties": 331
+      },
+      "privileged_oracle": {
+        "mean_diff": -0.3976,
+        "ci95": [
+          -0.5486,
+          -0.2674
+        ],
+        "wins": 7,
+        "losses": 236,
+        "ties": 333
+      },
+      "analytic_visual_sysid_passive": {
+        "mean_diff": -0.2413,
+        "ci95": [
+          -0.3299,
+          -0.1458
+        ],
+        "wins": 37,
+        "losses": 176,
+        "ties": 363
+      },
+      "farneback_flow_passive": {
+        "mean_diff": -0.1007,
+        "ci95": [
+          -0.1597,
+          -0.0503
+        ],
+        "wins": 81,
+        "losses": 139,
+        "ties": 356
+      },
+      "ours_lumaflow_active": {
+        "mean_diff": -0.0677,
+        "ci95": [
+          -0.1615,
+          0.0347
+        ],
+        "wins": 83,
+        "losses": 122,
+        "ties": 371
+      },
+      "joint_transformer_aug_active": {
+        "mean_diff": 0.0868,
+        "ci95": [
+          0.0069,
+          0.1823
+        ],
+        "wins": 125,
+        "losses": 75,
+        "ties": 376
+      },
+      "joint_transformer_active": {
+        "mean_diff": 0.1441,
+        "ci95": [
+          0.0312,
+          0.2743
+        ],
+        "wins": 148,
+        "losses": 65,
+        "ties": 363
+      },
+      "rma_gru_active": {
+        "mean_diff": 0.158,
+        "ci95": [
+          0.0469,
+          0.2934
+        ],
+        "wins": 147,
+        "losses": 56,
+        "ties": 373
+      },
+      "factored_no_equiv_active": {
+        "mean_diff": 0.1389,
+        "ci95": [
+          0.0816,
+          0.217
+        ],
+        "wins": 152,
+        "losses": 72,
+        "ties": 352
+      }
+    }
+  },
+  "paired_contrasts_ood": {
+    "ours_lumaflow_active": {
+      "nominal": {
+        "mean_diff": 0.4714,
+        "ci95": [
+          0.2656,
+          0.6849
+        ],
+        "wins": 181,
+        "losses": 0,
+        "ties": 203
+      },
+      "privileged_oracle": {
+        "mean_diff": -0.3802,
+        "ci95": [
+          -0.5859,
+          -0.2109
+        ],
+        "wins": 7,
+        "losses": 153,
+        "ties": 224
+      },
+      "analytic_visual_sysid_passive": {
+        "mean_diff": -0.1849,
+        "ci95": [
+          -0.3334,
+          -0.0521
+        ],
+        "wins": 37,
+        "losses": 108,
+        "ties": 239
+      },
+      "farneback_flow_passive": {
+        "mean_diff": -0.013,
+        "ci95": [
+          -0.138,
+          0.1042
+        ],
+        "wins": 74,
+        "losses": 79,
+        "ties": 231
+      },
+      "ours_rgb_passive": {
+        "mean_diff": 0.0703,
+        "ci95": [
+          -0.0703,
+          0.1901
+        ],
+        "wins": 89,
+        "losses": 62,
+        "ties": 233
+      },
+      "joint_transformer_aug_active": {
+        "mean_diff": 0.3333,
+        "ci95": [
+          0.1901,
+          0.4766
+        ],
+        "wins": 148,
+        "losses": 20,
+        "ties": 216
+      },
+      "joint_transformer_active": {
+        "mean_diff": 0.4297,
+        "ci95": [
+          0.2447,
+          0.6276
+        ],
+        "wins": 174,
+        "losses": 9,
+        "ties": 201
+      },
+      "rma_gru_active": {
+        "mean_diff": 0.3568,
+        "ci95": [
+          0.1536,
+          0.5547
+        ],
+        "wins": 163,
+        "losses": 26,
+        "ties": 195
+      },
+      "factored_no_equiv_active": {
+        "mean_diff": 0.2865,
+        "ci95": [
+          0.1458,
+          0.4219
+        ],
+        "wins": 133,
+        "losses": 23,
+        "ties": 228
+      }
+    },
+    "ours_rgb_passive": {
+      "nominal": {
+        "mean_diff": 0.401,
+        "ci95": [
+          0.25,
+          0.5573
+        ],
+        "wins": 154,
+        "losses": 0,
+        "ties": 230
+      },
+      "privileged_oracle": {
+        "mean_diff": -0.4505,
+        "ci95": [
+          -0.5729,
+          -0.3307
+        ],
+        "wins": 4,
+        "losses": 177,
+        "ties": 203
+      },
+      "analytic_visual_sysid_passive": {
+        "mean_diff": -0.2552,
+        "ci95": [
+          -0.3464,
+          -0.1719
+        ],
+        "wins": 23,
+        "losses": 121,
+        "ties": 240
+      },
+      "farneback_flow_passive": {
+        "mean_diff": -0.0833,
+        "ci95": [
+          -0.1328,
+          -0.0286
+        ],
+        "wins": 59,
+        "losses": 91,
+        "ties": 234
+      },
+      "ours_lumaflow_active": {
+        "mean_diff": -0.0703,
+        "ci95": [
+          -0.1901,
+          0.0703
+        ],
+        "wins": 62,
+        "losses": 89,
+        "ties": 233
+      },
+      "joint_transformer_aug_active": {
+        "mean_diff": 0.263,
+        "ci95": [
+          0.1667,
+          0.375
+        ],
+        "wins": 119,
+        "losses": 18,
+        "ties": 247
+      },
+      "joint_transformer_active": {
+        "mean_diff": 0.3594,
+        "ci95": [
+          0.224,
+          0.5078
+        ],
+        "wins": 142,
+        "losses": 4,
+        "ties": 238
+      },
+      "rma_gru_active": {
+        "mean_diff": 0.2865,
+        "ci95": [
+          0.1641,
+          0.4401
+        ],
+        "wins": 126,
+        "losses": 16,
+        "ties": 242
+      },
+      "factored_no_equiv_active": {
+        "mean_diff": 0.2161,
+        "ci95": [
+          0.1302,
+          0.3177
+        ],
+        "wins": 121,
+        "losses": 38,
+        "ties": 225
+      }
+    }
+  }
+}
