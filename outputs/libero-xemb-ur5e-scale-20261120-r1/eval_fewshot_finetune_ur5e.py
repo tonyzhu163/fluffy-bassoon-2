@@ -76,7 +76,7 @@ def collect_oracle_demo(simulator, policy, suite: str, task_id: int, init_state_
         out = policy.infer(to_openpi_observation(motor_obs, prompt))
         count = min(CHUNK_EXEC, max_steps - controls)
         canonical = np.clip(np.asarray(out["actions"], dtype=np.float32)[:count], low, high)
-        issued = np.clip(retarget_action_from_motor(canonical, spec.yaw_deg, spec.xy_scale, spec.gripper_sign), low, high).astype(np.float32)
+        issued = np.asarray(retarget_action_from_motor(canonical, spec.yaw_deg, spec.xy_scale, spec.gripper_sign, low, high), dtype=np.float32)
         state_vec = np.concatenate((raw["robot0_eef_pos"], raw["robot0_gripper_qpos"])).astype(np.float32)
         for i in range(len(canonical)):
             a_vlas.append(canonical[i])
