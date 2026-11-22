@@ -59,35 +59,34 @@ def build_official_test_tasks():
 def collect_oracle_demo(simulator, policy, suite: str, task_id: int, init_state_id: int, seed: int, spec: EmbodimentSpec):
     """Collect one real successful oracle demonstration on shifted 6-DoF UR5e: pairs of (a_vla, state, a_target_issued)."""
     case = dict(arm=DEV_ARM, suite=suite, task_id=task_id, variant="BASE", init_state_id=init_state_id, seed=seed)
-    reset = simulator.reset(case)
-    raw = reset["raw"]
-    prompt = reset["prompt"]
-    max_steps = int(reset["max_steps"])
+    sim_spec, initial = simulator.call("create", dict(case, embodiment=spec.name))
+    raw = initial["observation"]
+    anchor = np.asarray(initial["anchor_eef_pos"], dtype=np.float32)
+    prompt = initial["language_instruction"]
+    max_steps = int(sim_spec["max_steps"])
+    low = np.asarray(initial["action_schema"]["low"], dtype=np.float32)
+    high = np.asarray(initial["action_schema"]["high"], dtype=np.float32)
 
     a_vlas, states, a_targets = [], [], []
-    step = 0
+    controls = 0
     done = False
     success = False
-    while step < max_steps and not done:
-        motor_obs = retarget_observation_for_motor(raw, spec)
+    while controls < max_steps and not done:
+        motor_obs = raw if (controls == 0 or spec.yaw_deg == 0.0) else retarget_observation_for_motor(raw, anchor, spec.yaw_deg)
         out = policy.infer(to_openpi_observation(motor_obs, prompt))
-        chunk = np.asarray(out["actions"], dtype=np.float32)[:CHUNK_EXEC]
-        state_vec = np.concatenate((motor_obs["robot0_eef_pos"], motor_obs["robot0_gripper_qpos"])).astype(np.float32)
-        for act in chunk:
-            if step >= max_steps or done:
-                break
-            # Exact oracle issued action on target robot
-            target_issued, phys = retarget_action_from_motor(
-                act, spec, yaw_hat=spec.yaw_deg, scale_hat=spec.xy_scale, grip_hat=spec.gripper_sign
-            )
-            a_vlas.append(act.astype(np.float32))
+        count = min(CHUNK_EXEC, max_steps - controls)
+        canonical = np.clip(np.asarray(out["actions"], dtype=np.float32)[:count], low, high)
+        issued = np.clip(retarget_action_from_motor(canonical, spec.yaw_deg, spec.xy_scale, spec.gripper_sign), low, high).astype(np.float32)
+        state_vec = np.concatenate((raw["robot0_eef_pos"], raw["robot0_gripper_qpos"])).astype(np.float32)
+        for i in range(len(canonical)):
+            a_vlas.append(canonical[i])
             states.append(state_vec)
-            a_targets.append(target_issued.astype(np.float32))
-            res = simulator.step(phys)
-            raw = res["raw"]
-            done = bool(res["done"])
-            success = bool(res["success"])
-            step += 1
+            a_targets.append(issued[i])
+        step = simulator.call("chunk", issued)
+        raw = step["observation"]
+        controls += int(step["steps"])
+        done = bool(step["done"])
+        success = bool(step["success"])
     return success, np.asarray(a_vlas, dtype=np.float32), np.asarray(states, dtype=np.float32), np.asarray(a_targets, dtype=np.float32)
 
 
@@ -154,30 +153,31 @@ def train_linear_adapter(a_vla: np.ndarray, a_target: np.ndarray):
 
 def eval_with_adapter(simulator, policy, suite: str, task_id: int, init_state_id: int, seed: int, spec: EmbodimentSpec, adapter_fn=None) -> bool:
     case = dict(arm=DEV_ARM, suite=suite, task_id=task_id, variant="BASE", init_state_id=init_state_id, seed=seed)
-    reset = simulator.reset(case)
-    raw = reset["raw"]
-    prompt = reset["prompt"]
-    max_steps = int(reset["max_steps"])
+    sim_spec, initial = simulator.call("create", dict(case, embodiment=spec.name))
+    raw = initial["observation"]
+    prompt = initial["language_instruction"]
+    max_steps = int(sim_spec["max_steps"])
+    low = np.asarray(initial["action_schema"]["low"], dtype=np.float32)
+    high = np.asarray(initial["action_schema"]["high"], dtype=np.float32)
 
-    step = 0
+    controls = 0
     done = False
     success = False
-    while step < max_steps and not done:
-        motor_obs = retarget_observation_for_motor(raw, spec)
-        out = policy.infer(to_openpi_observation(motor_obs, prompt))
-        chunk = np.asarray(out["actions"], dtype=np.float32)[:CHUNK_EXEC]
-        state_vec = np.concatenate((motor_obs["robot0_eef_pos"], motor_obs["robot0_gripper_qpos"])).astype(np.float32)
-        for act in chunk:
-            if step >= max_steps or done:
-                break
-            issued = adapter_fn(act.astype(np.float32), state_vec) if adapter_fn is not None else act.astype(np.float32)
-            # Apply hidden physical shift directly to the issued action (identity adapter on top)
-            _, phys = retarget_action_from_motor(issued, spec, yaw_hat=0.0, scale_hat=1.0, grip_hat=1)
-            res = simulator.step(phys)
-            raw = res["raw"]
-            done = bool(res["done"])
-            success = bool(res["success"])
-            step += 1
+    while controls < max_steps and not done:
+        out = policy.infer(to_openpi_observation(raw, prompt))
+        count = min(CHUNK_EXEC, max_steps - controls)
+        canonical = np.clip(np.asarray(out["actions"], dtype=np.float32)[:count], low, high)
+        state_vec = np.concatenate((raw["robot0_eef_pos"], raw["robot0_gripper_qpos"])).astype(np.float32)
+        if adapter_fn is not None:
+            issued = np.stack([adapter_fn(canonical[i], state_vec) for i in range(len(canonical))], axis=0)
+        else:
+            issued = canonical
+        issued = np.clip(issued, low, high).astype(np.float32)
+        step = simulator.call("chunk", issued)
+        raw = step["observation"]
+        controls += int(step["steps"])
+        done = bool(step["done"])
+        success = bool(step["success"])
     return success
 
 
