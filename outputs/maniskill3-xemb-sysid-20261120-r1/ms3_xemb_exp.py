@@ -272,11 +272,14 @@ class MS3Reader(nn.Module):
         super().__init__()
         self.model_type = model_type
         self.cnn = SmallCNN(8, width)
-        if model_type == "joint_transformer":
+        if model_type in ("joint_transformer", "joint_transformer_aug"):
             self.in_proj = nn.Linear(width + 12, 128)
             enc_layer = nn.TransformerEncoderLayer(d_model=128, nhead=4, dim_feedforward=256, batch_first=True, activation="gelu")
             self.tx = nn.TransformerEncoder(enc_layer, num_layers=2)
             self.head = nn.Linear(128, 4)
+        elif model_type == "rma_gru":
+            self.gru = nn.GRU(width + 12, 192, batch_first=True)
+            self.head = nn.Sequential(nn.Linear(192, 192), nn.SiLU(), nn.Linear(192, 4))
         else:
             in_d = width if model_type == "factored_equiv" else width + 2
             self.vis_head = nn.Sequential(nn.Linear(in_d, 128), nn.SiLU(), nn.Linear(128, 3))
@@ -304,11 +307,15 @@ class MS3Reader(nn.Module):
         has_valid = valid.any(dim=1)
         w = valid.float()
 
-        if self.model_type == "joint_transformer":
+        if self.model_type in ("joint_transformer", "joint_transformer_aug", "rma_gru"):
             tok = torch.cat((v, iss, deef, djaw), dim=-1)
-            h = self.tx(self.in_proj(tok))
-            pooled = (h * w.unsqueeze(-1)).sum(dim=1) / w.sum(dim=1, keepdim=True).clamp(min=1.0)
-            out = self.head(pooled)
+            if self.model_type == "rma_gru":
+                _, h_n = self.gru(tok)
+                out = self.head(h_n[-1])
+            else:
+                h = self.tx(self.in_proj(tok))
+                pooled = (h * w.unsqueeze(-1)).sum(dim=1) / w.sum(dim=1, keepdim=True).clamp(min=1.0)
+                out = self.head(pooled)
             c, s = out[:, 0], out[:, 1]
             norm = torch.sqrt(c * c + s * s + 1e-8)
             cos_h = torch.where(has_valid, c / norm, torch.ones_like(c))
@@ -355,16 +362,35 @@ class MS3Reader(nn.Module):
 def train_reader(model_type: str, train_batch: dict, seed: int, steps: int = 1200, batch_size: int = 32, device: str = "cuda"):
     torch.manual_seed(seed)
     np.random.seed(seed)
+    use_steps = steps * 2 if model_type == "joint_transformer_aug" else steps
     model = MS3Reader(model_type).to(device)
     opt = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-4)
-    sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=steps, eta_min=5e-5)
+    sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=use_steps, eta_min=5e-5)
     n = len(train_batch["yaw_deg"])
     rng = np.random.default_rng(seed)
 
     tensors = {k: torch.as_tensor(v, device=device) for k, v in train_batch.items()}
-    for _ in range(steps):
+    for _ in range(use_steps):
         idx = torch.as_tensor(rng.integers(n, size=batch_size), device=device)
-        b = {k: v[idx] for k, v in tensors.items()}
+        b = {k: v[idx].clone() for k, v in tensors.items()}
+        if model_type == "joint_transformer_aug":
+            # Exact continuous physics augmentation (mirrors LIBERO Steel-Manned Yang et al.)
+            dtheta = torch.empty((batch_size,), device=device).uniform_(-180.0, 180.0)
+            rad_a = torch.deg2rad(dtheta)
+            ca, sa = torch.cos(rad_a)[:, None], torch.sin(rad_a)[:, None]
+            ix, iy = b["issued_mean"][..., 0].clone(), b["issued_mean"][..., 1].clone()
+            b["issued_mean"][..., 0] = ca * ix - sa * iy
+            b["issued_mean"][..., 1] = sa * ix + ca * iy
+            dx, dy = b["delta_eef"][..., 0].clone(), b["delta_eef"][..., 1].clone()
+            b["delta_eef"][..., 0] = ca * dx - sa * dy
+            b["delta_eef"][..., 1] = sa * dx + ca * dy
+            b["yaw_deg"] = (b["yaw_deg"] - dtheta + 180.0) % 360.0 - 180.0
+            m = torch.exp(torch.empty((batch_size,), device=device).uniform_(math.log(0.65), math.log(1.55)))
+            b["issued_mean"][..., :2] = b["issued_mean"][..., :2] / m[:, None, None]
+            b["xy_scale"] = b["xy_scale"] * m
+            f = torch.where(torch.rand((batch_size,), device=device) < 0.5, -1.0, 1.0)
+            b["issued_mean"][..., 6] = b["issued_mean"][..., 6] * f[:, None]
+            b["gripper_sign"] = (b["gripper_sign"].float() * f).to(torch.int32)
         cos_h, sin_h, log_s, grip_l = model(b)
         rad = torch.deg2rad(b["yaw_deg"])
         yaw_loss = ((cos_h - torch.cos(rad)) ** 2 + (sin_h - torch.sin(rad)) ** 2).mean()
@@ -471,7 +497,7 @@ def main():
 
     # 3. Train 3 seeds of each neural architecture strictly on 7-DoF Panda+Fetch and audit on 6-DoF xarm6_robotiq
     seed41_preds = {}
-    for mtype in ("joint_transformer", "factored_no_equiv", "factored_equiv"):
+    for mtype in ("joint_transformer", "joint_transformer_aug", "rma_gru", "factored_no_equiv", "factored_equiv"):
         per_seed = []
         for s in (41, 42, 43):
             model = train_reader(mtype, train_batch, seed=s, steps=args.steps, device=device)
@@ -486,15 +512,17 @@ def main():
                     swp = {k: eval_batch[k][perm] for k in ("img_before", "img_after", "issued_mean", "delta_eef", "delta_jaw", "valid")}
                     seed41_preds["ours_swapped_donor"] = predict_reader(model, swp, device=device)
         offline[mtype] = {reg: round(float(np.mean([d[reg] for d in per_seed])), 2) for reg in (*EVAL_REGIMES, "overall")}
-        print(f"OFFLINE {mtype:20s}: {offline[mtype]}", flush=True)
+        print(f"OFFLINE {mtype:24s}: {offline[mtype]}", flush=True)
 
-    # 4. Live closed-loop evaluation on held-out physical 6-DoF xarm6_robotiq (first 2 seeds per task x 12 emb = 72 queries x 9 arms = 648 episodes)
+    # 4. Live closed-loop evaluation on held-out physical 6-DoF xarm6_robotiq (72 queries x 11 arms = 792 episodes)
     ARMS = (
         "privileged_oracle",
         "analytic_visual_sysid",
         "ours_factored_equiv",
         "factored_no_equiv",
+        "joint_transformer_aug",
         "joint_transformer",
+        "rma_gru",
         "analytic_proprio_sysid",
         "nominal",
         "ours_cleared",
@@ -513,7 +541,9 @@ def main():
                 "analytic_visual_sysid": (float(yv_arr[i]), float(sp_arr[i]), int(gp_arr[i])),
                 "ours_factored_equiv": (float(seed41_preds["factored_equiv"][0][i]), float(seed41_preds["factored_equiv"][1][i]), int(seed41_preds["factored_equiv"][2][i])),
                 "factored_no_equiv": (float(seed41_preds["factored_no_equiv"][0][i]), float(seed41_preds["factored_no_equiv"][1][i]), int(seed41_preds["factored_no_equiv"][2][i])),
+                "joint_transformer_aug": (float(seed41_preds["joint_transformer_aug"][0][i]), float(seed41_preds["joint_transformer_aug"][1][i]), int(seed41_preds["joint_transformer_aug"][2][i])),
                 "joint_transformer": (float(seed41_preds["joint_transformer"][0][i]), float(seed41_preds["joint_transformer"][1][i]), int(seed41_preds["joint_transformer"][2][i])),
+                "rma_gru": (float(seed41_preds["rma_gru"][0][i]), float(seed41_preds["rma_gru"][1][i]), int(seed41_preds["rma_gru"][2][i])),
                 "analytic_proprio_sysid": (float(yp_arr[i]), float(sp_arr[i]), int(gp_arr[i])),
                 "nominal": (0.0, 1.0, 1),
                 "ours_cleared": (float(seed41_preds["ours_cleared"][0][i]), float(seed41_preds["ours_cleared"][1][i]), int(seed41_preds["ours_cleared"][2][i])),
