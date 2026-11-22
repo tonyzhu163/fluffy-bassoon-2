@@ -61,10 +61,10 @@ TEST_VARIANTS = ("S13", "S14", "S15", "S16", "S19")
 STRESS_EMBS = (
     "fam_nom",
     "fam_yaw90",
-    "comp_yaw180_s07_inv",
-    "comp_yaw270_s13_inv",
-    "cont_45_s085",
-    "cont_135_s115_inv",
+    "comp_180_lo_inv",
+    "comp_m90_hi_inv",
+    "cont_45_nom",
+    "cont_135_075_inv",
 )
 STRESS_ARMS = (
     "privileged_oracle",
@@ -192,6 +192,7 @@ def eval_test_shard(
     shard_idx: int,
     num_shards: int,
     seed_ckpt: int = 41,
+    pro2_ckpt_dir: Path | None = None,
 ):
     test_tasks = load_split_tasks("test")
     if num_shards != len(test_tasks):
@@ -203,10 +204,11 @@ def eval_test_shard(
     shard_dir.mkdir(parents=True, exist_ok=True)
 
     cals = fit_source_calibrators(train_archive)
+    ckpt_root = pro2_ckpt_dir if pro2_ckpt_dir is not None else (out_dir / "checkpoints")
     p_base_pas, c_base_pas, _ = load_v2_checkpoint(base_ckpt_dir / f"equiv_v2_dis_dz-passive_attempt1-seed{seed_ckpt}.msgpack")
-    p_cam, c_cam, _ = load_v2_checkpoint(out_dir / "checkpoints" / f"equiv_flow_cam_homog-seed{seed_ckpt}.msgpack")
-    p_v2p, c_v2p, _ = load_v2_checkpoint(out_dir / "checkpoints" / f"equiv_v2_pro2-seed{seed_ckpt}.msgpack")
-    p_percp, c_percp, _ = load_v2_checkpoint(out_dir / "checkpoints" / f"perceiver_icba_pro2-seed{seed_ckpt}.msgpack")
+    p_cam, c_cam, _ = load_v2_checkpoint(ckpt_root / f"equiv_flow_cam_homog-seed{seed_ckpt}.msgpack")
+    p_v2p, c_v2p, _ = load_v2_checkpoint(ckpt_root / f"equiv_v2_pro2-seed{seed_ckpt}.msgpack")
+    p_percp, c_percp, _ = load_v2_checkpoint(ckpt_root / f"perceiver_icba_pro2-seed{seed_ckpt}.msgpack")
 
     policy = load_frozen_policy("pi05")
     rows = []
@@ -358,6 +360,7 @@ def main():
     p3.add_argument("--out-dir", type=Path, required=True)
     p3.add_argument("--train-archive", type=Path, required=True)
     p3.add_argument("--base-ckpt-dir", type=Path, required=True)
+    p3.add_argument("--pro2-ckpt-dir", type=Path, default=None)
     p3.add_argument("--shard-idx", type=int, required=True)
     p3.add_argument("--num-shards", type=int, default=8)
     p3.add_argument("--seed-ckpt", type=int, default=41)
@@ -372,7 +375,7 @@ def main():
     elif args.cmd == "train-readers":
         train_pro2_readers(args.out_dir, args.num_shards, steps=args.steps)
     elif args.cmd == "eval-test":
-        eval_test_shard(args.out_dir, args.train_archive, args.base_ckpt_dir, args.shard_idx, args.num_shards, seed_ckpt=args.seed_ckpt)
+        eval_test_shard(args.out_dir, args.train_archive, args.base_ckpt_dir, args.shard_idx, args.num_shards, seed_ckpt=args.seed_ckpt, pro2_ckpt_dir=args.pro2_ckpt_dir)
     else:
         merge_results(args.out_dir, args.num_shards)
 
