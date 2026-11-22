@@ -1,0 +1,66 @@
+{
+  "arm": "UR5e",
+  "shifts": [
+    "comp_180_lo_inv",
+    "comp_m90_hi_inv",
+    "cont_135_075_inv",
+    "cont_m45_075"
+  ],
+  "n_tasks": 8,
+  "n_queries_per_arm": 32,
+  "zero_shot_unshifted": {
+    "successes": 7,
+    "trials": 8,
+    "rate": 0.875
+  },
+  "zero_shot_shifted": {
+    "successes": 0,
+    "trials": 32,
+    "rate": 0.0
+  },
+  "sft_mlp_same_shift": {
+    "1": {
+      "successes": 18,
+      "trials": 32,
+      "rate": 0.5625
+    },
+    "3": {
+      "successes": 25,
+      "trials": 32,
+      "rate": 0.7812
+    },
+    "10": {
+      "successes": 28,
+      "trials": 32,
+      "rate": 0.875
+    }
+  },
+  "sft_linear_same_shift": {
+    "1": {
+      "successes": 28,
+      "trials": 32,
+      "rate": 0.875
+    },
+    "3": {
+      "successes": 28,
+      "trials": 32,
+      "rate": 0.875
+    },
+    "10": {
+      "successes": 27,
+      "trials": 32,
+      "rate": 0.8438
+    }
+  },
+  "sft_mlp_k10_cross_shift": {
+    "successes": 0,
+    "trials": 32,
+    "rate": 0.0
+  },
+  "sft_linear_k10_cross_shift": {
+    "successes": 0,
+    "trials": 32,
+    "rate": 0.0
+  },
+  "seconds": 3022.7
+}
