@@ -143,28 +143,43 @@ def test_v2_so3_exact_equivariance_and_finite_grads():
 
     rng = np.random.default_rng(42)
     r_true = _random_so3(rng)
+    gains = np.array([0.65, 1.25, 1.55], dtype=np.float32)
     a = rng.normal(size=(2, 6, 3)).astype(np.float32)
-    v = np.einsum("ij,bkj->bki", r_true, a)
+    v = np.einsum("ij,bkj->bki", r_true, a * gains[None, None, :])
     w = np.ones((2, 6), dtype=np.float32)
-    r_hat = np.asarray(procrustes_so3(jnp.asarray(a), jnp.asarray(v), jnp.asarray(w), jnp.ones((2,), dtype=bool)))
+    r_hat = np.asarray(procrustes_so3(jnp.asarray(a * gains[None, None, :]), jnp.asarray(v), jnp.asarray(w), jnp.ones((2,), dtype=bool)))
     assert np.allclose(r_hat[0], r_true, atol=1e-4)
 
-    # Test full SO(3) neural reader equivariance and finite gradients.
+    # Test full SO(3) neural reader equivariance (when isotropic gains = 1), predict_embodiment_v2 unpacking, and finite gradients.
     cfg = ReaderV2Config(model_type="factored_equiv_so3", visual_mode="dis_lumaflow", cnn_width=24, mlp_width=32)
     params = init_reader_v2(jax.random.key(5), cfg)
     batch = _synthetic_batch(bsz=2, k=6, h=16, w=16, seed=5)
     batch["rot_mat"] = np.stack([r_true, _random_so3(rng)], axis=0)
     batch["xyz_scale"] = np.array([[0.8, 1.2, 0.9], [1.3, 0.7, 1.1]], dtype=np.float32)
 
-    r0, _, _ = apply_reader_v2(params, cfg, batch)
+    # Zero scale_head output layer -> isotropic g_hat = 1.0 -> exact right SO(3) equivariance.
+    iso_params = dict(params)
+    iso_scale = list(params["scale_head"])
+    w_last, b_last = iso_scale[-1]
+    iso_scale[-1] = (jnp.zeros_like(w_last), jnp.zeros_like(b_last))
+    iso_params["scale_head"] = tuple(iso_scale)
+
+    r0, _, _ = apply_reader_v2(iso_params, cfg, batch)
     q = _random_so3(rng)
     b_rot = dict(batch)
     iss_rot = batch["issued_mean"].copy()
     iss_rot[..., :3] = np.einsum("ij,bkj->bki", q.T, iss_rot[..., :3])
     b_rot["issued_mean"] = iss_rot
-    r1, _, _ = apply_reader_v2(params, cfg, b_rot)
+    r1, _, _ = apply_reader_v2(iso_params, cfg, b_rot)
     expected_r1 = np.einsum("bij,jk->bik", np.asarray(r0), q)
     assert np.allclose(np.asarray(r1), expected_r1, atol=1e-3)
+
+    # Public predict_embodiment_v2 cleanly unpacks SO(3) outputs + cleared history returns identity.
+    r_pred, s_pred, g_pred = predict_embodiment_v2(params, cfg, batch)
+    assert r_pred.shape == (2, 3, 3) and s_pred.shape == (2, 3) and g_pred.shape == (2,)
+    clr = dict(batch, valid=np.zeros_like(batch["valid"]))
+    r_clr, s_clr, g_clr = predict_embodiment_v2(params, cfg, clr)
+    assert np.allclose(r_clr[0], np.eye(3), atol=1e-5) and np.allclose(s_clr, 1.0) and np.all(g_clr == 1)
 
     (loss, _), grads = jax.value_and_grad(lambda p: reader_loss_v2(p, cfg, batch), has_aux=True)(params)
     assert np.isfinite(float(loss))
@@ -217,6 +232,38 @@ def test_equiv_flow_homography_exact_so2_and_zero_cardinal_quantization():
             assert circular_yaw_error_deg(float(y1), float(y0) - delta) < 1e-3
 
     # Verify finite gradients through direction-blind mask CNN + homography + Procrustes.
+    (loss, _), grads = jax.value_and_grad(lambda p: reader_loss_v2(p, cfg, batch), has_aux=True)(params)
+    assert np.isfinite(float(loss))
+    for leaf in jax.tree_util.tree_leaves(grads):
+        assert np.isfinite(np.asarray(leaf)).all()
+
+    clr = dict(batch, valid=np.zeros_like(batch["valid"]))
+    yc, sc, gc = predict_embodiment_v2(params, cfg, clr)
+    assert np.allclose(yc, 0.0) and np.allclose(sc, 1.0) and np.all(gc == 1)
+
+
+def test_equiv_flow_cam_homog_exact_so2_and_grads():
+    jax = pytest.importorskip("jax")
+    cfg = ReaderV2Config(
+        model_type="equiv_flow_cam_homog",
+        visual_mode="dis_lumaflow",
+        cnn_width=32,
+        use_dz_parallax=True,
+    )
+    params = init_reader_v2(jax.random.key(11), cfg)
+    batch = _synthetic_batch(bsz=3, k=5, h=16, w=16, seed=23)
+    batch["frame0_img"] = batch["img_before"][:, 0].copy()
+
+    yaw0, _, _ = predict_embodiment_v2(params, cfg, batch)
+    for delta in (37.5, -112.4, 180.0):
+        b_rot = dict(batch)
+        iss = batch["issued_mean"].copy()
+        iss[..., :2] = iss[..., :2] @ rot2(delta).T
+        b_rot["issued_mean"] = iss
+        yaw1, _, _ = predict_embodiment_v2(params, cfg, b_rot)
+        for y0, y1 in zip(yaw0, yaw1, strict=True):
+            assert circular_yaw_error_deg(float(y1), float(y0) - delta) < 1e-3
+
     (loss, _), grads = jax.value_and_grad(lambda p: reader_loss_v2(p, cfg, batch), has_aux=True)(params)
     assert np.isfinite(float(loss))
     for leaf in jax.tree_util.tree_leaves(grads):

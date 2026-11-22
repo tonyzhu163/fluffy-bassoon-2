@@ -21,16 +21,16 @@ attempt=$2
 ckpt_attempt=$3
 homog_attempt=$4
 policy_name=${5:-pi05}
+target_arm=${TARGET_ARM:-UR5e}
 shards=(0 1 2 3 4 5 6 7)
 devices=(0 1 2 3 4 5 6 7)
 probe_devices=0,1,2,3,4,5,6,7
-reset_args=()
+reset_args=(--warmup-create --reset-create-attempts 3)
 if (( $# >= 6 )); then
     [[ "$6" =~ ^[0-7]$ && "${7:-0}" =~ ^(0|[1-9][0-9]*)$ ]] || { echo "Invalid shard or device" >&2; exit 2; }
     shards=("$6")
     devices=("${7:-0}")
     probe_devices=${devices[0]}
-    reset_args=(--warmup-create --reset-create-attempts 3)
 fi
 host=$(hostname)
 [[ "$attempt" =~ ^[a-z0-9]+$ ]]
@@ -81,18 +81,18 @@ reuse="$root/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live"
 REUSE_ARGS=()
 if [[ -n "${STAGE2_SUPPORT_DIR:-}" ]]; then
     REUSE_ARGS=(--reuse-support-dir "$STAGE2_SUPPORT_DIR")
-elif [[ "$policy_name" == "pi05" ]]; then
+elif [[ "$policy_name" == "pi05" && "$target_arm" == "UR5e" ]]; then
     REUSE_ARGS=(--reuse-support-dir "$reuse")
 fi
-printf 'policy=%s seed=41 shards=%s checkpoints=%s,%s support=%s\n' \
-    "$policy_name" "${shards[*]}" "$ckpts" "$homog_ckpts" "${REUSE_ARGS[1]:-fresh}" > "$out/config.txt"
+printf 'policy=%s arm=%s seed=41 shards=%s checkpoints=%s,%s support=%s\n' \
+    "$policy_name" "$target_arm" "${shards[*]}" "$ckpts" "$homog_ckpts" "${REUSE_ARGS[1]:-fresh}" > "$out/config.txt"
 
 pids=()
 for i in "${!shards[@]}"; do
     s=${shards[i]}
     device=${devices[i]}
     CUDA_VISIBLE_DEVICES="$device" MUJOCO_EGL_DEVICE_ID="$device" \
-        timeout --kill-after=20s 75m "$python" -Bu "$here/eval_stage2a_live_ur5e.py" run-shard \
+        timeout --kill-after=20s 90m "$python" -Bu "$here/eval_stage2a_live_ur5e.py" run-shard \
         --train-archive "$archive" \
         --ckpt-dir "$ckpts" \
         --homog-ckpt-dir "$homog_ckpts" \
@@ -101,6 +101,7 @@ for i in "${!shards[@]}"; do
         --num-shards 8 \
         --seed-ckpt 41 \
         --policy "$policy_name" \
+        --arm "$target_arm" \
         "${reset_args[@]}" \
         "${REUSE_ARGS[@]}" \
         > "$out/logs/shard-$s.log" 2>&1 &
@@ -110,6 +111,6 @@ for p in "${pids[@]}"; do wait "$p"; done
 
 if (( ${#shards[@]} == 8 )); then
     CUDA_VISIBLE_DEVICES=0 "$python" -Bu "$here/eval_stage2a_live_ur5e.py" merge \
-        --output-dir "$out/live" --num-shards 8 > "$out/logs/merge.log" 2>&1
+        --output-dir "$out/live" --num-shards 8 --arm "$target_arm" > "$out/logs/merge.log" 2>&1
 fi
 date +%s > "$out/gpu-end.txt"

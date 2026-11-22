@@ -142,6 +142,7 @@ def run_online_streaming_episode(
     reader_cfg: ReaderV2Config,
     max_streaming_chunks: int = 24,
     check_reset=None,
+    canonicalize_quat: bool = False,
 ):
     """Zero-probe, zero-reset Attempt-1 online streaming adaptation using StreamingProcrustesEstimator.
 
@@ -167,7 +168,7 @@ def run_online_streaming_episode(
     rng = np.random.default_rng(int(case["seed"]) + NOISE_SEED_OFFSET)
     noise_bank = rng.standard_normal(((horizon + 4) // 5, action_horizon, action_dim)).astype(np.float32)
     frame0_img = initial["agentview_64"]
-    first_item = to_openpi_observation(raw, prompt)
+    first_item = to_openpi_observation(raw, prompt, canonicalize_quat=canonicalize_quat)
     frame0_state = first_item["observation/state"].astype(np.float32)
     repro = initial["environment_reproducibility"]
     model_id = initial["model_identity"]
@@ -211,7 +212,7 @@ def run_online_streaming_episode(
             item = first_item
         else:
             motor_obs = raw if cur_yaw == 0 else retarget_observation_for_motor(raw, anchor, cur_yaw)
-            item = to_openpi_observation(motor_obs, prompt)
+            item = to_openpi_observation(motor_obs, prompt, canonicalize_quat=canonicalize_quat)
         noise = noise_bank[controls // 5]
         proposal = np.asarray(policy.infer(item, noise=noise)["actions"], dtype=np.float32)
         if proposal.shape != (action_horizon, 7) or not np.isfinite(proposal).all():
@@ -381,6 +382,7 @@ def run_shard(
     policy_name: str = "pi05",
     reset_create_attempts: int = 1,
     warmup_create: bool = False,
+    target_arm: str = DEV_ARM,
 ):
     tasks, plan = build_test_plan()
     if num_shards != len(tasks):
@@ -391,6 +393,7 @@ def run_shard(
     my_suite, my_tid = tasks[shard_idx]
     my_entries = [e for e in plan if e["suite"] == my_suite and int(e["task_id"]) == my_tid]
     donors_local = make_donor_permutation(my_entries, np.random.default_rng(20261121 + shard_idx))
+    canon_quat = (policy_name == "pi0")
 
     shard_dir = output_dir / f"shard-{shard_idx}"
     # Existing progress has no durable reset reference or partial-arm ledger.
@@ -410,6 +413,18 @@ def run_shard(
 
     reused_meta = (reuse_support_dir / f"shard-{shard_idx}" / "support-meta.json") if reuse_support_dir else None
     with UR5eSimulator() as simulator:
+        if policy_name == "pi0" and shard_idx == 0:
+            gate_case = dict(arm=target_arm, suite="libero_goal", task_id=1, variant="BASE", init_state_id=13, seed=20500101)
+            gate_rec = run_episode(
+                simulator, policy, gate_case, get_embodiment_spec("nom"),
+                yaw_hat=0.0, scale_hat=1.0, grip_hat=1, canonicalize_quat=True,
+            )
+            print(
+                f"PI0_QUATFIX_GATE arm={target_arm} success={gate_rec['success']} controls={gate_rec['controls']}",
+                flush=True,
+            )
+            if not gate_rec["success"]:
+                raise RuntimeError(f"pi0 canonicalize_quat gate failed on {target_arm} Goal 1 layout 13")
         if reused_meta is not None:
             support_rows = json.loads(reused_meta.read_text())
             if [r["embodiment"] for r in support_rows] != [e["embodiment"] for e in my_entries]:
@@ -420,14 +435,14 @@ def run_shard(
                 suite, tid = entry["suite"], int(entry["task_id"])
                 spec = get_embodiment_spec(entry["embodiment"])
                 sup_seed = 31800000 + 10_000 * suites.index(suite) + 100 * tid + entry["support_init_state_id"]
-                sup_case = dict(arm=DEV_ARM, suite=suite, task_id=tid, variant="BASE", init_state_id=entry["support_init_state_id"], seed=sup_seed)
+                sup_case = dict(arm=target_arm, suite=suite, task_id=tid, variant="BASE", init_state_id=entry["support_init_state_id"], seed=sup_seed)
                 key = (suite, tid)
                 act_meta, act_trace = run_active_probe_episode(simulator, sup_case, spec, prompt=prompts.get(key))
                 prompts.setdefault(key, act_meta["prompt"])
                 _, pas_trace = run_episode(
                     simulator, policy, sup_case, spec, prompt=prompts[key],
                     yaw_hat=0.0, scale_hat=1.0, grip_hat=1, max_controls=SUPPORT_BUDGET,
-                    record_chunks=True, max_record_chunks=24,
+                    record_chunks=True, max_record_chunks=24, canonicalize_quat=canon_quat,
                 )
                 act_npz = support_dir / f"{local_i:02d}-{spec.name}-active.npz"
                 pas_npz = support_dir / f"{local_i:02d}-{spec.name}-passive.npz"
@@ -447,7 +462,7 @@ def run_shard(
             spec = get_embodiment_spec(entry["embodiment"])
             init_state_id = entry["query_init_state_id"]
             q_seed = 41800000 + 10_000 * suites.index(suite) + 100 * tid + init_state_id
-            case = dict(arm=DEV_ARM, suite=suite, task_id=tid, variant="BASE", init_state_id=init_state_id, seed=q_seed)
+            case = dict(arm=target_arm, suite=suite, task_id=tid, variant="BASE", init_state_id=init_state_id, seed=q_seed)
             if warmup_create and local_i == 0:
                 warmup_case = dict(case, embodiment=spec.name)
                 print(f"Unscored query create (zero actions): {warmup_case}", flush=True)
@@ -512,14 +527,14 @@ def run_shard(
                 if arm_name == "ours_equiv_v2_online":
                     rec = run_paired_query(
                         run_online_streaming_episode, simulator, policy, case, spec,
-                        reader_params=p_v2_pas, reader_cfg=c_v2_pas, **pairing,
+                        reader_params=p_v2_pas, reader_cfg=c_v2_pas, canonicalize_quat=canon_quat, **pairing,
                     )
                     row["arms"][arm_name] = rec
                 else:
                     yh, sh, gh = arm_preds[arm_name]
                     rec = run_paired_query(
                         run_episode, simulator, policy, case, spec,
-                        yaw_hat=yh, scale_hat=sh, grip_hat=gh, **pairing,
+                        yaw_hat=yh, scale_hat=sh, grip_hat=gh, canonicalize_quat=canon_quat, **pairing,
                     )
                     prompts.setdefault(key, rec["released_prompt"])
                     row["arms"][arm_name] = dict(
@@ -562,7 +577,7 @@ def validate_arm_results(row):
                 raise ValueError(f"Missing or invalid {field} for {label}")
 
 
-def merge_shards(output_dir: Path, num_shards: int):
+def merge_shards(output_dir: Path, num_shards: int, target_arm: str = DEV_ARM):
     tasks, plan = build_test_plan()
     if num_shards != len(tasks) or len(set(tasks)) != 8:
         raise ValueError("Merge requires all eight distinct task shards")
@@ -622,9 +637,9 @@ def merge_shards(output_dir: Path, num_shards: int):
                 continue
             contrasts[hero][comp] = task_clustered_bootstrap(all_rows, hero, comp, seed=20261121)
 
-    summary = dict(split="official_test", arm="UR5e", trials=len(all_rows), arms=list(STAGE2A_ARMS), by_regime=by_regime, paired_contrasts_overall=contrasts)
+    summary = dict(split="official_test", arm=target_arm, trials=len(all_rows), arms=list(STAGE2A_ARMS), by_regime=by_regime, paired_contrasts_overall=contrasts)
     write_json(output_dir / "stage2a-summary.json", summary)
-    print("=== STAGE 2A OFFICIAL TEST SUMMARY (96/96) ===", flush=True)
+    print(f"=== STAGE 2A OFFICIAL TEST SUMMARY ({target_arm}, 96/96) ===", flush=True)
     print(json.dumps(dict(overall=by_regime["overall"], ood=by_regime["ood_combined"]), indent=2), flush=True)
 
 
@@ -641,6 +656,7 @@ def main():
     p_run.add_argument("--seed-ckpt", type=int, default=41)
     p_run.add_argument("--reuse-support-dir", type=Path, default=None)
     p_run.add_argument("--policy", type=str, default="pi05", choices=("pi05", "pi0"))
+    p_run.add_argument("--arm", type=str, default=DEV_ARM, choices=("UR5e", "IIWA", "Kinova3", "Panda"))
     p_run.add_argument("--reset-create-attempts", type=int, choices=(1, 2, 3), default=1,
                        help="Maximum native query creates per arm, including the first")
     p_run.add_argument("--warmup-create", action="store_true",
@@ -649,14 +665,16 @@ def main():
     p_m = sub.add_parser("merge")
     p_m.add_argument("--output-dir", type=Path, required=True)
     p_m.add_argument("--num-shards", type=int, default=8)
+    p_m.add_argument("--arm", type=str, default=DEV_ARM, choices=("UR5e", "IIWA", "Kinova3", "Panda"))
 
     args = parser.parse_args()
     if args.cmd == "run-shard":
         run_shard(args.train_archive, args.ckpt_dir, args.homog_ckpt_dir, args.output_dir, args.shard_idx,
                   args.num_shards, args.seed_ckpt, args.reuse_support_dir, policy_name=args.policy,
-                  reset_create_attempts=args.reset_create_attempts, warmup_create=args.warmup_create)
+                  reset_create_attempts=args.reset_create_attempts, warmup_create=args.warmup_create,
+                  target_arm=args.arm)
     else:
-        merge_shards(args.output_dir, args.num_shards)
+        merge_shards(args.output_dir, args.num_shards, target_arm=args.arm)
 
 
 if __name__ == "__main__":

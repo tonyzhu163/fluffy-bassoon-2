@@ -39,8 +39,8 @@ def public_digest(raw: dict) -> dict:
     return {k: array_digest(v) for k, v in raw.items()}
 
 
-def to_openpi_observation(raw: dict, prompt: str) -> dict:
-    """Convert raw LIBERO observation into the exact OpenPI pi0.5 input dictionary."""
+def to_openpi_observation(raw: dict, prompt: str, *, canonicalize_quat: bool = False) -> dict:
+    """Convert raw LIBERO observation into the exact OpenPI pi0/pi0.5 input dictionary."""
     from openpi_client import image_tools
 
     rgb = [
@@ -49,7 +49,11 @@ def to_openpi_observation(raw: dict, prompt: str) -> dict:
         )
         for key in ("agentview_image", "robot0_eye_in_hand_image")
     ]
-    quat = raw["robot0_eef_quat_xyzw"]
+    quat = np.asarray(raw["robot0_eef_quat_xyzw"], dtype=np.float64)
+    if canonicalize_quat and abs(quat[3]) < 0.85 and quat[0] < 0.0:
+        # Canonicalize the SO(3) double cover (q == -q) on the downward-gripper hemisphere
+        # so axis-angle[0] stays in the (+pi) convention used by pi0_libero's AbsoluteActions.
+        quat = -quat
     w = np.clip(quat[3], -1.0, 1.0)
     den = np.sqrt(1.0 - w * w)
     rotation = quat[:3] * 2.0 * np.arccos(w) / den if den > 1e-10 else np.zeros(3)
@@ -88,6 +92,7 @@ def run_episode(
     record_chunks: bool = False,
     max_record_chunks: int = 24,
     check_reset=None,
+    canonicalize_quat: bool = False,
 ):
     """Execute one multi-arm episode under `spec` using retargeted frozen pi0.5."""
     sim_spec, initial = simulator.call("create", dict(case, embodiment=spec.name))
@@ -109,7 +114,7 @@ def run_episode(
     rng = np.random.default_rng(int(case["seed"]) + NOISE_SEED_OFFSET)
     noise_bank = rng.standard_normal(((horizon + 4) // 5, action_horizon, action_dim)).astype(np.float32)
     frame0_img = initial["agentview_64"]
-    first_item = to_openpi_observation(raw, prompt)
+    first_item = to_openpi_observation(raw, prompt, canonicalize_quat=canonicalize_quat)
     frame0_state = first_item["observation/state"].astype(np.float32)
     repro = initial["environment_reproducibility"]
     model_id = initial["model_identity"]
@@ -239,7 +244,7 @@ def run_episode(
             item = first_item
         else:
             motor_obs = raw if cur_yaw == 0 else retarget_observation_for_motor(raw, anchor, cur_yaw)
-            item = to_openpi_observation(motor_obs, prompt)
+            item = to_openpi_observation(motor_obs, prompt, canonicalize_quat=canonicalize_quat)
         noise = noise_bank[controls // 5]
         proposal = np.asarray(policy.infer(item, noise=noise)["actions"], dtype=np.float32)
         if proposal.shape != (action_horizon, 7) or not np.isfinite(proposal).all():

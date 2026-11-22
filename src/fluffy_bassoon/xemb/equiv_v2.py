@@ -456,6 +456,24 @@ def init_reader_v2(key, cfg: ReaderV2Config):
             grip_head=grip_head,
         )
 
+    if cfg.model_type == "equiv_flow_cam_homog":
+        # Camera-conditioned EquivFlow-Procrustes: static frame-0 CNN predicts a residual 2x2
+        # camera homography H(I_0) = H_0 + dH(I_0) strictly before any action is executed,
+        # preserving exact SO(2) equivariance and zero cardinal quantization even under shifted
+        # camera extrinsics (S15), FOV (S16), appearance/lighting (S13/S14), and noise (S19).
+        k5, k6 = jax.random.split(k2, 2)
+        cam_w = max(32, cfg.cnn_width // 2)
+        return dict(
+            mask_cnn=_init_flow_mask_cnn(k1, in_channels=7, width=cam_w),
+            cam_cnn=_init_res_cnn(k5, 5, cam_w),
+            cam_head_w=jnp.zeros((cam_w, 6), dtype=jnp.float32),
+            cam_head_b=jnp.zeros((6,), dtype=jnp.float32),
+            homography=jnp.eye(2, dtype=jnp.float32),
+            uz=jnp.zeros((2,), dtype=jnp.float32),
+            scale_head=scale_head,
+            grip_head=grip_head,
+        )
+
     raise ValueError(cfg.model_type)
 
 
@@ -472,6 +490,24 @@ def extract_visual_vectors_v2(params, cfg: ReaderV2Config, batch):
         if cfg.use_dz_parallax:
             local_dz = jnp.where(valid, 100.0 * jnp.asarray(batch["delta_eef"], dtype=jnp.float32)[..., 2], 0.0)
             v_planar = v_raw - local_dz[..., None] * params["uz"][None, None, :]
+        else:
+            v_planar = v_raw
+        return v_planar, w
+
+    if cfg.model_type == "equiv_flow_cam_homog":
+        flow_vec, w = _apply_flow_mask_pooling(params["mask_cnn"], batch)
+        f0 = _unit_rgb(batch["frame0_img"]) if "frame0_img" in batch else _unit_rgb(batch["img_before"][:, 0])
+        b, h, wi, _ = f0.shape
+        coords = jnp.broadcast_to(_coord_grid(h, wi)[None], (b, h, wi, 2))
+        cam_in = jnp.concatenate((f0, coords), axis=-1)
+        cam_feat = _apply_res_cnn(params["cam_cnn"], cam_in)  # [B, cam_w]
+        cam_delta = cam_feat @ params["cam_head_w"] + params["cam_head_b"]  # [B, 6]
+        h_mat = params["homography"][None] + cam_delta[:, :4].reshape(b, 2, 2)
+        v_raw = jnp.einsum("bij,bkj->bki", h_mat, flow_vec)
+        if cfg.use_dz_parallax:
+            dz_m = jnp.where(valid, jnp.asarray(batch["delta_eef"], dtype=jnp.float32)[..., 2], 0.0)
+            uz_b = params["uz"][None] + cam_delta[:, 4:6]
+            v_planar = v_raw - dz_m[..., None] * uz_b[:, None, :]
         else:
             v_planar = v_raw
         return v_planar, w
@@ -522,7 +558,7 @@ def apply_reader_v2(params, cfg: ReaderV2Config, batch):
 
     log_scale, grip_logit = _apply_scale_and_grip(params, issued, delta_eef, delta_jaw, valid)
 
-    if cfg.model_type in ("factored_equiv_v2", "equiv_flow_homography"):
+    if cfg.model_type in ("factored_equiv_v2", "equiv_flow_homography", "equiv_flow_cam_homog"):
         v_planar, w = extract_visual_vectors_v2(params, cfg, batch)
         cos_hat, sin_hat = _procrustes_yaw(issued[..., :2], v_planar, w, has_valid)
         return cos_hat, sin_hat, log_scale, grip_logit
@@ -544,8 +580,8 @@ def apply_reader_v2(params, cfg: ReaderV2Config, batch):
         vec3_out = _apply_mlp(params["vis_vec3"], vis)
         v_3d = vec3_out[..., :3]
         w = jnp.where(valid, jax.nn.softplus(vec3_out[..., 3]) + 1e-4, 0.0)
-        r_hat = procrustes_so3(issued[..., :3], v_3d, w, has_valid)
-        # Per-axis anisotropic log-scale estimation using rotated commands vs local delta_eef.
+        # Per-axis anisotropic log-scale estimation first, then pre-scale issued commands
+        # so SVD Procrustes recovers R in SO(3) cleanly even under unequal gains (gx != gy != gz).
         iss_xyz = issued[..., :3]
         deef_xyz = delta_eef[..., :3]
         eps = 1e-4
@@ -564,6 +600,9 @@ def apply_reader_v2(params, cfg: ReaderV2Config, batch):
         s_w = jnp.where(valid[..., None], jax.nn.softplus(s_conf) + 1e-4, 0.0)
         s_den = jnp.maximum(jnp.sum(s_w, axis=1), 1e-6)
         log_scale_xyz = jnp.where(has_valid[:, None], jnp.sum(s_w * s_val, axis=1) / s_den, 0.0)
+        gain_xyz = jnp.exp(jnp.clip(log_scale_xyz, np.log(0.25), np.log(4.0)))
+        iss_scaled = iss_xyz * gain_xyz[:, None, :]
+        r_hat = procrustes_so3(iss_scaled, v_3d, w, has_valid)
         return r_hat, log_scale_xyz, grip_logit
 
     raise ValueError(cfg.model_type)
@@ -600,8 +639,20 @@ def reader_loss_v2(params, cfg: ReaderV2Config, batch):
     return total, dict(total=total, yaw_loss=yaw_loss, scale_loss=scale_loss, grip_loss=grip_loss)
 
 
+def predict_embodiment_so3(params, cfg: ReaderV2Config, batch):
+    """Return decoded SO(3) predictions `(rot_mat_hat [B,3,3], xyz_scale_hat [B,3], grip_sign_hat [B])`."""
+    r_hat, log_scale_xyz, grip_logit_h = map(np.asarray, apply_reader_v2(params, cfg, batch))
+    if not all(np.isfinite(x).all() for x in (r_hat, log_scale_xyz, grip_logit_h)):
+        raise FloatingPointError("Nonfinite SO(3) reader prediction")
+    xyz_scale = np.exp(np.clip(log_scale_xyz, np.log(0.25), np.log(4.0))).astype(np.float32)
+    grip_sign = np.where(grip_logit_h >= 0.0, 1, -1).astype(np.int32)
+    return r_hat.astype(np.float32), xyz_scale, grip_sign
+
+
 def predict_embodiment_v2(params, cfg: ReaderV2Config, batch):
-    """Return decoded SO(2) predictions `(yaw_deg_hat, xy_scale_hat, grip_sign_hat)`."""
+    """Return decoded predictions (SO(2): `(yaw_deg, xy_scale, grip_sign)`; SO(3): `(rot_mat, xyz_scale, grip_sign)`)."""
+    if cfg.model_type == "factored_equiv_so3":
+        return predict_embodiment_so3(params, cfg, batch)
     cos_h, sin_h, log_scale_h, grip_logit_h = map(np.asarray, apply_reader_v2(params, cfg, batch))
     if not all(np.isfinite(x).all() for x in (cos_h, sin_h, log_scale_h, grip_logit_h)):
         raise FloatingPointError("Nonfinite V2 reader prediction")

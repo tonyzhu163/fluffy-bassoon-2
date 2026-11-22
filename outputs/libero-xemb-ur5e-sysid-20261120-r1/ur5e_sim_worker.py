@@ -19,7 +19,8 @@ from fluffy_bassoon.xemb.embodiment import (
 
 ROOT = Path("/mowenjie/fluffy-bassoon-2")
 SIM_PYTHON = ROOT / "setups/libero-meta-learning-20261117-r1/env/bin/python"
-ALLOWED_ARMS = ("Panda", "Sawyer", "UR5e")
+ALLOWED_ARMS = ("Panda", "Sawyer", "UR5e", "IIWA", "Kinova3")
+ALLOWED_VARIANTS = ("BASE", "S13", "S14", "S15", "S16", "S19")
 
 
 class UR5eSimulator:
@@ -110,8 +111,8 @@ def serve(fd: int):
                     if arm not in ALLOWED_ARMS:
                         raise ValueError(f"Unknown arm {arm!r}; expected one of {ALLOWED_ARMS}")
                     variant = str(value.get("variant", "BASE"))
-                    if variant not in ("BASE", "S15"):
-                        raise ValueError(f"Expected BASE or S15 variant, got {variant!r}")
+                    if variant not in ALLOWED_VARIANTS:
+                        raise ValueError(f"Expected variant in {ALLOWED_VARIANTS}, got {variant!r}")
                     suite = str(value["suite"])
                     task_id = int(value["task_id"])
                     init_state_id = int(value["init_state_id"])
