@@ -82,10 +82,12 @@ if receipt["status"] != "passed" or len(devices) != 2:
     raise SystemExit("Expected two scheduler-attested devices")
 for index, d in enumerate(devices):
     name = d["cuda_name"].upper()
-    if name != "NVIDIA RPBZZZ6" and "RTX PRO 6000" not in name:
-        raise SystemExit(f"Expected Pro6K, found {name}")
+    if name not in {"NVIDIA RPBZZZ6", "NVIDIA GEFORCE RTX 4090"} and "RTX PRO 6000" not in name:
+        raise SystemExit(f"Expected a Baige Pro6K or RTX 4090, found {name}")
     if d["allocation_ordinal"] != index or d["visibility_token"] != str(index):
         raise SystemExit("Unexpected CUDA ordinal mapping")
+if devices[0]["cuda_name"] != devices[1]["cuda_name"]:
+    raise SystemExit("Both evaluation lanes must use the same accelerator type")
 PY
     for device in 0 1; do
         (
