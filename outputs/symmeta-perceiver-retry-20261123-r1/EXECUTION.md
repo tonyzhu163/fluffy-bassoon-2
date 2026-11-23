@@ -6,13 +6,15 @@ At 16:23 Shanghai on November 23, Baige accepted `job-am9y13b811bk` for four RTX
 
 Each released panel contains the same 96 scheduled command settings and tasks, including 64 OOD cases, with its own passive support tapes. The checkpoint and prediction choice was made before collecting a native outcome. The RTX 4090 refit on the original accelerator, `job-6uezn9kt01vj`, was waiting for capacity. The first complete refit, Pro6K job `job-dg2hu5uswgea`, ran the three registered seeds on the same PR7 recipe. Each 24-position Perceiver trained for 2,500 updates at batch 32. Each saved checkpoint reproduced its 96 pre-save correction triples after reloading. [Refit recipe](TRAINING.md) · [Checkpoint digests](evidence/train02pro/checkpoints.sha256)
 
-| Reader seed | Published RTX 4090 OOD yaw MAE | Pro6K refit OOD yaw MAE |
-| --- | ---: | ---: |
-| 41 | 5.42° | 5.64° |
-| 42 | 5.83° | 5.98° |
-| 43 | 5.48° | 5.84° |
+| Reader seed | Published RTX 4090 OOD yaw MAE | Pro6K refit used for native retries | Fresh RTX 4090 refit |
+| --- | ---: | ---: | ---: |
+| 41 | 5.42° | 5.64° | 5.12° |
+| 42 | 5.83° | 5.98° | 5.05° |
+| 43 | 5.48° | 5.84° | 5.56° |
 
 These columns use the same 64 recorded UR5e supports and PR7 scorer. Native rollouts use the Pro6K refit's full correction triples, including scale and gripper sign, and the original same-seed SymMeta checkpoints. The refit took 274 launcher seconds (0.076 GPU-hours). [All per-seed score differences](evidence/train02pro/training-sanity.json) · [GPU receipt](evidence/train02pro/gpu.json)
+
+The original-accelerator refit subsequently completed in 350 launcher seconds (0.097 GPU-hours). Its three restored checkpoints each reproduced all 96 correction triples from memory. Across the 288 seed–support combinations in each panel, the two refits differed by 3.37° to 5.44° in mean absolute predicted yaw. They agreed on 1,150 of 1,152 gripper signs. Aggregate yaw accuracy reproduced across refits, with measurable differences in individual corrections. The frozen native input remains the Pro6K prediction file. [RTX 4090 per-seed comparison](evidence/train01/training-sanity.json) · [Export and checkpoint hashes](evidence/train01/hashes.txt)
 
 The training revision was `ba3c41e25575d07d7bd8bbfaae2797e7cf9dc0a9`. The native evaluator revision is `d568535b758f2b97b382f9b3e280376e769b5942`. CPU preparation verified all 384 tape SHA-256 digests and joined the 1,152 prediction rows to the four native query schedules. The immutable predictions have SHA-256 `c8420c2cb7d0cb38e6f0d73b3a20ce47997dbef7657b652d45eaaa8988eb6c0b`. [Frozen predictions](evidence/train02pro/predictions.json) · [CPU preparation](evidence/prepare01pro/contract.json)
 
