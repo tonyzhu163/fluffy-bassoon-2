@@ -60,7 +60,7 @@ Our contributions:
   \item \textbf{An identifiability observation (Prop.~\ref{prop:unident}).} For commands chosen independently of the rotation, displacements measured in the robot's rotated command frame do not depend on it. The rotation must come from an external reference: a camera, or joint encoders together with a kinematic model and base frame.
   \item \textbf{SymMeta (\S\ref{sec:method}).} An action-blind visual motion reader with vertical-parallax correction feeds a closed-form weighted Procrustes step~\citep{schonemann1966generalized,kabsch1976solution,umeyama1991least}. For fixed visual motion estimates, the rotation estimate is therefore exactly equivariant to any command-frame rotation. This is not invariance to camera pose (\S\ref{sec:limits}). Gain and gripper sign are estimated separately.
   \item \textbf{Transfer across arms and VLAs (Table~\ref{tab:headline}).} Trained only on Panda and Sawyer, the same checkpoints adapt frozen $\pi_{0.5}$ and $\pi_0$ on UR5e, IIWA, and Kinova3. Averaged over 3 seeds, SymMeta beats source-calibrated Horn--Schunck flow~\citep{horn1981determining} by 9.7--24.3 points, and it beats Horn--Schunck on every individual seed. A Perceiver history-encoder baseline reaches 59--87\% on familiar shifts but only 2--6\% on out-of-distribution (OOD) ones.
-  \item \textbf{Training-shift and capacity sweep (\S\ref{sec:scaling}).} With up to 128 training shifts, non-equivariant models stay at or below 45\% joint factor recovery on UR5e OOD shifts, and a Perceiver with about 4$\times$ the parameters is no better. SymMeta reaches 96\% at 7 shifts.
+  \item \textbf{Training-shift and capacity sweep (\S\ref{sec:scaling}).} With up to 128 training shifts, non-equivariant models stay at or below 45\% joint factor recovery on UR5e OOD shifts, and a Perceiver with 5.31$\times$ as many parameters is no better. SymMeta reaches 96\% at 7 shifts.
   \item \textbf{Boundaries (\S\ref{sec:limits}).} We report where the method falls short: adaptation within a single attempt, full 3D rotations, a second simulator, camera rotation, and camera shifts that break the VLA itself.
 \end{itemize}
 
@@ -134,6 +134,25 @@ SymMeta learns a shared visual motion reader on source robots. On a new robot, t
   removes parallax from the oblique camera before weighted Procrustes (Prop.~\ref{prop:equiv}). Vertical displacement $\Delta z^{\text{local}}$ is invariant to planar rotations about $z$, so this correction preserves equivariance in the planar case. Two small MLPs estimate $\log \hat{g}$ from $(|\bar{a}|, |\Delta p^{\text{local}}|)$, which is identifiable by Prop.~\ref{prop:unident}, and $\hat{s}$ from $(\bar{a}_{\text{grip}}, \Delta j)$, where $\Delta j$ is the change in finger opening. The 3D variant outputs $v_k \in \mathbb{R}^3$ and per-axis log-gains, then applies gain-pre-scaled SVD Procrustes.
   \item \textbf{\texttt{EquivFlow}.} This variant implements Prop.~\ref{prop:cardinal}. A 7-channel pixel-attention CNN that sees no flow directions pools DIS flow through a learned $2\times 2$ matrix $H_0$, or a first-frame-conditioned $H_\phi(I_0) = H_0 + \Delta H_\phi(I_0)$. With an MLP reader trained on axis-aligned probe bursts, continuous OOD yaw error is $38.0^\circ$, because the reader snaps to the training directions. \texttt{EquivFlow} reduces this to $9.6^\circ$ (active probe) and $10.3^\circ$ (passive), measured offline. In live control it trails SymMeta (Table~\ref{tab:additional_baselines}), so we treat it as the structurally safer variant under sparse axis-aligned probes, not as the headline method.
 \end{enumerate}
+
+
+\begin{figure}[t]
+  \centering\footnotesize
+  \setlength{\fboxsep}{4pt}
+  \fbox{\begin{minipage}{0.88\columnwidth}\centering
+    \textbf{First attempt} \quad 3 chunks $\times$ 5 controls\\
+    RGB frame pairs, issued commands, local motion and jaw width\\[2pt]
+    $\downarrow$\\[-1pt]
+    Visual reader $\to$ motion directions and confidence\\
+    Local motion and gripper readers $\to$ gain and polarity\\[2pt]
+    $\downarrow$\\[-1pt]
+    Weighted Procrustes aligns motion to commands $\to \hat R$\\[2pt]
+    $\downarrow$\\[-1pt]
+    \textbf{Second attempt} \quad Frozen VLA $\to$ inverse action correction
+  \end{minipage}}
+  \caption{SymMeta estimates one command interface from the first attempt and applies it throughout the query episode. Training details appear in Appendix~\ref{sec:training-details}.}
+  \label{fig:pipeline}
+\end{figure}
 
 \section{Experiments}
 
@@ -379,7 +398,7 @@ This paper presents work whose goal is to advance the field of machine learning 
     \texttt{EquivFlow} & 16.4$^\circ$ (6\%) & 12.3$^\circ$ (11\%) & 12.2$^\circ$ (83\%) & 13.1$^\circ$ (85\%) & 10.1$^\circ$ (91\%) & 15.6$^\circ$ (78\%) & 10.6$^\circ$ (90\%) \\
     Factored, no equivariance (ablation) & 71.0$^\circ$ (1\%) & 30.8$^\circ$ (1\%) & 56.7$^\circ$ (26\%) & 52.3$^\circ$ (34\%) & 44.9$^\circ$ (43\%) & 51.8$^\circ$ (40\%) & 50.4$^\circ$ (41\%) \\
     Perceiver, w192 & 74.2$^\circ$ (1\%) & 64.9$^\circ$ (1\%) & 102.7$^\circ$ (4\%) & 43.8$^\circ$ (26\%) & 16.1$^\circ$ (35\%) & 20.0$^\circ$ (45\%) & 44.1$^\circ$ (32\%) \\
-    Perceiver, w384 ($\sim$4$\times$ params) & 84.7$^\circ$ (5\%) & 84.3$^\circ$ (0\%) & 106.3$^\circ$ (4\%) & 84.2$^\circ$ (11\%) & 65.9$^\circ$ (10\%) & 52.1$^\circ$ (19\%) & 58.4$^\circ$ (20\%) \\
+    Perceiver, w384 (5.31$\times$ params) & 84.7$^\circ$ (5\%) & 84.3$^\circ$ (0\%) & 106.3$^\circ$ (4\%) & 84.2$^\circ$ (11\%) & 65.9$^\circ$ (10\%) & 52.1$^\circ$ (19\%) & 58.4$^\circ$ (20\%) \\
     \bottomrule
   \end{tabular}}
 \end{table}
@@ -415,5 +434,22 @@ UR5e ($\pi_0$) & Held-out 64 & +14.1 / +3.1 / +12.5 & +9.9 & [-3.1, +22.9] & $0.
 \end{table}
 
 For a single seed the exact query test flips the discordant binary pairs. For the seed average it flips the signed mean difference once per query, retaining its magnitude and the shared comparator. The task sensitivity enumerates all $2^8$ whole-task sign assignments. Each test assumes sign symmetry and independent flips at its stated unit. The percentile interval resamples eight whole tasks with replacement, conditional on the three checkpoints. All $p$-values are unadjusted. The eight fixed tasks limit generalization. On the full panel all eight task means favor SymMeta for each $\pi_{0.5}$ arm. On UR5e with $\pi_0$, six tasks favor SymMeta and two favor the flow reader.
+
+
+\section{Reader training and model sizes}
+\label{sec:training-details}
+\paragraph{Planar reader.} The training set contains 1,344 passive traces: two source arms (Panda and Sawyer), 24 tasks, four initial states and seven interface transforms. Each trace supplies three five-control chunks. The simulator provides one yaw $\theta$, gain $g$ and gripper sign $s$ for the entire trace. We normalize the predicted yaw pair $(\hat c,\hat s_\theta)$ and train with the batch mean of
+\[
+  1-\hat c\cos\theta-\hat s_\theta\sin\theta
+  +(\widehat{\log g}-\log g)^2
+  +\operatorname{BCEWithLogits}(\hat h,\mathbf{1}[s>0]).
+\]
+All three losses have unit weight. For each checkpoint we sample 64 traces uniformly with replacement per update. We use AdamW for 3,500 updates with gradient-norm clipping at 1, weight decay $10^{-4}$ and cosine learning-rate decay from $10^{-3}$ to $5\times10^{-5}$. The headline Perceiver uses the same training data, loss and schedule.
+
+\paragraph{Inputs and architecture.} The visual encoder processes $64\times64$ image pairs. Its nine channels are horizontal and vertical DIS flow, flow magnitude, signed mean-intensity change, RMS RGB change, the two gradients of temporally averaged intensity, and two pixel coordinates. Three $3\times3$ stride-two convolutions have 48, 96 and 96 channels, with a two-convolution residual block between stages two and three. Two spatial softmax pools produce 192 features, projected to 96 with SiLU activations in the encoder. A $96$--$192$--$96$--$5$ MLP predicts planar motion, a confidence logit and two parallax coefficients. The yaw loss reaches all five outputs through the alignment. Confidence is $\operatorname{softplus}(\ell_k)+10^{-4}$ on valid chunks. The vertical projection combines learned global and chunk-specific coefficients and multiplies local vertical motion in centimetres. Neither confidence nor projection receives a separate target. A $5$--$64$--$64$--$2$ gain head uses signed command and displacement, their magnitudes and a stabilized log-magnitude ratio. A $4$--$48$--$48$--$2$ gripper head uses gripper command, jaw change, final width and negative command times width change. Each head predicts a value and its pooling weight.
+
+\paragraph{Perceiver capacity.} The headline model has 2,122,950 parameters, eight latents, 32 positional slots and attention width 192. The width-192 scaling model uses 24 slots and has 2,121,414 parameters. The width-384 model has 11,274,374 parameters, 16 latents, five self-attention blocks and eight heads. The larger configuration has 5.31 times as many parameters as the smaller scaling model.
+
+\paragraph{Three-dimensional reader.} A separate seed-41 reader trains on 960 active probes from the two source arms, 24 tasks, two initial states and ten transforms. Six signed-axis bursts supply five controls each. A $96$--$128$--$64$--$4$ head outputs a three-vector and a confidence logit per chunk. This branch uses the visual vector directly and bypasses the planar vertical-motion correction. Estimated per-axis gains, clipped to $[0.25,4]$, rescale the commands before weighted SVD alignment. Its loss adds $\|\hat R-R\|_F^2/4$, mean squared log-gain error across axes and polarity cross-entropy. Training uses 3,000 AdamW updates, batch size 64 and cosine decay from 0.0015 to 0.000075 with the planar clipping and weight decay.
 
 \end{document}

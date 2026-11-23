@@ -4,7 +4,7 @@ Reads archived JSON evidence (never hardcoded numbers) and outputs 300-DPI PNG +
   1. fig1_multiarm_multivla.{png,pdf}: 4-panel Multi-Morphology (UR5e, IIWA, Kinova3) x Multi-VLA (pi0.5, pi0)
      official test live closed-loop success (384 queries = 4,608 live episodes, zero retraining).
   2. fig2_scaling_law.{png,pdf}: Embodiment-Diversity Scaling Law (M in {2,4,7,16,32,64,128} x capacity,
-     3 seeds on locked held-out 6-DoF UR5e OOD) with a 4x-larger Perceiver comparison.
+     3 seeds on locked held-out 6-DoF UR5e OOD) with a 5.31x-larger Perceiver comparison.
   3. fig3_horizon_and_so3.{png,pdf}: Left: Zero-probe passive support horizon (5/10/15 controls = 0.25-0.75s);
      Right: Full 3D SO(3) + anisotropic per-axis gains on held-out UR5e (n=96).
   4. fig4_memorization_cliff_matrix.{png,pdf}: Familiar vs. OOD memorization cliff across all 4 benchmarks,
@@ -135,7 +135,7 @@ def plot_fig1_multiarm_multivla(ev_dir: Path, out_dir: Path, scale_ev_dir: Path 
         hs_c = data["paired_contrasts_overall"]["ours_equiv_v2_passive"]["analytic_visual_hs_passive"]
         diff_pp = 100.0 * hs_c["mean_diff"]
         lo_pp, hi_pp = 100.0 * hs_c["ci95"][0], 100.0 * hs_c["ci95"][1]
-        ax.set_title(f"{title}\n(SymMeta vs. HS: +{diff_pp:.1f} pp, 95% CI [{lo_pp:+.1f}, {hi_pp:+.1f}])", fontsize=9.1, pad=8)
+        ax.set_title(f"{title}\n(Seed 41 vs. HS: +{diff_pp:.1f} pp, 95% CI [{lo_pp:+.1f}, {hi_pp:+.1f}])", fontsize=9.1, pad=8)
         ax.set_xlim(0, 124)
         ax.set_xlabel("Native Task Success (%)")
         ax.grid(axis="x")
@@ -169,7 +169,7 @@ def plot_fig2_scaling_law(ev_dir: Path, out_dir: Path):
         ("equiv_flow_homog", "Ours: EquivFlow-Procrustes", PALETTE["ours_homog"], "s", "--", 2.0),
         ("factored_no_equiv_v2", "Factored No-Equiv (Ablation)", PALETTE["no_equiv"], "^", "-.", 1.9),
         ("perceiver_icba_w192", "Perceiver encoder (w192)", PALETTE["perceiver"], "D", "-", 2.1),
-        ("perceiver_icba_w384", "Perceiver encoder (w384, 4× params)", PALETTE["perceiver_lg"], "v", ":", 2.1),
+        ("perceiver_icba_w384", "Perceiver encoder (w384, 5.31× params)", PALETTE["perceiver_lg"], "v", ":", 2.1),
     ]
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12.2, 4.4))
@@ -204,7 +204,7 @@ def plot_fig2_scaling_law(ev_dir: Path, out_dir: Path):
     ax2.annotate("SymMeta at M=7: 96%\n(scales to 99% at M=128)", xy=(7, 96), xytext=(11, 64),
                  arrowprops=dict(arrowstyle="->", color=PALETTE["ours_v2"], lw=1.2), fontsize=8.1, fontweight="bold", color=PALETTE["ours_v2"],
                  bbox=dict(boxstyle="round,pad=0.25", fc="white", ec=PALETTE["ours_v2"], alpha=0.88))
-    ax2.annotate("4× larger Perceiver:\nno better (≤20% OOD)", xy=(64, 19), xytext=(11, 2.5),
+    ax2.annotate("5.31× larger Perceiver:\nno better (≤20% OOD)", xy=(64, 19), xytext=(11, 2.5),
                  arrowprops=dict(arrowstyle="->", color=PALETTE["perceiver_lg"], lw=1.2), fontsize=8.1, fontweight="bold", color=PALETTE["perceiver_lg"],
                  bbox=dict(boxstyle="round,pad=0.25", fc="white", ec=PALETTE["perceiver_lg"], alpha=0.88))
     ax2.set_xscale("log", base=2)

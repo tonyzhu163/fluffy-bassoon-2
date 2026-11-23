@@ -13,9 +13,7 @@ From the ICML-style audit on 2026-11-23 (soundness, presentation, significance, 
 
 ## Blocking: paper
 
-- [ ] **Method reproducibility:** training loss and labels, dataset size, CNN spec, optimizer and hyperparameters, how `w_k` and `u_z` are supervised, parameter counts for both Perceiver widths, and whether the Δz correction is used in the 3D variant.
 - [ ] **Statistics:** Complete the appendix ledger accounting for every episode beyond the four headline panels. The [paired reanalysis](../../outputs/symmeta-paired-statistics-20261123-r1/RESULT.md) supplies per-seed query tests, task-level effects, and counts for the four panels.
-- [ ] **Pipeline figure** (one column) showing support trace → reader → Procrustes → wrapper.
 - [ ] **Bibliography.** Verify the author lists of `siddique2026reground` and `yang2026icba` against arXiv, and replace the placeholder authors of `liberopro2026`. Confirm which of ICBA and ReGround count as concurrent at the deadline.
 
 ## Should do
@@ -28,6 +26,8 @@ From the ICML-style audit on 2026-11-23 (soundness, presentation, significance, 
 - [ ] Add `jax`/`flax` as an optional dependency group so the reader tests run off the cluster (they skip today when the packages are missing).
 
 ## Done in this pass (text, figures and tests only; no new experiments)
+
+- Added a one-column inference diagram and a training appendix with the source data, labels, loss, optimizer, reader heads, scaling-model parameter counts and executed 3D correction path. [Checkpoint and implementation evidence](../../outputs/symmeta-fk-ur5e-20261123-r1/METHODS-READBACK.md)
 
 - Proposition 1 now covers command-frame end-effector displacements with commands chosen independently of the rotation. The incorrect claim that joint changes carry no information is removed, and the remark names what the proposition does not cover (joint encoders with a kinematic model, world-frame proprioception, camera extrinsics, closed-loop commands).
 - Proposition 2 states the fixed-`v_k`/`w_k` condition and the modulo-2π caveat. A new remark says the equivariance is to command-frame rotations for a fixed camera, not invariance to camera pose.
