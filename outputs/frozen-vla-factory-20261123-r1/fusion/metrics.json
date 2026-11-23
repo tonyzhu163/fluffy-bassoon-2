@@ -1,0 +1,2006 @@
+{
+  "receipt": {
+    "base_revision": "757a44cd4374833cad790852df8b87ddf412e638",
+    "input_gz_sha256": {
+      "roll": "be4190952f62bc352e92ec99e00cb407b04acb2e8eb0597964cc964f9d0b8850",
+      "world": "96d9de3131348abed6afd6271dd5197c77cbb7a9159e6559fe5d3833587a3449",
+      "moderate": "4d1c9209b7bec13781125d46c3e87bc2706a20f1bc8d5eb7c8428e007603f3c5",
+      "replay": "db666ac91680b69b38c04e2dfc997ca3080a9ee6eab2991f9d367f29e884894a",
+      "azimuth-30": "43f5a1c0477f43c7d8fae4bf98129e9e09e03b8d258714cac04d5b4486412688",
+      "azimuth+0": "aba3f6160289397da7fed65d651dee062a20e7f062bde5a2d60c8b0aa52e08f8",
+      "azimuth+30": "d97dd0c9e79a18189ac08964af9ffe89689f498885bac06c65ab66769d0f5702"
+    },
+    "reader_sha256": "c12bace5cb391499d6abd7cc5767f94b1519de7d77940efb0cfcb71ca0f686a4",
+    "source_npz_set_sha256": "8729fa68343e2a7a0cc6471ab25e7c707555a866e682a3dc999079a7b9dc3554",
+    "controls_per_support": 15,
+    "original_supports": 96,
+    "original_tasks": 8,
+    "replays": 8,
+    "replay_tasks": 2,
+    "gpu_hours": 0,
+    "motor_updates": 0,
+    "bootstrap_seed": 41,
+    "bootstrap_draws": 20000,
+    "max_reconstruction_difference_deg": {
+      "visual": 2.1052746888017282e-05,
+      "world": 5.684341886080802e-14
+    }
+  },
+  "conditions": {
+    "full_roll_+0": {
+      "ood": {
+        "n_supports": 64,
+        "n_tasks": 8,
+        "mae_deg": {
+          "visual": 6.829199316036359,
+          "world": 2.017118634471899,
+          "equal": 4.208675554386643,
+          "fusion": 2.9294239452961524
+        },
+        "median_visual_fraction": 0.19148548139613392,
+        "mean_visual_fraction": 0.25666560065349947,
+        "task_mae_deg": {
+          "libero_10/5": {
+            "visual": 8.428587344311264,
+            "world": 2.377854163102313,
+            "equal": 5.267492106189355,
+            "fusion": 3.3357894549588174
+          },
+          "libero_10/8": {
+            "visual": 5.518557356609943,
+            "world": 1.0984691598957887,
+            "equal": 3.1464949860465623,
+            "fusion": 1.8075196797247735
+          },
+          "libero_goal/3": {
+            "visual": 6.854580409494318,
+            "world": 2.006138762261017,
+            "equal": 4.125976345835056,
+            "fusion": 2.5445297769659945
+          },
+          "libero_goal/6": {
+            "visual": 8.257334117678205,
+            "world": 1.8675987958171874,
+            "equal": 4.933551659455855,
+            "fusion": 3.03395846482638
+          },
+          "libero_object/1": {
+            "visual": 5.9511484262904055,
+            "world": 2.974708733482938,
+            "equal": 4.257975318901956,
+            "fusion": 3.9648880877376556
+          },
+          "libero_object/8": {
+            "visual": 6.638185744677504,
+            "world": 2.903252722497143,
+            "equal": 4.353392500622341,
+            "fusion": 3.157852522204358
+          },
+          "libero_spatial/0": {
+            "visual": 6.3534722682720535,
+            "world": 1.5418994292950607,
+            "equal": 3.692451623593726,
+            "fusion": 2.4695596412320064
+          },
+          "libero_spatial/8": {
+            "visual": 6.631728860957182,
+            "world": 1.3670273094237437,
+            "equal": 3.8920698944482943,
+            "fusion": 3.121293934719233
+          }
+        },
+        "fusion_minus_control": {
+          "visual": {
+            "mean_deg": -3.899775370740207,
+            "supports_lower_error": 57,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -4.53917984963947,
+              -3.220984390143298
+            ]
+          },
+          "world": {
+            "mean_deg": 0.9123053108242534,
+            "supports_lower_error": 11,
+            "tasks_lower_error": 0,
+            "task_bootstrap_ci95_deg": [
+              0.6379553045265193,
+              1.2131547273041994
+            ]
+          },
+          "equal": {
+            "mean_deg": -1.2792516090904908,
+            "supports_lower_error": 49,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -1.6168148812060217,
+              -0.9133797643691159
+            ]
+          }
+        }
+      },
+      "all": {
+        "n_supports": 96,
+        "n_tasks": 8,
+        "mae_deg": {
+          "visual": 6.666230815169194,
+          "world": 1.9310952658049585,
+          "equal": 3.908284833987135,
+          "fusion": 2.5490962537573263
+        },
+        "median_visual_fraction": 0.10198161961259947,
+        "mean_visual_fraction": 0.19762243819192005,
+        "task_mae_deg": {
+          "libero_10/5": {
+            "visual": 9.63045222026326,
+            "world": 1.849675117521052,
+            "equal": 5.582431496042406,
+            "fusion": 2.4973570500674875
+          },
+          "libero_10/8": {
+            "visual": 6.096151502329491,
+            "world": 1.4042212603269633,
+            "equal": 3.2170256304140494,
+            "fusion": 1.7828909450461055
+          },
+          "libero_goal/3": {
+            "visual": 6.536552589534644,
+            "world": 1.8316182906556382,
+            "equal": 3.9811632800667334,
+            "fusion": 2.5461804264934975
+          },
+          "libero_goal/6": {
+            "visual": 8.316530932358281,
+            "world": 1.7878619041421402,
+            "equal": 4.683221834160889,
+            "fusion": 2.5358694800037305
+          },
+          "libero_object/1": {
+            "visual": 5.361744765725665,
+            "world": 3.0256728879528487,
+            "equal": 3.8291971142975143,
+            "fusion": 3.6440689942284217
+          },
+          "libero_object/8": {
+            "visual": 5.995804483097413,
+            "world": 2.6560542264021287,
+            "equal": 3.3864223371613327,
+            "fusion": 2.774593647684128
+          },
+          "libero_spatial/0": {
+            "visual": 5.578538185998473,
+            "world": 1.7688091756161175,
+            "equal": 3.2946140053299353,
+            "fusion": 2.359656724661091
+          },
+          "libero_spatial/8": {
+            "visual": 5.814071842046315,
+            "world": 1.1248492638227792,
+            "equal": 3.2922029744242187,
+            "fusion": 2.25215276187415
+          }
+        },
+        "fusion_minus_control": {
+          "visual": {
+            "mean_deg": -4.117134561411866,
+            "supports_lower_error": 86,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -5.243861789892113,
+              -3.097155262557431
+            ]
+          },
+          "world": {
+            "mean_deg": 0.618000987952368,
+            "supports_lower_error": 27,
+            "tasks_lower_error": 0,
+            "task_bootstrap_ci95_deg": [
+              0.43118809833202487,
+              0.8062480090095647
+            ]
+          },
+          "equal": {
+            "mean_deg": -1.3591885802298085,
+            "supports_lower_error": 75,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -1.9864755255831779,
+              -0.8048608524322474
+            ]
+          }
+        }
+      }
+    },
+    "full_roll_+90": {
+      "ood": {
+        "n_supports": 64,
+        "n_tasks": 8,
+        "mae_deg": {
+          "visual": 101.22706367595305,
+          "world": 2.017118634471899,
+          "equal": 50.917587908557266,
+          "fusion": 13.909382162293209
+        },
+        "median_visual_fraction": 0.05448796739299638,
+        "mean_visual_fraction": 0.14951180306387574,
+        "task_mae_deg": {
+          "libero_10/5": {
+            "visual": 110.83432697347325,
+            "world": 2.377854163102313,
+            "equal": 56.286211016887535,
+            "fusion": 3.380319615896994
+          },
+          "libero_10/8": {
+            "visual": 99.75692658330661,
+            "world": 1.0984691598957887,
+            "equal": 49.687948866836265,
+            "fusion": 4.515399593396349
+          },
+          "libero_goal/3": {
+            "visual": 93.01258204658487,
+            "world": 2.006138762261017,
+            "equal": 46.840126725618745,
+            "fusion": 27.57990619482492
+          },
+          "libero_goal/6": {
+            "visual": 108.92137070296803,
+            "world": 1.8675987958171874,
+            "equal": 55.07302476747179,
+            "fusion": 5.783732087645465
+          },
+          "libero_object/1": {
+            "visual": 91.062117820951,
+            "world": 2.974708733482938,
+            "equal": 46.38217096249845,
+            "fusion": 8.308947364351067
+          },
+          "libero_object/8": {
+            "visual": 90.0745020737614,
+            "world": 2.903252722497143,
+            "equal": 44.63680739985061,
+            "fusion": 9.827952619878232
+          },
+          "libero_spatial/0": {
+            "visual": 109.98872607732838,
+            "world": 1.5418994292950607,
+            "equal": 54.84608305555942,
+            "fusion": 15.975005506667639
+          },
+          "libero_spatial/8": {
+            "visual": 106.16595712925086,
+            "world": 1.3670273094237437,
+            "equal": 53.58833047373528,
+            "fusion": 35.903794315685005
+          }
+        },
+        "fusion_minus_control": {
+          "visual": {
+            "mean_deg": -87.31768151365983,
+            "supports_lower_error": 64,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -97.0661302504452,
+              -77.53469440041668
+            ]
+          },
+          "world": {
+            "mean_deg": 11.89226352782131,
+            "supports_lower_error": 12,
+            "tasks_lower_error": 0,
+            "task_bootstrap_ci95_deg": [
+              4.73178039658029,
+              20.24179153462403
+            ]
+          },
+          "equal": {
+            "mean_deg": -37.00820574626405,
+            "supports_lower_error": 56,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -45.05796234673422,
+              -28.45050092268689
+            ]
+          }
+        }
+      },
+      "all": {
+        "n_supports": 96,
+        "n_tasks": 8,
+        "mae_deg": {
+          "visual": 97.02355933495305,
+          "world": 1.9310952658049585,
+          "equal": 48.524598363681825,
+          "fusion": 12.085019044344133
+        },
+        "median_visual_fraction": 0.05521236441060079,
+        "mean_visual_fraction": 0.14684892604968186,
+        "task_mae_deg": {
+          "libero_10/5": {
+            "visual": 99.75025440674723,
+            "world": 1.849675117521052,
+            "equal": 50.46886121986807,
+            "fusion": 6.809935233227229
+          },
+          "libero_10/8": {
+            "visual": 87.59871823902024,
+            "world": 1.4042212603269633,
+            "equal": 43.336395259433885,
+            "fusion": 5.2497862100210115
+          },
+          "libero_goal/3": {
+            "visual": 104.31689744870971,
+            "world": 1.8316182906556382,
+            "equal": 52.48411547087046,
+            "fusion": 20.79981527882533
+          },
+          "libero_goal/6": {
+            "visual": 95.75408148920148,
+            "world": 1.7878619041421402,
+            "equal": 48.20532637161258,
+            "fusion": 7.617613064463572
+          },
+          "libero_object/1": {
+            "visual": 103.34230741741902,
+            "world": 3.0256728879528487,
+            "equal": 51.717294877242686,
+            "fusion": 6.3802282264222185
+          },
+          "libero_object/8": {
+            "visual": 90.29893529618398,
+            "world": 2.6560542264021287,
+            "equal": 44.52222901770326,
+            "fusion": 9.048843918150217
+          },
+          "libero_spatial/0": {
+            "visual": 98.25013367434043,
+            "world": 1.7688091756161175,
+            "equal": 48.756068372849825,
+            "fusion": 15.672934378117267
+          },
+          "libero_spatial/8": {
+            "visual": 96.87714670800217,
+            "world": 1.1248492638227792,
+            "equal": 48.70649631987386,
+            "fusion": 25.100996045526216
+          }
+        },
+        "fusion_minus_control": {
+          "visual": {
+            "mean_deg": -84.93854029060891,
+            "supports_lower_error": 96,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -89.9881280315958,
+              -79.93607224906134
+            ]
+          },
+          "world": {
+            "mean_deg": 10.153923778539173,
+            "supports_lower_error": 20,
+            "tasks_lower_error": 0,
+            "task_bootstrap_ci95_deg": [
+              5.435848898082552,
+              15.430535371870752
+            ]
+          },
+          "equal": {
+            "mean_deg": -36.439579319337696,
+            "supports_lower_error": 87,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -40.875757344436266,
+              -31.809918275719635
+            ]
+          }
+        }
+      }
+    },
+    "full_roll_-90": {
+      "ood": {
+        "n_supports": 64,
+        "n_tasks": 8,
+        "mae_deg": {
+          "visual": 84.52203436808676,
+          "world": 2.017118634471899,
+          "equal": 41.956961113462654,
+          "fusion": 15.134946786095128
+        },
+        "median_visual_fraction": 0.07326817249858375,
+        "mean_visual_fraction": 0.1812196475634996,
+        "task_mae_deg": {
+          "libero_10/5": {
+            "visual": 80.91194306825344,
+            "world": 2.377854163102313,
+            "equal": 39.586924003975824,
+            "fusion": 3.407835290657303
+          },
+          "libero_10/8": {
+            "visual": 76.36603443107842,
+            "world": 1.0984691598957887,
+            "equal": 38.37353164035625,
+            "fusion": 10.914427623874957
+          },
+          "libero_goal/3": {
+            "visual": 99.16324110767158,
+            "world": 2.006138762261017,
+            "equal": 49.24778485150946,
+            "fusion": 12.57715664287402
+          },
+          "libero_goal/6": {
+            "visual": 73.70409586731094,
+            "world": 1.8675987958171874,
+            "equal": 36.23970851766771,
+            "fusion": 3.470445289891316
+          },
+          "libero_object/1": {
+            "visual": 86.24966820359106,
+            "world": 2.974708733482938,
+            "equal": 42.27372204977259,
+            "fusion": 12.441606066400013
+          },
+          "libero_object/8": {
+            "visual": 90.45503189448479,
+            "world": 2.903252722497143,
+            "equal": 45.627959584272496,
+            "fusion": 20.840425228692492
+          },
+          "libero_spatial/0": {
+            "visual": 83.27931614343319,
+            "world": 1.5418994292950607,
+            "equal": 41.78793805482135,
+            "fusion": 19.065160387166937
+          },
+          "libero_spatial/8": {
+            "visual": 86.04694422887079,
+            "world": 1.3670273094237437,
+            "equal": 42.51812020532552,
+            "fusion": 38.362517759203975
+          }
+        },
+        "fusion_minus_control": {
+          "visual": {
+            "mean_deg": -69.38708758199165,
+            "supports_lower_error": 64,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -76.35784027902065,
+              -61.85655521312173
+            ]
+          },
+          "world": {
+            "mean_deg": 13.117828151623227,
+            "supports_lower_error": 17,
+            "tasks_lower_error": 0,
+            "task_bootstrap_ci95_deg": [
+              6.55229368756915,
+              21.01220992504839
+            ]
+          },
+          "equal": {
+            "mean_deg": -26.82201432736752,
+            "supports_lower_error": 56,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -32.630433236899634,
+              -19.382259306986313
+            ]
+          }
+        }
+      },
+      "all": {
+        "n_supports": 96,
+        "n_tasks": 8,
+        "mae_deg": {
+          "visual": 87.82509297663755,
+          "world": 1.9310952658049585,
+          "equal": 43.89972779211346,
+          "fusion": 15.124906216131718
+        },
+        "median_visual_fraction": 0.06096655986899721,
+        "mean_visual_fraction": 0.16697097206805936,
+        "task_mae_deg": {
+          "libero_10/5": {
+            "visual": 88.50569867668582,
+            "world": 1.849675117521052,
+            "equal": 43.659115321848475,
+            "fusion": 12.976827171715074
+          },
+          "libero_10/8": {
+            "visual": 84.97728590458782,
+            "world": 1.4042212603269633,
+            "equal": 42.95160681237015,
+            "fusion": 9.504756527608874
+          },
+          "libero_goal/3": {
+            "visual": 82.47087225026722,
+            "world": 1.8316182906556382,
+            "equal": 40.90976937861797,
+            "fusion": 8.96930890586397
+          },
+          "libero_goal/6": {
+            "visual": 87.92297012225642,
+            "world": 1.7878619041421402,
+            "equal": 43.633199434116364,
+            "fusion": 18.910277453232204
+          },
+          "libero_object/1": {
+            "visual": 82.61889293849829,
+            "world": 3.0256728879528487,
+            "equal": 41.26330530071596,
+            "fusion": 9.432688608528851
+          },
+          "libero_object/8": {
+            "visual": 89.83452887822317,
+            "world": 2.6560542264021287,
+            "equal": 45.54450306950033,
+            "fusion": 20.086454582168813
+          },
+          "libero_spatial/0": {
+            "visual": 94.19262814074055,
+            "world": 1.7688091756161175,
+            "equal": 47.46531253469066,
+            "fusion": 14.903678316584662
+          },
+          "libero_spatial/8": {
+            "visual": 92.07786690184112,
+            "world": 1.1248492638227792,
+            "equal": 45.77101048504778,
+            "fusion": 26.21525816335129
+          }
+        },
+        "fusion_minus_control": {
+          "visual": {
+            "mean_deg": -72.70018676050583,
+            "supports_lower_error": 96,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -75.43854884592484,
+              -69.93907087951511
+            ]
+          },
+          "world": {
+            "mean_deg": 13.19381095032676,
+            "supports_lower_error": 21,
+            "tasks_lower_error": 0,
+            "task_bootstrap_ci95_deg": [
+              9.323303449687506,
+              17.445115549476444
+            ]
+          },
+          "equal": {
+            "mean_deg": -28.774821575981747,
+            "supports_lower_error": 85,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -31.707130351299465,
+              -25.48321206126468
+            ]
+          }
+        }
+      }
+    },
+    "physical_azimuth_+0": {
+      "ood": {
+        "n_supports": 8,
+        "n_tasks": 2,
+        "mae_deg": {
+          "visual": 7.760701148199534,
+          "world": 1.8257445106677999,
+          "equal": 4.697473822426559,
+          "fusion": 3.9711830996027757
+        },
+        "median_visual_fraction": 0.17936822797118962,
+        "mean_visual_fraction": 0.28200037665838174,
+        "task_mae_deg": {
+          "libero_10/5": {
+            "visual": 6.832380694309151,
+            "world": 2.04022810150407,
+            "equal": 4.436304397906618,
+            "fusion": 4.095466374125763
+          },
+          "libero_spatial/0": {
+            "visual": 8.689021602089916,
+            "world": 1.6112609198315297,
+            "equal": 4.958643246946501,
+            "fusion": 3.846899825079788
+          }
+        },
+        "fusion_minus_control": {
+          "visual": {
+            "mean_deg": -3.789518048596758,
+            "supports_lower_error": 8,
+            "tasks_lower_error": 2
+          },
+          "world": {
+            "mean_deg": 2.145438588934976,
+            "supports_lower_error": 0,
+            "tasks_lower_error": 0
+          },
+          "equal": {
+            "mean_deg": -0.7262907228237836,
+            "supports_lower_error": 5,
+            "tasks_lower_error": 2
+          }
+        }
+      }
+    },
+    "physical_azimuth_+30": {
+      "ood": {
+        "n_supports": 8,
+        "n_tasks": 2,
+        "mae_deg": {
+          "visual": 34.221617124974415,
+          "world": 1.8257445106677999,
+          "equal": 17.416754426984888,
+          "fusion": 2.1237221312828787
+        },
+        "median_visual_fraction": 0.01846772166121143,
+        "mean_visual_fraction": 0.019147768383998506,
+        "task_mae_deg": {
+          "libero_10/5": {
+            "visual": 36.455437021234225,
+            "world": 2.04022810150407,
+            "equal": 18.918406180911084,
+            "fusion": 2.4172581810892098
+          },
+          "libero_spatial/0": {
+            "visual": 31.987797228714605,
+            "world": 1.6112609198315297,
+            "equal": 15.91510267305869,
+            "fusion": 1.8301860814765476
+          }
+        },
+        "fusion_minus_control": {
+          "visual": {
+            "mean_deg": -32.09789499369154,
+            "supports_lower_error": 8,
+            "tasks_lower_error": 2
+          },
+          "world": {
+            "mean_deg": 0.2979776206150788,
+            "supports_lower_error": 3,
+            "tasks_lower_error": 0
+          },
+          "equal": {
+            "mean_deg": -15.293032295702009,
+            "supports_lower_error": 8,
+            "tasks_lower_error": 2
+          }
+        }
+      }
+    },
+    "physical_azimuth_-30": {
+      "ood": {
+        "n_supports": 8,
+        "n_tasks": 2,
+        "mae_deg": {
+          "visual": 23.73061232634287,
+          "world": 1.8257445106677999,
+          "equal": 11.559360298673749,
+          "fusion": 4.371028809496156
+        },
+        "median_visual_fraction": 0.05667756599785192,
+        "mean_visual_fraction": 0.16580119513732136,
+        "task_mae_deg": {
+          "libero_10/5": {
+            "visual": 23.481696611336552,
+            "world": 2.04022810150407,
+            "equal": 11.050160635374297,
+            "fusion": 3.2049896637563293
+          },
+          "libero_spatial/0": {
+            "visual": 23.97952804134919,
+            "world": 1.6112609198315297,
+            "equal": 12.0685599619732,
+            "fusion": 5.537067955235983
+          }
+        },
+        "fusion_minus_control": {
+          "visual": {
+            "mean_deg": -19.359583516846715,
+            "supports_lower_error": 8,
+            "tasks_lower_error": 2
+          },
+          "world": {
+            "mean_deg": 2.5452842988283564,
+            "supports_lower_error": 4,
+            "tasks_lower_error": 0
+          },
+          "equal": {
+            "mean_deg": -7.1883314891775925,
+            "supports_lower_error": 7,
+            "tasks_lower_error": 2
+          }
+        }
+      }
+    },
+    "synthetic_world_bias_+30": {
+      "ood": {
+        "n_supports": 64,
+        "n_tasks": 8,
+        "mae_deg": {
+          "visual": 6.829199316036359,
+          "world": 29.391887858838516,
+          "equal": 12.82715750642607,
+          "fusion": 21.42413412820795
+        },
+        "median_visual_fraction": 0.19148548139613414,
+        "mean_visual_fraction": 0.2566656006534994,
+        "task_mae_deg": {
+          "libero_10/5": {
+            "visual": 8.428587344311264,
+            "world": 28.261904939698216,
+            "equal": 10.136188328291272,
+            "fusion": 22.93490450619334
+          },
+          "libero_10/8": {
+            "visual": 5.518557356609943,
+            "world": 30.381028849634085,
+            "equal": 15.207145582764412,
+            "fusion": 22.497198475964115
+          },
+          "libero_goal/3": {
+            "visual": 6.854580409494318,
+            "world": 29.332328595347352,
+            "equal": 11.97766900802181,
+            "fusion": 22.315595346982715
+          },
+          "libero_goal/6": {
+            "visual": 8.257334117678205,
+            "world": 28.775321168024444,
+            "equal": 12.292803507809435,
+            "fusion": 22.153965112760304
+          },
+          "libero_object/1": {
+            "visual": 5.9511484262904055,
+            "world": 28.297775895954107,
+            "equal": 12.105395424874395,
+            "fusion": 19.05523409968166
+          },
+          "libero_object/8": {
+            "visual": 6.638185744677504,
+            "world": 30.800887274060162,
+            "equal": 15.546497821005978,
+            "fusion": 22.302188603627286
+          },
+          "libero_spatial/0": {
+            "visual": 6.3534722682720535,
+            "world": 30.2965599662095,
+            "equal": 12.403442058181781,
+            "fusion": 21.471289823115505
+          },
+          "libero_spatial/8": {
+            "visual": 6.631728860957182,
+            "world": 28.989296181780272,
+            "equal": 12.948118320459486,
+            "fusion": 18.662697057338647
+          }
+        },
+        "fusion_minus_control": {
+          "visual": {
+            "mean_deg": 14.594934812171587,
+            "supports_lower_error": 5,
+            "tasks_lower_error": 0,
+            "task_bootstrap_ci95_deg": [
+              13.574778477097942,
+              15.584220856405315
+            ]
+          },
+          "world": {
+            "mean_deg": -7.967753730630571,
+            "supports_lower_error": 64,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -8.976579968639562,
+              -6.9067685359742725
+            ]
+          },
+          "equal": {
+            "mean_deg": 8.596976621781875,
+            "supports_lower_error": 7,
+            "tasks_lower_error": 0,
+            "task_bootstrap_ci95_deg": [
+              7.150609805845994,
+              10.182628714080964
+            ]
+          }
+        }
+      },
+      "all": {
+        "n_supports": 96,
+        "n_tasks": 8,
+        "mae_deg": {
+          "visual": 6.666230815169194,
+          "world": 29.974362607589374,
+          "equal": 13.193332157405434,
+          "fusion": 23.806050269239112
+        },
+        "median_visual_fraction": 0.10198161961259966,
+        "mean_visual_fraction": 0.19762243819192005,
+        "task_mae_deg": {
+          "libero_10/5": {
+            "visual": 9.63045222026326,
+            "world": 28.81253196701111,
+            "equal": 10.489817877620311,
+            "fusion": 25.164498127830427
+          },
+          "libero_10/8": {
+            "visual": 6.096151502329491,
+            "world": 30.925927720152497,
+            "equal": 14.810804542517813,
+            "fusion": 24.52304725830665
+          },
+          "libero_goal/3": {
+            "visual": 6.536552589534644,
+            "world": 29.348666506968755,
+            "equal": 12.204461654036836,
+            "fusion": 22.13785869699322
+          },
+          "libero_goal/6": {
+            "visual": 8.316530932358281,
+            "world": 29.343428745976297,
+            "equal": 12.552732242114304,
+            "fusion": 24.472406349542183
+          },
+          "libero_object/1": {
+            "visual": 5.361744765725665,
+            "world": 29.907717662933624,
+            "equal": 13.404841811189748,
+            "fusion": 23.015966398952685
+          },
+          "libero_object/8": {
+            "visual": 5.995804483097413,
+            "world": 31.25447726077748,
+            "equal": 15.693954586588044,
+            "fusion": 24.916401995503687
+          },
+          "libero_spatial/0": {
+            "visual": 5.578538185998473,
+            "world": 30.73799692864075,
+            "equal": 13.01605218207491,
+            "fusion": 24.358867185685188
+          },
+          "libero_spatial/8": {
+            "visual": 5.814071842046315,
+            "world": 29.464154068254455,
+            "equal": 13.373992363101513,
+            "fusion": 21.859356141098846
+          }
+        },
+        "fusion_minus_control": {
+          "visual": {
+            "mean_deg": 17.13981945406992,
+            "supports_lower_error": 5,
+            "tasks_lower_error": 0,
+            "task_bootstrap_ci95_deg": [
+              16.20471342182181,
+              18.074634095637037
+            ]
+          },
+          "world": {
+            "mean_deg": -6.16831233835026,
+            "supports_lower_error": 96,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -6.923599607361986,
+              -5.263090824359164
+            ]
+          },
+          "equal": {
+            "mean_deg": 10.612718111833676,
+            "supports_lower_error": 7,
+            "tasks_lower_error": 0,
+            "task_bootstrap_ci95_deg": [
+              9.474255924597106,
+              12.019327128666172
+            ]
+          }
+        }
+      }
+    },
+    "synthetic_world_bias_-30": {
+      "ood": {
+        "n_supports": 64,
+        "n_tasks": 8,
+        "mae_deg": {
+          "visual": 6.829199316036359,
+          "world": 30.608112141161474,
+          "equal": 17.172842493573924,
+          "fusion": 23.597542759375905
+        },
+        "median_visual_fraction": 0.19148548139613386,
+        "mean_visual_fraction": 0.2566656006534994,
+        "task_mae_deg": {
+          "libero_10/5": {
+            "visual": 8.428587344311264,
+            "world": 31.738095060301784,
+            "equal": 19.863811671708717,
+            "fusion": 28.343446613972773
+          },
+          "libero_10/8": {
+            "visual": 5.518557356609943,
+            "world": 29.6189711503659,
+            "equal": 14.792854417235585,
+            "fusion": 21.41499891146459
+          },
+          "libero_goal/3": {
+            "visual": 6.854580409494318,
+            "world": 30.66767140465264,
+            "equal": 18.022330991978187,
+            "fusion": 25.793106074064692
+          },
+          "libero_goal/6": {
+            "visual": 8.257334117678205,
+            "world": 31.224678831975538,
+            "equal": 17.707196492190555,
+            "fusion": 25.393983077103222
+          },
+          "libero_object/1": {
+            "visual": 5.9511484262904055,
+            "world": 31.702224104045897,
+            "equal": 17.894604575125598,
+            "fusion": 23.80551370477696
+          },
+          "libero_object/8": {
+            "visual": 6.638185744677504,
+            "world": 29.199112725939823,
+            "equal": 14.453502178994018,
+            "fusion": 21.126693840501623
+          },
+          "libero_spatial/0": {
+            "visual": 6.3534722682720535,
+            "world": 29.70344003379049,
+            "equal": 17.596557941818226,
+            "fusion": 23.1848479945487
+          },
+          "libero_spatial/8": {
+            "visual": 6.631728860957182,
+            "world": 31.010703818219717,
+            "equal": 17.0518816795405,
+            "fusion": 19.717751858574687
+          }
+        },
+        "fusion_minus_control": {
+          "visual": {
+            "mean_deg": 16.768343443339546,
+            "supports_lower_error": 1,
+            "tasks_lower_error": 0,
+            "task_bootstrap_ci95_deg": [
+              15.290862847577367,
+              18.174174142563245
+            ]
+          },
+          "world": {
+            "mean_deg": -7.010569381785568,
+            "supports_lower_error": 64,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -8.602821777303827,
+              -5.472089405221778
+            ]
+          },
+          "equal": {
+            "mean_deg": 6.424700265801983,
+            "supports_lower_error": 7,
+            "tasks_lower_error": 0,
+            "task_bootstrap_ci95_deg": [
+              5.162856975205971,
+              7.472821934925388
+            ]
+          }
+        }
+      },
+      "all": {
+        "n_supports": 96,
+        "n_tasks": 8,
+        "mae_deg": {
+          "visual": 6.666230815169194,
+          "world": 30.02563739241062,
+          "equal": 16.80666784259456,
+          "fusion": 24.661517847569222
+        },
+        "median_visual_fraction": 0.1019816196125998,
+        "mean_visual_fraction": 0.19762243819192007,
+        "task_mae_deg": {
+          "libero_10/5": {
+            "visual": 9.63045222026326,
+            "world": 31.187468032988885,
+            "equal": 19.51018212237968,
+            "fusion": 28.824726487479335
+          },
+          "libero_10/8": {
+            "visual": 6.096151502329491,
+            "world": 29.074072279847496,
+            "equal": 15.189195457482183,
+            "fusion": 22.619063797192126
+          },
+          "libero_goal/3": {
+            "visual": 6.536552589534644,
+            "world": 30.651333493031235,
+            "equal": 17.795538345963163,
+            "fusion": 25.52607957526537
+          },
+          "libero_goal/6": {
+            "visual": 8.316530932358281,
+            "world": 30.656571254023685,
+            "equal": 17.44726775788568,
+            "fusion": 26.380554238052156
+          },
+          "libero_object/1": {
+            "visual": 5.361744765725665,
+            "world": 30.092282337066376,
+            "equal": 16.595158188810245,
+            "fusion": 24.171608987486582
+          },
+          "libero_object/8": {
+            "visual": 5.995804483097413,
+            "world": 28.74552273922252,
+            "equal": 14.306045413411953,
+            "fusion": 22.783749912309645
+          },
+          "libero_spatial/0": {
+            "visual": 5.578538185998473,
+            "world": 29.262003071359242,
+            "equal": 16.98394781792509,
+            "fusion": 24.524292767205736
+          },
+          "libero_spatial/8": {
+            "visual": 5.814071842046315,
+            "world": 30.535845931745538,
+            "equal": 16.626007636898482,
+            "fusion": 22.46206701556281
+          }
+        },
+        "fusion_minus_control": {
+          "visual": {
+            "mean_deg": 17.99528703240003,
+            "supports_lower_error": 1,
+            "tasks_lower_error": 0,
+            "task_bootstrap_ci95_deg": [
+              17.23145670437384,
+              18.714621382948195
+            ]
+          },
+          "world": {
+            "mean_deg": -5.364119544841402,
+            "supports_lower_error": 96,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -6.4298467998364,
+              -4.243271370007403
+            ]
+          },
+          "equal": {
+            "mean_deg": 7.854850004974661,
+            "supports_lower_error": 7,
+            "tasks_lower_error": 0,
+            "task_bootstrap_ci95_deg": [
+              7.132319300531948,
+              8.521508679674067
+            ]
+          }
+        }
+      }
+    },
+    "zoom_roll_+0": {
+      "ood": {
+        "n_supports": 64,
+        "n_tasks": 8,
+        "mae_deg": {
+          "visual": 26.070814576940023,
+          "world": 2.017118634471899,
+          "equal": 13.100647358006816,
+          "fusion": 2.633974945373573
+        },
+        "median_visual_fraction": 0.014682777283323633,
+        "mean_visual_fraction": 0.08311162861499952,
+        "task_mae_deg": {
+          "libero_10/5": {
+            "visual": 14.782035496713121,
+            "world": 2.377854163102313,
+            "equal": 7.740044768923166,
+            "fusion": 3.3714709273537338
+          },
+          "libero_10/8": {
+            "visual": 28.347028268734896,
+            "world": 1.0984691598957887,
+            "equal": 14.42416639706594,
+            "fusion": 1.4091507180967042
+          },
+          "libero_goal/3": {
+            "visual": 53.50734491930669,
+            "world": 2.006138762261017,
+            "equal": 26.30271391300848,
+            "fusion": 2.405660781551738
+          },
+          "libero_goal/6": {
+            "visual": 30.53331449540918,
+            "world": 1.8675987958171874,
+            "equal": 14.916234020183499,
+            "fusion": 1.9829567261028558
+          },
+          "libero_object/1": {
+            "visual": 16.796441435638233,
+            "world": 2.974708733482938,
+            "equal": 8.355956925303818,
+            "fusion": 5.335397206161513
+          },
+          "libero_object/8": {
+            "visual": 3.8438379183328664,
+            "world": 2.903252722497143,
+            "equal": 2.8670247856364703,
+            "fusion": 2.853967472434558
+          },
+          "libero_spatial/0": {
+            "visual": 34.52297897177077,
+            "world": 1.5418994292950607,
+            "equal": 16.977077929404558,
+            "fusion": 1.99267183789798
+          },
+          "libero_spatial/8": {
+            "visual": 26.233535109614426,
+            "world": 1.3670273094237437,
+            "equal": 13.221960124528596,
+            "fusion": 1.720523893389501
+          }
+        },
+        "fusion_minus_control": {
+          "visual": {
+            "mean_deg": -23.43683963156645,
+            "supports_lower_error": 60,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -33.73381756897609,
+              -13.711937587503462
+            ]
+          },
+          "world": {
+            "mean_deg": 0.616856310901674,
+            "supports_lower_error": 27,
+            "tasks_lower_error": 1,
+            "task_bootstrap_ci95_deg": [
+              0.21949094148486903,
+              1.1679639198712104
+            ]
+          },
+          "equal": {
+            "mean_deg": -10.466672412633244,
+            "supports_lower_error": 54,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -15.626623403361695,
+              -5.5995370399522315
+            ]
+          }
+        }
+      },
+      "all": {
+        "n_supports": 96,
+        "n_tasks": 8,
+        "mae_deg": {
+          "visual": 25.59916597496949,
+          "world": 1.9310952658049585,
+          "equal": 12.838800458635822,
+          "fusion": 2.612093556758045
+        },
+        "median_visual_fraction": 0.0134789185512578,
+        "mean_visual_fraction": 0.07815742478274433,
+        "task_mae_deg": {
+          "libero_10/5": {
+            "visual": 17.135837940795778,
+            "world": 1.849675117521052,
+            "equal": 8.865676747330587,
+            "fusion": 2.9260101195348063
+          },
+          "libero_10/8": {
+            "visual": 25.897751230185154,
+            "world": 1.4042212603269633,
+            "equal": 13.026782797646483,
+            "fusion": 1.4415195301490134
+          },
+          "libero_goal/3": {
+            "visual": 47.859078965752936,
+            "world": 1.8316182906556382,
+            "equal": 23.541763896582236,
+            "fusion": 2.095354241170701
+          },
+          "libero_goal/6": {
+            "visual": 30.576571351792072,
+            "world": 1.7878619041421402,
+            "equal": 15.043036825119218,
+            "fusion": 2.4060753505982526
+          },
+          "libero_object/1": {
+            "visual": 13.461228273968596,
+            "world": 3.0256728879528487,
+            "equal": 6.761162084401569,
+            "fusion": 4.69729647608833
+          },
+          "libero_object/8": {
+            "visual": 4.578041477675221,
+            "world": 2.6560542264021287,
+            "equal": 2.9996197878337676,
+            "fusion": 2.842134569277841
+          },
+          "libero_spatial/0": {
+            "visual": 36.034127908718446,
+            "world": 1.7688091756161175,
+            "equal": 17.81362830273969,
+            "fusion": 3.1286005573240203
+          },
+          "libero_spatial/8": {
+            "visual": 29.25069065086772,
+            "world": 1.1248492638227792,
+            "equal": 14.65873322743303,
+            "fusion": 1.3597576099213953
+          }
+        },
+        "fusion_minus_control": {
+          "visual": {
+            "mean_deg": -22.987072418211444,
+            "supports_lower_error": 90,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -32.09430717468345,
+              -13.811919550958184
+            ]
+          },
+          "world": {
+            "mean_deg": 0.6809982909530865,
+            "supports_lower_error": 41,
+            "tasks_lower_error": 0,
+            "task_bootstrap_ci95_deg": [
+              0.30713676235466814,
+              1.0928714805930504
+            ]
+          },
+          "equal": {
+            "mean_deg": -10.226706901877778,
+            "supports_lower_error": 81,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -14.751424449971699,
+              -5.652643963717816
+            ]
+          }
+        }
+      }
+    },
+    "zoom_roll_+15": {
+      "ood": {
+        "n_supports": 64,
+        "n_tasks": 8,
+        "mae_deg": {
+          "visual": 25.346227259356368,
+          "world": 2.017118634471899,
+          "equal": 13.013337878614772,
+          "fusion": 4.795447264515035
+        },
+        "median_visual_fraction": 0.03649652059170906,
+        "mean_visual_fraction": 0.1381226926362237,
+        "task_mae_deg": {
+          "libero_10/5": {
+            "visual": 22.723766791407293,
+            "world": 2.377854163102313,
+            "equal": 12.366659573371969,
+            "fusion": 6.51179114501036
+          },
+          "libero_10/8": {
+            "visual": 28.19257822165223,
+            "world": 1.0984691598957887,
+            "equal": 14.253257110488189,
+            "fusion": 5.11198947361758
+          },
+          "libero_goal/3": {
+            "visual": 39.36099424802475,
+            "world": 2.006138762261017,
+            "equal": 19.53294730912599,
+            "fusion": 2.180462788474255
+          },
+          "libero_goal/6": {
+            "visual": 30.170148007042563,
+            "world": 1.8675987958171874,
+            "equal": 15.589832286659114,
+            "fusion": 3.3872850499942473
+          },
+          "libero_object/1": {
+            "visual": 20.511508331113667,
+            "world": 2.974708733482938,
+            "equal": 11.106866217579782,
+            "fusion": 10.586851871727998
+          },
+          "libero_object/8": {
+            "visual": 18.165634437602193,
+            "world": 2.903252722497143,
+            "equal": 8.730072619277085,
+            "fusion": 4.859542392001082
+          },
+          "libero_spatial/0": {
+            "visual": 23.698553021437977,
+            "world": 1.5418994292950607,
+            "equal": 12.118286060699187,
+            "fusion": 3.6521433336835756
+          },
+          "libero_spatial/8": {
+            "visual": 19.946635016570255,
+            "world": 1.3670273094237437,
+            "equal": 10.408781851716864,
+            "fusion": 2.0735120616111864
+          }
+        },
+        "fusion_minus_control": {
+          "visual": {
+            "mean_deg": -20.550779994841328,
+            "supports_lower_error": 63,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -26.37119043293586,
+              -15.443162323454274
+            ]
+          },
+          "world": {
+            "mean_deg": 2.7783286300431365,
+            "supports_lower_error": 17,
+            "tasks_lower_error": 0,
+            "task_bootstrap_ci95_deg": [
+              1.3687017051005896,
+              4.4483795745062595
+            ]
+          },
+          "equal": {
+            "mean_deg": -8.217890614099737,
+            "supports_lower_error": 55,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -11.572765132001907,
+              -4.974144934903187
+            ]
+          }
+        }
+      },
+      "all": {
+        "n_supports": 96,
+        "n_tasks": 8,
+        "mae_deg": {
+          "visual": 25.554092817975572,
+          "world": 1.9310952658049585,
+          "equal": 12.875080078085313,
+          "fusion": 4.057167218569495
+        },
+        "median_visual_fraction": 0.024159631928390983,
+        "mean_visual_fraction": 0.10993094859922219,
+        "task_mae_deg": {
+          "libero_10/5": {
+            "visual": 22.504549966066154,
+            "world": 1.849675117521052,
+            "equal": 11.987198864700249,
+            "fusion": 5.439959076683084
+          },
+          "libero_10/8": {
+            "visual": 25.578187347814445,
+            "world": 1.4042212603269633,
+            "equal": 12.557784763483719,
+            "fusion": 3.845967616357593
+          },
+          "libero_goal/3": {
+            "visual": 34.751510853394834,
+            "world": 1.8316182906556382,
+            "equal": 17.19025232824217,
+            "fusion": 3.474005758823907
+          },
+          "libero_goal/6": {
+            "visual": 27.560542591073627,
+            "world": 1.7878619041421402,
+            "equal": 13.913686082047272,
+            "fusion": 2.7529962027080708
+          },
+          "libero_object/1": {
+            "visual": 19.7560939588187,
+            "world": 3.0256728879528487,
+            "equal": 10.387148107781494,
+            "fusion": 8.117228930725387
+          },
+          "libero_object/8": {
+            "visual": 22.048411571125794,
+            "world": 2.6560542264021287,
+            "equal": 10.42876651351154,
+            "fusion": 3.983785427333686
+          },
+          "libero_spatial/0": {
+            "visual": 23.31529428458742,
+            "world": 1.7688091756161175,
+            "equal": 11.823158894981532,
+            "fusion": 3.1792619750220155
+          },
+          "libero_spatial/8": {
+            "visual": 28.91815197092359,
+            "world": 1.1248492638227792,
+            "equal": 14.712645069934533,
+            "fusion": 1.6641327609022127
+          }
+        },
+        "fusion_minus_control": {
+          "visual": {
+            "mean_deg": -21.496925599406076,
+            "supports_lower_error": 94,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -25.499359388511998,
+              -17.474131495878158
+            ]
+          },
+          "world": {
+            "mean_deg": 2.126071952764536,
+            "supports_lower_error": 35,
+            "tasks_lower_error": 0,
+            "task_bootstrap_ci95_deg": [
+              1.2392343767876777,
+              3.195819874303689
+            ]
+          },
+          "equal": {
+            "mean_deg": -8.817912859515818,
+            "supports_lower_error": 84,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -11.176144158461897,
+              -6.286816053391034
+            ]
+          }
+        }
+      }
+    },
+    "zoom_roll_+30": {
+      "ood": {
+        "n_supports": 64,
+        "n_tasks": 8,
+        "mae_deg": {
+          "visual": 40.53599409206585,
+          "world": 2.017118634471899,
+          "equal": 20.63508900809599,
+          "fusion": 8.180602275508292
+        },
+        "median_visual_fraction": 0.07240580179658261,
+        "mean_visual_fraction": 0.17054639568190993,
+        "task_mae_deg": {
+          "libero_10/5": {
+            "visual": 42.34633755629161,
+            "world": 2.377854163102313,
+            "equal": 22.04221630829671,
+            "fusion": 5.830202319460913
+          },
+          "libero_10/8": {
+            "visual": 38.732485832947965,
+            "world": 1.0984691598957887,
+            "equal": 19.52321091613605,
+            "fusion": 7.923272402285058
+          },
+          "libero_goal/3": {
+            "visual": 38.169625485985506,
+            "world": 2.006138762261017,
+            "equal": 19.41864844531908,
+            "fusion": 3.0306868780656018
+          },
+          "libero_goal/6": {
+            "visual": 40.061812871804236,
+            "world": 1.8675987958171874,
+            "equal": 20.800050559269362,
+            "fusion": 12.029665315260548
+          },
+          "libero_object/1": {
+            "visual": 45.44686027136905,
+            "world": 2.974708733482938,
+            "equal": 23.57454218770747,
+            "fusion": 12.303231317460025
+          },
+          "libero_object/8": {
+            "visual": 35.056091073361735,
+            "world": 2.903252722497143,
+            "equal": 17.127601899650784,
+            "fusion": 6.900104444835847
+          },
+          "libero_spatial/0": {
+            "visual": 44.262395026908244,
+            "world": 1.5418994292950607,
+            "equal": 21.98291753034936,
+            "fusion": 9.555626677914233
+          },
+          "libero_spatial/8": {
+            "visual": 40.21234461785848,
+            "world": 1.3670273094237437,
+            "equal": 20.611524218039097,
+            "fusion": 7.872028848784108
+          }
+        },
+        "fusion_minus_control": {
+          "visual": {
+            "mean_deg": -32.35539181655756,
+            "supports_lower_error": 64,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -34.335152139756275,
+              -30.251003460575397
+            ]
+          },
+          "world": {
+            "mean_deg": 6.163483641036393,
+            "supports_lower_error": 12,
+            "tasks_lower_error": 0,
+            "task_bootstrap_ci95_deg": [
+              4.116198694424988,
+              8.125146776096848
+            ]
+          },
+          "equal": {
+            "mean_deg": -12.454486732587698,
+            "supports_lower_error": 55,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -14.188709717044535,
+              -10.755609161454686
+            ]
+          }
+        }
+      },
+      "all": {
+        "n_supports": 96,
+        "n_tasks": 8,
+        "mae_deg": {
+          "visual": 37.787618859169534,
+          "world": 1.9310952658049585,
+          "equal": 18.94865205344496,
+          "fusion": 7.749081885272902
+        },
+        "median_visual_fraction": 0.06601669155135131,
+        "mean_visual_fraction": 0.1767822705915331,
+        "task_mae_deg": {
+          "libero_10/5": {
+            "visual": 37.35019559569393,
+            "world": 1.849675117521052,
+            "equal": 19.268831814341414,
+            "fusion": 4.7331472380501465
+          },
+          "libero_10/8": {
+            "visual": 36.8051116672882,
+            "world": 1.4042212603269633,
+            "equal": 18.171246923220593,
+            "fusion": 7.085441274106209
+          },
+          "libero_goal/3": {
+            "visual": 34.62660697147292,
+            "world": 1.8316182906556382,
+            "equal": 17.638970232252078,
+            "fusion": 3.161458940192226
+          },
+          "libero_goal/6": {
+            "visual": 34.802766130753476,
+            "world": 1.7878619041421402,
+            "equal": 17.834205163974897,
+            "fusion": 11.045190287700628
+          },
+          "libero_object/1": {
+            "visual": 42.20525253511007,
+            "world": 3.0256728879528487,
+            "equal": 21.14876743608822,
+            "fusion": 9.159439158915172
+          },
+          "libero_object/8": {
+            "visual": 41.55598812953931,
+            "world": 2.6560542264021287,
+            "equal": 20.150755434380915,
+            "fusion": 11.636121574733492
+          },
+          "libero_spatial/0": {
+            "visual": 38.29289538709927,
+            "world": 1.7688091756161175,
+            "equal": 18.777449229229255,
+            "fusion": 9.580025873687005
+          },
+          "libero_spatial/8": {
+            "visual": 36.662134456399066,
+            "world": 1.1248492638227792,
+            "equal": 18.5989901940723,
+            "fusion": 5.5918307347983385
+          }
+        },
+        "fusion_minus_control": {
+          "visual": {
+            "mean_deg": -30.038536973896626,
+            "supports_lower_error": 96,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -31.68070193168952,
+              -27.942543201168487
+            ]
+          },
+          "world": {
+            "mean_deg": 5.817986619467944,
+            "supports_lower_error": 25,
+            "tasks_lower_error": 0,
+            "task_bootstrap_ci95_deg": [
+              4.007074763701812,
+              7.6173972536821175
+            ]
+          },
+          "equal": {
+            "mean_deg": -11.199570168172057,
+            "supports_lower_error": 82,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -12.955143770501495,
+              -9.331056237335286
+            ]
+          }
+        }
+      }
+    },
+    "zoom_roll_-15": {
+      "ood": {
+        "n_supports": 64,
+        "n_tasks": 8,
+        "mae_deg": {
+          "visual": 24.877654959547407,
+          "world": 2.017118634471899,
+          "equal": 12.285888055750828,
+          "fusion": 3.6058425410495847
+        },
+        "median_visual_fraction": 0.04115939613060454,
+        "mean_visual_fraction": 0.13592689069237412,
+        "task_mae_deg": {
+          "libero_10/5": {
+            "visual": 20.8537135251397,
+            "world": 2.377854163102313,
+            "equal": 10.243391131045897,
+            "fusion": 2.2205185381960213
+          },
+          "libero_10/8": {
+            "visual": 22.230263347627492,
+            "world": 1.0984691598957887,
+            "equal": 11.314373173793875,
+            "fusion": 4.590533943209351
+          },
+          "libero_goal/3": {
+            "visual": 28.67124749327564,
+            "world": 2.006138762261017,
+            "equal": 14.189048440035553,
+            "fusion": 3.6678386997408943
+          },
+          "libero_goal/6": {
+            "visual": 26.82234903048607,
+            "world": 1.8675987958171874,
+            "equal": 13.09649176497145,
+            "fusion": 2.1890818115363793
+          },
+          "libero_object/1": {
+            "visual": 23.191527849362302,
+            "world": 2.974708733482938,
+            "equal": 10.87941533899167,
+            "fusion": 8.469714847802404
+          },
+          "libero_object/8": {
+            "visual": 17.959097774380762,
+            "world": 2.903252722497143,
+            "equal": 9.379992524220466,
+            "fusion": 4.621544207971823
+          },
+          "libero_spatial/0": {
+            "visual": 40.185298344416495,
+            "world": 1.5418994292950607,
+            "equal": 20.240929155313,
+            "fusion": 1.597020718656271
+          },
+          "libero_spatial/8": {
+            "visual": 19.107742311690814,
+            "world": 1.3670273094237437,
+            "equal": 8.943462917634726,
+            "fusion": 1.4904875612835333
+          }
+        },
+        "fusion_minus_control": {
+          "visual": {
+            "mean_deg": -21.271812418497824,
+            "supports_lower_error": 62,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -27.049530785335854,
+              -16.685541153529215
+            ]
+          },
+          "world": {
+            "mean_deg": 1.5887239065776857,
+            "supports_lower_error": 27,
+            "tasks_lower_error": 1,
+            "task_bootstrap_ci95_deg": [
+              0.43635277726031907,
+              2.945810525573338
+            ]
+          },
+          "equal": {
+            "mean_deg": -8.680045514701245,
+            "supports_lower_error": 55,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -12.10818814292287,
+              -5.822961325723138
+            ]
+          }
+        }
+      },
+      "all": {
+        "n_supports": 96,
+        "n_tasks": 8,
+        "mae_deg": {
+          "visual": 25.045488657656772,
+          "world": 1.9310952658049585,
+          "equal": 12.630038530963876,
+          "fusion": 3.115506413906516
+        },
+        "median_visual_fraction": 0.01592040321958349,
+        "mean_visual_fraction": 0.09664318391243897,
+        "task_mae_deg": {
+          "libero_10/5": {
+            "visual": 18.294890751040704,
+            "world": 1.849675117521052,
+            "equal": 9.068617490252805,
+            "fusion": 1.8475499422064583
+          },
+          "libero_10/8": {
+            "visual": 20.802621274304077,
+            "world": 1.4042212603269633,
+            "equal": 10.746218785307676,
+            "fusion": 4.120992980482725
+          },
+          "libero_goal/3": {
+            "visual": 25.482701491317147,
+            "world": 1.8316182906556382,
+            "equal": 12.661201262138057,
+            "fusion": 2.9586222050978983
+          },
+          "libero_goal/6": {
+            "visual": 26.013034951111095,
+            "world": 1.7878619041421402,
+            "equal": 12.876669625687827,
+            "fusion": 2.00221216790046
+          },
+          "libero_object/1": {
+            "visual": 22.76193724688079,
+            "world": 3.0256728879528487,
+            "equal": 11.424669765796189,
+            "fusion": 6.817677694662962
+          },
+          "libero_object/8": {
+            "visual": 21.49885294969215,
+            "world": 2.6560542264021287,
+            "equal": 11.376665105234814,
+            "fusion": 3.9661157419144666
+          },
+          "libero_spatial/0": {
+            "visual": 40.628475806081745,
+            "world": 1.7688091756161175,
+            "equal": 20.783529336487078,
+            "fusion": 1.9143147613500915
+          },
+          "libero_spatial/8": {
+            "visual": 24.881394790826448,
+            "world": 1.1248492638227792,
+            "equal": 12.102736876806572,
+            "fusion": 1.2965658176370642
+          }
+        },
+        "fusion_minus_control": {
+          "visual": {
+            "mean_deg": -21.929982243750253,
+            "supports_lower_error": 91,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -27.467401367101218,
+              -17.712951257528765
+            ]
+          },
+          "world": {
+            "mean_deg": 1.1844111481015571,
+            "supports_lower_error": 36,
+            "tasks_lower_error": 1,
+            "task_bootstrap_ci95_deg": [
+              0.38003407902905917,
+              2.134194222096687
+            ]
+          },
+          "equal": {
+            "mean_deg": -9.514532117057362,
+            "supports_lower_error": 83,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -12.632549805425448,
+              -7.071581067168072
+            ]
+          }
+        }
+      }
+    },
+    "zoom_roll_-30": {
+      "ood": {
+        "n_supports": 64,
+        "n_tasks": 8,
+        "mae_deg": {
+          "visual": 34.030803406448676,
+          "world": 2.017118634471899,
+          "equal": 16.74975709095736,
+          "fusion": 7.068820837710643
+        },
+        "median_visual_fraction": 0.07310438154518602,
+        "mean_visual_fraction": 0.1940667510967593,
+        "task_mae_deg": {
+          "libero_10/5": {
+            "visual": 30.176966823910796,
+            "world": 2.377854163102313,
+            "equal": 14.219435881804507,
+            "fusion": 3.2314062274241344
+          },
+          "libero_10/8": {
+            "visual": 34.61614310327522,
+            "world": 1.0984691598957887,
+            "equal": 17.498585976454653,
+            "fusion": 17.97036151961236
+          },
+          "libero_goal/3": {
+            "visual": 34.50143311429166,
+            "world": 2.006138762261017,
+            "equal": 16.916880854819507,
+            "fusion": 2.2246191826541697
+          },
+          "libero_goal/6": {
+            "visual": 32.02652602507325,
+            "world": 1.8675987958171874,
+            "equal": 15.708215263058932,
+            "fusion": 4.081802092675172
+          },
+          "libero_object/1": {
+            "visual": 47.53188210735064,
+            "world": 2.974708733482938,
+            "equal": 22.91482900165238,
+            "fusion": 14.191366330028647
+          },
+          "libero_object/8": {
+            "visual": 30.161048731271077,
+            "world": 2.903252722497143,
+            "equal": 15.480968002665616,
+            "fusion": 6.647501567108193
+          },
+          "libero_spatial/0": {
+            "visual": 35.69064987375287,
+            "world": 1.5418994292950607,
+            "equal": 17.993604919981195,
+            "fusion": 5.169578438490014
+          },
+          "libero_spatial/8": {
+            "visual": 27.541777472663895,
+            "world": 1.3670273094237437,
+            "equal": 13.265536827222082,
+            "fusion": 3.033931343692455
+          }
+        },
+        "fusion_minus_control": {
+          "visual": {
+            "mean_deg": -26.961982568738033,
+            "supports_lower_error": 63,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -30.23941313032551,
+              -23.273692293791207
+            ]
+          },
+          "world": {
+            "mean_deg": 5.051702203238744,
+            "supports_lower_error": 18,
+            "tasks_lower_error": 0,
+            "task_bootstrap_ci95_deg": [
+              1.7551322261365794,
+              9.196336258866557
+            ]
+          },
+          "equal": {
+            "mean_deg": -9.680936253246717,
+            "supports_lower_error": 57,
+            "tasks_lower_error": 7,
+            "task_bootstrap_ci95_deg": [
+              -12.165859766416771,
+              -6.398383919124866
+            ]
+          }
+        }
+      },
+      "all": {
+        "n_supports": 96,
+        "n_tasks": 8,
+        "mae_deg": {
+          "visual": 35.75928448405139,
+          "world": 1.9310952658049585,
+          "equal": 17.89243118469623,
+          "fusion": 6.029856039898581
+        },
+        "median_visual_fraction": 0.04789875357954036,
+        "mean_visual_fraction": 0.15777317576971128,
+        "task_mae_deg": {
+          "libero_10/5": {
+            "visual": 33.93347757093372,
+            "world": 1.849675117521052,
+            "equal": 16.373004768972418,
+            "fusion": 2.6681860652768563
+          },
+          "libero_10/8": {
+            "visual": 36.20671843069528,
+            "world": 1.4042212603269633,
+            "equal": 18.56632307542389,
+            "fusion": 16.38271145071072
+          },
+          "libero_goal/3": {
+            "visual": 33.55917204554524,
+            "world": 1.8316182906556382,
+            "equal": 16.453919276257,
+            "fusion": 2.3640693032313607
+          },
+          "libero_goal/6": {
+            "visual": 31.32373264769542,
+            "world": 1.7878619041421402,
+            "equal": 15.538441807842586,
+            "fusion": 3.605934959747806
+          },
+          "libero_object/1": {
+            "visual": 42.41708267439363,
+            "world": 3.0256728879528487,
+            "equal": 21.162400168663634,
+            "fusion": 10.78868001572296
+          },
+          "libero_object/8": {
+            "visual": 32.542642004442705,
+            "world": 2.6560542264021287,
+            "equal": 16.89855963261008,
+            "fusion": 5.514237107440077
+          },
+          "libero_spatial/0": {
+            "visual": 39.81830785480924,
+            "world": 1.7688091756161175,
+            "equal": 20.278152391724998,
+            "fusion": 4.701129234626471
+          },
+          "libero_spatial/8": {
+            "visual": 36.273142643895916,
+            "world": 1.1248492638227792,
+            "equal": 17.868648356075187,
+            "fusion": 2.213900182432397
+          }
+        },
+        "fusion_minus_control": {
+          "visual": {
+            "mean_deg": -29.72942844415281,
+            "supports_lower_error": 95,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -32.52726932675984,
+              -26.37537900161228
+            ]
+          },
+          "world": {
+            "mean_deg": 4.0987607740936225,
+            "supports_lower_error": 24,
+            "tasks_lower_error": 0,
+            "task_bootstrap_ci95_deg": [
+              1.4514341990167896,
+              7.614205235640434
+            ]
+          },
+          "equal": {
+            "mean_deg": -11.862575144797644,
+            "supports_lower_error": 88,
+            "tasks_lower_error": 8,
+            "task_bootstrap_ci95_deg": [
+              -14.217274220632914,
+              -8.738532191308643
+            ]
+          }
+        }
+      }
+    }
+  }
+}
