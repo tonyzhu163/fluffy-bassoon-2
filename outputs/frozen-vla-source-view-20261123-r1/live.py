@@ -51,7 +51,8 @@ def serve(fd, mode, log):
     class Observed(ArmEnv):
         control = panda = None
 
-        def reset(self, layout, seed):
+        def reset(self, init_state_id, seed):
+            layout = init_state_id
             self.layout = layout
             expo = Exposure()
             with expo.capture():
