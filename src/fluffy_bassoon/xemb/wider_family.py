@@ -26,11 +26,11 @@ def rot2_batch(yaw_deg) -> np.ndarray:
     return np.stack((np.stack((c, -s), axis=-1), np.stack((s, c), axis=-1)), axis=-2)
 
 
-def sample_interfaces(rng: np.random.Generator, family: str, n: int) -> dict:
+def sample_interfaces(rng: np.random.Generator, family: str, n: int, gain_range=GAIN_RANGE) -> dict:
     """Draw n interfaces. `shape` is gain times a unit-area 2x2 map; `z_gain` equals gain."""
     if family not in FAMILIES:
         raise ValueError(family)
-    gain = np.exp(rng.uniform(np.log(GAIN_RANGE[0]), np.log(GAIN_RANGE[1]), n))
+    gain = np.exp(rng.uniform(np.log(gain_range[0]), np.log(gain_range[1]), n))
     unit = np.broadcast_to(np.eye(2), (n, 2, 2)).copy()
     if family == "aniso":
         root = np.exp(0.5 * rng.uniform(-np.log(ANISO_RATIO), np.log(ANISO_RATIO), n))
@@ -99,6 +99,75 @@ def delay_commands(batch: dict, chunks: int = 1) -> dict:
     out["issued_mean"] = np.where(keep[..., None], issued, 0.0).astype(np.float32)
     out["valid"] = keep
     return out
+
+
+def delay_keep_motion(batch: dict, chunks: int = 1, rows=None) -> dict:
+    """Actuation delay that keeps every motion: only the last `chunks` commands are unknown.
+
+    `cmd_valid` marks the commands that exist; a reader that ignores it sees a zero command there.
+    `rows` selects the traces to delay.
+    """
+    valid = np.asarray(batch["valid"], dtype=bool)
+    rows = np.ones(len(valid), dtype=bool) if rows is None else np.asarray(rows, dtype=bool)
+    cmd_valid = valid.copy()
+    cmd_valid[:, :-chunks] &= valid[:, chunks:]
+    cmd_valid[:, -chunks:] = False
+    issued = np.zeros_like(batch["issued_mean"])
+    issued[:, :-chunks] = batch["issued_mean"][:, chunks:]
+    issued = np.where(cmd_valid[..., None], issued, 0.0)
+    out = dict(batch)
+    out["issued_mean"] = np.where(rows[:, None, None], issued, batch["issued_mean"]).astype(np.float32)
+    out["cmd_valid"] = np.where(rows[:, None], cmd_valid, np.asarray(batch.get("cmd_valid", valid), dtype=bool))
+    return out
+
+
+def lagged(x, lag: int, xp=np):
+    """x[:, k - lag] along the chunk axis, with empty slots at the start."""
+    if lag == 0:
+        return x
+    return xp.concatenate((xp.zeros_like(x[:, :lag]), x[:, :-lag]), axis=1)
+
+
+def soft_shape(cmd, moved, pair, ridge, xp=np, eps: float = 1e-9):
+    """2x2 map from commands to travel that departs from rotation-plus-gain only where commands excite it.
+
+    Minimizes sum_k |m_k - S c_k|^2 + ridge * sum_k |c_k|^2 / 2 * |S - P|_F^2 over the valid pairs,
+    where P is the best rotation-plus-gain fit of the same pairs. A large ridge returns P and
+    ridge = 0 is least squares. Works on NumPy or JAX arrays through `xp`.
+
+    Returns S, the fraction of travel energy P leaves unexplained, 1 - cos of P's rotation, and
+    the share of the weakest command direction that P rather than the data supplies.
+    """
+    w = xp.asarray(pair, dtype=cmd.dtype)
+    cx, cy, mx, my = cmd[..., 0], cmd[..., 1], moved[..., 0], moved[..., 1]
+    dot = xp.sum(w * (cx * mx + cy * my), axis=-1)
+    cross = xp.sum(w * (cx * my - cy * mx), axis=-1)
+    cc = xp.sum(w * (cx * cx + cy * cy), axis=-1)
+    mm = xp.sum(w * (mx * mx + my * my), axis=-1)
+    norm = xp.sqrt(dot * dot + cross * cross + eps * eps)
+    some = cc > eps
+    cos = xp.where(some, dot / norm, 1.0)
+    sin = xp.where(some, cross / norm, 0.0)
+    gain = xp.where(some, norm / (cc + eps), 1.0)
+    prior = gain[..., None, None] * xp.stack((xp.stack((cos, -sin), axis=-1), xp.stack((sin, cos), axis=-1)), axis=-2)
+    resid = xp.where(some, 1.0 - (dot * dot + cross * cross) / (cc * mm + eps), 0.0)
+
+    x00, x01, x11 = xp.sum(w * cx * cx, axis=-1), xp.sum(w * cx * cy, axis=-1), xp.sum(w * cy * cy, axis=-1)
+    yx = xp.stack(
+        (
+            xp.stack((xp.sum(w * mx * cx, axis=-1), xp.sum(w * mx * cy, axis=-1)), axis=-1),
+            xp.stack((xp.sum(w * my * cx, axis=-1), xp.sum(w * my * cy, axis=-1)), axis=-1),
+        ),
+        axis=-2,
+    )
+    lam = ridge * 0.5 * cc + eps
+    a, d = x00 + lam, x11 + lam
+    det = a * d - x01 * x01
+    inv = xp.stack((xp.stack((d, -x01), axis=-1), xp.stack((-x01, a), axis=-1)), axis=-2) / det[..., None, None]
+    shape = xp.einsum("...ij,...jk->...ik", yx + lam[..., None, None] * prior, inv)
+    weakest = 0.5 * (x00 + x11 - xp.sqrt((x00 - x11) ** 2 + 4.0 * x01 * x01 + eps * eps))
+    share = lam / (xp.maximum(weakest, 0.0) + lam)
+    return shape, resid, 1.0 - cos, share
 
 
 def procrustes_yaw_deg(source, vectors, weights) -> np.ndarray:
