@@ -4,6 +4,7 @@
 
 | Work | Cluster / job / source | Last check, progress and next action |
 | --- | --- | --- |
+| Released ReGround 90° rotation reproduction and same-case SymMeta | Codex, Baige | Verified public code and the upstream five-seed, 1,400-episode reference schedule. Preparing the released runtime, native baseline and matched evaluation. [Plan](reground-rotation-reference-20261123-r1/PLAN.md) |
 | SymMeta wider-family command-map recovery | Codex, Baige RTX 4090 Distributed Training, `job-4tjjgreq8u9k`, 1 GPU, PR #7 `4546516c` | Nov 23 14:39 Shanghai. Scheduled with a 60-minute wall limit. Real-data preflight confirmed 96 UR5e traces and the two-chunk delay control. Check training and the full three-seed summary. [Run plan](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/4546516cecedc08d5c8a7d41cae719b4ceee2246/outputs/symmeta-wider-family-20261123-r1/PLAN.md) |
 | SymMeta versus a matched-source linear flow reader | Codex, Baige CPU and planned Pro6K Distributed Training | Registered on November 23. Fit on the same 1,344 labeled traces and compare common-solver yaw and paired second-attempt task success. [Plan](symmeta-matched-flow-20261123-r1/PLAN.md) |
 | Original LIBERO-PRO matched π₀.₅ pilot | Baige Pro6K Distributed Training, `job-9me3dekaeqaj`, 1 GPU, `0c457b8f` | Nov 23 14:05:58 Shanghai. Submitted at 14:01:19. Waiting for the first shared job receipt. Monitor owns device, native inference and first-pair verification, then 20-minute checks through exit. [Monitor](symmeta-original-pro-20261123-r1/MONITOR.md) |
