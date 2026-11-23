@@ -42,7 +42,7 @@
 \printAffiliationsAndNotice{}
 
 \begin{abstract}
-Can a frozen robot policy use the first few movements of a task to calibrate a second attempt? We take eight held-out LIBERO-Pro2.0 task identities in their base scenes and impose twelve command settings per task, varying planar rotation, movement gain and gripper polarity. SymMeta learns from labeled Panda and Sawyer traces to align motion seen by a fixed camera with issued commands. After 15 uncorrected controls (0.75\,s), a reset starts a new layout of the same task. On the second attempt, frozen $\pi_{0.5}$ succeeds on 78.1\% of queries on UR5e, 78.5\% on IIWA and 66.3\% on Kinova3, averaged over three reader seeds. With the same seed-41 reader on UR5e, calibration during one uninterrupted attempt succeeds on 20/96 queries, versus 76/96 on a calibrated retry and 8/96 on an uncorrected retry. On 32 single attempts from original LIBERO-PRO with the native Panda command interface, applying the reader reduced success from 19/32 to 3/32. The retry gains depend on the imposed command shifts and access to a prior motion trace.
+Can a frozen robot policy use the first few movements of a task to calibrate a second attempt? We take eight held-out LIBERO-Pro2.0 task identities in their base scenes and impose twelve command settings per task, varying planar rotation, movement gain and gripper polarity. SymMeta learns from labeled Panda and Sawyer traces to align motion seen by a fixed camera with issued commands. After 15 uncorrected controls (0.75\,s), a reset starts a new layout of the same task. On the second attempt, frozen $\pi_{0.5}$ succeeds on 78.1\% of queries on UR5e, 78.5\% on IIWA and 66.3\% on Kinova3, averaged over three reader seeds. With the same seed-41 reader on UR5e, calibration during one uninterrupted attempt succeeds on 20/96 queries, versus 76/96 on a calibrated retry and 8/96 on an uncorrected retry. On 32 single attempts from original LIBERO-PRO with the native Panda command interface, applying the reader reduced success from 19/32 to 3/32. A continuously trained Perceiver without an explicit alignment solver also recovered yaw on the 64 held-out UR5e supports ($5.58^\circ$ mean error, versus $6.03^\circ$ for continuously trained SymMeta).
 \end{abstract}
 
 \section{Introduction}
@@ -197,7 +197,7 @@ The single-attempt test starts uncorrected on layout 13 and updates from its own
 \begin{figure*}[t]
   \centering
   \includegraphics[width=0.98\textwidth]{figures/fig4_memorization_cliff_matrix.pdf}
-  \caption{\textbf{Familiar vs.\ OOD success (3-seed means).} The local Perceiver reaches 59.4--86.5\% on familiar settings and 2.1--5.7\% on OOD settings. Each arm--policy pair has 32 familiar and 64 OOD queries.}
+  \caption{\textbf{Familiar vs.\ OOD success (3-seed means).} The original seven-shift Perceiver reaches 59.4--86.5\% on familiar settings and 2.1--5.7\% on OOD settings. Each arm--policy pair has 32 familiar and 64 OOD queries.}
   \label{fig:cliff}
 \end{figure*}
 
@@ -244,13 +244,13 @@ Do learned encoders fail only for lack of training diversity or capacity? We col
 \begin{figure*}[t]
   \centering
   \includegraphics[width=0.98\textwidth]{figures/fig2_scaling_law.pdf}
-  \caption{\textbf{Training-shift diversity and capacity sweep (5 models $\times$ 7 values of $M$ $\times$ 3 seeds; UR5e OOD queries).} Bands show one standard deviation across reader seeds. SymMeta reaches $7.9^\circ$ (96\% joint recovery) at $M{=}7$ and $5.7^\circ$ (99\%) at $M{=}128$. Non-equivariant models stay at or below 45\% across the sweep, with wide seed variance.}
+  \caption{\textbf{Training-shift diversity and capacity sweep (5 models $\times$ 7 values of $M$ $\times$ 3 seeds; UR5e OOD queries).} Bands show one standard deviation across reader seeds. SymMeta reaches $7.9^\circ$ (96\% joint recovery) at $M{=}7$ and $5.7^\circ$ (99\%) at $M{=}128$. Under the schedule used in this sweep, non-equivariant models stay at or below 45\% joint recovery.}
   \label{fig:scaling}
 \end{figure*}
 
 Three patterns hold across the sweep. (1) Once gain and gripper variation enter at $M{=}7$, SymMeta recovers all factors on 96\% of OOD queries, and its yaw error keeps falling slowly up to $M{=}128$. (2) With 18$\times$ more training transforms ($M{=}128$ vs.\ $7$), the non-equivariant ablation and the w192 Perceiver still recover at most 45\% of OOD queries. The w192 Perceiver is not monotone in $M$, and its seed bands are wide. (3) The larger w384 Perceiver is never better than w192 from $M{=}16$ upward, and it has higher yaw error at every $M$. At $M{=}2$ its joint recovery is marginally higher (5\% vs.\ 1\%), and at $M{=}7$ the two tie.
 
-A separate three-seed offline experiment continuously relabeled the recorded command interfaces. On 96 UR5e supports, mean in-family operator error was 0.149 for the frozen Procrustes reader, 0.152 for a ridge solver using the same reader and 0.150 for a Perceiver trained on continuous labels with learning-rate warmup. These are errors in the recovered action map. They show that the advantage in the discrete sweep depends on the training protocol and endpoint.
+\paragraph{A direct reader can recover unseen yaw.} On the same 64 recorded OOD UR5e supports, continuously trained SymMeta scored $6.03^\circ$ mean yaw error across three seeds. A Perceiver directly predicting the factors scored $5.58^\circ$ ($5.42,5.83,5.48^\circ$ by seed). With the same continuous labels, source traces, architecture, minibatch sampling and 2,500 updates, the original scaling-sweep schedule gave $96.86^\circ$. The tuned schedule lowered the peak learning rate from $1.5\!\times\!10^{-3}$ to $3\!\times\!10^{-4}$ and added 200 warmup updates. Accurate yaw recovery on these supports is therefore possible without the geometric solver. The historical seven-shift SymMeta checkpoints scored $7.04^\circ$. The tuned Perceiver's native retry success remains open.
 
 \subsection{Support Length and 3D Rotations}
 
