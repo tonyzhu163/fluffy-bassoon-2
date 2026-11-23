@@ -1,8 +1,10 @@
 # Verified findings
 
-## Wider-family command-map recovery on 96 UR5e traces
+## A tuned Perceiver recovers OOD yaw on the same 15-control UR5e supports as SymMeta
 
-Over three reader seeds at 15 controls, in-family mean operator error was 0.149 for Procrustes, 6.037 for unregularized factored least squares and 0.152 for factored ridge on the same frozen reader. A continuously trained Perceiver with warmup reached 0.150. The full-map Perceiver trained across families improved axis swaps (0.413 versus 1.257 for Procrustes) and had highly variable general-map errors (mean 15.212, mean within-seed median 1.366). All comparisons use offline relabels of the same held-out traces. [Three-seed results and evidence](../outputs/symmeta-wider-family-20261123-r1/RESULT.md)
+On the paper’s 64 recorded OOD supports, the continuous-label Perceiver with a lower peak learning rate and 200 warmup updates scored 5.42°, 5.83° and 5.48° yaw MAE across seeds 41–43. The seven-shift SymMeta checkpoints scored 6.82°, 7.00° and 7.29°. Across all 96 recorded supports, mean planar operator error was 0.146 versus 0.154. At the same 2,500 updates and with the same continuous labels, the original scaling-sweep schedule gave the Perceiver 96.86° mean OOD yaw error. The historical seven-shift Perceiver gave 95.63°. The tuned reader demonstrates accurate offline recovery without the explicit Procrustes solve. Its four-panel native retry success and performance under the tuned schedule on the original seven shifts remain open. [Five-way comparison, per-seed results and controls](../outputs/symmeta-wider-family-20261123-r1/RESULT.md)
+
+On four new in-family draws per recorded trace, mean operator error was 0.149 for Procrustes, 6.037 for unregularized factored least squares and 0.152 for factored ridge on the same frozen reader. Training a full-map Perceiver across families improved axis swaps (0.413 versus 1.257 for Procrustes). On general maps its mean error was 15.212 and the mean of its within-seed medians was 1.366. The median ratio of the two command singular values was 0.099 on the recorded supports. [Operator errors by family](../outputs/symmeta-wider-family-20261123-r1/gpu01w454/wider-family-summary.json)
 
 ## Streaming on the unmodified Panda command interface in original LIBERO-PRO
 

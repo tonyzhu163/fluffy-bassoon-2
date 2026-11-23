@@ -2,6 +2,20 @@
 
 Baige Distributed Training job `job-4tjjgreq8u9k` completed PR #7 at `4546516cecedc08d5c8a7d41cae719b4ceee2246` on one RTX 4090. The launcher exited 0 after 28 min 29 s (0.475 GPU-hours from launcher start to exit). The production evaluator ran its full 112,500 updates across seeds 41, 42 and 43. All 432 method–condition–seed rows are present. [Pinned plan and launcher](https://github.com/tonyzhu163/fluffy-bassoon-2/tree/4546516cecedc08d5c8a7d41cae719b4ceee2246/outputs/symmeta-wider-family-20261123-r1) · [Summary JSON](gpu01w454/wider-family-summary.json) · [Training log](gpu01w454/run.log) · [Device probe](gpu01w454/gpu.json) · [Exit receipt](gpu01w454/exit.txt) · [Independent checks](gpu01w454/verification.json)
 
+## A tuned Perceiver recovers yaw on the paper’s held-out shifts
+
+The tuned Perceiver had lower mean absolute yaw error than the paper’s SymMeta checkpoint in each of three seeds on the same 64 out-of-distribution (OOD) UR5e supports. It learned the yaw, gain and gripper outputs directly, without a Procrustes yaw solve. Each reader saw 15 controls. The last column measures planar command-map error across all 96 **recorded** supports, including the 32 familiar cases. [Per-seed measurements](gpu01w454/wider-family-summary.json)
+
+| Reader and training condition | OOD yaw MAE by seed, 41 / 42 / 43 | OOD yaw MAE, seed mean ± SD | Mean operator error, all 96 |
+| --- | ---: | ---: | ---: |
+| Perceiver, original seven-shift checkpoints | 97.08° / 92.34° / 97.48° | 95.63° ± 2.33° | 0.967 |
+| Perceiver, continuous labels, original **scaling-sweep** schedule | 78.75° / 112.80° / 99.02° | 96.86° ± 13.98° | 1.380 |
+| Perceiver, continuous labels, lower rate and warmup | 5.42° / 5.83° / 5.48° | **5.58° ± 0.18°** | **0.146** |
+| SymMeta, original seven-shift checkpoints | 6.82° / 7.00° / 7.29° | 7.04° ± 0.19° | 0.154 |
+| SymMeta, continuous labels | 6.45° / 6.07° / 5.55° | 6.03° ± 0.37° | 0.147 |
+
+The two continuous-label Perceiver runs used the same source traces, relabeling, architecture, minibatch sampling and 2,500-update budget. Changing the peak learning rate from 0.0015 to 0.0003 and adding 200 warmup updates reduced mean OOD yaw error from 96.86° to 5.58°. This paired comparison identifies the effect of those schedule changes together. The original seven-shift checkpoints used a separate training recipe. Their schedule-only control and the tuned reader’s native retry success on all four arm–policy panels are open. [Continuous training code](eval_wider_family.py) · [Original training code](../xemb-icml-campaign-20261121-r1/stage1_offline_gate.py)
+
 ## Offline operator error
 
 Lower values indicate more accurate command-map recovery. Entries give the mean error and its population standard deviation across the three seed means. All five fixed solvers use the same frozen visual reader within each seed. The 1,466 source traces came from Panda and Sawyer. The 96 held-out UR5e traces contributed four interface draws per relabeled family. The delay comparison uses two valid chunks on both sides since a one-chunk shift leaves two matched motions in each three-chunk recording. It scores recovery of the original spatial map under delayed commands. The recorded out-of-distribution yaw error for the frozen Procrustes reader reproduced the archived three-seed result of 7.04° ± 0.19°.
