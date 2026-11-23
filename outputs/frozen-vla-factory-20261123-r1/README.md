@@ -25,3 +25,5 @@ Three additional CPU workers test adapters applied directly to the inputs of a p
 | [appearance](https://app.devin.ai/sessions/a51278acfb5e47d2859b4f2cde292d5a) | Control for changes in arm appearance at a fixed viewpoint |
 
 The coordinating session also ran [temporal pooling](pooling/RESULT.md) for both archived visual readers. Each readout reproduced its frozen archive baseline on all 96 UR5e supports.
+
+On the original paired native retries, the smaller support yaw error identified 12 of the 15 held-out cases in which only one reader succeeded. [Calibration metric versus native success](calibration-metric/RESULT.md)
