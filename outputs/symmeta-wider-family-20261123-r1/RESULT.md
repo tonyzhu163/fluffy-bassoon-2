@@ -4,7 +4,7 @@ Baige Distributed Training job `job-4tjjgreq8u9k` completed PR #7 at `4546516cec
 
 ## A tuned Perceiver recovers yaw on the paper’s held-out shifts
 
-The tuned Perceiver had lower mean absolute yaw error than the paper’s SymMeta checkpoint in each of three seeds on the same 64 out-of-distribution (OOD) UR5e supports. It learned the yaw, gain and gripper outputs directly, without a Procrustes yaw solve. Each reader saw 15 controls. The last column measures planar command-map error across all 96 **recorded** supports, including the 32 familiar cases. [Per-seed measurements](gpu01w454/wider-family-summary.json)
+The tuned Perceiver had lower mean absolute yaw error than the paper’s SymMeta checkpoint in each of three seeds on the same 64 out-of-distribution (OOD) UR5e supports. It learned the yaw, gain and gripper outputs directly, without a Procrustes yaw solve. Both factor-output readers use the specified yaw/gain/gripper parameterization and receive images, issued commands and local robot measurements from 15 controls. The last column measures planar command-map error across all 96 **recorded** supports, including the 32 familiar cases. [Per-seed measurements](gpu01w454/wider-family-summary.json)
 
 | Reader and training condition | OOD yaw MAE by seed, 41 / 42 / 43 | OOD yaw MAE, seed mean ± SD | Mean operator error, all 96 |
 | --- | ---: | ---: | ---: |
