@@ -31,7 +31,8 @@ export OPENPI_DATA_HOME=$legacy/cache/openpi-215abfb
 export TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD=1 PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSERSITE=1
 export OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 MKL_NUM_THREADS=2
 export JAX_PLATFORMS=cuda XLA_PYTHON_CLIENT_PREALLOCATE=false
-export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl MUJOCO_EGL_DEVICE_ID=0
+export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl
+unset LIBGL_ALWAYS_SOFTWARE
 gpu=$(nvidia-smi --query-gpu=name --format=csv,noheader)
 [[ $gpu != *$'\n'* ]]
 case "$gpu" in
@@ -53,4 +54,8 @@ export LD_LIBRARY_PATH="$glvnd:$libs/prefix/lib/x86_64-linux-gnu$clean"
 export __EGL_VENDOR_LIBRARY_FILENAMES=$libs/nvidia-vendor.json
 export FLUFFY_GPU_EXECUTION=baige
 "$data/setups/robocasa365-native-20261101-r1/env/bin/python" -Bu "$code/scripts/[train]gpu_probe.py" --expected-count 1 --purpose evaluation --baige-container --output "$out/gpu.json"
+egl_index=$(PYTHONPATH="$code/outputs/reground-rotation-reference-20261123-r1:$PYTHONPATH" "$legacy/envs/openpi-215abfb/bin/python" -c 'from reference import egl_device; print(egl_device(0))')
+[[ $egl_index =~ ^[0-9]+$ ]]
+export MUJOCO_EGL_DEVICE_ID=$egl_index
+echo "Allocated CUDA ordinal 0 maps to EGL device $egl_index" >> "$out/launch.txt"
 timeout --kill-after=15s 105m "$legacy/envs/openpi-215abfb/bin/python" -Bu "$here/native.py" "$out" "$here/evidence/palette.json"
