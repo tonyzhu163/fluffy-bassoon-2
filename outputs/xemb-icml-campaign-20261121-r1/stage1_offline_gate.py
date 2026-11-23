@@ -156,6 +156,7 @@ def train_and_audit_v2(
     ckpt_dir: Path,
     nominal_gain: float,
     archive_sha: str,
+    lr_schedule=None,
 ):
     from flax import serialization
     import jax
@@ -176,7 +177,9 @@ def train_and_audit_v2(
     seed_results = []
     for seed in seeds:
         params = init_reader_v2(jax.random.key(seed), cfg)
-        schedule = optax.cosine_decay_schedule(init_value=1e-3, decay_steps=steps, alpha=0.05)
+        schedule = lr_schedule
+        if schedule is None:
+            schedule = optax.cosine_decay_schedule(init_value=1e-3, decay_steps=steps, alpha=0.05)
         optimizer = optax.chain(optax.clip_by_global_norm(1.0), optax.adamw(schedule, weight_decay=1e-4))
         opt_state = optimizer.init(params)
 
