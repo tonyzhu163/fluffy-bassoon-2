@@ -14,7 +14,7 @@ From the ICML-style audit on 2026-11-23 (soundness, presentation, significance, 
 ## Blocking: paper
 
 - [ ] **Method reproducibility:** training loss and labels, dataset size, CNN spec, optimizer and hyperparameters, how `w_k` and `u_z` are supervised, parameter counts for both Perceiver widths, and whether the Δz correction is used in the 3D variant.
-- [ ] **Statistics:** query-level paired permutation tests per seed, task-level effect sizes, and an appendix table accounting for every episode.
+- [ ] **Statistics:** Complete the appendix ledger accounting for every episode beyond the four headline panels. The [paired reanalysis](../../outputs/symmeta-paired-statistics-20261123-r1/RESULT.md) supplies per-seed query tests, task-level effects, and counts for the four panels.
 - [ ] **Pipeline figure** (one column) showing support trace → reader → Procrustes → wrapper.
 - [ ] **Bibliography.** Verify the author lists of `siddique2026reground` and `yang2026icba` against arXiv, and replace the placeholder authors of `liberopro2026`. Confirm which of ICBA and ReGround count as concurrent at the deadline.
 

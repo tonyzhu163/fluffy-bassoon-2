@@ -1,5 +1,9 @@
 # Verified findings
 
+## SymMeta versus source-calibrated brightness flow across reader seeds
+
+Across the eight tasks and 96 queries per panel, mean native success over seeds 41–43 improved by 19.8 points on UR5e, 24.3 on IIWA and 22.6 on Kinova3 with π₀.₅. All eight task means favored SymMeta in each π₀.₅ panel. On UR5e with π₀, six tasks improved and both LIBERO-Object tasks declined. The mean gain was 9.7 points, with a two-sided whole-task sign-flip p-value of 0.078. Outcomes reuse the same eight task clusters across seeds. [Paired analysis and saved outcomes](../outputs/symmeta-paired-statistics-20261123-r1/RESULT.md)
+
 ## SymMeta command-yaw estimates follow camera rotation on held-out UR5e
 
 Across the same 64 out-of-distribution π₀.₅ supports, the frozen seed-41 reader had 6.83° yaw MAE upright and 84.52° / 101.23° after displayed image rolls of −90° / +90°. Source-calibrated brightness flow scored 12.29° / 84.36° / 101.63° for upright / −90° / +90°. Independent joint kinematics gave 2.02° on the same motions. In a separate two-task MuJoCo check, physically orbiting the camera ±30° shifted the estimated command yaw by 28–30° on average with identical actions and physics across views. This was an offline identification test. [Paired controls, moderate rolls, provenance and limitations](../outputs/symmeta-camera-command-20261123-r1/RESULT.md)

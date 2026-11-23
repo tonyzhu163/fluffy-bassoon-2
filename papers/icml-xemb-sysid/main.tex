@@ -150,9 +150,9 @@ SymMeta learns a shared visual motion reader on source robots. On a new robot, t
 
 \paragraph{Protocol.} For each query, the frozen VLA first runs unadapted under the shifted interface (Attempt~1). Passive methods see only the first 15 controls (0.75\,s of simulated time) of that rollout, summarized as three consecutive 5-control chunks. The trace is recorded once per task and transform and shared by all passive methods and all reader seeds. Each method's estimate then wraps the VLA for a fresh episode of the same task (Attempt~2), and we report Attempt-2 task success. Attempt~1 is recorded on a different initial scene layout (LIBERO initial state 11) from the one used for Attempt~2 (initial state 13), so the estimate must carry across object layouts. The 0.75\,s figure counts support motion only; it excludes the reset and the reader's inference time. Active baselines instead execute a fixed 15-control probe. Adapting within Attempt~1, without a reset, is reported separately in \S\ref{sec:limits}.
 
-\paragraph{Statistics.} Learned methods (SymMeta, Perceiver) are trained with 3 seeds (41--43) and evaluated on all 96 queries per seed. The three seeds share the same 96 queries and support traces, so the reported mean $\pm$ standard deviation reflects reader-training variance only, and the independent units are the 8 tasks. Deterministic baselines are run once. Paired confidence intervals use a task-clustered bootstrap over the 8 tasks on the seed-41 panel. With 8 clusters these intervals are approximate, so we also report win/loss counts and per-seed differences.
+\paragraph{Statistics.} Learned methods (SymMeta, Perceiver) are trained with 3 seeds (41--43) and evaluated on all 96 queries per seed. The three seeds share the same 96 queries and support traces, so the reported mean $\pm$ standard deviation reflects reader-training variance only, and the independent units are the 8 tasks. Deterministic baselines are run once. Paired confidence intervals use a task-clustered bootstrap over the 8 tasks on the seed-41 panel. Appendix~\ref{sec:paired} reports per-seed gains and exact paired sign-flip tests at the query and task levels.
 
-\paragraph{Baseline implementations.} Horn--Schunck and DIS use flow-to-motion projections fitted on nominal Panda and Sawyer active probes. Both carry those projections to the target arm, where Broyden also updates its estimate from the active probe. None receives target-camera calibration. ``Perceiver'' is our Perceiver history encoder trained to predict the transform from the same support trace as SymMeta. It is inspired by, but is not, the method of \citet{yang2026icba}, which trains the policy with the context. ``Affine (proprio.)'' fits a ridge-regularized linear map from issued planar commands to command-frame end-effector displacements on the same passive trace and projects it onto a scaled rotation. It is inspired by ReGround~\citep{siddique2026reground} but omits that method's learned dynamics model, task-agnostic babbling data, and intent tracking, so it is not a test of the published method.
+\paragraph{Baseline implementations.} The comparator labelled HS (Horn--Schunck) fits one image translation per frame pair by motion-weighted brightness constancy. HS and DIS use flow-to-motion projections fitted on nominal Panda and Sawyer active probes. Both carry those projections to the target arm, where Broyden also updates its estimate from the active probe. None receives target-camera calibration. ``Perceiver'' is our Perceiver history encoder trained to predict the transform from the same support trace as SymMeta. It is inspired by, but is not, the method of \citet{yang2026icba}, which trains the policy with the context. ``Affine (proprio.)'' fits a ridge-regularized linear map from issued planar commands to command-frame end-effector displacements on the same passive trace and projects it onto a scaled rotation. It is inspired by ReGround~\citep{siddique2026reground} but omits that method's learned dynamics model, task-agnostic babbling data, and intent tracking, so it is not a test of the published method.
 
 \paragraph{$\pi_0$ state encoding.} $\pi_0$ adds the end-effector axis-angle from \texttt{observation/state[3:6]} to its predicted actions. UR5e and Panda share the same downward gripper pose at reset. However, UR5e's MuJoCo quaternion lies on the opposite sign of the $SO(3)$ double cover (axis-angle $x = -3.133$ vs.\ $+3.141$), which produced a $2\pi$ jump that saturated the wrist command. Even the exact oracle succeeded on 0 of 96 queries. We canonicalize $q \equiv -q$ on the downward-gripper hemisphere in the $\pi_0$ state observation for every method, including the oracle. With this fix, the oracle reaches 54.2\%.
 
@@ -385,9 +385,35 @@ This paper presents work whose goal is to advance the field of machine learning 
 \end{table}
 
 \paragraph{Second simulator: ManiSkill3 / SAPIEN.}
-As a preliminary check in a different physics engine and camera geometry~\citep{tao2025maniskill3}, we train on Panda and Fetch and test on xArm6 (792 episodes across 11 methods, about 72 per method). SymMeta has the highest success among adapted methods: 23.6\% overall and 22.9\% OOD, against a 66.7\% oracle. The next best are a variant without the rotation geometry (18.1\%) and RMA-GRU (6.9\%). At this sample size the gap to the second-best method is not significant, and absolute performance is far below the oracle. In a separate 3-seed LIBERO-Pro2.0 UR5e audit (576 episodes per method), a monolithic Transformer given continuous transform augmentation and twice the training steps reaches $13.8 \pm 9.2\%$ OOD success, and RMA-GRU reaches $11.5 \pm 0.7\%$.
+In ManiSkill3/SAPIEN~\citep{tao2025maniskill3}, we train the reader on Panda and Fetch and evaluate the xArm6 with a scripted motor. The SymMeta reader with vertical-motion correction succeeds on 22/72 starts, including 11/48 held-out starts and 0/24 continuous-angle starts. The exact-transform oracle succeeds on 48/72. Removing the correction gives 5/72. These results limit the evidence for transfer across simulators. In a separate 3-seed LIBERO-Pro2.0 UR5e audit (576 episodes per method), a monolithic Transformer given continuous transform augmentation and twice the training steps reaches $13.8 \pm 9.2\%$ OOD success, and RMA-GRU reaches $11.5 \pm 0.7\%$.
 
 \paragraph{Visual-perturbation panel.}
 The nine methods comprise the exact oracle, unadapted policy, passive \texttt{BASE}-trained SymMeta, active camera-conditioned EquivFlow, active Pro2-trained SymMeta, passive Horn--Schunck, active DIS+Procrustes, command-frame affine fit and active Pro2-trained Perceiver.
+
+
+\section{Paired native task success}
+\label{sec:paired}
+ We matched SymMeta and the source-calibrated brightness-flow reader on each official task, interface, scheduled reset and simulator seed. We first computed the paired success difference separately for each checkpoint, then averaged those differences within query. Each panel contributes 96 queries over eight tasks. The 64 held-out queries use compositional or continuous-angle shifts.
+
+\begin{table}[H]
+\centering\small
+\caption{Native success gains in percentage points. The three gains are ordered by reader seed (41, 42, 43). The interval and two-sided $p$-values refer to the seed-average contrast.}
+\begin{tabular}{llrrrrr}
+\hline
+Arm (policy) & Queries & Gains by seed & Mean & 95\% task interval & $p_{\rm query}$ & $p_{\rm task}$ \\
+\hline
+UR5e ($\pi_{0.5}$) & All 96 & +20.8 / +16.7 / +21.9 & +19.8 & [+11.8, +31.2] & $7.15\times10^{-5}$ & 0.0078 \\
+UR5e ($\pi_{0.5}$) & Held-out 64 & +25.0 / +18.8 / +25.0 & +22.9 & [+14.6, +33.3] & $0.00046$ & 0.0078 \\
+IIWA ($\pi_{0.5}$) & All 96 & +25.0 / +25.0 / +22.9 & +24.3 & [+16.7, +31.9] & $3.75\times10^{-6}$ & 0.0078 \\
+IIWA ($\pi_{0.5}$) & Held-out 64 & +25.0 / +21.9 / +17.2 & +21.4 & [+14.6, +28.6] & $0.000762$ & 0.0078 \\
+Kinova3 ($\pi_{0.5}$) & All 96 & +18.8 / +25.0 / +24.0 & +22.6 & [+14.9, +29.9] & $1.67\times10^{-6}$ & 0.0078 \\
+Kinova3 ($\pi_{0.5}$) & Held-out 64 & +14.1 / +20.3 / +21.9 & +18.8 & [+8.9, +28.6] & $0.00126$ & 0.0156 \\
+UR5e ($\pi_0$) & All 96 & +10.4 / +5.2 / +13.5 & +9.7 & [+1.7, +19.4] & $0.0901$ & 0.0781 \\
+UR5e ($\pi_0$) & Held-out 64 & +14.1 / +3.1 / +12.5 & +9.9 & [-3.1, +22.9] & $0.17$ & 0.2500 \\
+\hline
+\end{tabular}
+\end{table}
+
+For a single seed the exact query test flips the discordant binary pairs. For the seed average it flips the signed mean difference once per query, retaining its magnitude and the shared comparator. The task sensitivity enumerates all $2^8$ whole-task sign assignments. Each test assumes sign symmetry and independent flips at its stated unit. The percentile interval resamples eight whole tasks with replacement, conditional on the three checkpoints. All $p$-values are unadjusted. The eight fixed tasks limit generalization. On the full panel all eight task means favor SymMeta for each $\pi_{0.5}$ arm. On UR5e with $\pi_0$, six tasks favor SymMeta and two favor the flow reader.
 
 \end{document}
