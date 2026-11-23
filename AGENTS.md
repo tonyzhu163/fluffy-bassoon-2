@@ -13,6 +13,14 @@ the [documentation index](docs/README.md). Keep LycoReco work and runs pinned to
 - Prioritize falsifiable hypotheses whose answers would change a research decision.
   State what observation would count against each hypothesis. Start with the
   least expensive experiment that distinguishes competing explanations.
+- Gate work on the research question: is the concept sound, is the proposed
+  method a reasonable answer to it, and does controlled evidence show it is
+  effective? Do not invent numeric pass/fail thresholds as go/no-go gates; a
+  number chosen without a derivation carries no burden of proof. Use a number
+  as a gate only when it follows from a validity constraint or from the
+  comparison that decides the question (a matched baseline, an oracle ceiling,
+  a noise floor), and say which. Report measured effects with their
+  uncertainty and let the decision follow from what they show.
 - As orchestrator, delegate investigations, implementation, experiments and critical
   reviews through the existing worker CLI (locally, `codex exec`). Parallelize
   independent tasks. Give each worker the question, context, deliverable, resource
