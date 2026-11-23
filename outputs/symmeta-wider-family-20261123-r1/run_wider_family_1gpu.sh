@@ -33,6 +33,7 @@ reuse="$root/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live"
 [[ -d "$diverse/shard-0" && -d "$ckpts" && -d "$reuse" ]]
 
 out="$run/$attempt"
+[[ ! -e "$out" ]] || { echo "Attempt $attempt already exists; use a fresh name" >&2; exit 2; }
 mkdir -p "$out"
 df -h "$out" > "$out/storage.txt"
 printf '%s %s %s wider-family-offline\n' "$pin" "$host" "$$" > "$out/launch.txt"
