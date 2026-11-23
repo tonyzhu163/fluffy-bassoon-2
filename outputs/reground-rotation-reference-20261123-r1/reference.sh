@@ -22,7 +22,7 @@ payload() {
     local libs=/mowenjie/fluffy-bassoon-2/setups/libero90-full-action-20261119-r1/desktop-libs02
     if [[ -f "$libs/nvidia-vendor.json" ]]; then
         export __EGL_VENDOR_LIBRARY_FILENAMES="$libs/nvidia-vendor.json"
-        export LD_LIBRARY_PATH="$libs/prefix/usr/lib/x86_64-linux-gnu:${LD_LIBRARY_PATH:-}"
+        export LD_LIBRARY_PATH="$libs/prefix/usr/lib/x86_64-linux-gnu:$libs/prefix/lib/x86_64-linux-gnu:${LD_LIBRARY_PATH:-}"
     fi
     # Only the scheduler container defines the CUDA device namespace. If Baige leaves
     # CUDA_VISIBLE_DEVICES unset, number all its assigned devices in their native order.
