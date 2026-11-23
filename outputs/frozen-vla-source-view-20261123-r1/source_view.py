@@ -206,7 +206,6 @@ class Sibling:
         def draw(segmentation=False):
             return self.sim.render(camera_name=cam, width=256, height=256, depth=True, segmentation=segmentation)
         m = self.g.m
-        saved = m.geom_rgba[:,3].copy()
         groups = m.geom_group.copy()
         ctx = self.sim._render_context_offscreen
         visibility = ctx.vopt.geomgroup.copy()
