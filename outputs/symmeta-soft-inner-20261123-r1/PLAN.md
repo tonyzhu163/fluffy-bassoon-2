@@ -23,7 +23,7 @@ The tuned Perceiver matching SymMeta at 7 and 16 training interfaces, at 1 and 2
 
 - Stored traces hold one token per 5-control chunk and end at 3 chunks. Per-control tokens and learned pairing across more than one lag are not tested. A delayed trace has two usable command–motion pairs.
 - The unshifted test uses clean UR5e scenes. The 19/32 to 3/32 regression of the streaming reader on the native Panda interface was under LIBERO-PRO perturbations, which these traces do not contain.
-- The 7-interface sets are relabeled from the stage-3 traces, not the paper's original 1,344-trace archive; the schedule-only control on that archive is a separate TODO item.
+- The 7-interface sets are relabeled from the stage-3 traces, not the paper's original 1,344-trace archive; the schedule-only control on that archive is the separate [seven-schedule run](../symmeta-seven-schedule-20261123-r1/PLAN.md).
 - SymMeta and `soft` use a peak rate of 0.0015 and the Perceivers 0.0003 with 200 warmup updates, each reader's best known schedule. `soft` adds 200 warmup updates.
 - Relabeled commands can leave the unit box, strongly so for gains of 0.3–0.5. Operator error is not task success.
 
