@@ -84,9 +84,9 @@ def replay(arm, first, active):
         ps.append(step["observation"]["robot0_eef_pos"].copy())
     dq = np.diff(qs, axis=0)
     dp = np.diff(ps, axis=0)
-    np.testing.assert_allclose(dq, active["delta_joint"], atol=2e-6, rtol=0)
-    np.testing.assert_allclose(dp, active["delta_eef"], atol=1e-6, rtol=0)
-    return dict(controls=n, joint_max_abs_rad=float(np.max(np.abs(dq-active["delta_joint"]))),
+    matched = np.allclose(dq, active["delta_joint"], atol=2e-6, rtol=0) and np.allclose(
+        dp, active["delta_eef"], atol=1e-6, rtol=0)
+    return dict(controls=n, matched=bool(matched), joint_max_abs_rad=float(np.max(np.abs(dq-active["delta_joint"]))),
                 tcp_max_abs_m=float(np.max(np.abs(dp-active["delta_eef"]))))
 
 
@@ -130,8 +130,13 @@ def main(panel, reader_file, output):
                         and sha(Path(m["active_npz"])) == r["active_sha256"], m)
                 np.testing.assert_array_equal(nom["frame0_img"], a["frame0_img"])
                 np.testing.assert_array_equal(a["frame0_img"], p["frame0_img"])
-                np.testing.assert_allclose(a["frame0_state"], state_a, atol=2e-6, rtol=0)
-                np.testing.assert_allclose(p["frame0_state"], state_p, atol=2e-6, rtol=0)
+                frame_error = float(max(np.max(abs(a["frame0_state"]-state_a)), np.max(abs(p["frame0_state"]-state_p))))
+                if not active_receipt["matched"] or frame_error > 2e-6:
+                    estimates.append(dict(**r, fk_available=False, fk_yaw_hat=None, reader_available=True,
+                        native_reader_qualified=r["native_cpu_identity"], shard=shard, regime=hist["regime"],
+                        frame0_max_abs=frame_error, reason="archived active replay or reset state mismatch",
+                        reader_yaw_error_deg=circular_yaw_error_deg(r["yaw_hat"], hist["true_yaw"])))
+                    continue
                 mask = p["valid"]
                 p["chunk_steps"] = np.where(mask, CHUNK_SIZE, 0).astype(np.int32)
                 exposure = issued_exposure(p)[mask]
@@ -150,10 +155,11 @@ def main(panel, reader_file, output):
                     world_xy_path_mm=fit["world_xy_path_mm"], xy_length_max_error_mm=float(1000*max(residual)),
                     z_max_error_mm=float(1000*max(abs(native[:,2]-dp[:,2])))))
         print(panel, "FK", shard, len(estimates), flush=True)
+    available = len(estimates) == 96 and all(r["fk_available"] for r in estimates)
     with output.open("x") as f:
         json.dump(dict(**info, checkpoint_sha256=ref["checkpoint_sha256"], resets=receipts, rows=estimates,
-                       fk_qualified=len(estimates)==96, native_reader_qualified=ref["qualified"],
-                       qualified=len(estimates)==96 and ref["qualified"]), f, allow_nan=False)
+                       fk_qualified=available, native_reader_qualified=ref["qualified"],
+                       qualified=available and ref["qualified"]), f, allow_nan=False)
 
 
 if __name__ == "__main__":
