@@ -1,10 +1,11 @@
 """Pinned inputs and reference transport shared by preparation, fitting and evaluation."""
+
 from __future__ import annotations
 
 import hashlib
 import json
-from pathlib import Path
 import sys
+from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REF_CODE = HERE.parent / "reground-rotation-reference-20261123-r1"
@@ -17,14 +18,15 @@ CELL = "rot_z/90"
 BUDGETS = (15, 100, 1000)
 
 
-
 def sha(path):
     with Path(path).open("rb") as f:
         return hashlib.file_digest(f, "sha256").hexdigest()
 
 
 def digest(obj):
-    return hashlib.sha256(json.dumps(obj, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+    return hashlib.sha256(
+        json.dumps(obj, sort_keys=True, separators=(",", ":")).encode()
+    ).hexdigest()
 
 
 def subset_hash(episodes):
@@ -32,7 +34,10 @@ def subset_hash(episodes):
     h = hashlib.sha256()
     for e in episodes:
         n = len(e["A"])
-        ref.require(e["X"].shape == (n + 1, 25) and e["A"].shape == (n, 7) and n > 0, "Invalid tape")
+        ref.require(
+            e["X"].shape == (n + 1, 25) and e["A"].shape == (n, 7) and n > 0,
+            "Invalid tape",
+        )
         h.update(n.to_bytes(8, "little"))
         for k in ("X", "A"):
             ref.require(e[k].dtype.name == "float32", "Unexpected source dtype")
@@ -42,9 +47,12 @@ def subset_hash(episodes):
 
 def configure():
     ref.configure()
-    ref.require(ref.ROOT.is_absolute() and ref.ROOT.is_dir(), "Source the shared runtime")
+    ref.require(
+        ref.ROOT.is_absolute() and ref.ROOT.is_dir(), "Source the shared runtime"
+    )
     # All default native write paths are private. Source data are opened explicitly during preparation.
     from reground import utils
+
     utils.RUNS = WORK / "private-runs"
 
 
@@ -55,6 +63,10 @@ def cell_dir(seed, budget):
 def recipe(seed, budget):
     cfg = ref.read(ref.SOURCE / "configs/paper.json")[CELL]
     j = ref.grid()[seed]
-    ref.require((j["cfg"], j["cell"], j["policy"], j["seed"]) == (cfg, CELL, "pi05", seed)
-                and cfg["anchor"] == "idm" and not cfg.get("gate"), "Unexpected release recipe")
+    ref.require(
+        (j["cfg"], j["cell"], j["policy"], j["seed"]) == (cfg, CELL, "pi05", seed)
+        and cfg["anchor"] == "idm"
+        and not cfg.get("gate"),
+        "Unexpected release recipe",
+    )
     return {**cfg, "budget": budget}
