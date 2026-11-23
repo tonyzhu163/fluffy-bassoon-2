@@ -10,7 +10,7 @@ paper titles, author project pages, official repositories, configs and model
 cards; arXiv metadata queries; and backward/forward discovery from relevant
 papers and RLinf examples. English and Chinese recipe queries were used.
 Search queries, candidate dispositions and repository pins are recorded in
-[the search record](../../outputs/robocasa-ppo-literature-20261102-r1/SEARCH.md).
+[the search record](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/f03ddbb69933e0cc6656aa54f7c9c900da4d580c/outputs/robocasa-ppo-literature-20261102-r1/SEARCH.md).
 
 This is a comprehensive scoping and implementation review, not a preregistered
 systematic review or a claim of complete database coverage. In particular,
@@ -219,7 +219,7 @@ This rules out the alleged indexing failure for the inspected collector and
 batch; it is not a full audit of every rollout, action-level reward mode,
 auto-reset behavior or timeout bootstrap. Preserve those distinctions before
 generalizing. **Do not apply StructRL's done-shift patch to our collector on
-this evidence.** The compact [numerical record](../../outputs/robocasa-ppo-literature-20261102-r1/GAE-CHECK.json)
+this evidence.** The compact [numerical record](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/f03ddbb69933e0cc6656aa54f7c9c900da4d580c/outputs/robocasa-ppo-literature-20261102-r1/GAE-CHECK.json)
 identifies the batch, source and function hashes.
 
 ## Adjacent literature and exclusion decisions
