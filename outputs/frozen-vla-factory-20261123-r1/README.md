@@ -4,6 +4,8 @@ The factory tests which information a lightweight adapter needs to control an un
 
 Workflow `wfr-92d79c14c63342a292b2e0ea047f678a` launched all twelve workers. The native worker owns accelerator submissions with an incremental limit of 12 GPU-hours. Eleven other workers have CPU-only allocations. Existing Perceiver and FK jobs retain their original owners.
 
+Three additional CPU workers test adapters applied directly to the inputs of a public LIBERO-trained SmolVLA. These comparisons use frozen forward passes with paired action noise. The prior [S15 camera experiment](../xemb-camera-dev-20261122-r1/RESULT.md) motivates this test because native success fell to zero even with the exact action transform.
+
 | Worker | Experiment |
 | --- | --- |
 | [map](https://app.devin.ai/sessions/35af26b68f86493290db17816027c03e) | Constrained residual versus ridge and similarity for general planar maps |
@@ -18,5 +20,8 @@ Workflow `wfr-92d79c14c63342a292b2e0ea047f678a` launched all twelve workers. The
 | [timing](https://app.devin.ai/sessions/087df1d39f1f44e788d28e5ea0048e4f) | Phase-dependent pacing versus fixed execution |
 | [uncertainty](https://app.devin.ai/sessions/f254f8fea7cd4ee3b6e52e24decf5838) | Selective adaptation with paired native outcomes |
 | [native](https://app.devin.ai/sessions/e44daa6ab0e641aea157c4586a8f71f1) | Matched frozen-policy native rollout qualification |
+| [view](https://app.devin.ai/sessions/19e372773f55456cbc86ebb7fb3ccaf9) | Canonicalize the input view before frozen proposal generation |
+| [state](https://app.devin.ai/sessions/22460af5b549476e853fb7b5e1c5b01b) | Map target proprioception to the motor's state representation |
+| [appearance](https://app.devin.ai/sessions/a51278acfb5e47d2859b4f2cde292d5a) | Control for changes in arm appearance at a fixed viewpoint |
 
 The coordinating session also ran [temporal pooling](pooling/RESULT.md) for both archived visual readers. Each readout reproduced its frozen archive baseline on all 96 UR5e supports.
