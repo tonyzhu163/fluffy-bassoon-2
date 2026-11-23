@@ -228,7 +228,7 @@ def test_run_episode_6dof_retarget_and_trace(monkeypatch):
 
 
 def test_luminance_flow_reader_is_rgb_permutation_invariant():
-    import jax
+    jax = pytest.importorskip("jax")
     from fluffy_bassoon.xemb.readers import ReaderConfig, init_reader, predict_embodiment
 
     cfg = ReaderConfig(model_type="factored_equiv", max_chunks=8, cnn_width=32, mlp_width=64, visual_mode="luminance_flow")
@@ -255,7 +255,7 @@ def test_luminance_flow_reader_is_rgb_permutation_invariant():
 
 
 def test_hybrid_reader_forward_and_loss():
-    import jax
+    jax = pytest.importorskip("jax")
     import jax.numpy as jnp
     from fluffy_bassoon.xemb.readers import ReaderConfig, init_reader, predict_embodiment, reader_loss
 
