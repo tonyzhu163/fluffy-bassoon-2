@@ -6,4 +6,4 @@ The monitor watches `baige-dev:/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-sou
 
 ## Monitor checkpoints
 
-At 19:52 Shanghai the scheduler still showed this job queued, 40 minutes after submission. The PFS launcher directory was absent. Next check 20:12 or on receipt of the launch files. [Timestamped observations](native-readback/monitor.tsv)
+At 20:12 Shanghai the scheduler still showed this job queued, 60 minutes after submission. The PFS launcher directory was absent. Next check 20:32 or on receipt of the launch files. [Timestamped observations](native-readback/monitor.tsv)
