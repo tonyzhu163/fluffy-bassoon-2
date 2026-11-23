@@ -30,7 +30,14 @@ export CROSSARM_RELEASE="$root/sources/libero-pro2-e5500c69"
 export LIBERO_PRO_ROOT="$sim/simulator-source" LIBERO_CONFIG_PATH="$sim/libero-config"
 export TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD=1
 overlay="$root/setups/xemb-icml-campaign-20261121-r1/cv2-headless-overlay"
-PYTHONPATH="$overlay" /mowenjie/fluffy-bassoon/envs/openpi-215abfb/bin/python -Bu "$here/qualify.py" "$panel" "$out/reader.json"
+reader="$out/reader.json"
+if [[ $# == 4 ]]; then
+    [[ "$4" =~ ^[[:alnum:]_-]+$ ]]
+    reader="$root/outputs/$(basename "$here")/$4/$panel/reader.json"
+    sha256sum "$reader"
+else
+    PYTHONPATH="$overlay" /mowenjie/fluffy-bassoon/envs/openpi-215abfb/bin/python -Bu "$here/qualify.py" "$panel" "$reader"
+fi
 export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl MUJOCO_EGL_DEVICE_ID=0
 export __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json
-PYTHONPATH="$CROSSARM_RELEASE:$LIBERO_PRO_ROOT" "$sim/env/bin/python" -Bu "$here/fk.py" "$panel" "$out/reader.json" "$out/cases.json"
+PYTHONPATH="$CROSSARM_RELEASE:$LIBERO_PRO_ROOT" "$sim/env/bin/python" -Bu "$here/fk.py" "$panel" "$reader" "$out/cases.json"

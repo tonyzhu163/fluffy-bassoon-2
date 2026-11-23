@@ -1,4 +1,6 @@
 """CPU qualification using the historical evaluator checkout for each panel."""
+import ast
+import inspect
 import hashlib
 import json
 import os
@@ -64,6 +66,17 @@ def rows(archive, shard):
         yield m, r
 
 
+def historical_functions(ev):
+    """Run the original nested loader and predictor directly from the pinned evaluator."""
+    body = ast.parse(inspect.getsource(ev.run_shard))
+    namespace = vars(ev).copy()
+    for name in ("_load_npz", "_pred"):
+        node, = (n for n in ast.walk(body) if isinstance(n, ast.FunctionDef) and n.name == name)
+        module = ast.Module(body=[node], type_ignores=[])
+        exec(compile(module, ev.__file__, "exec"), namespace)
+    return namespace["_load_npz"], namespace["_pred"]
+
+
 def reader(panel, output):
     archive, src, info = sources(panel)
     import cv2
@@ -76,6 +89,7 @@ def reader(panel, output):
     checkpoint = archive.parent / "gpu03v2/stage1/checkpoints/equiv_v2_dis_dz-passive_attempt1-seed41.msgpack"
     require(sha(checkpoint) == CHECKPOINT, checkpoint)
     params, cfg, _ = ev.load_v2_checkpoint(checkpoint)
+    native_load, native_predict = historical_functions(ev)
     tasks, plan = ev.build_test_plan()
     suites = sorted({s for s, _ in tasks})
     result = []
@@ -91,6 +105,9 @@ def reader(panel, output):
             b["dis_flow"] = ev.compute_dis_flow_maps(b["img_before"], b["img_after"], b["valid"])
             yaw, gain, grip = ev.predict_embodiment_v2(params, cfg, b)
             yaw, gain, grip = float(yaw[0]), float(gain[0]), int(grip[0])
+            original = native_predict(params, cfg, native_load(str(p)))
+            require((yaw, gain, grip) == original and np.isfinite(yaw) and np.isfinite(gain)
+                    and gain > 0 and grip in (-1, 1), f"Native CPU identity failed: {p}")
             ref = r["arms"]["ours_equiv_v2_passive"]
             dy = (yaw - ref["yaw_hat"] + 180) % 360 - 180
             dg = gain - ref["scale_hat"]
@@ -102,14 +119,14 @@ def reader(panel, output):
                 support_sha256=sha(p), active_sha256=sha(Path(m["active_npz"])), physics=m["physics"],
                 support_seed=case["seed"], support_layout=case["support_init_state_id"], query_layout=qid,
                 query_seed=qseed, noise_seed=qseed + ev.NOISE_SEED_OFFSET,
-                historical=ref, native_match=match, yaw_hat=yaw, scale_hat=gain, grip_hat=grip,
+                historical=ref, historical_rounding_match=match, native_cpu_identity=True, yaw_hat=yaw, scale_hat=gain, grip_hat=grip,
                 yaw_residual_deg=dy, scale_residual=dg))
         print(panel, "reader", shard, flush=True)
     receipt = dict(**info, checkpoint_sha256=CHECKPOINT, checkpoint=str(checkpoint), rows=result,
-                   qualified=all(r["native_match"] for r in result))
+                   qualified=len(result) == 96 and all(r["native_cpu_identity"] for r in result))
     with output.open("x") as f:
         json.dump(receipt, f, allow_nan=False)
-    require(receipt["qualified"], f"Historical prediction mismatch; inspect {output}")
+    require(receipt["qualified"], f"CPU identity or completeness failure; inspect {output}")
 
 
 if __name__ == "__main__":
