@@ -15,6 +15,12 @@ def reader_jax():
     return pytest.importorskip("jax")
 
 
+def require_flax():
+    """`eval_live` imports flax at module load; skip off the qualified Linux runtime."""
+    if "OPENPI_DATA_HOME" not in os.environ:
+        pytest.importorskip("flax")
+
+
 @pytest.fixture
 def run_scripts(monkeypatch):
     path = Path(__file__).resolve().parents[1] / "outputs" / "libero-xemb-sysid-20261119-r1"
@@ -300,6 +306,7 @@ def test_short_terminal_prefix_and_legacy_passive_cap(run_scripts, tmp_path):
 
 def test_checkpoint_restores_lists_and_preserves_predictions(run_scripts, tmp_path):
     jax = reader_jax()
+    require_flax()
     from eval_live import load_reader_checkpoint
     from fluffy_bassoon.xemb import ReaderConfig, apply_reader, init_reader
     from train_readers import save_checkpoint
@@ -330,6 +337,7 @@ def test_checkpoint_restores_lists_and_preserves_predictions(run_scripts, tmp_pa
 
 def test_panel_integrity_donors_and_live_gate(run_scripts):
     reader_jax()
+    require_flax()
     from collect import build_schedule, validate_archive
     from eval_live import control_account, query_seed, select_panel
     from train_readers import make_donor_permutation, offline_gate

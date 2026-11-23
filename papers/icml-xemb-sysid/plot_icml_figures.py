@@ -8,7 +8,7 @@ Reads archived JSON evidence (never hardcoded numbers) and outputs 300-DPI PNG +
   3. fig3_horizon_and_so3.{png,pdf}: Left: Zero-probe passive support horizon (5/10/15 controls = 0.25-0.75s);
      Right: Full 3D SO(3) + anisotropic per-axis gains on held-out UR5e (n=96).
   4. fig4_memorization_cliff_matrix.{png,pdf}: Familiar vs. OOD memorization cliff across all 4 benchmarks,
-     3-seed means, contrasting Perceiver-ICBA's familiar-to-OOD drop with SymMeta.
+     3-seed means, contrasting the Perceiver encoder's familiar-to-OOD drop with SymMeta.
 """
 
 from __future__ import annotations
@@ -75,9 +75,9 @@ def plot_fig1_multiarm_multivla(ev_dir: Path, out_dir: Path, scale_ev_dir: Path 
         ("analytic_visual_hs_passive", "Horn–Schunck (Pas.)", PALETTE["hs"]),
         ("dense_flow_dis_passive", "DIS + Procrustes (Pas.)", PALETTE["dis"]),
         ("broyden_uvs_dis_active", "Broyden UVS (Act.)", PALETTE["broyden"]),
-        ("perceiver_icba_passive", "Perceiver-ICBA (3 seeds)", PALETTE["perceiver"]),
+        ("perceiver_icba_passive", "Perceiver encoder (3 seeds)", PALETTE["perceiver"]),
         ("zero_shot_shifted", "Zero-Shot Shifted (No Adapt.)", "#95a5a6"),
-        ("reground_babbling", "ReGround Babbling", PALETTE["reground"]),
+        ("reground_babbling", "Affine (command-frame proprio.)", PALETTE["reground"]),
         ("ours_v2_swapped", "Swapped Ctrl (SymMeta)", PALETTE["swapped"]),
     ]
 
@@ -168,8 +168,8 @@ def plot_fig2_scaling_law(ev_dir: Path, out_dir: Path):
         ("equiv_v2_dis_dz", "SymMeta (DIS + dz)", PALETTE["ours_v2"], "o", "-", 2.6),
         ("equiv_flow_homog", "Ours: EquivFlow-Procrustes", PALETTE["ours_homog"], "s", "--", 2.0),
         ("factored_no_equiv_v2", "Factored No-Equiv (Ablation)", PALETTE["no_equiv"], "^", "-.", 1.9),
-        ("perceiver_icba_w192", "Perceiver-ICBA (w192, Yang et al.)", PALETTE["perceiver"], "D", "-", 2.1),
-        ("perceiver_icba_w384", "Perceiver-ICBA (w384, 4× params)", PALETTE["perceiver_lg"], "v", ":", 2.1),
+        ("perceiver_icba_w192", "Perceiver encoder (w192)", PALETTE["perceiver"], "D", "-", 2.1),
+        ("perceiver_icba_w384", "Perceiver encoder (w384, 4× params)", PALETTE["perceiver_lg"], "v", ":", 2.1),
     ]
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12.2, 4.4))
@@ -240,7 +240,7 @@ def plot_fig3_horizon_and_so3(ev_dir: Path, out_dir: Path):
         ("equiv_flow_homog", "Ours: EquivFlow-Procrustes", PALETTE["ours_homog"], "s", "-."),
         ("analytic_visual_hs", "Horn–Schunck (Pas.)", PALETTE["hs"], "D", "-"),
         ("dense_flow_dis", "DIS + Procrustes (Pas.)", PALETTE["dis"], "P", ":"),
-        ("perceiver_icba", "Perceiver-ICBA (Pas.)", PALETTE["perceiver"], "v", "-"),
+        ("perceiver_icba", "Perceiver encoder (Pas.)", PALETTE["perceiver"], "v", "-"),
     ]
     for key, lbl, col, mk, ls in h_series:
         ys = [hor[str(c)][key]["ood_combined"]["yaw_mae_deg"] for c in ctrls]
@@ -263,7 +263,7 @@ def plot_fig3_horizon_and_so3(ev_dir: Path, out_dir: Path):
         ("privileged_oracle", "Exact 3D Oracle", PALETTE["oracle"]),
         ("ours_equiv_so3", "Ours: Equiv-SO(3) + Aniso", PALETTE["ours_v2"]),
         ("nominal", "Nominal (Unadapted)", "#95a5a6"),
-        ("reground_babbling_3d", "ReGround 3D Babbling", PALETTE["reground"]),
+        ("reground_babbling_3d", "Affine 3D (command-frame proprio.)", PALETTE["reground"]),
         ("ours_so3_swapped", "Swapped Ctrl", PALETTE["swapped"]),
     ]
     x = np.arange(len(regimes))
@@ -315,8 +315,8 @@ def plot_fig4_memorization_cliff(ev_dir: Path, out_dir: Path, scale_ev_dir: Path
     groups = [
         ("ours_equiv_v2_passive", "familiar", "SymMeta · Familiar", PALETTE["ours_v2"], 1.0, None),
         ("ours_equiv_v2_passive", "ood_combined", "SymMeta · OOD", PALETTE["ours_v2"], 0.55, "///"),
-        ("perceiver_icba_passive", "familiar", "Perceiver-ICBA · Familiar", PALETTE["perceiver"], 1.0, None),
-        ("perceiver_icba_passive", "ood_combined", "Perceiver-ICBA · OOD", PALETTE["perceiver"], 0.55, "///"),
+        ("perceiver_icba_passive", "familiar", "Perceiver encoder · Familiar", PALETTE["perceiver"], 1.0, None),
+        ("perceiver_icba_passive", "ood_combined", "Perceiver encoder · OOD", PALETTE["perceiver"], 0.55, "///"),
     ]
     for i, (m, reg, lbl, col, alp, hat) in enumerate(groups):
         vals = [_three_seed_rate(d, ms, m, reg) for _, d, ms in benches]
@@ -353,16 +353,16 @@ def plot_fig5_pro2_visual_stress(ev_dir: Path, out_dir: Path):
         ("ours_equiv_v2_passive_base", "SymMeta (Passive, Zero Retrain)", PALETTE["ours_v2"]),
         ("analytic_visual_hs_passive", "Horn–Schunck (Pas.)", PALETTE["hs"]),
         ("dense_flow_dis_active", "DIS + Procrustes (Act.)", PALETTE["dis"]),
-        ("perceiver_icba_pro2_active", "Perceiver-ICBA (Pro2-Retrained)", PALETTE["perceiver"]),
-        ("reground_babbling", "ReGround Babbling", PALETTE["reground"]),
+        ("perceiver_icba_pro2_active", "Perceiver encoder (Pro2-Retrained)", PALETTE["perceiver"]),
+        ("reground_babbling", "Affine (command-frame proprio.)", PALETTE["reground"]),
     ]
     methods_yaw = [
         ("ours_equiv_v2_passive_base", "SymMeta (Passive, Zero Retrain)", PALETTE["ours_v2"], "o", "-"),
         ("analytic_visual_hs_passive", "Horn–Schunck (Pas.)", PALETTE["hs"], "D", "-"),
         ("ours_equiv_v2_pro2_active", "SymMeta (Active, Pro2-Retrained)", PALETTE["ours_homog"], "s", "--"),
         ("dense_flow_dis_active", "DIS + Procrustes (Act.)", PALETTE["dis"], "P", "-."),
-        ("perceiver_icba_pro2_active", "Perceiver-ICBA (Pro2-Retrained)", PALETTE["perceiver"], "v", "-"),
-        ("reground_babbling", "ReGround Babbling", PALETTE["reground"], "^", ":"),
+        ("perceiver_icba_pro2_active", "Perceiver encoder (Pro2-Retrained)", PALETTE["perceiver"], "v", "-"),
+        ("reground_babbling", "Affine (command-frame proprio.)", PALETTE["reground"], "^", ":"),
     ]
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13.6, 4.6))
@@ -446,8 +446,8 @@ def plot_fig6_fewshot_sft_vs_sysid(ev_dir: Path, scale_ev_dir: Path, out_dir: Pa
              100.0 * fs["sft_linear_same_shift"]["3"]["rate"],
              100.0 * fs["sft_linear_same_shift"]["10"]["rate"]]
 
-    ax1.plot(x_idx, mlp_y, marker="o", lw=2.3, color="#c0392b", label="Few-Shot SFT: MLP Adapter (Same-Shift)")
-    ax1.plot(x_idx, lin_y, marker="s", lw=2.1, ls="--", color="#e67e22", label="Few-Shot SFT: Linear Adapter (Same-Shift)")
+    ax1.plot(x_idx, mlp_y, marker="o", lw=2.3, color="#c0392b", label="Demo-fitted MLP adapter (same shift)")
+    ax1.plot(x_idx, lin_y, marker="s", lw=2.1, ls="--", color="#e67e22", label="Demo-fitted linear adapter (same shift)")
     ax1.axhspan(v2_ov_m - v2_ov_s, v2_ov_m + v2_ov_s, color=PALETTE["ours_v2"], alpha=0.16)
     ax1.axhline(v2_ov_m, color=PALETTE["ours_v2"], lw=2.4, label=f"SymMeta (passive, K=0 demos, 0.75 s): {v2_ov_m:.1f}±{v2_ov_s:.1f}%")
     ax1.axhline(100.0 * fs["zero_shot_unshifted"]["rate"], color="#27ae60", lw=1.4, ls=":", label=f"Zero-Shot Unshifted UR5e: {100.0*fs['zero_shot_unshifted']['rate']:.1f}%")
@@ -466,7 +466,7 @@ def plot_fig6_fewshot_sft_vs_sysid(ev_dir: Path, scale_ev_dir: Path, out_dir: Pa
     ax1.grid(True)
 
     # Right: Cross-Shift Generalization
-    labels = ["Zero-Shot\nShifted", "SFT: MLP\n(K=10 demos)", "SFT: Linear\n(K=10 demos)", "SymMeta (passive)\n(K=0, 0.75 s)"]
+    labels = ["Zero-Shot\nShifted", "MLP adapter\n(K=10 demos)", "Linear adapter\n(K=10 demos)", "SymMeta (passive)\n(K=0, 0.75 s)"]
     vals = [100.0 * fs["zero_shot_shifted"]["rate"],
             100.0 * fs["sft_mlp_k10_cross_shift"]["rate"],
             100.0 * fs["sft_linear_k10_cross_shift"]["rate"],
@@ -485,7 +485,7 @@ def plot_fig6_fewshot_sft_vs_sysid(ev_dir: Path, scale_ev_dir: Path, out_dir: Pa
     ax2.set_title("(b) Cross-Shift Generalization (Deployed on Another Shift)")
     ax2.grid(axis="y")
 
-    fig.suptitle("Few-Shot Target-Robot Fine-Tuning (SFT) vs. SymMeta (Zero-Shot Passive Visual SysID) on Held-Out 6-DoF UR5e", fontsize=11.4, fontweight="bold", y=1.02)
+    fig.suptitle("Demonstration-Fitted Action Adapters (Frozen VLA) vs. SymMeta (Passive Visual SysID) on Held-Out 6-DoF UR5e", fontsize=11.4, fontweight="bold", y=1.02)
     plt.tight_layout()
     for ext in ("png", "pdf"):
         fig.savefig(out_dir / f"fig6_fewshot_sft_vs_sysid.{ext}")
