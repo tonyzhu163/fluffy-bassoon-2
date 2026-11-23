@@ -32,6 +32,15 @@ The controller-interface experiment changes Panda's native Cartesian pose contro
 | Separate calibration and wrist rotation | `job-iynjhzjijoyj` | 280 released Panda test starts, two retries sharing a distinct 15-control support. The only difference between those retry arms is the wrist correction. [Protocol](../reground-retry-wrist-20261123-r1/HANDOFF.md) |
 | ReGround at 15, 100 and 1,000 transitions | `job-oba1tdxissci`, `job-sc23pialxxia` | Two selected seeds, 32 common test starts per budget. Each fit reuses a 100,000-transition nominal model. The 15 target transitions come from two short episode prefixes and include validation data. [Fit qualification and native protocol](../reground-low-budget-20261123-r1/HANDOFF.md) |
 
-At 15 target transitions ReGround solved 0/32 starts at each of seeds 0 and 3. The 10,000-transition controls solved 32/32 and 26/32 on those same starts, and unadapted π₀.₅ solved zero. All opening comparisons passed. Unsafe episode counts at 15 transitions were respectively 6/32 and 0/32, with all 32 episodes at both seeds reaching the horizon. The 64 assignments share 32 starts. [Seed 0 readback](../reground-low-budget-20261123-r1/evidence/paired-15-seed0.json) · [Seed 3 readback](../reground-low-budget-20261123-r1/evidence/paired-15-seed3.json)
+Both budget jobs exited zero and used a combined 1.11 launcher GPU-hours. All 192 new native episodes passed their opening checks. The two fits share 32 distinct starts. Task success and unsafe-episode incidence differ substantially by seed and budget.
+
+| Target transitions | Successes out of 32, seeds 0 / 3 | Unsafe episodes out of 32, seeds 0 / 3 | Success change vs. 10,000, percentage points (95% interval) |
+| ---: | ---: | ---: | ---: |
+| 15 | 0 / 0 | 6 / 0 | −90.6 (−95.3 to −85.9) |
+| 100 | 0 / 5 | 0 / 20 | −82.8 (−89.1 to −76.6) |
+| 1,000 | 9 / 19 | 18 / 15 | −46.9 (−56.3 to −37.5) |
+| 10,000 | 32 / 26 | 15 / 15 | Reference |
+
+Untreated π₀.₅ scored 0/32 for each seed. The intervals resample starts within each fixed task, carrying both seeds together. [Paired start intervals](../reground-low-budget-20261123-r1/evidence/paired-starts.json) · [Source and target data accounting](../reground-low-budget-20261123-r1/RESULT.md)
 
 The published-protocol replication is complete. On the released 1,400 single-attempt Panda assignments per method, native success IQMs were 0.000 for frozen π₀.₅, 0.186 for streaming SymMeta and 0.974 for fitted ReGround. The retry, small-budget and arm-swap experiments have different estimands. [Released comparison and costs](../reground-rotation-reference-20261123-r1/RESULT.md)
