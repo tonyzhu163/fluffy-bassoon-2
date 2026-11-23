@@ -1,6 +1,9 @@
 # Released ReGround runtime on Baige
 
-**CPU simulation and the CUDA backend passed. The end-to-end development-GPU policy smoke is in progress.** On the CPU development machine, the released `TaskEnv` reset `spatial_0` at init 0 with the `rot_z/90` shift, rendered both 256 × 256 RGB cameras through Mesa, and advanced the 25-dimensional robot state by one step. The one-card RTX 4090 probe confirmed the physical device and ran a CUDA tensor calculation. [CPU receipt](runtime/qualification/cpu-smoke.json) · [GPU probe](runtime/qualification/dev-gpu-probe.json)
+**Ready for offline reference inference on Baige.** On the RTX 4090 development machine, the released `reground.policies.vla.VLA` strictly loaded all pi05 checkpoint keys, took two live 256 × 256 RGB views, generated a finite 1 × 50 × 7 action chunk, and executed its first action in `spatial_0` with the released `rot_z/90` shift. The simulator advanced one step with a finite 25-dimensional state. CPU reset/render/step and a separate end-to-end CPU policy step also passed. [GPU policy step](runtime/qualification/dev-gpu-smoke.json) · [Device probe](runtime/qualification/dev-gpu-probe.json) · [CPU simulation](runtime/qualification/cpu-smoke.json) · [CPU policy step](runtime/qualification/cpu-policy-smoke.json)
+
+The GPU host was `mwj-clean` (`dv-0d0ac1c839`), running driver 580.159.04. EGL reported the NVIDIA RTX 4090 renderer. Torch peak allocation was 9,523,264,000 bytes. The development check used **726 wall seconds on one card, 0.202 GPU-hours** of the 0.25 allowance, from 15:06:43 to 15:18:49 Shanghai. The cold shared-filesystem load exceeded the initial 620-second wrapper. The process continued under an 875-second wall guard and wrote the completed receipt after closing the simulator. On resumption the original outer `timeout` returned 124. The shared `dev01.log` contains the strict-load message and the same final receipt. [Wall-time record](runtime/qualification/dev-wall.json)
+
 
 ## Use the shared runtime
 
@@ -15,11 +18,17 @@ cd "$root/upstream"
 The released wrapper accepts an explicit revision. Native commands that omit it resolve the same commit. The noise seed, chunk index, observation processing, sampler and postprocessing all pass through the released implementation.
 
 ```python
+from reground.envs.libero_env import TaskEnv
 from reground.policies.vla import VLA
 
 vla = VLA("pi05", "cuda", revision="7152f13e34c6c115d808aea0e5d08aca74eac14b")
-# obs and description come from TaskEnv.reset() or its rendered step.
-actions = vla.predict_chunk([obs], [description], [noise_seed], chunk_idx)
+env = TaskEnv("spatial_0", shift="rot_z/90")
+try:
+    reset = env.reset(init_id=0, seed=0)
+    actions = vla.predict_chunk([reset["obs"]], [reset["description"]], [0], 0)
+    step = env.step(actions[0, 0], render=True)
+finally:
+    env.close()
 ```
 
 | Component | Verified identity |
@@ -47,14 +56,14 @@ From a Git checkout containing this run, deploy its setup files and the reposito
 ```bash
 p=outputs/reground-rotation-reference-20261123-r1
 root=/mowenjie/fluffy-bassoon-2/$p
-rev=$(git rev-parse HEAD)
+rev=2bbc8ce4cca262c71a80b68b3651d32b961b583d
 set -o pipefail
 git archive "$rev:$p/runtime" | ssh baige-dev "mkdir -p '$root/runtime' && tar -xf - -C '$root/runtime'"
 git archive "$rev" -- ':(literal)scripts/[train]gpu_probe.py' |
   ssh baige-dev "mkdir -p '$root/probe-source' && tar -xf - -C '$root/probe-source'"
 ```
 
-On the Baige CPU development machine, the script can reuse the verified wheelhouse in `$root/wheels`. It installs all 150 pinned distributions from local files. On a fresh rebuild, direct PyPI and PyTorch URLs come from the package manifest. Baige’s mirror can supply PyPI bytes under the same publisher digests. The parent install resolved the original requirements with `uv 0.9.5 --torch-backend cu128`. The public downloads were slow, so the recovery used that same resolution and checked the CUDA Torch, torchvision and Triton wheels against the official PyTorch hashes. The byte-verified wheels, original `install01.log`, successful `install02.log` and replay `install04.log` are on the shared root. [Rebuild script](runtime/setup.sh) · [Package URLs and hashes](runtime/packages.tsv) · [Version lock](runtime/requirements-linux.txt)
+On the Baige CPU development machine, the script can reuse the verified wheelhouse in `$root/wheels`. It installs all 150 pinned distributions from local files. On a fresh rebuild, direct PyPI and PyTorch URLs come from the package manifest. Baige’s mirror can supply PyPI bytes under the same publisher digests. The original upstream requirements file has SHA-256 `4d2cdcf5b9506b17396e94413ef296ad40e5207927e89f6f86af1858353315a2`. The parent install resolved the original requirements with `uv 0.9.5 --torch-backend cu128`. The public downloads were slow, so the recovery used that same resolution and checked the CUDA Torch, torchvision and Triton wheels against the official PyTorch hashes. The byte-verified wheels, original `install01.log`, successful `install02.log` and replay `install04.log` are on the shared root. [Rebuild script](runtime/setup.sh) · [Package URLs and hashes](runtime/packages.tsv) · [Version lock](runtime/requirements-linux.txt)
 
 ```bash
 export REGROUND_RUNTIME_ROOT=/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1
@@ -66,6 +75,8 @@ MUJOCO_GL=egl PYOPENGL_PLATFORM=egl MUJOCO_EGL_DEVICE_ID=0 EGL_PLATFORM=surfacel
   python "$root/runtime/qualify.py" --device cpu --output "$root/cpu-smoke.json"
 ```
 
-On the dedicated single-GPU development machine, `timeout -k 5s 620s bash "$root/runtime/dev-smoke.sh"` first runs the repository’s GPU probe by device UUID, then binds native inference and EGL to the single visible card. The smoke requires LeRobot’s strict all-keys-loaded confirmation, a finite 1 × 50 × 7 chunk from two live images and a subsequent real simulator step. [GPU entry point](runtime/dev-smoke.sh) · [Qualification code](runtime/qualify.py)
+On the dedicated single-GPU development machine, `timeout -k 5s 875s bash "$root/runtime/dev-smoke.sh"` first runs the repository’s GPU probe by device UUID, then binds native inference and EGL to the single visible card. The smoke requires LeRobot’s strict all-keys-loaded confirmation, a finite 1 × 50 × 7 chunk from two live images and a subsequent real simulator step. [GPU entry point](runtime/dev-smoke.sh) · [Qualification code](runtime/qualify.py)
 
 All 150 installed package versions matched the original lock and `uv pip check` passed. The CPU host also executed a torchvision NMS operation, decoded an 80-sample PCM waveform through TorchCodec/FFmpeg, ran a SciPy norm, and tokenized a string offline through `GemmaTokenizer`. [Package checks](runtime/qualification/package-check.json)
+
+The GPU smoke used the setup at `8bbfae90`. Revision `2bbc8ce4` added the optional `--cpu-policy` check to the same qualification script. The pinned upstream worktree was clean after qualification.
