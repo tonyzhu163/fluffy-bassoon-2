@@ -1,0 +1,42 @@
+--- a/outputs/reground-rotation-reference-20261123-r1/reference.sh
++++ b/outputs/reground-rotation-reference-20261123-r1/reference.sh
+@@ -14,7 +14,7 @@
+     local attempt=$1 gpus=$2 phase=$3
+     shift 3
+     source "$root/runtime/activate.sh"
+-    export PYTHONPATH="$PYTHONPATH:$code/src"
++    export PYTHONPATH="$PYTHONPATH:$code/src${REGROUND_TRANSFORMERS_PATH:+:$REGROUND_TRANSFORMERS_PATH}"
+     export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl PYTHONDONTWRITEBYTECODE=1
+     export TOKENIZERS_PARALLELISM=false OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
+     export NCCL_P2P_DISABLE=1 REGROUND_NEXEC=10
+@@ -76,5 +76,7 @@
+ trap finish EXIT
+ remaining=$((REFERENCE_STARTED + wall - 15 - $(date +%s)))
+ (( remaining > 0 ))
+-timeout --kill-after=10s "${remaining}s" bash "$here/reference.sh" _payload "$attempt" "$gpus" "$phase" "$@" \
++transport=()
++if [[ ${REGROUND_READ_CACHE:-0} == 1 ]]; then transport=(bash "$here/transport/with-cache.sh"); fi
++timeout --kill-after=10s "${remaining}s" "${transport[@]}" bash "$here/reference.sh" _payload "$attempt" "$gpus" "$phase" "$@" \
+     > "$attempt/launch.log" 2>&1
+--- a/outputs/reground-rotation-reference-20261123-r1/stream.sh
++++ b/outputs/reground-rotation-reference-20261123-r1/stream.sh
+@@ -39,5 +39,7 @@
+ trap finish EXIT
+ remaining=$((REFERENCE_STARTED + seconds - 15 - $(date +%s)))
+ (( remaining > 0 ))
+-timeout --kill-after=10s "${remaining}s" bash "$here/stream.sh" _lanes "$attempt" "$cards" "$@" \
++transport=()
++if [[ ${REGROUND_READ_CACHE:-0} == 1 ]]; then transport=(bash "$here/transport/with-cache.sh"); fi
++timeout --kill-after=10s "${remaining}s" "${transport[@]}" bash "$here/stream.sh" _lanes "$attempt" "$cards" "$@" \
+     > "$attempt/launch.log" 2>&1
+--- a/outputs/reground-rotation-reference-20261123-r1/symmeta_adapter.sh
++++ b/outputs/reground-rotation-reference-20261123-r1/symmeta_adapter.sh
+@@ -12,7 +12,7 @@
+ export SYMMETA_CHECKPOINT="$project/outputs/$campaign/gpu03v2/stage1/checkpoints/equiv_v2_dis_dz-passive_attempt1-seed41.msgpack"
+ export SYMMETA_PYTHON=/mowenjie/fluffy-bassoon/envs/openpi-215abfb/bin/python
+ export SYMMETA_CV2="$project/setups/$campaign/cv2-headless-overlay"
+-export PYTHONPATH="$PYTHONPATH:$SYMMETA_SOURCE/src:$code/src"
++export PYTHONPATH="$PYTHONPATH:$SYMMETA_SOURCE/src:$code/src${REGROUND_TRANSFORMERS_PATH:+:$REGROUND_TRANSFORMERS_PATH}"
+ export PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+ export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 LP_NUM_THREADS=1
+ export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl REGROUND_NEXEC=10
