@@ -16,9 +16,13 @@
 - [ ] Evaluate fresh layouts and randomly sampled yaw and gain values. Reader seeds currently reuse the same 96 queries and eight task clusters.
 - [ ] Measure how horizontal command access, learned chunk weights and vertical-parallax correction affect native success. The existing parallax ablation measures yaw error.
 - [ ] Test whether a second camera helps recover continuous 3D rotations and whether the planar result transfers to physical hardware.
+- [ ] Test command maps outside yaw, gain and gripper sign with supports that excite two command directions. On the 15-control passive traces, the Procrustes solver, ridge fits and a retrained Perceiver stayed near the unadapted error on axis swaps and general 2×2 maps, and unregularized least squares failed. The median ratio of the second to the first command direction was 0.10. Active probes or longer supports need new traces. [Offline result](../../outputs/symmeta-wider-family-20261123-r1/RESULT.md)
+- [ ] Replace the headline Perceiver rows. A Perceiver trained on continuously relabeled command maps with peak learning rate 3e-4 and 200 warmup updates reached 5.4°, 5.8° and 5.5° OOD yaw error per seed on the 64 UR5e supports, against 6.8°, 7.0° and 7.3° for the paper's SymMeta checkpoints and 97.1°, 92.3° and 97.5° for the paper's Perceiver. Measure its native success on the four panels. Separate the schedule change from continuous relabeling by training on the original 7 transforms with the new schedule. [Offline result](../../outputs/symmeta-wider-family-20261123-r1/RESULT.md)
+- [ ] Reproduce the released ReGround 90° rotation result and run SymMeta on the same cases. Report the target-robot data each method uses. [Plan](../../outputs/reground-rotation-reference-20261123-r1/PLAN.md)
 
 ## Open reporting and maintenance
 
 - [ ] Complete the appendix episode ledger beyond the four main panels. [Paired reanalysis](../../outputs/symmeta-paired-statistics-20261123-r1/RESULT.md)
 - [ ] Review the impact statement before submission.
+- [ ] State in related work that ReGround's π₀.₅ results cover a 90° action-frame rotation and a gain change as well as latency, and that its linear-calibration baseline reaches 0.98 and 0.94 success there. State the difference: ReGround fits on target-robot state from 1,000–100,000 transitions, and SymMeta uses 15 controls and no trusted kinematics. [ReGround](https://arxiv.org/abs/2611.20244)
 - [ ] Consider an optional JAX/Flax dependency group for running the reader tests off cluster.
