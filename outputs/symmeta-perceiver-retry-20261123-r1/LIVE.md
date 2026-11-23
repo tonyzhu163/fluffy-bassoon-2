@@ -1,6 +1,18 @@
 # Native evaluation handoff
 
-## Initial Linux CPU readback
+**Ready for the parent’s production export and GPU deployment.** On November 23 at 16:17 Shanghai, Baige Linux CPU qualification completed for the seven source files pinned in the receipt. The real simulator reached the first motor input twice per task on all four panels. No policy action or benchmark outcome was produced in this preflight. [CPU evidence, source hashes and task receipts](live-cpu-qualification.json)
+
+## Linux CPU qualification
+
+The final `qa05` run read all 384 real tape files, checked 32 historical noise-bank digests, and keyed a deliberately reversed schema fixture to all 1,152 scheduled comparisons. Its production-input loader rejects that fixture. Missing keys, duplicate keys, incorrect case metadata, wrong tape bytes/digests and invalid factor values fail validation. The supplied parent export still needs its own prepare with the production SHA-256. [Reproducible CPU entry point](paired_cpu.sh)
+
+Each of the 32 panel–task CPU checks used the original native motor, a software-rendered native simulator and an archived seed-41 correction to reach the first inference call twice without stepping. All 32 pairs matched on the full reset, first motor observation, prompt and actual first noise tensor. The query and support physics differed in every case. All eight π₀ tasks exercised the negative-quaternion sign branch. The earliest prepare exposed a wrong uniform-mounted-model assumption. The final harness checks each task's archived model, including the on-ground object-suite variants.
+
+CPU validation also read all 96 completed native pairs from the prior UR5e FK archive to exercise the opening-proposal and termination checks. It rejected a changed first proposal, noise, physics or outcome. A byte-identical prior pair survived a fresh-attempt import. The reduction fixture covered 1,151 and 1,152 keys, independently differing opening digests across executions and an unexpected extra result path. A separate arithmetic readback reproduced the archived matched-flow counts and task intervals for both splits. These checks used no new scored episodes. [CPU verifier](paired_qualify.py)
+
+The CPU evidence directory on Baige is `/mowenjie/fluffy-bassoon-2/outputs/symmeta-perceiver-retry-20261123-r1/cpu-live-qual.4LGTnn/qa05`. It contains per-task CPU receipts, the four prepared panels, logs and the qualification contract. The sibling `qa05.log` records the negative controls and the successful exit-path checks. The source snapshot was an uncommitted Git tree, `e70054d849ec6ac904afa535041349b0a44ac203`. The parent supplies the eventual deployment commit.
+
+## Archived support inputs
 
 On November 23, 2026, baige-dev read and hashed all 384 passive NPZs, matched every path to its shard manifest and found one archived support physics fingerprint per task (eight per panel). The ordered SHA-256 digests, computed over one lowercase tape SHA-256 plus newline per case, matched the existing FK reader receipts.
 

@@ -1,0 +1,7 @@
+# Seven-shift manuscript check
+
+Table 3, page 7, reports OOD yaw MAE of 88.06°, 79.03° and 83.03° for seeds 41–43 (83.37° ± 3.69°, 64 supports). Planar operator error was 0.8990 ± 0.0292 across all 96 supports. Recomputing the means and population SDs (divisor 3) reproduced every printed value in all six rows in both TeX and PDF. The five historical rows and the native rollout values match the manuscript at `d568535b`. [Seven-shift seed scores](evidence/gpu01/results/summary.json) · [PR7 seed scores](../symmeta-wider-family-20261123-r1/gpu01w454/wider-family-summary.json)
+
+The paired changes were −12.26° for OOD yaw (95% interval −17.04° to −7.39°) and −0.0676 for all-support operator error (−0.1003 to −0.0358). Both intervals resample eight tasks with the three seeds fixed. Section 5.3 distinguishes the two within-archive schedule changes from the cross-archive comparison. The four-panel native retry experiment remains open. [Verified control](RESULT.md)
+
+Built with the cached TinyTeX `latexmk -pdf` workflow and BibTeX using a temporary output directory. Poppler rendered all 14 pages. Visual inspection covered the page layouts, Table 3 at enlarged scale and the result text on page 6. All word bounds fit the pages. The final log contained underfull boxes and the ICML empty-anchor warning, with zero overfull boxes or unresolved references or citations. Delivered PDF SHA-256 `3d1b46ebb7c0f288f46dffa22dab0f5e0e64f242427afae5a3d81a59d4d928b0`. [Manuscript PDF](../../papers/icml-xemb-sysid/main.pdf)
