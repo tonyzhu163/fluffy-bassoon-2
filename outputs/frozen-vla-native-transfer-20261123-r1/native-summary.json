@@ -1,0 +1,186 @@
+{
+  "rows": [
+    {
+      "case": {
+        "arm": "Kinova3",
+        "suite": "libero_goal",
+        "task_id": 3,
+        "init_state_id": 14,
+        "variant": "BASE",
+        "seed": 41810314
+      },
+      "success": {
+        "Panda": true,
+        "Kinova3": false,
+        "matrix": true,
+        "planar_matrix": true,
+        "tracking": true
+      },
+      "controls": {
+        "Panda": 175,
+        "Kinova3": 300,
+        "matrix": 179,
+        "planar_matrix": 169,
+        "tracking": 172
+      }
+    },
+    {
+      "case": {
+        "arm": "Kinova3",
+        "suite": "libero_goal",
+        "task_id": 3,
+        "init_state_id": 15,
+        "variant": "BASE",
+        "seed": 41810315
+      },
+      "success": {
+        "Panda": true,
+        "Kinova3": false,
+        "matrix": false,
+        "planar_matrix": false,
+        "tracking": false
+      },
+      "controls": {
+        "Panda": 233,
+        "Kinova3": 300,
+        "matrix": 300,
+        "planar_matrix": 300,
+        "tracking": 300
+      }
+    },
+    {
+      "case": {
+        "arm": "Kinova3",
+        "suite": "libero_10",
+        "task_id": 8,
+        "init_state_id": 14,
+        "variant": "BASE",
+        "seed": 41800814
+      },
+      "success": {
+        "Panda": true,
+        "Kinova3": true,
+        "matrix": false,
+        "planar_matrix": true,
+        "tracking": true
+      },
+      "controls": {
+        "Panda": 495,
+        "Kinova3": 496,
+        "matrix": 520,
+        "planar_matrix": 450,
+        "tracking": 497
+      }
+    },
+    {
+      "case": {
+        "arm": "Kinova3",
+        "suite": "libero_10",
+        "task_id": 8,
+        "init_state_id": 15,
+        "variant": "BASE",
+        "seed": 41800815
+      },
+      "success": {
+        "Panda": true,
+        "Kinova3": true,
+        "matrix": false,
+        "planar_matrix": false,
+        "tracking": false
+      },
+      "controls": {
+        "Panda": 336,
+        "Kinova3": 361,
+        "matrix": 520,
+        "planar_matrix": 520,
+        "tracking": 520
+      }
+    },
+    {
+      "case": {
+        "arm": "Kinova3",
+        "suite": "libero_goal",
+        "task_id": 6,
+        "init_state_id": 14,
+        "variant": "BASE",
+        "seed": 41810614
+      },
+      "success": {
+        "Panda": true,
+        "Kinova3": true,
+        "matrix": true,
+        "planar_matrix": true,
+        "tracking": false
+      },
+      "controls": {
+        "Panda": 86,
+        "Kinova3": 94,
+        "matrix": 94,
+        "planar_matrix": 94,
+        "tracking": 300
+      }
+    },
+    {
+      "case": {
+        "arm": "Kinova3",
+        "suite": "libero_goal",
+        "task_id": 6,
+        "init_state_id": 15,
+        "variant": "BASE",
+        "seed": 41810615
+      },
+      "success": {
+        "Panda": true,
+        "Kinova3": true,
+        "matrix": true,
+        "planar_matrix": true,
+        "tracking": true
+      },
+      "controls": {
+        "Panda": 86,
+        "Kinova3": 99,
+        "matrix": 99,
+        "planar_matrix": 96,
+        "tracking": 86
+      }
+    }
+  ],
+  "contrasts": {
+    "matrix_minus_Kinova3": {
+      "n": 6,
+      "gains": 1,
+      "losses": 2,
+      "difference": -0.16666666666666666,
+      "exact_discordant_sign_p": 1.0
+    },
+    "planar_matrix_minus_Kinova3": {
+      "n": 6,
+      "gains": 1,
+      "losses": 1,
+      "difference": 0.0,
+      "exact_discordant_sign_p": 1.0
+    },
+    "matrix_minus_planar_matrix": {
+      "n": 6,
+      "gains": 0,
+      "losses": 1,
+      "difference": -0.16666666666666666,
+      "exact_discordant_sign_p": 1.0
+    },
+    "Panda_minus_Kinova3": {
+      "n": 6,
+      "gains": 2,
+      "losses": 0,
+      "difference": 0.3333333333333333,
+      "exact_discordant_sign_p": 0.5
+    },
+    "tracking_minus_Kinova3": {
+      "n": 6,
+      "gains": 1,
+      "losses": 2,
+      "difference": -0.16666666666666666,
+      "exact_discordant_sign_p": 1.0
+    }
+  },
+  "inference": "Six selected within-task starts; exact sign probabilities assume independent symmetric discordance. Task/start effects and individual pairs matter more than pooled significance in this pilot."
+}

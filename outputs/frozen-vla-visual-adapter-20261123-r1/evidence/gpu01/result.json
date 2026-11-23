@@ -1,0 +1,95 @@
+{
+  "checkpoint": "/mowenjie/fluffy-bassoon/inputs/pi05-libero-openpi-20261027-r1",
+  "matrix": {
+    "raw": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "uniform": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "linkwise": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ]
+    ]
+  },
+  "tasks": [
+    [
+      "libero_goal",
+      3
+    ],
+    [
+      "libero_10",
+      8
+    ],
+    [
+      "libero_goal",
+      6
+    ]
+  ],
+  "initial_states": [
+    14,
+    15
+  ],
+  "descriptive_task_cluster_intervals": {
+    "linkwise_minus_uniform": {
+      "gain": 1,
+      "loss": 1,
+      "delta": 0.0,
+      "task_bootstrap_95": [
+        0.0,
+        0.0
+      ]
+    },
+    "linkwise_minus_raw": {
+      "gain": 1,
+      "loss": 0,
+      "delta": 0.16666666666666666,
+      "task_bootstrap_95": [
+        0.0,
+        0.3916666666666663
+      ]
+    },
+    "uniform_minus_raw": {
+      "gain": 1,
+      "loss": 0,
+      "delta": 0.16666666666666666,
+      "task_bootstrap_95": [
+        0.0,
+        0.3916666666666663
+      ]
+    }
+  },
+  "task_selection": "historical failures and one successful task"
+}
