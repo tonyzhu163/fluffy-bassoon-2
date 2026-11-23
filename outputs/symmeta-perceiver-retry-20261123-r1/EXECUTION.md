@@ -13,6 +13,8 @@ The first allocation remained queued because no node had four free GPUs. At 16:3
 
 At 16:51 Shanghai the Pro6K queue reported zero free GPUs, and all four panel jobs were still queued. The RTX 4090 queue had a schedulable four-card node. Baige started `job-2s6q9a9xe96e` on that node at 16:52. The launch passed the same frozen Pro6K predictions to the same `d568535b` evaluator. Each pair uses one physical GPU for both readers. All four pending Pro6K fallback jobs were stopped before dispatch and wrote no attempt artifacts. The active output directory is `native02g4090/`. [Active allocation and released reservations](evidence/native-4090.jpg)
 
+At 17:05 the four-device probe and inference/rendering bindings had passed. The first 14 UR5e pairs were present. Case 0, seed 41, had 520 controls per reader, identical full resets and identical opening proposals under NVIDIA EGL.
+
 ## Frozen input
 
 Each released panel contains the same 96 scheduled command settings and tasks, including 64 OOD cases, with its own passive support tapes. The checkpoint and prediction choice was made before collecting a native outcome. The RTX 4090 refit on the original accelerator, `job-6uezn9kt01vj`, was waiting for capacity. The first complete refit, Pro6K job `job-dg2hu5uswgea`, ran the three registered seeds on the same PR7 recipe. Each 24-position Perceiver trained for 2,500 updates at batch 32. Each saved checkpoint reproduced its 96 pre-save correction triples after reloading. [Refit recipe](TRAINING.md) · [Checkpoint digests](evidence/train02pro/checkpoints.sha256)

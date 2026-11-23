@@ -1,0 +1,61 @@
+{
+  "root": "/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1",
+  "upstream": "16a98486f560676b9036d1a6d067b9dd51a5917a",
+  "policy": "7152f13e34c6c115d808aea0e5d08aca74eac14b",
+  "scientific_code": "cab855a03c8ff1a3f1926513369099bf11c4b859",
+  "controlled_code": "c3efd5042a29c68248c07b2d6375d367df6378ef",
+  "original_predicate_revision": "baac956f214fe680c120c0636e6801bda6ed8dc2",
+  "source_sha256": {
+    "reground/eval/jobs.py": "1310dee3bd95e3ca1b4cb2d130aabb18764aa6fdc9281a2043e8986274f94b0f",
+    "reground/eval/rollout.py": "2cd7d36a0b97b22fdf3e4b89f9cfa4a0afc32f5b09f65652385a6097e4128b69",
+    "reground/envs/libero_env.py": "3e372fe9374878ed26f4932b77ab6655bdeff20c78bea4ba65d2ca87cee093c4",
+    "reground/envs/safety.py": "5c59d08b3427c2799ef328ea6cd3a1c9924709c3861dbd65421e90ed71c2c380",
+    "reground/policies/vla.py": "a0a20fe2d4164f8b83d981e1afab1ba30c30ff67e21be129e78946b02409e35b",
+    "reground/utils.py": "96ba3cb111281ed81710875cdf6fb1e8144f743130234e972209504fcd1d41bd",
+    "configs/speed_envelope.json": "2ca18348e44cd9aa217574739afc08ba78fba9554f21c11dba5f0b25c47b7095",
+    "common-opening/opening.py": "70feb332fde58490f82a526da67fddb0406b031177a31af91d373b246b8fdcf0",
+    "common-opening/runner.py": "d464815d9c40363d41e7263542b2b2ae121306e7ec70c26e8c2c62da073fd40f",
+    "reference.py": "f4013e6f00264fcd36505ab6feeaafd4db378d1c2f77f5a62abdfd7c11e0d162",
+    "symmeta_adapter.py": "3064ad1ba78bedfc0343fe71ce49775cfca594e78d3c6ed6d569c8ea4c34f127",
+    "evidence/rotation-jobs.json.gz": "d9a615ce1aa85c2602809e955dfa3d9524cc5bfc70a84d0bb16b627dd915cb58",
+    "native_grid.py": "3c623c8f538fa785a87ec6ddd3aab973a79295a60a850f13f0b0c0ab502583d8"
+  },
+  "runtime": {
+    "python": "3.12.15 (main, Oct 14 2026, 01:05:27) [Clang 23.1.3 ]",
+    "numpy": "2.2.6",
+    "system": "Linux-5.15.0-151-generic-x86_64-with-glibc2.35",
+    "machine": "x86_64",
+    "researcher_affinity": {
+      "original_reporter": [
+        0
+      ],
+      "controlled_readback": [
+        1
+      ]
+    },
+    "cuda_visible_devices": "",
+    "blocked_modules_loaded": [],
+    "noise_executable_dependencies": [
+      "\tlinux-vdso.so.1 (0x00007ffe35b00000)",
+      "\tlibstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007f1406faf000)",
+      "\tlibgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007f1406f8f000)",
+      "\tlibc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f1406d66000)",
+      "\tlibm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007f1406c7f000)",
+      "\t/lib64/ld-linux-x86-64.so.2 (0x00007f14071ea000)"
+    ],
+    "noise_build": "c++ -O2 -std=c++17 -mavx2 -mfma -DCPU_CAPABILITY_AVX2 -I<torch/include> noise.cc -o noise",
+    "torch_cpu_headers": {
+      "native/cpu/avx_mathfun.h": "e713d6fc64a0e034b13f2cf4b3b9d481fcb4ab0ea2a925154ee1286fe526d07a",
+      "native/cpu/DistributionTemplates.h": "088a7774ee09d7cd43b267e33f9c11752bf9a42b88d620bef0e358236cad5ff9",
+      "core/TransformationHelper.h": "8eff8a994ada7b28c0f0ed8c6564d232160de78b211ba49e49145bc586259260"
+    }
+  },
+  "audit_sha256": {
+    "native_read.py": "3fe90b698a6f56ae756b1da2a779b30950732436a5386262887bccd305448e3f",
+    "reporter.py": "645f83cfc8bc8eb346967166c4a27a01ab7df25d8377f843822597dfb8132e3b",
+    "controlled.py": "c97387706c48b9c455602944591b6b4af23f22c6f825112e6c711dd75f36eab4",
+    "summarize.py": "dad941ceb0fcdea086fdd9459040b62a5c35fb3f04e49c2066ffb7d15e35055d",
+    "noise.cc": "018dc70ced8e75331d5b520540053bc1a45133691d1b38422ab39ce27d23f03d",
+    "provenance.py": "94639ab774426325855596322447e389388a79c7a0b7181b326de8971c9c5bee"
+  }
+}
