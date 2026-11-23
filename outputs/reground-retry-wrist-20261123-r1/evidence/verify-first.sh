@@ -2,7 +2,9 @@
 # Run on Baige CPU after the first atomic publication. Emit a JSON receipt to stdout.
 set -euo pipefail
 run_root=/mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1
-native_attempt="$run_root/scored/attempts/retry01"
+attempt_id=${1:-retry01}
+[[ $# -le 1 && $attempt_id =~ ^retry[0-9]+$ ]]
+native_attempt="$run_root/scored/attempts/$attempt_id"
 read -r RETRY_PIN launch_host phase allocated start wall < "$native_attempt/launch.txt"
 case "$RETRY_PIN" in
     0bfa5b087a2b5d5ba9d6ecebafd9db5288947186|ac28987f221e336cef2ea64dc16dfffc9f0e74c9) ;;
@@ -10,7 +12,7 @@ case "$RETRY_PIN" in
 esac
 export RETRY_PIN
 here="$run_root/src-$RETRY_PIN"
-attempt="$run_root/evidence/first-batch-cpu"
+attempt="$run_root/evidence/first-batch-cpu-$attempt_id"
 mkdir -p "$attempt"
 source "$here/env.sh"
 export CUDA_VISIBLE_DEVICES='' JAX_PLATFORMS=cpu
@@ -60,7 +62,7 @@ with contextlib.redirect_stdout(sys.stderr):
         np.testing.assert_array_equal(left[:n,[0,1,2,5,6]], right[:n,[0,1,2,5,6]])
         changes.append(float(np.abs(left[:n,3:5]-right[:n,3:5]).max()))
     support = ref.read(path/"support.json")
-    receipt = dict(job="job-iynjhzjijoyj", attempt=attempt.name, code=contract["code"], batch=path.name,
+    receipt = dict(job=host.removesuffix("-master-0"), attempt=attempt.name, code=contract["code"], batch=path.name,
         checked_at=datetime.now(timezone(timedelta(hours=8))).isoformat(timespec="seconds"),
         validator="retry.validate with native horizon and released policy defaults", producer=producer,
         upstream=contract["upstream"], policy=contract["policy"], reader_weights=contract["reader"]["weights_sha256"],

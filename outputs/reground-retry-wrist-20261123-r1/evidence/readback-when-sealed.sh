@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
-# Baige CPU. Wait for retry01 and run its documented full readback on the producing checkout.
+# Baige CPU. Wait for the selected attempt and run its documented full readback on the producing checkout.
 set -euo pipefail
 run_root=/mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1
 store="$run_root/scored"
-attempt="$store/attempts/retry01"
+attempt_id=${1:-retry01}
+[[ $# -le 1 && $attempt_id =~ ^retry[0-9]+$ ]]
+attempt="$store/attempts/$attempt_id"
 shopt -s nullglob
 while :; do
     batches=("$store"/batches/batch[0-9][0-9][0-9]/producer.json)
@@ -24,11 +26,11 @@ while :; do
     fi
     sleep 15
 done
-pin=$(python3 - "$store" <<'PY'
+pin=$(python3 - "$store" "$attempt_id" <<'PY'
 from pathlib import Path
 import json,sys
 store = Path(sys.argv[1])
-pin, host, phase, cards, start, wall = (store/"attempts/retry01/launch.txt").read_text().split()
+pin, host, phase, cards, start, wall = (store/"attempts"/sys.argv[2]/"launch.txt").read_text().split()
 assert pin in {"0bfa5b087a2b5d5ba9d6ecebafd9db5288947186","ac28987f221e336cef2ea64dc16dfffc9f0e74c9"}
 assert phase == "full" and cards == "4"
 expected = {f"batch{i:03d}" for i in range(70)}
@@ -38,7 +40,7 @@ for name in sorted(expected):
     contract = json.loads((path/"contract.json").read_text())
     producer = json.loads((path/"producer.json").read_text())
     assert contract["code"] == producer["code"] == pin, name
-    assert producer["attempt"] == "retry01" and producer["host"] == host, name
+    assert producer["attempt"] == sys.argv[2] and producer["host"] == host, name
 print(pin)
 PY
 )
