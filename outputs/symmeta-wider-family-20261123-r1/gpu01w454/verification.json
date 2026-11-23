@@ -1,0 +1,357 @@
+{
+ "status": "verified_complete",
+ "verified_utc": "2026-11-23T07:09:19+00:00",
+ "job": "job-4tjjgreq8u9k",
+ "attempt": "gpu01w454",
+ "pin": "4546516cecedc08d5c8a7d41cae719b4ceee2246",
+ "host": "job-4tjjgreq8u9k-master-0",
+ "device": "NVIDIA GeForce RTX 4090",
+ "device_count": 1,
+ "probe": "passed",
+ "exit_code": 0,
+ "launcher_start_utc": "2026-11-23T06:39:03+00:00",
+ "exit_utc": "2026-11-23T07:07:32+00:00",
+ "launcher_wall_seconds": 1709,
+ "evidence_sha256": {
+  "launch.txt": "89a0a42a3ac5b4d3c804e680f8b4a7187ce0a38394f3de58576c8f9a42f207e0",
+  "gpu.json": "e6e8ca9febd3096c2ec6ba0b4f4a52f6fd5ce1627b190459122404fdaed7b1f5",
+  "run.log": "8580ab18f82732d1b7caf8ecb7fceab5d049dd7e5337e53bbda652fc8e206ffa",
+  "exit.txt": "11f79a6b9862a8592b6b4854ee171c66ec819efe568d73242e0ad18800a046ae",
+  "wider-family-summary.json": "02f10b464a91abc616ac600c2be025550d1b8f85350228c8645155a19fc7db18"
+ },
+ "sources": {
+  "training": "outputs/xemb-icml-campaign-20261121-r1/gpu12scale/stage3/diverse_shards",
+  "locked_test": "outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live",
+  "paper_checkpoints": "outputs/xemb-icml-campaign-20261121-r1/gpu03v2/stage1/checkpoints",
+  "yaw_aggregate": "outputs/xemb-icml-campaign-20261121-r1/evidence/ablation-horizon-ur5e.json",
+  "yaw_case_sources": "The 16 source files for UR5e pi05 in outputs/symmeta-paired-statistics-20261123-r1/sources.csv matched their pinned SHA-256 hashes."
+ },
+ "inputs": {
+  "synthetic": false,
+  "train": 1466,
+  "train_arms": {
+   "Panda": 733,
+   "Sawyer": 733
+  },
+  "train_shard_counts": [
+   184,
+   184,
+   183,
+   183,
+   183,
+   183,
+   183,
+   183
+  ],
+  "locked_test": {
+   "tapes": 96,
+   "tasks": 8,
+   "regimes": {
+    "familiar": 32,
+    "compositional_ood": 32,
+    "continuous_angle_ood": 32
+   },
+   "valid_chunks": 3
+  },
+  "horizons": [
+   3
+  ],
+  "draws_per_trace": 4,
+  "scoring_conditions": [
+   "recorded",
+   "family",
+   "aniso",
+   "shear",
+   "swap",
+   "general",
+   "recorded_2_chunks",
+   "delay_1_chunk_2_chunks"
+  ],
+  "n_in_condition_order": [
+   96,
+   384,
+   384,
+   384,
+   384,
+   384,
+   96,
+   96
+  ],
+  "metres_per_command": 0.052865876270322514,
+  "independent_metres_absolute_difference": 6.938893903907228e-18,
+  "max_abs_difference_in_independent_spread_box_and_no_adaptation_stats": 2.7755575615628914e-17
+ },
+ "coverage": {
+  "seeds": [
+   41,
+   42,
+   43
+  ],
+  "methods": [
+   "symmeta_cont",
+   "perceiver_cont",
+   "perceiver_cont_warm",
+   "perceiver_cont_warm_4x",
+   "perceiver_map_family",
+   "perceiver_map_wide",
+   "perceiver_paper",
+   "symmeta_paper+procrustes",
+   "symmeta_cont+factored_ridge",
+   "symmeta_cont+visual_ridge",
+   "symmeta_cont+factored_ls",
+   "symmeta_cont+visual_ls",
+   "symmeta_cont+proprio_only_ls",
+   "symmeta_paper+factored_ridge",
+   "symmeta_paper+visual_ridge",
+   "symmeta_paper+factored_ls",
+   "symmeta_paper+visual_ls",
+   "symmeta_paper+proprio_only_ls"
+  ],
+  "rows_per_seed": {
+   "41": 144,
+   "42": 144,
+   "43": 144
+  },
+  "unique_rows": 432,
+  "summary_cells_exactly_recomputed": 144,
+  "finite_numeric_fields": 3467,
+  "finished_fits": 18,
+  "logged_updates": 112500,
+  "batch_size_from_launcher_default": 32,
+  "step_scale": 1.0,
+  "partial_seed_snapshots_match_final_prefixes": [
+   41,
+   42
+  ],
+  "ridge_choices_match_training_log": true,
+  "source_selected_ridges": {
+   "factored": 3.0,
+   "visual": 3.0,
+   "applies_to": "Both readers in all three seeds. This was the largest candidate tested."
+  }
+ },
+ "control": {
+  "trace_count": 96,
+  "eligible_motions_per_trace": 2,
+  "motion_chunks_zero_indexed": [
+   0,
+   1
+  ],
+  "control_command_chunks": [
+   0,
+   1
+  ],
+  "delay_command_chunks": [
+   1,
+   2
+  ],
+  "target_map": "recorded static spatial map for both",
+  "no_adaptation_mean": 1.2678923313986008,
+  "factored_ls_frame_yaw_identical_for_both_conditions": true
+ },
+ "campaign_anchor": {
+  "symmeta_paper+procrustes": {
+   "recorded_ood_by_seed_deg": [
+    6.82357,
+    7.00005,
+    7.28728
+   ],
+   "archive_ood_by_seed_deg": [
+    6.82437,
+    6.99953,
+    7.29047
+   ],
+   "max_abs_yaw_mean_difference_deg_all_or_ood": 0.0031873,
+   "recorded_operator_mean_delta_by_seed": [
+    -8.13e-05,
+    -2.8e-06,
+    -3.78e-05
+   ],
+   "archive_operator_rounding_bound_by_seed": [
+    0.0005432,
+    0.0005484,
+    0.0005563
+   ],
+   "recorded_ood_three_seed_mean_and_population_sd": {
+    "run": [
+     7.04,
+     0.19
+    ],
+    "campaign": [
+     7.04,
+     0.19
+    ]
+   },
+   "two_chunk_control_yaw_all_three_seed_mean_and_population_sd": {
+    "run": [
+     7.59,
+     0.46
+    ],
+    "campaign": [
+     7.59,
+     0.46
+    ]
+   }
+  },
+  "perceiver_paper": {
+   "recorded_ood_by_seed_deg": [
+    97.07525,
+    92.34247,
+    97.47559
+   ],
+   "archive_ood_by_seed_deg": [
+    97.07234,
+    92.33875,
+    97.47281
+   ],
+   "max_abs_yaw_mean_difference_deg_all_or_ood": 0.0037165,
+   "recorded_operator_mean_delta_by_seed": [
+    -2.24e-05,
+    2.32e-05,
+    -2.97e-05
+   ],
+   "archive_operator_rounding_bound_by_seed": [
+    0.0006014,
+    0.0005972,
+    0.0006075
+   ],
+   "recorded_ood_three_seed_mean_and_population_sd": {
+    "run": [
+     95.63,
+     2.33
+    ],
+    "campaign": [
+     95.63,
+     2.33
+    ]
+   },
+   "two_chunk_control_yaw_all_three_seed_mean_and_population_sd": {
+    "run": [
+     65.19,
+     2.23
+    ],
+    "campaign": [
+     65.19,
+     2.23
+    ]
+   }
+  },
+  "precision": "Archived per-tape yaw and scale are rounded to 0.01 degree and 0.001, respectively. For recorded scalar-gain rotations the operator error equals the complex modulus of (true_gain / predicted_gain) * exp(i * yaw_error) - 1. Mean rounding bounds propagate half the last digit of each saved prediction."
+ },
+ "operator_means_in_condition_order": {
+  "symmeta_paper+procrustes": [
+   0.1542,
+   0.1489,
+   0.2219,
+   0.303,
+   1.2566,
+   0.8297,
+   0.1615,
+   0.4366
+  ],
+  "symmeta_paper+factored_ls": [
+   6.0374,
+   6.0374,
+   6.0372,
+   6.0373,
+   6.0374,
+   6.0375,
+   6.6078,
+   16.4429
+  ],
+  "symmeta_paper+factored_ridge": [
+   0.1522,
+   0.1522,
+   0.1986,
+   0.2836,
+   2.1411,
+   1.9388,
+   0.1424,
+   0.2896
+  ],
+  "perceiver_paper": [
+   0.9665,
+   1.0395,
+   1.0305,
+   1.0647,
+   1.4691,
+   1.4022,
+   0.9816,
+   0.9911
+  ],
+  "perceiver_cont": [
+   1.3799,
+   1.2963,
+   1.3345,
+   1.3233,
+   1.452,
+   1.3949,
+   1.3829,
+   1.3426
+  ],
+  "perceiver_cont_warm": [
+   0.1461,
+   0.1503,
+   0.2047,
+   0.2972,
+   1.1331,
+   1.0277,
+   0.1467,
+   0.262
+  ],
+  "perceiver_cont_warm_4x": [
+   0.1598,
+   0.1578,
+   0.2073,
+   0.2871,
+   1.2822,
+   1.1604,
+   0.1465,
+   0.2167
+  ],
+  "perceiver_map_family": [
+   0.1549,
+   0.1544,
+   0.2099,
+   0.2933,
+   1.5504,
+   1.5117,
+   0.1529,
+   0.2643
+  ],
+  "perceiver_map_wide": [
+   0.3357,
+   0.244,
+   0.7941,
+   0.4316,
+   0.4128,
+   15.2123,
+   0.7296,
+   63.7925
+  ]
+ },
+ "wide_map_general": {
+  "per_seed_mean": [
+   11.3753,
+   30.1905,
+   4.071
+  ],
+  "average_of_per_seed_medians": 1.3661
+ },
+ "limitations": [
+  "Offline spatial operator error uses a pseudoinverse. Nearly singular estimates can dominate the mean, while a zero map scores 1. The score measures planar correction and omits gripper accuracy, action clipping, temporal compensation and closed-loop task success.",
+  "The 384 family cases share 96 motions and four interface draws per trace. Seed SD measures model seed variability. The JSON retains per-seed summaries without per-trace estimates.",
+  "For full-rank unregularized fits, relabeling transforms the estimate and true map by the same right factor, preserving the corrected residual. Weak excitation, rank defects and numerical stabilization matter.",
+  "Across sampled families, 12.67–15.80% of relabeled chunk-mean XY commands exceed the unit box. The replay retains original motions and treats originally saturated physical commands as unclipped.",
+  "The factored_ls yaw field measures the proprioceptive frame rotation, including on reflection/shear families. Map-wide training includes the five sampled families and omits delay."
+ ],
+ "wide_map_delay": {
+  "per_seed_mean": [
+   1.8171,
+   187.1286,
+   2.4318
+  ],
+  "average_of_per_seed_medians": 0.9995
+ },
+ "aggregation": "Each summary cell exactly reproduced from three seed rows: unweighted mean, population SD, mean of seed medians, seed means and applicable yaw arrays at the writer's precision. Per-row q75 is retained in the raw JSON."
+}

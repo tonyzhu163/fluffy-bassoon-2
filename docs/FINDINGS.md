@@ -1,5 +1,9 @@
 # Verified findings
 
+## Wider-family command-map recovery on 96 UR5e traces
+
+Over three reader seeds at 15 controls, in-family mean operator error was 0.149 for Procrustes, 6.037 for unregularized factored least squares and 0.152 for factored ridge on the same frozen reader. A continuously trained Perceiver with warmup reached 0.150. The full-map Perceiver trained across families improved axis swaps (0.413 versus 1.257 for Procrustes) and had highly variable general-map errors (mean 15.212, mean within-seed median 1.366). All comparisons use offline relabels of the same held-out traces. [Three-seed results and evidence](../outputs/symmeta-wider-family-20261123-r1/RESULT.md)
+
 ## Matched-source visual yaw on UR5e
 
 On the 64 held-out π₀.₅ supports, a learned visual reader scored 6.53° mean absolute yaw error and a six-coefficient linear flow projection scored 9.16°. Both used the same 1,344 labeled source traces and the same geometric solver with equal chunk weights. The 2.63° paired advantage had a 95% task-bootstrap interval of 1.64° to 3.65°. On the 32 unseen-angle cases alone the advantage was 0.30° (−2.40° to +2.90°). [Source fit, per-task estimates and reference intervals](../outputs/symmeta-matched-flow-20261123-r1/OFFLINE.md)
