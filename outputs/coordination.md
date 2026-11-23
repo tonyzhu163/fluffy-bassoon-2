@@ -4,7 +4,7 @@
 
 | Work | Cluster / job / source | Last check, progress and next action |
 | --- | --- | --- |
-| Original LIBERO-PRO matched π₀.₅ pilot | Codex, Baige Pro6K Distributed Training preparation | Original leaderboard protocol, simulator release, and single-attempt evaluator in qualification. Compare native and SymMeta on the same unmodified cases and policy-noise schedule. [Pilot plan](symmeta-original-pro-20261123-r1/PLAN.md) |
+| Original LIBERO-PRO matched π₀.₅ pilot | Baige Pro6K Distributed Training, `job-9me3dekaeqaj`, 1 GPU, `0c457b8f` | Nov 23 14:01 Shanghai. Queued. Native and streaming calibration, 32 paired starts on four released families. Verify the first real pair and then check every 20 minutes. [Launch](symmeta-original-pro-20261123-r1/LAUNCH.md) |
 | SymMeta FK on remaining arm/policy panels | Codex, Baige Linux CPU | Qualifying archived joint tapes, camera-reader predictions and reset identity for IIWA and Kinova3 × π₀.₅ and UR5e × π₀. [Preparation](symmeta-fk-crossarm-20261123-r1/) |
 | SymMeta paired statistics across reader seeds | Codex, Baige Linux CPU, 0 GPUh | Complete. All 384 panel–query keys and 118 published count checks matched. Mean gains were 19.8–24.3 points for π₀.₅, and 9.7 for π₀ (whole-task p = 0.078). [Paired analysis](symmeta-paired-statistics-20261123-r1/RESULT.md) |
 | SymMeta trusted kinematics versus visual yaw | Codex, Baige Pro6K Distributed Training, `job-pc0ioesm8tle`, 2 GPUs | Nov 23 12:46 Shanghai. GPU probe and 96-case prepare passed. Native evaluation on pin `3fe381d6`. Qualify first completed pair, then check every 20 minutes. [Plan and inputs](symmeta-fk-ur5e-20261123-r1/PLAN.md) |

@@ -24,7 +24,7 @@ class OnlineReader:
         ib, ia = [downsample_agentview(o["agentview_image"])[None, None] for o in (before, after)]
         pos0, pos1 = [np.asarray(o["robot0_eef_pos"], np.float32) for o in (before, after)]
         jaw0, jaw1 = [float(jaw_width_from_qpos(o["robot0_gripper_qpos"])) for o in (before, after)]
-        mean = issued.mean(axis=0)
+        mean = np.asarray(issued, np.float32).mean(axis=0)
         valid = np.ones((1, 1), dtype=bool)
         batch = dict(img_before=ib, img_after=ia, dis_flow=compute_dis_flow_maps(ib, ia, valid),
                      issued_mean=mean[None, None], delta_eef=(pos1-pos0)[None, None],

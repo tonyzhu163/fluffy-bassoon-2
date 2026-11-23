@@ -21,12 +21,12 @@
 \theoremstyle{remark}
 \newtheorem{remark}{Remark}
 
-\icmltitlerunning{SymMeta: Adapting Frozen VLAs}
+\icmltitlerunning{Single-Trace Robot Calibration}
 
 \begin{document}
 
 \twocolumn[
-  \icmltitle{SymMeta: A Geometric Inner Loop for Adapting Frozen VLAs Across Robots}
+  \icmltitle{Calibrating Frozen Robot Policies from One Motion Trace}
 
   \begin{icmlauthorlist}
     \icmlauthor{Anonymous Authors}{anon}
@@ -42,7 +42,7 @@
 \printAffiliationsAndNotice{}
 
 \begin{abstract}
-A frozen vision-language-action (VLA) policy fails on a new arm whose command interface differs by an unknown rotation, gain, or gripper polarity, even though the policy itself still works: supplying the exact inverse transform restores 54--89\% success. We show that end-effector displacements measured in the robot's own command frame carry no information about that rotation, and that learned sequence encoders fit the shifts they were trained on but fail on new combinations and angles. When trusted kinematics and base-frame registration are unavailable, SymMeta estimates the rotation from video. An action-blind visual motion reader feeds a closed-form Procrustes step that is exactly equivariant to command-frame rotations, and separate heads estimate gain and gripper sign. The frozen VLA is never fine-tuned. Trained only on simulated Panda and Sawyer arms, SymMeta uses 15 controls (0.75\,s of simulated time) of an unadapted first attempt to adapt a second attempt on three unseen simulated arms (UR5e, IIWA, Kinova3) and two VLAs ($\pi_{0.5}$, $\pi_0$). Averaged over 3 seeds, it reaches 78.1\% success on UR5e with $\pi_{0.5}$ (oracle 85.4\%) and 50--79\% on out-of-distribution shifts across all four arm--VLA pairs, while a Perceiver in-context encoder falls to 2--6\%. SymMeta beats source-calibrated Horn--Schunck flow by 9.7--24.3 points. Adapting within a single attempt remains hard (9--27\%), full 3D rotations reach only 38.5\% against an 88.5\% oracle, and the estimate assumes the training camera pose: rotating the camera shifts the estimated rotation by a similar angle.
+Can a frozen vision-language-action policy use a brief movement to discover how an unfamiliar robot executes its commands? On three simulated arms with altered command interfaces, frozen $\pi_{0.5}$ succeeds on 77--89\% of tasks when supplied with the exact command mapping and on 6--8\% without correction. We study mismatches in planar frame rotation, movement gain, and gripper polarity. SymMeta learns from labeled motion traces on Panda and Sawyer to estimate these quantities on an unseen arm. A visual network reads motion relative to a fixed camera, a geometric fit aligns it with issued commands, and two small networks read movement scale and gripper response. Using 15 controls (0.75\,s) from its first attempt to calibrate a fresh attempt, frozen $\pi_{0.5}$ reaches 78.1\% success on UR5e, 78.5\% on IIWA, and 66.3\% on Kinova3. The same family of corrections serves eight held-out manipulation tasks. The estimate depends on camera placement, and applying corrections during the first attempt reaches only 9--27\% across four arm--policy pairs. These experiments establish transfer across arms within a specified family of command changes.
 \end{abstract}
 
 \section{Introduction}
@@ -125,9 +125,9 @@ Because the mask depends on $\|f_k\|$, linearity holds only conditionally on the
 \section{Method}
 \label{sec:method}
 
-SymMeta learns a shared visual motion reader on source robots. On a new robot, the Procrustes step estimates the command-frame rotation by aligning the issued commands with the motion inferred from video. Both readers below are trained on Panda and Sawyer trajectories from 24 LIBERO training tasks, with no target-arm or test-task data. Training and evaluation use the same nominal third-person camera pose relative to the robot base.
+We specify the three interface factors and their inverse. We train the reader from random initialization on 1,344 labeled Panda and Sawyer traces from 24 training tasks for the main planar experiment. At deployment its weights are frozen. It receives camera frames, issued commands and local robot measurements. It has no task or robot identifier. The visual estimate assumes the training camera pose relative to the robot base.
 \begin{enumerate}
-  \item \textbf{SymMeta.} A 4-stage residual spatial-attention CNN takes a 9-channel motion tensor: luminance before and after, the absolute temporal difference, DIS flow $(u, v)$ and its magnitude, spatial gradient, and pixel coordinates. It predicts planar motion $v_k^{\text{raw}}$, a confidence $w_k$, and a parallax coupling vector $u_{z,k}$. Subtracting the vertical-motion term,
+  \item \textbf{SymMeta.} Three stride-2 convolutions (48, 96, 96 channels) and a residual block encode a $64\!\times\!64$ map of DIS flow and magnitude, signed intensity change, RMS color change, two intensity gradients and pixel coordinates. Two learned spatial attention maps pool the $8\!\times\!8$ feature grid. A feedforward head reads the pooled features. It predicts planar motion $v_k^{\text{raw}}$, a confidence $w_k$, and a parallax coupling vector $u_{z,k}$. Subtracting the vertical-motion term,
   \[
     v_k = v_k^{\text{raw}} - \Delta z_k^{\text{local}}\, u_{z,k},
   \]
