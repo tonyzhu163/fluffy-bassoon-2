@@ -1,0 +1,31 @@
+{
+  "filesystem": "gpfs",
+  "scope": "single Linux host, separate processes on shared PFS",
+  "race": {
+    "events": [
+      "recovered",
+      "published"
+    ],
+    "metadata_and_data_marker": 2,
+    "contenders": 2,
+    "candidate_npz_sha256": [
+      "34b522d441bb13f972a22e28f3a19f5becd47f65152365eac03b18d26ce747c1",
+      "e351a8cf7522739a2854d84eff638d7fdeea904bcc44bd112ca33b9db07ff18c"
+    ]
+  },
+  "native_babble": [
+    {
+      "unit": "seed0/none/0/babble/shard000",
+      "npz_sha256": "3bfac8016ae8c52edf80bf2b02fc83e0f2e120fdff000ddc0d631e2c9246a29b",
+      "transitions": 200,
+      "episodes": 1
+    },
+    {
+      "unit": "seed4/rot_z/90/babble/shard049",
+      "npz_sha256": "6dd7de65ecf166288fd80432913b872215f6cbef20cb3878891069107b48cc54",
+      "transitions": 200,
+      "episodes": 1
+    }
+  ],
+  "gpu_hours": 0
+}
