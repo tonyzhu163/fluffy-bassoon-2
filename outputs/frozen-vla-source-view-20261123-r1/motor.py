@@ -56,6 +56,13 @@ def paired_frames(policy,out):
                       for k,item in items.items()}
             if hashes["raw"] != hashes["control"] or hashes["control"] == hashes["panda"]:
                 raise ValueError("Preprocessed motor control or intervention failed")
+            if policy is None:
+                stats = {}
+                for key in ("observation/image","observation/wrist_image"):
+                    a, b = items["control"][key], items["panda"][key]
+                    stats[key] = dict(shape=list(a.shape), changed=int(np.any(a!=b,axis=-1).sum()))
+                write_json(out/f"motor-input-{i}-{n:03d}.json",dict(hashes=hashes,images=stats,noise=array_digest(noise)))
+                continue
             proposals = {m:propose(policy,items[m],noise) for m in MODES}
             proposals["raw_repeat"] = propose(policy,items["raw"],noise)
             row = dict(layout=i,step=n,sha256=hashlib.sha256(f.read_bytes()).hexdigest(),input_hashes=hashes,
@@ -69,6 +76,21 @@ def paired_frames(policy,out):
             write_json(out/f"proposals-{i}-{n:03d}.json",row)
 
 
+class AuditCalls:
+    """Measure actual motor inputs and proposals without modifying either."""
+    def __init__(self, policy):
+        self.policy = policy
+        self._model = getattr(policy,"_model",None)
+        self.calls = []
+
+    def infer(self,item,*,noise):
+        result = self.policy.infer(item,noise=noise)
+        self.calls.append(dict(input={k:array_digest(v) for k,v in item.items() if k!="prompt"},
+                               prompt=item["prompt"], noise=array_digest(noise),
+                               proposal=array_digest(np.asarray(result["actions"],np.float32))))
+        return result
+
+
 def native(policy,out,*,mesa=False):
     scores = []
     for i in (16,17):
@@ -78,9 +100,10 @@ def native(policy,out,*,mesa=False):
             # Only the isolated EGL simulator child receives this environment adjustment.
             with patch.dict(os.environ,{"CUDA_VISIBLE_DEVICES":""}):
                 endpoint = UR5eSimulator(allow_mesa=mesa) if mode=="raw" else Simulator(mode,trace,mesa=mesa)
+            audit = AuditCalls(policy)
             try:
                 with endpoint as sim:
-                    row = run_episode(sim,policy,case(i),get_embodiment_spec("nom"),
+                    row = run_episode(sim,audit,case(i),get_embodiment_spec("nom"),
                                       max_controls=6 if mesa else None,canonicalize_quat=False)
             except RuntimeError as exc:
                 # A future unrepresentable pose censors the branch; preserve prior frames and other starts.
@@ -88,6 +111,13 @@ def native(policy,out,*,mesa=False):
                     write_json(out/f"inadmissible-{i}.json",dict(case=case(i),mode=mode,reason=str(exc)))
                     break
                 raise
+            finally:
+                write_json(out/f"calls-{i}-{mode}.json",audit.calls)
+            write_json(out/f"native-{i}-{mode}.json",dict(case=case(i),mode=mode,**row))
+            if mode == "raw":
+                raw_calls = audit.calls
+            elif mode == "control" and raw_calls != audit.calls:
+                raise ValueError("Target render changed motor input, noise or proposal in matched native loop")
             if not mesa and (not (row["terminated"] or row["truncated"])
                              or row["reset"]["renderer_vendor"] != "NVIDIA Corporation"
                              or bool(max(row["native_rewards"])) != row["success"]):
@@ -105,7 +135,6 @@ def native(policy,out,*,mesa=False):
                 if mesa and (ref["native_rewards"]!=row["native_rewards"] or row["controls"]!=6):
                     raise ValueError("Fixed-control qualification mismatch")
             rows[mode]=row
-            write_json(out/f"native-{i}-{mode}.json",dict(case=case(i),mode=mode,**row))
         scores.append(dict(layout=i,paired=len(rows)==3,outcomes={m:r["success"] for m,r in rows.items()}))
     write_json(out/"native-pairs.json",scores)
 
@@ -124,6 +153,7 @@ if __name__ == "__main__":
     if args.cpu_smoke:
         if os.environ.get("CUDA_VISIBLE_DEVICES") or len(os.sched_getaffinity(0))!=2:
             raise ValueError("Expected two CPU cores")
+        paired_frames(None,args.output)
         native(CpuProbe(),args.output,mesa=True)
     else:
         policy=load_frozen_pi05()

@@ -70,6 +70,7 @@ class Exposure:
                 raise ValueError(f"Two camera exposures differ in {k}")
         m = sim.model._model
         scratch = mujoco.MjData(m)
+        scratch.time = a["time"]
         scratch.mocap_pos[:] = a["mocap_pos"]
         scratch.mocap_quat[:] = a["mocap_quat"]
         # Only accept configurations which reconstruct the transforms actually drawn.
@@ -117,6 +118,7 @@ class Sibling:
     def sync(self, target, exposure):
         tm, g = target.sim.model._model, self.g
         m, data = g.m, self.sim.data._data
+        data.time = exposure.time
         source_scene, destination = scene_state(target), scene_state(self.native)
         if source_scene["fixtures"].keys() != destination["fixtures"].keys():
             raise ValueError("Fixture inventory mismatch")
