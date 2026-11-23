@@ -22,3 +22,7 @@ At 15:52 the reference runner had sealed 656 frozen-control test episodes spanni
 | `job-0uwxvy2croqa` | `babblecpu01` | One RTX 4090 allocation with 12 CPUs, 45-minute maximum, submitted 15:46 on `516a2f75`. Eight camera-free native simulation workers passed the device, runtime and preload checks. The CPU verification reproduced the serial reference's compressed output bytes on eight fixtures. [Qualification](speed/SPEED.md) · [Submission](evidence/submission-babblecpu01.jpg) |
 
 The run holds the reference and streaming allocations within a combined 48.5 GPU-hour launcher ceiling. The matched-source evaluation used 0.67 GPU-hours, the development qualification 0.202 and the pre-launch mount failure about 0.035. At 15:52 the next action is to verify the first common Base/streaming trajectories, then verify a complete seed's calibration pool before fitting.
+
+At 15:54 the first 16 sealed streaming episodes matched their frozen-control counterparts byte-for-byte over ten controls apiece, including all 11 robot states, issued and proposed actions, and measured speeds. All task, reset, replica, seed and shift keys agreed. [First published-pair check](evidence/first-stream-pair.json)
+
+At 15:56, Baige accepted `job-v3wxgfwqi477` (`collect-s1to4-01`), with two RTX 4090 GPUs and a 90-minute maximum, to share the remaining policy-driven calibration work for seeds 1–4. It uses the same four-environment batches, detached source and cross-host locks as the other collectors. [Submission](evidence/submission-collect-s1to4.jpg)
