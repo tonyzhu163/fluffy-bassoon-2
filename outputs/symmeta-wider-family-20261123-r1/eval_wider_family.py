@@ -281,6 +281,10 @@ def summarize(true_op, est_op) -> dict:
 
 # ---------------------------------------------------------------- conditions
 
+def has_yaw(condition: str) -> bool:
+    return condition == "family" or condition.startswith(("recorded", "delay"))
+
+
 def build_conditions(test: dict, k: int) -> dict:
     """Test supports at k chunks: as recorded, relabeled to each family, and with a one-chunk delay."""
     base = take_chunks(test, k)
@@ -295,6 +299,15 @@ def build_conditions(test: dict, k: int) -> dict:
         delayed = take_chunks(delay_commands(take_chunks(test, k + 1), 1), k)
         delayed["op"] = recorded["op"]
         conds["delay_1_chunk"] = delayed
+    else:
+        # Supports end at k chunks: a delayed trace keeps k-1 motions, so pair it with a k-1 control.
+        short = dict(recorded)
+        short["valid"] = recorded["valid"].copy()
+        short["valid"][:, k - 1:] = False
+        conds[f"recorded_{k - 1}_chunks"] = short
+        delayed = delay_commands(base, 1)
+        delayed["op"] = recorded["op"]
+        conds[f"delay_1_chunk_{k - 1}_chunks"] = delayed
     return conds
 
 
@@ -362,7 +375,7 @@ def main():
             cond_k = conds[SUPPORT_CHUNKS]
             for cname, cond in cond_k.items():
                 est, yaw = predict_ops(params, output, cfg, cond)
-                record(name, seed, SUPPORT_CHUNKS, cname, cond, est, yaw if cname in ("recorded", "family", "delay_1_chunk") else None)
+                record(name, seed, SUPPORT_CHUNKS, cname, cond, est, yaw if has_yaw(cname) else None)
 
         readers = {"symmeta_cont": trained["symmeta_cont"][0::2]}
         if args.checkpoint_dir:
@@ -374,7 +387,7 @@ def main():
             p, c, _ = load_v2_checkpoint(args.checkpoint_dir / f"perceiver_icba_dis-passive_attempt1-seed{seed}.msgpack")
             for cname, cond in conds[SUPPORT_CHUNKS].items():
                 est, yaw = predict_ops(p, "factors", c, cond)
-                record("perceiver_paper", seed, SUPPORT_CHUNKS, cname, cond, est, yaw if cname in ("recorded", "family", "delay_1_chunk") else None)
+                record("perceiver_paper", seed, SUPPORT_CHUNKS, cname, cond, est, yaw if has_yaw(cname) else None)
 
         for rname, (params, cfg) in readers.items():
             # Ridge strength is chosen on the source arms, pooled over all families.
@@ -395,7 +408,7 @@ def main():
                     v, w = np.concatenate([v_test] * reps), np.concatenate([w_test] * reps)
                     paper_op, yaw = predict_ops(params, "factors", cfg, cond)
                     if k != SUPPORT_CHUNKS or rname != "symmeta_cont":
-                        record(f"{rname}+procrustes", seed, k, cname, cond, paper_op, yaw if cname in ("recorded", "family", "delay_1_chunk") else None)
+                        record(f"{rname}+procrustes", seed, k, cname, cond, paper_op, yaw if has_yaw(cname) else None)
                     ops = solver_ops(cond, v, w, paper_op, metres, 0.0)
                     for key in ("factored", "visual"):
                         ops[f"{key}_ridge"] = solver_ops(cond, v, w, paper_op, metres, best[key])[f"{key}_ridge"]

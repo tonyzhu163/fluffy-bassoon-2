@@ -14,7 +14,7 @@ Recorded 15-control support traces are relabeled to sampled planar interfaces `R
 - Fixed solvers on frozen readers (the paper's seed 41–43 checkpoints and a reader retrained with continuous relabeling): the paper's Procrustes and scale head; `factored`, a least-squares 2x2 map from commands to proprioceptive travel plus a Procrustes frame rotation from travel to visual vectors; `visual`, one 2x2 least-squares map from commands to visual vectors. Each has an unregularized form and a ridge form that shrinks to the paper's solution, with the ridge chosen on the source arms.
 - Learned inner loops, 3 seeds: the paper's Perceiver trained with continuous in-family relabeling at the sweep's schedule, with warmup and a lower rate, and with 4 times the updates; and a Perceiver that outputs the 2x2 map, trained in-family and on all families.
 - Score: `|A inv(A_hat) - I|_F / sqrt(2)`, the planar command map the frozen policy is left with after correction, next to the same quantity with no adaptation. Yaw error is reported where a yaw is defined, and the recorded condition repeats the paper's OOD yaw number as an anchor.
-- Fixed solvers are also run at 6, 12 and 24 chunks where the test supports have them.
+- The locked UR5e supports end at 3 chunks. A delayed trace then keeps 2 motions, so the delay condition is scored at 2 chunks against a 2-chunk recorded control. Longer horizons (6, 12, 24 chunks) run only on supports that have them.
 
 ## What would count against the current design
 
