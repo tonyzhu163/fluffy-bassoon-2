@@ -60,6 +60,8 @@ CUDA_VISIBLE_DEVICES="" MUJOCO_GL=egl PYOPENGL_PLATFORM=egl MUJOCO_EGL_DEVICE_ID
   --output "$root/reference-cpu-readback.json"
 ```
 
+At the 15:17 Shanghai handoff, the parent had started corrected-pin attempt `babble03` on Baige job `job-rmvtf5i2znts` with four requested cards and a 5.93 GPU-hour reservation. The shared store had zero published production shards at that check. The stock π₀.₅ loader had confirmed every key on CPU. The development-GPU policy inference receipt was still pending. The parent’s next check is the allocation probe and first published shard. [Handoff receipt](evidence/reference-handoff.json)
+
 ## Inspect and resume
 
 ```bash
