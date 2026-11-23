@@ -1,0 +1,608 @@
+{
+  "prior": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-motion-models-20261123-r1/cpu01/source-fit.json",
+    "sha256": "acf6150ecd7937733d77516cabfaca4a7648531009e3d7c3264c025170279f73"
+  },
+  "prior_matrix": [
+    [
+      0.04039071043222442,
+      0.0003157544355946797,
+      -0.009047247003391169
+    ],
+    [
+      0.0015151235356966296,
+      0.04592633104159007,
+      0.0005670552049504933
+    ],
+    [
+      -0.0029382944546352016,
+      -0.002538209342069649,
+      0.052149609015023995
+    ],
+    [
+      0.02057612924682936,
+      -7.722424359433816e-05,
+      0.004243536702322122
+    ],
+    [
+      -0.0012843982074246506,
+      0.01408423688434695,
+      -0.0010363839639342548
+    ],
+    [
+      0.007466823068824832,
+      0.004870131733110714,
+      0.017328205113045766
+    ]
+  ],
+  "source_residual_power": 4.081132053575791e-05,
+  "source_fit": {
+    "command_bias": [
+      [
+        -0.004343233683474364,
+        0.003754916245985492,
+        -0.00670145329716458
+      ],
+      [
+        0.006155543216176819,
+        -0.0035986712808869087,
+        0.0016538051862722211
+      ],
+      [
+        0.006406299132943105,
+        0.028874355017170217,
+        0.007519298684096588
+      ],
+      [
+        0.008815953586599977,
+        -0.00843136681465267,
+        0.015432972444704476
+      ],
+      [
+        0.0026666796252736765,
+        0.003006283765887754,
+        0.0011661749764434284
+      ],
+      [
+        0.00044876357054287594,
+        0.0022795999206581498,
+        0.0010707318034543715
+      ],
+      [
+        0.00851226815330506,
+        0.007282236241075302,
+        0.0066396975826246134
+      ],
+      [
+        0.008527828091945223,
+        -0.0053259341152823965,
+        0.01732259150629599
+      ],
+      [
+        -0.010976249281913717,
+        0.012754308561990753,
+        -0.009227249726511334
+      ],
+      [
+        -0.003790734133094898,
+        0.009760028705818397,
+        0.007807862410868029
+      ]
+    ],
+    "rho": 0.7866256177850047
+  },
+  "leave_arm_out_source": {
+    "Panda": {
+      "command_bias": [
+        [
+          -0.0059016892132506115,
+          0.003076480679654378,
+          -0.008461453082132152
+        ],
+        [
+          0.006379131274455187,
+          -0.00429557584926,
+          0.00023145570030038906
+        ],
+        [
+          0.006713774771450663,
+          0.028397663065714968,
+          0.011296819730192356
+        ],
+        [
+          0.008671893838066843,
+          -0.0020107262807878543,
+          0.012965392223296587
+        ],
+        [
+          0.006984573048739703,
+          0.0006701081610014915,
+          0.0024176675477287097
+        ],
+        [
+          -0.0013495632847588491,
+          0.010254674764107657,
+          -0.0005816277150658503
+        ],
+        [
+          0.008932713140178556,
+          0.004468485393450837,
+          0.013556978214817975
+        ],
+        [
+          0.005152137752534642,
+          -0.002358009498237161,
+          0.0212641545955724
+        ],
+        [
+          -0.00880131817983688,
+          0.011622816021048392,
+          -0.008827971977423106
+        ],
+        [
+          -0.005413293894598276,
+          0.005801123806957024,
+          0.0030506567013169
+        ]
+      ],
+      "rho": 0.7498795481440761
+    },
+    "Sawyer": {
+      "command_bias": [
+        [
+          -0.002446812552926037,
+          0.003994369777450325,
+          -0.003912134881681914
+        ],
+        [
+          0.006226088233108191,
+          -0.0033056479364292,
+          0.0017263619882398034
+        ],
+        [
+          0.004255108649364525,
+          0.022736177836897523,
+          -0.0011687989748091234
+        ],
+        [
+          0.008979630535779548,
+          -0.010448597951025262,
+          0.018879068425908065
+        ],
+        [
+          -0.0006408145825853832,
+          0.005520357203430061,
+          0.0020298049744736225
+        ],
+        [
+          0.0032942342214604715,
+          -0.005216328184348746,
+          0.007051184223384389
+        ],
+        [
+          0.006421337210700246,
+          0.013106598793748807,
+          -0.00405167519183236
+        ],
+        [
+          0.009694997213276884,
+          -0.004728607675578602,
+          0.010645999510396239
+        ],
+        [
+          -0.012727523801445135,
+          0.006514984071969196,
+          -0.011414962869676654
+        ],
+        [
+          -0.002120625342409829,
+          0.0035342697848195753,
+          0.012499876243571087
+        ]
+      ],
+      "rho": 0.7828969847252547
+    }
+  },
+  "rows": [
+    {
+      "arm": "Panda",
+      "task": "libero_goal/4",
+      "start": 7,
+      "path": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-crossarm-20261120-r1/gpu01/pilot/joint_queries/libero_goal-4-i7-s20261527/Panda/unadapted/tape.npz",
+        "sha256": "8a886e847904d1d5c3d4caa7d23fe9404d45ed108149e3f067b20ad6d476d202"
+      },
+      "chunks": 60,
+      "raw_mm": 21.413334514849947,
+      "cmd_mm": 20.924589681302717,
+      "online_mm": 10.282785032380025,
+      "stale_mm": 19.034701412758626,
+      "reverse_mm": 35.53389851279962,
+      "predictor_positive_dot_fraction": 0.9298245614035088,
+      "typical_correction_norm": 0.2832093368854736,
+      "cases_capped_by_pending_command": 9,
+      "measured_displacement_mm": 25.302542373538017,
+      "projected_compensation_mm": 12.505674578385365
+    },
+    {
+      "arm": "Sawyer",
+      "task": "libero_goal/4",
+      "start": 7,
+      "path": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-crossarm-20261120-r1/gpu01/pilot/joint_queries/libero_goal-4-i7-s20261527/Sawyer/unadapted/tape.npz",
+        "sha256": "59407263e99be117f6807ad03c431633ed9b41a10e865645da229ca0fadd6146"
+      },
+      "chunks": 60,
+      "raw_mm": 43.17953575193612,
+      "cmd_mm": 18.976290661606043,
+      "online_mm": 7.70082566627899,
+      "stale_mm": 11.563790283966942,
+      "reverse_mm": 33.004053879580276,
+      "predictor_positive_dot_fraction": 0.9824561403508771,
+      "typical_correction_norm": 0.2978558651541656,
+      "cases_capped_by_pending_command": 1,
+      "measured_displacement_mm": 15.254981815814972,
+      "projected_compensation_mm": 13.001358172139822
+    },
+    {
+      "arm": "Panda",
+      "task": "libero_goal/4",
+      "start": 8,
+      "path": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-crossarm-20261120-r1/gpu01/pilot/joint_queries/libero_goal-4-i8-s20261528/Panda/unadapted/tape.npz",
+        "sha256": "896839a87d3b3b11d8bc38cbda3e305797e7efba8d0904239751493b62b10007"
+      },
+      "chunks": 17,
+      "raw_mm": 7.372422531325103,
+      "cmd_mm": 19.81196651925765,
+      "online_mm": 11.773006046043585,
+      "stale_mm": 20.222886882361223,
+      "reverse_mm": 33.082784581777595,
+      "predictor_positive_dot_fraction": 0.9285714285714286,
+      "typical_correction_norm": 0.2714168609172697,
+      "cases_capped_by_pending_command": 1,
+      "measured_displacement_mm": 48.847608268260956,
+      "projected_compensation_mm": 12.60923787100083
+    },
+    {
+      "arm": "Sawyer",
+      "task": "libero_goal/4",
+      "start": 8,
+      "path": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-crossarm-20261120-r1/gpu01/pilot/joint_queries/libero_goal-4-i8-s20261528/Sawyer/unadapted/tape.npz",
+        "sha256": "a471e3a2e8788aa34f53379f42f07f29532baa48e2b3613ce24689d129822b15"
+      },
+      "chunks": 19,
+      "raw_mm": 17.127656850838445,
+      "cmd_mm": 17.043435507841767,
+      "online_mm": 9.539572190013997,
+      "stale_mm": 15.929355845307521,
+      "reverse_mm": 27.740308642572117,
+      "predictor_positive_dot_fraction": 0.875,
+      "typical_correction_norm": 0.27714624634762275,
+      "cases_capped_by_pending_command": 0,
+      "measured_displacement_mm": 43.45433786511421,
+      "projected_compensation_mm": 12.55972891176509
+    },
+    {
+      "arm": "Panda",
+      "task": "libero_goal/5",
+      "start": 7,
+      "path": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-crossarm-20261120-r1/gpu01/pilot/joint_queries/libero_goal-5-i7-s20261627/Panda/unadapted/tape.npz",
+        "sha256": "5f6bcb2bc19e4cc0d65c416afefe2f54b015ba02d79a274aaf77aac54ec4f5b1"
+      },
+      "chunks": 22,
+      "raw_mm": 27.79891471634148,
+      "cmd_mm": 17.940702530395694,
+      "online_mm": 9.517234965152491,
+      "stale_mm": 17.093308152859393,
+      "reverse_mm": 29.900709463204837,
+      "predictor_positive_dot_fraction": 1.0,
+      "typical_correction_norm": 0.2765332749914242,
+      "cases_capped_by_pending_command": 0,
+      "measured_displacement_mm": 32.81081095337868,
+      "projected_compensation_mm": 12.58425888981477
+    },
+    {
+      "arm": "Sawyer",
+      "task": "libero_goal/5",
+      "start": 7,
+      "path": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-crossarm-20261120-r1/gpu01/pilot/joint_queries/libero_goal-5-i7-s20261627/Sawyer/unadapted/tape.npz",
+        "sha256": "b9e8b6cfb4744f62ad384d7e2eb3340ad8da3eb299f0f87994942c33511b70a2"
+      },
+      "chunks": 60,
+      "raw_mm": 49.70039197472537,
+      "cmd_mm": 22.572585461758752,
+      "online_mm": 7.0530671586195295,
+      "stale_mm": 9.197949046347818,
+      "reverse_mm": 39.546343908163045,
+      "predictor_positive_dot_fraction": 0.9824561403508771,
+      "typical_correction_norm": 0.1970685894847534,
+      "cases_capped_by_pending_command": 0,
+      "measured_displacement_mm": 9.694215841591358,
+      "projected_compensation_mm": 8.720916396613573
+    },
+    {
+      "arm": "Panda",
+      "task": "libero_goal/5",
+      "start": 8,
+      "path": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-crossarm-20261120-r1/gpu01/pilot/joint_queries/libero_goal-5-i8-s20261628/Panda/unadapted/tape.npz",
+        "sha256": "bdf1cb81cfa3f7de8761ab212009175b876df8d43c2cc93fe6ebd3757a115668"
+      },
+      "chunks": 42,
+      "raw_mm": 32.4506417265603,
+      "cmd_mm": 15.592380452680846,
+      "online_mm": 10.466000219790914,
+      "stale_mm": 19.242348709816877,
+      "reverse_mm": 25.305427102624154,
+      "predictor_positive_dot_fraction": 0.8717948717948718,
+      "typical_correction_norm": 0.24384524168660038,
+      "cases_capped_by_pending_command": 2,
+      "measured_displacement_mm": 27.99263969063759,
+      "projected_compensation_mm": 11.103445797148634
+    },
+    {
+      "arm": "Sawyer",
+      "task": "libero_goal/5",
+      "start": 8,
+      "path": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-crossarm-20261120-r1/gpu01/pilot/joint_queries/libero_goal-5-i8-s20261628/Sawyer/unadapted/tape.npz",
+        "sha256": "11f86e085f60f05c1ae962685cab0c7616ed0c93c7acab066dc33954c2b03b60"
+      },
+      "chunks": 60,
+      "raw_mm": 39.45125690237032,
+      "cmd_mm": 18.86767099232194,
+      "online_mm": 7.8640029146756865,
+      "stale_mm": 10.114198248068956,
+      "reverse_mm": 32.5686095486728,
+      "predictor_positive_dot_fraction": 0.9824561403508771,
+      "typical_correction_norm": 0.1688757068926614,
+      "cases_capped_by_pending_command": 1,
+      "measured_displacement_mm": 14.696618542075157,
+      "projected_compensation_mm": 7.542005177173813
+    },
+    {
+      "arm": "Panda",
+      "task": "libero_goal/4",
+      "start": 10,
+      "path": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-crossarm-20261120-r1/gpu01/pilot/source_gate/libero_goal-4-i10-s20261530/Panda/unadapted/tape.npz",
+        "sha256": "c68ccffccc74acfe0c74f2f37223fecdeb41d09f7d9f79f86577f9cb8c43e5b8"
+      },
+      "chunks": 19,
+      "raw_mm": 7.347255668130258,
+      "cmd_mm": 21.47869922553991,
+      "online_mm": 11.638324885958992,
+      "stale_mm": 22.942667345450793,
+      "reverse_mm": 36.18657443177163,
+      "predictor_positive_dot_fraction": 0.9375,
+      "typical_correction_norm": 0.3028913104977754,
+      "cases_capped_by_pending_command": 2,
+      "measured_displacement_mm": 50.686534494161606,
+      "projected_compensation_mm": 14.017674451176495
+    },
+    {
+      "arm": "Sawyer",
+      "task": "libero_goal/4",
+      "start": 10,
+      "path": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-crossarm-20261120-r1/gpu01/pilot/source_gate/libero_goal-4-i10-s20261530/Sawyer/unadapted/tape.npz",
+        "sha256": "7167796b0dcd5da42fc703859bf6137e2f0baffcd598a9d2014546b9c61e0011"
+      },
+      "chunks": 60,
+      "raw_mm": 35.05498894212025,
+      "cmd_mm": 20.770228994973376,
+      "online_mm": 11.766582840812726,
+      "stale_mm": 14.39628861122115,
+      "reverse_mm": 34.620559905643795,
+      "predictor_positive_dot_fraction": 0.9122807017543859,
+      "typical_correction_norm": 0.2700369518984822,
+      "cases_capped_by_pending_command": 6,
+      "measured_displacement_mm": 19.13592778146267,
+      "projected_compensation_mm": 12.40192225873243
+    },
+    {
+      "arm": "UR5e",
+      "task": "libero_goal/1",
+      "start": 13,
+      "path": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-crossarm-20261120-r1/gpu01/pilot/evaluation/libero_goal-1-i13-s20261233/UR5e/unadapted/tape.npz",
+        "sha256": "52c4f1c694f949269801fbdd5e34139b5560c05ca4121fd7da1f5740f1ef3c9d"
+      },
+      "chunks": 16,
+      "raw_mm": 6.902650945072682,
+      "cmd_mm": 28.8932422317806,
+      "online_mm": 16.421563654605173,
+      "stale_mm": 32.73896987499552,
+      "reverse_mm": 47.991471246496225,
+      "predictor_positive_dot_fraction": 0.9230769230769231,
+      "typical_correction_norm": 0.35058089544776677,
+      "cases_capped_by_pending_command": 4,
+      "measured_displacement_mm": 45.76440155506134,
+      "projected_compensation_mm": 15.56361983406775
+    },
+    {
+      "arm": "UR5e",
+      "task": "libero_goal/1",
+      "start": 14,
+      "path": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-crossarm-20261120-r1/gpu01/pilot/evaluation/libero_goal-1-i14-s20261234/UR5e/unadapted/tape.npz",
+        "sha256": "efc105fa733210cabf77b0c198e672c12c2111c5bc0d5e81395379d808635cdd"
+      },
+      "chunks": 19,
+      "raw_mm": 6.253842445042201,
+      "cmd_mm": 27.512609250112835,
+      "online_mm": 13.931066570549426,
+      "stale_mm": 28.855253375852012,
+      "reverse_mm": 47.41962937546074,
+      "predictor_positive_dot_fraction": 0.9375,
+      "typical_correction_norm": 0.38096941174542703,
+      "cases_capped_by_pending_command": 6,
+      "measured_displacement_mm": 43.919190764427185,
+      "projected_compensation_mm": 16.851871645972786
+    },
+    {
+      "arm": "UR5e",
+      "task": "libero_spatial/1",
+      "start": 13,
+      "path": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-crossarm-20261120-r1/gpu01/pilot/evaluation/libero_spatial-1-i13-s20271233/UR5e/unadapted/tape.npz",
+        "sha256": "f7caafdf998bf458e1a948dbdc6152d8d0861240cd6736d068368f291ecc4eb4"
+      },
+      "chunks": 23,
+      "raw_mm": 7.54514780263834,
+      "cmd_mm": 26.32148474793252,
+      "online_mm": 11.082792564489441,
+      "stale_mm": 22.588587755818615,
+      "reverse_mm": 46.06222764949976,
+      "predictor_positive_dot_fraction": 0.9,
+      "typical_correction_norm": 0.439863889790315,
+      "cases_capped_by_pending_command": 3,
+      "measured_displacement_mm": 50.52993819117546,
+      "projected_compensation_mm": 19.270316167234906
+    },
+    {
+      "arm": "UR5e",
+      "task": "libero_spatial/1",
+      "start": 14,
+      "path": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-crossarm-20261120-r1/gpu01/pilot/evaluation/libero_spatial-1-i14-s20271234/UR5e/unadapted/tape.npz",
+        "sha256": "3e58ab7602ded10cab13801a3f5423a267ae0953169cb5560a0a1dac7cba5e5a"
+      },
+      "chunks": 21,
+      "raw_mm": 7.0034812109917235,
+      "cmd_mm": 26.0506181034617,
+      "online_mm": 11.167201311540415,
+      "stale_mm": 22.74871817925134,
+      "reverse_mm": 47.509236006461705,
+      "predictor_positive_dot_fraction": 0.9444444444444444,
+      "typical_correction_norm": 0.4453066488345099,
+      "cases_capped_by_pending_command": 4,
+      "measured_displacement_mm": 49.10653457045555,
+      "projected_compensation_mm": 19.640302613223568
+    },
+    {
+      "arm": "Kinova3",
+      "task": "libero_10/8",
+      "start": 14,
+      "path": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-native-transfer-20261123-r1/gpu01/libero_10-8-14-Kinova3.json",
+        "sha256": "36c274f3661ce61f70367bd621b762e69d0beae495e25fc9e9365151a64fdb7d"
+      },
+      "chunks": 99,
+      "raw_mm": 10.83718784000347,
+      "cmd_mm": 18.580659609820472,
+      "online_mm": 7.059284832732683,
+      "stale_mm": 12.05485277769743,
+      "reverse_mm": 32.570870227044736,
+      "predictor_positive_dot_fraction": 0.9895833333333334,
+      "typical_correction_norm": 0.3012972766905622,
+      "cases_capped_by_pending_command": 27,
+      "measured_displacement_mm": 26.645726793027638,
+      "projected_compensation_mm": 13.301146373762387
+    },
+    {
+      "arm": "Kinova3",
+      "task": "libero_10/8",
+      "start": 15,
+      "path": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-native-transfer-20261123-r1/gpu01/libero_10-8-15-Kinova3.json",
+        "sha256": "d39569dbbec5fbc94c6da20d5c123205e1cbdfe77c09d4c72d328a21614d5fed"
+      },
+      "chunks": 72,
+      "raw_mm": 7.3025759658264136,
+      "cmd_mm": 18.168164388874565,
+      "online_mm": 7.402239377057378,
+      "stale_mm": 12.739789736958254,
+      "reverse_mm": 31.65613954921978,
+      "predictor_positive_dot_fraction": 0.9420289855072463,
+      "typical_correction_norm": 0.2839694029130453,
+      "cases_capped_by_pending_command": 17,
+      "measured_displacement_mm": 27.036964106796017,
+      "projected_compensation_mm": 12.841262778248783
+    },
+    {
+      "arm": "Kinova3",
+      "task": "libero_goal/3",
+      "start": 14,
+      "path": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-native-transfer-20261123-r1/gpu01/libero_goal-3-14-Kinova3.json",
+        "sha256": "5a5bd5bd03d521468bf32afee52bc1ea653b64fec6b8baaa53dd59aad9f75bec"
+      },
+      "chunks": 60,
+      "raw_mm": 45.401751815814904,
+      "cmd_mm": 21.147394230940055,
+      "online_mm": 8.695331086193908,
+      "stale_mm": 12.491201561838087,
+      "reverse_mm": 36.943106443251004,
+      "predictor_positive_dot_fraction": 1.0,
+      "typical_correction_norm": 0.28277140767016495,
+      "cases_capped_by_pending_command": 2,
+      "measured_displacement_mm": 9.82981669578719,
+      "projected_compensation_mm": 14.494770126566207
+    },
+    {
+      "arm": "Kinova3",
+      "task": "libero_goal/3",
+      "start": 15,
+      "path": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-native-transfer-20261123-r1/gpu01/libero_goal-3-15-Kinova3.json",
+        "sha256": "b817b88f7664c1c67b7425e112e675d2b9ebc31c210760fa8b46ce6b30155894"
+      },
+      "chunks": 60,
+      "raw_mm": 16.060698371388494,
+      "cmd_mm": 15.409673227162092,
+      "online_mm": 9.983543981086234,
+      "stale_mm": 16.196474035078452,
+      "reverse_mm": 26.0050086003517,
+      "predictor_positive_dot_fraction": 0.8947368421052632,
+      "typical_correction_norm": 0.24965477323917082,
+      "cases_capped_by_pending_command": 5,
+      "measured_displacement_mm": 22.968135929930675,
+      "projected_compensation_mm": 11.37727849772067
+    },
+    {
+      "arm": "Kinova3",
+      "task": "libero_goal/6",
+      "start": 14,
+      "path": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-native-transfer-20261123-r1/gpu01/libero_goal-6-14-Kinova3.json",
+        "sha256": "0785c5468312dd81131859f1de78e0bae7e6ec088f2cf0754a2bcd87147daed9"
+      },
+      "chunks": 18,
+      "raw_mm": 13.096134119521329,
+      "cmd_mm": 17.41892207996868,
+      "online_mm": 8.515753525366144,
+      "stale_mm": 16.360200608848924,
+      "reverse_mm": 30.692013566026322,
+      "predictor_positive_dot_fraction": 0.9333333333333333,
+      "typical_correction_norm": 0.26465715749395746,
+      "cases_capped_by_pending_command": 3,
+      "measured_displacement_mm": 42.517866789833235,
+      "projected_compensation_mm": 12.56050489968704
+    },
+    {
+      "arm": "Kinova3",
+      "task": "libero_goal/6",
+      "start": 15,
+      "path": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-native-transfer-20261123-r1/gpu01/libero_goal-6-15-Kinova3.json",
+        "sha256": "2abc9e4851d843251613cc90027843d52f665356a2efdc94dbd5ab3ac41cfc74"
+      },
+      "chunks": 19,
+      "raw_mm": 10.230274548219345,
+      "cmd_mm": 16.642972777944035,
+      "online_mm": 9.558083268326575,
+      "stale_mm": 17.127397266733777,
+      "reverse_mm": 28.910714485609024,
+      "predictor_positive_dot_fraction": 0.9375,
+      "typical_correction_norm": 0.2713496890113293,
+      "cases_capped_by_pending_command": 2,
+      "measured_displacement_mm": 41.59689401878138,
+      "projected_compensation_mm": 12.567903663456693
+    }
+  ]
+}
