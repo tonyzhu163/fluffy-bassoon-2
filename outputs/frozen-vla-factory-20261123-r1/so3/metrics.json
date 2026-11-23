@@ -1,0 +1,1422 @@
+{
+  "revision": "757a44cd4374833cad790852df8b87ddf412e638",
+  "resource": "local CPU, 0 GPUh",
+  "numpy": "2.5.4",
+  "source_tasks_windows": {
+    "libero_10-0": 18,
+    "libero_10-3": 13,
+    "libero_goal-0": 7,
+    "libero_goal-1": 5,
+    "libero_object-0": 8,
+    "libero_object-7": 8,
+    "libero_spatial-1": 6,
+    "libero_spatial-7": 7
+  },
+  "source_mean_m_per_command": 0.058826661869917675,
+  "source_geodesic_grid_deg": {
+    "gain_so3": {
+      "0.0": 28.11719001966749,
+      "0.001": 27.247651517070853,
+      "0.01": 23.78253997104621,
+      "0.1": 21.050114087644086,
+      "1.0": 20.656709985014835,
+      "10.0": 20.80514344672755
+    },
+    "raw_polar": {
+      "0.0": 20.901550108026232
+    },
+    "least_squares": {
+      "0.0": 54.760739943168005
+    },
+    "ridge_zero": {
+      "0.0": 54.760739943168005,
+      "0.001": 41.25480339528707,
+      "0.01": 28.34236294283463,
+      "0.1": 22.2943857323433,
+      "1.0": 20.720654704330727,
+      "10.0": 20.842729050300683
+    },
+    "ridge_polar": {
+      "0.0": 54.760739943168005,
+      "0.001": 36.041693070204744,
+      "0.01": 25.679075464051152,
+      "0.1": 21.200703799708396,
+      "1.0": 20.738095803895774,
+      "10.0": 20.89341106201012
+    }
+  },
+  "source_selected_shrinkage": {
+    "gain_so3": 1.0,
+    "raw_polar": 0.0,
+    "least_squares": 0.0,
+    "ridge_zero": 1.0,
+    "ridge_polar": 1.0
+  },
+  "seeds_source_target_boot": [
+    231101,
+    231102,
+    231103
+  ],
+  "draws_per_trace": 32,
+  "target_supports": 96,
+  "target_tasks": 8,
+  "original_s3_s1_quantiles_min_q1_median_q3_max": [
+    0.0010629455530231963,
+    0.006228486140443408,
+    0.012585124974618238,
+    0.026665363564859525,
+    0.0778961027429179
+  ],
+  "median_original_s3_s1_by_half": {
+    "weaker": 0.006278072105002629,
+    "stronger": 0.026145940507848502
+  },
+  "results": {
+    "anisotropic": {
+      "cases": 3072,
+      "outside_unit_box": 354,
+      "pairs_by_stratum": {
+        "all": 3072,
+        "weaker": 1536,
+        "stronger": 1536,
+        "in_box": 2718,
+        "weaker_in_box": 1373
+      },
+      "strata": {
+        "all": {
+          "gain_so3": {
+            "mean_deg": 23.40002332415853,
+            "pooled_p90_deg": 46.81541555572614,
+            "mean_inverse_rms": 0.4325573023187361,
+            "control_minus_gain_deg": 0.0,
+            "paired_task_bootstrap95_deg": [
+              0.0,
+              0.0
+            ],
+            "control_minus_gain_inverse_rms": 0.0,
+            "paired_task_bootstrap95_inverse_rms": [
+              0.0,
+              0.0
+            ],
+            "gain_win_fraction": 0.0,
+            "mean_deg_by_task": {
+              "libero_10-5": 23.481243526087244,
+              "libero_10-8": 16.126990785784912,
+              "libero_goal-3": 20.52013388381238,
+              "libero_goal-6": 24.82580638178457,
+              "libero_object-1": 16.331088955140732,
+              "libero_object-8": 26.366307277335242,
+              "libero_spatial-0": 36.92312804507402,
+              "libero_spatial-8": 22.625487738249124
+            }
+          },
+          "raw_polar": {
+            "mean_deg": 23.579844356519175,
+            "pooled_p90_deg": 46.55688608488909,
+            "mean_inverse_rms": 0.4222523850491328,
+            "control_minus_gain_deg": 0.1798210323606481,
+            "paired_task_bootstrap95_deg": [
+              0.04725886451308741,
+              0.3284463397110611
+            ],
+            "control_minus_gain_inverse_rms": -0.010304917269603326,
+            "paired_task_bootstrap95_inverse_rms": [
+              -0.023796310972427133,
+              0.0035254947989935875
+            ],
+            "gain_win_fraction": 0.541015625,
+            "mean_deg_by_task": {
+              "libero_10-5": 23.53509073120874,
+              "libero_10-8": 16.316974241906752,
+              "libero_goal-3": 20.50877465261919,
+              "libero_goal-6": 24.771134557182467,
+              "libero_object-1": 16.834892371542818,
+              "libero_object-8": 26.550045047068313,
+              "libero_spatial-0": 37.440249529562365,
+              "libero_spatial-8": 22.68159372106277
+            }
+          },
+          "least_squares": {
+            "mean_deg": 75.83627703989931,
+            "pooled_p90_deg": 106.42044046025859,
+            "mean_inverse_rms": 1.864432624492876,
+            "control_minus_gain_deg": 52.43625371574079,
+            "paired_task_bootstrap95_deg": [
+              47.68100615224824,
+              57.22739556222707
+            ],
+            "control_minus_gain_inverse_rms": 1.43187532217414,
+            "paired_task_bootstrap95_inverse_rms": [
+              1.2769143893501536,
+              1.550360692911608
+            ],
+            "gain_win_fraction": 0.9847005208333333,
+            "mean_deg_by_task": {
+              "libero_10-5": 69.1087825265235,
+              "libero_10-8": 80.81034575296555,
+              "libero_goal-3": 73.29146003337956,
+              "libero_goal-6": 77.93162255542383,
+              "libero_object-1": 68.27128024869317,
+              "libero_object-8": 85.7374399839684,
+              "libero_spatial-0": 77.36402887403274,
+              "libero_spatial-8": 74.17525634420781
+            }
+          },
+          "ridge_zero": {
+            "mean_deg": 23.639484835035912,
+            "pooled_p90_deg": 46.62832870381625,
+            "mean_inverse_rms": 2.912881969778721,
+            "control_minus_gain_deg": 0.2394615108773832,
+            "paired_task_bootstrap95_deg": [
+              0.057134851845266094,
+              0.4340354175967234
+            ],
+            "control_minus_gain_inverse_rms": 2.4803246674599846,
+            "paired_task_bootstrap95_inverse_rms": [
+              2.427728271475743,
+              2.5384317913219374
+            ],
+            "gain_win_fraction": 0.5579427083333333,
+            "mean_deg_by_task": {
+              "libero_10-5": 23.571620699623878,
+              "libero_10-8": 16.26855421495661,
+              "libero_goal-3": 20.410189082795373,
+              "libero_goal-6": 24.797905683299913,
+              "libero_object-1": 17.03242217078629,
+              "libero_object-8": 26.91584431811997,
+              "libero_spatial-0": 37.40310652535751,
+              "libero_spatial-8": 22.716235985347755
+            }
+          },
+          "ridge_polar": {
+            "mean_deg": 23.57502013091623,
+            "pooled_p90_deg": 46.58291174700008,
+            "mean_inverse_rms": 0.42081150411148094,
+            "control_minus_gain_deg": 0.17499680675769977,
+            "paired_task_bootstrap95_deg": [
+              0.029396124736468406,
+              0.3344802298354819
+            ],
+            "control_minus_gain_inverse_rms": -0.011745798207255149,
+            "paired_task_bootstrap95_inverse_rms": [
+              -0.02573140769240724,
+              0.002291802593390044
+            ],
+            "gain_win_fraction": 0.5481770833333333,
+            "mean_deg_by_task": {
+              "libero_10-5": 23.533834002323477,
+              "libero_10-8": 16.24631937826174,
+              "libero_goal-3": 20.448279308948536,
+              "libero_goal-6": 24.771173981378848,
+              "libero_object-1": 16.88883000525344,
+              "libero_object-8": 26.63636875505293,
+              "libero_spatial-0": 37.407589901873834,
+              "libero_spatial-8": 22.66776571423702
+            }
+          }
+        },
+        "weaker": {
+          "gain_so3": {
+            "mean_deg": 29.39777684652774,
+            "pooled_p90_deg": 59.062602854530965,
+            "mean_inverse_rms": 0.46165519999294957,
+            "control_minus_gain_deg": 0.0,
+            "paired_task_bootstrap95_deg": [
+              0.0,
+              0.0
+            ],
+            "control_minus_gain_inverse_rms": 0.0,
+            "paired_task_bootstrap95_inverse_rms": [
+              0.0,
+              0.0
+            ],
+            "gain_win_fraction": 0.0,
+            "mean_deg_by_task": {
+              "libero_10-5": 30.69575866244878,
+              "libero_10-8": 17.311251787541394,
+              "libero_goal-3": 27.371778737246192,
+              "libero_goal-6": 26.1362955599209,
+              "libero_object-1": 19.72672747669981,
+              "libero_object-8": 35.53471320911882,
+              "libero_spatial-0": 60.01484648749661,
+              "libero_spatial-8": 18.390842851749433
+            }
+          },
+          "raw_polar": {
+            "mean_deg": 29.73929234321418,
+            "pooled_p90_deg": 59.86383247440325,
+            "mean_inverse_rms": 0.47834918667239334,
+            "control_minus_gain_deg": 0.3415154966864376,
+            "paired_task_bootstrap95_deg": [
+              0.14784047519027013,
+              0.5304827118885915
+            ],
+            "control_minus_gain_inverse_rms": 0.01669398667944378,
+            "paired_task_bootstrap95_inverse_rms": [
+              -0.006518582425948949,
+              0.03683542484455227
+            ],
+            "gain_win_fraction": 0.5826822916666667,
+            "mean_deg_by_task": {
+              "libero_10-5": 31.056791750138142,
+              "libero_10-8": 17.480657426984664,
+              "libero_goal-3": 27.460415463691366,
+              "libero_goal-6": 26.576772071666806,
+              "libero_object-1": 20.070707336782025,
+              "libero_object-8": 36.2158258156634,
+              "libero_spatial-0": 60.78790588414849,
+              "libero_spatial-8": 18.265262996638555
+            }
+          },
+          "least_squares": {
+            "mean_deg": 85.95207111894096,
+            "pooled_p90_deg": 111.84676715724785,
+            "mean_inverse_rms": 1.9335343739239301,
+            "control_minus_gain_deg": 56.554294272413216,
+            "paired_task_bootstrap95_deg": [
+              48.94249771965104,
+              63.4923192036472
+            ],
+            "control_minus_gain_inverse_rms": 1.4718791739309807,
+            "paired_task_bootstrap95_inverse_rms": [
+              1.2730058866651937,
+              1.6560576092217596
+            ],
+            "gain_win_fraction": 0.9694010416666667,
+            "mean_deg_by_task": {
+              "libero_10-5": 89.28543817171055,
+              "libero_10-8": 90.95717242229459,
+              "libero_goal-3": 88.4135958173377,
+              "libero_goal-6": 88.42967271753571,
+              "libero_object-1": 74.93059645903202,
+              "libero_object-8": 85.50290510056114,
+              "libero_spatial-0": 94.82919553298518,
+              "libero_spatial-8": 75.26799273007082
+            }
+          },
+          "ridge_zero": {
+            "mean_deg": 29.7705910717183,
+            "pooled_p90_deg": 59.88722052436073,
+            "mean_inverse_rms": 2.8980480253753838,
+            "control_minus_gain_deg": 0.37281422519055785,
+            "paired_task_bootstrap95_deg": [
+              0.15200181141081362,
+              0.5799163942386008
+            ],
+            "control_minus_gain_inverse_rms": 2.436392825382434,
+            "paired_task_bootstrap95_inverse_rms": [
+              2.179082631745019,
+              2.6493068250436353
+            ],
+            "gain_win_fraction": 0.5944010416666667,
+            "mean_deg_by_task": {
+              "libero_10-5": 31.061222762285464,
+              "libero_10-8": 17.44926486017767,
+              "libero_goal-3": 27.47587554021329,
+              "libero_goal-6": 26.569422756962457,
+              "libero_object-1": 20.334835871135404,
+              "libero_object-8": 36.28649219923002,
+              "libero_spatial-0": 60.767834533891744,
+              "libero_spatial-8": 18.21978004985036
+            }
+          },
+          "ridge_polar": {
+            "mean_deg": 29.739920331438505,
+            "pooled_p90_deg": 59.875152540172486,
+            "mean_inverse_rms": 0.47742291607121623,
+            "control_minus_gain_deg": 0.34214348491076274,
+            "paired_task_bootstrap95_deg": [
+              0.14429195406888892,
+              0.5337308507412343
+            ],
+            "control_minus_gain_inverse_rms": 0.015767716078266637,
+            "paired_task_bootstrap95_inverse_rms": [
+              -0.007673348139002398,
+              0.036108565120522226
+            ],
+            "gain_win_fraction": 0.5924479166666666,
+            "mean_deg_by_task": {
+              "libero_10-5": 31.046977525565694,
+              "libero_10-8": 17.4482116018736,
+              "libero_goal-3": 27.45751016138497,
+              "libero_goal-6": 26.56718137151206,
+              "libero_object-1": 20.162660369034576,
+              "libero_object-8": 36.23466025278936,
+              "libero_spatial-0": 60.75482964137257,
+              "libero_spatial-8": 18.247331727975205
+            }
+          }
+        },
+        "stronger": {
+          "gain_so3": {
+            "mean_deg": 17.402269801789316,
+            "pooled_p90_deg": 30.307678265978595,
+            "mean_inverse_rms": 0.4034594046445227,
+            "control_minus_gain_deg": 0.0,
+            "paired_task_bootstrap95_deg": [
+              0.0,
+              0.0
+            ],
+            "control_minus_gain_inverse_rms": 0.0,
+            "paired_task_bootstrap95_inverse_rms": [
+              0.0,
+              0.0
+            ],
+            "gain_win_fraction": 0.0,
+            "mean_deg_by_task": {
+              "libero_10-5": 16.26672838972571,
+              "libero_10-8": 14.94272978402843,
+              "libero_goal-3": 13.668489030378572,
+              "libero_goal-6": 23.515317203648237,
+              "libero_object-1": 12.935450433581655,
+              "libero_object-8": 17.19790134555167,
+              "libero_spatial-0": 13.831409602651435,
+              "libero_spatial-8": 26.860132624748825
+            }
+          },
+          "raw_polar": {
+            "mean_deg": 17.420396369824175,
+            "pooled_p90_deg": 30.57455251191967,
+            "mean_inverse_rms": 0.36615558342587223,
+            "control_minus_gain_deg": 0.018126568034858556,
+            "paired_task_bootstrap95_deg": [
+              -0.23387411493997706,
+              0.26853260231558873
+            ],
+            "control_minus_gain_inverse_rms": -0.03730382121865043,
+            "paired_task_bootstrap95_inverse_rms": [
+              -0.0562533615898685,
+              -0.017489480331539787
+            ],
+            "gain_win_fraction": 0.49934895833333337,
+            "mean_deg_by_task": {
+              "libero_10-5": 16.013389712279334,
+              "libero_10-8": 15.153291056828841,
+              "libero_goal-3": 13.55713384154702,
+              "libero_goal-6": 22.965497042698132,
+              "libero_object-1": 13.599077406303614,
+              "libero_object-8": 16.88426427847323,
+              "libero_spatial-0": 14.092593174976237,
+              "libero_spatial-8": 27.097924445486996
+            }
+          },
+          "least_squares": {
+            "mean_deg": 65.72048296085768,
+            "pooled_p90_deg": 96.95571718033601,
+            "mean_inverse_rms": 1.7953308750618215,
+            "control_minus_gain_deg": 48.318213159068364,
+            "paired_task_bootstrap95_deg": [
+              42.0180520551416,
+              55.4169344564618
+            ],
+            "control_minus_gain_inverse_rms": 1.3918714704172992,
+            "paired_task_bootstrap95_inverse_rms": [
+              1.1378189376374972,
+              1.6513818131706308
+            ],
+            "gain_win_fraction": 1.0,
+            "mean_deg_by_task": {
+              "libero_10-5": 48.93212688133644,
+              "libero_10-8": 70.66351908363649,
+              "libero_goal-3": 58.169324249421436,
+              "libero_goal-6": 67.43357239331196,
+              "libero_object-1": 61.6119640383543,
+              "libero_object-8": 85.97197486737569,
+              "libero_spatial-0": 59.89886221508032,
+              "libero_spatial-8": 73.08251995834483
+            }
+          },
+          "ridge_zero": {
+            "mean_deg": 17.508378598353527,
+            "pooled_p90_deg": 30.53519652911986,
+            "mean_inverse_rms": 2.9277159141820586,
+            "control_minus_gain_deg": 0.1061087965642086,
+            "paired_task_bootstrap95_deg": [
+              -0.1595054136138651,
+              0.3687847886457496
+            ],
+            "control_minus_gain_inverse_rms": 2.524256509537536,
+            "paired_task_bootstrap95_inverse_rms": [
+              2.358622915092452,
+              2.724052861804851
+            ],
+            "gain_win_fraction": 0.521484375,
+            "mean_deg_by_task": {
+              "libero_10-5": 16.082018636962292,
+              "libero_10-8": 15.087843569735547,
+              "libero_goal-3": 13.344502625377466,
+              "libero_goal-6": 23.02638860963737,
+              "libero_object-1": 13.730008470437177,
+              "libero_object-8": 17.545196437009924,
+              "libero_spatial-0": 14.038378516823277,
+              "libero_spatial-8": 27.212691920845156
+            }
+          },
+          "ridge_polar": {
+            "mean_deg": 17.410119930393954,
+            "pooled_p90_deg": 30.479286699513278,
+            "mean_inverse_rms": 0.3642000921517457,
+            "control_minus_gain_deg": 0.0078501286046367,
+            "paired_task_bootstrap95_deg": [
+              -0.23193749924718357,
+              0.2501912447004303
+            ],
+            "control_minus_gain_inverse_rms": -0.039259312492776935,
+            "paired_task_bootstrap95_inverse_rms": [
+              -0.058415223364795855,
+              -0.019303255159976627
+            ],
+            "gain_win_fraction": 0.50390625,
+            "mean_deg_by_task": {
+              "libero_10-5": 16.020690479081267,
+              "libero_10-8": 15.044427154649881,
+              "libero_goal-3": 13.439048456512097,
+              "libero_goal-6": 22.975166591245625,
+              "libero_object-1": 13.614999641472302,
+              "libero_object-8": 17.038077257316505,
+              "libero_spatial-0": 14.060350162375101,
+              "libero_spatial-8": 27.088199700498837
+            }
+          }
+        },
+        "in_box": {
+          "gain_so3": {
+            "mean_deg": 23.503669029418933,
+            "pooled_p90_deg": 46.09756938094661,
+            "mean_inverse_rms": 0.4330221794874902,
+            "control_minus_gain_deg": 0.0,
+            "paired_task_bootstrap95_deg": [
+              0.0,
+              0.0
+            ],
+            "control_minus_gain_inverse_rms": 0.0,
+            "paired_task_bootstrap95_inverse_rms": [
+              0.0,
+              0.0
+            ],
+            "gain_win_fraction": 0.0,
+            "mean_deg_by_task": {
+              "libero_10-5": 23.481243526087244,
+              "libero_10-8": 16.126990785784912,
+              "libero_goal-3": 20.722521515693007,
+              "libero_goal-6": 25.012090943531778,
+              "libero_object-1": 16.366601945429508,
+              "libero_object-8": 26.41834227358832,
+              "libero_spatial-0": 37.24786489705763,
+              "libero_spatial-8": 22.65369634817908
+            }
+          },
+          "raw_polar": {
+            "mean_deg": 23.624996087185835,
+            "pooled_p90_deg": 46.28060315860724,
+            "mean_inverse_rms": 0.41074018626046477,
+            "control_minus_gain_deg": 0.12132705776690154,
+            "paired_task_bootstrap95_deg": [
+              -0.037374008722295744,
+              0.2865158651426203
+            ],
+            "control_minus_gain_inverse_rms": -0.022281993227025447,
+            "paired_task_bootstrap95_inverse_rms": [
+              -0.036206208134819035,
+              -0.007334009068636854
+            ],
+            "gain_win_fraction": 0.5294403553073846,
+            "mean_deg_by_task": {
+              "libero_10-5": 23.53509073120874,
+              "libero_10-8": 16.316974241906752,
+              "libero_goal-3": 20.66171250622393,
+              "libero_goal-6": 24.78787464353351,
+              "libero_object-1": 16.86972898281277,
+              "libero_object-8": 26.555319107052025,
+              "libero_spatial-0": 37.69134461066678,
+              "libero_spatial-8": 22.581923874082175
+            }
+          },
+          "least_squares": {
+            "mean_deg": 75.60852368743538,
+            "pooled_p90_deg": 106.43530057939415,
+            "mean_inverse_rms": 1.8962991444210018,
+            "control_minus_gain_deg": 52.10485465801645,
+            "paired_task_bootstrap95_deg": [
+              47.21268184333332,
+              57.00933521538495
+            ],
+            "control_minus_gain_inverse_rms": 1.4632769649335113,
+            "paired_task_bootstrap95_inverse_rms": [
+              1.2958453758865134,
+              1.5998618429470164
+            ],
+            "gain_win_fraction": 0.9841269841269842,
+            "mean_deg_by_task": {
+              "libero_10-5": 69.1087825265235,
+              "libero_10-8": 80.81034575296555,
+              "libero_goal-3": 72.76664868551337,
+              "libero_goal-6": 77.81864198232864,
+              "libero_object-1": 68.14476429660743,
+              "libero_object-8": 85.59263793937716,
+              "libero_spatial-0": 76.6488131380991,
+              "libero_spatial-8": 73.9775551780683
+            }
+          },
+          "ridge_zero": {
+            "mean_deg": 23.667089348703424,
+            "pooled_p90_deg": 46.097527982674336,
+            "mean_inverse_rms": 2.935362326474332,
+            "control_minus_gain_deg": 0.16342031928448902,
+            "paired_task_bootstrap95_deg": [
+              -0.04515764772518964,
+              0.38055393331555665
+            ],
+            "control_minus_gain_inverse_rms": 2.5023401469868416,
+            "paired_task_bootstrap95_inverse_rms": [
+              2.4506655583580463,
+              2.5558547312400304
+            ],
+            "gain_win_fraction": 0.5438451553160988,
+            "mean_deg_by_task": {
+              "libero_10-5": 23.571620699623878,
+              "libero_10-8": 16.26855421495661,
+              "libero_goal-3": 20.486144876539267,
+              "libero_goal-6": 24.79975871817311,
+              "libero_object-1": 17.062306364291413,
+              "libero_object-8": 26.918508312496346,
+              "libero_spatial-0": 37.6095945706434,
+              "libero_spatial-8": 22.62022703290336
+            }
+          },
+          "ridge_polar": {
+            "mean_deg": 23.61222598872687,
+            "pooled_p90_deg": 46.201422298611334,
+            "mean_inverse_rms": 0.4090600819907951,
+            "control_minus_gain_deg": 0.10855695930793462,
+            "paired_task_bootstrap95_deg": [
+              -0.06094971597455626,
+              0.28696718248184655
+            ],
+            "control_minus_gain_inverse_rms": -0.023962097496695152,
+            "paired_task_bootstrap95_inverse_rms": [
+              -0.037712958973076596,
+              -0.008753288296651384
+            ],
+            "gain_win_fraction": 0.5356986121492449,
+            "mean_deg_by_task": {
+              "libero_10-5": 23.533834002323477,
+              "libero_10-8": 16.24631937826174,
+              "libero_goal-3": 20.569053741135605,
+              "libero_goal-6": 24.781050620272154,
+              "libero_object-1": 16.921189826402514,
+              "libero_object-8": 26.640016745997766,
+              "libero_spatial-0": 37.639712947428265,
+              "libero_spatial-8": 22.566630647993417
+            }
+          }
+        },
+        "weaker_in_box": {
+          "gain_so3": {
+            "mean_deg": 29.469962537952078,
+            "pooled_p90_deg": 57.74604345532926,
+            "mean_inverse_rms": 0.4613839845534439,
+            "control_minus_gain_deg": 0.0,
+            "paired_task_bootstrap95_deg": [
+              0.0,
+              0.0
+            ],
+            "control_minus_gain_inverse_rms": 0.0,
+            "paired_task_bootstrap95_inverse_rms": [
+              0.0,
+              0.0
+            ],
+            "gain_win_fraction": 0.0,
+            "mean_deg_by_task": {
+              "libero_10-5": 30.69575866244878,
+              "libero_10-8": 17.311251787541394,
+              "libero_goal-3": 27.345253577153134,
+              "libero_goal-6": 26.344032719574084,
+              "libero_object-1": 19.801867897900816,
+              "libero_object-8": 35.603911177241066,
+              "libero_spatial-0": 60.1923275949224,
+              "libero_spatial-8": 18.465296886834953
+            }
+          },
+          "raw_polar": {
+            "mean_deg": 29.744679747393658,
+            "pooled_p90_deg": 57.92785189112516,
+            "mean_inverse_rms": 0.46615131725332326,
+            "control_minus_gain_deg": 0.27471720944157685,
+            "paired_task_bootstrap95_deg": [
+              0.0780116160660474,
+              0.47240837465359337
+            ],
+            "control_minus_gain_inverse_rms": 0.004767332699879317,
+            "paired_task_bootstrap95_inverse_rms": [
+              -0.015462648712833663,
+              0.02248839866392602
+            ],
+            "gain_win_fraction": 0.5634112677982359,
+            "mean_deg_by_task": {
+              "libero_10-5": 31.056791750138142,
+              "libero_10-8": 17.480657426984664,
+              "libero_goal-3": 27.341185455692596,
+              "libero_goal-6": 26.57557542289508,
+              "libero_object-1": 20.084680307636066,
+              "libero_object-8": 36.2814546654425,
+              "libero_spatial-0": 60.878078397894946,
+              "libero_spatial-8": 18.259014552465242
+            }
+          },
+          "least_squares": {
+            "mean_deg": 85.82006894944107,
+            "pooled_p90_deg": 110.46954186196655,
+            "mean_inverse_rms": 1.9637569745919814,
+            "control_minus_gain_deg": 56.350106411488994,
+            "paired_task_bootstrap95_deg": [
+              48.55542750611557,
+              63.415389489826374
+            ],
+            "control_minus_gain_inverse_rms": 1.5023729900385376,
+            "paired_task_bootstrap95_inverse_rms": [
+              1.2961985619165113,
+              1.6886785693224693
+            ],
+            "gain_win_fraction": 0.9682539682539683,
+            "mean_deg_by_task": {
+              "libero_10-5": 89.28543817171055,
+              "libero_10-8": 90.95717242229459,
+              "libero_goal-3": 88.42310825300888,
+              "libero_goal-6": 88.51505501819632,
+              "libero_object-1": 74.7457090887877,
+              "libero_object-8": 85.44489654949486,
+              "libero_spatial-0": 94.13530984544239,
+              "libero_spatial-8": 75.05386224659325
+            }
+          },
+          "ridge_zero": {
+            "mean_deg": 29.765040640687793,
+            "pooled_p90_deg": 57.97866492760998,
+            "mean_inverse_rms": 2.912186425973612,
+            "control_minus_gain_deg": 0.2950781027357132,
+            "paired_task_bootstrap95_deg": [
+              0.0718023462530987,
+              0.5088404443761941
+            ],
+            "control_minus_gain_inverse_rms": 2.4508024414201683,
+            "paired_task_bootstrap95_inverse_rms": [
+              2.1939509496493947,
+              2.6623422501319585
+            ],
+            "gain_win_fraction": 0.5765095507195226,
+            "mean_deg_by_task": {
+              "libero_10-5": 31.061222762285464,
+              "libero_10-8": 17.44926486017767,
+              "libero_goal-3": 27.337088003047626,
+              "libero_goal-6": 26.542965044230566,
+              "libero_object-1": 20.350960182294305,
+              "libero_object-8": 36.351819712908224,
+              "libero_spatial-0": 60.815296304217895,
+              "libero_spatial-8": 18.21170825634059
+            }
+          },
+          "ridge_polar": {
+            "mean_deg": 29.740080331155852,
+            "pooled_p90_deg": 57.94494047378318,
+            "mean_inverse_rms": 0.4651022194083081,
+            "control_minus_gain_deg": 0.27011779320377244,
+            "paired_task_bootstrap95_deg": [
+              0.06852310984443229,
+              0.46903613159409996
+            ],
+            "control_minus_gain_inverse_rms": 0.003718234854864213,
+            "paired_task_bootstrap95_inverse_rms": [
+              -0.017078457269339518,
+              0.021644435223206877
+            ],
+            "gain_win_fraction": 0.5727081037896823,
+            "mean_deg_by_task": {
+              "libero_10-5": 31.046977525565694,
+              "libero_10-8": 17.4482116018736,
+              "libero_goal-3": 27.330227257321678,
+              "libero_goal-6": 26.554785679636353,
+              "libero_object-1": 20.17726082531308,
+              "libero_object-8": 36.30008523441635,
+              "libero_spatial-0": 60.82304874951402,
+              "libero_spatial-8": 18.24004577560604
+            }
+          }
+        }
+      }
+    },
+    "isotropic": {
+      "cases": 3072,
+      "outside_unit_box": 3,
+      "pairs_by_stratum": {
+        "all": 3072,
+        "weaker": 1536,
+        "stronger": 1536,
+        "in_box": 3069,
+        "weaker_in_box": 1534
+      },
+      "strata": {
+        "all": {
+          "gain_so3": {
+            "mean_deg": 21.580082923448913,
+            "pooled_p90_deg": 45.369946291937595,
+            "mean_inverse_rms": 0.3661775557981706,
+            "control_minus_gain_deg": 0.0,
+            "paired_task_bootstrap95_deg": [
+              0.0,
+              0.0
+            ],
+            "control_minus_gain_inverse_rms": 0.0,
+            "paired_task_bootstrap95_inverse_rms": [
+              0.0,
+              0.0
+            ],
+            "gain_win_fraction": 0.0,
+            "mean_deg_by_task": {
+              "libero_10-5": 21.634098945876133,
+              "libero_10-8": 13.953412218221677,
+              "libero_goal-3": 19.00361244405525,
+              "libero_goal-6": 23.402785299307983,
+              "libero_object-1": 14.013418614732082,
+              "libero_object-8": 25.162314297168113,
+              "libero_spatial-0": 34.6431165699826,
+              "libero_spatial-8": 20.827904998247448
+            }
+          },
+          "raw_polar": {
+            "mean_deg": 21.202178921913678,
+            "pooled_p90_deg": 45.638156469182555,
+            "mean_inverse_rms": 0.3018957548337066,
+            "control_minus_gain_deg": -0.3779040015352326,
+            "paired_task_bootstrap95_deg": [
+              -0.5341888739746273,
+              -0.1955540466669516
+            ],
+            "control_minus_gain_inverse_rms": -0.06428180096446397,
+            "paired_task_bootstrap95_inverse_rms": [
+              -0.07534793060519693,
+              -0.05191508456420895
+            ],
+            "gain_win_fraction": 0.41634114583333337,
+            "mean_deg_by_task": {
+              "libero_10-5": 21.138204247165945,
+              "libero_10-8": 13.451873022345197,
+              "libero_goal-3": 18.64543195141676,
+              "libero_goal-6": 23.041982762678256,
+              "libero_object-1": 13.28134328799454,
+              "libero_object-8": 24.63763588895982,
+              "libero_spatial-0": 34.774570028362234,
+              "libero_spatial-8": 20.64639018638666
+            }
+          },
+          "least_squares": {
+            "mean_deg": 75.7908436565665,
+            "pooled_p90_deg": 104.31878951596934,
+            "mean_inverse_rms": 1.9360192778467367,
+            "control_minus_gain_deg": 54.21076073311758,
+            "paired_task_bootstrap95_deg": [
+              49.25811686642417,
+              59.27410236852858
+            ],
+            "control_minus_gain_inverse_rms": 1.569841722048566,
+            "paired_task_bootstrap95_inverse_rms": [
+              1.399318285177121,
+              1.698134375370514
+            ],
+            "gain_win_fraction": 0.9791666666666667,
+            "mean_deg_by_task": {
+              "libero_10-5": 68.6500523044971,
+              "libero_10-8": 80.40511035948487,
+              "libero_goal-3": 72.62989280987337,
+              "libero_goal-6": 77.73799690496064,
+              "libero_object-1": 67.46735662942211,
+              "libero_object-8": 88.28401617464073,
+              "libero_spatial-0": 77.03911303634776,
+              "libero_spatial-8": 74.11321103330533
+            }
+          },
+          "ridge_zero": {
+            "mean_deg": 21.503602634251486,
+            "pooled_p90_deg": 45.691598262487425,
+            "mean_inverse_rms": 2.8489207231769527,
+            "control_minus_gain_deg": -0.07648028919742489,
+            "paired_task_bootstrap95_deg": [
+              -0.20028064669764606,
+              0.07578020674542206
+            ],
+            "control_minus_gain_inverse_rms": 2.4827431673787825,
+            "paired_task_bootstrap95_inverse_rms": [
+              2.4194373437590837,
+              2.5517967557396193
+            ],
+            "gain_win_fraction": 0.515625,
+            "mean_deg_by_task": {
+              "libero_10-5": 21.368668356798135,
+              "libero_10-8": 13.777269173497166,
+              "libero_goal-3": 18.74456445737149,
+              "libero_goal-6": 23.245726134145908,
+              "libero_object-1": 13.810928826906085,
+              "libero_object-8": 25.2626954564883,
+              "libero_spatial-0": 34.99961886920219,
+              "libero_spatial-8": 20.81934979960262
+            }
+          },
+          "ridge_polar": {
+            "mean_deg": 21.293423738949343,
+            "pooled_p90_deg": 45.64887403968249,
+            "mean_inverse_rms": 0.30622440881302687,
+            "control_minus_gain_deg": -0.2866591844995646,
+            "paired_task_bootstrap95_deg": [
+              -0.40972923654749943,
+              -0.132007502175897
+            ],
+            "control_minus_gain_inverse_rms": -0.0599531469851437,
+            "paired_task_bootstrap95_inverse_rms": [
+              -0.07191123866609139,
+              -0.047112305516158165
+            ],
+            "gain_win_fraction": 0.45182291666666663,
+            "mean_deg_by_task": {
+              "libero_10-5": 21.22007411993353,
+              "libero_10-8": 13.538580621334262,
+              "libero_goal-3": 18.666759115265368,
+              "libero_goal-6": 23.1183880039442,
+              "libero_object-1": 13.480759820547169,
+              "libero_object-8": 24.825597287865477,
+              "libero_spatial-0": 34.81970416585754,
+              "libero_spatial-8": 20.677526776847213
+            }
+          }
+        },
+        "weaker": {
+          "gain_so3": {
+            "mean_deg": 27.724795214697977,
+            "pooled_p90_deg": 57.433304090191015,
+            "mean_inverse_rms": 0.39524328882900467,
+            "control_minus_gain_deg": 0.0,
+            "paired_task_bootstrap95_deg": [
+              0.0,
+              0.0
+            ],
+            "control_minus_gain_inverse_rms": 0.0,
+            "paired_task_bootstrap95_inverse_rms": [
+              0.0,
+              0.0
+            ],
+            "gain_win_fraction": 0.0,
+            "mean_deg_by_task": {
+              "libero_10-5": 29.145454559258138,
+              "libero_10-8": 15.135278522049196,
+              "libero_goal-3": 26.4991555448342,
+              "libero_goal-6": 25.081034923865307,
+              "libero_object-1": 17.642087454964997,
+              "libero_object-8": 34.398909860080806,
+              "libero_spatial-0": 57.99613174092093,
+              "libero_spatial-8": 15.900309111610225
+            }
+          },
+          "raw_polar": {
+            "mean_deg": 27.620551501891722,
+            "pooled_p90_deg": 59.373606228825125,
+            "mean_inverse_rms": 0.36906901412242993,
+            "control_minus_gain_deg": -0.10424371280625289,
+            "paired_task_bootstrap95_deg": [
+              -0.2862920611836335,
+              0.10401892764772737
+            ],
+            "control_minus_gain_inverse_rms": -0.02617427470657472,
+            "paired_task_bootstrap95_inverse_rms": [
+              -0.04832499908991058,
+              -0.005901941190087862
+            ],
+            "gain_win_fraction": 0.4609375,
+            "mean_deg_by_task": {
+              "libero_10-5": 28.92959069738087,
+              "libero_10-8": 14.842059374092424,
+              "libero_goal-3": 26.340200227984752,
+              "libero_goal-6": 24.99274235608097,
+              "libero_object-1": 17.36763852615042,
+              "libero_object-8": 34.627215884940604,
+              "libero_spatial-0": 58.447824596008445,
+              "libero_spatial-8": 15.417140352495275
+            }
+          },
+          "least_squares": {
+            "mean_deg": 85.58522368130625,
+            "pooled_p90_deg": 114.53024682918902,
+            "mean_inverse_rms": 2.013622631934711,
+            "control_minus_gain_deg": 57.86042846660826,
+            "paired_task_bootstrap95_deg": [
+              50.301611311726184,
+              64.91069198682838
+            ],
+            "control_minus_gain_inverse_rms": 1.6183793431057063,
+            "paired_task_bootstrap95_inverse_rms": [
+              1.3911922597589308,
+              1.826475044138892
+            ],
+            "gain_win_fraction": 0.9583333333333333,
+            "mean_deg_by_task": {
+              "libero_10-5": 88.7134722475602,
+              "libero_10-8": 90.97363646958547,
+              "libero_goal-3": 87.29637570670654,
+              "libero_goal-6": 87.87006866372373,
+              "libero_object-1": 73.83970339268039,
+              "libero_object-8": 85.61207507747172,
+              "libero_spatial-0": 94.2582977236638,
+              "libero_spatial-8": 76.11816016905807
+            }
+          },
+          "ridge_zero": {
+            "mean_deg": 27.829275974582398,
+            "pooled_p90_deg": 59.383302903359336,
+            "mean_inverse_rms": 2.8318688806425856,
+            "control_minus_gain_deg": 0.10448075988442096,
+            "paired_task_bootstrap95_deg": [
+              -0.12506196977388945,
+              0.35861018675964074
+            ],
+            "control_minus_gain_inverse_rms": 2.4366255918135806,
+            "paired_task_bootstrap95_inverse_rms": [
+              2.1621670788915788,
+              2.663020986074508
+            ],
+            "gain_win_fraction": 0.55859375,
+            "mean_deg_by_task": {
+              "libero_10-5": 29.065613299254906,
+              "libero_10-8": 15.040323788212762,
+              "libero_goal-3": 26.41315183986745,
+              "libero_goal-6": 25.127470377573104,
+              "libero_object-1": 17.921223689026302,
+              "libero_object-8": 34.82179226367634,
+              "libero_spatial-0": 58.763260354759495,
+              "libero_spatial-8": 15.481372184288821
+            }
+          },
+          "ridge_polar": {
+            "mean_deg": 27.69283635147948,
+            "pooled_p90_deg": 59.376086810891834,
+            "mean_inverse_rms": 0.3711655669110293,
+            "control_minus_gain_deg": -0.03195886321849417,
+            "paired_task_bootstrap95_deg": [
+              -0.22205851214727185,
+              0.177671202934933
+            ],
+            "control_minus_gain_inverse_rms": -0.024077721917975324,
+            "paired_task_bootstrap95_inverse_rms": [
+              -0.046698518595815225,
+              -0.0034172388762377043
+            ],
+            "gain_win_fraction": 0.49479166666666663,
+            "mean_deg_by_task": {
+              "libero_10-5": 28.978611024534548,
+              "libero_10-8": 14.913547595418855,
+              "libero_goal-3": 26.360660140906095,
+              "libero_goal-6": 25.040266436836323,
+              "libero_object-1": 17.591198626709442,
+              "libero_object-8": 34.69540497543398,
+              "libero_spatial-0": 58.518329351966436,
+              "libero_spatial-8": 15.444672660030156
+            }
+          }
+        },
+        "stronger": {
+          "gain_so3": {
+            "mean_deg": 15.435370632199845,
+            "pooled_p90_deg": 27.983802810657068,
+            "mean_inverse_rms": 0.3371118227673365,
+            "control_minus_gain_deg": 0.0,
+            "paired_task_bootstrap95_deg": [
+              0.0,
+              0.0
+            ],
+            "control_minus_gain_inverse_rms": 0.0,
+            "paired_task_bootstrap95_inverse_rms": [
+              0.0,
+              0.0
+            ],
+            "gain_win_fraction": 0.0,
+            "mean_deg_by_task": {
+              "libero_10-5": 14.122743332494117,
+              "libero_10-8": 12.771545914394162,
+              "libero_goal-3": 11.508069343276297,
+              "libero_goal-6": 21.72453567475066,
+              "libero_object-1": 10.384749774499168,
+              "libero_object-8": 15.925718734255412,
+              "libero_spatial-0": 11.29010139904427,
+              "libero_spatial-8": 25.755500884884665
+            }
+          },
+          "raw_polar": {
+            "mean_deg": 14.783806341935632,
+            "pooled_p90_deg": 27.359169863755795,
+            "mean_inverse_rms": 0.23472249554498326,
+            "control_minus_gain_deg": -0.6515642902642125,
+            "paired_task_bootstrap95_deg": [
+              -0.9486891372050773,
+              -0.3422362152580106
+            ],
+            "control_minus_gain_inverse_rms": -0.10238932722235322,
+            "paired_task_bootstrap95_inverse_rms": [
+              -0.11936135703845109,
+              -0.08355309699632799
+            ],
+            "gain_win_fraction": 0.37174479166666663,
+            "mean_deg_by_task": {
+              "libero_10-5": 13.34681779695102,
+              "libero_10-8": 12.061686670597966,
+              "libero_goal-3": 10.950663674848776,
+              "libero_goal-6": 21.091223169275533,
+              "libero_object-1": 9.195048049838665,
+              "libero_object-8": 14.648055892979036,
+              "libero_spatial-0": 11.101315460716016,
+              "libero_spatial-8": 25.875640020278052
+            }
+          },
+          "least_squares": {
+            "mean_deg": 65.99646363182674,
+            "pooled_p90_deg": 98.60717183770734,
+            "mean_inverse_rms": 1.8584159237587623,
+            "control_minus_gain_deg": 50.5610929996269,
+            "paired_task_bootstrap95_deg": [
+              43.773790401810686,
+              58.740466861093026
+            ],
+            "control_minus_gain_inverse_rms": 1.5213041009914257,
+            "paired_task_bootstrap95_inverse_rms": [
+              1.2363158537246677,
+              1.8106171415932883
+            ],
+            "gain_win_fraction": 1.0,
+            "mean_deg_by_task": {
+              "libero_10-5": 48.58663236143402,
+              "libero_10-8": 69.83658424938425,
+              "libero_goal-3": 57.96340991304019,
+              "libero_goal-6": 67.60592514619758,
+              "libero_object-1": 61.09500986616384,
+              "libero_object-8": 90.95595727180977,
+              "libero_spatial-0": 59.81992834903172,
+              "libero_spatial-8": 72.1082618975526
+            }
+          },
+          "ridge_zero": {
+            "mean_deg": 15.177929293920574,
+            "pooled_p90_deg": 27.548494098889293,
+            "mean_inverse_rms": 2.8659725657113206,
+            "control_minus_gain_deg": -0.25744133827927074,
+            "paired_task_bootstrap95_deg": [
+              -0.44675661159789304,
+              -0.03239695217267586
+            ],
+            "control_minus_gain_inverse_rms": 2.5288607429439844,
+            "paired_task_bootstrap95_inverse_rms": [
+              2.354189873101365,
+              2.7367607053715157
+            ],
+            "gain_win_fraction": 0.47265625,
+            "mean_deg_by_task": {
+              "libero_10-5": 13.67172341434136,
+              "libero_10-8": 12.51421455878157,
+              "libero_goal-3": 11.075977074875526,
+              "libero_goal-6": 21.363981890718705,
+              "libero_object-1": 9.70063396478587,
+              "libero_object-8": 15.703598649300254,
+              "libero_spatial-0": 11.235977383644885,
+              "libero_spatial-8": 26.15732741491642
+            }
+          },
+          "ridge_polar": {
+            "mean_deg": 14.894011126419208,
+            "pooled_p90_deg": 27.40507093006851,
+            "mean_inverse_rms": 0.2412832507150244,
+            "control_minus_gain_deg": -0.541359505780635,
+            "paired_task_bootstrap95_deg": [
+              -0.7832106240639609,
+              -0.2837156398548159
+            ],
+            "control_minus_gain_inverse_rms": -0.09582857205231207,
+            "paired_task_bootstrap95_inverse_rms": [
+              -0.11217370949546696,
+              -0.07829139054439614
+            ],
+            "gain_win_fraction": 0.4088541666666667,
+            "mean_deg_by_task": {
+              "libero_10-5": 13.461537215332504,
+              "libero_10-8": 12.163613647249669,
+              "libero_goal-3": 10.972858089624644,
+              "libero_goal-6": 21.19650957105208,
+              "libero_object-1": 9.370321014384894,
+              "libero_object-8": 14.955789600296974,
+              "libero_spatial-0": 11.121078979748637,
+              "libero_spatial-8": 25.91038089366427
+            }
+          }
+        },
+        "in_box": {
+          "gain_so3": {
+            "mean_deg": 21.579951668762227,
+            "pooled_p90_deg": 45.378022135795675,
+            "mean_inverse_rms": 0.3661761382702877,
+            "control_minus_gain_deg": 0.0,
+            "paired_task_bootstrap95_deg": [
+              0.0,
+              0.0
+            ],
+            "control_minus_gain_inverse_rms": 0.0,
+            "paired_task_bootstrap95_inverse_rms": [
+              0.0,
+              0.0
+            ],
+            "gain_win_fraction": 0.0,
+            "mean_deg_by_task": {
+              "libero_10-5": 21.634098945876133,
+              "libero_10-8": 13.953412218221677,
+              "libero_goal-3": 19.00361244405525,
+              "libero_goal-6": 23.402785299307983,
+              "libero_object-1": 14.013418614732082,
+              "libero_object-8": 25.162314297168113,
+              "libero_spatial-0": 34.64206653248912,
+              "libero_spatial-8": 20.827904998247448
+            }
+          },
+          "raw_polar": {
+            "mean_deg": 21.202178921913678,
+            "pooled_p90_deg": 45.63815646918256,
+            "mean_inverse_rms": 0.3018957548337066,
+            "control_minus_gain_deg": -0.37777274684854756,
+            "paired_task_bootstrap95_deg": [
+              -0.5341888739746273,
+              -0.19502902792021126
+            ],
+            "control_minus_gain_inverse_rms": -0.06428038343658116,
+            "paired_task_bootstrap95_inverse_rms": [
+              -0.07534793060519693,
+              -0.05191232038483745
+            ],
+            "gain_win_fraction": 0.41604012656810035,
+            "mean_deg_by_task": {
+              "libero_10-5": 21.138204247165945,
+              "libero_10-8": 13.451873022345197,
+              "libero_goal-3": 18.64543195141676,
+              "libero_goal-6": 23.041982762678256,
+              "libero_object-1": 13.28134328799454,
+              "libero_object-8": 24.63763588895982,
+              "libero_spatial-0": 34.774570028362234,
+              "libero_spatial-8": 20.64639018638666
+            }
+          },
+          "least_squares": {
+            "mean_deg": 75.7908436565665,
+            "pooled_p90_deg": 104.31878951596934,
+            "mean_inverse_rms": 1.9360192778467367,
+            "control_minus_gain_deg": 54.21089198780426,
+            "paired_task_bootstrap95_deg": [
+              49.25837937579754,
+              59.27410236852858
+            ],
+            "control_minus_gain_inverse_rms": 1.569843139576449,
+            "paired_task_bootstrap95_inverse_rms": [
+              1.3993211202328868,
+              1.698135792898397
+            ],
+            "gain_win_fraction": 0.9791666666666667,
+            "mean_deg_by_task": {
+              "libero_10-5": 68.6500523044971,
+              "libero_10-8": 80.40511035948487,
+              "libero_goal-3": 72.62989280987337,
+              "libero_goal-6": 77.73799690496064,
+              "libero_object-1": 67.46735662942211,
+              "libero_object-8": 88.28401617464073,
+              "libero_spatial-0": 77.03911303634776,
+              "libero_spatial-8": 74.11321103330533
+            }
+          },
+          "ridge_zero": {
+            "mean_deg": 21.503602634251486,
+            "pooled_p90_deg": 45.691598262487425,
+            "mean_inverse_rms": 2.8489207231769527,
+            "control_minus_gain_deg": -0.0763490345107398,
+            "paired_task_bootstrap95_deg": [
+              -0.20028064669764606,
+              0.07617397080547735
+            ],
+            "control_minus_gain_inverse_rms": 2.4827445849066656,
+            "paired_task_bootstrap95_inverse_rms": [
+              2.4194373437590837,
+              2.551799590795385
+            ],
+            "gain_win_fraction": 0.5154751904121864,
+            "mean_deg_by_task": {
+              "libero_10-5": 21.368668356798135,
+              "libero_10-8": 13.777269173497166,
+              "libero_goal-3": 18.74456445737149,
+              "libero_goal-6": 23.245726134145908,
+              "libero_object-1": 13.810928826906085,
+              "libero_object-8": 25.2626954564883,
+              "libero_spatial-0": 34.999618869202195,
+              "libero_spatial-8": 20.81934979960262
+            }
+          },
+          "ridge_polar": {
+            "mean_deg": 21.293423738949343,
+            "pooled_p90_deg": 45.64887403968249,
+            "mean_inverse_rms": 0.30622440881302687,
+            "control_minus_gain_deg": -0.28652792981287994,
+            "paired_task_bootstrap95_deg": [
+              -0.40972923654749943,
+              -0.13174499280252763
+            ],
+            "control_minus_gain_inverse_rms": -0.05995172945726089,
+            "paired_task_bootstrap95_inverse_rms": [
+              -0.07191123866609139,
+              -0.04710805293250972
+            ],
+            "gain_win_fraction": 0.4517620127688172,
+            "mean_deg_by_task": {
+              "libero_10-5": 21.22007411993353,
+              "libero_10-8": 13.538580621334262,
+              "libero_goal-3": 18.666759115265368,
+              "libero_goal-6": 23.1183880039442,
+              "libero_object-1": 13.480759820547169,
+              "libero_object-8": 24.825597287865477,
+              "libero_spatial-0": 34.81970416585754,
+              "libero_spatial-8": 20.677526776847213
+            }
+          }
+        },
+        "weaker_in_box": {
+          "gain_so3": {
+            "mean_deg": 27.72474076191908,
+            "pooled_p90_deg": 57.435953077854215,
+            "mean_inverse_rms": 0.39524205165177373,
+            "control_minus_gain_deg": 0.0,
+            "paired_task_bootstrap95_deg": [
+              0.0,
+              0.0
+            ],
+            "control_minus_gain_inverse_rms": 0.0,
+            "paired_task_bootstrap95_inverse_rms": [
+              0.0,
+              0.0
+            ],
+            "gain_win_fraction": 0.0,
+            "mean_deg_by_task": {
+              "libero_10-5": 29.145454559258138,
+              "libero_10-8": 15.135278522049196,
+              "libero_goal-3": 26.4991555448342,
+              "libero_goal-6": 25.081034923865307,
+              "libero_object-1": 17.642087454964997,
+              "libero_object-8": 34.398909860080806,
+              "libero_spatial-0": 57.99569611868975,
+              "libero_spatial-8": 15.900309111610225
+            }
+          },
+          "raw_polar": {
+            "mean_deg": 27.620551501891722,
+            "pooled_p90_deg": 59.37360622882513,
+            "mean_inverse_rms": 0.36906901412242993,
+            "control_minus_gain_deg": -0.10418926002735646,
+            "paired_task_bootstrap95_deg": [
+              -0.2862920611836335,
+              0.10418228598441666
+            ],
+            "control_minus_gain_inverse_rms": -0.026173037529343822,
+            "paired_task_bootstrap95_inverse_rms": [
+              -0.048323761912679675,
+              -0.005898198728964384
+            ],
+            "gain_win_fraction": 0.4605034722222222,
+            "mean_deg_by_task": {
+              "libero_10-5": 28.92959069738087,
+              "libero_10-8": 14.842059374092424,
+              "libero_goal-3": 26.340200227984752,
+              "libero_goal-6": 24.99274235608097,
+              "libero_object-1": 17.36763852615042,
+              "libero_object-8": 34.627215884940604,
+              "libero_spatial-0": 58.447824596008445,
+              "libero_spatial-8": 15.417140352495275
+            }
+          },
+          "least_squares": {
+            "mean_deg": 85.58522368130625,
+            "pooled_p90_deg": 114.53024682918904,
+            "mean_inverse_rms": 2.013622631934711,
+            "control_minus_gain_deg": 57.86048291938716,
+            "paired_task_bootstrap95_deg": [
+              50.30177467006287,
+              64.91069198682838
+            ],
+            "control_minus_gain_inverse_rms": 1.6183805802829374,
+            "paired_task_bootstrap95_inverse_rms": [
+              1.3911922597589308,
+              1.826475044138892
+            ],
+            "gain_win_fraction": 0.9583333333333333,
+            "mean_deg_by_task": {
+              "libero_10-5": 88.7134722475602,
+              "libero_10-8": 90.97363646958547,
+              "libero_goal-3": 87.29637570670654,
+              "libero_goal-6": 87.87006866372373,
+              "libero_object-1": 73.83970339268039,
+              "libero_object-8": 85.61207507747172,
+              "libero_spatial-0": 94.2582977236638,
+              "libero_spatial-8": 76.11816016905807
+            }
+          },
+          "ridge_zero": {
+            "mean_deg": 27.829275974582398,
+            "pooled_p90_deg": 59.383302903359336,
+            "mean_inverse_rms": 2.8318688806425856,
+            "control_minus_gain_deg": 0.10453521266331761,
+            "paired_task_bootstrap95_deg": [
+              -0.12506196977388945,
+              0.35877354509633064
+            ],
+            "control_minus_gain_inverse_rms": 2.4366268289908115,
+            "paired_task_bootstrap95_inverse_rms": [
+              2.1621670788915788,
+              2.66302346042897
+            ],
+            "gain_win_fraction": 0.5584201388888889,
+            "mean_deg_by_task": {
+              "libero_10-5": 29.065613299254906,
+              "libero_10-8": 15.040323788212762,
+              "libero_goal-3": 26.41315183986745,
+              "libero_goal-6": 25.127470377573104,
+              "libero_object-1": 17.921223689026302,
+              "libero_object-8": 34.82179226367634,
+              "libero_spatial-0": 58.763260354759495,
+              "libero_spatial-8": 15.481372184288821
+            }
+          },
+          "ridge_polar": {
+            "mean_deg": 27.692836351479478,
+            "pooled_p90_deg": 59.37608681089184,
+            "mean_inverse_rms": 0.37116556691102937,
+            "control_minus_gain_deg": -0.03190441043959877,
+            "paired_task_bootstrap95_deg": [
+              -0.22205851214727185,
+              0.17783592259109157
+            ],
+            "control_minus_gain_inverse_rms": -0.02407648474074442,
+            "paired_task_bootstrap95_inverse_rms": [
+              -0.046698518595815225,
+              -0.0034147645217758957
+            ],
+            "gain_win_fraction": 0.4942708333333333,
+            "mean_deg_by_task": {
+              "libero_10-5": 28.978611024534548,
+              "libero_10-8": 14.913547595418855,
+              "libero_goal-3": 26.360660140906095,
+              "libero_goal-6": 25.040266436836323,
+              "libero_object-1": 17.591198626709442,
+              "libero_object-8": 34.69540497543398,
+              "libero_spatial-0": 58.51832935196643,
+              "libero_spatial-8": 15.444672660030156
+            }
+          }
+        }
+      }
+    }
+  }
+}
