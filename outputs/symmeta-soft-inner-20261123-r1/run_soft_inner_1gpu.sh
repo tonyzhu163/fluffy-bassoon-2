@@ -33,6 +33,7 @@ export PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 export LIBERO_PRO_ROOT="$sim/simulator-source" LIBERO_CONFIG_PATH="$sim/libero-config"
 export CROSSARM_RELEASE="$release" OPENPI_DATA_HOME="$legacy/cache/openpi-215abfb" TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD=1
 export PYTHONPATH="$overlay:$code/src:$release:$LIBERO_PRO_ROOT:$code/outputs/libero-crossarm-20261120-r1:$code/outputs/libero-xemb-ur5e-sysid-20261120-r1:$code/outputs/libero-xemb-ur5e-scale-20261120-r1:$campaign:$wider"
+export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0}
 export FLUFFY_GPU_EXECUTION=baige JAX_PLATFORMS=cuda XLA_PYTHON_CLIENT_PREALLOCATE=false
 export NCCL_P2P_DISABLE=1 MUJOCO_GL=egl PYOPENGL_PLATFORM=egl MUJOCO_EGL_DEVICE_ID=0
 libs="$root/setups/libero90-full-action-20261119-r1/desktop-libs02"
