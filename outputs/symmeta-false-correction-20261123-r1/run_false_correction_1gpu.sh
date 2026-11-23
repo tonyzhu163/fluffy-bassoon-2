@@ -36,7 +36,7 @@ out="$run/$attempt"
 [[ ! -e "$out" ]] || { echo "Attempt $attempt already exists; use a fresh name" >&2; exit 2; }
 mkdir -p "$out"
 df -h "$out" > "$out/storage.txt"
-printf '%s %s %s soft-inner-offline\n' "$pin" "$host" "$$" > "$out/launch.txt"
+printf '%s %s %s false-correction-offline\n' "$pin" "$host" "$$" > "$out/launch.txt"
 start=$(date +%s)
 trap 'rc=$?; printf "%s %s %s\n" "$rc" "$(date +%s)" "$start" > "$out/exit.txt"' EXIT
 
@@ -64,7 +64,7 @@ date +%s > "$out/gpu-start.txt"
     --expected-count 1 --purpose training --baige-container --baige-exclusive-training \
     --output "$out/gpu.json" > "$out/probe.log" 2>&1
 
-"$python" -Bu "$here/eval_soft_inner.py" \
+"$python" -Bu "$here/eval_false_correction.py" \
     --output "$out" \
     --diverse-dir "$diverse" \
     --reuse-support-dir "$reuse" \
