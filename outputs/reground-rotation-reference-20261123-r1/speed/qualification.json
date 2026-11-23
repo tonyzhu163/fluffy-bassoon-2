@@ -1,0 +1,573 @@
+{
+  "host": "aibox-r855e239307b-6bfb688cdd-lz2dx",
+  "fixture_dir": "/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/speed/qualification.2oVrQ3d2",
+  "worker_gpu_hours": 0,
+  "source": {
+    "python": "/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/env/bin/python",
+    "upstream": "16a98486f560676b9036d1a6d067b9dd51a5917a",
+    "reference": "/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/src-23a6641562a4d833837f27ab0535a20ad94e8ec8/outputs/reground-rotation-reference-20261123-r1",
+    "packages": 150,
+    "assets": 586,
+    "asset_revision": "0b3ea86be5fe169d0fd036ae63d1070ec09e90f6"
+  },
+  "quota": {
+    "affinity": 64,
+    "capacity": 8,
+    "cpu_max": "800000 100000",
+    "memory_max": 34359738368,
+    "rejected_workers": 9
+  },
+  "budget": {
+    "rejected_unfinished_gpu_seconds": 3800,
+    "reconciled_prior": 2800,
+    "one_card_reservation": 600,
+    "cap": 3600
+  },
+  "resume": {
+    "while_claimed": {
+      "planned": 2,
+      "verified": 1,
+      "outstanding": [
+        "seed1/rot_z/90/babble/shard001"
+      ],
+      "wall_s": 3.927043381961994
+    },
+    "after_release": {
+      "planned": 2,
+      "verified": 2,
+      "outstanding": [],
+      "wall_s": 5.483631250914186
+    },
+    "previous_npz_untouched": true,
+    "recovered_npz_sha256": "9bd9259f27b63b58a5494a07d424290a0a9656060d85bf14ba4dc0907ba2612e"
+  },
+  "dev_launch_guard": "Scored babbling requires one Baige Distributed Training master",
+  "reference_sha256": "f4013e6f00264fcd36505ab6feeaafd4db378d1c2f77f5a62abdfd7c11e0d162",
+  "wall_s": {
+    "registered_serial_warm_cache": 78.69934754702263,
+    "prefork_eight_warm_cache": 12.198525698040612,
+    "registered_four_empty_numba_cache": 82.1014547960367,
+    "prefork_eight_empty_numba_cache": 23.731785126030445
+  },
+  "preload": {
+    "parallel": {
+      "seconds": 5.479091306915507,
+      "threads": 1,
+      "cuda_initialized": false,
+      "torch": "2.11.0+cu128",
+      "lerobot_env": "lerobot.envs.libero",
+      "task_env": "reground.envs.libero_env",
+      "babble_source": "/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/upstream/reground/data/babble.py",
+      "rss_kib": 681340,
+      "workers": 8,
+      "cpu_capacity": 8
+    },
+    "private": {
+      "seconds": 10.0230154680321,
+      "threads": 1,
+      "cuda_initialized": false,
+      "torch": "2.11.0+cu128",
+      "lerobot_env": "lerobot.envs.libero",
+      "task_env": "reground.envs.libero_env",
+      "babble_source": "/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/upstream/reground/data/babble.py",
+      "rss_kib": 681760,
+      "workers": 8,
+      "cpu_capacity": 8
+    }
+  },
+  "rows": [
+    {
+      "unit": "seed0/none/0/babble/shard000",
+      "n_target": 1,
+      "npz_sha256": "3bfac8016ae8c52edf80bf2b02fc83e0f2e120fdff000ddc0d631e2c9246a29b",
+      "serial_unit_s": 23.33896919293329,
+      "published_metadata": {
+        "cell": "none/0",
+        "seed": 0,
+        "shard": 0,
+        "n": 200,
+        "cfg": {
+          "T": 200,
+          "sigma_t": 0.35,
+          "sigma_r": 0.06,
+          "theta": 0.15,
+          "drift_t": 0.6,
+          "drift_r": 0.08,
+          "seg_min": 10,
+          "seg_max": 40,
+          "grip_p": 0.03,
+          "box_xy": 0.25,
+          "box_z_up": 0.15,
+          "box_z_down": 0.4,
+          "table_margin": 0.03,
+          "tilt_max": 0.6,
+          "retreat_max": 30
+        },
+        "tasks": [
+          "spatial_0",
+          "spatial_2",
+          "object_1",
+          "object_3",
+          "goal_1",
+          "goal_2",
+          "10_1",
+          "10_3"
+        ]
+      },
+      "native_wall_s": {
+        "serial": 19.570410013198853,
+        "parallel": 6.411060810089111,
+        "private": 13.367120027542114
+      }
+    },
+    {
+      "unit": "seed1/rot_z/90/babble/shard001",
+      "n_target": 1,
+      "npz_sha256": "9bd9259f27b63b58a5494a07d424290a0a9656060d85bf14ba4dc0907ba2612e",
+      "serial_unit_s": 8.874027858953923,
+      "published_metadata": {
+        "cell": "rot_z/90",
+        "seed": 1,
+        "shard": 1,
+        "n": 200,
+        "cfg": {
+          "T": 200,
+          "sigma_t": 0.35,
+          "sigma_r": 0.06,
+          "theta": 0.15,
+          "drift_t": 0.6,
+          "drift_r": 0.08,
+          "seg_min": 10,
+          "seg_max": 40,
+          "grip_p": 0.03,
+          "box_xy": 0.25,
+          "box_z_up": 0.15,
+          "box_z_down": 0.4,
+          "table_margin": 0.03,
+          "tilt_max": 0.6,
+          "retreat_max": 30
+        },
+        "tasks": [
+          "spatial_0",
+          "spatial_2",
+          "object_1",
+          "object_3",
+          "goal_1",
+          "goal_2",
+          "10_1",
+          "10_3"
+        ]
+      },
+      "native_wall_s": {
+        "serial": 8.31071662902832,
+        "parallel": 6.360342741012573,
+        "private": 13.250399112701416
+      }
+    },
+    {
+      "unit": "seed2/none/0/babble/shard002",
+      "n_target": 1,
+      "npz_sha256": "49ffd94b2c5522a3c6f152183738f646f332c56610d306f7ae292ed09062db74",
+      "serial_unit_s": 7.66370204591658,
+      "published_metadata": {
+        "cell": "none/0",
+        "seed": 2,
+        "shard": 2,
+        "n": 200,
+        "cfg": {
+          "T": 200,
+          "sigma_t": 0.35,
+          "sigma_r": 0.06,
+          "theta": 0.15,
+          "drift_t": 0.6,
+          "drift_r": 0.08,
+          "seg_min": 10,
+          "seg_max": 40,
+          "grip_p": 0.03,
+          "box_xy": 0.25,
+          "box_z_up": 0.15,
+          "box_z_down": 0.4,
+          "table_margin": 0.03,
+          "tilt_max": 0.6,
+          "retreat_max": 30
+        },
+        "tasks": [
+          "spatial_0",
+          "spatial_2",
+          "object_1",
+          "object_3",
+          "goal_1",
+          "goal_2",
+          "10_1",
+          "10_3"
+        ]
+      },
+      "native_wall_s": {
+        "serial": 7.116797924041748,
+        "parallel": 5.291987419128418,
+        "private": 12.441614627838135
+      }
+    },
+    {
+      "unit": "seed3/rot_z/90/babble/shard003",
+      "n_target": 1,
+      "npz_sha256": "d6afc32ba9ea18086d3a074ee95227e84841151479c1b7415a703d1689c4cb9a",
+      "serial_unit_s": 7.871413834975101,
+      "published_metadata": {
+        "cell": "rot_z/90",
+        "seed": 3,
+        "shard": 3,
+        "n": 200,
+        "cfg": {
+          "T": 200,
+          "sigma_t": 0.35,
+          "sigma_r": 0.06,
+          "theta": 0.15,
+          "drift_t": 0.6,
+          "drift_r": 0.08,
+          "seg_min": 10,
+          "seg_max": 40,
+          "grip_p": 0.03,
+          "box_xy": 0.25,
+          "box_z_up": 0.15,
+          "box_z_down": 0.4,
+          "table_margin": 0.03,
+          "tilt_max": 0.6,
+          "retreat_max": 30
+        },
+        "tasks": [
+          "spatial_0",
+          "spatial_2",
+          "object_1",
+          "object_3",
+          "goal_1",
+          "goal_2",
+          "10_1",
+          "10_3"
+        ]
+      },
+      "native_wall_s": {
+        "serial": 7.327749967575073,
+        "parallel": 5.311955690383911,
+        "private": 12.377624034881592
+      }
+    },
+    {
+      "unit": "seed4/none/0/babble/shard004",
+      "n_target": 1,
+      "npz_sha256": "249ca8f71e84fb695e5467cf4afbec23c15f217870c74aa749d9d75ec7aae11b",
+      "serial_unit_s": 7.9459499820368364,
+      "published_metadata": {
+        "cell": "none/0",
+        "seed": 4,
+        "shard": 4,
+        "n": 200,
+        "cfg": {
+          "T": 200,
+          "sigma_t": 0.35,
+          "sigma_r": 0.06,
+          "theta": 0.15,
+          "drift_t": 0.6,
+          "drift_r": 0.08,
+          "seg_min": 10,
+          "seg_max": 40,
+          "grip_p": 0.03,
+          "box_xy": 0.25,
+          "box_z_up": 0.15,
+          "box_z_down": 0.4,
+          "table_margin": 0.03,
+          "tilt_max": 0.6,
+          "retreat_max": 30
+        },
+        "tasks": [
+          "spatial_0",
+          "spatial_2",
+          "object_1",
+          "object_3",
+          "goal_1",
+          "goal_2",
+          "10_1",
+          "10_3"
+        ]
+      },
+      "native_wall_s": {
+        "serial": 7.418893337249756,
+        "parallel": 5.4888756275177,
+        "private": 12.516094446182251
+      }
+    },
+    {
+      "unit": "seed0/rot_z/90/babble/shard005",
+      "n_target": 1,
+      "npz_sha256": "283ccee01228892f0eef8c623b6f4bf85b706a87b63616c80e4f6d8c9d1b6efa",
+      "serial_unit_s": 7.803523109992966,
+      "published_metadata": {
+        "cell": "rot_z/90",
+        "seed": 0,
+        "shard": 5,
+        "n": 200,
+        "cfg": {
+          "T": 200,
+          "sigma_t": 0.35,
+          "sigma_r": 0.06,
+          "theta": 0.15,
+          "drift_t": 0.6,
+          "drift_r": 0.08,
+          "seg_min": 10,
+          "seg_max": 40,
+          "grip_p": 0.03,
+          "box_xy": 0.25,
+          "box_z_up": 0.15,
+          "box_z_down": 0.4,
+          "table_margin": 0.03,
+          "tilt_max": 0.6,
+          "retreat_max": 30
+        },
+        "tasks": [
+          "spatial_0",
+          "spatial_2",
+          "object_1",
+          "object_3",
+          "goal_1",
+          "goal_2",
+          "10_1",
+          "10_3"
+        ]
+      },
+      "native_wall_s": {
+        "serial": 7.250459909439087,
+        "parallel": 5.553307771682739,
+        "private": 12.52844500541687
+      }
+    },
+    {
+      "unit": "seed1/none/0/babble/shard006",
+      "n_target": 1,
+      "npz_sha256": "4a8e1f501d8d8f50213da386e8d86c4e1974e153c5e14138dd0d8bf281fc3985",
+      "serial_unit_s": 7.663418515003286,
+      "published_metadata": {
+        "cell": "none/0",
+        "seed": 1,
+        "shard": 6,
+        "n": 147,
+        "cfg": {
+          "T": 200,
+          "sigma_t": 0.35,
+          "sigma_r": 0.06,
+          "theta": 0.15,
+          "drift_t": 0.6,
+          "drift_r": 0.08,
+          "seg_min": 10,
+          "seg_max": 40,
+          "grip_p": 0.03,
+          "box_xy": 0.25,
+          "box_z_up": 0.15,
+          "box_z_down": 0.4,
+          "table_margin": 0.03,
+          "tilt_max": 0.6,
+          "retreat_max": 30
+        },
+        "tasks": [
+          "spatial_0",
+          "spatial_2",
+          "object_1",
+          "object_3",
+          "goal_1",
+          "goal_2",
+          "10_1",
+          "10_3"
+        ]
+      },
+      "native_wall_s": {
+        "serial": 7.100432634353638,
+        "parallel": 5.410370349884033,
+        "private": 12.270508050918579
+      }
+    },
+    {
+      "unit": "seed2/rot_z/90/babble/shard007",
+      "n_target": 1,
+      "npz_sha256": "d6216da53b44a008a29baa8a09d8bc2ce32ddd036bcdce9486d7e3a8baeda428",
+      "serial_unit_s": 7.5312245399691164,
+      "published_metadata": {
+        "cell": "rot_z/90",
+        "seed": 2,
+        "shard": 7,
+        "n": 200,
+        "cfg": {
+          "T": 200,
+          "sigma_t": 0.35,
+          "sigma_r": 0.06,
+          "theta": 0.15,
+          "drift_t": 0.6,
+          "drift_r": 0.08,
+          "seg_min": 10,
+          "seg_max": 40,
+          "grip_p": 0.03,
+          "box_xy": 0.25,
+          "box_z_up": 0.15,
+          "box_z_down": 0.4,
+          "table_margin": 0.03,
+          "tilt_max": 0.6,
+          "retreat_max": 30
+        },
+        "tasks": [
+          "spatial_0",
+          "spatial_2",
+          "object_1",
+          "object_3",
+          "goal_1",
+          "goal_2",
+          "10_1",
+          "10_3"
+        ]
+      },
+      "native_wall_s": {
+        "serial": 6.994532823562622,
+        "parallel": 5.284578561782837,
+        "private": 12.263159990310669
+      }
+    }
+  ],
+  "identical_scientific_sidecars": 8,
+  "four_lane_hashes_and_metadata_matched": 8,
+  "private_worker_events": [
+    {
+      "event": "start",
+      "unit": "seed0/none/0/babble/shard000",
+      "utc": 1795419450.9111934,
+      "pid": 349442
+    },
+    {
+      "event": "published",
+      "unit": "seed0/none/0/babble/shard000",
+      "utc": 1795419464.4909902,
+      "wall_s": 13.581181476009078,
+      "rss_kib": 2143248,
+      "transitions_per_s": 14.72625929881701,
+      "transitions": 200,
+      "episodes": 1
+    },
+    {
+      "event": "start",
+      "unit": "seed1/rot_z/90/babble/shard001",
+      "utc": 1795419450.9123926,
+      "pid": 349443
+    },
+    {
+      "event": "published",
+      "unit": "seed1/rot_z/90/babble/shard001",
+      "utc": 1795419464.3734992,
+      "wall_s": 13.462335363961756,
+      "rss_kib": 2144180,
+      "transitions_per_s": 14.856263389143733,
+      "transitions": 200,
+      "episodes": 1
+    },
+    {
+      "event": "start",
+      "unit": "seed2/none/0/babble/shard002",
+      "utc": 1795419450.9189904,
+      "pid": 349444
+    },
+    {
+      "event": "published",
+      "unit": "seed2/none/0/babble/shard002",
+      "utc": 1795419463.585768,
+      "wall_s": 12.669252125080675,
+      "rss_kib": 2285184,
+      "transitions_per_s": 15.786251471313777,
+      "transitions": 200,
+      "episodes": 1
+    },
+    {
+      "event": "start",
+      "unit": "seed3/rot_z/90/babble/shard003",
+      "utc": 1795419450.9262366,
+      "pid": 349445
+    },
+    {
+      "event": "published",
+      "unit": "seed3/rot_z/90/babble/shard003",
+      "utc": 1795419463.5331047,
+      "wall_s": 12.608089762972668,
+      "rss_kib": 2233112,
+      "transitions_per_s": 15.862831226611213,
+      "transitions": 200,
+      "episodes": 1
+    },
+    {
+      "event": "start",
+      "unit": "seed4/none/0/babble/shard004",
+      "utc": 1795419450.9492428,
+      "pid": 349446
+    },
+    {
+      "event": "published",
+      "unit": "seed4/none/0/babble/shard004",
+      "utc": 1795419463.6821587,
+      "wall_s": 12.734323060023598,
+      "rss_kib": 1884640,
+      "transitions_per_s": 15.705585531111018,
+      "transitions": 200,
+      "episodes": 1
+    },
+    {
+      "event": "start",
+      "unit": "seed0/rot_z/90/babble/shard005",
+      "utc": 1795419450.9534996,
+      "pid": 349447
+    },
+    {
+      "event": "published",
+      "unit": "seed0/rot_z/90/babble/shard005",
+      "utc": 1795419463.6951883,
+      "wall_s": 12.742956672096625,
+      "rss_kib": 1909516,
+      "transitions_per_s": 15.694944677787529,
+      "transitions": 200,
+      "episodes": 1
+    },
+    {
+      "event": "start",
+      "unit": "seed1/none/0/babble/shard006",
+      "utc": 1795419450.957032,
+      "pid": 349448
+    },
+    {
+      "event": "published",
+      "unit": "seed1/none/0/babble/shard006",
+      "utc": 1795419463.467694,
+      "wall_s": 12.511933196918108,
+      "rss_kib": 2548116,
+      "transitions_per_s": 11.74878395580057,
+      "transitions": 147,
+      "episodes": 1
+    },
+    {
+      "event": "start",
+      "unit": "seed2/rot_z/90/babble/shard007",
+      "utc": 1795419450.958412,
+      "pid": 349449
+    },
+    {
+      "event": "published",
+      "unit": "seed2/rot_z/90/babble/shard007",
+      "utc": 1795419463.4582343,
+      "wall_s": 12.502000667038374,
+      "rss_kib": 2046828,
+      "transitions_per_s": 15.997439555998556,
+      "transitions": 200,
+      "episodes": 1
+    }
+  ],
+  "reproduction_files_sha256": {
+    "babble.py": "c74b4ff08e516d0a7bde4309392a3ebaa877cb0d84afaba87dce410dd3fd2f92",
+    "check_runtime.py": "509b6679b50155fab9b62a620176985f8fab64ddd7079a6948bccfccdb939f84",
+    "environment.sh": "40b23447f9e2c6392527597db8bd8de4782d81632d53ab113930c9074a9d1ab5",
+    "launch.sh": "63e1df50c7d32cee32aea2b8c557cfefe32ba3fa325105a1bf49bdcc926dd2dc",
+    "qualify.py": "7123ec75ca61c7cfb96dc88ac515755108689bcd84e162ae104cc926c94d077b",
+    "runtime.sha256": "0603bc3f1113c0b11f1b1f4aeb07dc501c892bd6e3ea55e942359a6f37beaf84",
+    "startup_cpu.py": "572aac134b6dd6160306b0894096a5a20f8c503fadb1b0faf6af835c33d89f50"
+  }
+}
