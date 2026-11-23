@@ -148,7 +148,8 @@ def apply_soft(params, cfg: ReaderV2Config, batch, metres: float):
     mix = jax.nn.softmax(jnp.stack(logits, axis=-1), axis=-1)
     shape = mix[:, 0, None, None] * shapes[0] + mix[:, 1, None, None] * shapes[1]
     _, grip_logit = _apply_scale_and_grip(params["reader"], issued, 100.0 * sig("delta_eef"), 100.0 * sig("delta_jaw"), valid)
-    info = dict(cos=cos, sin=sin, kappa=jnp.exp(params["log_kappa"]) * length, lag1=mix[:, 1], share=mix[:, 0] * shares[0] + mix[:, 1] * shares[1])
+    # The concentration reads the resultant length without training the reader through it.
+    info = dict(cos=cos, sin=sin, kappa=jnp.exp(params["log_kappa"]) * jax.lax.stop_gradient(length), lag1=mix[:, 1], share=mix[:, 0] * shares[0] + mix[:, 1] * shares[1])
     return rot @ shape, grip_logit, info
 
 
@@ -160,7 +161,7 @@ def soft_loss(params, cfg: ReaderV2Config, batch, metres: float):
     grip_t = jnp.asarray(batch["gripper_sign"] > 0, dtype=jnp.float32)
     grip_loss = jnp.mean(jax.nn.softplus(grip_logit) - grip_t * grip_logit)
     rad = jnp.deg2rad(jnp.asarray(batch["yaw_deg"], dtype=jnp.float32))
-    # Von Mises likelihood of the frame yaw; it trains the concentration only, so kappa reports yaw precision.
+    # Von Mises likelihood of the frame yaw. It trains only the concentration scale, so kappa reports yaw precision.
     align = jax.lax.stop_gradient(info["cos"] * jnp.cos(rad) + info["sin"] * jnp.sin(rad))
     nll = jnp.mean(info["kappa"] * (1.0 - align) + jnp.log(jax.scipy.special.i0e(info["kappa"])))
     return jnp.mean(jnp.sum(jnp.square(op - batch["op"]), axis=(-2, -1))) + grip_loss + 0.1 * nll
