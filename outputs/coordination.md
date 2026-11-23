@@ -4,6 +4,7 @@
 
 | Work | Cluster / job / source | Last check, progress and next action |
 | --- | --- | --- |
+| SymMeta wider-family command-map recovery | Codex, Baige RTX 4090 Distributed Training, PR #7 | Staging the updated PR on November 23. Test whether general solvers match Procrustes in-family and improve outside it on 96 locked UR5e supports. [PR and run plan](https://github.com/tonyzhu163/fluffy-bassoon-2/pull/7) |
 | SymMeta versus a matched-source linear flow reader | Codex, Baige CPU and planned Pro6K Distributed Training | Registered on November 23. Fit on the same 1,344 labeled traces and compare common-solver yaw and paired second-attempt task success. [Plan](symmeta-matched-flow-20261123-r1/PLAN.md) |
 | Original LIBERO-PRO matched π₀.₅ pilot | Baige Pro6K Distributed Training, `job-9me3dekaeqaj`, 1 GPU, `0c457b8f` | Nov 23 14:05:58 Shanghai. Submitted at 14:01:19. Waiting for the first shared job receipt. Monitor owns device, native inference and first-pair verification, then 20-minute checks through exit. [Monitor](symmeta-original-pro-20261123-r1/MONITOR.md) |
 | SymMeta FK on remaining arm/policy panels | Codex, Baige Linux CPU | Qualifying archived joint tapes, camera-reader predictions and reset identity for IIWA and Kinova3 × π₀.₅ and UR5e × π₀. [Preparation](symmeta-fk-crossarm-20261123-r1/) |
