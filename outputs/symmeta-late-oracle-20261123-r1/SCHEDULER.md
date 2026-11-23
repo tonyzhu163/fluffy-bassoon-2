@@ -1,0 +1,3 @@
+# Production assignment
+
+The parent stopped the queued job `job-8urr2t60bwr6` at 18:42:40 Shanghai before it received a device. The CPU validator found that a mathematically unchanged zero may have opposite signed-zero bits. The new reader validates numerical equality and retains strict identity-intervention hashes. Production now uses `job-um1qkcfudxqv`, attempt `gpu02`, two RTX PRO 6000D, submit time 18:43:27. The signed and unsigned zero fix is the only code change. Execution pin is `cbbbcdca19c7ed3812c3805ce0ee8897109fb9fb`. Panel SHA, paired design and 75-minute limit are unchanged. [Scheduler receipt](submission-r2.jpg)

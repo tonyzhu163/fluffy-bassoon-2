@@ -13,7 +13,7 @@ export LIBERO_PRO_ROOT=$setup/simulator-source LIBERO_CONFIG_PATH=$setup/libero-
 export PYTHONPATH="$root/setups/xemb-icml-campaign-20261121-r1/cv2-headless-overlay:$CROSSARM_RELEASE:$LIBERO_PRO_ROOT:$code/src:$code/outputs/libero-crossarm-20261120-r1:$code/outputs/libero-xemb-ur5e-sysid-20261120-r1"
 export NATIVE_PANEL=$code/outputs/frozen-vla-native-transfer-20261123-r1
 export LD_LIBRARY_PATH="$root/setups/libero90-full-action-20261119-r1/desktop-libs02/prefix/usr/lib/x86_64-linux-gnu:${LD_LIBRARY_PATH:-}"
-export CUDA_VISIBLE_DEVICES='' MUJOCO_GL=egl PYOPENGL_PLATFORM=egl EGL_PLATFORM=surfaceless
+export CUDA_VISIBLE_DEVICES='' MUJOCO_EGL_DEVICE_ID=0 MUJOCO_GL=egl PYOPENGL_PLATFORM=egl EGL_PLATFORM=surfaceless
 export __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json
 export LIBGL_ALWAYS_SOFTWARE=1 GALLIUM_DRIVER=llvmpipe LP_NUM_THREADS=1
 export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
