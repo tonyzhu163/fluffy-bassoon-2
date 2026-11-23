@@ -21,5 +21,4 @@
 
 - [ ] Complete the appendix episode ledger beyond the four main panels. [Paired reanalysis](../../outputs/symmeta-paired-statistics-20261123-r1/RESULT.md)
 - [ ] Review the impact statement before submission.
-- [ ] Align the project findings index with the paper's comparator names.
 - [ ] Consider an optional JAX/Flax dependency group for running the reader tests off cluster.
