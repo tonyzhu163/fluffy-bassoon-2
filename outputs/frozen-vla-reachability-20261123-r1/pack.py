@@ -18,7 +18,7 @@ FILES = {
 }
 
 
-def pack(directory, task):
+def pack(directory, task, destination):
     name, sha = FILES[task]
     path = directory / name
     digest = hashlib.sha256()
@@ -27,9 +27,11 @@ def pack(directory, task):
             digest.update(chunk)
     if digest.hexdigest() != sha:
         raise ValueError(path)
-    with h5py.File(path) as src, h5py.File(directory / (task + ".h5"), "w") as dst:
+    destination.mkdir(exist_ok=True, parents=True)
+    with h5py.File(path) as src, h5py.File(destination / (task + ".h5"), "w") as dst:
         dst.attrs.update(source=name, sha256=sha, revision="f13aa24a3da8c43c7225569f28c562979fa0e35a")
-        for name, demo in src["data"].items():
+        for name in ("demo_0", "demo_1"):
+            demo = src["data"][name]
             group = dst.create_group(name)
             model = ET.fromstring(demo.attrs["model_file"]).find("worldbody")
             joints = [el.get("name") for el in model.iter() if el.tag in ("joint", "freejoint")]
@@ -47,4 +49,4 @@ def pack(directory, task):
 
 
 if __name__ == "__main__":
-    pack(Path(sys.argv[1]), sys.argv[2])
+    pack(Path(sys.argv[1]), sys.argv[2], Path(sys.argv[3]) if len(sys.argv)>3 else Path(sys.argv[1]))

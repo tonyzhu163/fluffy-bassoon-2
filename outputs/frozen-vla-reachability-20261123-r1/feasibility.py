@@ -95,7 +95,11 @@ def stage_geometry(src, template, free, scalar, source_start, target_start, obj,
     template.d.qpos[:] = template.initial_qpos
     for name in scalar:
         src_idx, dst_idx = src.m.joint(name).qposadr[0], template.m.joint(name).qposadr[0]
-        template.d.qpos[dst_idx] = src.d.qpos[src_idx]
+        value = src.d.qpos[src_idx]
+        joint = template.m.joint(name)
+        if joint.limited[0]:
+            value = np.clip(value, *joint.range)
+        template.d.qpos[dst_idx] = value
     template.forward()
     receiver_map = body_pose(template.m, template.d, receiver) @ np.linalg.inv(body_pose(src.m, src.d, receiver))
     if receiver in free:
@@ -113,7 +117,9 @@ def stage_geometry(src, template, free, scalar, source_start, target_start, obj,
         else:
             mapping = target_start[body] @ np.linalg.inv(source_start[body])
         put_free(template.m, template.d, joint, mapping @ body_pose(src.m, src.d, body))
-    template.d.qpos[template.fingers] = src.d.qpos[src.fingers]
+    finger_ids = [template.m.joint(f"gripper0_finger_joint{i}").id for i in (1, 2)]
+    flo, fhi = template.m.jnt_range[finger_ids].T
+    template.d.qpos[template.fingers] = np.clip(src.d.qpos[src.fingers], flo, fhi)
     template.forward()
     goal = tool_map @ src.tcp()
     # The held object / active contact body must have exactly the same hand-relative pose.
@@ -225,9 +231,13 @@ def case(task_key, layout, inputs, out, renderer):
                     goal = stage_geometry(src, panda, free, scalar, source_start, target_start,
                                           obj, phase, hits, receiver, t)
                     stage = staged_state(panda, free, scalar)
+                    donor_fingers = src.d.qpos[src.fingers]
+                    scalar_projection = {n: float(stage["joints"][n][0] - src.d.qpos[src.m.joint(n).qposadr[0]])
+                                         for n in scalar}
                     expected_scene = np.stack([body_pose(panda.m, panda.d, b) for b in panel_bodies])
                     row = dict(body=obj, phase=phase, frame=t, donor_q=src.d.qpos[src.adr].tolist(),
                                donor_tcp=src.tcp().tolist(), donor_contacts=src.contacts(obj),
+                               donor_fingers=donor_fingers.tolist(), scalar_projection=scalar_projection,
                                goal=goal.tolist(), stage=stage, search={})
                     donor["waypoints"].append(row)
                     for arm in ARMS:
