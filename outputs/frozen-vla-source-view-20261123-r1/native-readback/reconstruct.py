@@ -214,6 +214,26 @@ def native(layout):
                 panda_minus_raw_return=(out["panda"]["native_return"] - out["raw"]["native_return"]) if paired else None)
 
 
+def paired_uncertainty(scores):
+    from scipy.stats import binomtest
+
+    paired = [s["branches"] for s in scores if s["paired"]]
+    n = len(paired)
+    if not n:
+        return dict(complete_layouts=0, planned_layouts=len(scores))
+    rescues = sum(b["panda"]["success"] and not b["raw"]["success"] for b in paired)
+    losses = sum(b["raw"]["success"] and not b["panda"]["success"] for b in paired)
+    success = {m: sum(b[m]["success"] for b in paired) for m in MODES}
+    intervals = {}
+    for m, k in success.items():
+        ci = binomtest(k, n).proportion_ci(confidence_level=.95, method="exact")
+        intervals[m] = [ci.low, ci.high]
+    upper = binomtest(rescues + losses, n, alternative="less").proportion_ci().high
+    return dict(complete_layouts=n, planned_layouts=len(scores), successes=success, rescues=rescues,
+                losses=losses, ties=n-rescues-losses, paired_success_difference=(rescues-losses)/n,
+                exact_95pct_per_arm_if_iid=intervals, one_sided_95pct_discordance_upper_if_iid=upper)
+
+
 def main():
     frames, scores = [], []
     for layout in (14, 15):
@@ -231,7 +251,8 @@ def main():
         expected = [dict(layout=s["layout"], paired=s["paired"], outcomes={
             m: b["success"] for m, b in s["branches"].items() if b["status"] == "terminal"}) for s in scores]
         check(load(path) == expected, "producer pairing/labels vs reconstructed episodes")
-    print(json.dumps(dict(frames=frames, native=scores), indent=2, allow_nan=False))
+    print(json.dumps(dict(frames=frames, native=scores, native_summary=paired_uncertainty(scores)),
+                     indent=2, allow_nan=False))
 
 
 if __name__ == "__main__":
