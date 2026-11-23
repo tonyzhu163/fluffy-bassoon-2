@@ -22,6 +22,8 @@ def space(path):
 
 def transport(dest):
     start = time.monotonic()
+    if Path(os.environ.get("REGROUND_RUNTIME_ROOT", ROOT)).resolve() != ROOT:
+        raise ValueError(f"Transport is qualified only for {ROOT}")
     data = (ROOT / "wheels" / WHEEL).read_bytes()
     if hashlib.sha256(data).hexdigest() != SHA:
         raise ValueError("Wheel digest differs from the qualified runtime lock")
