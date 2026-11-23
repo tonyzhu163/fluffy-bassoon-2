@@ -30,7 +30,15 @@ On 32 single-attempt queries across eight released tasks and four perturbation f
 
 ## Probe direction and planar interface recovery on UR5e
 
+On open-loop frozen π₀.₅ action tapes, damping the inverse reduced clipped command error from 0.308 to 0.184 on 64 weak two-direction supports. Isotropic damping scored 0.189. A scaled rotation gave 0.039 on the 192 recorded yaw/gain supports where the damped full inverse gave 0.136. [Task-level intervals, strong-support controls and command replay](../outputs/frozen-vla-factory-20261123-r1/inverse/RESULT.md)
+
 On 384 new simulated UR5e supports with reflected or anisotropic XY interfaces and matched endpoint jitter, an independent second command direction reduced full-map relative forward error from 0.560 to 0.270 at the same 15-control budget (paired reduction 0.290, eight-task 95% interval 0.204 to 0.363). Trusted FK supplied the displacements. On 192 archived yaw/gain supports, scaled rotation gave lower error than full ridge, 0.080 versus 0.262. These screens measure command-map recovery. [Directions, maps and observation assumptions](../outputs/frozen-vla-factory-20261123-r1/excitation/RESULT.md)
+
+## Observation adapters for frozen SmolVLA
+
+An affine joint-to-pose adapter fitted on the opposite robot gave first-five-action RMSE of 0.2346 on UR5e and 0.3193 on IIWA relative to the frozen policy using the measured target tool pose. Dropping state gave 0.1001 pooled RMSE. Fitting the same adapter on 15 joint/pose pairs from three separate target episodes gave 0.0141, improving over opposite-arm calibration on all 16 held-out frames (paired mean reduction 0.2629, 95% eight-task interval 0.2097–0.3262). Unknown source-frame registration and downstream task success remain open. [Leave-one-arm-out and few-shot comparison](../outputs/frozen-vla-factory-20261123-r1/state-transfer/RESULT.md)
+
+On eight standard LIBERO Panda tasks with physical quarter-turn camera rolls, frozen SmolVLA's full-chunk action RMSE relative to the upright reference fell from 0.2069 to 0.0172 with an image-estimated correction. One upright scene was falsely rotated. In a separate experiment with one near-reset Panda/UR5e pose per task, rendering the source arm using only the target tool pose, jaw and installation geometry reduced 50-step translation RMS from 0.0596 to 0.0282 on ten full UR5e images. The displaced-render control scored 0.0922. These CPU forward passes compared proposals at fixed inputs and noise. The native success of these two input adapters remains unmeasured. [Camera controls](../outputs/frozen-vla-factory-20261123-r1/view/RESULT.md) · [Rendered arm and occlusion controls](../outputs/frozen-vla-factory-20261123-r1/rendered-appearance/RESULT.md)
 
 ## Matched-source visual yaw on UR5e
 
