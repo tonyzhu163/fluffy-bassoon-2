@@ -320,6 +320,7 @@ def main():
 
     started = time.monotonic()
     cv2.setNumThreads(1)
+    cv2.ocl.setUseOpenCL(False)
     if jax.default_backend() != "cpu":
         raise RuntimeError("CPU JAX required")
     params, cfg, projection, sources = frozen_inputs(args.data_root)
