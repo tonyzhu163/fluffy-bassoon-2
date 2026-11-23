@@ -21,12 +21,12 @@
 \theoremstyle{remark}
 \newtheorem{remark}{Remark}
 
-\icmltitlerunning{Single-Trace Robot Calibration}
+\icmltitlerunning{Second-Attempt Calibration under Imposed Command Shifts}
 
 \begin{document}
 
 \twocolumn[
-  \icmltitle{Calibrating Frozen Robot Policies from One Motion Trace}
+  \icmltitle{Second-Attempt Calibration under Researcher-Imposed Command Shifts\texorpdfstring{\\}{ }on Eight Held-Out LIBERO-Pro2.0 Tasks}
 
   \begin{icmlauthorlist}
     \icmlauthor{Anonymous Authors}{anon}
@@ -42,39 +42,34 @@
 \printAffiliationsAndNotice{}
 
 \begin{abstract}
-Can a frozen vision-language-action policy use a brief movement to discover how an unfamiliar robot executes its commands? On three simulated arms with altered command interfaces, frozen $\pi_{0.5}$ succeeds on 77--89\% of tasks when supplied with the exact command mapping and on 6--8\% without correction. We study mismatches in planar frame rotation, movement gain, and gripper polarity. SymMeta learns from labeled motion traces on Panda and Sawyer to estimate these quantities on an unseen arm. A visual network reads motion relative to a fixed camera, a geometric fit aligns it with issued commands, and two small networks read movement scale and gripper response. Using 15 controls (0.75\,s) from its first attempt to calibrate a fresh attempt, frozen $\pi_{0.5}$ reaches 78.1\% success on UR5e, 78.5\% on IIWA, and 66.3\% on Kinova3. The same family of corrections serves eight held-out manipulation tasks. The estimate depends on camera placement, and applying corrections during the first attempt reaches only 9--27\% across four arm--policy pairs. These experiments establish transfer across arms within a specified family of command changes.
+Can a frozen robot policy use the first few movements of a task to calibrate a second attempt? We take eight held-out LIBERO-Pro2.0 task identities in their base scenes and impose twelve command settings per task, varying planar rotation, movement gain and gripper polarity. SymMeta learns from labeled Panda and Sawyer traces to align motion seen by a fixed camera with issued commands. After 15 uncorrected controls (0.75\,s), a reset starts a new layout of the same task. On the second attempt, frozen $\pi_{0.5}$ succeeds on 78.1\% of queries on UR5e, 78.5\% on IIWA and 66.3\% on Kinova3, averaged over three reader seeds. With the same seed-41 reader on UR5e, calibration during one uninterrupted attempt succeeds on 20/96 queries, versus 76/96 on a calibrated retry and 8/96 on an uncorrected retry. These rates measure calibration with a prior motion trace, a fixed camera pose and an opportunity to start again.
 \end{abstract}
 
 \section{Introduction}
 
-Generalist VLA policies such as $\pi_{0.5}$~\citep{black2025pi05}, $\pi_0$~\citep{black2024pi0}, OpenVLA~\citep{kim2024openvla}, and RT-2~\citep{brohan2023rt2} solve diverse tabletop tasks on the robots they were trained on. On a new arm, the command interface can differ by a rotation $R$ of the end-effector command frame, an actuator gain $g$, or a gripper sign $s \in \{-1, +1\}$. Such mismatches arise from base-mount yaw, teleoperation-to-policy frame conventions, vendor tool-frame and gripper conventions, and state-encoding details. We found one ourselves: the $\pi_0$ quaternion sign issue in \S\ref{sec:setup}. When the transform is known, the policy still works. In our simulated benchmark, supplying the exact inverse transform restores 85.4\% (UR5e), 88.5\% (IIWA), 77.1\% (Kinova3), and 54.2\% (UR5e, $\pi_0$) success without changing a policy weight. The open problem is to estimate the interface transform quickly, without demonstrations or access to the controller's conventions.
+A robot policy can propose a useful movement and still send the gripper the wrong way if the controller interprets its commands in a different frame. We ask whether a frozen vision-language-action policy (VLA) can use motion observed on one attempt to correct its commands on the next. LIBERO-Pro2.0 supplies the eight held-out task identities, base scenes and native success criteria. We supply the command transforms, simulated arm substitutions and two-attempt protocol.
 
-When the robot model, controller conventions, and camera extrinsics are documented, classical hand--eye calibration~\citep{tsai1989handeye,park1994handeye} solves this offline. We target the setting where they are unknown or wrong and the only shared reference frame is a camera mounted as in training. Two recent lines of work adapt from interaction instead:
-\begin{enumerate}
-  \item \textbf{In-context behavior adaptation}~\citep{yang2026icba} conditions a policy on short histories of commanded actions and resulting motions through a Transformer context encoder. That work trains the policy with the context; we keep the policy frozen and evaluate a Perceiver~\citep{jaegle2022perceiverio} history encoder that predicts the transform, as a baseline in its spirit.
-  \item \textbf{Re-grounding from motor babbling} (ReGround;~\citealp{siddique2026reground}) keeps the VLA frozen, learns the deployed robot's dynamics from task-agnostic babbling, and tracks the policy's intended motion. We evaluate a simplified affine variant restricted to command-frame proprioception, not the published pipeline (\S\ref{sec:setup}).
-\end{enumerate}
+We train SymMeta to read motion on Panda and Sawyer and deploy the frozen reader on UR5e, IIWA and Kinova3. A camera mounted as in training supplies the reference direction. The visual reader estimates motion and a weight for each frame pair without seeing the horizontal commands. Weighted Procrustes then aligns the estimated motions to those commands. This separation gives exact planar command-frame equivariance for fixed motion estimates and weights. Separate heads estimate gain and gripper polarity. The supervision is one set of interface labels per training trace.
 
-Our contributions:
-\begin{itemize}
-  \item \textbf{An identifiability observation (Prop.~\ref{prop:unident}).} For commands chosen independently of the rotation, displacements measured in the robot's rotated command frame do not depend on it. The rotation must come from an external reference: a camera, or joint encoders together with a kinematic model and base frame.
-  \item \textbf{SymMeta (\S\ref{sec:method}).} An action-blind visual motion reader with vertical-parallax correction feeds a closed-form weighted Procrustes step~\citep{schonemann1966generalized,kabsch1976solution,umeyama1991least}. For fixed visual motion estimates, the rotation estimate is therefore exactly equivariant to any command-frame rotation. This is not invariance to camera pose (\S\ref{sec:limits}). Gain and gripper sign are estimated separately.
-  \item \textbf{Transfer across arms and VLAs (Table~\ref{tab:headline}).} Trained only on Panda and Sawyer, the same checkpoints adapt frozen $\pi_{0.5}$ and $\pi_0$ on UR5e, IIWA, and Kinova3. Averaged over 3 seeds, SymMeta beats source-calibrated Horn--Schunck flow~\citep{horn1981determining} by 9.7--24.3 points, and it beats Horn--Schunck on every individual seed. A Perceiver history-encoder baseline reaches 59--87\% on familiar shifts but only 2--6\% on out-of-distribution (OOD) ones.
-  \item \textbf{Training-shift and capacity sweep (\S\ref{sec:scaling}).} With up to 128 training shifts, non-equivariant models stay at or below 45\% joint factor recovery on UR5e OOD shifts, and a Perceiver with 5.31$\times$ as many parameters is no better. SymMeta reaches 96\% at 7 shifts.
-  \item \textbf{Boundaries (\S\ref{sec:limits}).} We report where the method falls short: adaptation within a single attempt, full 3D rotations, a second simulator, camera rotation, and camera shifts that break the VLA itself.
-\end{itemize}
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/fig1_multiarm_multivla.pdf}
+  \caption{\textbf{Single attempt and seed-matched retry.} The seed-41 reader either updates during the scored episode or starts it calibrated from 15 controls on an earlier layout. Each row uses the same 96 query resets and policy-noise draws for both protocols.}
+  \label{fig:multiarm}
+\end{figure}
+
+A single-attempt controller must collect evidence while its uncorrected actions are already changing the scene. On a retry, the controller applies the prior estimate from the first action. We measure both protocols (Fig.~\ref{fig:multiarm}) and include an uncorrected retry under the same shifts (Table~\ref{tab:headline}). We then test which signals identify the rotation, how the learned reader transfers to unseen command settings, and how the estimate changes when the camera moves or joint kinematics supply the reference frame.
 
 \section{Related Work}
 
 \paragraph{Cross-embodiment VLAs and visual transfer.}
-Generalist VLAs~\citep{brohan2023rt2,kim2024openvla,doshi2024scaling,black2024pi0,black2025pi05} transfer broadly across canonical robots but assume a consistent command interface. Mirage~\citep{chen2024mirage} and RoVi-Aug~\citep{chen2024roviaug} address visual appearance mismatch under known kinematics. We address an unknown command-frame rotation, gain, and gripper polarity, and we neither retrain the policy nor edit images.
+Generalist VLAs~\citep{brohan2023rt2,kim2024openvla,doshi2024scaling,black2025pi0,black2025pi05} transfer broadly across canonical robots but assume a consistent command interface. Mirage~\citep{chen2024mirage} and RoVi-Aug~\citep{chen2024roviaug} address visual appearance mismatch under known kinematics. We address an unknown command-frame rotation, gain, and gripper polarity, and we neither retrain the policy nor edit images.
 
 \paragraph{In-context adaptation and online system identification.}
-Online system-identification methods~\citep{yu2017preparing,kumar2021rma,laskin2023algorithm} infer latent dynamics from proprioceptive histories. ReGround~\citep{siddique2026reground} keeps a VLA frozen and re-grounds its intended motion with a dynamics model learned from motor babbling; it targets actuation shifts including latency, which our static interface model does not cover. In-context behavior adaptation~\citep{yang2026icba} trains a policy conditioned on a Transformer encoding of commanded actions and resulting motions.
-We show that command-frame end-effector displacements alone carry no information about a rotation of that frame. Our baselines are a Perceiver history encoder and a command-frame affine calibration in the spirit of these two works. They are our own implementations for the frozen-policy setting and should not be read as results for the published methods.
+Online system identification~\citep{yu2017preparing,kumar2021rma,laskin2023algorithm} uses interaction histories to infer dynamics. In-context behavior adaptation (ICBA) trains a policy to use a Transformer encoding of commanded actions and observed motion~\citep{yang2026icba}. ReGround keeps a VLA frozen, learns dynamics from task-agnostic motor babbling and tracks intended motion under shifts including latency~\citep{siddique2026reground}. We evaluate two local proxies. One is a Perceiver~\citep{jaegle2022perceiverio} trained to predict interface factors. The other fits an affine map to command-frame proprioception. All reported outcomes for these comparators belong to the local implementations.
 
-\paragraph{Calibration, equivariance, and visual servoing.}
-Hand--eye calibration~\citep{tsai1989handeye,park1994handeye} recovers fixed frame transforms from known motions and pose measurements. Uncalibrated visual servoing (Broyden UVS;~\citealp{jagersand1997uvs}) and optical flow~\citep{horn1981determining,kroeger2016dis} estimate image Jacobians from pixels. Group-equivariant networks~\citep{cohen2016group,wang2022equivariant} build symmetry into policy backbones. We leave the policy untouched and enforce rotation equivariance only in a small identification module, through weighted Procrustes alignment~\citep{schonemann1966generalized,kabsch1976solution,umeyama1991least}.
+\paragraph{Geometric calibration.}
+Hand--eye calibration~\citep{tsai1989handeye,park1994handeye} relates measured poses across frames. Uncalibrated visual servoing~\citep{jagersand1997uvs} estimates an image Jacobian, and dense inverse search (DIS) estimates optical flow~\citep{kroeger2016dis}. Procrustes alignment is classical~\citep{schonemann1966generalized,kabsch1976solution,umeyama1991least}. \citet{choy2020deep} already combined learned correspondence confidence with differentiable weighted Procrustes to register pairs of 3D scans. Here the quantities being aligned are issued commands and planar motion inferred from oblique video. Trace-level yaw supervision trains the motion readout and its weights through that alignment. The resulting equivariance concerns the command coordinates supplied to the solver, whereas equivariant policy networks impose symmetry on the policy itself~\citep{cohen2016group,wang2022equivariant}.
 
 \section{Problem Formulation}
 
@@ -83,7 +78,7 @@ A frozen VLA outputs canonical relative end-effector commands $a_t = (\Delta p_t
   \text{Planar:}\; & \Delta p_{t,xy}^{\text{phys}} = g\, R(\theta)\,\Delta p_{t,xy}^{\text{cmd}}, \label{eq:so2}\\
   \text{3D:}\; & \Delta p_t^{\text{phys}} = R\, D\,\Delta p_t^{\text{cmd}},\quad D = \operatorname{diag}(g_x, g_y, g_z), \label{eq:so3}
 \end{align}
-with $(\theta, g, s) \in [-\pi, \pi) \times \mathbb{R}_+ \times \{\pm 1\}$ in the planar case and $R \in SO(3)$ in the 3D case. The method observes a short history $\mathcal{H} = \{(I_k^{\text{before}}, I_k^{\text{after}}, \bar{a}_k, \Delta p_k^{\text{local}}, \Delta j_k)\}_{k=1}^K$ of camera frames, issued commands, end-effector displacements in the robot's command frame, and changes in gripper finger opening. Arm joint encoders are not an input. It estimates $(\hat{R}, \hat{D}, \hat{s})$ and wraps the frozen VLA with the inverse adapter $\bar{a}_t^{\text{issued}} = \hat{D}^{-1}\hat{R}^\top a_t^{\text{VLA}}$ (and $\hat{s}$ for the gripper).
+with $(\theta, g, s) \in [-\pi, \pi) \times \mathbb{R}_+ \times \{\pm 1\}$ in the planar case and $R \in SO(3)$ in the 3D case. The method observes a short history $\mathcal{H} = \{(I_k^{\text{before}}, I_k^{\text{after}}, \bar{a}_k, \Delta p_k^{\text{local}}, \Delta j_k)\}_{k=1}^K$ of camera frames, issued commands, end-effector displacements in the robot's command frame, and changes in gripper finger opening. Arm joint encoders are not an input. It estimates $(\hat{R}, \hat{D}, \hat{s})$ and wraps the frozen VLA with the inverse adapter $\bar{a}_t^{\text{issued}} = \hat{D}^{-1}\hat{R}^\top a_t^{\text{VLA}}$ (and $\hat{s}$ for the gripper). The planar wrapper also rotates the observed end-effector displacement from its reset position back into the policy frame.
 
 \begin{proposition}[Command-frame displacements do not identify $R$]
 \label{prop:unident}
@@ -94,14 +89,14 @@ Substitute $\Delta p_k^{\text{world}}$ into the definition: $R^\top R D \bar{a}_
 \end{proof}
 
 \begin{remark}
-The proposition is about one information source, not about any specific method or about proprioception in general. It does not cover (i) arm joint encoders combined with a kinematic model and a known base frame, (ii) proprioception expressed in a world frame, or (iii) methods given the camera extrinsics; each supplies the missing reference frame. On the 96 UR5e support traces, planar alignment of the issued commands with forward-kinematics displacements recovers yaw with $1.93^\circ$ mean absolute error, compared with $6.67^\circ$ for seed-41 SymMeta on the same traces (\S\ref{sec:limits}). SymMeta targets the case where such a model is unavailable or untrusted. The proposition also does not cover commands produced in closed loop by a policy that observes images, which can depend on $R$ through the visual feedback; our proprioceptive baseline does not exploit this. Finally, the same substitution shows that $D$ \emph{is} identifiable from command-frame displacements, which SymMeta's gain head uses. Under a non-uniform training prior, such as a few discrete training rotations, an estimator can do better than $90^\circ$ in-distribution by guessing the prior mode, but not on rotations outside the prior's support.
+The cancellation applies to displacements reported in the rotating frame and to commands chosen independently of $R$. Joint encoders with a kinematic model and known base frame, world-frame measurements, or calibrated camera geometry can supply an external reference. A policy acting on images can also choose commands that depend on $R$. The local displacements retain information about $D$ even when $R$ cancels.
 \end{remark}
 
 \begin{proposition}[Equivariance of the Procrustes step]
 \label{prop:equiv}
 Let $v_k \in \mathbb{R}^d$ and $w_k > 0$ be visual motion estimates and weights computed without access to the commands $\bar{a}_k$, and hold them fixed. Define $H = \sum_k w_k\, v_k (\hat{D}\bar{a}_k)^\top = U\Sigma V^\top$ and $\hat{R} = U \operatorname{diag}(1, \dots, 1, \det(UV^\top)) V^\top$.
 \begin{enumerate}
-  \item \textbf{Planar case.} With $D = gI_2$, $\hat\theta(\bar a, v) = \operatorname{atan2}\big(\sum_k w_k (\bar{a}_k \times v_k), \sum_k w_k (\bar{a}_k \cdot v_k)\big)$ satisfies $\hat\theta(R(\Delta\theta)^\top \bar a, v) = \hat\theta(\bar a, v) + \Delta\theta \pmod{2\pi}$ for every $\Delta\theta$, whenever the two sums are not both zero. All estimation error therefore comes from errors in $v_k$ and $w_k$, not from which command rotations appeared in training.
+  \item \textbf{Planar case.} With $D = gI_2$, $\hat\theta(\bar a, v) = \operatorname{atan2}\big(\sum_k w_k (\bar{a}_k \times v_k), \sum_k w_k (\bar{a}_k \cdot v_k)\big)$ satisfies $\hat\theta(R(\Delta\theta)^\top \bar a, v) = \hat\theta(\bar a, v) + \Delta\theta \pmod{2\pi}$ for every $\Delta\theta$, whenever the two sums are not both zero. This identity holds for every choice of training rotations. Training can still affect the motions and weights supplied to the solver.
   \item \textbf{3D case with known gains.} If $v_k = R D \bar{a}_k$ exactly, $\hat{D} = D$, and the commands $\{D\bar a_k\}$ span $\mathbb{R}^3$, then $\hat{R} = R$. Without gain pre-scaling, $H = R D \big(\sum_k w_k \bar{a}_k \bar{a}_k^\top\big)$, whose orthogonal factor generally differs from $R$ when $D$ is anisotropic.
 \end{enumerate}
 \end{proposition}
@@ -131,7 +126,7 @@ We specify the three interface factors and their inverse. We train the reader fr
   \[
     v_k = v_k^{\text{raw}} - \Delta z_k^{\text{local}}\, u_{z,k},
   \]
-  removes parallax from the oblique camera before weighted Procrustes (Prop.~\ref{prop:equiv}). Vertical displacement $\Delta z^{\text{local}}$ is invariant to planar rotations about $z$, so this correction preserves equivariance in the planar case. Two small MLPs estimate $\log \hat{g}$ from $(|\bar{a}|, |\Delta p^{\text{local}}|)$, which is identifiable by Prop.~\ref{prop:unident}, and $\hat{s}$ from $(\bar{a}_{\text{grip}}, \Delta j)$, where $\Delta j$ is the change in finger opening. The 3D variant outputs $v_k \in \mathbb{R}^3$ and per-axis log-gains, then applies gain-pre-scaled SVD Procrustes.
+  compensates for parallax in the oblique view before weighted Procrustes (Prop.~\ref{prop:equiv}). Vertical displacement $\Delta z^{\text{local}}$ is invariant to planar rotations about $z$, so this correction preserves equivariance in the planar case. Two small MLPs estimate gain from issued translations and local displacements and gripper polarity from the gripper command, jaw motion and final opening (Appendix~\ref{sec:training-details}). The 3D variant outputs $v_k \in \mathbb{R}^3$ and per-axis log-gains, then applies gain-pre-scaled SVD Procrustes.
   \item \textbf{\texttt{EquivFlow}.} This variant implements Prop.~\ref{prop:cardinal}. A 7-channel pixel-attention CNN that sees no flow directions pools DIS flow through a learned $2\times 2$ matrix $H_0$, or a first-frame-conditioned $H_\phi(I_0) = H_0 + \Delta H_\phi(I_0)$. With an MLP reader trained on axis-aligned probe bursts, continuous OOD yaw error is $38.0^\circ$, because the reader snaps to the training directions. \texttt{EquivFlow} reduces this to $9.6^\circ$ (active probe) and $10.3^\circ$ (passive), measured offline. In live control it trails SymMeta (Table~\ref{tab:additional_baselines}), so we treat it as the structurally safer variant under sparse axis-aligned probes, not as the headline method.
 \end{enumerate}
 
@@ -159,7 +154,7 @@ We specify the three interface factors and their inverse. We train the reader fr
 \subsection{Setup}
 \label{sec:setup}
 
-\paragraph{Benchmark.} We evaluate on the official LIBERO-Pro2.0 test split~\citep{liu2023libero,liberopro2026}: 8 held-out tasks drawn from Spatial, Object, Goal, and Long. Each task is crossed with 12 interface transforms, giving 96 queries per arm--VLA pair. The 7 training transforms are the nominal transform, yaw $\in \{90^\circ, 180^\circ, -90^\circ\}$, gain $\in \{0.65, 1.55\}$, and gripper inversion, each varying one factor. The 12 test transforms fall into three groups of four:
+\paragraph{Benchmark.} We use the eight task identities held out for controlled studies in LIBERO-Pro2.0~\citep{liu2023libero,liberopro2026}: Spatial 0 and 8, Object 1 and 8, Goal 3 and 6, and Long 5 and 8 (zero-based IDs). We use their \texttt{BASE} scenes and cross each with our twelve command settings, giving 96 queries per arm--VLA pair. The holdout applies to reader training. The VLAs may have encountered these tasks during pretraining. The 7 training transforms are the nominal transform, yaw $\in \{90^\circ, 180^\circ, -90^\circ\}$, gain $\in \{0.65, 1.55\}$, and gripper inversion, each varying one factor. The 12 test transforms fall into three groups of four:
 \begin{itemize}
   \item \emph{familiar}: nominal, yaw $90^\circ$, yaw $180^\circ$, gripper inversion;
   \item \emph{compositional OOD}: training factor values never combined in training, e.g.\ yaw $180^\circ$ with gain $0.65$ and inverted gripper;
@@ -167,62 +162,57 @@ We specify the three interface factors and their inverse. We train the reader fr
 \end{itemize}
 ``OOD'' pools the 64 compositional and continuous queries. All arms are simulated in MuJoCo. A step is one control at 20\,Hz of simulated time.
 
-\paragraph{Protocol.} For each query, the frozen VLA first runs unadapted under the shifted interface (Attempt~1). Passive methods see only the first 15 controls (0.75\,s of simulated time) of that rollout, summarized as three consecutive 5-control chunks. The trace is recorded once per task and transform and shared by all passive methods and all reader seeds. Each method's estimate then wraps the VLA for a fresh episode of the same task (Attempt~2), and we report Attempt-2 task success. Attempt~1 is recorded on a different initial scene layout (LIBERO initial state 11) from the one used for Attempt~2 (initial state 13), so the estimate must carry across object layouts. The 0.75\,s figure counts support motion only; it excludes the reset and the reader's inference time. Active baselines instead execute a fixed 15-control probe. Adapting within Attempt~1, without a reset, is reported separately in \S\ref{sec:limits}.
+\paragraph{Protocol.} For each task and command setting, the unadapted frozen VLA executes 15 controls on initial layout 11 (Attempt~1). All passive readers and training seeds share three five-control chunks from that trace. A fresh episode on layout 13 scores native success (Attempt~2). The calibrated retry starts with the estimated correction and holds it fixed. The uncorrected retry uses the identity wrapper on the same scheduled query. Active methods collect a separate 15-control probe. Support lasts 0.75\,s of simulated motion, excluding reset and inference time.
 
-\paragraph{Statistics.} Learned methods (SymMeta, Perceiver) are trained with 3 seeds (41--43) and evaluated on all 96 queries per seed. The three seeds share the same 96 queries and support traces, so the reported mean $\pm$ standard deviation reflects reader-training variance only, and the independent units are the 8 tasks. Deterministic baselines are run once. Paired confidence intervals use a task-clustered bootstrap over the 8 tasks on the seed-41 panel. Appendix~\ref{sec:paired} reports per-seed gains and exact paired sign-flip tests at the query and task levels.
+The single-attempt test starts uncorrected on layout 13 and updates from its own motion. Its first correction can take effect after ten controls. The seed-matched calibrated retry uses the same seed-41 checkpoint, query reset and policy-noise bank. Each protocol contributes one scored episode per query.
 
-\paragraph{Baseline implementations.} The comparator labelled HS (Horn--Schunck) fits one image translation per frame pair by motion-weighted brightness constancy. HS and DIS use flow-to-motion projections fitted on nominal Panda and Sawyer active probes. Both carry those projections to the target arm, where Broyden also updates its estimate from the active probe. None receives target-camera calibration. ``Perceiver'' is our Perceiver history encoder trained to predict the transform from the same support trace as SymMeta. It is inspired by, but is not, the method of \citet{yang2026icba}, which trains the policy with the context. ``Affine (proprio.)'' fits a ridge-regularized linear map from issued planar commands to command-frame end-effector displacements on the same passive trace and projects it onto a scaled rotation. It is inspired by ReGround~\citep{siddique2026reground} but omits that method's learned dynamics model, task-agnostic babbling data, and intent tracking, so it is not a test of the published method.
+\paragraph{Statistics.} Learned methods (SymMeta, Perceiver) are trained with 3 seeds (41--43) and evaluated on all 96 queries per seed. The three seeds share the same 96 queries and support traces, so the reported mean $\pm$ standard deviation reflects reader-training variance only, and the independent units are the 8 tasks. Deterministic baselines are run once. We bootstrap paired differences by resampling eight whole tasks. For three-seed contrasts we first average the paired differences for each query. Appendix~\ref{sec:paired} reports per-seed gains and paired sign-flip tests at the query and task levels.
+
+\paragraph{Baseline implementations.} The brightness-translation reader fits one global translation per frame pair by weighted least squares on brightness constancy, weighting pixels by absolute temporal intensity change. It computes no dense flow field. Both this reader and the DIS comparator project image motion to planar motion using nominal Panda and Sawyer active probes. Broyden updates its Jacobian on the target probe. The passive brightness-translation and learned readers share target traces, but differ in source supervision and in their gain and gripper estimators. Their native success difference compares the complete adapters. Our Perceiver proxy predicts the transform from the same support as SymMeta. Our affine proxy fits a ridge-regularized map from issued planar commands to local displacements and projects it onto a scaled rotation. It uses only the passive trace.
 
 \paragraph{$\pi_0$ state encoding.} $\pi_0$ adds the end-effector axis-angle from \texttt{observation/state[3:6]} to its predicted actions. UR5e and Panda share the same downward gripper pose at reset. However, UR5e's MuJoCo quaternion lies on the opposite sign of the $SO(3)$ double cover (axis-angle $x = -3.133$ vs.\ $+3.141$), which produced a $2\pi$ jump that saturated the wrist command. Even the exact oracle succeeded on 0 of 96 queries. We canonicalize $q \equiv -q$ on the downward-gripper hemisphere in the $\pi_0$ state observation for every method, including the oracle. With this fix, the oracle reaches 54.2\%.
 
-\subsection{Transfer Across Arms and VLAs}
+\subsection{Calibrating a Second Attempt}
 
 \begin{table*}[t]
   \centering
-  \caption{\textbf{Official LIBERO-Pro2.0 test split, checkpoints trained only on Panda+Sawyer.} SymMeta and Perceiver: mean $\pm$ std over 3 training seeds (96 queries each). Other columns: single deterministic runs on the same 96 queries. ``Unshifted'' is the frozen VLA on the nominal interface over the 8 test tasks ($n{=}8$, one episode per task). ``Shifted'' is the frozen VLA without adaptation over all 12 transforms; its successes come from the nominal transform. $\Delta$HS: SymMeta minus Horn--Schunck, as the mean over seeds with the smallest single-seed gap in brackets.}
+  \caption{\textbf{Native success on eight held-out task identities under imposed command shifts.} The first four numeric columns count successes on 96 queries. The single attempt and calibrated retry use the same seed-41 SymMeta checkpoint. The uncorrected retry and the exact inverse use the same query schedule. The last two columns give calibrated retry success (\%, mean $\pm$ SD over reader seeds 41--43) on all settings and on the eight OOD shifts.}
   \label{tab:headline}
-  \footnotesize
+  \small
   \setlength{\tabcolsep}{4pt}
-  \resizebox{\textwidth}{!}{%
-  \begin{tabular}{lrrrrrrr}
+  \begin{tabular}{lrrrrrr}
     \toprule
-    \textbf{Arm (VLA)} & \textbf{Unshifted ($n{=}8$)} & \textbf{Shifted, no adapt.} & \textbf{SymMeta: All / OOD} & \textbf{Horn--Schunck} & \textbf{Perceiver: All / OOD} & \textbf{Oracle} & \textbf{$\Delta$HS (min seed)} \\
+    & & \multicolumn{2}{c}{SymMeta (seed 41)} & & \multicolumn{2}{c}{SymMeta retry (3 seeds)} \\
+    \cmidrule(lr){3-4}\cmidrule(l){6-7}
+    Arm (policy) & Uncorrected retry & Single attempt & Calibrated retry & Exact inverse & All 96 & OOD 64 \\
     \midrule
-    UR5e ($\pi_{0.5}$) & 100.0\% & 8.3\% (0.0\% OOD) & \textbf{78.1$\pm$2.3} / \textbf{79.2$\pm$2.9} & 58.3\% & 32.6$\pm$1.3 / 5.7$\pm$2.0 & 85.4\% & $+19.8$ [$+16.7$] \\
-    IIWA ($\pi_{0.5}$) & 75.0\% & 6.2\% (0.0\% OOD) & \textbf{78.5$\pm$1.0} / \textbf{77.6$\pm$3.2} & 54.2\% & 31.9$\pm$2.6 / 4.7$\pm$2.6 & 88.5\% & $+24.3$ [$+22.9$] \\
-    Kinova3 ($\pi_{0.5}$) & 75.0\% & 6.2\% (0.0\% OOD) & \textbf{66.3$\pm$2.7} / \textbf{64.1$\pm$3.4} & 43.8\% & 30.2$\pm$0.8 / 4.7$\pm$0.0 & 77.1\% & $+22.6$ [$+18.8$] \\
-    UR5e ($\pi_0$) & 75.0\% & 6.2\% (0.0\% OOD) & \textbf{55.6$\pm$3.4} / \textbf{50.5$\pm$4.8} & 45.8\% & 21.2$\pm$1.3 / 2.1$\pm$0.7 & 54.2\% & $+9.7$ [$+5.2$] \\
+    UR5e ($\pi_{0.5}$)    & 8 & 20 & 76 & 82 & $78.1\pm2.3$ & $79.2\pm2.9$ \\
+    IIWA ($\pi_{0.5}$)    & 6 & 26 & 76 & 85 & $78.5\pm1.0$ & $77.6\pm3.2$ \\
+    Kinova3 ($\pi_{0.5}$) & 6 & 21 & 60 & 74 & $66.3\pm2.7$ & $64.1\pm3.4$ \\
+    UR5e ($\pi_0$)        & 6 &  9 & 54 & 52 & $55.6\pm3.4$ & $50.5\pm4.8$ \\
     \bottomrule
-  \end{tabular}}
+  \end{tabular}
 \end{table*}
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=0.98\textwidth]{figures/fig1_multiarm_multivla.pdf}
-  \caption{\textbf{Official LIBERO-Pro2.0 test results on three simulated arms and two frozen VLAs.} Solid bars: all 96 queries; hatched bars: the 64 OOD queries. SymMeta and Perceiver: mean $\pm$ std over 3 seeds. The dashed green line is the unshifted frozen VLA ($n{=}8$).}
-  \label{fig:multiarm}
-\end{figure*}
-
-\begin{figure*}[t]
-  \centering
   \includegraphics[width=0.98\textwidth]{figures/fig4_memorization_cliff_matrix.pdf}
-  \caption{\textbf{Familiar vs.\ OOD success (3-seed means).} The Perceiver baseline reaches 59--87\% on familiar transforms but 2--6\% on OOD transforms, a drop of 57--82 points. SymMeta's familiar and OOD success stay within about 15 points of each other on every arm--VLA pair.}
+  \caption{\textbf{Familiar vs.\ OOD success (3-seed means).} The local Perceiver reaches 59.4--86.5\% on familiar settings and 2.1--5.7\% on OOD settings. Each arm--policy pair has 32 familiar and 64 OOD queries.}
   \label{fig:cliff}
 \end{figure*}
 
-Table~\ref{tab:headline} and Fig.~\ref{fig:cliff} support three findings.
-\begin{enumerate}
-  \item \textbf{SymMeta outperforms the source-calibrated visual baselines.} Averaged over seeds, it beats Horn--Schunck by 9.7--24.3 points, with every seed ahead on every arm--VLA pair. It also beats DIS+Procrustes by 25--47 points and Broyden UVS by 37--51 points. On UR5e with $\pi_0$, SymMeta (55.6\%) is within 1.4 points of the oracle (54.2\%), a difference well inside seed variation.
-  \item \textbf{The Perceiver encoder does not generalize to new shifts.} The Perceiver baseline does well on familiar transforms (59--87\%, vs.\ 66--80\% for SymMeta) but falls to 2--6\% on OOD transforms on every arm and VLA.
-  \item \textbf{The adapter relies on the matching support trace.} Replacing the support trace with one from a mismatched embodiment drops SymMeta to 0--1\%. The command-frame affine baseline stays at 4--6\%, close to the unadapted policy, as Prop.~\ref{prop:unident} predicts for rotated transforms.
-\end{enumerate}
+With one uninterrupted attempt, the seed-41 reader succeeds on 9--26 of 96 queries per panel. The seed-matched calibrated retry succeeds on 54--76, while an uncorrected retry succeeds on 6--8 (Table~\ref{tab:headline}). A retry changes both when correction begins and which trajectory supplies evidence. Replacing the support trace with one from a different command setting reduces calibrated retry success to 0--1\% (Appendix Table~\ref{tab:additional_baselines}).
+
+\paragraph{What the visual reader contributes.} Across three reader seeds the calibrated retry gains 19.8, 24.3 and 22.6 percentage points over brightness-translation on the three $\pi_{0.5}$ arms. All eight task means favor SymMeta on each arm. On UR5e with $\pi_0$, the gain is 9.7 points and six of eight task means favor SymMeta (task-level $p=0.078$). Appendix~\ref{sec:paired} gives paired intervals. On 64 OOD UR5e $\pi_{0.5}$ traces, normalizing each motion vector and using equal chunk weights gives $6.53^\circ$ yaw error for the learned reader and $12.11^\circ$ for brightness-translation. This comparison holds the solver fixed. The two readers still receive different source supervision. Figure~\ref{fig:cliff} separates familiar and OOD shifts for the local Perceiver. Appendix Table~\ref{tab:comparators} gives the corresponding controls.
+
+\paragraph{Forward kinematics.} The FK reader uses additional information from encoder measurements for all six arm joints, their reset configuration and a trusted model of the UR5e and its gripper in a known base frame. It aligns the resulting world-frame tool displacements to the issued commands. On UR5e with $\pi_{0.5}$, we reran FK and the seed-41 visual reader on the same 96 query resets and policy-noise draws. Both used identical learned gain and gripper estimates. Changing only yaw gave 78/96 native successes for FK and 76/96 for vision (7 FK-only, 5 vision-only, 84 ties). FK minus vision was $+2.1$ percentage points (95\% task-cluster bootstrap interval $[-2.1,+7.3]$). FK reduced mean absolute yaw error from $6.67^\circ$ to $1.93^\circ$ overall and from $6.83^\circ$ to $2.02^\circ$ on the 64 OOD supports. The native-success interval admits effects in either direction.
 
 \paragraph{Comparison to action adapters fitted on target demonstrations.}
-We fit a linear or MLP action adapter to $K\in\{1,3,10\}$ successful demonstrations per shift on UR5e ($\pi_{0.5}$). Each demonstration uses the exact inverse transform. Across four OOD shifts the ten-demo sets contain 6,635 retained transitions, excluding failed collection attempts. Each fitted adapter serves all eight tasks on its shift. SymMeta instead uses 15 passive controls (0.75\,s) and a reset per query. On the same 32 task--transform pairs, the one-demo linear adapter succeeds on 28, SymMeta on 25, the oracle on 27 and Horn--Schunck on 18 (Fig.~\ref{fig:fewshot}). The separate runs match simulator reset seeds and layout 13. The seed-41 panel replays policy noise across methods; the adapter evaluator samples its own noise, so the three-success gap is descriptive. Both ten-demo adapters score 0/32 when transferred to the next shift (Table~\ref{tab:fewshot}).
+We fit a linear or MLP action adapter to $K\in\{1,3,10\}$ successful demonstrations per shift on UR5e ($\pi_{0.5}$). Each demonstration uses the exact inverse transform. Across four OOD shifts the ten-demo sets contain 6,635 retained transitions, excluding failed collection attempts. Each fitted adapter serves all eight tasks on its shift. SymMeta instead uses 15 passive controls (0.75\,s) and a reset per query. On the same 32 task--transform pairs, the one-demo linear adapter succeeds on 28, SymMeta on 25, the oracle on 27 and brightness-translation on 18 (Fig.~\ref{fig:fewshot}). The separate runs match simulator reset seeds and layout 13. The seed-41 panel replays policy noise across methods; the adapter evaluator samples its own noise, so the three-success gap is descriptive. Both ten-demo adapters score 0/32 when transferred to the next shift (Table~\ref{tab:fewshot}).
 
 \begin{table}[t]
   \centering
-  \caption{UR5e ($\pi_{0.5}$) on four OOD shifts. Adapter and seed-41 rows share the 32 query resets. Policy noise differs across runs. $^\dagger$The nominal control covers eight tasks.}
+  \caption{UR5e ($\pi_{0.5}$) on four OOD shifts. Adapter and seed-41 rows share the 32 query resets. Policy noise differs across runs. $^\dagger$The adapter evaluator's own nominal control covers eight tasks.}
   \label{tab:fewshot}
   \scriptsize
   \setlength{\tabcolsep}{3pt}
@@ -236,7 +226,7 @@ We fit a linear or MLP action adapter to $K\in\{1,3,10\}$ successful demonstrati
     MLP adapter & $1/3/10$ & $18/25/28$ of 32 & 0/32 ($K{=}10$) \\
     Linear adapter & $1/3/10$ & $28/28/27$ of 32 & 0/32 ($K{=}10$) \\
     SymMeta (seed 41, same 32) & 0 & 78.1\% (25/32) & n/a \\
-    Horn--Schunck (same 32) & 0 & 56.2\% (18/32) & n/a \\
+    brightness-translation (same 32) & 0 & 56.2\% (18/32) & n/a \\
     Oracle (same 32) & 0 & 84.4\% (27/32) & n/a \\
     \bottomrule
   \end{tabular}}
@@ -250,7 +240,7 @@ Do learned encoders fail only for lack of training diversity or capacity? We col
 \begin{figure*}[t]
   \centering
   \includegraphics[width=0.98\textwidth]{figures/fig2_scaling_law.pdf}
-  \caption{\textbf{Training-shift diversity and capacity sweep (5 models $\times$ 7 values of $M$ $\times$ 3 seeds; UR5e OOD queries).} Shaded bands span the seeds. SymMeta reaches $7.9^\circ$ (96\% joint recovery) at $M{=}7$ and $5.7^\circ$ (99\%) at $M{=}128$. Non-equivariant models stay at or below 45\% across the sweep, with wide seed variance.}
+  \caption{\textbf{Training-shift diversity and capacity sweep (5 models $\times$ 7 values of $M$ $\times$ 3 seeds; UR5e OOD queries).} Bands show one standard deviation across reader seeds. SymMeta reaches $7.9^\circ$ (96\% joint recovery) at $M{=}7$ and $5.7^\circ$ (99\%) at $M{=}128$. Non-equivariant models stay at or below 45\% across the sweep, with wide seed variance.}
   \label{fig:scaling}
 \end{figure*}
 
@@ -259,13 +249,13 @@ Three patterns hold across the sweep. (1) Once gain and gripper variation enter 
 \subsection{Support Length and 3D Rotations}
 
 \paragraph{Support length (Fig.~\ref{fig:horizon_so3}A).}
-On the UR5e OOD queries (3 seeds), SymMeta's yaw error is $12.7^\circ$ after 5 controls (0.25\,s), $7.4^\circ$ after 10, and $7.0^\circ$ after 15. With 15 controls, Horn--Schunck reaches $12.3^\circ$, DIS+Procrustes $24.1^\circ$, and the Perceiver baseline $95.6^\circ$. Removing the vertical-parallax correction raises SymMeta's error from $7.0^\circ$ to $12.1^\circ$.
+On the UR5e OOD queries (3 seeds), SymMeta's yaw error is $12.7^\circ$ after 5 controls (0.25\,s), $7.4^\circ$ after 10, and $7.0^\circ$ after 15. With 15 controls, brightness-translation reaches $12.3^\circ$, DIS+Procrustes $24.1^\circ$, and the Perceiver baseline $95.6^\circ$. Removing the vertical-parallax correction raises SymMeta's error from $7.0^\circ$ to $12.1^\circ$.
 
 \paragraph{Full 3D rotations with per-axis gains (Fig.~\ref{fig:horizon_so3}B).}
 \label{sec:so3}
 This extension is partial. The 3D reader is trained on 10 axis-aligned 3D transforms on Panda and Sawyer and tested on 12 held-out 3D transforms on UR5e ($n{=}96$). The test set includes oblique rotations, unequal gains $(0.65, 1.25, 1.40)$, and gripper inversion. It reaches 38.5\% success against an 88.5\% oracle: 68.8\% on familiar, 37.5\% on compositional, and 9.4\% on continuous $SO(3)$ transforms, with $24.5^\circ$ mean geodesic error. This beats the unadapted policy (7.3\%; $+31.2$ points, 95\% CI $[+19.8, +41.7]$, 31 wins / 1 loss) and the 3D command-frame affine baseline (4.2\%), but continuous 3D rotations remain largely unsolved (\S\ref{sec:limits}).
 
-A second-simulator evaluation on xArm6 reaches 23.6\% success against a 66.7\% oracle (Appendix~\ref{sec:extra}).
+With a scripted motor in a second simulator, the parallax-corrected reader on xArm6 reaches 30.6\% success against a 66.7\% oracle (Appendix~\ref{sec:extra}).
 
 \begin{figure*}[t]
   \centering
@@ -276,28 +266,28 @@ A second-simulator evaluation on xArm6 reaches 23.6\% success against a 66.7\% o
 
 \subsection{LIBERO-Pro2.0 Visual and Camera Perturbations}
 
-We test the \texttt{BASE}-trained SymMeta, without retraining, on 48 UR5e queries for each of the five LIBERO-Pro2.0 visual and camera perturbations~\citep{liberopro2026}. The perturbations are \texttt{S13} lighting and texture, \texttt{S14} distractors, \texttt{S15} camera translation by $(0.10, -0.10, 0.07)$\,m, \texttt{S16} field of view and zoom, and \texttt{S19} background and appearance. Nine methods are evaluated (2,160 episodes); Table~\ref{tab:pro2} shows six of them, and Fig.~\ref{fig:pro2}B adds a Pro2-retrained active SymMeta variant.
-Under \texttt{S15}, the frozen VLA fails even with the exact transform (0\% oracle), so success there carries no information about adaptation. We report it only for calibration error. On the four perturbations the VLA can solve, SymMeta reaches 69.3\% against a 76.0\% oracle and 56.8\% for Horn--Schunck.
+We test the \texttt{BASE}-trained SymMeta, without retraining, on 48 UR5e queries for each of five LIBERO-Pro2.0 visual and camera perturbations~\citep{liberopro2026}. We cross six command settings with each catalogue entry on all eight tasks~\citep[Table~15]{liberopro2026}. We use the object appearance (S13) variant that recolors objects, contrast or scene domain (S14) changes to palette and lighting, camera extrinsics (S15) offsets, camera image formation (S16) changes to field of view, and observation quality (S19) changes to RGB intensity and noise. Each of nine methods runs on all 240 queries (2,160 scored episodes). Table~\ref{tab:pro2} reports six methods. Figure~\ref{fig:pro2} compares the two passive readers with the exact inverse as a success reference.
+Under \texttt{S15}, every method scores 0/48, including the exact inverse. Yaw error still distinguishes the estimates on these cases. On the four perturbations with a nonzero exact-inverse success rate, SymMeta reaches 69.3\% against a 76.0\% oracle and 56.8\% for brightness-translation.
 
 \begin{table*}[t]
   \centering
-  \caption{\textbf{LIBERO-Pro2.0 visual and camera perturbations on UR5e ($\pi_{0.5}$, $n{=}48$ per row).} Each cell gives success and mean yaw error. SymMeta is trained on \texttt{BASE} scenes only, while the Perceiver is retrained on Pro2 variants. Under \texttt{S15} the oracle itself scores 0\%, so that row informs only yaw error. Over all 240 queries, SymMeta beats Horn--Schunck by $+10.0$ points (95\% CI $[+4.2, +15.8]$, 35 wins / 11 losses).}
+  \caption{\textbf{Five LIBERO-Pro2.0 perturbations crossed with imposed command settings on UR5e ($\pi_{0.5}$, $n{=}48$ per row).} Cells give success (\%) and, for readers, mean yaw error in degrees. SymMeta is trained on \texttt{BASE} scenes only, while the Perceiver is retrained on Pro2 variants. All methods score 0/48 under \texttt{S15}. Over all 240 queries, the paired gain over brightness-translation is $+10.0$ points (95\% CI $[+4.2, +15.8]$, 35 wins / 11 losses).}
   \label{tab:pro2}
   \footnotesize
   \setlength{\tabcolsep}{4pt}
   \resizebox{\textwidth}{!}{%
   \begin{tabular}{lrrrrrr}
     \toprule
-    \textbf{Variant ($n{=}48$)} & \textbf{Oracle} & \textbf{SymMeta (\texttt{BASE})} & \textbf{Horn--Schunck (Pas.)} & \textbf{DIS+Proc.\ (Act.)} & \textbf{Perceiver (Pro2-retr.)} & \textbf{Affine (proprio.)} \\
+    \textbf{Variant} & \textbf{Oracle} & \shortstack[r]{\textbf{SymMeta}\\(passive)} & \shortstack[r]{\textbf{Brightness-}\\\textbf{translation} (passive)} & \shortstack[r]{\textbf{DIS + Proc.}\\(active)} & \shortstack[r]{\textbf{Local Perceiver}\\(active)} & \shortstack[r]{\textbf{Local affine}\\(passive)} \\
     \midrule
-    \texttt{S13} lighting / texture & 85.4\% & \textbf{75.0\%} (5.87$^\circ$) & 62.5\% (8.58$^\circ$) & 45.8\% (14.29$^\circ$) & 27.1\% (71.78$^\circ$) & 8.3\% (96.03$^\circ$) \\
-    \texttt{S14} distractors & 85.4\% & \textbf{87.5\%} (5.85$^\circ$) & 68.8\% (9.82$^\circ$) & 54.2\% (16.02$^\circ$) & 29.2\% (72.69$^\circ$) & 8.3\% (88.70$^\circ$) \\
-    \texttt{S16} field of view / zoom & 39.6\% & \textbf{35.4\%} (7.86$^\circ$) & 27.1\% (13.58$^\circ$) & 18.8\% (51.48$^\circ$) & 14.6\% (72.83$^\circ$) & 4.2\% (90.16$^\circ$) \\
-    \texttt{S19} background / appearance & 93.8\% & \textbf{79.2\%} (6.35$^\circ$) & 68.8\% (10.55$^\circ$) & 50.0\% (19.90$^\circ$) & 33.3\% (71.98$^\circ$) & 6.2\% (96.90$^\circ$) \\
+    \texttt{S13} object appearance & 85.4\% & \textbf{75.0\%} (5.87$^\circ$) & 62.5\% (8.58$^\circ$) & 45.8\% (14.29$^\circ$) & 27.1\% (71.78$^\circ$) & 8.3\% (96.03$^\circ$) \\
+    \texttt{S14} contrast / scene domain & 85.4\% & \textbf{87.5\%} (5.85$^\circ$) & 68.8\% (9.82$^\circ$) & 54.2\% (16.02$^\circ$) & 29.2\% (72.69$^\circ$) & 8.3\% (88.70$^\circ$) \\
+    \texttt{S16} camera image formation & 39.6\% & \textbf{35.4\%} (7.86$^\circ$) & 27.1\% (13.58$^\circ$) & 18.8\% (51.48$^\circ$) & 14.6\% (72.83$^\circ$) & 4.2\% (90.16$^\circ$) \\
+    \texttt{S19} observation quality & 93.8\% & \textbf{79.2\%} (6.35$^\circ$) & 68.8\% (10.55$^\circ$) & 50.0\% (19.90$^\circ$) & 33.3\% (71.98$^\circ$) & 6.2\% (96.90$^\circ$) \\
     \midrule
-    Solvable variants ($n{=}192$) & 76.0\% & \textbf{69.3\%} & 56.8\% & --- & --- & --- \\
+    Excluding S15 ($n{=}192$) & 76.0\% & \textbf{69.3\%} & 56.8\% & --- & --- & --- \\
     \midrule
-    \texttt{S15} camera shift (oracle 0\%) & 0.0\% & 0.0\% (\textbf{6.94$^\circ$}) & 0.0\% (8.43$^\circ$) & 0.0\% (22.03$^\circ$) & 0.0\% (72.27$^\circ$) & 0.0\% (88.21$^\circ$) \\
+    \texttt{S15} camera extrinsics & 0.0\% & 0.0\% (\textbf{6.94$^\circ$}) & 0.0\% (8.43$^\circ$) & 0.0\% (22.03$^\circ$) & 0.0\% (72.27$^\circ$) & 0.0\% (88.21$^\circ$) \\
     All five ($n{=}240$) & 60.8\% & 55.4\% (6.57$^\circ$) & 45.4\% (10.19$^\circ$) & 33.8\% (24.75$^\circ$) & 20.8\% (72.31$^\circ$) & 5.4\% (92.00$^\circ$) \\
     \bottomrule
   \end{tabular}}
@@ -306,7 +296,7 @@ Under \texttt{S15}, the frozen VLA fails even with the exact transform (0\% orac
 \begin{figure*}[t]
   \centering
   \includegraphics[width=0.98\textwidth]{figures/fig5_pro2_visual_stress.pdf}
-  \caption{\textbf{LIBERO-Pro2.0 visual and camera perturbations on UR5e.} \textbf{(A)} Success on each perturbation. \textbf{(B)} Mean yaw error, including \texttt{S15}, where the frozen VLA fails even with the exact transform.}
+  \caption{\textbf{Five LIBERO-Pro2.0 perturbations crossed with imposed command settings on UR5e.} \textbf{(A)} Success on each perturbation. \textbf{(B)} Mean yaw error, including \texttt{S15}, where the frozen VLA fails even with the exact transform.}
   \label{fig:pro2}
 \end{figure*}
 
@@ -314,19 +304,18 @@ Under \texttt{S15}, the frozen VLA fails even with the exact transform (0\% orac
 \label{sec:limits}
 
 \begin{enumerate}
-  \item \textbf{Two attempts.} The headline results use a fresh query episode after support collection. Without a reset, seed-41 SymMeta starts with the identity wrapper and first applies an updated estimate after ten controls. It succeeds on 9--26 of 96 queries per panel (Table~\ref{tab:online}).
-  \item \textbf{Camera pose.} The reader is not invariant to the camera. In an offline test on the 64 UR5e OOD support traces with the seed-41 reader, rotating the image by $\mp 90^\circ$ about the optical axis raised yaw error from $6.83^\circ$ to $84.5^\circ$ and $101.2^\circ$, and the estimate moved by about the roll angle on every trace. Horn--Schunck behaved the same way ($12.3^\circ$ to $84.4^\circ$ and $101.6^\circ$). Orbiting the simulated camera by $\pm 30^\circ$ about the vertical on eight fresh trajectories shifted SymMeta's estimate by $28$--$30^\circ$. SymMeta therefore estimates the command rotation relative to the camera, and recovers the command-frame rotation only when the camera is mounted as in training. Task success under camera rotation is not measured.
-  \item \textbf{Kinematic alternative.} When joint encoders, a kinematic model, and the base frame are trusted, forward kinematics plus the same planar alignment estimates yaw with $1.93^\circ$ error on all 96 UR5e support traces versus $6.67^\circ$ for seed-41 SymMeta. On the 64 OOD traces the respective errors are $2.02^\circ$ and $6.83^\circ$. These offline errors measure yaw estimation. A closed-loop comparison is needed to establish how much the difference affects task success.
-  \item \textbf{Baselines.} The Perceiver and command-frame affine baselines are our implementations for the frozen-policy setting, not the published ICBA and ReGround systems.
+  \item \textbf{Two attempts.} Calibration on an earlier layout gives the policy a corrected first action on the retry. Single-attempt results in Table~\ref{tab:headline} measure performance when the policy must estimate the interface while executing the task.
+  \item \textbf{Camera pose.} The reader is not invariant to the camera. In an offline test on the 64 UR5e OOD support traces with the seed-41 reader, rotating the image by $\mp 90^\circ$ about the optical axis raised yaw error from $6.83^\circ$ to $84.5^\circ$ and $101.2^\circ$, and the estimate moved by about the roll angle on every trace. The brightness-translation reader behaved the same way ($12.3^\circ$ to $84.4^\circ$ and $101.6^\circ$). Orbiting the simulated camera by $\pm 30^\circ$ about the vertical on eight fresh trajectories shifted SymMeta's estimate by $28$--$30^\circ$. SymMeta therefore estimates the command rotation relative to the camera, and recovers the command-frame rotation only when the camera is mounted as in training. Task success under camera rotation is not measured.
+  \item \textbf{Information available.} The visual reader assumes a fixed camera. FK needs measured joints, calibrated geometry and a known base frame. The native comparison holds gain and gripper estimates fixed and covers one arm--policy pair.
   \item \textbf{Simulation only.} All arms are simulated (MuJoCo and SAPIEN). We have not tested on physical hardware.
   \item \textbf{Shift model.} We model the interface as a global rotation, gain, and gripper sign on end-effector commands. Other differences between arms, such as workspace, dynamics, and joint limits, are left to the frozen VLA. The oracle results suggest it handles them for these arms.
   \item \textbf{Full 3D rotations.} With a single camera, out-of-plane rotations are poorly observed: $24.5^\circ$ geodesic error and 38.5\% success against an 88.5\% oracle. This motivates multi-view or wrist-camera depth.
-  \item \textbf{Camera shifts that break the VLA.} Under \texttt{S15}, SymMeta still estimates yaw to within $6.94^\circ$, but the frozen VLA fails on the shifted wrist image even with the exact transform. Correcting the command interface cannot fix the policy's own perception.
+  \item \textbf{Camera shifts that break the VLA.} Under \texttt{S15}, SymMeta has a mean yaw error of $6.94^\circ$. Both camera views change, and even the exact inverse gives 0/48 successes.
 \end{enumerate}
 
 \section{Conclusion}
 
-A frozen VLA that fails on a new arm because of a rotated, rescaled, or sign-flipped command interface can be recovered by estimating that interface from video. Command-frame end-effector displacements cannot supply the rotation. A Procrustes step that is exactly equivariant to command-frame rotations, fed by an action-blind motion reader, generalizes to transforms the learned encoders we tested never saw. In simulation, with the camera mounted as in training, 0.75\,s of first-attempt motion brings a second attempt within 7--11 points of the oracle on three unseen arms with $\pi_{0.5}$ and level with it for $\pi_0$ on UR5e. Single-attempt adaptation, full 3D rotations, changed camera pose, and physical hardware remain open.
+On eight held-out LIBERO-Pro2.0 task identities in base scenes, a frozen policy can use a short trace to calibrate a second attempt under researcher-imposed planar command shifts. A fixed camera supplies the direction that command-frame displacements alone cannot identify. With the same reader seed and query schedule, success is substantially lower when calibration must take place within a single attempt. The evidence concerns the specified shift family, simulated arms and camera placement. Physical deployment and transfer across camera poses remain open.
 
 \section*{Impact Statement}
 
@@ -342,14 +331,14 @@ This paper presents work whose goal is to advance the field of machine learning 
 \section{Additional transfer comparisons}
 \begin{table}[!ht]
   \centering
-  \caption{\textbf{Additional baselines and controls on the seed-41 panel ($n{=}96$ per row).} SymMeta here is the seed-41 checkpoint, so its numbers differ from the 3-seed means in Table~\ref{tab:headline}. The last column gives the paired difference to Horn--Schunck with a task-clustered 95\% bootstrap CI. Probe mode: Pas.\ = passive Attempt-1 trace, Act.\ = 15-control active probe.}
+  \caption{\textbf{Additional baselines and controls on the seed-41 panel ($n{=}96$ per row).} SymMeta here is the seed-41 checkpoint, so its numbers differ from the 3-seed means in Table~\ref{tab:headline}. The last column gives the paired difference to brightness-translation with a task-clustered 95\% bootstrap CI. Probe mode: Pas.\ = passive Attempt-1 trace, Act.\ = 15-control active probe.}
   \label{tab:additional_baselines}
   \footnotesize
   \setlength{\tabcolsep}{4pt}
   \resizebox{\textwidth}{!}{%
   \begin{tabular}{lrrrrrrr}
     \toprule
-    \textbf{Arm (VLA), seed 41} & \textbf{SymMeta (Pas.)} & \textbf{EquivFlow (Pas.)} & \textbf{DIS+Proc.\ (Pas.)} & \textbf{Broyden UVS (Act.)} & \textbf{Affine (proprio.)} & \textbf{Swapped support} & \textbf{SymMeta $-$ HS [95\% CI]} \\
+    \textbf{Arm (VLA), seed 41} & \textbf{SymMeta (Pas.)} & \textbf{EquivFlow (Pas.)} & \textbf{DIS+Proc.\ (Pas.)} & \textbf{Broyden UVS (Act.)} & \textbf{Affine (proprio.)} & \textbf{Swapped support} & \textbf{Gain [95\% CI]} \\
     \midrule
     UR5e ($\pi_{0.5}$) & 79.2\% & 66.7\% & 41.7\% & 32.3\% & 6.2\% & 0.0\% & $+20.8$ $[+13.5, +30.2]$ \\
     IIWA ($\pi_{0.5}$) & 79.2\% & 61.5\% & 31.2\% & 27.1\% & 6.2\% & 1.0\% & $+25.0$ $[+18.7, +31.2]$ \\
@@ -361,14 +350,19 @@ This paper presents work whose goal is to advance the field of machine learning 
 
 \begin{table}[!ht]
   \centering
-  \caption{Same-attempt task success with the seed-41 streaming reader. Each panel contains eight tasks and twelve transforms.}
-  \label{tab:online}
-  \begin{tabular}{lrrrr}
+  \caption{Controls for the calibrated retry. The nominal VLA runs once on each of eight tasks. The remaining columns use the imposed settings. The local Perceiver is summarized over seeds 41--43. Gain is the seed-average SymMeta success rate minus brightness-translation, with the smallest seed gain in parentheses. The uncorrected retry had zero OOD successes on every panel.}
+  \label{tab:comparators}
+  \small
+  \begin{tabular}{lrrrrr}
     \toprule
-    & UR5e ($\pi_{0.5}$) & IIWA ($\pi_{0.5}$) & Kinova3 ($\pi_{0.5}$) & UR5e ($\pi_0$) \\
+    & \shortstack[r]{Nominal VLA\\(successes / 8)} & \shortstack[r]{Brightness-translation\\(all 96, \%)} & \multicolumn{2}{c}{Local Perceiver (\%)} & \shortstack[r]{SymMeta gain\\(pp)} \\
+    \cmidrule(lr){4-5}
+    Arm (policy) & & & All 96 & OOD 64 & Mean (min) \\
     \midrule
-    Successes / queries & 20/96 & 26/96 & 21/96 & 9/96 \\
-    Success (\%) & 20.8 & 27.1 & 21.9 & 9.4 \\
+    UR5e ($\pi_{0.5}$)    & 8 & 58.3 & $32.6\pm1.3$ & $5.7\pm1.9$ & $+19.8$ ($+16.7$) \\
+    IIWA ($\pi_{0.5}$)    & 6 & 54.2 & $31.9\pm2.6$ & $4.7\pm2.6$ & $+24.3$ ($+22.9$) \\
+    Kinova3 ($\pi_{0.5}$) & 6 & 43.8 & $30.2\pm0.9$ & $4.7\pm0.0$ & $+22.6$ ($+18.8$) \\
+    UR5e ($\pi_0$)        & 6 & 45.8 & $21.2\pm1.3$ & $2.1\pm0.7$ & $+9.7$ ($+5.2$) \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -376,7 +370,7 @@ This paper presents work whose goal is to advance the field of machine learning 
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=0.95\textwidth]{figures/fig6_fewshot_sft_vs_sysid.pdf}
-  \caption{\textbf{Demonstration-fitted action adapters vs.\ SymMeta on UR5e ($\pi_{0.5}$).} \textbf{(a)} Native successes by number of successful oracle demonstrations per shift. \textbf{(b)} Native successes on eight tasks at each of four OOD shifts. SymMeta, oracle and Horn--Schunck use the seed-41 panel. The one-demo linear adapter uses the same query resets with separate policy-noise draws.}
+  \caption{\textbf{Demonstration-fitted action adapters vs.\ SymMeta on UR5e ($\pi_{0.5}$).} \textbf{(a)} Native successes by number of successful oracle demonstrations per shift. \textbf{(b)} Native successes on eight tasks at each of four OOD shifts. SymMeta, oracle and brightness-translation use the seed-41 panel. The one-demo linear adapter uses the same query resets with separate policy-noise draws.}
   \label{fig:fewshot}
 \end{figure}
 
@@ -407,12 +401,12 @@ This paper presents work whose goal is to advance the field of machine learning 
 In ManiSkill3/SAPIEN~\citep{tao2025maniskill3}, we train the reader on Panda and Fetch and evaluate the xArm6 with a scripted motor. The SymMeta reader with vertical-motion correction succeeds on 22/72 starts, including 11/48 held-out starts and 0/24 continuous-angle starts. The exact-transform oracle succeeds on 48/72. Removing the correction gives 5/72. These results limit the evidence for transfer across simulators. In a separate 3-seed LIBERO-Pro2.0 UR5e audit (576 episodes per method), a monolithic Transformer given continuous transform augmentation and twice the training steps reaches $13.8 \pm 9.2\%$ OOD success, and RMA-GRU reaches $11.5 \pm 0.7\%$.
 
 \paragraph{Visual-perturbation panel.}
-The nine methods comprise the exact oracle, unadapted policy, passive \texttt{BASE}-trained SymMeta, active camera-conditioned EquivFlow, active Pro2-trained SymMeta, passive Horn--Schunck, active DIS+Procrustes, command-frame affine fit and active Pro2-trained Perceiver.
+The nine methods comprise the exact oracle, unadapted policy, passive \texttt{BASE}-trained SymMeta, active camera-conditioned EquivFlow, active Pro2-trained SymMeta, passive brightness-translation, active DIS+Procrustes, command-frame affine fit and active Pro2-trained Perceiver.
 
 
 \section{Paired native task success}
 \label{sec:paired}
- We matched SymMeta and the source-calibrated brightness-flow reader on each official task, interface, scheduled reset and simulator seed. We first computed the paired success difference separately for each checkpoint, then averaged those differences within query. Each panel contributes 96 queries over eight tasks. The 64 held-out queries use compositional or continuous-angle shifts.
+ We matched SymMeta and the source-calibrated brightness-translation reader on each held-out task identity, imposed interface, scheduled reset and simulator seed. We first computed the paired success difference separately for each checkpoint, then averaged those differences within query. Each panel contributes 96 queries over eight tasks. The 64 held-out queries use compositional or continuous-angle shifts.
 
 \begin{table}[H]
 \centering\small
@@ -433,7 +427,7 @@ UR5e ($\pi_0$) & Held-out 64 & +14.1 / +3.1 / +12.5 & +9.9 & [-3.1, +22.9] & $0.
 \end{tabular}
 \end{table}
 
-For a single seed the exact query test flips the discordant binary pairs. For the seed average it flips the signed mean difference once per query, retaining its magnitude and the shared comparator. The task sensitivity enumerates all $2^8$ whole-task sign assignments. Each test assumes sign symmetry and independent flips at its stated unit. The percentile interval resamples eight whole tasks with replacement, conditional on the three checkpoints. All $p$-values are unadjusted. The eight fixed tasks limit generalization. On the full panel all eight task means favor SymMeta for each $\pi_{0.5}$ arm. On UR5e with $\pi_0$, six tasks favor SymMeta and two favor the flow reader.
+For a single seed the exact query test flips the discordant binary pairs. For the seed average it flips the signed mean difference once per query, retaining its magnitude and the shared comparator. The task sensitivity enumerates all $2^8$ whole-task sign assignments. Each test assumes sign symmetry and independent flips at its stated unit. The percentile interval resamples eight whole tasks with replacement, conditional on the three checkpoints. All $p$-values are unadjusted. The eight fixed tasks limit generalization. On the full panel all eight task means favor SymMeta for each $\pi_{0.5}$ arm. On UR5e with $\pi_0$, six tasks favor SymMeta and two favor brightness-translation.
 
 
 \section{Reader training and model sizes}
@@ -446,7 +440,7 @@ For a single seed the exact query test flips the discordant binary pairs. For th
 \]
 All three losses have unit weight. For each checkpoint we sample 64 traces uniformly with replacement per update. We use AdamW for 3,500 updates with gradient-norm clipping at 1, weight decay $10^{-4}$ and cosine learning-rate decay from $10^{-3}$ to $5\times10^{-5}$. The headline Perceiver uses the same training data, loss and schedule.
 
-\paragraph{Inputs and architecture.} The visual encoder processes $64\times64$ image pairs. Its nine channels are horizontal and vertical DIS flow, flow magnitude, signed mean-intensity change, RMS RGB change, the two gradients of temporally averaged intensity, and two pixel coordinates. Three $3\times3$ stride-two convolutions have 48, 96 and 96 channels, with a two-convolution residual block between stages two and three. Two spatial softmax pools produce 192 features, projected to 96 with SiLU activations in the encoder. A $96$--$192$--$96$--$5$ MLP predicts planar motion, a confidence logit and two parallax coefficients. The yaw loss reaches all five outputs through the alignment. Confidence is $\operatorname{softplus}(\ell_k)+10^{-4}$ on valid chunks. The vertical projection combines learned global and chunk-specific coefficients and multiplies local vertical motion in centimetres. Neither confidence nor projection receives a separate target. A $5$--$64$--$64$--$2$ gain head uses signed command and displacement, their magnitudes and a stabilized log-magnitude ratio. A $4$--$48$--$48$--$2$ gripper head uses gripper command, jaw change, final width and negative command times width change. Each head predicts a value and its pooling weight.
+\paragraph{Inputs and architecture.} The visual encoder processes $64\times64$ image pairs. Its nine channels are horizontal and vertical DIS flow, flow magnitude, signed mean-intensity change, RMS RGB change, the two gradients of temporally averaged intensity, and two pixel coordinates. Three $3\times3$ stride-two convolutions have 48, 96 and 96 channels, with a two-convolution residual block between stages two and three. Two spatial softmax pools produce 192 features, projected to 96 with SiLU activations in the encoder. A $96$--$192$--$96$--$5$ MLP predicts planar motion, a confidence logit and two parallax coefficients. The yaw loss reaches all five outputs through the alignment. Confidence is $\operatorname{softplus}(\ell_k)+10^{-4}$ on valid chunks. The vertical projection combines learned global and chunk-specific coefficients and multiplies local vertical motion in centimetres. Only the product of chunk weight and motion vector enters the yaw fit. Their individual magnitudes therefore lack a separate interpretation as calibrated reliability or speed. A $5$--$64$--$64$--$2$ gain head uses signed command and displacement, their magnitudes and a stabilized log-magnitude ratio. A $4$--$48$--$48$--$2$ gripper head uses gripper command, jaw change, final width and negative command times width change. Each head predicts a value and its pooling weight.
 
 \paragraph{Perceiver capacity.} The headline model has 2,122,950 parameters, eight latents, 32 positional slots and attention width 192. The width-192 scaling model uses 24 slots and has 2,121,414 parameters. The width-384 model has 11,274,374 parameters, 16 latents, five self-attention blocks and eight heads. The larger configuration has 5.31 times as many parameters as the smaller scaling model.
 
