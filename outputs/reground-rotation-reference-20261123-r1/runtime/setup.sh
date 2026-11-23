@@ -28,6 +28,7 @@ if [[ -n ${REGROUND_PYPI_MIRROR:-} ]]; then mirror=(--pypi-mirror "$REGROUND_PYP
 "$py" "$setup_dir/prepare_cache.py" \
     --model "${REGROUND_MODEL_SOURCE:-/mowenjie/fluffy-bassoon/inputs/pi05-libero-lerobot-v044-7152f13e-20261027-r1}" \
     --tokenizer "${REGROUND_TOKENIZER_SOURCE:-/mowenjie/.cache/huggingface/hub/models--google--paligemma-3b-pt-224/snapshots/35e4f46485b4d07967e7e9935bc3786aad50687c}" \
+    --tokenizer-config "${REGROUND_TOKENIZER_CONFIG:-/mowenjie/fluffy-bassoon-2/inputs/libero-witness-paligemma-pt-20261119-r1/config.json}" \
     --hub "$root/hf/hub" > "$root/hf-verified.jsonl"
 "$py" "$setup_dir/prepare_assets.py" "${REGROUND_ASSET_SOURCE:-/mowenjie/fluffy-bassoon/inputs/libero-assets-20261107}" \
     "$root/assets" > "$root/assets-verified.json"
