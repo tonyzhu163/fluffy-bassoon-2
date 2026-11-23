@@ -420,73 +420,42 @@ def plot_fig5_pro2_visual_stress(ev_dir: Path, out_dir: Path):
 
 def plot_fig6_fewshot_sft_vs_sysid(ev_dir: Path, scale_ev_dir: Path, out_dir: Path):
     fs = load_json(scale_ev_dir / "fewshot-finetune-ur5e-summary.json")
-    ms = load_json(scale_ev_dir / "multiseed-zeroshot-ur5e-pi05.json")
-    s41 = load_json(ev_dir / "ur5e-pi05-summary.json")
+    rows_path = ev_dir.parents[1] / "xemb-live-wave-20261121-r1/evidence/pi05-rows.jsonl"
+    rows = [json.loads(line) for line in rows_path.read_text().splitlines()]
+    matched = [r for r in rows if r["embodiment"] in fs["shifts"]]
+    keys = {(r["suite"], r["task_id"], r["embodiment"]) for r in matched}
+    tasks = {(suite, task) for suite, task, _ in keys}
+    n = fs["n_queries_per_arm"]
+    if len(tasks) != fs["n_tasks"] or len(keys) != len(matched) or len(keys) != n:
+        raise ValueError("Incomplete or duplicated task–transform pairs in the demo comparison")
 
-    v2_ov = [100.0 * s41["by_regime"]["overall"]["rates"]["ours_equiv_v2_passive"],
-             100.0 * ms["by_regime"]["overall"]["rates"]["ours_equiv_v2_passive_s42"],
-             100.0 * ms["by_regime"]["overall"]["rates"]["ours_equiv_v2_passive_s43"]]
-    v2_ood = [100.0 * s41["by_regime"]["ood_combined"]["rates"]["ours_equiv_v2_passive"],
-              100.0 * ms["by_regime"]["ood_combined"]["rates"]["ours_equiv_v2_passive_s42"],
-              100.0 * ms["by_regime"]["ood_combined"]["rates"]["ours_equiv_v2_passive_s43"]]
-    v2_ov_m, v2_ov_s = float(np.mean(v2_ov)), float(np.std(v2_ov))
-    v2_ood_m, v2_ood_s = float(np.mean(v2_ood)), float(np.std(v2_ood))
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9, 3.1), sharey=True, layout="constrained")
+    for method, name, color, marker in [
+        ("sft_mlp_same_shift", "MLP adapter", "#b14a40", "o"),
+        ("sft_linear_same_shift", "Linear adapter", "#ad6900", "s"),
+    ]:
+        records = fs[method]
+        shots = sorted(map(int, records))
+        successes = [records[str(k)]["successes"] for k in shots]
+        ax1.plot(range(len(shots)), successes, marker=marker, label=name, color=color)
+    ax1.set_xticks(range(len(shots)), shots)
+    ax1.set_xlabel("Successful oracle demonstrations per shift")
+    ax1.set_title("(a) Adapter fitted on the query shift")
+    ax1.legend(loc="lower right")
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11.8, 4.2))
-
-    # Left: Same-Shift Success vs Target Demos K
-    ks = [0, 1, 3, 10]
-    x_idx = np.arange(len(ks))
-    mlp_y = [100.0 * fs["zero_shot_shifted"]["rate"],
-             100.0 * fs["sft_mlp_same_shift"]["1"]["rate"],
-             100.0 * fs["sft_mlp_same_shift"]["3"]["rate"],
-             100.0 * fs["sft_mlp_same_shift"]["10"]["rate"]]
-    lin_y = [100.0 * fs["zero_shot_shifted"]["rate"],
-             100.0 * fs["sft_linear_same_shift"]["1"]["rate"],
-             100.0 * fs["sft_linear_same_shift"]["3"]["rate"],
-             100.0 * fs["sft_linear_same_shift"]["10"]["rate"]]
-
-    ax1.plot(x_idx, mlp_y, marker="o", lw=2.3, color="#c0392b", label="Demo-fitted MLP adapter (same shift)")
-    ax1.plot(x_idx, lin_y, marker="s", lw=2.1, ls="--", color="#e67e22", label="Demo-fitted linear adapter (same shift)")
-    ax1.axhspan(v2_ov_m - v2_ov_s, v2_ov_m + v2_ov_s, color=PALETTE["ours_v2"], alpha=0.16)
-    ax1.axhline(v2_ov_m, color=PALETTE["ours_v2"], lw=2.4, label=f"SymMeta (passive, K=0 demos, 0.75 s): {v2_ov_m:.1f}±{v2_ov_s:.1f}%")
-    ax1.axhline(100.0 * fs["zero_shot_unshifted"]["rate"], color="#27ae60", lw=1.4, ls=":", label=f"Zero-Shot Unshifted UR5e: {100.0*fs['zero_shot_unshifted']['rate']:.1f}%")
-
-    for xi, ym in zip(x_idx, mlp_y):
-        if xi == 2:
-            ax1.text(xi + 0.06, ym - 6.5, f"{ym:.1f}%", ha="center", va="top", fontsize=8.0, color="#c0392b", fontweight="bold")
-        else:
-            ax1.text(xi, ym + 4.2, f"{ym:.1f}%", ha="center", va="bottom", fontsize=8.0, color="#c0392b", fontweight="bold")
-    ax1.set_xticks(x_idx)
-    ax1.set_xticklabels(["0\n(Zero-Shot)", "1 demo\n(~170 steps)", "3 demos\n(~500 steps)", "10 demos\n(~1,650 steps)"], fontsize=8.5)
-    ax1.set_ylim(-4, 112)
-    ax1.set_ylabel("Held-Out UR5e Native Success (%)")
-    ax1.set_title("(a) Same-Shift Performance vs. Target Demonstrations")
-    ax1.legend(loc="lower right", fontsize=7.6, framealpha=0.95)
-    ax1.grid(True)
-
-    # Right: Cross-Shift Generalization
-    labels = ["Zero-Shot\nShifted", "MLP adapter\n(K=10 demos)", "Linear adapter\n(K=10 demos)", "SymMeta (passive)\n(K=0, 0.75 s)"]
-    vals = [100.0 * fs["zero_shot_shifted"]["rate"],
-            100.0 * fs["sft_mlp_k10_cross_shift"]["rate"],
-            100.0 * fs["sft_linear_k10_cross_shift"]["rate"],
-            v2_ood_m]
-    errs = [0.0, 0.0, 0.0, v2_ood_s]
-    cols = ["#95a5a6", "#c0392b", "#e67e22", PALETTE["ours_v2"]]
-    xs = np.arange(len(labels))
-    ax2.bar(xs, vals, yerr=errs, width=0.55, color=cols, edgecolor="white", capsize=4, error_kw=dict(ecolor="#1a1a1a", lw=1.3))
-    for xi, v, e in zip(xs, vals, errs):
-        txt = f"{v:.1f}±{e:.1f}%" if e > 0 else f"{v:.1f}%"
-        ax2.text(xi, v + e + 2.5, txt, ha="center", va="bottom", fontsize=8.8, fontweight="bold", color="#1a1a1a")
-    ax2.set_xticks(xs)
-    ax2.set_xticklabels(labels, fontsize=8.5)
-    ax2.set_ylim(0, 105)
-    ax2.set_ylabel("Cross-Shift OOD Native Success (%)")
-    ax2.set_title("(b) Cross-Shift Generalization (Deployed on Another Shift)")
-    ax2.grid(axis="y")
-
-    fig.suptitle("Demonstration-Fitted Action Adapters (Frozen VLA) vs. SymMeta (Passive Visual SysID) on Held-Out 6-DoF UR5e", fontsize=11.4, fontweight="bold", y=1.02)
-    plt.tight_layout()
+    counts = [sum(r["arms"][method]["success"] for r in matched) for method in
+              ("ours_equiv_v2_passive", "privileged_oracle", "analytic_visual_hs_passive")]
+    counts.insert(1, fs["sft_linear_same_shift"]["1"]["successes"])
+    labels = ["SymMeta", "Linear adapter\n(1 demo)", "Oracle", "Horn–Schunck"]
+    bars = ax2.bar(labels, counts, color=[PALETTE["ours_v2"], "#ad6900", PALETTE["oracle"], PALETTE["hs"]])
+    ax2.bar_label(bars, padding=2)
+    ax2.set_title("(b) Same 32 task–transform pairs")
+    ax1.set_ylabel(f"Successful queries (of {n})")
+    ax1.set_yticks(range(0, n + 1, 8))
+    ax1.set_ylim(0, n + 1)
+    for ax in (ax1, ax2):
+        ax.set_axisbelow(True)
+        ax.grid(axis="y")
     for ext in ("png", "pdf"):
         fig.savefig(out_dir / f"fig6_fewshot_sft_vs_sysid.{ext}")
     plt.close(fig)

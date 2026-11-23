@@ -48,15 +48,12 @@ payload() {
     done
     export LD_LIBRARY_PATH="$libs/prefix/usr/lib/x86_64-linux-gnu$driver_paths"
     export __EGL_VENDOR_LIBRARY_FILENAMES="$libs/nvidia-vendor.json"
-    set_paths() {
-        local tree=$1
-        export PYTHONPATH="$overlay:$tree/src:$release:$sim/simulator-source:$tree/outputs/libero-crossarm-20261120-r1:$tree/outputs/libero-xemb-ur5e-sysid-20261120-r1:$tree/outputs/libero-xemb-ur5e-scale-20261120-r1:$tree/outputs/$campaign"
-    }
+    export PAIRED_DEPS="$repair"
+    export PYTHONPATH="$overlay:$repair/src:$release:$sim/simulator-source:$repair/outputs/libero-crossarm-20261120-r1:$repair/outputs/libero-xemb-ur5e-sysid-20261120-r1:$repair/outputs/libero-xemb-ur5e-scale-20261120-r1:$repair/outputs/$campaign"
     cd "$here"
     printf '%s\n' "commit=$pin" "tree=$code" "host=$(hostname)" "gpus=$count" "wall_seconds=$wall" \
         "runner=$repair@$repair_pin" > "$out/config.txt"
     df -h "$out" > "$out/storage.txt"
-    set_paths "$repair"
     export CUDA_VISIBLE_DEVICES
     CUDA_VISIBLE_DEVICES=$(seq -s, 0 $((count-1)))
     "$root/setups/robocasa365-native-20261101-r1/env/bin/python" -Bu "$repair/scripts/[train]gpu_probe.py" \

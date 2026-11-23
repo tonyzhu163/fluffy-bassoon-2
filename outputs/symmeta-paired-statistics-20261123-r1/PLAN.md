@@ -1,0 +1,3 @@
+# Paired reanalysis plan
+
+Compare SymMeta reader seeds 41, 42 and 43 against the source-calibrated brightness-flow reader within each of the four published arm-policy panels. Check exact query identity, task order, split membership and published aggregate counts before inference. Use paired native success differences for all 96 queries and the held-out 64. Report exact two-sided paired sign/permutation tests and sign flips of the eight task effects. Keep the three reader seeds paired to the same queries and avoid counting repeated baseline observations as independent. Record public outcomes, checks, uncertainty and limitations, then summarize in an appendix. Use CPU only on Baige.

@@ -4,6 +4,7 @@ import gzip
 import hashlib
 import json
 import math
+import os
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -97,6 +98,7 @@ def panel():
 
 def prepare(out, runner):
     tasks, entries = runner.build_test_plan()
+    require(len(tasks) == 8 and len(entries) == 96, "Unexpected official schedule")
     suites = sorted({suite for suite, _ in tasks})
     rows = panel()
     for shard, task in enumerate(tasks):
@@ -126,7 +128,7 @@ def validate_pair(r, arms, runner):
     a, b = arms["symmeta"], arms["fk"]
     reset = a["reset"]
     require(reset == b["reset"] and reset["physics"] != r["support"]["physics"] and
-            reset["arm"] == "UR5e" and reset["joint_count"] == 6 and
+            reset["arm"] == "UR5e" and reset["joint_count"] == 6 and reset["worker_step_index"] == 0 and
             reset["noise_seed"] == r["query"]["seed"] + runner.NOISE_SEED_OFFSET and
             len(reset["noise_sha256"]) == 64 and a["opening_proposal_sha256"] == b["opening_proposal_sha256"]
             and len(a["opening_proposal_sha256"]) == 64, f"Pairing failed at {r['index']}")
@@ -199,6 +201,16 @@ if __name__ == "__main__":
     parser.add_argument("--shard", type=int, choices=range(8))
     args = parser.parse_args()
     import eval_stage2a_live_ur5e as official
+
+    import ur5e_motor
+    import ur5e_sim_worker
+
+    dependencies = Path(os.environ["PAIRED_DEPS"]) / "outputs"
+    for module, directory in ((official, "xemb-icml-campaign-20261121-r1"),
+                              (ur5e_motor, "libero-xemb-ur5e-sysid-20261120-r1"),
+                              (ur5e_sim_worker, "libero-xemb-ur5e-sysid-20261120-r1")):
+        expected = dependencies / directory / (module.__name__ + ".py")
+        require(Path(module.__file__).resolve() == expected.resolve(), f"Wrong module origin: {module}")
 
     if args.mode == "prepare":
         prepare(args.output, official)

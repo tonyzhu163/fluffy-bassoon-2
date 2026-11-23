@@ -42,7 +42,7 @@
 \printAffiliationsAndNotice{}
 
 \begin{abstract}
-A frozen vision-language-action (VLA) policy fails on a new arm whose command interface differs by an unknown rotation, gain, or gripper polarity, even though the policy itself still works: supplying the exact inverse transform restores 54--89\% success. We show that end-effector displacements measured in the robot's own command frame carry no information about that rotation, and that learned sequence encoders fit the shifts they were trained on but fail on new combinations and angles. SymMeta estimates the rotation from video instead. An action-blind visual motion reader feeds a closed-form Procrustes step that is exactly equivariant to command-frame rotations, and separate heads estimate gain and gripper sign. The frozen VLA is never fine-tuned. Trained only on simulated Panda and Sawyer arms, SymMeta uses 15 controls (0.75\,s of simulated time) of an unadapted first attempt to adapt a second attempt on three unseen simulated arms (UR5e, IIWA, Kinova3) and two VLAs ($\pi_{0.5}$, $\pi_0$). Averaged over 3 seeds, it reaches 78.1\% success on UR5e with $\pi_{0.5}$ (oracle 85.4\%) and 50--79\% on out-of-distribution shifts across all four arm--VLA pairs, while a Perceiver in-context encoder falls to 2--6\%. SymMeta beats Horn--Schunck flow by 9.7--24.3 points. Adapting within a single attempt remains hard (9--27\%), full 3D rotations reach only 38.5\% against an 88.5\% oracle, and the estimate assumes the training camera pose: rotating the camera shifts the estimated rotation by a similar angle.
+A frozen vision-language-action (VLA) policy fails on a new arm whose command interface differs by an unknown rotation, gain, or gripper polarity, even though the policy itself still works: supplying the exact inverse transform restores 54--89\% success. We show that end-effector displacements measured in the robot's own command frame carry no information about that rotation, and that learned sequence encoders fit the shifts they were trained on but fail on new combinations and angles. When trusted kinematics and base-frame registration are unavailable, SymMeta estimates the rotation from video. An action-blind visual motion reader feeds a closed-form Procrustes step that is exactly equivariant to command-frame rotations, and separate heads estimate gain and gripper sign. The frozen VLA is never fine-tuned. Trained only on simulated Panda and Sawyer arms, SymMeta uses 15 controls (0.75\,s of simulated time) of an unadapted first attempt to adapt a second attempt on three unseen simulated arms (UR5e, IIWA, Kinova3) and two VLAs ($\pi_{0.5}$, $\pi_0$). Averaged over 3 seeds, it reaches 78.1\% success on UR5e with $\pi_{0.5}$ (oracle 85.4\%) and 50--79\% on out-of-distribution shifts across all four arm--VLA pairs, while a Perceiver in-context encoder falls to 2--6\%. SymMeta beats source-calibrated Horn--Schunck flow by 9.7--24.3 points. Adapting within a single attempt remains hard (9--27\%), full 3D rotations reach only 38.5\% against an 88.5\% oracle, and the estimate assumes the training camera pose: rotating the camera shifts the estimated rotation by a similar angle.
 \end{abstract}
 
 \section{Introduction}
@@ -59,7 +59,7 @@ Our contributions:
 \begin{itemize}
   \item \textbf{An identifiability observation (Prop.~\ref{prop:unident}).} For commands chosen independently of the rotation, displacements measured in the robot's rotated command frame do not depend on it. The rotation must come from an external reference: a camera, or joint encoders together with a kinematic model and base frame.
   \item \textbf{SymMeta (\S\ref{sec:method}).} An action-blind visual motion reader with vertical-parallax correction feeds a closed-form weighted Procrustes step~\citep{schonemann1966generalized,kabsch1976solution,umeyama1991least}. For fixed visual motion estimates, the rotation estimate is therefore exactly equivariant to any command-frame rotation. This is not invariance to camera pose (\S\ref{sec:limits}). Gain and gripper sign are estimated separately.
-  \item \textbf{Transfer across arms and VLAs (Table~\ref{tab:headline}).} Trained only on Panda and Sawyer, the same checkpoints adapt frozen $\pi_{0.5}$ and $\pi_0$ on UR5e, IIWA, and Kinova3. Averaged over 3 seeds, SymMeta beats Horn--Schunck flow~\citep{horn1981determining} by 9.7--24.3 points, and it beats Horn--Schunck on every individual seed. A Perceiver history-encoder baseline reaches 59--87\% on familiar shifts but only 2--6\% on out-of-distribution (OOD) ones.
+  \item \textbf{Transfer across arms and VLAs (Table~\ref{tab:headline}).} Trained only on Panda and Sawyer, the same checkpoints adapt frozen $\pi_{0.5}$ and $\pi_0$ on UR5e, IIWA, and Kinova3. Averaged over 3 seeds, SymMeta beats source-calibrated Horn--Schunck flow~\citep{horn1981determining} by 9.7--24.3 points, and it beats Horn--Schunck on every individual seed. A Perceiver history-encoder baseline reaches 59--87\% on familiar shifts but only 2--6\% on out-of-distribution (OOD) ones.
   \item \textbf{Training-shift and capacity sweep (\S\ref{sec:scaling}).} With up to 128 training shifts, non-equivariant models stay at or below 45\% joint factor recovery on UR5e OOD shifts, and a Perceiver with about 4$\times$ the parameters is no better. SymMeta reaches 96\% at 7 shifts.
   \item \textbf{Boundaries (\S\ref{sec:limits}).} We report where the method falls short: adaptation within a single attempt, full 3D rotations, a second simulator, camera rotation, and camera shifts that break the VLA itself.
 \end{itemize}
@@ -94,7 +94,7 @@ Substitute $\Delta p_k^{\text{world}}$ into the definition: $R^\top R D \bar{a}_
 \end{proof}
 
 \begin{remark}
-The proposition is about one information source, not about any specific method or about proprioception in general. It does not cover (i) arm joint encoders combined with a kinematic model and a known base frame, (ii) proprioception expressed in a world frame, or (iii) methods given the camera extrinsics; each supplies the missing reference frame. On the 96 UR5e support traces, planar alignment of the issued commands with forward-kinematics displacements recovers yaw with $1.93^\circ$ mean absolute error, lower than SymMeta's (\S\ref{sec:limits}). SymMeta targets the case where such a model is unavailable or untrusted. The proposition also does not cover commands produced in closed loop by a policy that observes images, which can depend on $R$ through the visual feedback; our proprioceptive baseline does not exploit this. Finally, the same substitution shows that $D$ \emph{is} identifiable from command-frame displacements, which SymMeta's gain head uses. Under a non-uniform training prior, such as a few discrete training rotations, an estimator can do better than $90^\circ$ in-distribution by guessing the prior mode, but not on rotations outside the prior's support.
+The proposition is about one information source, not about any specific method or about proprioception in general. It does not cover (i) arm joint encoders combined with a kinematic model and a known base frame, (ii) proprioception expressed in a world frame, or (iii) methods given the camera extrinsics; each supplies the missing reference frame. On the 96 UR5e support traces, planar alignment of the issued commands with forward-kinematics displacements recovers yaw with $1.93^\circ$ mean absolute error, compared with $6.67^\circ$ for seed-41 SymMeta on the same traces (\S\ref{sec:limits}). SymMeta targets the case where such a model is unavailable or untrusted. The proposition also does not cover commands produced in closed loop by a policy that observes images, which can depend on $R$ through the visual feedback; our proprioceptive baseline does not exploit this. Finally, the same substitution shows that $D$ \emph{is} identifiable from command-frame displacements, which SymMeta's gain head uses. Under a non-uniform training prior, such as a few discrete training rotations, an estimator can do better than $90^\circ$ in-distribution by guessing the prior mode, but not on rotations outside the prior's support.
 \end{remark}
 
 \begin{proposition}[Equivariance of the Procrustes step]
@@ -152,7 +152,7 @@ SymMeta learns a shared visual motion reader on source robots. On a new robot, t
 
 \paragraph{Statistics.} Learned methods (SymMeta, Perceiver) are trained with 3 seeds (41--43) and evaluated on all 96 queries per seed. The three seeds share the same 96 queries and support traces, so the reported mean $\pm$ standard deviation reflects reader-training variance only, and the independent units are the 8 tasks. Deterministic baselines are run once. Paired confidence intervals use a task-clustered bootstrap over the 8 tasks on the seed-41 panel. With 8 clusters these intervals are approximate, so we also report win/loss counts and per-seed differences.
 
-\paragraph{Baseline implementations.} ``Perceiver'' is our Perceiver history encoder trained to predict the transform from the same support trace as SymMeta. It is inspired by, but is not, the method of \citet{yang2026icba}, which trains the policy with the context. ``Affine (proprio.)'' fits a ridge-regularized linear map from issued planar commands to command-frame end-effector displacements on the same passive trace and projects it onto a scaled rotation. It is inspired by ReGround~\citep{siddique2026reground} but omits that method's learned dynamics model, task-agnostic babbling data, and intent tracking, so it is not a test of the published method.
+\paragraph{Baseline implementations.} Horn--Schunck and DIS use flow-to-motion projections fitted on nominal Panda and Sawyer active probes. Both carry those projections to the target arm, where Broyden also updates its estimate from the active probe. None receives target-camera calibration. ``Perceiver'' is our Perceiver history encoder trained to predict the transform from the same support trace as SymMeta. It is inspired by, but is not, the method of \citet{yang2026icba}, which trains the policy with the context. ``Affine (proprio.)'' fits a ridge-regularized linear map from issued planar commands to command-frame end-effector displacements on the same passive trace and projects it onto a scaled rotation. It is inspired by ReGround~\citep{siddique2026reground} but omits that method's learned dynamics model, task-agnostic babbling data, and intent tracking, so it is not a test of the published method.
 
 \paragraph{$\pi_0$ state encoding.} $\pi_0$ adds the end-effector axis-angle from \texttt{observation/state[3:6]} to its predicted actions. UR5e and Panda share the same downward gripper pose at reset. However, UR5e's MuJoCo quaternion lies on the opposite sign of the $SO(3)$ double cover (axis-angle $x = -3.133$ vs.\ $+3.141$), which produced a $2\pi$ jump that saturated the wrist command. Even the exact oracle succeeded on 0 of 96 queries. We canonicalize $q \equiv -q$ on the downward-gripper hemisphere in the $\pi_0$ state observation for every method, including the oracle. With this fix, the oracle reaches 54.2\%.
 
@@ -177,25 +177,6 @@ SymMeta learns a shared visual motion reader on source robots. On a new robot, t
   \end{tabular}}
 \end{table*}
 
-\begin{table*}[t]
-  \centering
-  \caption{\textbf{Additional baselines and controls on the seed-41 panel ($n{=}96$ per row).} SymMeta here is the seed-41 checkpoint, so its numbers differ from the 3-seed means in Table~\ref{tab:headline}. The last column gives the paired difference to Horn--Schunck with a task-clustered 95\% bootstrap CI. Probe mode: Pas.\ = passive Attempt-1 trace, Act.\ = 15-control active probe.}
-  \label{tab:additional_baselines}
-  \footnotesize
-  \setlength{\tabcolsep}{4pt}
-  \resizebox{\textwidth}{!}{%
-  \begin{tabular}{lrrrrrrr}
-    \toprule
-    \textbf{Arm (VLA), seed 41} & \textbf{SymMeta (Pas.)} & \textbf{EquivFlow (Pas.)} & \textbf{DIS+Proc.\ (Pas.)} & \textbf{Broyden UVS (Act.)} & \textbf{Affine (proprio.)} & \textbf{Swapped support} & \textbf{SymMeta $-$ HS [95\% CI]} \\
-    \midrule
-    UR5e ($\pi_{0.5}$) & 79.2\% & 66.7\% & 41.7\% & 32.3\% & 6.2\% & 0.0\% & $+20.8$ $[+13.5, +30.2]$ \\
-    IIWA ($\pi_{0.5}$) & 79.2\% & 61.5\% & 31.2\% & 27.1\% & 6.2\% & 1.0\% & $+25.0$ $[+18.7, +31.2]$ \\
-    Kinova3 ($\pi_{0.5}$) & 62.5\% & 55.2\% & 29.2\% & 21.9\% & 6.2\% & 1.0\% & $+18.8$ $[+10.4, +27.1]$ \\
-    UR5e ($\pi_0$) & 56.2\% & 53.1\% & 30.2\% & 18.8\% & 4.2\% & 0.0\% & $+10.4$ $[+2.1, +18.8]$ \\
-    \bottomrule
-  \end{tabular}}
-\end{table*}
-
 \begin{figure*}[t]
   \centering
   \includegraphics[width=0.98\textwidth]{figures/fig1_multiarm_multivla.pdf}
@@ -212,17 +193,17 @@ SymMeta learns a shared visual motion reader on source robots. On a new robot, t
 
 Table~\ref{tab:headline} and Fig.~\ref{fig:cliff} support three findings.
 \begin{enumerate}
-  \item \textbf{SymMeta beats classical visual estimators.} Averaged over seeds, it beats Horn--Schunck by 9.7--24.3 points, with every seed ahead on every arm--VLA pair. It also beats DIS+Procrustes by 25--47 points and Broyden UVS by 37--51 points. On UR5e with $\pi_0$, SymMeta (55.6\%) is within 1.4 points of the oracle (54.2\%), a difference well inside seed variation.
+  \item \textbf{SymMeta outperforms the source-calibrated visual baselines.} Averaged over seeds, it beats Horn--Schunck by 9.7--24.3 points, with every seed ahead on every arm--VLA pair. It also beats DIS+Procrustes by 25--47 points and Broyden UVS by 37--51 points. On UR5e with $\pi_0$, SymMeta (55.6\%) is within 1.4 points of the oracle (54.2\%), a difference well inside seed variation.
   \item \textbf{The Perceiver encoder does not generalize to new shifts.} The Perceiver baseline does well on familiar transforms (59--87\%, vs.\ 66--80\% for SymMeta) but falls to 2--6\% on OOD transforms on every arm and VLA.
   \item \textbf{The adapter relies on the matching support trace.} Replacing the support trace with one from a mismatched embodiment drops SymMeta to 0--1\%. The command-frame affine baseline stays at 4--6\%, close to the unadapted policy, as Prop.~\ref{prop:unident} predicts for rotated transforms.
 \end{enumerate}
 
 \paragraph{Comparison to action adapters fitted on target demonstrations.}
-The VLA stays frozen here too; only a small output adapter is fitted. We collect $K \in \{1, 3, 10\}$ successful demonstrations on UR5e for each of four OOD transforms (two compositional, two continuous; 32 queries) and fit MLP or linear action adapters by regression (Table~\ref{tab:fewshot}). The demonstrations are rollouts of the VLA wrapped with the exact inverse transform, so they presuppose the quantity SymMeta estimates, or an equivalent teleoperator. On the shift they were fitted on, a linear adapter reaches 87.5\% (28/32) from a single demonstration. On the same 32 task--transform pairs in the seed-41 panel, SymMeta reaches 78.1\% (25/32), the oracle 84.4\% (27/32), and Horn--Schunck 56.2\% (18/32). The adapter and SymMeta numbers come from separate runs with identical query seeds. An MLP adapter needs $K{=}3$ to reach 78.1\%. Neither adapter transfers to a different shift: both score 0\% at $K{=}10$, which is expected for a fixed adapter. The practical trade-off is one demonstration per new interface versus 0.75\,s of passive video plus a reset per new interface.
+We fit a linear or MLP action adapter to $K\in\{1,3,10\}$ successful demonstrations per shift on UR5e ($\pi_{0.5}$). Each demonstration uses the exact inverse transform. Across four OOD shifts the ten-demo sets contain 6,635 retained transitions, excluding failed collection attempts. Each fitted adapter serves all eight tasks on its shift. SymMeta instead uses 15 passive controls (0.75\,s) and a reset per query. On the same 32 task--transform pairs, the one-demo linear adapter succeeds on 28, SymMeta on 25, the oracle on 27 and Horn--Schunck on 18 (Fig.~\ref{fig:fewshot}). The separate runs match simulator reset seeds and layout 13. The seed-41 panel replays policy noise across methods; the adapter evaluator samples its own noise, so the three-success gap is descriptive. Both ten-demo adapters score 0/32 when transferred to the next shift (Table~\ref{tab:fewshot}).
 
 \begin{table}[t]
   \centering
-  \caption{\textbf{Action adapters fitted on target demonstrations, UR5e ($\pi_{0.5}$), 4 OOD transforms, 32 queries.} The VLA is frozen in every row. SymMeta, oracle, and Horn--Schunck rows are the same 32 task--transform pairs from the seed-41 panel (a separate run with identical query seeds). $^\dagger$A separate run of the unshifted baseline from Table~\ref{tab:headline}, which scored 8/8.}
+  \caption{UR5e ($\pi_{0.5}$) on four OOD shifts. Adapter and seed-41 rows share the 32 query resets. Policy noise differs across runs. $^\dagger$The nominal control covers eight tasks.}
   \label{tab:fewshot}
   \scriptsize
   \setlength{\tabcolsep}{3pt}
@@ -232,9 +213,9 @@ The VLA stays frozen here too; only a small output adapter is fitted. We collect
     \textbf{Method on UR5e} & \textbf{Target demos} & \textbf{Same shift} & \textbf{Other shift} \\
     \midrule
     Unshifted VLA & 0 & 87.5\% (7/8)$^\dagger$ & --- \\
-    Shifted, no adaptation & 0 & 0.0\% (0/32) & 0.0\% (0/32) \\
-    Adapter: MLP ($K{=}1$ / $3$ / $10$) & 1 / 3 / 10 & 56.2 / 78.1 / 87.5\% & 0.0\% ($K{=}10$) \\
-    Adapter: Linear ($K{=}1$ / $10$) & 1 / 10 & 87.5 / 84.4\% & 0.0\% ($K{=}10$) \\
+    Shifted, no adaptation & 0 & 0/32 & --- \\
+    MLP adapter & $1/3/10$ & $18/25/28$ of 32 & 0/32 ($K{=}10$) \\
+    Linear adapter & $1/3/10$ & $28/28/27$ of 32 & 0/32 ($K{=}10$) \\
     SymMeta (seed 41, same 32) & 0 & 78.1\% (25/32) & n/a \\
     Horn--Schunck (same 32) & 0 & 56.2\% (18/32) & n/a \\
     Oracle (same 32) & 0 & 84.4\% (27/32) & n/a \\
@@ -242,37 +223,10 @@ The VLA stays frozen here too; only a small output adapter is fitted. We collect
   \end{tabular}}
 \end{table}
 
-\begin{figure*}[t]
-  \centering
-  \includegraphics[width=0.95\textwidth]{figures/fig6_fewshot_sft_vs_sysid.pdf}
-  \caption{\textbf{Demonstration-fitted action adapters vs.\ SymMeta on UR5e ($\pi_{0.5}$).} \textbf{(a)} Same-shift success vs.\ number of target demonstrations. \textbf{(b)} Adapters trained with $K{=}10$ demonstrations on one shift, deployed on another. SymMeta numbers are over all 96 queries.}
-  \label{fig:fewshot}
-\end{figure*}
-
 \subsection{Training-Shift Diversity and Capacity}
 \label{sec:scaling}
 
-Do learned encoders fail only for lack of training diversity or capacity? We collect 1,466 MuJoCo Attempt-1 trajectories on Panda and Sawyer covering up to 128 sampled interface transforms. We train five models at $M \in \{2, 4, 7, 16, 32, 64, 128\}$ training transforms with 3 seeds each (105 models). Every model is evaluated on the 64 UR5e OOD queries. Table~\ref{tab:scaling} reports how well each model recovers the transform, not task success.
-
-\begin{table*}[t]
-  \centering
-  \caption{\textbf{Training-shift diversity and capacity sweep on UR5e OOD queries ($n{=}64$, 3 seeds per cell).} Each cell gives yaw MAE ($^\circ$, lower is better) and joint factor recovery (yaw within $20^\circ$, gain and gripper sign correct; higher is better). For $M \le 4$ only yaw varies, so joint recovery is near zero for every model by construction.}
-  \label{tab:scaling}
-  \footnotesize
-  \setlength{\tabcolsep}{4pt}
-  \resizebox{\textwidth}{!}{%
-  \begin{tabular}{lrrrrrrr}
-    \toprule
-    \textbf{Model} & $M{=}2$ & $M{=}4$ & $M{=}7$ & $M{=}16$ & $M{=}32$ & $M{=}64$ & $M{=}128$ \\
-    \midrule
-    \textbf{SymMeta} & 14.2$^\circ$ (12\%) & \textbf{8.7$^\circ$} (12\%) & \textbf{7.9$^\circ$ (96\%)} & \textbf{7.1$^\circ$ (94\%)} & \textbf{6.7$^\circ$ (98\%)} & \textbf{5.9$^\circ$ (99\%)} & \textbf{5.7$^\circ$ (99\%)} \\
-    \texttt{EquivFlow} & 16.4$^\circ$ (6\%) & 12.3$^\circ$ (11\%) & 12.2$^\circ$ (83\%) & 13.1$^\circ$ (85\%) & 10.1$^\circ$ (91\%) & 15.6$^\circ$ (78\%) & 10.6$^\circ$ (90\%) \\
-    Factored, no equivariance (ablation) & 71.0$^\circ$ (1\%) & 30.8$^\circ$ (1\%) & 56.7$^\circ$ (26\%) & 52.3$^\circ$ (34\%) & 44.9$^\circ$ (43\%) & 51.8$^\circ$ (40\%) & 50.4$^\circ$ (41\%) \\
-    Perceiver, w192 & 74.2$^\circ$ (1\%) & 64.9$^\circ$ (1\%) & 102.7$^\circ$ (4\%) & 43.8$^\circ$ (26\%) & 16.1$^\circ$ (35\%) & 20.0$^\circ$ (45\%) & 44.1$^\circ$ (32\%) \\
-    Perceiver, w384 ($\sim$4$\times$ params) & 84.7$^\circ$ (5\%) & 84.3$^\circ$ (0\%) & 106.3$^\circ$ (4\%) & 84.2$^\circ$ (11\%) & 65.9$^\circ$ (10\%) & 52.1$^\circ$ (19\%) & 58.4$^\circ$ (20\%) \\
-    \bottomrule
-  \end{tabular}}
-\end{table*}
+Do learned encoders fail only for lack of training diversity or capacity? We collect 1,466 MuJoCo Attempt-1 trajectories on Panda and Sawyer covering up to 128 sampled interface transforms. We train five models at $M \in \{2, 4, 7, 16, 32, 64, 128\}$ training transforms with 3 seeds each (105 models). We evaluate each model offline on the 64 recorded UR5e OOD support traces. Table~\ref{tab:scaling} reports how well each model recovers the transform, not task success.
 
 \begin{figure*}[t]
   \centering
@@ -283,7 +237,7 @@ Do learned encoders fail only for lack of training diversity or capacity? We col
 
 Three patterns hold across the sweep. (1) Once gain and gripper variation enter at $M{=}7$, SymMeta recovers all factors on 96\% of OOD queries, and its yaw error keeps falling slowly up to $M{=}128$. (2) With 18$\times$ more training transforms ($M{=}128$ vs.\ $7$), the non-equivariant ablation and the w192 Perceiver still recover at most 45\% of OOD queries. The w192 Perceiver is not monotone in $M$, and its seed bands are wide. (3) The larger w384 Perceiver is never better than w192 from $M{=}16$ upward, and it has higher yaw error at every $M$. At $M{=}2$ its joint recovery is marginally higher (5\% vs.\ 1\%), and at $M{=}7$ the two tie.
 
-\subsection{Support Length, 3D Rotations, and a Second Simulator}
+\subsection{Support Length and 3D Rotations}
 
 \paragraph{Support length (Fig.~\ref{fig:horizon_so3}A).}
 On the UR5e OOD queries (3 seeds), SymMeta's yaw error is $12.7^\circ$ after 5 controls (0.25\,s), $7.4^\circ$ after 10, and $7.0^\circ$ after 15. With 15 controls, Horn--Schunck reaches $12.3^\circ$, DIS+Procrustes $24.1^\circ$, and the Perceiver baseline $95.6^\circ$. Removing the vertical-parallax correction raises SymMeta's error from $7.0^\circ$ to $12.1^\circ$.
@@ -292,8 +246,7 @@ On the UR5e OOD queries (3 seeds), SymMeta's yaw error is $12.7^\circ$ after 5 c
 \label{sec:so3}
 This extension is partial. The 3D reader is trained on 10 axis-aligned 3D transforms on Panda and Sawyer and tested on 12 held-out 3D transforms on UR5e ($n{=}96$). The test set includes oblique rotations, unequal gains $(0.65, 1.25, 1.40)$, and gripper inversion. It reaches 38.5\% success against an 88.5\% oracle: 68.8\% on familiar, 37.5\% on compositional, and 9.4\% on continuous $SO(3)$ transforms, with $24.5^\circ$ mean geodesic error. This beats the unadapted policy (7.3\%; $+31.2$ points, 95\% CI $[+19.8, +41.7]$, 31 wins / 1 loss) and the 3D command-frame affine baseline (4.2\%), but continuous 3D rotations remain largely unsolved (\S\ref{sec:limits}).
 
-\paragraph{Second simulator: ManiSkill3 / SAPIEN.}
-As a preliminary check in a different physics engine and camera geometry~\citep{tao2025maniskill3}, we train on Panda and Fetch and test on xArm6 (792 episodes across 11 methods, about 72 per method). SymMeta has the highest success among adapted methods: 23.6\% overall and 22.9\% OOD, against a 66.7\% oracle. The next best are a variant without the rotation geometry (18.1\%) and RMA-GRU (6.9\%). At this sample size the gap to the second-best method is not significant, and absolute performance is far below the oracle. In a separate 3-seed LIBERO-Pro2.0 UR5e audit (576 episodes per method), a monolithic Transformer given continuous transform augmentation and twice the training steps reaches $13.8 \pm 9.2\%$ OOD success, and RMA-GRU reaches $11.5 \pm 0.7\%$.
+A second-simulator evaluation on xArm6 reaches 23.6\% success against a 66.7\% oracle (Appendix~\ref{sec:extra}).
 
 \begin{figure*}[t]
   \centering
@@ -342,9 +295,9 @@ Under \texttt{S15}, the frozen VLA fails even with the exact transform (0\% orac
 \label{sec:limits}
 
 \begin{enumerate}
-  \item \textbf{Two attempts.} All headline numbers use the two-attempt protocol of \S\ref{sec:setup}: estimate from the first 0.75\,s of Attempt~1 on one scene layout, then reset and run Attempt~2 on another layout of the same task. Adapting within Attempt~1 without a reset reaches only 9.4--27.1\%, because large shifts ($180^\circ$ yaw or an inverted gripper) disturb objects in the first steps before the estimate converges.
-  \item \textbf{Camera pose.} The reader is not invariant to the camera. In an offline test on the 64 UR5e OOD support traces with the seed-41 reader, rotating the image by $\mp 90^\circ$ about the optical axis raised yaw error from $6.8^\circ$ to $84.5^\circ$ and $101.2^\circ$, and the estimate moved by about the roll angle on every trace. Horn--Schunck behaved the same way ($12.3^\circ$ to $84.4^\circ$ and $101.6^\circ$). Orbiting the simulated camera by $\pm 30^\circ$ about the vertical on eight fresh trajectories shifted SymMeta's estimate by $28$--$30^\circ$. SymMeta therefore estimates the command rotation relative to the camera, and recovers the command-frame rotation only when the camera is mounted as in training. Task success under camera rotation is not measured.
-  \item \textbf{Kinematic alternative.} When joint encoders, a kinematic model, and the base frame are trusted, forward kinematics plus the same planar alignment estimates yaw with $1.93^\circ$ error on all 96 UR5e support traces ($2.02^\circ$ on OOD), better than SymMeta's $6.8^\circ$ and independent of the camera. We have not run this estimator in closed loop. SymMeta is useful when that information is missing or wrong.
+  \item \textbf{Two attempts.} The headline results use a fresh query episode after support collection. Without a reset, seed-41 SymMeta starts with the identity wrapper and first applies an updated estimate after ten controls. It succeeds on 9--26 of 96 queries per panel (Table~\ref{tab:online}).
+  \item \textbf{Camera pose.} The reader is not invariant to the camera. In an offline test on the 64 UR5e OOD support traces with the seed-41 reader, rotating the image by $\mp 90^\circ$ about the optical axis raised yaw error from $6.83^\circ$ to $84.5^\circ$ and $101.2^\circ$, and the estimate moved by about the roll angle on every trace. Horn--Schunck behaved the same way ($12.3^\circ$ to $84.4^\circ$ and $101.6^\circ$). Orbiting the simulated camera by $\pm 30^\circ$ about the vertical on eight fresh trajectories shifted SymMeta's estimate by $28$--$30^\circ$. SymMeta therefore estimates the command rotation relative to the camera, and recovers the command-frame rotation only when the camera is mounted as in training. Task success under camera rotation is not measured.
+  \item \textbf{Kinematic alternative.} When joint encoders, a kinematic model, and the base frame are trusted, forward kinematics plus the same planar alignment estimates yaw with $1.93^\circ$ error on all 96 UR5e support traces versus $6.67^\circ$ for seed-41 SymMeta. On the 64 OOD traces the respective errors are $2.02^\circ$ and $6.83^\circ$. These offline errors measure yaw estimation. A closed-loop comparison is needed to establish how much the difference affects task success.
   \item \textbf{Baselines.} The Perceiver and command-frame affine baselines are our implementations for the frozen-policy setting, not the published ICBA and ReGround systems.
   \item \textbf{Simulation only.} All arms are simulated (MuJoCo and SAPIEN). We have not tested on physical hardware.
   \item \textbf{Shift model.} We model the interface as a global rotation, gain, and gripper sign on end-effector commands. Other differences between arms, such as workspace, dynamics, and joint limits, are left to the frozen VLA. The oracle results suggest it handles them for these arms.
@@ -362,5 +315,79 @@ This paper presents work whose goal is to advance the field of machine learning 
 
 \bibliography{references}
 \bibliographystyle{icml2026}
+
+
+\clearpage
+\onecolumn
+\appendix
+\section{Additional transfer comparisons}
+\begin{table}[!ht]
+  \centering
+  \caption{\textbf{Additional baselines and controls on the seed-41 panel ($n{=}96$ per row).} SymMeta here is the seed-41 checkpoint, so its numbers differ from the 3-seed means in Table~\ref{tab:headline}. The last column gives the paired difference to Horn--Schunck with a task-clustered 95\% bootstrap CI. Probe mode: Pas.\ = passive Attempt-1 trace, Act.\ = 15-control active probe.}
+  \label{tab:additional_baselines}
+  \footnotesize
+  \setlength{\tabcolsep}{4pt}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{lrrrrrrr}
+    \toprule
+    \textbf{Arm (VLA), seed 41} & \textbf{SymMeta (Pas.)} & \textbf{EquivFlow (Pas.)} & \textbf{DIS+Proc.\ (Pas.)} & \textbf{Broyden UVS (Act.)} & \textbf{Affine (proprio.)} & \textbf{Swapped support} & \textbf{SymMeta $-$ HS [95\% CI]} \\
+    \midrule
+    UR5e ($\pi_{0.5}$) & 79.2\% & 66.7\% & 41.7\% & 32.3\% & 6.2\% & 0.0\% & $+20.8$ $[+13.5, +30.2]$ \\
+    IIWA ($\pi_{0.5}$) & 79.2\% & 61.5\% & 31.2\% & 27.1\% & 6.2\% & 1.0\% & $+25.0$ $[+18.7, +31.2]$ \\
+    Kinova3 ($\pi_{0.5}$) & 62.5\% & 55.2\% & 29.2\% & 21.9\% & 6.2\% & 1.0\% & $+18.8$ $[+10.4, +27.1]$ \\
+    UR5e ($\pi_0$) & 56.2\% & 53.1\% & 30.2\% & 18.8\% & 4.2\% & 0.0\% & $+10.4$ $[+2.1, +18.8]$ \\
+    \bottomrule
+  \end{tabular}}
+\end{table}
+
+\begin{table}[!ht]
+  \centering
+  \caption{Same-attempt task success with the seed-41 streaming reader. Each panel contains eight tasks and twelve transforms.}
+  \label{tab:online}
+  \begin{tabular}{lrrrr}
+    \toprule
+    & UR5e ($\pi_{0.5}$) & IIWA ($\pi_{0.5}$) & Kinova3 ($\pi_{0.5}$) & UR5e ($\pi_0$) \\
+    \midrule
+    Successes / queries & 20/96 & 26/96 & 21/96 & 9/96 \\
+    Success (\%) & 20.8 & 27.1 & 21.9 & 9.4 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=0.95\textwidth]{figures/fig6_fewshot_sft_vs_sysid.pdf}
+  \caption{\textbf{Demonstration-fitted action adapters vs.\ SymMeta on UR5e ($\pi_{0.5}$).} \textbf{(a)} Native successes by number of successful oracle demonstrations per shift. \textbf{(b)} Native successes on eight tasks at each of four OOD shifts. SymMeta, oracle and Horn--Schunck use the seed-41 panel. The one-demo linear adapter uses the same query resets with separate policy-noise draws.}
+  \label{fig:fewshot}
+\end{figure}
+
+\clearpage
+\section{Offline scaling and additional simulation results}
+\label{sec:extra}
+\begin{table}[!ht]
+  \centering
+  \caption{\textbf{Training-shift diversity and capacity sweep on UR5e OOD queries ($n{=}64$, 3 seeds per cell).} Each cell gives yaw MAE ($^\circ$, lower is better) and joint factor recovery (yaw within $20^\circ$, gain and gripper sign correct; higher is better). For $M \le 4$ only yaw varies, so joint recovery is near zero for every model by construction.}
+  \label{tab:scaling}
+  \footnotesize
+  \setlength{\tabcolsep}{4pt}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{lrrrrrrr}
+    \toprule
+    \textbf{Model} & $M{=}2$ & $M{=}4$ & $M{=}7$ & $M{=}16$ & $M{=}32$ & $M{=}64$ & $M{=}128$ \\
+    \midrule
+    \textbf{SymMeta} & 14.2$^\circ$ (12\%) & \textbf{8.7$^\circ$} (12\%) & \textbf{7.9$^\circ$ (96\%)} & \textbf{7.1$^\circ$ (94\%)} & \textbf{6.7$^\circ$ (98\%)} & \textbf{5.9$^\circ$ (99\%)} & \textbf{5.7$^\circ$ (99\%)} \\
+    \texttt{EquivFlow} & 16.4$^\circ$ (6\%) & 12.3$^\circ$ (11\%) & 12.2$^\circ$ (83\%) & 13.1$^\circ$ (85\%) & 10.1$^\circ$ (91\%) & 15.6$^\circ$ (78\%) & 10.6$^\circ$ (90\%) \\
+    Factored, no equivariance (ablation) & 71.0$^\circ$ (1\%) & 30.8$^\circ$ (1\%) & 56.7$^\circ$ (26\%) & 52.3$^\circ$ (34\%) & 44.9$^\circ$ (43\%) & 51.8$^\circ$ (40\%) & 50.4$^\circ$ (41\%) \\
+    Perceiver, w192 & 74.2$^\circ$ (1\%) & 64.9$^\circ$ (1\%) & 102.7$^\circ$ (4\%) & 43.8$^\circ$ (26\%) & 16.1$^\circ$ (35\%) & 20.0$^\circ$ (45\%) & 44.1$^\circ$ (32\%) \\
+    Perceiver, w384 ($\sim$4$\times$ params) & 84.7$^\circ$ (5\%) & 84.3$^\circ$ (0\%) & 106.3$^\circ$ (4\%) & 84.2$^\circ$ (11\%) & 65.9$^\circ$ (10\%) & 52.1$^\circ$ (19\%) & 58.4$^\circ$ (20\%) \\
+    \bottomrule
+  \end{tabular}}
+\end{table}
+
+\paragraph{Second simulator: ManiSkill3 / SAPIEN.}
+As a preliminary check in a different physics engine and camera geometry~\citep{tao2025maniskill3}, we train on Panda and Fetch and test on xArm6 (792 episodes across 11 methods, about 72 per method). SymMeta has the highest success among adapted methods: 23.6\% overall and 22.9\% OOD, against a 66.7\% oracle. The next best are a variant without the rotation geometry (18.1\%) and RMA-GRU (6.9\%). At this sample size the gap to the second-best method is not significant, and absolute performance is far below the oracle. In a separate 3-seed LIBERO-Pro2.0 UR5e audit (576 episodes per method), a monolithic Transformer given continuous transform augmentation and twice the training steps reaches $13.8 \pm 9.2\%$ OOD success, and RMA-GRU reaches $11.5 \pm 0.7\%$.
+
+\paragraph{Visual-perturbation panel.}
+The nine methods comprise the exact oracle, unadapted policy, passive \texttt{BASE}-trained SymMeta, active camera-conditioned EquivFlow, active Pro2-trained SymMeta, passive Horn--Schunck, active DIS+Procrustes, command-frame affine fit and active Pro2-trained Perceiver.
 
 \end{document}
