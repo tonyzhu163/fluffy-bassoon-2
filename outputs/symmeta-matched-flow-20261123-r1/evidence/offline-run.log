@@ -1,0 +1,53 @@
+2026-11-23T06:37:47+00:00
+/mowenjie/fluffy-bassoon-2/outputs/symmeta-matched-flow-20261123-r1/offline-cpu01/freeze.bundle is okay
+The bundle contains this ref:
+86df380f53037eb914b22fa0e21b074f52eadf9b HEAD
+The bundle requires this ref:
+0c457b8fadc2f63c3d212a830b70f6d440eac48b 
+86df380f53037eb914b22fa0e21b074f52eadf9b Freeze source-only matched DIS yaw fit and paired target scoring
+## HEAD (no branch)
+Filesystem            Size  Used Avail Use% Mounted on
+mt-qyDyYS-pfs-xPQ6Bb  2.0T  1.8T  257G  88% /mowenjie
+d597ee0f1e99937bbeb2705132d709b514a4b5c2 job-6prgb2hkbe8c-master-0 154 collect-train
+d563845717e1f9312878b228328908484c4752f9 job-1m06pwwi5d89-master-0 138 stage1-v2-offline-gate
+fit 86df380f53037eb914b22fa0e21b074f52eadf9b host=aibox-r855e239307b-6bfb688cdd-lz2dx python=3.11.17 numpy=1.26.4 scipy=1.15.3 cv2=5.1.0 opencv_threads=1 opencl=False CPU only
+read 192/1344 source traces
+read 384/1344 source traces
+read 576/1344 source traces
+read 768/1344 source traces
+read 960/1344 source traces
+read 1152/1344 source traces
+read 1344/1344 source traces
+wrote source-membership.json.gz sha256=d88a9ee1df56bb670617449738fc42115f67170bfe033dcb28a672a385f5549a
+wrote fit.json sha256=da955481c9471c8609688f1f1ab48e56fcb673ccbdbb558e5f3be76dac6cfb99
+fit completed in 10.10s
+2026-11-23T06:38:18+00:00
+2026-11-23T06:38:56+00:00
+/mowenjie/fluffy-bassoon-2/outputs/symmeta-matched-flow-20261123-r1/offline-cpu01/fit-pin.bundle is okay
+The bundle contains this ref:
+7d2f21d7c0620dfc43ac010a1e2b01789ebf8304 HEAD
+The bundle requires this ref:
+86df380f53037eb914b22fa0e21b074f52eadf9b 
+Frozen coefficients 7d2f21d7c0620dfc43ac010a1e2b01789ebf8304 fit.json sha256=da955481c9471c8609688f1f1ab48e56fcb673ccbdbb558e5f3be76dac6cfb99
+score 86df380f53037eb914b22fa0e21b074f52eadf9b host=aibox-r855e239307b-6bfb688cdd-lz2dx python=3.11.17 numpy=1.26.4 scipy=1.15.3 cv2=5.1.0 opencv_threads=1 opencl=False CPU only
+wrote predictions.json sha256=c6828c9c848ccd0ce10bc89a5c91356b66c58619b08cbc07ba15d2af7608e191
+wrote target-details.json.gz sha256=00af4761a8954e2816242d84bc1907e910c9926ec3801bca6fb084e39fd55d26
+wrote metrics.json sha256=a88393f5dd97323589036c054f23914db35e88b7e254c088c1f243c3261e0ac0
+wrote prediction-provenance.json sha256=699aec14de6470e0dbba3ab71ab7cc70a8ee4cf2d2df3312116f94520862db1e
+{"all": {"mean": 2.5574130879727894, "ci95": [1.8360329639870059, 3.2371837832367487]}, "held_out": {"mean": 2.6297851254430786, "ci95": [1.6371372966426607, 3.6528566709433368]}, "compositional_ood": {"mean": 4.956732228647565, "ci95": [2.517239248347149, 7.80446021614624]}, "continuous_angle_ood": {"mean": 0.3028380222385927, "ci95": [-2.402327133564487, 2.9042842330035423]}, "familiar": {"mean": 2.41266901303221, "ci95": [0.37283293162254605, 4.423492208551802]}}
+score completed in 0.55s
+2026-11-23T06:38:57+00:00
+2026-11-23T06:39:43+00:00
+Verification devices [CpuDevice(id=0)]
+Predictions 96 keys per row ['embodiment', 'index', 'learned_yaw_deg', 'linear_yaw_deg', 'suite', 'support_sha256', 'task_id']
+Live seed41 export outputs/symmeta-fk-ur5e-20261123-r1/evidence/reader.json b740827bcb8bf8d1f90cc86648772e8a6b9dbce5dd6e7fffeaa88a75a7deb654 keys per row ['grip_hat', 'id', 'index', 'scale_hat', 'support_sha256', 'yaw_hat'] full identity joins 96
+Direct CPU seed41 vs archived upright XY, max absolute discrepancy 0.0
+Complex circular mean vs reported yaw, max wrapped discrepancy (degrees) 2.842170943040401e-14
+Every case had three unit-weight aligned directions and both resultants identified
+all 96 {'mean': 6.374519615835007, 'ci95': [5.637053104298897, 7.321796788070783]} {'mean': 8.931932703807796, 'ci95': [7.890541780221636, 10.034069593350695]} {'mean': 2.5574130879727894, 'ci95': [1.8360329639870059, 3.2371837832367487]}
+held_out 64 {'mean': 6.5337423655183215, 'ci95': [5.92434251427561, 7.210062222507433]} {'mean': 9.163527490961402, 'ci95': [8.06283353682407, 10.391821893376228]} {'mean': 2.6297851254430786, 'ci95': [1.6371372966426607, 3.6528566709433368]}
+compositional_ood 32 {'mean': 6.2021037529095535, 'ci95': [4.582817277739524, 7.7821769796722]} {'mean': 11.158835981557118, 'ci95': [9.309057464200526, 13.392748438873578]} {'mean': 4.956732228647565, 'ci95': [2.517239248347149, 7.80446021614624]}
+continuous_angle_ood 32 {'mean': 6.8653809781270905, 'ci95': [5.630817509768327, 7.836101543892793]} {'mean': 7.168219000365683, 'ci95': [4.569846471955116, 9.757360475495727]} {'mean': 0.3028380222385927, 'ci95': [-2.402327133564487, 2.9042842330035423]}
+familiar 32 {'mean': 6.056074116468377, 'ci95': [3.9993644464025575, 9.097943601462966]} {'mean': 8.468743129500588, 'ci95': [6.14476218862792, 11.078205342974886]} {'mean': 2.41266901303221, 'ci95': [0.37283293162254605, 4.423492208551802]}
+Verification passed
+2026-11-23T06:39:48+00:00
