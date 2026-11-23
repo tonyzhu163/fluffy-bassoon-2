@@ -36,7 +36,10 @@ def snapshot(env):
     x = np.empty(mujoco.mj_stateSize(m, STATE))
     mujoco.mj_getState(m, d, x, STATE)
     r = env.robots[0]
-    return dict(x=x, grip=r.gripper.current_action.copy(), goal_ori=getattr(r.controller, "goal_ori", None),
+    ori = getattr(r.controller, "goal_ori", None)
+    clocks = {k: (v._time_since_last_sample, v._sampled, v._current_delay)
+              for k, v in env.env._observables.items()}
+    return dict(x=x, clocks=clocks, grip=r.gripper.current_action.copy(), goal_ori=None if ori is None else ori.copy(),
                 timestep=env.env.timestep, cur_time=env.env.cur_time, perturb=env.env._perturbation_step)
 
 
@@ -46,6 +49,10 @@ def restore(env, snap):
     mujoco.mj_forward(m, d)
     # Recompute the derived fields, preserving the integration warm start.
     mujoco.mj_setState(m, d, snap["x"], STATE)
+    assert env.env._observables.keys() == snap["clocks"].keys()
+    for k, observable in env.env._observables.items():
+        observable._time_since_last_sample, observable._sampled, observable._current_delay = snap["clocks"][k]
+    env.env._obs_cache = {}
     robot = env.robots[0]
     robot.gripper.current_action = snap["grip"].copy()
     if robot.controller.name == OSC and snap["goal_ori"] is not None:
@@ -157,7 +164,7 @@ class Pair:
 
     def start(self, name):
         env = self.envs[name]
-        restore(env, self.opening[name])
+        restore(env, self.initial)
         raw = env.begin_perturbation_rollout()
         return _public(raw, 7) if self.cameras else raw
 

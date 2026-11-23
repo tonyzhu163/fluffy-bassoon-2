@@ -7,7 +7,7 @@ import traceback
 
 import numpy as np
 
-from native import Decoder, JOINT, OSC, Pair, digest
+from native import Decoder, JOINT, OSC, Pair
 from ur5e_sim_worker import _probe_egl
 
 

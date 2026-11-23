@@ -30,10 +30,12 @@ def sensed(raw):
 def probe(pair, name, state, action):
     env = pair.envs[name]
     restore(env, state)
-    raw = env.begin_perturbation_rollout()
-    before = sensed(raw)
-    after, reward = pair.step(name, action)
-    return delta(*before, *sensed(after)) / OSC_SCALE
+    before = sensed(env.begin_perturbation_rollout())
+    pair.step(name, action)
+    # Sample both native pose sensors at the exact integration boundary for differential checks.
+    env.sim.forward()
+    after = sensed(env.env._get_observations(force_update=True))
+    return delta(*before, *after) / OSC_SCALE
 
 
 def pulses(pair, name, state, grip):
@@ -46,6 +48,9 @@ def pulses(pair, name, state, grip):
         minus = probe(pair, name, state, np.r_[-axis * 0.5, grip])
         cols.append(plus - minus)
         samples.append([minus, plus])
+    repeat = probe(pair, name, state, np.r_[np.zeros(n), grip])
+    if not np.array_equal(repeat, zero):
+        raise ValueError(f"Same-state {name} zero response changed by {np.max(np.abs(repeat-zero))}")
     return np.stack(cols, axis=1), zero, samples
 
 
@@ -61,7 +66,7 @@ def calibrate():
                     osc_singular_values=np.linalg.svd(b, compute_uv=False).tolist(),
                     source="libero_goal/1/BASE/layout1/861701", reset=pair.full_hash,
                     signed_probes={OSC: s1, JOINT: s2}, zeros={OSC: z1, JOINT: z2},
-                    pulse_amplitude=0.5, controls={OSC: 13, JOINT: 15})
+                    pulse_amplitude=0.5, controls={OSC: 14, JOINT: 16}, identical_zero_repeat=True)
     finally:
         pair.close()
 
@@ -162,7 +167,7 @@ def main(out):
                 probes.append(differential(pair, state, tape[i], cal, i, state["goal_ori"]))
             save(out/(suite+".json"), dict(tape_sha256=sha, historical=archive, instruction=pair.prompt,
                  bddl_sha256=hashlib.sha256(pair.bddl.read_bytes()).hexdigest(),
-                 bddl_goal=pair.bddl.read_text().split("(:goal")[-1].strip(), horizon=pair.horizon,
+                 bddl_goal=pair.bddl.read_text().split("(:goal")[1].strip().splitlines()[0].strip(), horizon=pair.horizon,
                  settled_integration_hash=pair.full_hash, released_row_hash=pair.row_hash,
                  joint_order=robot.robot_joints, arm=type(robot.robot_model).__name__,
                  grip_site=robot.controller.eef_name, clipped_by_coordinate=(tape!=original).sum(axis=0),
