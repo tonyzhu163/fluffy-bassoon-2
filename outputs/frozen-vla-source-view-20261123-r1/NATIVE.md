@@ -1,9 +1,5 @@
 # Frozen π₀.₅ source-view evaluation on Kinova3
 
-Baige Distributed Training shows `job-69hluhi5wgb7` queued at the first check, 19:12 Shanghai, November 23. It was submitted at 19:12:00 for one RTX 4090, 12 CPUs and 48 GiB. The launcher is pinned to `2b59cff7e173ee8064905256b98a1dd3fd0f79d5` with a one-GPU-hour cap. The first PFS check found no launcher directory. Queue time is tracked separately from GPU use.
+Baige Distributed Training job `job-69hluhi5wgb7` was submitted at 19:12:00 Shanghai on November 23. The scheduler spent 1 h 20 min 5 s in the creation/queue phase and 5 s in startup. It entered running state at 20:32:10. The launcher read back the qualified revision `2b59cff7e173ee8064905256b98a1dd3fd0f79d5`. At 20:33:10 the CUDA evaluation probe passed on one RTX 4090 with scheduler, PCI and process identity verified. The budget is one GPU-hour. [Monitor log](native-readback/monitor.tsv) · [Device receipt](native-readback/gpu01/gpu.json)
 
-The monitor watches `baige-dev:/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-source-view-20261123-r1/gpu01` for device qualification, the first matched proposal and the first real native episode. The next scheduled status check is 19:32 or earlier upon allocation. Frame comparisons use raw, Kinova render, Panda render and raw repeat on starts 14/15. Native scores use separate same-job raw, Kinova and Panda branches on starts 16/17. [Plan](PLAN.md) · [Renderer qualification](RESULT.md) · [Launch contract](HANDOFF.md)
-
-## Monitor checkpoints
-
-At 20:12 Shanghai the scheduler still showed this job queued, 60 minutes after submission. The PFS launcher directory was absent. Next check 20:32 or on receipt of the launch files. [Timestamped observations](native-readback/monitor.tsv)
+The monitor next checks the first real frozen proposal and first completed native episode. The next regular status check is 20:52 Shanghai or upon terminal exit. The archived motor inputs are independently reconstructed for all ten frames. [Inputs](native-readback/frame-inputs.json) · [Plan](PLAN.md) · [Renderer qualification](RESULT.md)
