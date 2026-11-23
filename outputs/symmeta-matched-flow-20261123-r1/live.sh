@@ -68,6 +68,7 @@ payload() {
     printf '%s  panel.json\n' "$panel_sha" > "$out/panel.sha256"
     if [[ $mode == prepare ]]; then return 0; fi
 
+    printf '%s\n' 'gpus=2' 'wall_seconds=5400' >> "$out/config.txt"
     export JAX_PLATFORMS=cuda FLUFFY_GPU_EXECUTION=baige
     export CUDA_VISIBLE_DEVICES=0,1
     "$root/setups/robocasa365-native-20261101-r1/env/bin/python" -Bu "$deps/scripts/[train]gpu_probe.py" \

@@ -22,6 +22,7 @@ FK_PANEL = "51a4575ff3105b0e7005befb598f94d8bf69ed0c068324c8833a92b11cfd05d0"
 RESET_FIELDS = ("noise_sha256", "noise_seed", "horizon", "prompt", "action_schema",
                 "perturbation_plan", "model_class")
 FK_TASK_CONDITIONS = "49eec3d35cdc3bbf74e7e14d5fe459141dd8ee311f56634be7a234e706004f30"
+PREDICTION_RECEIPT = "699aec14de6470e0dbba3ab71ab7cc70a8ee4cf2d2df3312116f94520862db1e"
 POLICY_MANIFEST = "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170"
 SIM_MANIFEST = "d8a8f31f5da86402927a469b9b4742120c75a54030bcc9b5fba8f5a157fbd915"
 ARMS = ("learned", "linear")
@@ -118,6 +119,9 @@ def join_predictions(fk, rows, raw):
 
 
 def prepare(out, source, sha, fk):
+    receipt = parse(fk.checked(HERE / "evidence/prediction-provenance.json", PREDICTION_RECEIPT))
+    require(sha == receipt["predictions_sha256"] and receipt["ordered_support_set_sha256"] == fk.SUPPORT_SET
+            and receipt["checkpoint"]["sha256"] == fk.CHECKPOINT, "Wrong frozen offline prediction receipt")
     raw = fk.checked(source, sha)
     # Recompute the original panel from all 96 tape bytes, eight manifests and the official schedule.
     with TemporaryDirectory(dir=out) as directory:
@@ -130,6 +134,8 @@ def prepare(out, source, sha, fk):
     native.write_json(out / "panel.json", dict(
         rows=rows, task_conditions=conditions, fk_panel_sha256=FK_PANEL,
         fk_task_conditions_sha256=FK_TASK_CONDITIONS, predictions_sha256=sha,
+        prediction_receipt_sha256=PREDICTION_RECEIPT, offline_revision=receipt["revision"],
+        source_fit_sha256=receipt["fit"]["sha256"],
         original_inputs=original, runtime=runtime))
     print(f"Prepared {len(rows)} paired queries from predictions {sha}", flush=True)
 
