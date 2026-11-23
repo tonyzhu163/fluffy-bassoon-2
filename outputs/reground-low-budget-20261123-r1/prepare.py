@@ -1,14 +1,14 @@
 """CPU-only materialization. This is the only production stage allowed to open source pools."""
 import argparse
-import contextlib
 import gzip
-import os
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest.mock import patch
 
-from common import (BUDGETS, CELL, REF_CODE, REF_FITS, SOURCE_STORE, WORK, configure, digest,
-                    initial_state, ref, reference_model, sha, subset_hash)
+from common import (BUDGETS, CELL, REF_CODE, SOURCE_STORE, WORK, configure, digest,
+                    ref, sha, subset_hash)
+
+REF_FITS = ref.read(REF_CODE / "evidence/fitted-models.json")
 
 
 def source_pool(seed, kind, rows):
@@ -65,7 +65,7 @@ def prepare(seed, tmp):
         key = m["role"] + "_" + m["kind"]
         report["reference_models"][key] = dict(cache=directory.name, model_sha256=m["model_sha256"])
         if m["role"] == "dep":
-            report["reference_models"][key]["init_sha256"] = sha(initial_state(seed, m["kind"]))
+            report["reference_models"][key]["init_sha256"] = sha(SOURCE_STORE / "fit-starts" / (directory.name + ".pt"))
     for n in (*BUDGETS, 10000):
         nb = round(0.6 * n)
         b, kb = prefix(pools["babble"], nb)
@@ -85,7 +85,7 @@ def prepare(seed, tmp):
                       train_transitions=sum(len(eps[i]["A"]) for i in train),
                       val_transitions=sum(len(eps[i]["A"]) for i in val), windows={})
         for kind in ("fwd", "idm"):
-            m = reference_model(seed, "dep", kind)
+            m = next(m for m in full_record["models"] if m["role"] == "dep" and m["kind"] == kind)
             spec = cache.make_spec(kind, "dep", CELL, seed, n, .6)
             ref.require(spec == {**m["spec"], "budget": n}, "Spec drift")
             k = spec["cfg"]["unroll"] if kind == "fwd" else 1

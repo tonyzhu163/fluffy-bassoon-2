@@ -7,13 +7,14 @@ import json
 import os
 from pathlib import Path
 import socket
+import signal
 import sys
 from tempfile import TemporaryDirectory
 import time
 from unittest.mock import patch
 
-from common import (BUDGETS, CELL, HERE, SOURCE_STORE, WORK, cell_dir, configure, digest, initial_state,
-                    recipe, ref, reference_model, sha, subset_hash)
+from common import (BUDGETS, CELL, HERE, SOURCE_STORE, WORK, cell_dir, configure, digest,
+                    recipe, ref, sha, subset_hash)
 
 
 def forbidden(*args, **kwargs):
@@ -23,17 +24,21 @@ def forbidden(*args, **kwargs):
 class Inputs:
     def __init__(self, seed, budget):
         self.seed, self.budget = seed, budget
-        self.manifest = ref.read(HERE / "evidence" / f"seed{seed}.json")
-        self.record = self.manifest["budgets"][str(budget)]
+        contract = ref.read(HERE / "contracts" / f"seed{seed}" / f"b{budget}.json")
+        ref.require((contract["seed"], contract["budget"]) == (seed, budget), "Wrong contract")
+        self.models = contract["models"]
+        self.record = contract["record"]
         self.tape = cell_dir(seed, budget) / "prefix.npz"
         self.cfg = recipe(seed, budget)
 
     def spec(self, role, kind):
-        model = reference_model(self.seed, role, kind)
-        spec = dict(model["spec"])
-        if role == "dep":
-            spec["budget"] = self.budget
-        return spec
+        return self.models[f"{role}_{kind}"]["spec"]
+
+    def nominal_path(self, kind):
+        return SOURCE_STORE / "runs" / "models" / self.models["nom_" + kind]["cache"] / "model.pt"
+
+    def init(self, kind):
+        return SOURCE_STORE / "fit-starts" / (self.models["dep_" + kind]["start_cache"] + ".pt")
 
     def load_tape(self):
         from reground.data import babble
@@ -69,10 +74,10 @@ def bounded(inputs, fit):
     from reground.data import babble
     from reground.method import build
     from reground.models import cache
-    allowed = {SOURCE_STORE / reference_model(inputs.seed, "nom", k)["dir"] / "model.pt"
+    allowed = {inputs.nominal_path(k)
                for k in ("fwd", "idm")}
     if fit:
-        allowed |= {inputs.tape, *(initial_state(inputs.seed, k) for k in ("fwd", "idm"))}
+        allowed |= {inputs.tape, *(inputs.init(k) for k in ("fwd", "idm"))}
     _guard = (tuple(str(p) + "/" for p in (SOURCE_STORE, WORK / "inputs", WORK / "private-runs/data")),
               {p.resolve() for p in allowed})
     try:
@@ -91,8 +96,8 @@ def fit_one(inputs, directory, kind, device):
     from reground.utils import stable_hash
     import torch
     spec = inputs.spec("dep", kind)
-    init = initial_state(inputs.seed, kind)
-    model_init = inputs.manifest["reference_models"]["dep_" + kind]["init_sha256"]
+    init = inputs.init(kind)
+    model_init = inputs.models["dep_" + kind]["init_sha256"]
     identity = dict(spec=spec, upstream=ref.PIN, prefix_sha256=inputs.record["sha256"],
                     init_sha256=model_init, fit_device=device)
     target = directory / "models" / stable_hash(spec)
@@ -138,7 +143,7 @@ def verify_fitted(inputs, directory, kind, device):
     receipt = ref.read(d / "bounded.json")
     ref.require(ref.read(d / "spec.json") == receipt["spec"] == spec and receipt["fit_device"] == device
                 and receipt["upstream"] == ref.PIN and receipt["prefix_sha256"] == inputs.record["sha256"]
-                and receipt["init_sha256"] == inputs.manifest["reference_models"]["dep_"+kind]["init_sha256"]
+                and receipt["init_sha256"] == inputs.models["dep_"+kind]["init_sha256"]
                 and receipt["metrics_sha256"] == sha(d / "fit_metrics.json") and receipt["model_sha256"] == sha(d / "model.pt"),
                 f"Fit receipt mismatch: {d}")
     return receipt
@@ -159,7 +164,7 @@ def deployment(inputs, directory, device):
         with patch.object(cache, "RUNS", root):
             if role == "nom":
                 path = cache.spec_dir(spec) / "model.pt"
-                ref.require(sha(path) == reference_model(inputs.seed, role, kind)["model_sha256"], path)
+                ref.require(sha(path) == inputs.models["nom_" + kind]["model_sha256"], path)
             model = cache.load_or_fit(spec, dev, fit_ok=False)
         seen.append([role, kind])
         return model
@@ -190,11 +195,10 @@ def panel_jobs(inputs, panel):
 
 def evaluate(inputs, directory, device, panel, ctx):
     from reground.eval import jobs
-    from reground.method import build
     receipts = [verify_fitted(inputs, directory, k, device) for k in ("fwd","idm")]
     # Immutable weights + recipe namespace the replayable CEM states and completed shards.
     contract = digest(dict(upstream=ref.PIN, policy=ref.POLICY, cfg=inputs.cfg,
-                           weights=[r["model_sha256"] for r in receipts], nominal=inputs.manifest["reference_models"]["nom_fwd"],
+                           weights=[r["model_sha256"] for r in receipts], nominal=inputs.models["nom_fwd"],
                            transport=sha(Path(ref.__file__)), runner=sha(Path(__file__)), common=sha(HERE / "common.py")))
     store = directory / "eval" / contract
     store.mkdir(parents=True, exist_ok=True)
@@ -266,6 +270,9 @@ def main():
         ref.require(not torch.cuda.is_available() and len(os.sched_getaffinity(0)) <= 2
                     and torch.get_num_threads() <= 2, "CPU qualification must use at most two cores")
     else:
+        def terminate(signum, frame):
+            raise SystemExit(128 + signum)
+        signal.signal(signal.SIGTERM, terminate)
         gpu(device, args.phase)
     ctx = None
     try:
@@ -278,7 +285,7 @@ def main():
                         fit_one(inputs, directory, kind, device)
                 if cpu:
                     from qualify import cpu_check
-                    cpu_check(inputs, directory)
+                    cpu_check(inputs, directory, deployment, verify_fitted)
                 elif args.phase != "fit":
                     if ctx is None:
                         ctx = WorkerCtx("pi05", device, ref.BATCH, lambda msg: print(msg, flush=True))

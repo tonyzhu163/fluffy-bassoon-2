@@ -1,25 +1,21 @@
-"""CPU readback through the native controller; a recorded state/chunk fixture, outside scoring."""
+"""CPU readback through the native controller; a synthetic state/chunk fixture, outside scoring."""
 import os
-from pathlib import Path
-import sys
 import numpy as np
 import torch
 
-from common import CELL, REF_CODE, WORK, ref, sha, subset_hash
+from common import CELL, ref
 
 
-def cpu_check(inputs, directory):
+def cpu_check(inputs, directory, deployment, verify_fitted):
     from reground.method import build
-    # Running runner.py as a script must share its single audit hook and context state.
-    api = sys.modules["__main__"]
-    receipts = {k: api.verify_fitted(inputs, directory, k, "cpu") for k in ("fwd","idm")}
+    receipts = {k: verify_fitted(inputs, directory, k, "cpu") for k in ("fwd","idm")}
     # No real target fixture is exposed to this smoke. Use a synthetic identity orientation and a 50-action proposal.
     x = np.zeros((1,25), np.float32)
     x[0,[3,7]]=1
     chunk=np.zeros((1,50,7),np.float32)
     chunk[:,:,0]=.1
     chunk[:,:,6]=-1
-    with api.deployment(inputs, directory, "cpu"):
+    with deployment(inputs, directory, "cpu"):
         ctrl = build.make_controller("reground", inputs.cfg, CELL, inputs.seed, "cpu", fit_ok=False, policy="pi05")
         ref.require(not ctrl.needs_sim and ctrl.shift == 0 and ctrl.cfg["anchor"] == "idm", "Wrong controller")
         ctrl.reset(x)

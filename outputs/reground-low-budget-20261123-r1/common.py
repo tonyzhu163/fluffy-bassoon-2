@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import os
 from pathlib import Path
 import sys
 
@@ -16,7 +15,7 @@ SOURCE_STORE = ref.ROOT / "reference-native"
 WORK = ref.ROOT.parent / "reground-low-budget-20261123-r1"
 CELL = "rot_z/90"
 BUDGETS = (15, 100, 1000)
-REF_FITS = ref.read(REF_CODE / "evidence/fitted-models.json")
+
 
 
 def sha(path):
@@ -51,15 +50,6 @@ def configure():
 
 def cell_dir(seed, budget):
     return WORK / "inputs" / f"seed{seed}" / f"b{budget}"
-
-
-def reference_model(seed, role, kind):
-    return next(m for m in REF_FITS[seed]["models"] if (m["role"], m["kind"]) == (role, kind))
-
-
-def initial_state(seed, kind):
-    m = reference_model(seed, "dep", kind)
-    return SOURCE_STORE / "fit-starts" / (Path(m["dir"]).name + ".pt")
 
 
 def recipe(seed, budget):
