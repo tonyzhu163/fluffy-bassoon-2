@@ -1,6 +1,6 @@
 # SymMeta ICML submission: open work
 
-From the ICML-style audit on 2026-11-23 (soundness, presentation, significance, originality). Items are ordered by how much they change the accept/reject case. Text-only fixes already applied to `main.tex` are listed at the end.
+From the ICML-style audit on 2026-11-23 (soundness, presentation, significance, originality). Items are ordered by how much they change the accept/reject case. Text-only fixes already applied to `main.tex` are listed at the end. This file is the single list of open work; `main.tex` carries no inline TODO markers.
 
 ## Blocking: experiments
 
@@ -13,8 +13,8 @@ From the ICML-style audit on 2026-11-23 (soundness, presentation, significance, 
 
 ## Blocking: paper
 
-- [ ] **Method reproducibility** (`TODO(method)` in `main.tex`): training loss and labels, dataset size, CNN spec, optimizer and hyperparameters, how `w_k` and `u_z` are supervised, parameter counts for both Perceiver widths, and whether the Δz correction is used in the 3D variant.
-- [ ] **Statistics** (`TODO(stats)`): query-level paired permutation tests per seed, task-level effect sizes, and an appendix table accounting for every episode.
+- [ ] **Method reproducibility:** training loss and labels, dataset size, CNN spec, optimizer and hyperparameters, how `w_k` and `u_z` are supervised, parameter counts for both Perceiver widths, and whether the Δz correction is used in the 3D variant.
+- [ ] **Statistics:** query-level paired permutation tests per seed, task-level effect sizes, and an appendix table accounting for every episode.
 - [ ] **Page limit.** The build is 10 pages including references and the body text now ends on page 9. Move Table 2, the scaling table and the ManiSkill3 paragraph to an appendix to reach 8 body pages.
 - [ ] **Pipeline figure** (one column) showing support trace → reader → Procrustes → wrapper.
 - [ ] **Bibliography.** Verify the author lists of `siddique2026reground` and `yang2026icba` against arXiv, and replace the placeholder authors of `liberopro2026`. Confirm which of ICBA and ReGround count as concurrent at the deadline.
@@ -27,7 +27,8 @@ From the ICML-style audit on 2026-11-23 (soundness, presentation, significance, 
 - [ ] 3D: either drop to an appendix or add a second camera; 38.5% vs. 88.5% oracle and 9.4% on continuous rotations does not support a 3D claim.
 - [ ] ManiSkill3: raise the sample size (about 72 episodes per method now) or move to an appendix as a negative result.
 - [ ] A small hardware test (one arm, a few yaw offsets) would answer the simulation-only objection.
-- [ ] `DRAFT.md`, `EXTENDED_ABSTRACT.md` and the top entries of `docs/FINDINGS.md` still use the old baseline names ("Perceiver-ICBA", "ReGround") and the old Proposition 1 wording. Update or delete the two drafts.
+- [ ] The top entries of `docs/FINDINGS.md` still use the old baseline names ("Perceiver-ICBA", "ReGround").
+- [ ] Review the impact statement wording.
 - [ ] Add `jax`/`flax` as an optional dependency group so the reader tests run off the cluster (they skip today when the packages are missing).
 
 ## Done in this pass (text, figures and tests only; no new experiments)

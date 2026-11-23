@@ -70,7 +70,7 @@ Our contributions:
 Generalist VLAs~\citep{brohan2023rt2,kim2024openvla,doshi2024scaling,black2024pi0,black2025pi05} transfer broadly across canonical robots but assume a consistent command interface. Mirage~\citep{chen2024mirage} and RoVi-Aug~\citep{chen2024roviaug} address visual appearance mismatch under known kinematics. We address an unknown command-frame rotation, gain, and gripper polarity, and we neither retrain the policy nor edit images.
 
 \paragraph{In-context adaptation and online system identification.}
-Online system-identification methods~\citep{yu2017preparing,kumar2021rma,laskin2023algorithm} infer latent dynamics from proprioceptive histories. ReGround~\citep{siddique2026reground} keeps a VLA frozen and re-grounds its intended motion with a dynamics model learned from motor babbling; it targets actuation shifts including latency, which our static interface model does not cover. In-context behavior adaptation~\citep{yang2026icba} trains a policy conditioned on a Transformer encoding of commanded actions and resulting motions. % TODO: confirm whether ICBA and ReGround are prior or concurrent work at the submission deadline.
+Online system-identification methods~\citep{yu2017preparing,kumar2021rma,laskin2023algorithm} infer latent dynamics from proprioceptive histories. ReGround~\citep{siddique2026reground} keeps a VLA frozen and re-grounds its intended motion with a dynamics model learned from motor babbling; it targets actuation shifts including latency, which our static interface model does not cover. In-context behavior adaptation~\citep{yang2026icba} trains a policy conditioned on a Transformer encoding of commanded actions and resulting motions.
 We show that command-frame end-effector displacements alone carry no information about a rotation of that frame. Our baselines are a Perceiver history encoder and a command-frame affine calibration in the spirit of these two works. They are our own implementations for the frozen-policy setting and should not be read as results for the published methods.
 
 \paragraph{Calibration, equivariance, and visual servoing.}
@@ -126,15 +126,12 @@ Because the mask depends on $\|f_k\|$, linearity holds only conditionally on the
 \label{sec:method}
 
 SymMeta learns a shared visual motion reader on source robots. On a new robot, the Procrustes step estimates the command-frame rotation by aligning the issued commands with the motion inferred from video. Both readers below are trained on Panda and Sawyer trajectories from 24 LIBERO training tasks, with no target-arm or test-task data. Training and evaluation use the same nominal third-person camera pose relative to the robot base.
-% TODO(method): add a one-column pipeline figure and an appendix with the training
-% loss and labels, dataset size, CNN spec, optimizer and hyperparameters, and how
-% w_k and u_z are supervised.
 \begin{enumerate}
   \item \textbf{SymMeta.} A 4-stage residual spatial-attention CNN takes a 9-channel motion tensor: luminance before and after, the absolute temporal difference, DIS flow $(u, v)$ and its magnitude, spatial gradient, and pixel coordinates. It predicts planar motion $v_k^{\text{raw}}$, a confidence $w_k$, and a parallax coupling vector $u_{z,k}$. Subtracting the vertical-motion term,
   \[
     v_k = v_k^{\text{raw}} - \Delta z_k^{\text{local}}\, u_{z,k},
   \]
-  removes parallax from the oblique camera before weighted Procrustes (Prop.~\ref{prop:equiv}). Vertical displacement $\Delta z^{\text{local}}$ is invariant to planar rotations about $z$, so this correction preserves equivariance in the planar case. Two small MLPs estimate $\log \hat{g}$ from $(|\bar{a}|, |\Delta p^{\text{local}}|)$, which is identifiable by Prop.~\ref{prop:unident}, and $\hat{s}$ from $(\bar{a}_{\text{grip}}, \Delta j)$, where $\Delta j$ is the change in finger opening. The 3D variant outputs $v_k \in \mathbb{R}^3$ and per-axis log-gains, then applies gain-pre-scaled SVD Procrustes. % TODO(3D): state whether and how the dz correction is used in 3D, where z is not rotation-invariant.
+  removes parallax from the oblique camera before weighted Procrustes (Prop.~\ref{prop:equiv}). Vertical displacement $\Delta z^{\text{local}}$ is invariant to planar rotations about $z$, so this correction preserves equivariance in the planar case. Two small MLPs estimate $\log \hat{g}$ from $(|\bar{a}|, |\Delta p^{\text{local}}|)$, which is identifiable by Prop.~\ref{prop:unident}, and $\hat{s}$ from $(\bar{a}_{\text{grip}}, \Delta j)$, where $\Delta j$ is the change in finger opening. The 3D variant outputs $v_k \in \mathbb{R}^3$ and per-axis log-gains, then applies gain-pre-scaled SVD Procrustes.
   \item \textbf{\texttt{EquivFlow}.} This variant implements Prop.~\ref{prop:cardinal}. A 7-channel pixel-attention CNN that sees no flow directions pools DIS flow through a learned $2\times 2$ matrix $H_0$, or a first-frame-conditioned $H_\phi(I_0) = H_0 + \Delta H_\phi(I_0)$. With an MLP reader trained on axis-aligned probe bursts, continuous OOD yaw error is $38.0^\circ$, because the reader snaps to the training directions. \texttt{EquivFlow} reduces this to $9.6^\circ$ (active probe) and $10.3^\circ$ (passive), measured offline. In live control it trails SymMeta (Table~\ref{tab:additional_baselines}), so we treat it as the structurally safer variant under sparse axis-aligned probes, not as the headline method.
 \end{enumerate}
 
@@ -154,8 +151,6 @@ SymMeta learns a shared visual motion reader on source robots. On a new robot, t
 \paragraph{Protocol.} For each query, the frozen VLA first runs unadapted under the shifted interface (Attempt~1). Passive methods see only the first 15 controls (0.75\,s of simulated time) of that rollout, summarized as three consecutive 5-control chunks. The trace is recorded once per task and transform and shared by all passive methods and all reader seeds. Each method's estimate then wraps the VLA for a fresh episode of the same task (Attempt~2), and we report Attempt-2 task success. Attempt~1 is recorded on a different initial scene layout (LIBERO initial state 11) from the one used for Attempt~2 (initial state 13), so the estimate must carry across object layouts. The 0.75\,s figure counts support motion only; it excludes the reset and the reader's inference time. Active baselines instead execute a fixed 15-control probe. Adapting within Attempt~1, without a reset, is reported separately in \S\ref{sec:limits}.
 
 \paragraph{Statistics.} Learned methods (SymMeta, Perceiver) are trained with 3 seeds (41--43) and evaluated on all 96 queries per seed. The three seeds share the same 96 queries and support traces, so the reported mean $\pm$ standard deviation reflects reader-training variance only, and the independent units are the 8 tasks. Deterministic baselines are run once. Paired confidence intervals use a task-clustered bootstrap over the 8 tasks on the seed-41 panel. With 8 clusters these intervals are approximate, so we also report win/loss counts and per-seed differences.
-% TODO(stats): add query-level paired permutation tests per seed and an
-% appendix table accounting for every episode.
 
 \paragraph{Baseline implementations.} ``Perceiver'' is our Perceiver history encoder trained to predict the transform from the same support trace as SymMeta. It is inspired by, but is not, the method of \citet{yang2026icba}, which trains the policy with the context. ``Affine (proprio.)'' fits a ridge-regularized linear map from issued planar commands to command-frame end-effector displacements on the same passive trace and projects it onto a scaled rotation. It is inspired by ReGround~\citep{siddique2026reground} but omits that method's learned dynamics model, task-agnostic babbling data, and intent tracking, so it is not a test of the published method.
 
@@ -224,8 +219,6 @@ Table~\ref{tab:headline} and Fig.~\ref{fig:cliff} support three findings.
 
 \paragraph{Comparison to action adapters fitted on target demonstrations.}
 The VLA stays frozen here too; only a small output adapter is fitted. We collect $K \in \{1, 3, 10\}$ successful demonstrations on UR5e for each of four OOD transforms (two compositional, two continuous; 32 queries) and fit MLP or linear action adapters by regression (Table~\ref{tab:fewshot}). The demonstrations are rollouts of the VLA wrapped with the exact inverse transform, so they presuppose the quantity SymMeta estimates, or an equivalent teleoperator. On the shift they were fitted on, a linear adapter reaches 87.5\% (28/32) from a single demonstration. On the same 32 task--transform pairs in the seed-41 panel, SymMeta reaches 78.1\% (25/32), the oracle 84.4\% (27/32), and Horn--Schunck 56.2\% (18/32). The adapter and SymMeta numbers come from separate runs with identical query seeds. An MLP adapter needs $K{=}3$ to reach 78.1\%. Neither adapter transfers to a different shift: both score 0\% at $K{=}10$, which is expected for a fixed adapter. The practical trade-off is one demonstration per new interface versus 0.75\,s of passive video plus a reset per new interface.
-% TODO(adapters): rerun SymMeta and the adapters in one job on the same 32 queries,
-% and report the demonstration-collection cost per new interface.
 
 \begin{table}[t]
   \centering
@@ -259,7 +252,7 @@ The VLA stays frozen here too; only a small output adapter is fitted. We collect
 \subsection{Training-Shift Diversity and Capacity}
 \label{sec:scaling}
 
-Do learned encoders fail only for lack of training diversity or capacity? We collect 1,466 MuJoCo Attempt-1 trajectories on Panda and Sawyer covering up to 128 sampled interface transforms. We train five models at $M \in \{2, 4, 7, 16, 32, 64, 128\}$ training transforms with 3 seeds each (105 models). Every model is evaluated on the 64 UR5e OOD queries. Table~\ref{tab:scaling} reports how well each model recovers the transform, not task success. % TODO: state that this is offline estimation on the recorded support traces, and give parameter counts for w192 and w384.
+Do learned encoders fail only for lack of training diversity or capacity? We collect 1,466 MuJoCo Attempt-1 trajectories on Panda and Sawyer covering up to 128 sampled interface transforms. We train five models at $M \in \{2, 4, 7, 16, 32, 64, 128\}$ training transforms with 3 seeds each (105 models). Every model is evaluated on the 64 UR5e OOD queries. Table~\ref{tab:scaling} reports how well each model recovers the transform, not task success.
 
 \begin{table*}[t]
   \centering
@@ -311,7 +304,7 @@ As a preliminary check in a different physics engine and camera geometry~\citep{
 
 \subsection{LIBERO-Pro2.0 Visual and Camera Perturbations}
 
-We test the \texttt{BASE}-trained SymMeta, without retraining, on 48 UR5e queries for each of the five LIBERO-Pro2.0 visual and camera perturbations~\citep{liberopro2026}. The perturbations are \texttt{S13} lighting and texture, \texttt{S14} distractors, \texttt{S15} camera translation by $(0.10, -0.10, 0.07)$\,m, \texttt{S16} field of view and zoom, and \texttt{S19} background and appearance. Nine methods are evaluated (2,160 episodes); Table~\ref{tab:pro2} shows six of them, and Fig.~\ref{fig:pro2}B adds a Pro2-retrained active SymMeta variant. % TODO: list all 9 methods in an appendix table.
+We test the \texttt{BASE}-trained SymMeta, without retraining, on 48 UR5e queries for each of the five LIBERO-Pro2.0 visual and camera perturbations~\citep{liberopro2026}. The perturbations are \texttt{S13} lighting and texture, \texttt{S14} distractors, \texttt{S15} camera translation by $(0.10, -0.10, 0.07)$\,m, \texttt{S16} field of view and zoom, and \texttt{S19} background and appearance. Nine methods are evaluated (2,160 episodes); Table~\ref{tab:pro2} shows six of them, and Fig.~\ref{fig:pro2}B adds a Pro2-retrained active SymMeta variant.
 Under \texttt{S15}, the frozen VLA fails even with the exact transform (0\% oracle), so success there carries no information about adaptation. We report it only for calibration error. On the four perturbations the VLA can solve, SymMeta reaches 69.3\% against a 76.0\% oracle and 56.8\% for Horn--Schunck.
 
 \begin{table*}[t]
@@ -366,7 +359,6 @@ A frozen VLA that fails on a new arm because of a rotated, rescaled, or sign-fli
 \section*{Impact Statement}
 
 This paper presents work whose goal is to advance the field of machine learning for robot control. Methods that let a pretrained policy run on a robot with an unknown command interface could lower the cost of deploying robots. They could also make it easier to run a policy on hardware it was never validated on. All results here are in simulation, and physical deployment would need its own safety testing.
-% TODO: review and edit the impact statement wording.
 
 \bibliography{references}
 \bibliographystyle{icml2026}
