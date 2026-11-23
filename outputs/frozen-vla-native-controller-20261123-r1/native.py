@@ -89,7 +89,7 @@ class Chain:
                             np.r_[desired, np.zeros(7)], bounds=(low, high), method="bvls")
         if not result.success:
             raise RuntimeError(result.message)
-        return result.x
+        return np.clip(result.x, low, high)
 
     def ik(self, q, twist):
         return self.solve(q, self.jac(q) * JOINT_SCALE / OSC_SCALE[:, None], twist / OSC_SCALE)
