@@ -8,6 +8,10 @@
 - [x] The paper uses the official descriptions of the five static perturbations and reports the visual-stress results separately from the base-scene experiment. [LIBERO-Pro2.0 catalogue, Table 15](https://arxiv.org/html/2610.24587v1)
 - [x] On the original 1,344 seven-shift traces, changing only the Perceiver learning-rate schedule reduced yaw MAE on 64 recorded OOD UR5e supports from 95.63° to 83.37° (paired change −12.26°, 95% task-bootstrap interval −17.04° to −7.39°). Both fits used 32 positional slots, the original sampler, batch 64, 3,500 updates and seeds 41–43. [Verified control](../../outputs/symmeta-seven-schedule-20261123-r1/RESULT.md)
 
+- [x] The related work identifies the published rotation, gain and latency experiments and the success of target-fitted linear calibration on the two static shifts. The appendix documents the target-data budgets for the released rotation condition and the passive visual reader. [Published Table 1](https://arxiv.org/html/2611.20244v1#S4)
+
+- [x] Reproduced the released ReGround 90° rotation cell and tested frozen streaming SymMeta on all 1,400 assigned episodes. The paper reports success, unsafe incidence, calibration budgets and opening agreement. [Full result](../../outputs/reground-rotation-reference-20261123-r1/RESULT.md)
+
 ## Open experiments
 
 - [ ] Determine how FK yaw affects native success on IIWA × π₀.₅, Kinova3 × π₀.₅ and UR5e × π₀. Report the number of qualified pairs for each arm. [Cross-arm qualification](../../outputs/symmeta-fk-crossarm-20261123-r1/RESULT.md)
@@ -19,11 +23,9 @@
 - [ ] Test whether a second camera helps recover continuous 3D rotations and whether the planar result transfers to physical hardware.
 - [ ] Test whether a second independent command direction improves full-map recovery at fixed support duration. The recorded median singular-value ratio was 0.099. Procrustes and visual ridge had general-map errors of 0.830 and 0.819 versus 1.406 without adaptation. The full-map Perceiver improved axis swaps to 0.413, but had a mean general-map error of 15.212. Active or longer supports require new traces. [Offline result](../../outputs/symmeta-wider-family-20261123-r1/RESULT.md)
 - [ ] Measure native second-attempt success on UR5e, IIWA and Kinova3 with π₀.₅ and on UR5e with π₀. The offline run saved scores only. Reproduce `perceiver_cont_warm` (2,500 updates, batch 32, seeds 41–43), export and reload each checkpoint, and verify its recorded OOD yaw against the saved result. Pair with the same-seed SymMeta on identical cases, tapes, resets and query noise. Report native success overall (96 queries) and OOD (64) per panel, with task-paired uncertainty. [Offline result](../../outputs/symmeta-wider-family-20261123-r1/RESULT.md)
-- [ ] Reproduce the released ReGround 90° rotation result and run SymMeta on the same cases. Report the target-robot data each method uses. [Plan](../../outputs/reground-rotation-reference-20261123-r1/PLAN.md)
 
 ## Open reporting and maintenance
 
 - [ ] Complete the appendix episode ledger beyond the four main panels. [Paired reanalysis](../../outputs/symmeta-paired-statistics-20261123-r1/RESULT.md)
 - [ ] Review the impact statement before submission.
-- [ ] State in related work that ReGround's π₀.₅ results cover a 90° action-frame rotation and a gain change as well as latency, and that its linear-calibration baseline reaches 0.98 and 0.94 success there. State the difference: ReGround fits on target-robot state from 1,000–100,000 transitions, and SymMeta uses 15 controls and no trusted kinematics. [ReGround](https://arxiv.org/abs/2611.20244)
 - [ ] Consider an optional JAX/Flax dependency group for running the reader tests off cluster.
