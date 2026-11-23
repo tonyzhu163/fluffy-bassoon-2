@@ -1,0 +1,977 @@
+{
+  "policy": "lerobot/smolvla_libero",
+  "revision": "a24f1f380461b665158d52acd140152c79e8b36d",
+  "vlm_revision": "4cde9d208e19519c36917aa170fffc7e381aa0ad",
+  "weights_sha256": "9a9f6413e42c0f332fccbce9a0dc796af2790f82cf002f791cdbf7e01e1afca8",
+  "total_parameters": 450046176,
+  "trainable_parameters": 0,
+  "eval_mode": true,
+  "precision": [
+    "torch.bfloat16",
+    "torch.float32"
+  ],
+  "device": "cpu",
+  "threads": 6,
+  "action_shape": [
+    50,
+    7
+  ],
+  "calibration": [
+    "fit-libero_10-2",
+    "fit-libero_10-9",
+    "fit-libero_goal-5",
+    "fit-libero_goal-7",
+    "fit-libero_object-2",
+    "fit-libero_object-6",
+    "fit-libero_spatial-2",
+    "fit-libero_spatial-4"
+  ],
+  "tasks": [
+    {
+      "key": "development-libero_10-0",
+      "task": "put both the alphabet soup and the tomato sauce in the basket",
+      "seed": 231100,
+      "noise_sha256": "b9176c7bad3168a90b8ac146acab6dcb41920d02ab66f93a0531e664c8874af3",
+      "baseline": "p0",
+      "nominal_temporal_std": [
+        0.11690914630889893,
+        0.22783158719539642,
+        0.21237558126449585,
+        0.002427620580419898,
+        0.01871342584490776,
+        0.007871115580201149,
+        0.007155721541494131
+      ],
+      "repeat_max_abs": 0.0,
+      "fresh_noise_nominal_rmse": 0.015296180330823965,
+      "rows": [
+        {
+          "camera": null,
+          "physical_roll_deg": 0,
+          "estimated_image_corrections_deg": [
+            90,
+            0
+          ],
+          "raw_rgb_mae": 0.0,
+          "oracle_rgb_mae": 0.0,
+          "chunks": {
+            "raw": "p0",
+            "estimated": "p1",
+            "oracle": "p0"
+          },
+          "rmse": {
+            "raw": 0.0,
+            "estimated": 0.10695147021650865,
+            "oracle": 0.0
+          }
+        },
+        {
+          "camera": "agent",
+          "physical_roll_deg": -90,
+          "estimated_image_corrections_deg": [
+            90,
+            0
+          ],
+          "raw_rgb_mae": 48.05025736490885,
+          "oracle_rgb_mae": 0.0089569091796875,
+          "chunks": {
+            "raw": "p2",
+            "estimated": "p3",
+            "oracle": "p4"
+          },
+          "rmse": {
+            "raw": 0.1073580904528308,
+            "estimated": 0.147486881501716,
+            "oracle": 0.0010332341082715376
+          }
+        },
+        {
+          "camera": "agent",
+          "physical_roll_deg": 90,
+          "estimated_image_corrections_deg": [
+            -90,
+            0
+          ],
+          "raw_rgb_mae": 48.039632161458336,
+          "oracle_rgb_mae": 0.020009358723958332,
+          "chunks": {
+            "raw": "p5",
+            "estimated": "p6",
+            "oracle": "p7"
+          },
+          "rmse": {
+            "raw": 0.18793678353297966,
+            "estimated": 0.14703713950390387,
+            "oracle": 0.0009798380454333136
+          }
+        },
+        {
+          "camera": "wrist",
+          "physical_roll_deg": -90,
+          "estimated_image_corrections_deg": [
+            90,
+            -90
+          ],
+          "raw_rgb_mae": 19.343165079752605,
+          "oracle_rgb_mae": 0.0041961669921875,
+          "chunks": {
+            "raw": "p8",
+            "estimated": "p9",
+            "oracle": "p10"
+          },
+          "rmse": {
+            "raw": 0.5925644637817267,
+            "estimated": 0.10694948378395626,
+            "oracle": 0.00093270789882658
+          }
+        },
+        {
+          "camera": "wrist",
+          "physical_roll_deg": 90,
+          "estimated_image_corrections_deg": [
+            90,
+            90
+          ],
+          "raw_rgb_mae": 19.343210856119793,
+          "oracle_rgb_mae": 0.00469970703125,
+          "chunks": {
+            "raw": "p11",
+            "estimated": "p12",
+            "oracle": "p13"
+          },
+          "rmse": {
+            "raw": 0.12885728653615883,
+            "estimated": 0.10712064724707958,
+            "oracle": 0.0010250131902092168
+          }
+        }
+      ]
+    },
+    {
+      "key": "development-libero_10-3",
+      "task": "put the black bowl in the bottom drawer of the cabinet and close it",
+      "seed": 231101,
+      "noise_sha256": "1bdbacc186b31f8315a869951870fb709c2ed22d7b729c888d7c733985e06fdf",
+      "baseline": "p0",
+      "nominal_temporal_std": [
+        0.16588640213012695,
+        0.08870688825845718,
+        0.2073465883731842,
+        0.007130470126867294,
+        0.032800786197185516,
+        0.08668158948421478,
+        0.006563419010490179
+      ],
+      "rows": [
+        {
+          "camera": null,
+          "physical_roll_deg": 0,
+          "estimated_image_corrections_deg": [
+            0,
+            0
+          ],
+          "raw_rgb_mae": 0.0,
+          "oracle_rgb_mae": 0.0,
+          "chunks": {
+            "raw": "p0",
+            "estimated": "p0",
+            "oracle": "p0"
+          },
+          "rmse": {
+            "raw": 0.0,
+            "estimated": 0.0,
+            "oracle": 0.0
+          }
+        },
+        {
+          "camera": "agent",
+          "physical_roll_deg": -90,
+          "estimated_image_corrections_deg": [
+            -90,
+            0
+          ],
+          "raw_rgb_mae": 73.34508260091145,
+          "oracle_rgb_mae": 0.02008056640625,
+          "chunks": {
+            "raw": "p1",
+            "estimated": "p2",
+            "oracle": "p2"
+          },
+          "rmse": {
+            "raw": 0.06649725563566722,
+            "estimated": 0.001133653148672129,
+            "oracle": 0.001133653148672129
+          }
+        },
+        {
+          "camera": "agent",
+          "physical_roll_deg": 90,
+          "estimated_image_corrections_deg": [
+            90,
+            0
+          ],
+          "raw_rgb_mae": 73.34408569335938,
+          "oracle_rgb_mae": 0.024851481119791668,
+          "chunks": {
+            "raw": "p3",
+            "estimated": "p4",
+            "oracle": "p4"
+          },
+          "rmse": {
+            "raw": 0.11444746456221555,
+            "estimated": 0.0011738579660641175,
+            "oracle": 0.0011738579660641175
+          }
+        },
+        {
+          "camera": "wrist",
+          "physical_roll_deg": -90,
+          "estimated_image_corrections_deg": [
+            0,
+            -90
+          ],
+          "raw_rgb_mae": 61.6275380452474,
+          "oracle_rgb_mae": 0.020594278971354168,
+          "chunks": {
+            "raw": "p5",
+            "estimated": "p6",
+            "oracle": "p6"
+          },
+          "rmse": {
+            "raw": 0.1110695063911403,
+            "estimated": 0.0014409353532263355,
+            "oracle": 0.0014409353532263355
+          }
+        },
+        {
+          "camera": "wrist",
+          "physical_roll_deg": 90,
+          "estimated_image_corrections_deg": [
+            0,
+            90
+          ],
+          "raw_rgb_mae": 61.62187703450521,
+          "oracle_rgb_mae": 0.019632975260416668,
+          "chunks": {
+            "raw": "p7",
+            "estimated": "p8",
+            "oracle": "p8"
+          },
+          "rmse": {
+            "raw": 0.12420167982400734,
+            "estimated": 0.0010098783908116526,
+            "oracle": 0.0010098783908116526
+          }
+        }
+      ]
+    },
+    {
+      "key": "development-libero_goal-0",
+      "task": "open the middle drawer of the cabinet",
+      "seed": 231102,
+      "noise_sha256": "5a000d1500e5895620f981d4bf5887eede50439cfcc1472b848da7a2fa9ebf6c",
+      "baseline": "p0",
+      "nominal_temporal_std": [
+        0.18173359334468842,
+        0.025224437937140465,
+        0.06464359909296036,
+        0.04081912711262703,
+        0.0436343252658844,
+        0.07017292082309723,
+        0.007826421409845352
+      ],
+      "rows": [
+        {
+          "camera": null,
+          "physical_roll_deg": 0,
+          "estimated_image_corrections_deg": [
+            0,
+            0
+          ],
+          "raw_rgb_mae": 0.0,
+          "oracle_rgb_mae": 0.0,
+          "chunks": {
+            "raw": "p0",
+            "estimated": "p0",
+            "oracle": "p0"
+          },
+          "rmse": {
+            "raw": 0.0,
+            "estimated": 0.0,
+            "oracle": 0.0
+          }
+        },
+        {
+          "camera": "agent",
+          "physical_roll_deg": -90,
+          "estimated_image_corrections_deg": [
+            -90,
+            0
+          ],
+          "raw_rgb_mae": 60.75171915690104,
+          "oracle_rgb_mae": 0.010894775390625,
+          "chunks": {
+            "raw": "p1",
+            "estimated": "p2",
+            "oracle": "p2"
+          },
+          "rmse": {
+            "raw": 0.05070773037297794,
+            "estimated": 0.0012861982477126031,
+            "oracle": 0.0012861982477126031
+          }
+        },
+        {
+          "camera": "agent",
+          "physical_roll_deg": 90,
+          "estimated_image_corrections_deg": [
+            90,
+            0
+          ],
+          "raw_rgb_mae": 60.75207010904948,
+          "oracle_rgb_mae": 0.0080718994140625,
+          "chunks": {
+            "raw": "p3",
+            "estimated": "p4",
+            "oracle": "p4"
+          },
+          "rmse": {
+            "raw": 0.056098929212982325,
+            "estimated": 0.0023407842419113445,
+            "oracle": 0.0023407842419113445
+          }
+        },
+        {
+          "camera": "wrist",
+          "physical_roll_deg": -90,
+          "estimated_image_corrections_deg": [
+            0,
+            -90
+          ],
+          "raw_rgb_mae": 67.38449605305989,
+          "oracle_rgb_mae": 0.008234659830729166,
+          "chunks": {
+            "raw": "p5",
+            "estimated": "p6",
+            "oracle": "p6"
+          },
+          "rmse": {
+            "raw": 0.06372015627295899,
+            "estimated": 0.0010504944652732348,
+            "oracle": 0.0010504944652732348
+          }
+        },
+        {
+          "camera": "wrist",
+          "physical_roll_deg": 90,
+          "estimated_image_corrections_deg": [
+            0,
+            90
+          ],
+          "raw_rgb_mae": 67.38441467285156,
+          "oracle_rgb_mae": 0.008672078450520834,
+          "chunks": {
+            "raw": "p7",
+            "estimated": "p8",
+            "oracle": "p8"
+          },
+          "rmse": {
+            "raw": 0.08188593925111382,
+            "estimated": 0.0008627624966290546,
+            "oracle": 0.0008627624966290546
+          }
+        }
+      ]
+    },
+    {
+      "key": "development-libero_goal-1",
+      "task": "put the bowl on the stove",
+      "seed": 231103,
+      "noise_sha256": "0d2d4c28dd3ebc6ded2ca265d1bbcec400ee7c2b19c6871d88ed0491c5f7e6ea",
+      "baseline": "p0",
+      "nominal_temporal_std": [
+        0.43556252121925354,
+        0.16634754836559296,
+        0.41763150691986084,
+        0.0215472299605608,
+        0.033324554562568665,
+        0.01047239638864994,
+        0.8680064678192139
+      ],
+      "rows": [
+        {
+          "camera": null,
+          "physical_roll_deg": 0,
+          "estimated_image_corrections_deg": [
+            0,
+            0
+          ],
+          "raw_rgb_mae": 0.0,
+          "oracle_rgb_mae": 0.0,
+          "chunks": {
+            "raw": "p0",
+            "estimated": "p0",
+            "oracle": "p0"
+          },
+          "rmse": {
+            "raw": 0.0,
+            "estimated": 0.0,
+            "oracle": 0.0
+          }
+        },
+        {
+          "camera": "agent",
+          "physical_roll_deg": -90,
+          "estimated_image_corrections_deg": [
+            -90,
+            0
+          ],
+          "raw_rgb_mae": 61.410502115885414,
+          "oracle_rgb_mae": 0.010162353515625,
+          "chunks": {
+            "raw": "p1",
+            "estimated": "p2",
+            "oracle": "p2"
+          },
+          "rmse": {
+            "raw": 0.07330826017177917,
+            "estimated": 0.001662385571022844,
+            "oracle": 0.001662385571022844
+          }
+        },
+        {
+          "camera": "agent",
+          "physical_roll_deg": 90,
+          "estimated_image_corrections_deg": [
+            90,
+            0
+          ],
+          "raw_rgb_mae": 61.40853373209635,
+          "oracle_rgb_mae": 0.0094451904296875,
+          "chunks": {
+            "raw": "p3",
+            "estimated": "p4",
+            "oracle": "p4"
+          },
+          "rmse": {
+            "raw": 0.1706755688185124,
+            "estimated": 0.0027235645067086598,
+            "oracle": 0.0027235645067086598
+          }
+        },
+        {
+          "camera": "wrist",
+          "physical_roll_deg": -90,
+          "estimated_image_corrections_deg": [
+            0,
+            -90
+          ],
+          "raw_rgb_mae": 65.23883565266927,
+          "oracle_rgb_mae": 0.008448282877604166,
+          "chunks": {
+            "raw": "p5",
+            "estimated": "p6",
+            "oracle": "p6"
+          },
+          "rmse": {
+            "raw": 0.33068225790449846,
+            "estimated": 0.0014705116908846597,
+            "oracle": 0.0014705116908846597
+          }
+        },
+        {
+          "camera": "wrist",
+          "physical_roll_deg": 90,
+          "estimated_image_corrections_deg": [
+            0,
+            90
+          ],
+          "raw_rgb_mae": 65.23834228515625,
+          "oracle_rgb_mae": 0.007731119791666667,
+          "chunks": {
+            "raw": "p7",
+            "estimated": "p8",
+            "oracle": "p8"
+          },
+          "rmse": {
+            "raw": 0.29220515929619323,
+            "estimated": 0.0010011283718468257,
+            "oracle": 0.0010011283718468257
+          }
+        }
+      ]
+    },
+    {
+      "key": "development-libero_object-0",
+      "task": "pick up the alphabet soup and place it in the basket",
+      "seed": 231104,
+      "noise_sha256": "e2b1079e71aaeb2b28456b3e4d295fae2bb370e1ce6e0760eb8231dd7f71feab",
+      "baseline": "p0",
+      "nominal_temporal_std": [
+        0.15763719379901886,
+        0.29278403520584106,
+        0.32925063371658325,
+        0.004780924413353205,
+        0.029680699110031128,
+        0.025190921500325203,
+        0.008723766542971134
+      ],
+      "rows": [
+        {
+          "camera": null,
+          "physical_roll_deg": 0,
+          "estimated_image_corrections_deg": [
+            0,
+            0
+          ],
+          "raw_rgb_mae": 0.0,
+          "oracle_rgb_mae": 0.0,
+          "chunks": {
+            "raw": "p0",
+            "estimated": "p0",
+            "oracle": "p0"
+          },
+          "rmse": {
+            "raw": 0.0,
+            "estimated": 0.0,
+            "oracle": 0.0
+          }
+        },
+        {
+          "camera": "agent",
+          "physical_roll_deg": -90,
+          "estimated_image_corrections_deg": [
+            -90,
+            0
+          ],
+          "raw_rgb_mae": 43.6497802734375,
+          "oracle_rgb_mae": 0.006144205729166667,
+          "chunks": {
+            "raw": "p1",
+            "estimated": "p2",
+            "oracle": "p2"
+          },
+          "rmse": {
+            "raw": 0.06069196437303879,
+            "estimated": 0.0009692780864240414,
+            "oracle": 0.0009692780864240414
+          }
+        },
+        {
+          "camera": "agent",
+          "physical_roll_deg": 90,
+          "estimated_image_corrections_deg": [
+            90,
+            0
+          ],
+          "raw_rgb_mae": 43.64935302734375,
+          "oracle_rgb_mae": 0.005340576171875,
+          "chunks": {
+            "raw": "p3",
+            "estimated": "p4",
+            "oracle": "p4"
+          },
+          "rmse": {
+            "raw": 0.20685325817515124,
+            "estimated": 0.001089234018913406,
+            "oracle": 0.001089234018913406
+          }
+        },
+        {
+          "camera": "wrist",
+          "physical_roll_deg": -90,
+          "estimated_image_corrections_deg": [
+            0,
+            -90
+          ],
+          "raw_rgb_mae": 51.57380676269531,
+          "oracle_rgb_mae": 0.004358927408854167,
+          "chunks": {
+            "raw": "p5",
+            "estimated": "p6",
+            "oracle": "p6"
+          },
+          "rmse": {
+            "raw": 0.30836534223573664,
+            "estimated": 0.000754752364600845,
+            "oracle": 0.000754752364600845
+          }
+        },
+        {
+          "camera": "wrist",
+          "physical_roll_deg": 90,
+          "estimated_image_corrections_deg": [
+            0,
+            90
+          ],
+          "raw_rgb_mae": 51.5732167561849,
+          "oracle_rgb_mae": 0.004267374674479167,
+          "chunks": {
+            "raw": "p7",
+            "estimated": "p8",
+            "oracle": "p8"
+          },
+          "rmse": {
+            "raw": 0.2120604433194543,
+            "estimated": 0.0009270708881004588,
+            "oracle": 0.0009270708881004588
+          }
+        }
+      ]
+    },
+    {
+      "key": "development-libero_object-7",
+      "task": "pick up the milk and place it in the basket",
+      "seed": 231105,
+      "noise_sha256": "59c275929c0bbb215c039ce347ac66541ff200ea4376be9d0169dfd5932afcd2",
+      "baseline": "p0",
+      "nominal_temporal_std": [
+        0.2830962538719177,
+        0.37457767128944397,
+        0.2999233305454254,
+        0.014040078036487103,
+        0.018131084740161896,
+        0.02582528442144394,
+        0.391191691160202
+      ],
+      "rows": [
+        {
+          "camera": null,
+          "physical_roll_deg": 0,
+          "estimated_image_corrections_deg": [
+            0,
+            0
+          ],
+          "raw_rgb_mae": 0.0,
+          "oracle_rgb_mae": 0.0,
+          "chunks": {
+            "raw": "p0",
+            "estimated": "p0",
+            "oracle": "p0"
+          },
+          "rmse": {
+            "raw": 0.0,
+            "estimated": 0.0,
+            "oracle": 0.0
+          }
+        },
+        {
+          "camera": "agent",
+          "physical_roll_deg": -90,
+          "estimated_image_corrections_deg": [
+            -90,
+            0
+          ],
+          "raw_rgb_mae": 43.15594482421875,
+          "oracle_rgb_mae": 0.006785074869791667,
+          "chunks": {
+            "raw": "p1",
+            "estimated": "p2",
+            "oracle": "p2"
+          },
+          "rmse": {
+            "raw": 0.12908688728617404,
+            "estimated": 0.0016549798230565127,
+            "oracle": 0.0016549798230565127
+          }
+        },
+        {
+          "camera": "agent",
+          "physical_roll_deg": 90,
+          "estimated_image_corrections_deg": [
+            90,
+            0
+          ],
+          "raw_rgb_mae": 43.155049641927086,
+          "oracle_rgb_mae": 0.00469970703125,
+          "chunks": {
+            "raw": "p3",
+            "estimated": "p4",
+            "oracle": "p4"
+          },
+          "rmse": {
+            "raw": 0.20768187515379155,
+            "estimated": 0.001651994039779738,
+            "oracle": 0.001651994039779738
+          }
+        },
+        {
+          "camera": "wrist",
+          "physical_roll_deg": -90,
+          "estimated_image_corrections_deg": [
+            0,
+            -90
+          ],
+          "raw_rgb_mae": 59.982828776041664,
+          "oracle_rgb_mae": 0.0037333170572916665,
+          "chunks": {
+            "raw": "p5",
+            "estimated": "p6",
+            "oracle": "p6"
+          },
+          "rmse": {
+            "raw": 0.603372431630877,
+            "estimated": 0.0009426458484663038,
+            "oracle": 0.0009426458484663038
+          }
+        },
+        {
+          "camera": "wrist",
+          "physical_roll_deg": 90,
+          "estimated_image_corrections_deg": [
+            0,
+            90
+          ],
+          "raw_rgb_mae": 59.98298645019531,
+          "oracle_rgb_mae": 0.0037282307942708335,
+          "chunks": {
+            "raw": "p7",
+            "estimated": "p8",
+            "oracle": "p8"
+          },
+          "rmse": {
+            "raw": 0.3980252487012279,
+            "estimated": 0.0008914010647993461,
+            "oracle": 0.0008914010647993461
+          }
+        }
+      ]
+    },
+    {
+      "key": "development-libero_spatial-1",
+      "task": "pick up the black bowl next to the ramekin and place it on the plate",
+      "seed": 231106,
+      "noise_sha256": "ea778bf5aff38484e1bafa5069307a4b8476f7591a5e7c31f51464ad025b8766",
+      "baseline": "p0",
+      "nominal_temporal_std": [
+        0.14656314253807068,
+        0.3180885314941406,
+        0.38918399810791016,
+        0.012399435974657536,
+        0.025671785697340965,
+        0.007962261326611042,
+        0.00815300177782774
+      ],
+      "rows": [
+        {
+          "camera": null,
+          "physical_roll_deg": 0,
+          "estimated_image_corrections_deg": [
+            0,
+            0
+          ],
+          "raw_rgb_mae": 0.0,
+          "oracle_rgb_mae": 0.0,
+          "chunks": {
+            "raw": "p0",
+            "estimated": "p0",
+            "oracle": "p0"
+          },
+          "rmse": {
+            "raw": 0.0,
+            "estimated": 0.0,
+            "oracle": 0.0
+          }
+        },
+        {
+          "camera": "agent",
+          "physical_roll_deg": -90,
+          "estimated_image_corrections_deg": [
+            -90,
+            0
+          ],
+          "raw_rgb_mae": 56.14921569824219,
+          "oracle_rgb_mae": 0.007593790690104167,
+          "chunks": {
+            "raw": "p1",
+            "estimated": "p2",
+            "oracle": "p2"
+          },
+          "rmse": {
+            "raw": 0.18778740408950112,
+            "estimated": 0.0019246332360399955,
+            "oracle": 0.0019246332360399955
+          }
+        },
+        {
+          "camera": "agent",
+          "physical_roll_deg": 90,
+          "estimated_image_corrections_deg": [
+            90,
+            0
+          ],
+          "raw_rgb_mae": 56.14929707845052,
+          "oracle_rgb_mae": 0.005671183268229167,
+          "chunks": {
+            "raw": "p3",
+            "estimated": "p4",
+            "oracle": "p4"
+          },
+          "rmse": {
+            "raw": 0.15337756354834853,
+            "estimated": 0.0012827941806218106,
+            "oracle": 0.0012827941806218106
+          }
+        },
+        {
+          "camera": "wrist",
+          "physical_roll_deg": -90,
+          "estimated_image_corrections_deg": [
+            0,
+            -90
+          ],
+          "raw_rgb_mae": 60.9739023844401,
+          "oracle_rgb_mae": 0.004206339518229167,
+          "chunks": {
+            "raw": "p5",
+            "estimated": "p6",
+            "oracle": "p6"
+          },
+          "rmse": {
+            "raw": 0.1454653408342247,
+            "estimated": 0.0014076633247326975,
+            "oracle": 0.0014076633247326975
+          }
+        },
+        {
+          "camera": "wrist",
+          "physical_roll_deg": 90,
+          "estimated_image_corrections_deg": [
+            0,
+            90
+          ],
+          "raw_rgb_mae": 60.974812825520836,
+          "oracle_rgb_mae": 0.004170735677083333,
+          "chunks": {
+            "raw": "p7",
+            "estimated": "p8",
+            "oracle": "p8"
+          },
+          "rmse": {
+            "raw": 0.25163792917079775,
+            "estimated": 0.0011465621917034433,
+            "oracle": 0.0011465621917034433
+          }
+        }
+      ]
+    },
+    {
+      "key": "development-libero_spatial-7",
+      "task": "pick up the black bowl on the stove and place it on the plate",
+      "seed": 231107,
+      "noise_sha256": "14ad77ad10419cd185ca494b55eef9d3f31d27458c46fae0501708fb9485b0b2",
+      "baseline": "p0",
+      "nominal_temporal_std": [
+        0.1615464985370636,
+        0.07355771958827972,
+        0.31959977746009827,
+        0.009384054690599442,
+        0.038387540727853775,
+        0.012233922258019447,
+        0.9166229963302612
+      ],
+      "rows": [
+        {
+          "camera": null,
+          "physical_roll_deg": 0,
+          "estimated_image_corrections_deg": [
+            0,
+            0
+          ],
+          "raw_rgb_mae": 0.0,
+          "oracle_rgb_mae": 0.0,
+          "chunks": {
+            "raw": "p0",
+            "estimated": "p0",
+            "oracle": "p0"
+          },
+          "rmse": {
+            "raw": 0.0,
+            "estimated": 0.0,
+            "oracle": 0.0
+          }
+        },
+        {
+          "camera": "agent",
+          "physical_roll_deg": -90,
+          "estimated_image_corrections_deg": [
+            -90,
+            0
+          ],
+          "raw_rgb_mae": 54.74517313639323,
+          "oracle_rgb_mae": 0.0051422119140625,
+          "chunks": {
+            "raw": "p1",
+            "estimated": "p2",
+            "oracle": "p2"
+          },
+          "rmse": {
+            "raw": 0.13922981597250494,
+            "estimated": 0.0032739071617461537,
+            "oracle": 0.0032739071617461537
+          }
+        },
+        {
+          "camera": "agent",
+          "physical_roll_deg": 90,
+          "estimated_image_corrections_deg": [
+            90,
+            0
+          ],
+          "raw_rgb_mae": 54.74168395996094,
+          "oracle_rgb_mae": 0.0081939697265625,
+          "chunks": {
+            "raw": "p3",
+            "estimated": "p4",
+            "oracle": "p4"
+          },
+          "rmse": {
+            "raw": 0.20358852983815628,
+            "estimated": 0.002513344657307929,
+            "oracle": 0.002513344657307929
+          }
+        },
+        {
+          "camera": "wrist",
+          "physical_roll_deg": -90,
+          "estimated_image_corrections_deg": [
+            0,
+            -90
+          ],
+          "raw_rgb_mae": 59.03967793782552,
+          "oracle_rgb_mae": 0.006993611653645833,
+          "chunks": {
+            "raw": "p5",
+            "estimated": "p6",
+            "oracle": "p6"
+          },
+          "rmse": {
+            "raw": 0.5019575461322953,
+            "estimated": 0.0016432961977991653,
+            "oracle": 0.0016432961977991653
+          }
+        },
+        {
+          "camera": "wrist",
+          "physical_roll_deg": 90,
+          "estimated_image_corrections_deg": [
+            0,
+            90
+          ],
+          "raw_rgb_mae": 59.04092915852865,
+          "oracle_rgb_mae": 0.006230672200520833,
+          "chunks": {
+            "raw": "p7",
+            "estimated": "p8",
+            "oracle": "p8"
+          },
+          "rmse": {
+            "raw": 0.3599171099941495,
+            "estimated": 0.0022121481239350746,
+            "oracle": 0.0022121481239350746
+          }
+        }
+      ]
+    }
+  ]
+}
