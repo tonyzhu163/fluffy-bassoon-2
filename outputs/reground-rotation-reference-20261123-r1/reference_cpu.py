@@ -9,8 +9,6 @@ import subprocess
 import sys
 import tempfile
 import time
-from contextlib import redirect_stdout
-from io import StringIO
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
@@ -121,8 +119,7 @@ def metric_check():
 def cpu_native(tmp):
     import numpy as np
     import torch
-    from reground.eval import jobs, rollout
-    from reground.method import build
+    from reground.eval import jobs
     from reground.models import cache
     from reground.models.dynamics import ModelCfg
     from reground.utils import stable_hash
@@ -220,9 +217,59 @@ def cpu_native(tmp):
                 native_data_audit=receipt["data"])
 
 
+def simulator(tmp):
+    """Use production data collection for one complete shard and verify a native fixed-start rollout."""
+    import hashlib
+    import numpy as np
+    import torch
+    from lerobot.envs.libero import _get_suite, get_task_init_states
+    from reground.envs.libero_env import parse_task
+    from reground.eval import jobs, rollout
+    from reground.method.build import make_controller
+    from util import resolve_tasks
+
+    assert not torch.cuda.is_available(), "Use the CPU-only qualification host"
+    counts = {}
+    for task in resolve_tasks():
+        suite, tid = parse_task(task)
+        starts = get_task_init_states(_get_suite(suite), tid, is_libero_plus=False)
+        counts[task] = len(starts)
+        assert len(starts) == 50
+    ctx = jobs.WorkerCtx("pi05", "cpu", 1, print)
+    j = next(j for j in ref.units("babble", [1]) if j["cell"] == "rot_z/90")
+    path = ref.output(j)
+    start = time.monotonic()
+    native = ref.perform(j, ctx, tmp / "native-babble", path)
+    native.update(shard_sha256=hashlib.sha256(path.read_bytes()).hexdigest(), wall_s=time.monotonic() - start)
+    # A no-op test double isolates native simulation/metrics and the worker pipe from model access.
+    class FixedAction:
+        def predict_chunk(self, obs, desc, noise, chunk):
+            assert len(obs) == 1 and all(v.shape == (256, 256, 3) for v in obs[0]["pixels"].values())
+            a = np.zeros((1, 50, 7), np.float32)
+            a[:, :, 6] = -1
+            return a
+
+    try:
+        episode = rollout.Episode("spatial_0", 15)
+        ctrl = make_controller("base", {}, "rot_z/90", 0, "cpu")
+        result = rollout.run_batch(FixedAction(), ctx.pool, [episode], ctrl, "rot_z/90",
+                                   speed_limit=jobs.speed_limit("pi05"))
+        row = result.rows[0]
+        assert row["steps"] > 0 and (row["success"] or row["steps"] == 280)
+        assert row["unsafe"] == int(any(row[k] > 0 for k in ("contact_steps","displaced","fallen","speed_viol")))
+        trace = result.traces[0]
+        assert trace["X"].shape == (row["steps"] + 1, 25)
+        assert row["speed_viol"] == int((trace["speed"] > jobs.speed_limit("pi05")).sum())
+        return dict(fixed_states=counts, unrendered_native_babble=native, real_sim_fixture_action=row,
+                    fixture_policy="constant no-op; no frozen policy inference")
+    finally:
+        ctx.close()
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--native", action="store_true", help="also test Torch fit/rollout transport on CPU")
+    p.add_argument("--simulator", action="store_true", help="also exercise installed native LIBERO on CPU")
     p.add_argument("--output", type=Path, required=True)
     args = p.parse_args()
     import numpy, pandas, scipy
@@ -242,6 +289,8 @@ def main():
         test["lock_exclusion_and_reacquisition"] = True
         if args.native:
             test["native_cpu"] = cpu_native(tmp)
+        if args.simulator:
+            test["simulator_cpu"] = simulator(tmp)
         test.update(elapsed_s=time.monotonic() - start, gpu_hours=0)
         ref.write(args.output, test)
         print(json.dumps(test, indent=2))

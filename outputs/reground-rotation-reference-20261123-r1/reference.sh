@@ -57,7 +57,8 @@ if (( $# == 0 )); then set -- 0 1 2 3 4; fi
 [[ $(hostname) == job-*-master-0 && -n ${KUBERNETES_SERVICE_HOST:-} && ${WORLD_SIZE:-1} == 1 ]] || {
     echo "Expected one Baige Distributed Training master container with all requested GPUs" >&2; exit 2; }
 [[ $(git -C "$code" rev-parse HEAD) == "$pin" && $(git -C "$root/upstream" rev-parse HEAD) == "$pinup" ]]
-git -C "$code" diff --quiet HEAD -- "${here#"$code"/}" 'scripts/[train]gpu_probe.py' src/fluffy_bassoon/baige_gpu.py
+if git -C "$code" symbolic-ref -q HEAD >/dev/null; then echo "Use the pinned detached job checkout" >&2; exit 2; fi
+git -C "$code" diff --quiet HEAD -- "${here#"$code"/}" ':(literal)scripts/[train]gpu_probe.py' src/fluffy_bassoon/baige_gpu.py
 [[ -x $py && -r $root/runtime/activate.sh && -s $root/libero-config/config.yaml ]]
 export REFERENCE_STARTED=$(date +%s) REFERENCE_PHASE=$phase REFERENCE_CODE_PIN=$pin
 attempt="$store/attempts/$id"

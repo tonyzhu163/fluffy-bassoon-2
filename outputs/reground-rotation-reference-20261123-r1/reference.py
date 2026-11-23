@@ -7,6 +7,7 @@ import csv
 import ctypes
 import fcntl
 import gzip
+import hashlib
 import json
 import os
 import signal
@@ -390,6 +391,18 @@ def run_lane(args):
     egl = egl_device(args.rank)
     os.environ["MUJOCO_EGL_DEVICE_ID"] = str(egl)
     print(f"CUDA {device} PCI {row['pci_bus_id']} EGL {egl}", flush=True)
+    if args.phase in ("collect", "base", "reground"):
+        from mujoco.egl import GLContext
+        from OpenGL import GL
+        context = GLContext(16, 16)
+        try:
+            context.make_current()
+            vendor = GL.glGetString(GL.GL_VENDOR).decode()
+            renderer = GL.glGetString(GL.GL_RENDERER).decode()
+            require("NVIDIA" in vendor.upper(), f"Wrong EGL vendor {vendor}: {renderer}")
+            print(f"EGL vendor={vendor} renderer={renderer}", flush=True)
+        finally:
+            context.free()
     ctx = jobs.WorkerCtx("pi05", device, BATCH, lambda msg: print(msg, flush=True))
     progress = args.attempt / f"{args.phase}-gpu{args.rank}.jsonl"
     planned = units(args.phase, args.seeds)
@@ -445,7 +458,9 @@ def summarize():
             tmp = d / f"results.{os.getpid()}.tmp"
             frame.to_csv(tmp, index=False, columns=FIELDS)
             tmp.replace(d / "results.csv")
-        results[method] = summarise(pd.concat(frames, ignore_index=True))
+        frame = pd.concat(frames, ignore_index=True)
+        results[method] = summarise(frame)
+        results[method]["per_task"] = frame.groupby("task")[["success", "unsafe"]].mean().to_dict("index")
     write(STORE / "summary.json", results)
     print(json.dumps(results, indent=2))
 
@@ -501,8 +516,12 @@ def reserve(args):
         charge = args.gpus * args.wall
         require(args.cap > 0 and args.cap <= 50 and previous + charge <= args.cap * 3600,
                 f"Reference reservation {previous}+{charge} GPU-seconds exceeds cap {args.cap} GPUh")
+        runtime_files = ("runtime/activate.sh", "runtime/offline/sitecustomize.py", "resolved.txt",
+                         "hf-verified.jsonl", "assets-verified.json", "libero-config/config.yaml")
+        hashes = {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
+                  for name in runtime_files if (ROOT / name).is_file()}
         write(args.attempt / "reservation.json",
-              dict(host=socket.gethostname(), code=os.environ["REFERENCE_CODE_PIN"], gpus=args.gpus,
+              dict(runtime_files_sha256=hashes, upstream=PIN, policy=POLICY, host=socket.gethostname(), code=os.environ["REFERENCE_CODE_PIN"], gpus=args.gpus,
                    phase=os.environ["REFERENCE_PHASE"], seeds=args.seeds, wall_seconds=args.wall,
                    max_gpu_seconds=charge, prior_gpu_seconds=previous, cap_gpuh=args.cap,
                    started_utc=float(os.environ["REFERENCE_STARTED"])))
