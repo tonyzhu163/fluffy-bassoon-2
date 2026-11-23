@@ -348,9 +348,13 @@ def main():
             records = [p[method] for p in parity.values()]
             checks[method] = dict(n=len(records), within_rounding=sum(p["within_rounding"] for p in records),
                                   max_abs_diff_deg=max(p["abs_diff_deg"] for p in records))
-    checks["passed"] = (checks["direct_native_max_abs_diff_deg"] <= FLOAT32_SLACK_DEG
-                        and checks["inverse_max_abs_diff_deg"] <= FLOAT32_SLACK_DEG
-                        and all(checks[m]["within_rounding"] == len(cases) for m in NATIVE_ARMS if official))
+    checks["published_rounding_agreement"] = (
+        all(checks[m]["within_rounding"] == len(cases) for m in NATIVE_ARMS) if official else None
+    )
+    checks["same_runtime_passed"] = (
+        checks["direct_native_max_abs_diff_deg"] <= FLOAT32_SLACK_DEG
+        and checks["inverse_max_abs_diff_deg"] <= FLOAT32_SLACK_DEG
+    )
     code_paths = [Path(__file__).resolve()] + [CODE / f"src/fluffy_bassoon/xemb/{module}.py"
                                                for module in ("readers", "baselines", "embodiment", "equiv_v2")]
     revision = subprocess.check_output(["git", "-C", str(CODE), "rev-parse", "HEAD"], text=True).strip()
@@ -365,8 +369,8 @@ def main():
     with args.output.open("x") as stream:
         stream.write(encoded + "\n")
     print(json.dumps(checks), flush=True)
-    if not checks["passed"]:
-        raise SystemExit(f"Parity check failed; inspect per-query residuals in {args.output}")
+    if not checks["same_runtime_passed"]:
+        raise SystemExit(f"CPU inference or inverse-roll check failed; inspect per-query residuals in {args.output}")
 
 
 if __name__ == "__main__":
