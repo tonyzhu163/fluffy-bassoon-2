@@ -4,11 +4,11 @@ Reads archived JSON evidence (never hardcoded numbers) and outputs 300-DPI PNG +
   1. fig1_multiarm_multivla.{png,pdf}: 4-panel Multi-Morphology (UR5e, IIWA, Kinova3) x Multi-VLA (pi0.5, pi0)
      official test live closed-loop success (384 queries = 4,608 live episodes, zero retraining).
   2. fig2_scaling_law.{png,pdf}: Embodiment-Diversity Scaling Law (M in {2,4,7,16,32,64,128} x capacity,
-     3 seeds on locked held-out 6-DoF UR5e OOD) showing exponential sample efficiency & Perceiver capacity anti-scaling.
+     3 seeds on locked held-out 6-DoF UR5e OOD) with a 4x-larger Perceiver comparison.
   3. fig3_horizon_and_so3.{png,pdf}: Left: Zero-probe passive support horizon (5/10/15 controls = 0.25-0.75s);
      Right: Full 3D SO(3) + anisotropic per-axis gains on held-out UR5e (n=96).
   4. fig4_memorization_cliff_matrix.{png,pdf}: Familiar vs. OOD memorization cliff across all 4 benchmarks,
-     contrasting Perceiver-ICBA's -60 to -83 pp cliff against our equivariant stability.
+     3-seed means, contrasting Perceiver-ICBA's familiar-to-OOD drop with SymMeta.
 """
 
 from __future__ import annotations
@@ -151,7 +151,7 @@ def plot_fig1_multiarm_multivla(ev_dir: Path, out_dir: Path, scale_ev_dir: Path 
     handles, labels = axes[0].get_legend_handles_labels()
     fig.legend(handles, labels,
                loc="lower center", ncol=3, bbox_to_anchor=(0.5, -0.05), fontsize=9.2)
-    fig.suptitle("Zero-Shot Cross-Morphology & Cross-VLA Transfer with SymMeta (Trained Only on Panda + Sawyer · 3 Seeds · 6,560 Live Episodes)",
+    fig.suptitle("Zero-Shot Cross-Morphology & Cross-VLA Transfer with SymMeta (Trained Only on Panda + Sawyer · Learned Methods: 3 Seeds × 96 Queries)",
                  fontsize=11.8, fontweight="bold", y=1.03)
     plt.tight_layout()
     for ext in ("png", "pdf"):
@@ -194,9 +194,9 @@ def plot_fig2_scaling_law(ev_dir: Path, out_dir: Path):
     ax1.set_xscale("log", base=2)
     ax1.set_xticks(m_levels)
     ax1.set_xticklabels([str(m) for m in m_levels])
-    ax1.set_xlabel("Training Embodiment Diversity $M$ (Source Panda + Sawyer)")
+    ax1.set_xlabel("Number of Training Shifts $M$ (Source Panda + Sawyer)")
     ax1.set_ylabel("Held-Out 6-DoF UR5e OOD Yaw MAE (° ↓)")
-    ax1.set_title("(a) OOD Rotational Error vs. Embodiment Diversity")
+    ax1.set_title("(a) OOD Rotational Error vs. Training-Shift Diversity")
     ax1.set_ylim(0, 120)
     ax1.grid(True)
 
@@ -204,13 +204,13 @@ def plot_fig2_scaling_law(ev_dir: Path, out_dir: Path):
     ax2.annotate("SymMeta at M=7: 96%\n(scales to 99% at M=128)", xy=(7, 96), xytext=(11, 64),
                  arrowprops=dict(arrowstyle="->", color=PALETTE["ours_v2"], lw=1.2), fontsize=8.1, fontweight="bold", color=PALETTE["ours_v2"],
                  bbox=dict(boxstyle="round,pad=0.25", fc="white", ec=PALETTE["ours_v2"], alpha=0.88))
-    ax2.annotate("4× larger Perceiver:\nanti-scales (≤20% OOD!)", xy=(64, 19), xytext=(11, 2.5),
+    ax2.annotate("4× larger Perceiver:\nno better (≤20% OOD)", xy=(64, 19), xytext=(11, 2.5),
                  arrowprops=dict(arrowstyle="->", color=PALETTE["perceiver_lg"], lw=1.2), fontsize=8.1, fontweight="bold", color=PALETTE["perceiver_lg"],
                  bbox=dict(boxstyle="round,pad=0.25", fc="white", ec=PALETTE["perceiver_lg"], alpha=0.88))
     ax2.set_xscale("log", base=2)
     ax2.set_xticks(m_levels)
     ax2.set_xticklabels([str(m) for m in m_levels])
-    ax2.set_xlabel("Training Embodiment Diversity $M$ (Source Panda + Sawyer)")
+    ax2.set_xlabel("Number of Training Shifts $M$ (Source Panda + Sawyer)")
     ax2.set_ylabel("Held-Out 6-DoF UR5e OOD All-Correct (% ↑)")
     ax2.set_title("(b) Joint Factor Recovery (Yaw ≤20° & Scale & Grip)")
     ax2.set_ylim(-2, 106)
@@ -218,7 +218,7 @@ def plot_fig2_scaling_law(ev_dir: Path, out_dir: Path):
 
     handles, labels = ax1.get_legend_handles_labels()
     fig.legend(handles, labels, loc="lower center", ncol=3, bbox_to_anchor=(0.5, -0.10), fontsize=8.8)
-    fig.suptitle("SymMeta Embodiment-Diversity & Capacity Scaling on Real MuJoCo Trajectories (3 Seeds, Locked UR5e OOD n=64)", fontsize=11.5, fontweight="bold", y=1.02)
+    fig.suptitle("Training-Shift Diversity & Capacity Sweep on MuJoCo Trajectories (3 Seeds, Locked UR5e OOD n=64)", fontsize=11.5, fontweight="bold", y=1.02)
     plt.tight_layout()
     for ext in ("png", "pdf"):
         fig.savefig(out_dir / f"fig2_scaling_law.{ext}")
@@ -289,12 +289,24 @@ def plot_fig3_horizon_and_so3(ev_dir: Path, out_dir: Path):
     plt.close(fig)
 
 
-def plot_fig4_memorization_cliff(ev_dir: Path, out_dir: Path):
+def _three_seed_rate(seed41: dict, ms: dict | None, method: str, regime: str) -> float:
+    """Mean rate over seeds 41-43 (seed 41 from the official panel, 42-43 from the multiseed rerun)."""
+    if ms is None:
+        return 100.0 * seed41["by_regime"][regime]["rates"][method]
+    per_seed = ms["multiseed"][method][regime]["per_seed"]
+    if len(per_seed) == 2:
+        per_seed = [seed41["by_regime"][regime]["rates"][method], *per_seed]
+    return 100.0 * float(np.mean(per_seed))
+
+
+def plot_fig4_memorization_cliff(ev_dir: Path, out_dir: Path, scale_ev_dir: Path | None = None):
+    def _ms(fn):
+        return load_json(scale_ev_dir / fn) if (scale_ev_dir and (scale_ev_dir / fn).exists()) else None
     benches = [
-        ("UR5e ($\\pi_{0.5}$)", load_json(ev_dir / "ur5e-pi05-summary.json")),
-        ("IIWA ($\\pi_{0.5}$)", load_json(ev_dir / "iiwa-pi05-summary.json")),
-        ("Kinova3 ($\\pi_{0.5}$)", load_json(ev_dir / "kinova3-pi05-summary.json")),
-        ("UR5e ($\\pi_0$)", load_json(ev_dir / "ur5e-pi0-summary.json")),
+        ("UR5e ($\\pi_{0.5}$)", load_json(ev_dir / "ur5e-pi05-summary.json"), _ms("multiseed-zeroshot-ur5e-pi05.json")),
+        ("IIWA ($\\pi_{0.5}$)", load_json(ev_dir / "iiwa-pi05-summary.json"), _ms("multiseed-zeroshot-iiwa-pi05.json")),
+        ("Kinova3 ($\\pi_{0.5}$)", load_json(ev_dir / "kinova3-pi05-summary.json"), _ms("multiseed-zeroshot-kinova3-pi05.json")),
+        ("UR5e ($\\pi_0$)", load_json(ev_dir / "ur5e-pi0-summary.json"), _ms("multiseed-zeroshot-ur5e-pi0.json")),
     ]
     x = np.arange(len(benches))
     w = 0.18
@@ -307,17 +319,17 @@ def plot_fig4_memorization_cliff(ev_dir: Path, out_dir: Path):
         ("perceiver_icba_passive", "ood_combined", "Perceiver-ICBA · OOD", PALETTE["perceiver"], 0.55, "///"),
     ]
     for i, (m, reg, lbl, col, alp, hat) in enumerate(groups):
-        vals = [100.0 * d["by_regime"][reg]["rates"][m] for _, d in benches]
+        vals = [_three_seed_rate(d, ms, m, reg) for _, d, ms in benches]
         offs = x + (i - 1.5) * w
         ax.bar(offs, vals, width=w, label=lbl, color=col, alpha=alp, hatch=hat, edgecolor="#222222", linewidth=0.5)
         for xi, v in zip(offs, vals):
             ax.text(xi, v + 1.5, f"{v:.0f}%", ha="center", va="bottom", fontsize=7.8, fontweight="bold" if reg == "ood_combined" else "normal")
 
     ax.set_xticks(x)
-    ax.set_xticklabels([b for b, _ in benches], fontsize=9.5, fontweight="bold")
+    ax.set_xticklabels([b for b, _, _ in benches], fontsize=9.5, fontweight="bold")
     ax.set_ylim(0, 106)
     ax.set_ylabel("Live Frozen VLA Native Success (%)")
-    ax.set_title("Monolithic Memorization Cliff vs. SymMeta Generalization Across 3 Robots & 2 Frozen VLAs")
+    ax.set_title("Familiar vs. OOD Success Across 3 Simulated Arms & 2 Frozen VLAs (mean of 3 seeds)")
     ax.legend(ncol=2, loc="upper right", fontsize=8.5)
     ax.grid(axis="y")
     plt.tight_layout()
@@ -490,7 +502,7 @@ def main():
     plot_fig1_multiarm_multivla(args.evidence_dir, args.out_dir, scale_ev_dir=args.scale_evidence_dir)
     plot_fig2_scaling_law(args.evidence_dir, args.out_dir)
     plot_fig3_horizon_and_so3(args.evidence_dir, args.out_dir)
-    plot_fig4_memorization_cliff(args.evidence_dir, args.out_dir)
+    plot_fig4_memorization_cliff(args.evidence_dir, args.out_dir, scale_ev_dir=args.scale_evidence_dir)
     if (args.evidence_dir / "pro2-stress-ur5e-summary.json").exists():
         plot_fig5_pro2_visual_stress(args.evidence_dir, args.out_dir)
     if args.scale_evidence_dir and (args.scale_evidence_dir / "fewshot-finetune-ur5e-summary.json").exists():

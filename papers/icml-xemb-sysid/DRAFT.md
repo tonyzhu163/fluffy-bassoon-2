@@ -1,6 +1,6 @@
 # SymMeta: A Geometric Inner Loop for Adapting Frozen VLAs Across Robots
 
-*(ICML Working Draft & Extended Abstract — `/Users/mowenjie/sticks-and-stones/papers/icml-xemb-sysid/DRAFT.md`; LaTeX source in `main.tex` + `references.bib`; camera-ready figures in `figures/`)*
+*(ICML Working Draft & Extended Abstract — `papers/icml-xemb-sysid/DRAFT.md`; LaTeX source in `main.tex` + `references.bib`; camera-ready figures in `figures/`)*
 
 ---
 
