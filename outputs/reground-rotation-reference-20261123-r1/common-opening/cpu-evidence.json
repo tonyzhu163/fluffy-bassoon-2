@@ -1,0 +1,89 @@
+{
+  "host": "aibox-r855e239307b-6bfb688cdd-lz2dx",
+  "code": "84b4d980eb85dafae718fe4895ef51d0f1648140",
+  "upstream": "16a98486f560676b9036d1a6d067b9dd51a5917a",
+  "reader": {
+    "archive": "ff2ddf0ab03e6fbe243979556d8d8f2ebb9bc29c",
+    "reader_revision": "fd909227c2013cc58be1ced519b03ea1328199ea",
+    "reader_sha256": "f83b1c0b9ada76c2126f366294785222e121703e02977c66bf530b1fb731b1e5",
+    "weights_sha256": "c12bace5cb391499d6abd7cc5767f94b1519de7d77940efb0cfcb71ca0f686a4",
+    "backend": "cpu",
+    "jax": "0.5.3",
+    "numpy": "1.26.4",
+    "opencv": "5.1.0",
+    "python": "3.11.17",
+    "update_limit": 24
+  },
+  "gpu_hours": 0,
+  "original_filter": {
+    "0/4": [
+      [
+        "10_3",
+        44,
+        0
+      ],
+      [
+        "10_3",
+        45,
+        0
+      ],
+      [
+        "10_3",
+        46,
+        0
+      ],
+      [
+        "10_3",
+        47,
+        0
+      ],
+      [
+        "10_3",
+        48,
+        0
+      ],
+      [
+        "10_3",
+        49,
+        0
+      ]
+    ],
+    "1/15": [
+      [
+        "spatial_0",
+        48,
+        0
+      ]
+    ]
+  },
+  "byte_exact_native_shard_rows": {
+    "base": 16,
+    "symmeta": 16,
+    "reground": 16
+  },
+  "fixture": "deterministic scene and policy, archive reader, native CEM with private synthetic cache",
+  "real_queries_per_batch": {
+    "capture": [
+      0
+    ],
+    "stock": [
+      0,
+      1,
+      2
+    ],
+    "controlled": [
+      1,
+      2
+    ]
+  },
+  "rejected": [
+    "camera",
+    "wrist",
+    "jaw",
+    "eef",
+    "sim",
+    "task",
+    "nonce",
+    "noise"
+  ]
+}

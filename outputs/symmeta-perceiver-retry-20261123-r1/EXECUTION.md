@@ -4,12 +4,14 @@ At 16:23 Shanghai on November 23, Baige accepted `job-am9y13b811bk` for four RTX
 
 The first allocation remained queued because no node had four free GPUs. At 16:33 Shanghai I stopped that specific unstarted job and submitted four single-GPU Distributed Training jobs. Each uses the frozen evaluator, predictions and eight tasks from one panel. The scheduling wrapper is `14dab6c95067fa208a4047951375de2afcb4774b`. In a Linux CPU qualification, the four preparations reproduced the sealed inputs and the combiner preserved every pair in a 1,152-pair fixture. [Panel launcher](fragment/panel.sh) · [Strict combination](fragment/fragment.py) · [Submitted jobs](evidence/native-panel-jobs.jpg)
 
-| Panel | Baige job | Number of matched pairs |
+| Unstarted Pro6K fallback | Baige job | Assigned pairs |
 | --- | --- | ---: |
 | UR5e × π₀.₅ | `job-60xi82krb40p` | 288 |
 | IIWA × π₀.₅ | `job-tvbb9yhfqy4z` | 288 |
 | Kinova3 × π₀.₅ | `job-sg069yja48p2` | 288 |
 | UR5e × π₀ | `job-0jaby7lttjel` | 288 |
+
+At 16:51 Shanghai the Pro6K queue reported zero free GPUs, and all four panel jobs were still queued. The RTX 4090 queue had a schedulable four-card node. Baige started `job-2s6q9a9xe96e` on that node at 16:52. The launch passed the same frozen Pro6K predictions to the same `d568535b` evaluator. Each pair uses one physical GPU for both readers. All four pending Pro6K fallback jobs were stopped before dispatch and wrote no attempt artifacts. The active output directory is `native02g4090/`. [Active allocation and released reservations](evidence/native-4090.jpg)
 
 ## Frozen input
 
@@ -27,4 +29,4 @@ The original-accelerator refit subsequently completed in 350 launcher seconds (0
 
 The training revision was `ba3c41e25575d07d7bd8bbfaae2797e7cf9dc0a9`. The native evaluator revision is `d568535b758f2b97b382f9b3e280376e769b5942`. CPU preparation verified all 384 tape SHA-256 digests and joined the 1,152 prediction rows to the four native query schedules. The immutable predictions have SHA-256 `c8420c2cb7d0cb38e6f0d73b3a20ce47997dbef7657b652d45eaaa8988eb6c0b`. [Frozen predictions](evidence/train02pro/predictions.json) · [CPU preparation](evidence/prepare01pro/contract.json)
 
-Full checkpoint files and raw episode records are kept under `baige-dev:/mowenjie/fluffy-bassoon-2/outputs/symmeta-perceiver-retry-20261123-r1/`. The refit directory is `train02pro/`, the verified input is `prepare01pro/`, and the four native panel attempts write to `fragment-pro01/`.
+Full checkpoint files and raw episode records are kept under `baige-dev:/mowenjie/fluffy-bassoon-2/outputs/symmeta-perceiver-retry-20261123-r1/`. The refit directory is `train02pro/`, the verified input is `prepare01pro/`, and active native episode records are under `native02g4090/pairs/`.

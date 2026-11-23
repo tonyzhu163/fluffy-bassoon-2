@@ -34,6 +34,13 @@ def start_cluster_iqm(rows, metric):
 
 def compare(path):
     cases = pd.DataFrame(json.loads(path.read_text()))
+    if not cases["matched_prefix"].between(1, 10).all():
+        raise ValueError("Every matched episode needs an audited common opening")
+    return summarize_assignments(cases)
+
+
+def summarize_assignments(cases):
+    """Compute released scores on the complete assigned grid, regardless of the pairing analysis."""
     with gzip.open(HERE / "evidence/rotation-jobs.json.gz", "rt") as f:
         jobs = json.load(f)
     planned = {(task, start, rep, j["seed"], noise_seed(start, rep))
@@ -42,8 +49,6 @@ def compare(path):
         cases[col] = pd.to_numeric(cases[col], errors="raise").astype(int)
     if len(cases) != len(planned) or set(cases[KEY].itertuples(index=False, name=None)) != planned:
         raise ValueError("The three-method comparison requires the exact five-seed released test grid")
-    if not cases["matched_prefix"].between(1, 10).all():
-        raise ValueError("Every matched episode needs an audited common opening")
     methods, contrasts = {}, {}
     for method in METHODS:
         rows = cases.rename(columns={method + "_" + metric: metric for metric in ("success", "unsafe")})
