@@ -38,6 +38,7 @@ If `exact_asrun_0` is already near `exact_full_0`, the wrist and EEF input were 
 - One reader seed (41), one seed label, 35 starts per task. The exact arms are deterministic given the start and policy noise.
 - `retry_full` uses a different start for support, as in the paper, and costs one extra reset and 16 unscored controls per query. ReGround's fit uses 10,000 target transitions shared across queries.
 - Supports and scored episodes draw different policy noise, each from the released rule for its start.
+- A simulator worker's earlier resets of a task move that task's fixtures ([prefix audit](../reground-rotation-reference-20261123-r1/prefix-audit/RESULT.md)). Every shard here starts from new workers, and supports reset a separate set of workers, so all seven arms score the same scenes; the summary lists any start whose reset image differs between arms. The recorded streaming run kept one worker across a shard boundary, so six of its drawer scenes differ from these.
 
 ## Run
 
@@ -45,7 +46,7 @@ If `exact_asrun_0` is already near `exact_full_0`, the wrist and EEF input were 
 bash outputs/reground-rotation-decompose-20261123-r1/run.sh <pin> <attempt> <2|4|5 GPUs> <wall seconds> [--arms ...] [--shards ...]
 ```
 
-Each arm's shards go to `decompose-native/<arm>/shards` under the reference runtime root; `<attempt>/decompose-summary.json` holds successes, unsafe counts and per-task counts by arm.
+Each arm's shards go to `decompose-native/<arm>/shards` under the reference runtime root; `<attempt>/decompose-summary.json` holds successes, unsafe counts and per-task counts by arm, for the arms and shards the attempt selected.
 
 [arms.py](arms.py) subclasses the reference run's `MatchedBatch` and reuses its lane (GPU checks, shard locks, staging), its reader process and the released episode loop. `arms.sh` and `run.sh` are `symmeta_adapter.sh` and `stream.sh` with the entry point, store and budget changed, and with the current source ahead of the archived source on `PYTHONPATH` so the wrist rotation in `retarget_action_from_motor` is found. The archived and current `embodiment.py` are otherwise identical.
 

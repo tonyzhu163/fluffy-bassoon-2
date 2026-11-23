@@ -29,7 +29,7 @@ export SYMMETA_EXPECTED_CODE=$pin REFERENCE_STARTED=$(date +%s) REFERENCE_PHASE=
 attempt=$root/decompose-native/attempts/$id
 mkdir -p "$(dirname "$attempt")"
 mkdir "$attempt"
-"$root/env/bin/python" -B "$here/reference.py" reserve --attempt "$attempt" --gpus "$cards" \
+"$root/env/bin/python" -B "$here/../reground-rotation-reference-20261123-r1/reference.py" reserve --attempt "$attempt" --gpus "$cards" \
     --wall "$seconds" --cap "${DECOMPOSE_CAP_GPUH:-14}"
 finish() {
     rc=$? end=$(date +%s)

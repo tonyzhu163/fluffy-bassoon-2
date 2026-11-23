@@ -89,6 +89,7 @@ class ArmBatch(base.MatchedBatch):
                 self.horizons = [SUPPORT_CONTROLS + 1] * len(outs)
             for lane in self.lanes:
                 lane.applied = []
+                lane.scene = base.digest(lane.before["agentview_image"])
         return outs
 
     def predict_chunk(self, observations, tasks, seeds, query):
@@ -124,12 +125,18 @@ def run_job(name, job, ctx, pipe, info, dest):
     arm = ARMS[name]
     upstream = rollout.run_batch
     receipts = []
+    # A worker's earlier resets of a task move that task's fixtures (prefix-audit/RESULT.md). Every shard
+    # starts from new workers and supports reset their own, so all arms score the same scenes.
+    if ctx._pool is not None:
+        ctx._pool.close()
+        ctx._pool = None
+    calibration = rollout.EnvPool(reference.BATCH) if arm["source"] == "support" else None
 
     def batch(vla, pool, eps, _, cell, **kw):
         given, support = None, [None] * len(eps)
         if arm["source"] == "support":
             first = [replace(e, init_id=support_start(e.init_id), video=False) for e in eps]
-            probe = ArmBatch(vla, pool, pipe, arm, support=True)
+            probe = ArmBatch(vla, calibration, pipe, arm, support=True)
             upstream(probe, probe, first, probe, cell, **kw)
             # A support that ended early keeps the nominal interface.
             given = [tuple(lane.updates[-1]["next_adapter"]) if len(lane.updates) == SUPPORT_CONTROLS // CHUNK else base.IDENTITY
@@ -142,16 +149,21 @@ def run_job(name, job, ctx, pipe, info, dest):
         for row, lane, sup in zip(result.rows, bridge.lanes, support):
             require(lane.steps == row["steps"], "Extraneous steps")
             receipts.append(dict(task=row["task"], init_id=row["init_id"], rep=row["rep"], noise_seed=row["noise_seed"],
-                                 scored_controls=lane.steps, applied=lane.applied, queries=lane.queries,
+                                 scored_controls=lane.steps, reset_image_sha256=lane.scene,
+                                 applied=lane.applied, queries=lane.queries,
                                  updates=lane.updates, support=sup))
         return result
 
-    with patch.object(jobs, "job_dir", lambda _: dest), patch.object(build, "make_controller", lambda *a, **kw: None), \
-            patch.object(rollout, "run_batch", batch):
-        jobs.run_eval_job(job, ctx)
+    try:
+        with patch.object(jobs, "job_dir", lambda _: dest), patch.object(build, "make_controller", lambda *a, **kw: None), \
+                patch.object(rollout, "run_batch", batch):
+            jobs.run_eval_job(job, ctx)
+    finally:
+        if calibration is not None:
+            calibration.close()
     write(dest / "calibration.json", receipts)
     manifest = reference.read(dest / "manifest.json")
-    manifest.update(arm=name, arm_config=arm, reader=info, code_revision=os.environ["SYMMETA_CODE_REV"],
+    manifest.update(arm=name, arm_config=arm, new_workers_per_shard=True, reader=info, code_revision=os.environ["SYMMETA_CODE_REV"],
                     arms_sha256=sha256(Path(__file__).read_bytes()).hexdigest(), device=ctx.device,
                     accelerator=os.environ.get("SYMMETA_ACCELERATOR", "cpu"), support_controls=SUPPORT_CONTROLS)
     write(dest / "manifest.json", manifest)
@@ -213,23 +225,33 @@ def lane(args):
 
 
 def summarize(args):
-    out = {}
+    """Counts for the selected arms and shards only, and whether the arms scored the same reset scenes."""
+    out, scenes = {}, {}
     for name in args.arms:
-        rows = []
+        rows, shards, expected = [], [], 0
         for job in units(name):
+            if args.shards is not None and job["shard"] not in args.shards:
+                continue
+            expected += len(job["episodes"])
             dest = STORE / name / "shards" / reference.label(job)
             if not dest.exists():
                 continue
             validate(name, dest, job)
+            shards.append(job["shard"])
             rows += list(csv.DictReader((dest / "results.csv").read_text().splitlines()))
+            for rec in reference.read(dest / "calibration.json"):
+                scenes.setdefault((rec["task"], rec["init_id"]), set()).add(rec["reset_image_sha256"])
         by_task = {}
         for r in rows:
             by_task.setdefault(r["task"], []).append(int(r["success"]))
-        out[name] = dict(config=ARMS[name], episodes=len(rows), successes=sum(int(r["success"]) for r in rows),
+        out[name] = dict(config=ARMS[name], shards=shards, episodes=len(rows), selected_episodes=expected,
+                         successes=sum(int(r["success"]) for r in rows),
                          unsafe=sum(int(r["unsafe"]) for r in rows),
                          by_task={task: [sum(v), len(v)] for task, v in sorted(by_task.items())})
-    write(args.attempt / "decompose-summary.json", out)
-    print(json.dumps({k: [v["successes"], v["episodes"]] for k, v in out.items()}, indent=1))
+    differing = sorted(key for key, seen in scenes.items() if len(seen) > 1)
+    write(args.attempt / "decompose-summary.json", dict(arms=out, starts_with_differing_reset_images=differing))
+    print(json.dumps({k: [v["successes"], v["episodes"], v["selected_episodes"]] for k, v in out.items()}, indent=1))
+    print(f"starts whose reset image differs between arms: {len(differing)}")
 
 
 def main():
