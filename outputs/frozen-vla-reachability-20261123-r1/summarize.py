@@ -24,7 +24,7 @@ def flags(fit, phase):
 
 def write_csv(out, name, rows):
     with (out / name).open("w") as f:
-        w = csv.DictWriter(f, fieldnames=rows[0].keys())
+        w = csv.DictWriter(f, fieldnames=rows[0].keys(), lineterminator="\n")
         w.writeheader()
         w.writerows(rows)
 
