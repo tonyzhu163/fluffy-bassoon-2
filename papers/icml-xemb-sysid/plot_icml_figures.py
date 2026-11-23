@@ -166,7 +166,7 @@ def plot_fig3_horizon_and_so3(ev_dir: Path, out_dir: Path):
         ("equiv_flow_homog", "EquivFlow", PALETTE["ours_homog"], "s", "-."),
         ("analytic_visual_hs", "Brightness-translation", PALETTE["brightness"], "D", "-"),
         ("dense_flow_dis", "DIS + Procrustes", PALETTE["dis"], "P", ":"),
-        ("perceiver_icba", "Local Perceiver", PALETTE["perceiver"], "v", "-"),
+        ("perceiver_icba", "Seven-shift Perceiver", PALETTE["perceiver"], "v", "-"),
     ]
     for key, lbl, col, mk, ls in h_series:
         ys = [hor[str(c)][key]["ood_combined"]["yaw_mae_deg"] for c in ctrls]
@@ -237,8 +237,8 @@ def plot_fig4_memorization_cliff(ev_dir: Path, out_dir: Path, scale_ev_dir: Path
     groups = [
         ("ours_equiv_v2_passive", "familiar", "SymMeta · Familiar", PALETTE["ours_v2"], 1.0, None),
         ("ours_equiv_v2_passive", "ood_combined", "SymMeta · OOD", PALETTE["ours_v2"], 0.55, "///"),
-        ("perceiver_icba_passive", "familiar", "Local Perceiver · Familiar", PALETTE["perceiver"], 1.0, None),
-        ("perceiver_icba_passive", "ood_combined", "Local Perceiver · OOD", PALETTE["perceiver"], 0.55, "///"),
+        ("perceiver_icba_passive", "familiar", "Seven-shift Perceiver · Familiar", PALETTE["perceiver"], 1.0, None),
+        ("perceiver_icba_passive", "ood_combined", "Seven-shift Perceiver · OOD", PALETTE["perceiver"], 0.55, "///"),
     ]
     for i, (m, reg, lbl, col, alp, hat) in enumerate(groups):
         vals = [_three_seed_rate(d, ms, m, reg) for _, d, ms in benches]

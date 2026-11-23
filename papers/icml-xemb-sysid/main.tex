@@ -42,7 +42,7 @@
 \printAffiliationsAndNotice{}
 
 \begin{abstract}
-Can a frozen robot policy use the first few movements of a task to calibrate a second attempt? We take eight held-out LIBERO-Pro2.0 task identities in their base scenes and impose twelve command settings per task, varying planar rotation, movement gain and gripper polarity. SymMeta learns from labeled Panda and Sawyer traces to align motion seen by a fixed camera with issued commands. After 15 uncorrected controls (0.75\,s), a reset starts a new layout of the same task. On the second attempt, frozen $\pi_{0.5}$ succeeds on 78.1\% of queries on UR5e, 78.5\% on IIWA and 66.3\% on Kinova3, averaged over three reader seeds. With the same seed-41 reader on UR5e, calibration during one uninterrupted attempt succeeds on 20/96 queries, versus 76/96 on a calibrated retry and 8/96 on an uncorrected retry. On 32 single attempts from original LIBERO-PRO with the native Panda command interface, applying the reader reduced success from 19/32 to 3/32. A continuously trained Perceiver without an explicit alignment solver also recovered yaw on the 64 held-out UR5e supports ($5.58^\circ$ mean error, versus $6.03^\circ$ for continuously trained SymMeta).
+Can a frozen robot policy use its first few movements to calibrate a second attempt? We impose twelve settings of planar rotation, gain and gripper polarity on eight held-out LIBERO-Pro2.0 tasks in their base scenes. Trained on Panda and Sawyer, SymMeta reads fixed-camera images, issued commands and proprioception over three five-control chunks (0.75\,s). After a reset to a new layout, frozen $\pi_{0.5}$ succeeds on 78.1\% of queries on UR5e, 78.5\% on IIWA and 66.3\% on Kinova3, averaged over three reader seeds. On UR5e the seed-41 reader succeeds on 20/96 uninterrupted attempts versus 76/96 calibrated retries and 8/96 uncorrected retries. On the 64 out-of-distribution UR5e traces, a Perceiver trained with continuous labels and a tuned schedule estimates yaw directly with $5.58^\circ$ mean absolute error, compared with $6.03^\circ$ for continuously trained SymMeta and $7.04^\circ$ for seven-shift SymMeta. Native retry success for this Perceiver remains unmeasured. On 32 single attempts from original LIBERO-PRO with the native Panda command interface, applying streaming SymMeta reduced success from 19/32 to 3/32.
 \end{abstract}
 
 \section{Introduction}
@@ -166,7 +166,7 @@ We specify the three interface factors and their inverse. We train the reader fr
 
 The single-attempt test starts uncorrected on layout 13 and updates from its own motion. Its first correction can take effect after ten controls. The seed-matched calibrated retry uses the same seed-41 checkpoint, query reset and policy-noise bank. Each protocol contributes one scored episode per query.
 
-\paragraph{Statistics.} Learned methods (SymMeta, Perceiver) are trained with 3 seeds (41--43) and evaluated on all 96 queries per seed. The three seeds share the same 96 queries and support traces, so the reported mean $\pm$ standard deviation reflects reader-training variance only, and the independent units are the 8 tasks. Deterministic baselines are run once. We bootstrap paired differences by resampling eight whole tasks. For three-seed contrasts we first average the paired differences for each query. Appendix~\ref{sec:paired} reports per-seed gains and paired sign-flip tests at the query and task levels.
+\paragraph{Statistics.} For the four native retry panels, we train seven-shift SymMeta and Perceiver readers with three seeds (41--43) and evaluate each checkpoint on all 96 queries. The three seeds share the same 96 queries and support traces, so the reported mean $\pm$ standard deviation reflects reader-training variance only, and the independent units are the 8 tasks. Deterministic baselines are run once. We bootstrap paired differences by resampling eight whole tasks. For three-seed contrasts we first average the paired differences for each query. Appendix~\ref{sec:paired} reports per-seed gains and paired sign-flip tests at the query and task levels.
 
 \paragraph{Baseline implementations.} The brightness-translation reader fits one global translation per frame pair by weighted least squares on brightness constancy, weighting pixels by absolute temporal intensity change. It computes no dense flow field. Both this reader and the DIS comparator project image motion to planar motion using nominal Panda and Sawyer active probes. Broyden updates its Jacobian on the target probe. The passive brightness-translation and learned readers share target traces, but differ in source supervision and in their gain and gripper estimators. Their native success difference compares the complete adapters. Our Perceiver proxy predicts the transform from the same support as SymMeta. Our affine proxy fits a ridge-regularized map from issued planar commands to local displacements and projects it onto a scaled rotation. It uses only the passive trace.
 
@@ -197,7 +197,7 @@ The single-attempt test starts uncorrected on layout 13 and updates from its own
 \begin{figure*}[t]
   \centering
   \includegraphics[width=0.98\textwidth]{figures/fig4_memorization_cliff_matrix.pdf}
-  \caption{\textbf{Familiar vs.\ OOD success (3-seed means).} The original seven-shift Perceiver reaches 59.4--86.5\% on familiar settings and 2.1--5.7\% on OOD settings. Each arm--policy pair has 32 familiar and 64 OOD queries.}
+  \caption{\textbf{Native retry success for the original seven-shift checkpoints.} The historical Perceiver baseline succeeds on 59.4--86.5\% of familiar queries and 2.1--5.7\% of OOD queries across four arm--policy pairs (32 familiar and 64 OOD queries per seed, three-seed means). Table~\ref{tab:recorded} compares readers offline on the recorded UR5e traces.}
   \label{fig:cliff}
 \end{figure*}
 
@@ -236,26 +236,39 @@ We fit a linear or MLP action adapter to $K\in\{1,3,10\}$ successful demonstrati
   \end{tabular}}
 \end{table}
 
-\subsection{Training-Shift Diversity and Capacity}
+\subsection{Identifying Held-Out Command Shifts}
 \label{sec:scaling}
 
-Do learned encoders fail only for lack of training diversity or capacity? We collect 1,466 MuJoCo Attempt-1 trajectories on Panda and Sawyer covering up to 128 sampled interface transforms. We train five models at $M \in \{2, 4, 7, 16, 32, 64, 128\}$ training transforms with 3 seeds each (105 models). We evaluate each model offline on the 64 recorded UR5e OOD support traces. Table~\ref{tab:scaling} reports how well each model recovers the transform, not task success.
+The seven-shift SymMeta checkpoints estimate yaw by aligning visual motion to issued commands. Can a Perceiver learn yaw directly from the same three chunks? We evaluate both readers offline on recorded UR5e supports (Table~\ref{tab:recorded}). The Perceiver trained with continuous labels and a tuned schedule has lower OOD yaw error than seven-shift SymMeta in each seed. Their mean planar operator errors on all 96 supports are 0.146 and 0.154, respectively.
 
-\begin{figure*}[t]
+\begin{table*}[t]
   \centering
-  \includegraphics[width=0.98\textwidth]{figures/fig2_scaling_law.pdf}
-  \caption{\textbf{Training-shift diversity and capacity sweep (5 models $\times$ 7 values of $M$ $\times$ 3 seeds; UR5e OOD queries).} Bands show one standard deviation across reader seeds. SymMeta reaches $7.9^\circ$ (96\% joint recovery) at $M{=}7$ and $5.7^\circ$ (99\%) at $M{=}128$. Under the schedule used in this sweep, non-equivariant models stay at or below 45\% joint recovery.}
-  \label{fig:scaling}
-\end{figure*}
+  \caption{\textbf{Offline identification on the recorded UR5e traces.} Yaw MAE uses the 64 supports classified as compositional or continuous-angle OOD relative to the seven training shifts. Planar operator error uses all 96 supports, including the 32 familiar ones. For true map $A$ and estimated map $\hat A$, this error is $\lVert A\hat A^{-1}-I\rVert_F/\sqrt{2}$. Both errors are lower for more accurate estimates. SD is across reader seeds.}
+  \label{tab:recorded}
+  \small
+  \begin{tabular}{llrrrrr}
+    \toprule
+    & & \multicolumn{4}{c}{Yaw MAE ($^\circ$), OOD 64} & Operator error \\
+    \cmidrule(lr){3-6}
+    Reader & Training condition & Seed 41 & Seed 42 & Seed 43 & Mean $\pm$ SD & All 96, mean $\pm$ SD \\
+    \midrule
+    Perceiver & Seven shifts (historical baseline) & 97.08 & 92.34 & 97.48 & $95.63\pm2.33$ & $0.9665\pm0.0225$ \\
+    Perceiver & Continuous labels, sweep schedule & 78.75 & 112.80 & 99.02 & $96.86\pm13.98$ & $1.3799\pm0.1102$ \\
+    Perceiver & Continuous labels, tuned schedule & 5.42 & 5.83 & 5.48 & $5.58\pm0.18$ & $0.1461\pm0.0045$ \\
+    SymMeta & Seven shifts (retry checkpoints) & 6.82 & 7.00 & 7.29 & $7.04\pm0.19$ & $0.1542\pm0.0022$ \\
+    SymMeta & Continuous labels, sweep schedule & 6.45 & 6.07 & 5.55 & $6.03\pm0.37$ & $0.1467\pm0.0041$ \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
 
-Three patterns hold across the sweep. (1) Once gain and gripper variation enter at $M{=}7$, SymMeta recovers all factors on 96\% of OOD queries, and its yaw error keeps falling slowly up to $M{=}128$. (2) With 18$\times$ more training transforms ($M{=}128$ vs.\ $7$), the non-equivariant ablation and the w192 Perceiver still recover at most 45\% of OOD queries. The w192 Perceiver is not monotone in $M$, and its seed bands are wide. (3) The larger w384 Perceiver is never better than w192 from $M{=}16$ upward, and it has higher yaw error at every $M$. At $M{=}2$ its joint recovery is marginally higher (5\% vs.\ 1\%), and at $M{=}7$ the two tie.
+For continuous-label training we re-express source commands and local displacements under sampled interfaces while retaining the recorded images. The two continuous-label Perceivers use the same architecture and see the same relabeled minibatches for 2,500 updates. Lowering the peak learning rate from $1.5\times10^{-3}$ to $3\times10^{-4}$ and adding 200 warmup updates together reduce yaw MAE from $96.86^\circ$ to $5.58^\circ$. The comparison measures the combined effect of these two changes. Training on the original seven shifts with the tuned schedule and measuring the tuned Perceiver's native retry success on the four arm--policy panels remain open.
 
-\paragraph{A direct reader can recover unseen yaw.} On the same 64 recorded OOD UR5e supports, continuously trained SymMeta scored $6.03^\circ$ mean yaw error across three seeds. A Perceiver directly predicting the factors scored $5.58^\circ$ ($5.42,5.83,5.48^\circ$ by seed). With the same continuous labels, source traces, architecture, minibatch sampling and 2,500 updates, the original scaling-sweep schedule gave $96.86^\circ$. The tuned schedule lowered the peak learning rate from $1.5\!\times\!10^{-3}$ to $3\!\times\!10^{-4}$ and added 200 warmup updates. Accurate yaw recovery on these supports is therefore possible without the geometric solver. The historical seven-shift SymMeta checkpoints scored $7.04^\circ$. The tuned Perceiver's native retry success remains open.
+In the discrete training-shift sweep, five models trained on subsets of 1,466 Panda and Sawyer traces at seven levels of diversity ($M{=}2$ to 128, three seeds each). Under the sweep schedule, SymMeta recovers all three factors on 96\% of OOD supports at $M{=}7$ and 99\% at $M{=}128$. The width-192 Perceiver reaches at most 45\% joint recovery and width 384 at most 20\% (Appendix Fig.~\ref{fig:scaling} and Table~\ref{tab:scaling}). On four additional in-family relabelings per UR5e support, mean operator errors are 0.149 for the seven-shift SymMeta reader, 0.152 for ridge using the same reader and 0.150 for the tuned Perceiver.
 
 \subsection{Support Length and 3D Rotations}
 
 \paragraph{Support length (Fig.~\ref{fig:horizon_so3}A).}
-On the UR5e OOD queries (3 seeds), SymMeta's yaw error is $12.7^\circ$ after 5 controls (0.25\,s), $7.4^\circ$ after 10, and $7.0^\circ$ after 15. With 15 controls, brightness-translation reaches $12.3^\circ$, DIS+Procrustes $24.1^\circ$, and the Perceiver baseline $95.6^\circ$. Removing the vertical-parallax correction raises SymMeta's error from $7.0^\circ$ to $12.1^\circ$.
+On the UR5e OOD queries (3 seeds), seven-shift SymMeta's yaw error is $12.7^\circ$ after 5 controls (0.25\,s), $7.4^\circ$ after 10, and $7.0^\circ$ after 15. With 15 controls, brightness-translation reaches $12.3^\circ$, DIS+Procrustes $24.1^\circ$, and the historical seven-shift Perceiver $95.6^\circ$. Removing the vertical-parallax correction raises SymMeta's error from $7.0^\circ$ to $12.1^\circ$.
 
 \paragraph{Full 3D rotations with per-axis gains (Fig.~\ref{fig:horizon_so3}B).}
 \label{sec:so3}
@@ -356,12 +369,12 @@ This paper presents work whose goal is to advance the field of machine learning 
 
 \begin{table}[!ht]
   \centering
-  \caption{Controls for the calibrated retry. The nominal VLA runs once on each of eight tasks. The remaining columns use the imposed settings. The local Perceiver is summarized over seeds 41--43. Gain is the seed-average SymMeta success rate minus brightness-translation, with the smallest seed gain in parentheses. The uncorrected retry had zero OOD successes on every panel.}
+  \caption{Native task success on calibrated retries. The nominal VLA runs once on each of eight tasks. The remaining columns use the imposed settings. The historical seven-shift Perceiver columns give the mean and SD across seeds 41--43. Gain is the seed-average SymMeta success rate minus brightness-translation, with the smallest seed gain in parentheses. The uncorrected retry had zero OOD successes on every panel.}
   \label{tab:comparators}
   \small
   \begin{tabular}{lrrrrr}
     \toprule
-    & \shortstack[r]{Nominal VLA\\(successes / 8)} & \shortstack[r]{Brightness-translation\\(all 96, \%)} & \multicolumn{2}{c}{Local Perceiver (\%)} & \shortstack[r]{SymMeta gain\\(pp)} \\
+    & \shortstack[r]{Nominal VLA\\(successes / 8)} & \shortstack[r]{Brightness-translation\\(all 96, \%)} & \multicolumn{2}{c}{Seven-shift Perceiver (\%)} & \shortstack[r]{SymMeta gain\\(pp)} \\
     \cmidrule(lr){4-5}
     Arm (policy) & & & All 96 & OOD 64 & Mean (min) \\
     \midrule
@@ -383,9 +396,15 @@ This paper presents work whose goal is to advance the field of machine learning 
 \clearpage
 \section{Offline scaling and additional simulation results}
 \label{sec:extra}
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=0.9\textwidth]{figures/fig2_scaling_law.pdf}
+  \caption{\textbf{Offline identification under the discrete training-shift sweep.} Five models share the sweep schedule, with three seeds at each of seven values of $M$. Bands show one standard deviation across seeds on the 64 recorded UR5e OOD supports.}
+  \label{fig:scaling}
+\end{figure}
 \begin{table}[!ht]
   \centering
-  \caption{\textbf{Training-shift diversity and capacity sweep on UR5e OOD queries ($n{=}64$, 3 seeds per cell).} Each cell gives yaw MAE ($^\circ$, lower is better) and joint factor recovery (yaw within $20^\circ$, gain and gripper sign correct; higher is better). For $M \le 4$ only yaw varies, so joint recovery is near zero for every model by construction.}
+  \caption{\textbf{Discrete training-shift sweep on UR5e OOD supports ($n{=}64$, 3 seeds per cell).} Each cell gives yaw MAE ($^\circ$) and the percentage meeting all three identification criteria (yaw error $\leq20^\circ$, absolute log-gain error $\leq0.25$, correct gripper sign). For $M \le 4$ only yaw varies in training.}
   \label{tab:scaling}
   \footnotesize
   \setlength{\tabcolsep}{4pt}
@@ -466,11 +485,11 @@ Familiar & 32 & 24 & 23 & 3 & 2 \\
   +(\widehat{\log g}-\log g)^2
   +\operatorname{BCEWithLogits}(\hat h,\mathbf{1}[s>0]).
 \]
-All three losses have unit weight. For each checkpoint we sample 64 traces uniformly with replacement per update. We use AdamW for 3,500 updates with gradient-norm clipping at 1, weight decay $10^{-4}$ and cosine learning-rate decay from $10^{-3}$ to $5\times10^{-5}$. The headline Perceiver uses the same training data, loss and schedule.
+All three losses have unit weight. For each checkpoint we sample 64 traces uniformly with replacement per update. We use AdamW for 3,500 updates with gradient-norm clipping at 1, weight decay $10^{-4}$ and cosine learning-rate decay from $10^{-3}$ to $5\times10^{-5}$. The historical seven-shift Perceiver uses the same training data, loss and schedule.
 
 \paragraph{Inputs and architecture.} The visual encoder processes $64\times64$ image pairs. Its nine channels are horizontal and vertical DIS flow, flow magnitude, signed mean-intensity change, RMS RGB change, the two gradients of temporally averaged intensity, and two pixel coordinates. Three $3\times3$ stride-two convolutions have 48, 96 and 96 channels, with a two-convolution residual block between stages two and three. Two spatial softmax pools produce 192 features, projected to 96 with SiLU activations in the encoder. A $96$--$192$--$96$--$5$ MLP predicts planar motion, a confidence logit and two parallax coefficients. The yaw loss reaches all five outputs through the alignment. Confidence is $\operatorname{softplus}(\ell_k)+10^{-4}$ on valid chunks. The vertical projection combines learned global and chunk-specific coefficients and multiplies local vertical motion in centimetres. Only the product of chunk weight and motion vector enters the yaw fit. Their individual magnitudes therefore lack a separate interpretation as calibrated reliability or speed. A $5$--$64$--$64$--$2$ gain head uses signed command and displacement, their magnitudes and a stabilized log-magnitude ratio. A $4$--$48$--$48$--$2$ gripper head uses gripper command, jaw change, final width and negative command times width change. Each head predicts a value and its pooling weight.
 
-\paragraph{Perceiver capacity.} The headline model has 2,122,950 parameters, eight latents, 32 positional slots and attention width 192. The width-192 scaling model uses 24 slots and has 2,121,414 parameters. The width-384 model has 11,274,374 parameters, 16 latents, five self-attention blocks and eight heads. The larger configuration has 5.31 times as many parameters as the smaller scaling model.
+\paragraph{Perceiver capacity.} The seven-shift retry baseline has 2,122,950 parameters, eight latents, 32 positional slots and attention width 192. The width-192 scaling model uses 24 slots and has 2,121,414 parameters. The width-384 model has 11,274,374 parameters, 16 latents, five self-attention blocks and eight heads. The larger configuration has 5.31 times as many parameters as the smaller scaling model.
 
 \paragraph{Three-dimensional reader.} A separate seed-41 reader trains on 960 active probes from the two source arms, 24 tasks, two initial states and ten transforms. Six signed-axis bursts supply five controls each. A $96$--$128$--$64$--$4$ head outputs a three-vector and a confidence logit per chunk. This branch uses the visual vector directly and bypasses the planar vertical-motion correction. Estimated per-axis gains, clipped to $[0.25,4]$, rescale the commands before weighted SVD alignment. Its loss adds $\|\hat R-R\|_F^2/4$, mean squared log-gain error across axes and polarity cross-entropy. Training uses 3,000 AdamW updates, batch size 64 and cosine decay from 0.0015 to 0.000075 with the planar clipping and weight decay.
 
