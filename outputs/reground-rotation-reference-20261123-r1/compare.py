@@ -6,12 +6,30 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-from reground.eval.stats import summarise
+from reground.eval.stats import iqm, summarise
 from reground.utils import noise_seed
 
 HERE = Path(__file__).resolve().parent
 METHODS = ("base", "reground", "symmeta")
 KEY = ["task", "init_id", "rep", "adapt_seed", "noise_seed"]
+
+
+def start_cluster_iqm(rows, metric):
+    """Resample starts within task, keeping the five results for each start together."""
+    rng = np.random.default_rng(20261123)
+    draws = []
+    observed = []
+    for _, task_rows in rows.groupby("task", sort=True):
+        starts = task_rows.pivot(index="init_id", columns="adapt_seed", values=metric).to_numpy()
+        if starts.shape != (35, 5) or not np.isfinite(starts).all():
+            raise ValueError("Incomplete task-by-start panel")
+        indices = rng.integers(len(starts), size=(10000, len(starts)))
+        draws.append(starts[indices].mean(axis=1))
+        observed.extend(starts.mean(axis=0))
+    scores = np.sort(np.concatenate(draws, axis=1), axis=1)
+    trim = scores.shape[1] // 4
+    boots = scores[:, trim:-trim].mean(axis=1)
+    return float(iqm(observed)), np.percentile(boots, [2.5, 97.5]).tolist()
 
 
 def compare(path):
@@ -32,6 +50,11 @@ def compare(path):
         if not rows[["success", "unsafe"]].isin([0, 1]).all().all():
             raise ValueError(f"Invalid outcome in {method}")
         result = summarise(rows)
+        for metric in ("success", "unsafe"):
+            estimate, interval = start_cluster_iqm(rows, metric)
+            if not np.isclose(estimate, result[metric], rtol=0, atol=1e-14):
+                raise ValueError(f"Point estimate differs from released IQM for {method} {metric}")
+            result[metric + "_start_cluster_ci95"] = interval
         result["per_task"] = rows.groupby("task")[["success", "unsafe"]].mean().to_dict("index")
         disagreement = rows.groupby(["task", "init_id"])[["success", "unsafe"]].nunique().gt(1)
         result["starts_with_variation_across_seeds"] = disagreement.sum().to_dict()

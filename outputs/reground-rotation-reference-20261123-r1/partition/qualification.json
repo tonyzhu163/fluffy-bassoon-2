@@ -1,0 +1,141 @@
+{
+  "upstream": "16a98486f560676b9036d1a6d067b9dd51a5917a",
+  "policy": "7152f13e34c6c115d808aea0e5d08aca74eac14b",
+  "reference": "23a6641562a4d833837f27ab0535a20ad94e8ec8",
+  "platform": "Linux-5.15.0-151-generic-x86_64-with-glibc2.35",
+  "python": "3.12.15",
+  "gpu_hours": 0,
+  "plan": {
+    "collect": {
+      "native_jobs": 250,
+      "no_duplicates": true,
+      "seed_ranges": [
+        [
+          0
+        ],
+        [
+          1,
+          2,
+          3,
+          4
+        ]
+      ],
+      "shard_ranges": [
+        [
+          0,
+          17
+        ],
+        [
+          17,
+          25
+        ]
+      ],
+      "lanes_per_assignment": 3
+    },
+    "babble": {
+      "native_jobs": 500,
+      "no_duplicates": true,
+      "seed_ranges": [
+        [
+          0
+        ],
+        [
+          1,
+          2,
+          3,
+          4
+        ]
+      ],
+      "shard_ranges": [
+        [
+          0,
+          33
+        ],
+        [
+          33,
+          50
+        ]
+      ],
+      "lanes_per_assignment": 3
+    }
+  },
+  "collect": [
+    {
+      "unit": "seed0/none/0/collect/shard000",
+      "npz_sha256": "47d08d629fa9606ef6e1d06fe29a1798ae841389ee651036fc1b966cf9df2ae3",
+      "transitions": 4944,
+      "episodes": 20,
+      "replayed_batches": 1
+    },
+    {
+      "unit": "seed3/none/0/collect/shard000",
+      "npz_sha256": "d6a8dcdc26ed8b0734f6aa701a6ee57a4404b5792708281416d5d79f9db7e3fd",
+      "transitions": 4090,
+      "episodes": 16,
+      "replayed_batches": 1
+    },
+    {
+      "unit": "seed0/rot_z/90/collect/shard000",
+      "npz_sha256": "47d08d629fa9606ef6e1d06fe29a1798ae841389ee651036fc1b966cf9df2ae3",
+      "transitions": 4944,
+      "episodes": 20,
+      "replayed_batches": 1
+    },
+    {
+      "unit": "seed3/rot_z/90/collect/shard000",
+      "npz_sha256": "d6a8dcdc26ed8b0734f6aa701a6ee57a4404b5792708281416d5d79f9db7e3fd",
+      "transitions": 4090,
+      "episodes": 16,
+      "replayed_batches": 1
+    },
+    {
+      "unit": "seed0/none/0/collect/shard024",
+      "npz_sha256": "479206df923c95369eeebc0eededb801c3d351d5deada8fd4e2c1d35e1887104",
+      "transitions": 5020,
+      "episodes": 20,
+      "replayed_batches": 1
+    },
+    {
+      "unit": "seed3/none/0/collect/shard024",
+      "npz_sha256": "077294273874d099218d41c8d47c8b1fd80401e8c3e82ff18ee6f4bba05cf90c",
+      "transitions": 4850,
+      "episodes": 20,
+      "replayed_batches": 1
+    },
+    {
+      "unit": "seed0/rot_z/90/collect/shard024",
+      "npz_sha256": "479206df923c95369eeebc0eededb801c3d351d5deada8fd4e2c1d35e1887104",
+      "transitions": 5020,
+      "episodes": 20,
+      "replayed_batches": 1
+    },
+    {
+      "unit": "seed3/rot_z/90/collect/shard024",
+      "npz_sha256": "077294273874d099218d41c8d47c8b1fd80401e8c3e82ff18ee6f4bba05cf90c",
+      "transitions": 4850,
+      "episodes": 20,
+      "replayed_batches": 1
+    }
+  ],
+  "budget": {
+    "prior_open": 3200,
+    "requested": 600,
+    "limit": 3600,
+    "rejected": true,
+    "prior_closed": 2800,
+    "max_charge": 600,
+    "admitted": true
+  },
+  "batch_race": {
+    "competing_batch_markers": [
+      1,
+      2
+    ],
+    "consumed_by_both": 1,
+    "retained_batch_sha256": "a189e15c5438e0a2b8c28298ea189c60b3b8d62d3bd55741f05d4991f0e8c058"
+  },
+  "original_claim_contended_then_reacquired": true,
+  "canonical_lock_inode_unchanged": true,
+  "final_skip_kept_inode_times": true,
+  "interrupted_pair_recovered": true
+}

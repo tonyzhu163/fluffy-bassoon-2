@@ -1,0 +1,77 @@
+{
+  "revision": "ba3c41e25575d07d7bd8bbfaae2797e7cf9dc0a9",
+  "cpu_qualification": false,
+  "hostname": "job-v9luygbnvwq2-master-0",
+  "devices": [
+    "cuda:0"
+  ],
+  "versions": {
+    "jax": "0.5.3",
+    "jaxlib": "0.5.3",
+    "optax": "0.2.4",
+    "flax": "0.10.2",
+    "numpy": "1.26.4"
+  },
+  "model": "perceiver_icba_dis",
+  "mode": "passive_attempt1",
+  "config": {
+    "model_type": "perceiver_icba",
+    "visual_mode": "dis_lumaflow",
+    "max_chunks": 32,
+    "cnn_width": 96,
+    "mlp_width": 192,
+    "use_dz_parallax": true,
+    "perceiver_latents": 8,
+    "perceiver_width": 192,
+    "perceiver_layers": 3,
+    "perceiver_heads": 4
+  },
+  "seeds": [
+    41,
+    42,
+    43
+  ],
+  "batch_size": 64,
+  "actual_updates_per_seed": 3500,
+  "schedule_steps": 3500,
+  "schedule_lr": {
+    "0": 0.0,
+    "1": 1.500011421740055e-06,
+    "199": 0.00029850000282749534,
+    "200": 0.0003000000142492354,
+    "3499": 1.5000068742665462e-05,
+    "3500": 1.500000053056283e-05
+  },
+  "source": {
+    "archive": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu01/archive/archive.json",
+    "archive_sha256": "37f062958cb63b962ceefb760f0592fdb120da966369ee308b509e2d82449076",
+    "ordered_source_sha256": "b3d0de8949ba43bfe7da57b644656da456d0fe45a85c77e9e43234b4a05612f0",
+    "source_arms": {
+      "Panda": 672,
+      "Sawyer": 672
+    },
+    "source_shifts": {
+      "nom": 192,
+      "yaw90": 192,
+      "yaw180": 192,
+      "yawm90": 192,
+      "scale_lo": 192,
+      "scale_hi": 192,
+      "grip_inv": 192
+    },
+    "n_dev": 96,
+    "nominal_gain": 0.054141017027535904
+  },
+  "test_panel": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live",
+  "ordered_test_sha256": "8729fa68343e2a7a0cc6471ab25e7c707555a866e682a3dc999079a7b9dc3554",
+  "bootstrap": {
+    "unit": "suite/task_id",
+    "fixed_paired_seeds": [
+      41,
+      42,
+      43
+    ],
+    "draws": 20000,
+    "seed": 20261123
+  }
+}

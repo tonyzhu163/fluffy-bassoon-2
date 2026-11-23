@@ -243,7 +243,7 @@ The seven-shift SymMeta checkpoints estimate yaw by aligning visual motion to is
 
 \begin{table*}[t]
   \centering
-  \caption{\textbf{Offline identification on the recorded UR5e traces.} Yaw MAE uses the 64 supports classified as compositional or continuous-angle OOD relative to the seven training shifts. Planar operator error uses all 96 supports, including the 32 familiar ones. For true map $A$ and estimated map $\hat A$, this error is $\lVert A\hat A^{-1}-I\rVert_F/\sqrt{2}$. Both errors are lower for more accurate estimates. SD is across reader seeds.}
+  \caption{\textbf{Offline identification on the recorded UR5e traces.} Yaw MAE uses the 64 supports classified as compositional or continuous-angle OOD relative to the seven training shifts. Planar operator error uses all 96 supports, including the 32 familiar ones. For true map $A$ and estimated map $\hat A$, this error is $\lVert A\hat A^{-1}-I\rVert_F/\sqrt{2}$. Both errors are lower for more accurate estimates. SD is the population standard deviation of the three seed means (divisor 3).}
   \label{tab:recorded}
   \small
   \begin{tabular}{llrrrrr}
@@ -253,6 +253,7 @@ The seven-shift SymMeta checkpoints estimate yaw by aligning visual motion to is
     Reader & Training condition & Seed 41 & Seed 42 & Seed 43 & Mean $\pm$ SD & All 96, mean $\pm$ SD \\
     \midrule
     Perceiver & Seven shifts (historical baseline) & 97.08 & 92.34 & 97.48 & $95.63\pm2.33$ & $0.9665\pm0.0225$ \\
+    Perceiver & Seven shifts, tuned schedule & 88.06 & 79.03 & 83.03 & $83.37\pm3.69$ & $0.8990\pm0.0292$ \\
     Perceiver & Continuous labels, sweep schedule & 78.75 & 112.80 & 99.02 & $96.86\pm13.98$ & $1.3799\pm0.1102$ \\
     Perceiver & Continuous labels, tuned schedule & 5.42 & 5.83 & 5.48 & $5.58\pm0.18$ & $0.1461\pm0.0045$ \\
     SymMeta & Seven shifts (retry checkpoints) & 6.82 & 7.00 & 7.29 & $7.04\pm0.19$ & $0.1542\pm0.0022$ \\
@@ -261,7 +262,9 @@ The seven-shift SymMeta checkpoints estimate yaw by aligning visual motion to is
   \end{tabular}
 \end{table*}
 
-For continuous-label training we re-express source commands and local displacements under sampled interfaces while retaining the recorded images. The two continuous-label Perceivers use the same architecture and see the same relabeled minibatches for 2,500 updates. Lowering the peak learning rate from $1.5\times10^{-3}$ to $3\times10^{-4}$ and adding 200 warmup updates together reduce yaw MAE from $96.86^\circ$ to $5.58^\circ$. The comparison measures the combined effect of these two changes. Training on the original seven shifts with the tuned schedule and measuring the tuned Perceiver's native retry success on the four arm--policy panels remain open.
+On the original 1,344 seven-shift traces, we hold the Perceiver's 32 positional slots, per-seed initialization and sampled minibatches fixed (batch 64, 3,500 updates). Lowering the peak learning rate from $10^{-3}$ to $3\times10^{-4}$ with 200 warmup updates and a proportionally lower cosine endpoint reduces OOD yaw MAE from $95.63^\circ$ to $83.37^\circ$. The paired change is $-12.26^\circ$ (95\% bootstrap interval $[-17.04,-7.39]^\circ$, resampling eight whole tasks with seeds 41--43 fixed). Across all 96 supports the operator error changes by $-0.0676$ (95\% interval $[-0.1003,-0.0358]$).
+
+For continuous-label training we re-express source commands and local displacements under sampled interfaces while retaining the recorded images. Both continuous-label Perceivers use 1,466 source traces, 24 slots and identical relabeled minibatches (batch 32, 2,500 updates). Lowering the peak from $1.5\times10^{-3}$ to $3\times10^{-4}$ with 200 warmup updates reduces OOD yaw MAE from $96.86^\circ$ to $5.58^\circ$. Each within-archive comparison isolates its schedule change. The two tuned readers ($83.37^\circ$ versus $5.58^\circ$) differ in source archive, interface labels, positional slots, minibatch sampling and update budget. Native retry success for the tuned continuous-label reader remains open on all four arm--policy panels.
 
 In the discrete training-shift sweep, five models trained on subsets of 1,466 Panda and Sawyer traces at seven levels of diversity ($M{=}2$ to 128, three seeds each). Under the sweep schedule, SymMeta recovers all three factors on 96\% of OOD supports at $M{=}7$ and 99\% at $M{=}128$. The width-192 Perceiver reaches at most 45\% joint recovery and width 384 at most 20\% (Appendix Fig.~\ref{fig:scaling} and Table~\ref{tab:scaling}). On four additional in-family relabelings per UR5e support, mean operator errors are 0.149 for the seven-shift SymMeta reader, 0.152 for ridge using the same reader and 0.150 for the tuned Perceiver.
 
