@@ -1,0 +1,44 @@
+# Public camera history identifies first drawer opening on Kinova3
+
+**Fund a small paired test of whether a phase cue changes the frozen motor's next action. Defer training a phase-conditioned action adapter.** A four-patch camera reader fitted on 30 human Panda demonstrations beat a source-fitted elapsed-time clock on four fresh native Kinova3 simulator resets. Each reset received the same two prerecorded Kinova command sequences. The reader also distinguished the two original incidents at the same elapsed time. All eight fresh executions failed the native bowl-placement task. On two of them the drawer closed again after opening. A persistent “advance to placement” instruction would outlive the condition it assumes. [Pre-outcome registration](PLAN.md) · [Source and target lineage](LINEAGE.md)
+
+## Measured transfer
+
+The target label turns on at the first control endpoint where the native wooden-cabinet open predicate holds. We scored predicted probabilities at five-control camera observations. Brier score is mean squared probability error, with zero best. Each complete trajectory gets equal weight and the two sequences on each fresh reset stay paired. The clock learns a separate probability for every observed elapsed tick in the source fit. The constant learns source prevalence, 0.703. Both use the reader's exact training examples, public supervision and episode weights. [Fitted parameters](evidence/model.json) · [Scoring code](evaluate.py)
+
+| Evaluation population | Start count and camera samples | Camera Brier | Clock Brier | Constant Brier | False advances / missed positives, camera vs clock |
+| --- | --- | ---: | ---: | ---: | --- |
+| Held-out human Panda demonstrations | 10 episodes, 403 samples | 0.0138 | **0.0106** | 0.2095 | 8 / 0 vs 2 / 4 |
+| Fresh Kinova3 resets with fixed recorded commands | 4 starts × 2 sequences, 488 samples | **0.0090** | 0.0395 | 0.1855 | 5 / 0 vs 21 / 0 |
+| Known Kinova3 incident reenactments | 2 selected starts, 122 samples | **0.0023** | 0.3990 | 0.3312 | 0 / 0 vs 49 / 0 |
+
+On the source holdout, camera minus clock was +0.0031 Brier (95% whole-demo bootstrap interval −0.0022 to +0.0081). The human physical openings clustered between controls 51 and 63. On the fresh Kinova layouts, the camera improved Brier by 0.0327, 0.0301, 0.0313 and 0.0279. The mean improvement was 0.0305 (95% paired layout bootstrap interval 0.0288 to 0.0320). This interval resamples four layouts with the two command sequences fixed. It gives no estimate of uncertainty over new VLA command draws. Excluding terminal observations, where the motor has no next action, gave 0.0092 camera and 0.0402 clock. [Per-demo scores](evidence/source.json) · [Per-layout scores](evidence/crossed.json) · [Next-action sensitivity](evidence/lineage.json)
+
+| Fresh Kinova3 row | Tape 14 first physical opening / camera call | Tape 15 first physical opening / camera call | Clock call, both sequences |
+| --- | ---: | ---: | ---: |
+| 30 | 60 / 60 | 82 / 80 | 60 |
+| 31 | 60 / 60 | 81 / 80 | 60 |
+| 32 | 59 / 60 | 81 / 80 | 60 |
+| 33 | 61 / 60 | 81 / 80 | 60 |
+
+At the 19 same-layout, same-time comparisons where the two trajectories had opposite labels, the camera gave the opened drawer the higher probability 19 times. Every clock comparison tied. These 19 comparisons reuse four starts. The camera itself anticipated the crossing by one or two controls on all four tape-15 executions. On row 30 at control 80, it assigned 0.821 when the drawer was at −0.131 m. The native crossing at −0.14 m came two controls later. The clock assigned 1.000 at that frame. On row 33 with tape 14, the clock had the lower whole-episode error, 0.0113 versus 0.0168. [Per-observation predictions and physical scores](evidence/crossed.csv.gz)
+
+## The two known incidents
+
+At control 60 the time-only prediction was 0.781 on both incidents. The visual probabilities were **0.992 on row 14** (−0.146 m, open) and **0.008 on row 15** (0.000 m, closed). The maximum visual probability through control 300 on row 15 was 0.036. Row 14 had a slightly better clock Brier, 0.0021 versus 0.0036. The aggregate incident advantage came from the row that never opened. The same row-15 commands opened the drawer on all four fresh starts. Consequently, memorizing that sequence as a failed pull would have given the wrong answer on those starts. [Incident scores](evidence/known.json) · [Recorded probabilities](evidence/known.csv.gz)
+
+Those labels describe local CPU reenactment. Both original frozen-policy episodes and both reenactments timed out, with identical native reward tapes. Row 14's maximum CPU-to-original tool-position difference was 0.00013 mm. On row 15 the replay later diverged by up to 8.17 mm at the tool and 9.38 mm in a finger. The original tapes did not record the drawer joint. The earlier reachability study separately identified the plate encounter and measured agreement of the early trajectory. [Replay lineage](evidence/lineage.json) · [Known contact incidents](../frozen-vla-reachability-20261123-r1/RESULT.md)
+
+## What the reader measures
+
+At deployment the only input is the public agent camera at reset and every five controls. The reader compares the current mean luminance of four regions to their own reset values. A logistic readout turns their standardized changes into a probability. Its running maximum represents “has opened.” The source fit selected the four non-adjacent regions from a 16 × 16 grid. It used visible drawer-front motion in the fitting demonstrations as weak supervision. The final fitting image helped annotate those source examples. Every deployed prediction was reproduced using only its observed prefix. No target case was used to select features, weights, probability threshold or timing controls. [Public annotation](annotate.py) · [Reader](reader.py) · [Split and source-clock alignment](LINEAGE.md)
+
+On rows 31 and 33 with tape 14, the drawer ceased meeting the native open predicate at controls 102 and 97. It ended 3.2 and 2.3 mm from closed. At control 200 the historical probabilities were 0.998 and 0.999, while the instantaneous camera probabilities had fallen to 0.005 and 0.011. Removing the running maximum increased fresh-layout Brier to 0.1381 for the registered *ever-open* label. The same memory that helps that estimand obscures reclosure. This study also leaves grasp, bowl localization, current clearance, shifted cameras, new cabinet appearances and the ability of the next action to improve reward unresolved. [Full-control reversals](evidence/lineage.json) · [Instantaneous and historical probabilities](evidence/crossed.csv.gz)
+
+## Intervention and independent live-policy limit
+
+The prepared intervention gives the frozen motor “put the bowl in the top drawer” for **one five-control replan** at the first positive call, then restores the task instruction. Its three branches are raw, elapsed-clock trigger and visual trigger, with identical replacement wording. The public score changes only the motor prompt. Both intervention branches retain the original prompt at reset. On a native CPU interface check using tape 15 on row 30, the visual branch delivered the cue at 80, the clock at 60 and raw never did. All 19 public observations, 90 issued controls, native rewards and the reset matched with commands fixed. Source-tape checks reproduced every expected first call on the ten held demos. This qualifies cue delivery. A fixed action sequence cannot measure a frozen policy's response to the words. [Intervention](phase_prompt.py) · [Native interface receipt](evidence/native-prompt.json) · [Source-tape receipt](evidence/prompt-qualification.json)
+
+For a future decision, first compare the two prompts on the exact same observations, inference process and noise. If the proposed actions change, compare all three branches on preregistered Kinova rows 36–39, seeds 42710336–42710339, using live replanning, verified shared opening proposals and unchanged native success. Report which raw successes are lost and which failures are rescued. A pulse can test initiation of the next interaction. It offers no correction to a motor that keeps visiting the plate before the drawer ever opens. Native success evidence would be needed to fund a larger learned action adapter.
+
+The separate feedback job's untreated, closed-loop rows 16/17 were registered before its outcomes. At close, Baige had supplied neither expected raw tape. Only its CPU fixtures and submitted source checkout were present. The independent on-policy comparison is therefore unscored. The four crossed starts establish transfer under two reused command sequences. They do not add independent frozen-policy draws. This worker used two Baige CPU cores, zero GPU-hours and submitted no job. [Expected tape names, pins and reproduction](LINEAGE.md)

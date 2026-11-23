@@ -1,5 +1,9 @@
 # Verified findings
 
+## Public camera history identifies first drawer opening on fresh Kinova3 simulator resets
+
+A four-patch camera reader fitted on 30 human Panda demonstrations scored 0.0138 Brier on ten held-out demos versus 0.0106 for a source-fitted clock. On four fresh native Kinova3 resets, each executing the same two previously recorded policy command sequences, the reader scored 0.0090 versus 0.0395. The paired Brier reduction was 0.0305 (95% layout bootstrap interval 0.0288–0.0320, conditional on those two sequences). It ranked the open trajectory higher in all 19 same-layout, same-time comparisons with opposite physical labels. Two drawers subsequently reclosed and all eight attempts timed out. A one-replan prompt change passed a native CPU interface check. Its effect on frozen-policy success and the independently registered live-policy starts remain unmeasured. [Results, split and individual predictions](../outputs/frozen-vla-phase-transfer-20261123-r1/RESULT.md)
+
 ## Predicting unshifted motion on three simulated robot arms
 
 From the same 15 passive target controls, a source-regularized 3D response model reduced displacement prediction error relative to a planar response on Kinova3 (−0.69 mm per five controls, approximate 95% task interval −1.35 to −0.02) and IIWA (−0.35 mm, −0.50 to −0.19). Error increased on UR5e (+0.65 mm, +0.12 to +1.18). The learned nonlinear model had higher point errors than its linear counterpart on all three arms, with intervals spanning zero. An equal-budget probe that excited three directions increased the 3D model’s error on subsequent policy motions for all three arms. These are offline predictions on eight held-out tasks per arm using trusted metric end-effector positions. [Registered experiments, controls and uncertainty](../outputs/frozen-vla-motion-models-20261123-r1/HANDOFF.md)
