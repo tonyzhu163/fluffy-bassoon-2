@@ -27,4 +27,6 @@ mkdir -p "$NUMBA_CACHE_DIR" "$MPLCONFIGDIR" "$TMPDIR"
 lib="$data/setups/libero90-full-action-20261119-r1/desktop-libs02"
 export LD_LIBRARY_PATH="$lib/prefix/usr/lib/x86_64-linux-gnu:$lib/prefix/lib/x86_64-linux-gnu"
 export PYTHONPATH="$code/outputs/libero-crossarm-20261120-r1:$CROSSARM_RELEASE:$LIBERO_PRO_ROOT"
-taskset -c "${GRIPPER_CPU_PAIR:-18,19}" "$sim/env/bin/python" -Bu "$here/native.py" "$out"
+stage=${3:-native}
+[[ $stage == native || $stage == grasp ]]
+taskset -c "${GRIPPER_CPU_PAIR:-18,19}" "$sim/env/bin/python" -Bu "$here/$stage.py" "$out"

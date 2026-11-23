@@ -115,6 +115,7 @@ class Instrument:
         controls = limits.mean(axis=1) + .5*(limits[:,1]-limits[:,0])*expected
         np.testing.assert_allclose(controls, self.substeps, rtol=0, atol=1e-14)
         geom = self.body_offsets()
+        self.public_quat = np.asarray(raw["robot0_eef_quat"], dtype=np.float32).copy()
         q = raw["robot0_gripper_qpos"]
         return dict(q=q.tolist(), jaw_mm=float((q[0]-q[1])*1000), ctrl=self.substeps[-1].tolist(),
                     substeps=n, contacts=sorted(self.contacts), reward=float(reward),
