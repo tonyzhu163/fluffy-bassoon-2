@@ -18,8 +18,7 @@ def flags(fit, phase):
     kinds = {c["kind"] for c in fit["contacts"]}
     ok = fit["pose_ok"]
     arm_clear = ok and not kinds.intersection(("arm_scene", "arm_self_or_base"))
-    strict = (ok and not (kinds - {"intended_finger"})
-              and (phase == "approach" or "intended_finger" in kinds))
+    strict = ok and kinds == (set() if phase == "approach" else {"intended_finger"})
     return ok, arm_clear, strict
 
 
@@ -32,7 +31,7 @@ def write_csv(out, name, rows):
 
 def tables(inputs, output):
     waypoints, cases, replay = [], [], []
-    for task, n in (("goal3", 10), ("long8", 12), ("goal6", 6)):
+    for task in ("goal3", "long8", "goal6"):
         for layout in (14, 15):
             stem = f"{task}-{layout}"
             d = read(inputs / (stem+".json"))
@@ -70,7 +69,7 @@ def tables(inputs, output):
             for arm in ("Panda","Kinova3"):
                 for mode in ("recorded","half_turn"):
                     subset = [r for r in case_rows if (r["arm"],r["orientation"])==(arm,mode)]
-                    assert len(subset) == n, (stem, arm, len(subset), n)
+                    assert len(subset) == sum(len(x["waypoints"]) for x in d["demonstrations"])
                     cases.append(dict(case=stem, arm=arm, orientation=mode, sampled_waypoints=len(subset),
                                       pose_witness=sum(r["solved"]>0 for r in subset),
                                       pose_and_no_arm_collision=sum(r["no_arm_collision"]>0 for r in subset),
