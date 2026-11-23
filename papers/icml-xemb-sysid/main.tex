@@ -105,17 +105,17 @@ Let $v_k \in \mathbb{R}^d$ and $w_k > 0$ be visual motion estimates and weights 
 \end{proof}
 
 \begin{remark}
-The equivariance is with respect to rotations of the \emph{command} frame for a fixed camera. It is not invariance to the camera. The reader expresses $v_k$ in a frame fixed by the training camera pose, so rotating the camera rotates $v_k$ and the estimate $\hat\theta$ with it. We measure this in \S\ref{sec:limits}. Part 2 is a noiseless statement with known gains; it gives no guarantee with estimated gains or monocular motion estimates.
+The planar identity holds for a rotation of the \emph{command} coordinates with the camera and visual estimates fixed. Moving the camera changes the images used to estimate $v_k$. We measure the resulting yaw error in \S\ref{sec:limits}. Part 2 assumes exact motion measurements and known gains.
 \end{remark}
 
 On our 3D probe fixture, raw Procrustes without pre-scaling has $11.73^\circ$ rotational bias, and pre-scaling with the true gains removes it to numerical precision. With estimated gains, the residual bias grows with the gain error; we report the live 3D results in \S\ref{sec:so3}.
 
 \begin{proposition}[Linear pooling in \texttt{EquivFlow}]
 \label{prop:cardinal}
-Let $v_k = H_\phi(I_0) \sum_{x,y} M_\psi(x, y)\, f_k(x, y)$, where $f_k$ is dense optical flow, $H_\phi(I_0)$ is a $2\times 2$ matrix that depends only on the first frame, and the mask $M_\psi$ depends only on rotation-invariant per-pixel features (flow magnitude, luminance change and gradient magnitudes, luminance, pixel coordinates). For a fixed mask, $v_k$ is linear in $f_k$. A rotation of the flow field that leaves the mask unchanged therefore rotates $\sum M_\psi f_k$ by the same angle, and the reader cannot learn a direction-specific mapping, such as snapping to the training directions.
+Let $s_k=\sum_{x,y}M_\psi(x,y)f_k(x,y)$ be the pooled dense flow and $v_k=H_\phi(I_0)s_k$ the estimated motion. Hold the pixel weights and first frame fixed. Rotating each flow vector at its pixel by $Q\in SO(2)$ gives $s'_k=Q s_k$ by linearity of the sum. The output is $v'_k=H_\phi(I_0)Q s_k$, which equals $Qv_k$ for every $s_k$ precisely when $H_\phi(I_0)$ commutes with $Q$.
 \end{proposition}
 
-Because the mask depends on $\|f_k\|$, linearity holds only conditionally on the mask, and the image-plane map approximates 3D motion only locally. Proposition~\ref{prop:cardinal} rules out direction-specific nonlinearities in the reader, but it does not guarantee accurate motion estimates.
+The learned matrix can stretch one image axis more than the other and thereby change the inferred angle. The mask also depends on flow magnitude and image features, so real changes in the scene can change the weights. Proposition~\ref{prop:cardinal} characterizes the pooling operation under its stated conditions.
 
 \section{Method}
 \label{sec:method}
@@ -127,7 +127,7 @@ We specify the three interface factors and their inverse. We train the reader fr
     v_k = v_k^{\text{raw}} - \Delta z_k^{\text{local}}\, u_{z,k},
   \]
   compensates for parallax in the oblique view before weighted Procrustes (Prop.~\ref{prop:equiv}). Vertical displacement $\Delta z^{\text{local}}$ is invariant to planar rotations about $z$, so this correction preserves equivariance in the planar case. Two small MLPs estimate gain from issued translations and local displacements and gripper polarity from the gripper command, jaw motion and final opening (Appendix~\ref{sec:training-details}). The 3D variant outputs $v_k \in \mathbb{R}^3$ and per-axis log-gains, then applies gain-pre-scaled SVD Procrustes.
-  \item \textbf{\texttt{EquivFlow}.} This variant implements Prop.~\ref{prop:cardinal}. A 7-channel pixel-attention CNN that sees no flow directions pools DIS flow through a learned $2\times 2$ matrix $H_0$, or a first-frame-conditioned $H_\phi(I_0) = H_0 + \Delta H_\phi(I_0)$. With an MLP reader trained on axis-aligned probe bursts, continuous OOD yaw error is $38.0^\circ$, because the reader snaps to the training directions. \texttt{EquivFlow} reduces this to $9.6^\circ$ (active probe) and $10.3^\circ$ (passive), measured offline. In live control it trails SymMeta (Table~\ref{tab:additional_baselines}), so we treat it as the structurally safer variant under sparse axis-aligned probes, not as the headline method.
+  \item \textbf{\texttt{EquivFlow}.} This variant implements Prop.~\ref{prop:cardinal}. A 7-channel pixel-attention CNN that sees no flow directions pools DIS flow through a learned $2\times 2$ matrix $H_0$, or a first-frame-conditioned $H_\phi(I_0) = H_0 + \Delta H_\phi(I_0)$. On continuous held-out rotations, an MLP reader trained on axis-aligned probe bursts has $38.0^\circ$ yaw error. \texttt{EquivFlow} achieves $9.6^\circ$ on active probes and $10.3^\circ$ on passive traces offline. SymMeta has higher native retry success (Table~\ref{tab:additional_baselines}).
 \end{enumerate}
 
 
