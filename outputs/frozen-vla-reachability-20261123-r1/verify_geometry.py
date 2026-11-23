@@ -89,6 +89,9 @@ def inspect(case_file):
             for donor in data["demonstrations"]:
                 for waypoint in donor["waypoints"]:
                     install(g, waypoint["stage"])
+                    for j in range(g.m.njnt):
+                        if g.m.jnt_limited[j] and j not in g.joints:
+                            assert g.m.jnt_range[j,0] <= g.d.qpos[g.m.jnt_qposadr[j]] <= g.m.jnt_range[j,1]
                     for mode, sols in waypoint["search"][arm].items():
                         goal = np.asarray(waypoint["goal"])
                         if mode == "half_turn":
