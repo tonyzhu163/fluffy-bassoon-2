@@ -111,7 +111,7 @@ def check_case(obj, case, *, terminal=True):
         require(reset["renderer_vendor"] == "NVIDIA Corporation" and sum(rec["native_rewards"]) == rec["native_return"],
                 "NVIDIA native return")
         require(0 < rec["controls"] <= reset["horizon"] and
-                (rec["success"] or rec["controls"] == reset["horizon"]), "native termination or horizon")
+                (not rec["truncated"] or rec["controls"] == reset["horizon"]), "native termination or horizon")
 
 
 def check_pair(raw, obj, row, method):
