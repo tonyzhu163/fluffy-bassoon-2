@@ -1,0 +1,487 @@
+{
+  "checks": {
+    "matched_prefix_cells": 32,
+    "triggered": 28,
+    "archive_first_finger_at_or_before_cut": 28,
+    "archive_reset_hash_matches": 0,
+    "archive_continue_hits_within_tape_match": 32,
+    "archive_stop_controls_match": 32,
+    "archive_max_abs_public_trace_error": {
+      "robot0_eef_pos": 0.0014766007661819458,
+      "robot0_eef_quat_xyzw": 0.002327457070350647,
+      "robot0_gripper_qpos": 0.001984239090234041
+    }
+  },
+  "scores": {
+    "all": {
+      "n": 32,
+      "continue_tape": 27,
+      "fixed_slow": 25,
+      "fixed_regrasp": 14,
+      "fold_fixed": 27,
+      "command_only": 27,
+      "contact_gate": 27,
+      "oracle": 27
+    },
+    "default": {
+      "n": 16,
+      "continue_tape": 15,
+      "fixed_slow": 15,
+      "fixed_regrasp": 12,
+      "fold_fixed": 15,
+      "command_only": 15,
+      "contact_gate": 15,
+      "oracle": 15
+    },
+    "paced": {
+      "n": 16,
+      "continue_tape": 12,
+      "fixed_slow": 10,
+      "fixed_regrasp": 2,
+      "fold_fixed": 12,
+      "command_only": 12,
+      "contact_gate": 12,
+      "oracle": 12
+    },
+    "ordinary": {
+      "n": 16,
+      "continue_tape": 14,
+      "fixed_slow": 13,
+      "fixed_regrasp": 7,
+      "fold_fixed": 14,
+      "command_only": 14,
+      "contact_gate": 14,
+      "oracle": 14
+    },
+    "reduced": {
+      "n": 16,
+      "continue_tape": 13,
+      "fixed_slow": 12,
+      "fixed_regrasp": 7,
+      "fold_fixed": 13,
+      "command_only": 13,
+      "contact_gate": 13,
+      "oracle": 13
+    },
+    "libero_10-0": {
+      "n": 4,
+      "continue_tape": 1,
+      "fixed_slow": 1,
+      "fixed_regrasp": 0,
+      "fold_fixed": 1,
+      "command_only": 1,
+      "contact_gate": 1,
+      "oracle": 1
+    },
+    "libero_10-3": {
+      "n": 4,
+      "continue_tape": 4,
+      "fixed_slow": 4,
+      "fixed_regrasp": 2,
+      "fold_fixed": 4,
+      "command_only": 4,
+      "contact_gate": 4,
+      "oracle": 4
+    },
+    "libero_goal-0": {
+      "n": 4,
+      "continue_tape": 4,
+      "fixed_slow": 4,
+      "fixed_regrasp": 4,
+      "fold_fixed": 4,
+      "command_only": 4,
+      "contact_gate": 4,
+      "oracle": 4
+    },
+    "libero_goal-1": {
+      "n": 4,
+      "continue_tape": 4,
+      "fixed_slow": 4,
+      "fixed_regrasp": 2,
+      "fold_fixed": 4,
+      "command_only": 4,
+      "contact_gate": 4,
+      "oracle": 4
+    },
+    "libero_object-0": {
+      "n": 4,
+      "continue_tape": 2,
+      "fixed_slow": 2,
+      "fixed_regrasp": 0,
+      "fold_fixed": 2,
+      "command_only": 2,
+      "contact_gate": 2,
+      "oracle": 2
+    },
+    "libero_object-7": {
+      "n": 4,
+      "continue_tape": 4,
+      "fixed_slow": 2,
+      "fixed_regrasp": 2,
+      "fold_fixed": 4,
+      "command_only": 4,
+      "contact_gate": 4,
+      "oracle": 4
+    },
+    "libero_spatial-1": {
+      "n": 4,
+      "continue_tape": 4,
+      "fixed_slow": 4,
+      "fixed_regrasp": 2,
+      "fold_fixed": 4,
+      "command_only": 4,
+      "contact_gate": 4,
+      "oracle": 4
+    },
+    "libero_spatial-7": {
+      "n": 4,
+      "continue_tape": 4,
+      "fixed_slow": 4,
+      "fixed_regrasp": 2,
+      "fold_fixed": 4,
+      "command_only": 4,
+      "contact_gate": 4,
+      "oracle": 4
+    }
+  },
+  "gate_minus_comparator": {
+    "continue_tape": {
+      "wins": 0,
+      "losses": 0,
+      "delta_pp": 0.0,
+      "task_bootstrap_95_pp": [
+        0.0,
+        0.0
+      ]
+    },
+    "fixed_slow": {
+      "wins": 2,
+      "losses": 0,
+      "delta_pp": 6.25,
+      "task_bootstrap_95_pp": [
+        0.0,
+        18.75
+      ]
+    },
+    "fixed_regrasp": {
+      "wins": 13,
+      "losses": 0,
+      "delta_pp": 40.625,
+      "task_bootstrap_95_pp": [
+        28.125,
+        50.0
+      ]
+    },
+    "fold_fixed": {
+      "wins": 0,
+      "losses": 0,
+      "delta_pp": 0.0,
+      "task_bootstrap_95_pp": [
+        0.0,
+        0.0
+      ]
+    },
+    "command_only": {
+      "wins": 0,
+      "losses": 0,
+      "delta_pp": 0.0,
+      "task_bootstrap_95_pp": [
+        0.0,
+        0.0
+      ]
+    },
+    "oracle": {
+      "wins": 0,
+      "losses": 0,
+      "delta_pp": 0.0,
+      "task_bootstrap_95_pp": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "oracle_minus_continue": {
+    "wins": 0,
+    "losses": 0,
+    "delta_pp": 0.0,
+    "task_bootstrap_95_pp": [
+      0.0,
+      0.0
+    ]
+  },
+  "choices_on_triggered_cells": {
+    "command_only": {
+      "continue": 28,
+      "slow": 0,
+      "regrasp": 0
+    },
+    "contact_gate": {
+      "continue": 28,
+      "slow": 0,
+      "regrasp": 0
+    }
+  },
+  "bootstrap": {
+    "unit": "task",
+    "draws": 50000,
+    "seed": 41
+  },
+  "rows": [
+    {
+      "task": "libero_10-0",
+      "cadence": "default",
+      "material": "ordinary",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_10-0",
+      "cadence": "default",
+      "material": "reduced",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_10-0",
+      "cadence": "paced",
+      "material": "ordinary",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_10-0",
+      "cadence": "paced",
+      "material": "reduced",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_10-3",
+      "cadence": "default",
+      "material": "ordinary",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_10-3",
+      "cadence": "default",
+      "material": "reduced",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_10-3",
+      "cadence": "paced",
+      "material": "ordinary",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_10-3",
+      "cadence": "paced",
+      "material": "reduced",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_goal-0",
+      "cadence": "default",
+      "material": "ordinary",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_goal-0",
+      "cadence": "default",
+      "material": "reduced",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_goal-0",
+      "cadence": "paced",
+      "material": "ordinary",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_goal-0",
+      "cadence": "paced",
+      "material": "reduced",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_goal-1",
+      "cadence": "default",
+      "material": "ordinary",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_goal-1",
+      "cadence": "default",
+      "material": "reduced",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_goal-1",
+      "cadence": "paced",
+      "material": "ordinary",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_goal-1",
+      "cadence": "paced",
+      "material": "reduced",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_object-0",
+      "cadence": "default",
+      "material": "ordinary",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_object-0",
+      "cadence": "default",
+      "material": "reduced",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_object-0",
+      "cadence": "paced",
+      "material": "ordinary",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_object-0",
+      "cadence": "paced",
+      "material": "reduced",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_object-7",
+      "cadence": "default",
+      "material": "ordinary",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_object-7",
+      "cadence": "default",
+      "material": "reduced",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_object-7",
+      "cadence": "paced",
+      "material": "ordinary",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_object-7",
+      "cadence": "paced",
+      "material": "reduced",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_spatial-1",
+      "cadence": "default",
+      "material": "ordinary",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_spatial-1",
+      "cadence": "default",
+      "material": "reduced",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_spatial-1",
+      "cadence": "paced",
+      "material": "ordinary",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_spatial-1",
+      "cadence": "paced",
+      "material": "reduced",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_spatial-7",
+      "cadence": "default",
+      "material": "ordinary",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_spatial-7",
+      "cadence": "default",
+      "material": "reduced",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_spatial-7",
+      "cadence": "paced",
+      "material": "ordinary",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    },
+    {
+      "task": "libero_spatial-7",
+      "cadence": "paced",
+      "material": "reduced",
+      "gate": 0,
+      "command_only": 0,
+      "fold_fixed": 0
+    }
+  ]
+}
