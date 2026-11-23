@@ -6,7 +6,7 @@ Retired proposals, launch handoffs and checkpoint-by-checkpoint status notes can
 
 The 2026-11-23 cleanup retired three plans that were never run (`retry-feedback-plan-20261110-r1`, `retry-history-gate1-20261110-r1`, `robocasa-cadence-oracle-20261118-r1`), the superseded SymMeta paper drafts and plan under `papers/icml-xemb-sysid/` (`DRAFT.md`, `EXTENDED_ABSTRACT.md`, `PLAN.md`, `plot_current_results.py` and four unused figures), and the completed rows of the coordination board. All remain at their original paths in the [snapshot before that cleanup](https://github.com/tonyzhu163/fluffy-bassoon-2/tree/77464dc1bf706652e25a6f9bb4653094c9962711).
 
-The same day, 39 closed run directories that no retained document, code or run record refers to were removed from the tree. The [retired-run list](retired-runs-20261123.md) links each one at the snapshot above and states the rule used.
+The same day, 39 closed run directories that no retained document, code or run record refers to were removed from the tree. The [retired-run list](retired-runs-20261123.md) links each one at the snapshot above and states the rule used. A second pass archived 121 more directories from closed research lines; the same list gives their rule and recovery commit (`f03ddbb6`).
 
 ## Artifact retention
 
