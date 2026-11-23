@@ -1,0 +1,433 @@
+{
+  "host": "aibox-r855e239307b-6bfb688cdd-lz2dx",
+  "recorded_utc": "2026-11-23T07:47:37.338166+00:00",
+  "gpu_hours": 0,
+  "runtime_root": "/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1",
+  "raw_dir": "/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/transport/cpu-PeIkmV",
+  "native_and_matched_harness": "cab855a03c8ff1a3f1926513369099bf11c4b859",
+  "integration_code_pin": "0a5fbddd9972e77d351ac8229ec18660515e0fb7",
+  "source_sha256": {
+    "with-cache.sh": "3762fd866e07141b980874dd4d6e81ff4a89b46a0d50addf68f21373c47dffe0",
+    "wheel.py": "cfdb8329a8944dba094b6bb4d176e57f8a4d3a74bdd72ceb15a31b704c490cf8",
+    "launchers.patch": "58f3a55d61f7e0621193356bed2d9a91cecd41cdb4dd2367da98ffdc689ea336",
+    "compare_episode.py": "10b4239907ec12dfda9808f3cd26033456bcdb45963af0b2269bdd2ae178a986",
+    "probe.py": "e6739bd19350afa239003ef5627126d1da30083b7b3cc8bbc5c5000da82a8703"
+  },
+  "audit": {
+    "directories": 468,
+    "elapsed_s": 4.488421097048558,
+    "files": 2272,
+    "package_bytes": 41561144,
+    "package_tree_sha256": "870a2258af5db32e39d8045b00f5079a3e535d38307a2a9f6ae6634f8db12ec2",
+    "wheel_bytes": 10236696,
+    "wheel_sha256": "0bd6281b82966fe5a7a16f553ea517a9db1dee6284d7cb224dfd88fc0dd1c167"
+  },
+  "stage_final": {
+    "after": {
+      "bytes_available": 31451516928,
+      "inodes_available": 3129621
+    },
+    "before": {
+      "bytes_available": 31500054528,
+      "inodes_available": 3132361
+    },
+    "directories": 468,
+    "elapsed_s": 0.3817823010031134,
+    "files": 2272,
+    "package_bytes": 41561144,
+    "package_tree_sha256": "870a2258af5db32e39d8045b00f5079a3e535d38307a2a9f6ae6634f8db12ec2",
+    "wheel_bytes": 10236696,
+    "wheel_sha256": "0bd6281b82966fe5a7a16f553ea517a9db1dee6284d7cb224dfd88fc0dd1c167"
+  },
+  "stage_matched": {
+    "after": {
+      "bytes_available": 31453884416,
+      "inodes_available": 3129628
+    },
+    "before": {
+      "bytes_available": 31502417920,
+      "inodes_available": 3132368
+    },
+    "directories": 468,
+    "elapsed_s": 0.36871200310997665,
+    "files": 2272,
+    "package_bytes": 41561144,
+    "package_tree_sha256": "870a2258af5db32e39d8045b00f5079a3e535d38307a2a9f6ae6634f8db12ec2",
+    "wheel_bytes": 10236696,
+    "wheel_sha256": "0bd6281b82966fe5a7a16f553ea517a9db1dee6284d7cb224dfd88fc0dd1c167"
+  },
+  "staging_success_cleanup": true,
+  "staging_failure_cleanup": "exit=17 removed=/tmp/reground-transformers.jM62un4s",
+  "wrapper_failure_exit": 17,
+  "df_before": [
+    "Filesystem               1B-blocks          Used    Available Use% Mounted on",
+    "overlay                52521566208   20999229440  31505559552  40% /",
+    "mt-qyDyYS-pfs-xPQ6Bb 2199023255552 1940662517760 258360737792  89% /mowenjie",
+    "Filesystem             Inodes   IUsed   IFree IUse% Mounted on",
+    "overlay               3276800  144276 3132524    5% /",
+    "mt-qyDyYS-pfs-xPQ6Bb 10000384 9038139  962245   91% /mowenjie"
+  ],
+  "df_after_cleanup": [
+    "Filesystem               1B-blocks          Used    Available Use% Mounted on",
+    "overlay                52521566208   21001719808  31503069184  40% /",
+    "mt-qyDyYS-pfs-xPQ6Bb 2199023255552 1940914176000 258109079552  89% /mowenjie",
+    "Filesystem             Inodes   IUsed   IFree IUse% Mounted on",
+    "overlay               3276800  144281 3132519    5% /",
+    "mt-qyDyYS-pfs-xPQ6Bb 10000384 9041801  958583   91% /mowenjie"
+  ],
+  "cpu_qual": {
+    "native_interpreter": "env/bin/python -Bu",
+    "renderer": "Mesa llvmpipe",
+    "cuda_visible_devices": "",
+    "threads": {
+      "OMP_NUM_THREADS": 1,
+      "OPENBLAS_NUM_THREADS": 1,
+      "MKL_NUM_THREADS": 1,
+      "LP_NUM_THREADS": 1
+    },
+    "cpu_affinity_episode_policy": [
+      4,
+      5
+    ],
+    "cpu_affinity_benchmark": [
+      4
+    ],
+    "import_order": "ABBAABBA",
+    "nice": {
+      "matched": 10,
+      "policy": 19,
+      "benchmark": 19
+    },
+    "private_caches": "HOME, TMPDIR, XDG_CACHE_HOME, XDG_CONFIG_HOME, MPLCONFIGDIR, NUMBA_CACHE_DIR",
+    "cache_state": "No drop_caches. Shared CPU host, varying concurrent load. Stock then staged for fixture, staged then stock for strict policy."
+  },
+  "native_reset_profile": {
+    "launch_to_close": "wall=22.303 user=18.738 sys=2.418",
+    "setup_and_reset": "env_and_reset_s 14.639545552898198",
+    "libero_import_cumulative_microseconds": 5376601,
+    "logs": "imports.log, profile.out"
+  },
+  "worker_imports": [
+    {
+      "arm": "shared",
+      "process_wall_s": 44.20741942001041,
+      "origin": "/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/env/lib/python3.12/site-packages/transformers",
+      "lib": "LiberoEnv",
+      "elapsed_s": 42.596032793982886,
+      "opens": 2720,
+      "distinct_sources": 1355,
+      "source_names_sha256": "82a4ee472dcab561bb512337ea33e47dbd4de2b9fe4955bb3f0fbd35a8b7efef"
+    },
+    {
+      "arm": "scratch",
+      "process_wall_s": 6.1356628520879894,
+      "origin": "/tmp/reground-transformers.U8tEenjQ/transformers",
+      "lib": "LiberoEnv",
+      "elapsed_s": 5.01634260895662,
+      "opens": 2732,
+      "distinct_sources": 1358,
+      "source_names_sha256": "92336810239489fd9682ccb1eae72cca9b8cdad3c479b151df26c1c64985ea31"
+    },
+    {
+      "arm": "scratch",
+      "process_wall_s": 5.115953169995919,
+      "origin": "/tmp/reground-transformers.U8tEenjQ/transformers",
+      "lib": "LiberoEnv",
+      "elapsed_s": 3.700222908053547,
+      "opens": 2732,
+      "distinct_sources": 1358,
+      "source_names_sha256": "92336810239489fd9682ccb1eae72cca9b8cdad3c479b151df26c1c64985ea31"
+    },
+    {
+      "arm": "shared",
+      "process_wall_s": 5.279785827035084,
+      "origin": "/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/env/lib/python3.12/site-packages/transformers",
+      "lib": "LiberoEnv",
+      "elapsed_s": 4.100118916947395,
+      "opens": 2720,
+      "distinct_sources": 1355,
+      "source_names_sha256": "82a4ee472dcab561bb512337ea33e47dbd4de2b9fe4955bb3f0fbd35a8b7efef"
+    },
+    {
+      "arm": "shared",
+      "process_wall_s": 5.629970422014594,
+      "origin": "/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/env/lib/python3.12/site-packages/transformers",
+      "lib": "LiberoEnv",
+      "elapsed_s": 4.405640552053228,
+      "opens": 2720,
+      "distinct_sources": 1355,
+      "source_names_sha256": "82a4ee472dcab561bb512337ea33e47dbd4de2b9fe4955bb3f0fbd35a8b7efef"
+    },
+    {
+      "arm": "scratch",
+      "process_wall_s": 6.5130574270151556,
+      "origin": "/tmp/reground-transformers.U8tEenjQ/transformers",
+      "lib": "LiberoEnv",
+      "elapsed_s": 5.37460181908682,
+      "opens": 2732,
+      "distinct_sources": 1358,
+      "source_names_sha256": "92336810239489fd9682ccb1eae72cca9b8cdad3c479b151df26c1c64985ea31"
+    },
+    {
+      "arm": "scratch",
+      "process_wall_s": 4.855457372032106,
+      "origin": "/tmp/reground-transformers.U8tEenjQ/transformers",
+      "lib": "LiberoEnv",
+      "elapsed_s": 3.817644827067852,
+      "opens": 2732,
+      "distinct_sources": 1358,
+      "source_names_sha256": "92336810239489fd9682ccb1eae72cca9b8cdad3c479b151df26c1c64985ea31"
+    },
+    {
+      "arm": "shared",
+      "process_wall_s": 5.440534402965568,
+      "origin": "/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/env/lib/python3.12/site-packages/transformers",
+      "lib": "LiberoEnv",
+      "elapsed_s": 4.477257065009326,
+      "opens": 2720,
+      "distinct_sources": 1355,
+      "source_names_sha256": "82a4ee472dcab561bb512337ea33e47dbd4de2b9fe4955bb3f0fbd35a8b7efef"
+    }
+  ],
+  "matched": {
+    "exact": {
+      "controls": 280,
+      "launcher_revision": "cab855a03c8ff1a3f1926513369099bf11c4b859",
+      "ledger_sha256": "7f42ef523538dd3a1fa417c159e3f336dda39209130d8c92ab87d6290922a102",
+      "native_replay": {
+        "contact_steps": 0,
+        "displaced": 0,
+        "fallen": 0,
+        "peak_speed": 0.9870227171480173,
+        "speed_viol": 30,
+        "steps": 280,
+        "success": 0,
+        "table_steps": 0,
+        "unsafe": 1
+      },
+      "native_revision": "16a98486f560676b9036d1a6d067b9dd51a5917a",
+      "queries": 28,
+      "reader": {
+        "archive": "ff2ddf0ab03e6fbe243979556d8d8f2ebb9bc29c",
+        "backend": "cpu",
+        "jax": "0.5.3",
+        "numpy": "1.26.4",
+        "opencv": "5.1.0",
+        "python": "3.11.17",
+        "reader_revision": "fd909227c2013cc58be1ced519b03ea1328199ea",
+        "reader_sha256": "f83b1c0b9ada76c2126f366294785222e121703e02977c66bf530b1fb731b1e5",
+        "update_limit": 24,
+        "weights_sha256": "c12bace5cb391499d6abd7cc5767f94b1519de7d77940efb0cfcb71ca0f686a4"
+      },
+      "row": {
+        "adapt_seed": "0",
+        "alarm_step": "-1",
+        "cfg_id": "max_updates=24,reader_chunk=5,reader_seed=41",
+        "contact_steps": "0",
+        "displaced": "0",
+        "fallen": "0",
+        "init_id": "15",
+        "level": "90.0",
+        "method": "symmeta",
+        "noise_seed": "709751874",
+        "peak_speed": "0.9870227171480173",
+        "policy": "pi05",
+        "rep": "0",
+        "shift": "rot_z",
+        "speed_viol": "30",
+        "split": "test",
+        "steps": "280",
+        "success": "0",
+        "suite": "spatial",
+        "table_steps": "0",
+        "task": "spatial_0",
+        "u_dev_mean": "0.07655148639875864",
+        "unsafe": "1"
+      },
+      "scene_seed": 0,
+      "traces_npy_sha256": {
+        "spatial_0__15__0__A.npy": "7c7ffbff421088417882175576552fe9f6b8341f0d9684f396f2c3f9cb112ece",
+        "spatial_0__15__0__A_vla.npy": "5b8bc8a5dc2128c6196f2c11cac6b07f0f19e1fb4316a0b3763291c3a8895952",
+        "spatial_0__15__0__X.npy": "0e28294cf180d085ddc15d00b8540d75edd3525be342ef1dbf0993a576fca3ae",
+        "spatial_0__15__0__ref.npy": "e83760eb0dd403401bd802f5a2432fa34db44560c83232625e4e1471f7187351",
+        "spatial_0__15__0__speed.npy": "702abb38f6a019ffda7e0ae8a9057428017bc870a979e6e0814a1706f0c97c35"
+      },
+      "updates": 24
+    },
+    "stock_time": "wall=74.777 user=54.349 sys=5.216",
+    "staged_time": "wall=57.020 user=53.580 sys=4.108",
+    "only_excluded": [
+      "wall_s",
+      "ms_vla",
+      "ms_per_step",
+      "compute_s",
+      "ipc_and_compute_s"
+    ]
+  },
+  "strict_policy": {
+    "stock": {
+      "host": "aibox-r855e239307b-6bfb688cdd-lz2dx",
+      "time_utc": "2026-11-23T07:43:21.066442+00:00",
+      "device": "cpu",
+      "torch_cuda": "12.8",
+      "torch_sum": 6,
+      "cuda_available": false,
+      "packages": {
+        "lerobot": "0.6.1",
+        "torch": "2.11.0+cu128",
+        "torchvision": "0.26.0+cu128",
+        "torchcodec": "0.11.1",
+        "numpy": "2.2.6",
+        "scipy": "1.18.1",
+        "pandas": "2.3.3",
+        "PyYAML": "6.0.3",
+        "imageio": "2.37.4",
+        "imageio-ffmpeg": "0.6.0",
+        "pytest": "9.1.1"
+      },
+      "task": "spatial_0",
+      "shift": "rot_z/90",
+      "init_id": 0,
+      "seed": 0,
+      "renderer": "llvmpipe (LLVM 15.0.7, 256 bits)",
+      "gl_vendor": "Mesa",
+      "assets": "/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/libero-config/config.yaml",
+      "image_shapes": {
+        "image": [
+          256,
+          256,
+          3
+        ],
+        "image2": [
+          256,
+          256,
+          3
+        ]
+      },
+      "policy": "PI05Policy",
+      "wrapper": "reground.policies.vla.VLA",
+      "revision": "7152f13e34c6c115d808aea0e5d08aca74eac14b",
+      "strict_load": true,
+      "noise_seed": 0,
+      "chunk_idx": 0,
+      "chunk_shape": [
+        1,
+        50,
+        7
+      ],
+      "chunk_sha256": "5d59ddddd2b4c0fb42626ef707a3bea36769b66f8e0b368706017d4d86478fbd",
+      "first_action": [
+        0.024895496666431427,
+        0.0018670260906219482,
+        0.04106869548559189,
+        -0.00012160366168245673,
+        0.006270799785852432,
+        0.001829915214329958,
+        -0.9942736029624939
+      ],
+      "steps": 1,
+      "state_dim": 25,
+      "state_l2_change": 0.030449265614151955,
+      "elapsed_seconds": 204.78594133805018
+    },
+    "scratch": {
+      "host": "aibox-r855e239307b-6bfb688cdd-lz2dx",
+      "time_utc": "2026-11-23T07:40:23.719360+00:00",
+      "device": "cpu",
+      "torch_cuda": "12.8",
+      "torch_sum": 6,
+      "cuda_available": false,
+      "packages": {
+        "lerobot": "0.6.1",
+        "torch": "2.11.0+cu128",
+        "torchvision": "0.26.0+cu128",
+        "torchcodec": "0.11.1",
+        "numpy": "2.2.6",
+        "scipy": "1.18.1",
+        "pandas": "2.3.3",
+        "PyYAML": "6.0.3",
+        "imageio": "2.37.4",
+        "imageio-ffmpeg": "0.6.0",
+        "pytest": "9.1.1"
+      },
+      "task": "spatial_0",
+      "shift": "rot_z/90",
+      "init_id": 0,
+      "seed": 0,
+      "renderer": "llvmpipe (LLVM 15.0.7, 256 bits)",
+      "gl_vendor": "Mesa",
+      "assets": "/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/libero-config/config.yaml",
+      "image_shapes": {
+        "image": [
+          256,
+          256,
+          3
+        ],
+        "image2": [
+          256,
+          256,
+          3
+        ]
+      },
+      "policy": "PI05Policy",
+      "wrapper": "reground.policies.vla.VLA",
+      "revision": "7152f13e34c6c115d808aea0e5d08aca74eac14b",
+      "strict_load": true,
+      "noise_seed": 0,
+      "chunk_idx": 0,
+      "chunk_shape": [
+        1,
+        50,
+        7
+      ],
+      "chunk_sha256": "5d59ddddd2b4c0fb42626ef707a3bea36769b66f8e0b368706017d4d86478fbd",
+      "first_action": [
+        0.024895496666431427,
+        0.0018670260906219482,
+        0.04106869548559189,
+        -0.00012160366168245673,
+        0.006270799785852432,
+        0.001829915214329958,
+        -0.9942736029624939
+      ],
+      "steps": 1,
+      "state_dim": 25,
+      "state_l2_change": 0.030449265614151955,
+      "elapsed_seconds": 146.38008341297973
+    },
+    "all_nontiming_fields_identical": true,
+    "stock_time": "wall=215.581 user=117.285 sys=22.268",
+    "scratch_time": "wall=149.915 user=113.259 sys=21.258",
+    "historical_unpaired_cpu_chunk_sha256": "79c8efd04e95ec16241ef3a9a4ecc963ca8c0267a94579cd6074bc457f59875d",
+    "qualification": "runtime/qualify.py --device cpu --cpu-policy; import origin asserted before invocation"
+  },
+  "production": {
+    "observed_2026_11_23_shanghai": "15:36",
+    "collect01_gpu0": [
+      "[worker] loaded pi05 rev 7152f13e in 362s",
+      "[collect] collect pi05 none/0 seed0 shard0 422/4000 107s",
+      "[collect] collect pi05 none/0 seed0 shard0 1071/4000 136s",
+      "[collect] collect pi05 none/0 seed0 shard0 1491/4000 158s",
+      "[collect] collect pi05 none/0 seed0 shard0 2098/4000 185s",
+      "[collect] collect pi05 none/0 seed0 shard0 2574/4000 208s",
+      "[collect] collect pi05 none/0 seed0 shard0 3207/4000 235s"
+    ],
+    "base01_gpu0": [
+      "[worker] loaded pi05 rev 7152f13e in 361s",
+      "[job] pi05 rot_z/90 base default seed0 test shard0 4/280 succ=0.00 131s",
+      "[job] pi05 rot_z/90 base default seed0 test shard0 8/280 succ=0.00 161s",
+      "[job] pi05 rot_z/90 base default seed0 test shard0 12/280 succ=0.00 192s",
+      "[job] pi05 rot_z/90 base default seed0 test shard0 16/280 succ=0.00 223s"
+    ],
+    "babble03_gpu0": {
+      "event": "published",
+      "unit": "seed0/none/0/babble/shard000",
+      "utc": 1795418819.6512668,
+      "wall_s": 455.6833862992935,
+      "transitions": 2063,
+      "episodes": 11,
+      "transitions_per_s": 4.527266216032328,
+      "episodes_per_s": 0.024139567802402135
+    }
+  }
+}
