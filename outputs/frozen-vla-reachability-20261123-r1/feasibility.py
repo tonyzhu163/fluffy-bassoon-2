@@ -10,7 +10,6 @@ from pathlib import Path
 import h5py
 import mujoco
 import numpy as np
-from scipy.spatial.transform import Rotation
 
 from arm_env import ArmEnv
 from geometry import Geometry, body_pose, put_free
@@ -99,6 +98,8 @@ def stage_geometry(src, template, free, scalar, source_start, target_start, obj,
         template.d.qpos[dst_idx] = src.d.qpos[src_idx]
     template.forward()
     receiver_map = body_pose(template.m, template.d, receiver) @ np.linalg.inv(body_pose(src.m, src.d, receiver))
+    if receiver in free:
+        receiver_map = target_start[receiver] @ np.linalg.inv(source_start[receiver])
     if phase == "last_touch":
         tool_map = receiver_map
     elif obj in free:
@@ -120,6 +121,11 @@ def stage_geometry(src, template, free, scalar, source_start, target_start, obj,
     expected = np.linalg.inv(body_pose(src.m, src.d, obj)) @ src.tcp()
     if not np.allclose(actual, expected, atol=1e-9, rtol=0):
         raise ValueError(f"Contact frame not preserved at {obj}, {phase}")
+    if phase == "last_touch":
+        src_relative = np.linalg.inv(body_pose(src.m, src.d, receiver)) @ src.tcp()
+        dst_relative = np.linalg.inv(body_pose(template.m, template.d, receiver)) @ goal
+        if not np.allclose(src_relative, dst_relative, atol=1e-9, rtol=0):
+            raise ValueError("Placement changed the receiver-relative hand pose")
     return goal
 
 
@@ -196,7 +202,16 @@ def case(task_key, layout, inputs, out, renderer):
                                  for body in fixture_names}
                 hits, selected, tcp = events(src, tape, targets, receiver)
                 recorded_xyz = group["obs/ee_pos"][:]
-                donor = dict(demo=demo, n=len(tape), file_terminal_reward=float(group.attrs["terminal_reward"]),
+                # Stored proprioception and the integrated state can sample different instants.
+                # Recompute the separate public joint sample in the same physical TCP frame.
+                observed_fk = []
+                for joints in group["obs/joint_states"][:]:
+                    src.d.qpos[src.adr] = joints
+                    mujoco.mj_kinematics(src.m, src.d)
+                    observed_fk.append(src.tcp()[:3, 3])
+                public_errors = np.linalg.norm(observed_fk-recorded_xyz, axis=1)
+                donor = dict(demo=demo, public_joint_fk_to_public_eef_median_m=float(np.median(public_errors)),
+                             public_joint_fk_to_public_eef_max_m=float(public_errors.max()), n=len(tape), file_terminal_reward=float(group.attrs["terminal_reward"]),
                              file_terminal_done=bool(group.attrs["terminal_done"]),
                              first_movable_pose_delta_m={k: float(np.linalg.norm(target_start[k][:3, 3] -
                                                                                     v[:3, 3])) for k, v in source_start.items()},
