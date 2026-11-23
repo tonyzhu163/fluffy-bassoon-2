@@ -1,0 +1,408 @@
+{
+  "base_revision": "757a44cd4374833cad790852df8b87ddf412e638",
+  "collector": "menu02 at b90ee5a0c049d301529d0bf661d0a682b858ed78",
+  "endpoint": "offline lookup of recorded terminal branch success",
+  "fit_cases": 32,
+  "fit_tasks": [
+    "libero_10/2",
+    "libero_10/9",
+    "libero_goal/5",
+    "libero_goal/7",
+    "libero_object/2",
+    "libero_object/6",
+    "libero_spatial/2",
+    "libero_spatial/4"
+  ],
+  "gpu_hours": 0,
+  "timing": {
+    "n": 32,
+    "tasks": [
+      "libero_10/0",
+      "libero_10/3",
+      "libero_goal/0",
+      "libero_goal/1",
+      "libero_object/0",
+      "libero_object/7",
+      "libero_spatial/1",
+      "libero_spatial/7"
+    ],
+    "total": {
+      "default": 18,
+      "paced": 13,
+      "short_wait": 18,
+      "gripper_wait": 19,
+      "current": 19,
+      "current_no_phase": 19,
+      "history": 19,
+      "history_no_phase": 19,
+      "fit_fixed": 18,
+      "lag_only": 21,
+      "oracle": 22,
+      "oracle_no_phase": 22
+    },
+    "by_regime": {
+      "BASE": {
+        "default": 16,
+        "paced": 8,
+        "short_wait": 14,
+        "gripper_wait": 15,
+        "current": 16,
+        "current_no_phase": 16,
+        "history": 16,
+        "history_no_phase": 16,
+        "fit_fixed": 16,
+        "lag_only": 16,
+        "oracle": 16,
+        "oracle_no_phase": 16
+      },
+      "S20": {
+        "default": 2,
+        "paced": 5,
+        "short_wait": 4,
+        "gripper_wait": 4,
+        "current": 3,
+        "current_no_phase": 3,
+        "history": 3,
+        "history_no_phase": 3,
+        "fit_fixed": 2,
+        "lag_only": 5,
+        "oracle": 6,
+        "oracle_no_phase": 6
+      }
+    },
+    "selections": {
+      "current": {
+        "default": 24,
+        "paced": 0,
+        "short_wait": 8,
+        "gripper_wait": 0
+      },
+      "current_no_phase": {
+        "default": 24,
+        "paced": 0,
+        "short_wait": 8,
+        "gripper_wait": 0
+      },
+      "history": {
+        "default": 13,
+        "paced": 3,
+        "short_wait": 16,
+        "gripper_wait": 0
+      },
+      "history_no_phase": {
+        "default": 13,
+        "paced": 3,
+        "short_wait": 16,
+        "gripper_wait": 0
+      },
+      "fit_fixed": {
+        "default": 32,
+        "paced": 0,
+        "short_wait": 0,
+        "gripper_wait": 0
+      },
+      "lag_only": {
+        "default": 16,
+        "paced": 16,
+        "short_wait": 0,
+        "gripper_wait": 0
+      }
+    },
+    "contrasts": {
+      "gripper_wait minus short_wait": {
+        "wins": 3,
+        "losses": 2,
+        "delta_pp": 3.125,
+        "task_bootstrap_95_pp": [
+          0.0,
+          9.375
+        ],
+        "task_net": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "gripper_wait minus paced": {
+        "wins": 8,
+        "losses": 2,
+        "delta_pp": 18.75,
+        "task_bootstrap_95_pp": [
+          0.0,
+          37.5
+        ],
+        "task_net": [
+          2,
+          1,
+          1,
+          -1,
+          2,
+          1,
+          -1,
+          1
+        ]
+      },
+      "gripper_wait minus default": {
+        "wins": 2,
+        "losses": 1,
+        "delta_pp": 3.125,
+        "task_bootstrap_95_pp": [
+          -6.25,
+          12.5
+        ],
+        "task_net": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          -1,
+          0
+        ]
+      },
+      "gripper_wait minus lag_only": {
+        "wins": 1,
+        "losses": 3,
+        "delta_pp": -6.25,
+        "task_bootstrap_95_pp": [
+          -21.875,
+          6.25
+        ],
+        "task_net": [
+          0,
+          0,
+          1,
+          -1,
+          0,
+          0,
+          -2,
+          0
+        ]
+      },
+      "current minus current_no_phase": {
+        "wins": 0,
+        "losses": 0,
+        "delta_pp": 0.0,
+        "task_bootstrap_95_pp": [
+          0.0,
+          0.0
+        ],
+        "task_net": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "history minus history_no_phase": {
+        "wins": 0,
+        "losses": 0,
+        "delta_pp": 0.0,
+        "task_bootstrap_95_pp": [
+          0.0,
+          0.0
+        ],
+        "task_net": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "history minus current": {
+        "wins": 1,
+        "losses": 1,
+        "delta_pp": 0.0,
+        "task_bootstrap_95_pp": [
+          -9.375,
+          9.375
+        ],
+        "task_net": [
+          0,
+          1,
+          -1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "history minus fit_fixed": {
+        "wins": 2,
+        "losses": 1,
+        "delta_pp": 3.125,
+        "task_bootstrap_95_pp": [
+          -6.25,
+          12.5
+        ],
+        "task_net": [
+          0,
+          1,
+          -1,
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "history minus lag_only": {
+        "wins": 0,
+        "losses": 2,
+        "delta_pp": -6.25,
+        "task_bootstrap_95_pp": [
+          -15.625,
+          0.0
+        ],
+        "task_net": [
+          0,
+          0,
+          0,
+          -1,
+          0,
+          0,
+          -1,
+          0
+        ]
+      },
+      "oracle minus oracle_no_phase": {
+        "wins": 0,
+        "losses": 0,
+        "delta_pp": 0.0,
+        "task_bootstrap_95_pp": [
+          0.0,
+          0.0
+        ],
+        "task_net": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "oracle minus lag_only": {
+        "wins": 1,
+        "losses": 0,
+        "delta_pp": 3.125,
+        "task_bootstrap_95_pp": [
+          0.0,
+          9.375
+        ],
+        "task_net": [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "fit_fixed": "default",
+    "fit_lag_table": [
+      "default",
+      "paced"
+    ]
+  },
+  "friction": {
+    "n": 16,
+    "tasks": [
+      "libero_10-0",
+      "libero_10-3",
+      "libero_goal-0",
+      "libero_goal-1",
+      "libero_object-0",
+      "libero_object-7",
+      "libero_spatial-1",
+      "libero_spatial-7"
+    ],
+    "total": {
+      "default": 14,
+      "paced": 12,
+      "current_two_tapes": 14,
+      "oracle": 15
+    },
+    "by_regime": {
+      "ordinary": {
+        "default": 8,
+        "paced": 6,
+        "current_two_tapes": 8,
+        "oracle": 8
+      },
+      "reduced": {
+        "default": 6,
+        "paced": 6,
+        "current_two_tapes": 6,
+        "oracle": 7
+      }
+    },
+    "selections": {
+      "current_two_tapes": {
+        "default": 16,
+        "paced": 0
+      }
+    },
+    "contrasts": {
+      "current_two_tapes minus default": {
+        "wins": 0,
+        "losses": 0,
+        "delta_pp": 0.0,
+        "task_bootstrap_95_pp": [
+          0.0,
+          0.0
+        ],
+        "task_net": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "oracle minus default": {
+        "wins": 1,
+        "losses": 0,
+        "delta_pp": 6.25,
+        "task_bootstrap_95_pp": [
+          0.0,
+          18.75
+        ],
+        "task_net": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ]
+      }
+    },
+    "prefix_with_gripper_sign_change": 0
+  }
+}
