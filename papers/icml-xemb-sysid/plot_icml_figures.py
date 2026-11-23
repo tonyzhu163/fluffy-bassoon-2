@@ -70,7 +70,7 @@ def plot_fig1_multiarm_multivla(ev_dir: Path, out_dir: Path, scale_ev_dir: Path 
     ]
     methods = [
         ("privileged_oracle", "Exact Oracle", PALETTE["oracle"]),
-        ("ours_equiv_v2_passive", "Ours: Passive V2 (3 seeds)", PALETTE["ours_v2"]),
+        ("ours_equiv_v2_passive", "SymMeta (passive, 3 seeds)", PALETTE["ours_v2"]),
         ("ours_equiv_homog_passive", "Ours: EquivFlow (Pas.)", PALETTE["ours_homog"]),
         ("analytic_visual_hs_passive", "Horn–Schunck (Pas.)", PALETTE["hs"]),
         ("dense_flow_dis_passive", "DIS + Procrustes (Pas.)", PALETTE["dis"]),
@@ -78,7 +78,7 @@ def plot_fig1_multiarm_multivla(ev_dir: Path, out_dir: Path, scale_ev_dir: Path 
         ("perceiver_icba_passive", "Perceiver-ICBA (3 seeds)", PALETTE["perceiver"]),
         ("zero_shot_shifted", "Zero-Shot Shifted (No Adapt.)", "#95a5a6"),
         ("reground_babbling", "ReGround Babbling", PALETTE["reground"]),
-        ("ours_v2_swapped", "Swapped Ctrl (Ours)", PALETTE["swapped"]),
+        ("ours_v2_swapped", "Swapped Ctrl (SymMeta)", PALETTE["swapped"]),
     ]
 
     fig, axes = plt.subplots(1, 4, figsize=(17.2, 4.7), sharey=True)
@@ -135,7 +135,7 @@ def plot_fig1_multiarm_multivla(ev_dir: Path, out_dir: Path, scale_ev_dir: Path 
         hs_c = data["paired_contrasts_overall"]["ours_equiv_v2_passive"]["analytic_visual_hs_passive"]
         diff_pp = 100.0 * hs_c["mean_diff"]
         lo_pp, hi_pp = 100.0 * hs_c["ci95"][0], 100.0 * hs_c["ci95"][1]
-        ax.set_title(f"{title}\n(Ours vs. HS: +{diff_pp:.1f} pp, 95% CI [{lo_pp:+.1f}, {hi_pp:+.1f}])", fontsize=9.1, pad=8)
+        ax.set_title(f"{title}\n(SymMeta vs. HS: +{diff_pp:.1f} pp, 95% CI [{lo_pp:+.1f}, {hi_pp:+.1f}])", fontsize=9.1, pad=8)
         ax.set_xlim(0, 124)
         ax.set_xlabel("Native Task Success (%)")
         ax.grid(axis="x")
@@ -151,7 +151,7 @@ def plot_fig1_multiarm_multivla(ev_dir: Path, out_dir: Path, scale_ev_dir: Path 
     handles, labels = axes[0].get_legend_handles_labels()
     fig.legend(handles, labels,
                loc="lower center", ncol=3, bbox_to_anchor=(0.5, -0.05), fontsize=9.2)
-    fig.suptitle("Zero-Shot Cross-Morphology & Cross-VLA Transfer (Trained Only on Panda + Sawyer · 3 Seeds · 6,560 Live Episodes)",
+    fig.suptitle("Zero-Shot Cross-Morphology & Cross-VLA Transfer with SymMeta (Trained Only on Panda + Sawyer · 3 Seeds · 6,560 Live Episodes)",
                  fontsize=11.8, fontweight="bold", y=1.03)
     plt.tight_layout()
     for ext in ("png", "pdf"):
@@ -165,7 +165,7 @@ def plot_fig2_scaling_law(ev_dir: Path, out_dir: Path):
     table = data["table"]
 
     series = [
-        ("equiv_v2_dis_dz", "Ours: Factored Equiv-V2 (DIS + dz)", PALETTE["ours_v2"], "o", "-", 2.6),
+        ("equiv_v2_dis_dz", "SymMeta (DIS + dz)", PALETTE["ours_v2"], "o", "-", 2.6),
         ("equiv_flow_homog", "Ours: EquivFlow-Procrustes", PALETTE["ours_homog"], "s", "--", 2.0),
         ("factored_no_equiv_v2", "Factored No-Equiv (Ablation)", PALETTE["no_equiv"], "^", "-.", 1.9),
         ("perceiver_icba_w192", "Perceiver-ICBA (w192, Yang et al.)", PALETTE["perceiver"], "D", "-", 2.1),
@@ -201,7 +201,7 @@ def plot_fig2_scaling_law(ev_dir: Path, out_dir: Path):
     ax1.grid(True)
 
     ax2.axvline(7.0, color="#666666", linestyle="--", linewidth=0.9, alpha=0.6)
-    ax2.annotate("Ours at M=7: 96%\n(scales to 99% at M=128)", xy=(7, 96), xytext=(11, 64),
+    ax2.annotate("SymMeta at M=7: 96%\n(scales to 99% at M=128)", xy=(7, 96), xytext=(11, 64),
                  arrowprops=dict(arrowstyle="->", color=PALETTE["ours_v2"], lw=1.2), fontsize=8.1, fontweight="bold", color=PALETTE["ours_v2"],
                  bbox=dict(boxstyle="round,pad=0.25", fc="white", ec=PALETTE["ours_v2"], alpha=0.88))
     ax2.annotate("4× larger Perceiver:\nanti-scales (≤20% OOD!)", xy=(64, 19), xytext=(11, 2.5),
@@ -218,7 +218,7 @@ def plot_fig2_scaling_law(ev_dir: Path, out_dir: Path):
 
     handles, labels = ax1.get_legend_handles_labels()
     fig.legend(handles, labels, loc="lower center", ncol=3, bbox_to_anchor=(0.5, -0.10), fontsize=8.8)
-    fig.suptitle("Embodiment-Diversity & Capacity Scaling Law on Real MuJoCo Trajectories (3 Seeds, Locked UR5e OOD n=64)", fontsize=11.5, fontweight="bold", y=1.02)
+    fig.suptitle("SymMeta Embodiment-Diversity & Capacity Scaling on Real MuJoCo Trajectories (3 Seeds, Locked UR5e OOD n=64)", fontsize=11.5, fontweight="bold", y=1.02)
     plt.tight_layout()
     for ext in ("png", "pdf"):
         fig.savefig(out_dir / f"fig2_scaling_law.{ext}")
@@ -235,8 +235,8 @@ def plot_fig3_horizon_and_so3(ev_dir: Path, out_dir: Path):
     ctrls = [5, 10, 15]
     x_sec = [c / 20.0 for c in ctrls]  # 20 Hz control
     h_series = [
-        ("equiv_v2_dis_dz", "Ours: Passive V2 (DIS + dz)", PALETTE["ours_v2"], "o", "-"),
-        ("equiv_v2_dis_nodz", "Ours: Passive V2 (no dz)", "#5dade2", "^", "--"),
+        ("equiv_v2_dis_dz", "SymMeta (DIS + dz)", PALETTE["ours_v2"], "o", "-"),
+        ("equiv_v2_dis_nodz", "SymMeta (no dz)", "#5dade2", "^", "--"),
         ("equiv_flow_homog", "Ours: EquivFlow-Procrustes", PALETTE["ours_homog"], "s", "-."),
         ("analytic_visual_hs", "Horn–Schunck (Pas.)", PALETTE["hs"], "D", "-"),
         ("dense_flow_dis", "DIS + Procrustes (Pas.)", PALETTE["dis"], "P", ":"),
@@ -253,7 +253,7 @@ def plot_fig3_horizon_and_so3(ev_dir: Path, out_dir: Path):
     ax1.set_ylim(0, 108)
     ax1.set_xlabel("Observed Zero-Probe Attempt-1 Motion Budget (20 Hz)")
     ax1.set_ylabel("Held-Out UR5e OOD Yaw MAE (° ↓)")
-    ax1.set_title("(a) Sub-Second Passive Convergence (Locked UR5e, 3 Seeds)")
+    ax1.set_title("(a) Sub-Second Passive Convergence of SymMeta (Locked UR5e, 3 Seeds)")
     ax1.legend(loc="center right", fontsize=7.8)
     ax1.grid(True)
 
@@ -301,8 +301,8 @@ def plot_fig4_memorization_cliff(ev_dir: Path, out_dir: Path):
 
     fig, ax = plt.subplots(figsize=(9.5, 4.1))
     groups = [
-        ("ours_equiv_v2_passive", "familiar", "Ours V2 · Familiar", PALETTE["ours_v2"], 1.0, None),
-        ("ours_equiv_v2_passive", "ood_combined", "Ours V2 · OOD", PALETTE["ours_v2"], 0.55, "///"),
+        ("ours_equiv_v2_passive", "familiar", "SymMeta · Familiar", PALETTE["ours_v2"], 1.0, None),
+        ("ours_equiv_v2_passive", "ood_combined", "SymMeta · OOD", PALETTE["ours_v2"], 0.55, "///"),
         ("perceiver_icba_passive", "familiar", "Perceiver-ICBA · Familiar", PALETTE["perceiver"], 1.0, None),
         ("perceiver_icba_passive", "ood_combined", "Perceiver-ICBA · OOD", PALETTE["perceiver"], 0.55, "///"),
     ]
@@ -317,7 +317,7 @@ def plot_fig4_memorization_cliff(ev_dir: Path, out_dir: Path):
     ax.set_xticklabels([b for b, _ in benches], fontsize=9.5, fontweight="bold")
     ax.set_ylim(0, 106)
     ax.set_ylabel("Live Frozen VLA Native Success (%)")
-    ax.set_title("Monolithic Memorization Cliff vs. Equivariant Generalization Across 3 Robots & 2 Frozen VLAs")
+    ax.set_title("Monolithic Memorization Cliff vs. SymMeta Generalization Across 3 Robots & 2 Frozen VLAs")
     ax.legend(ncol=2, loc="upper right", fontsize=8.5)
     ax.grid(axis="y")
     plt.tight_layout()
@@ -338,16 +338,16 @@ def plot_fig5_pro2_visual_stress(ev_dir: Path, out_dir: Path):
     ]
     methods_live = [
         ("privileged_oracle", "Exact Oracle", PALETTE["oracle"]),
-        ("ours_equiv_v2_passive_base", "Ours: Passive V2 (Zero Retrain)", PALETTE["ours_v2"]),
+        ("ours_equiv_v2_passive_base", "SymMeta (Passive, Zero Retrain)", PALETTE["ours_v2"]),
         ("analytic_visual_hs_passive", "Horn–Schunck (Pas.)", PALETTE["hs"]),
         ("dense_flow_dis_active", "DIS + Procrustes (Act.)", PALETTE["dis"]),
         ("perceiver_icba_pro2_active", "Perceiver-ICBA (Pro2-Retrained)", PALETTE["perceiver"]),
         ("reground_babbling", "ReGround Babbling", PALETTE["reground"]),
     ]
     methods_yaw = [
-        ("ours_equiv_v2_passive_base", "Ours: Passive V2 (Zero Retrain)", PALETTE["ours_v2"], "o", "-"),
+        ("ours_equiv_v2_passive_base", "SymMeta (Passive, Zero Retrain)", PALETTE["ours_v2"], "o", "-"),
         ("analytic_visual_hs_passive", "Horn–Schunck (Pas.)", PALETTE["hs"], "D", "-"),
-        ("ours_equiv_v2_pro2_active", "Ours: V2 Active (Pro2-Retrained)", PALETTE["ours_homog"], "s", "--"),
+        ("ours_equiv_v2_pro2_active", "SymMeta (Active, Pro2-Retrained)", PALETTE["ours_homog"], "s", "--"),
         ("dense_flow_dis_active", "DIS + Procrustes (Act.)", PALETTE["dis"], "P", "-."),
         ("perceiver_icba_pro2_active", "Perceiver-ICBA (Pro2-Retrained)", PALETTE["perceiver"], "v", "-"),
         ("reground_babbling", "ReGround Babbling", PALETTE["reground"], "^", ":"),
@@ -386,7 +386,7 @@ def plot_fig5_pro2_visual_stress(ev_dir: Path, out_dir: Path):
         if m_key in ("ours_equiv_v2_passive_base", "analytic_visual_hs_passive", "dense_flow_dis_active"):
             ax2.text(x_v[-1] + 0.14, ys[-1], f"{ys[-1]:.1f}°", va="center", ha="left", fontsize=7.8, fontweight="bold", color=col)
 
-    ax2.annotate("Ours holds 6.9° on S15\n& 7.9° on S16 (zero retrain)",
+    ax2.annotate("SymMeta holds 6.9° on S15\n& 7.9° on S16 (zero retrain)",
                  xy=(2, 6.94), xytext=(1.35, 34.0), ha="center", fontsize=7.7, fontweight="bold", color=PALETTE["ours_v2"],
                  arrowprops=dict(arrowstyle="->", color=PALETTE["ours_v2"], lw=1.1),
                  bbox=dict(boxstyle="round,pad=0.25", fc="white", ec=PALETTE["ours_v2"], alpha=0.92))
@@ -399,7 +399,7 @@ def plot_fig5_pro2_visual_stress(ev_dir: Path, out_dir: Path):
     ax2.legend(loc="upper center", ncol=2, fontsize=7.0, framealpha=0.95)
     ax2.grid(True)
 
-    fig.suptitle("LIBERO-Pro2.0 Visual & Camera Stress-Test on Held-Out 6-DoF UR5e (2,160 Live Episodes · Ours vs. HS: +10.0 pp, 95% CI [+4.2, +15.8])", fontsize=11.0, fontweight="bold", y=1.02)
+    fig.suptitle("LIBERO-Pro2.0 Visual & Camera Stress-Test on Held-Out 6-DoF UR5e (2,160 Live Episodes · SymMeta vs. HS: +10.0 pp, 95% CI [+4.2, +15.8])", fontsize=11.0, fontweight="bold", y=1.02)
     plt.tight_layout()
     for ext in ("png", "pdf"):
         fig.savefig(out_dir / f"fig5_pro2_visual_stress.{ext}")
@@ -437,7 +437,7 @@ def plot_fig6_fewshot_sft_vs_sysid(ev_dir: Path, scale_ev_dir: Path, out_dir: Pa
     ax1.plot(x_idx, mlp_y, marker="o", lw=2.3, color="#c0392b", label="Few-Shot SFT: MLP Adapter (Same-Shift)")
     ax1.plot(x_idx, lin_y, marker="s", lw=2.1, ls="--", color="#e67e22", label="Few-Shot SFT: Linear Adapter (Same-Shift)")
     ax1.axhspan(v2_ov_m - v2_ov_s, v2_ov_m + v2_ov_s, color=PALETTE["ours_v2"], alpha=0.16)
-    ax1.axhline(v2_ov_m, color=PALETTE["ours_v2"], lw=2.4, label=f"Ours: Passive V2 (K=0 demos, 0.75 s): {v2_ov_m:.1f}±{v2_ov_s:.1f}%")
+    ax1.axhline(v2_ov_m, color=PALETTE["ours_v2"], lw=2.4, label=f"SymMeta (passive, K=0 demos, 0.75 s): {v2_ov_m:.1f}±{v2_ov_s:.1f}%")
     ax1.axhline(100.0 * fs["zero_shot_unshifted"]["rate"], color="#27ae60", lw=1.4, ls=":", label=f"Zero-Shot Unshifted UR5e: {100.0*fs['zero_shot_unshifted']['rate']:.1f}%")
 
     for xi, ym in zip(x_idx, mlp_y):
@@ -454,7 +454,7 @@ def plot_fig6_fewshot_sft_vs_sysid(ev_dir: Path, scale_ev_dir: Path, out_dir: Pa
     ax1.grid(True)
 
     # Right: Cross-Shift Generalization
-    labels = ["Zero-Shot\nShifted", "SFT: MLP\n(K=10 demos)", "SFT: Linear\n(K=10 demos)", "Ours: Passive V2\n(K=0, 0.75 s)"]
+    labels = ["Zero-Shot\nShifted", "SFT: MLP\n(K=10 demos)", "SFT: Linear\n(K=10 demos)", "SymMeta (passive)\n(K=0, 0.75 s)"]
     vals = [100.0 * fs["zero_shot_shifted"]["rate"],
             100.0 * fs["sft_mlp_k10_cross_shift"]["rate"],
             100.0 * fs["sft_linear_k10_cross_shift"]["rate"],
@@ -473,7 +473,7 @@ def plot_fig6_fewshot_sft_vs_sysid(ev_dir: Path, scale_ev_dir: Path, out_dir: Pa
     ax2.set_title("(b) Cross-Shift Generalization (Deployed on Another Shift)")
     ax2.grid(axis="y")
 
-    fig.suptitle("Few-Shot Target-Robot Fine-Tuning (SFT) vs. Zero-Shot Passive Visual SysID on Held-Out 6-DoF UR5e", fontsize=11.4, fontweight="bold", y=1.02)
+    fig.suptitle("Few-Shot Target-Robot Fine-Tuning (SFT) vs. SymMeta (Zero-Shot Passive Visual SysID) on Held-Out 6-DoF UR5e", fontsize=11.4, fontweight="bold", y=1.02)
     plt.tight_layout()
     for ext in ("png", "pdf"):
         fig.savefig(out_dir / f"fig6_fewshot_sft_vs_sysid.{ext}")

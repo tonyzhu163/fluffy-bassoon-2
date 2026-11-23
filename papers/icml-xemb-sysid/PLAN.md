@@ -1,4 +1,4 @@
-# ICML Paper Plan — In-Context Embodied System Identification for Frozen VLAs
+# ICML Paper Plan — SymMeta
 
 **Location:** `sticks-and-stones/papers/icml-xemb-sysid/`  
 **Target Venue:** ICML (8-page main text + unlimited references/appendix)  
@@ -9,7 +9,7 @@
 ## 1. Working Title & Core Positioning
 
 **Working Title:**  
-*In-Context Embodied System Identification for Frozen VLAs: Why Monolithic Sequence Encoders Memorize and How SO(2)-Equivariant Factorization Transfers Zero-Shot Across Morphologies*
+*SymMeta: A Geometric Inner Loop for Adapting Frozen VLAs Across Robots*
 
 ### Core Thesis
 Off-the-shelf Vision-Language-Action models (VLAs, e.g., frozen $\pi_{0.5}$) already possess strong manipulation competence, yet collapse (`7.3%` overall; `2.3%` under shift) when deployed on an unseen physical robot morphology (`7-DoF Panda/Sawyer` $\rightarrow$ held-out `6-DoF UR5e`) with unknown command-frame rotation, gain, or jaw polarity. We show that:
