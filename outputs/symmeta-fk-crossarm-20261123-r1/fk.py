@@ -96,7 +96,7 @@ def main(panel, reader_file, output):
     from fluffy_bassoon.xemb.embodiment import circular_yaw_error_deg
 
     ref = load(reader_file)
-    require(ref["qualified"] and ref["panel"] == panel and len(ref["rows"]) == 96, reader_file)
+    require(ref["panel"] == panel and ref["pin"] == info["pin"] and len(ref["rows"]) == 96, reader_file)
     receipts, estimates = [], []
     for shard in range(8):
         manifest = list(rows(archive, shard))
@@ -142,6 +142,8 @@ def main(panel, reader_file, output):
                 native = p["delta_eef"][mask]
                 residual = np.abs(np.linalg.norm(native[:,:2],axis=1) - np.linalg.norm(dp[:,:2],axis=1))
                 estimates.append(dict(**r, fk_yaw_hat=yaw, fk_available=True, reader_available=True,
+                    native_reader_qualified=r["native_match"], issued_xy=exposure[:,:2].tolist(),
+                    world_delta_xy_m=dp[:,:2].tolist(),
                     fk_yaw_error_deg=circular_yaw_error_deg(yaw, hist["true_yaw"]),
                     reader_yaw_error_deg=circular_yaw_error_deg(r["yaw_hat"], hist["true_yaw"]),
                     regime=hist["regime"], shard=shard, aligned_correlation=fit["aligned_correlation"],
@@ -150,7 +152,8 @@ def main(panel, reader_file, output):
         print(panel, "FK", shard, len(estimates), flush=True)
     with output.open("x") as f:
         json.dump(dict(**info, checkpoint_sha256=ref["checkpoint_sha256"], resets=receipts, rows=estimates,
-                       qualified=len(estimates)==96), f, allow_nan=False)
+                       fk_qualified=len(estimates)==96, native_reader_qualified=ref["qualified"],
+                       qualified=len(estimates)==96 and ref["qualified"]), f, allow_nan=False)
 
 
 if __name__ == "__main__":

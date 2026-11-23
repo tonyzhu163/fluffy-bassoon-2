@@ -1,0 +1,189 @@
+{
+  "openpi_revision": "215abfb217dbac7d5f1273282331b9b1866c0479",
+  "variant": "BASE",
+  "physical_gripper": "PandaGripper",
+  "support_layout": 11,
+  "query_layout": 13,
+  "support_seed": "31800000 + sorted_suite_index*10000 + task_id*100 + 11",
+  "query_seed": "41800000 + sorted_suite_index*10000 + task_id*100 + 13",
+  "noise_seed_offset": 817117,
+  "noise": "numpy.default_rng(query_seed + offset).standard_normal((ceil(native_horizon/5),action_horizon,action_dim)).astype(float32)",
+  "policy_chunk_controls": 5,
+  "query_max_controls": "native task horizon",
+  "warmup_create": true,
+  "reset_create_attempts": 3,
+  "prompt": "released language instruction",
+  "pi0_quaternion_sign": "negate xyzw when abs(w)<0.85 and x<0 before axis-angle",
+  "success": "native simulator success",
+  "panels": {
+    "gpu09iiwa": {
+      "launch": "490f25c5716aa067199c5b65e32caf6cd15421a4 job-3qs72l3fcgi9-master-0 155 stage2a-live-ur5e",
+      "source_pin": "490f25c5716aa067199c5b65e32caf6cd15421a4",
+      "source": "/mowenjie/fluffy-bassoon-2/setups/xemb-icml-campaign-20261121-r1/source-wave2d",
+      "config": "policy=pi05 arm=IIWA seed=41 shards=0 1 2 3 4 5 6 7 checkpoints=/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu03v2/stage1/checkpoints,/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu04homog/stage1/checkpoints support=fresh",
+      "policy_config": "pi05_libero",
+      "checkpoint": "/mowenjie/fluffy-bassoon/inputs/pi05-libero-openpi-20261027-r1",
+      "weight_transport_manifest_sha256": "28310343bab088490f4e84110ce13861ccdeb3eda1bb4dd7c4bc26df84b8428c",
+      "checkpoint_ready": "verified",
+      "query_canonicalize_quat": false,
+      "support_passive_canonicalize_quat": false,
+      "support_active_canonicalize_quat": false,
+      "extra_delta_transform": false,
+      "action_horizon": 10,
+      "action_dim": 32,
+      "decoder_output_dim": 7,
+      "sources": {
+        "outputs/xemb-icml-campaign-20261121-r1/run_stage2a_8gpu.sh": "9e99ac1eac736d42fa0e810c49368f2e82698586337294f2cd54ac8da076af6d",
+        "outputs/xemb-icml-campaign-20261121-r1/eval_stage2a_live_ur5e.py": "fbf7c6b2b1b58e3d421a8c218c5ab025a4ad335cedb4bdad6c715c77cd4a349f",
+        "outputs/libero-xemb-ur5e-sysid-20261120-r1/ur5e_motor.py": "d59c82f37cb3996eb0d8eac688955b16dca50f63bdd21b4b21d4ffe224a01e2b"
+      },
+      "historical_shards": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu09iiwa/live/shard-0/live-shard.json",
+          "sha256": "926b36e6e512f873915373eb3114e7c7b0a22d3f96c4f90592f2e5ae06b2f33e"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu09iiwa/live/shard-1/live-shard.json",
+          "sha256": "b82f0d3f4dda2484cbf9cc590558561f64ee9b43e92b2a82c4fdb5726ddff5b6"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu09iiwa/live/shard-2/live-shard.json",
+          "sha256": "5ea217fc69d769bb21659cc1da313226a104286d5fc5bb695361f84384c17fb7"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu09iiwa/live/shard-3/live-shard.json",
+          "sha256": "55d4f9952fcf792f847beaf5ab44edc703825e09553495928a52b4ba79feaec8"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu09iiwa/live/shard-4/live-shard.json",
+          "sha256": "8e2721d09c447357cc6d09a98f779828d89a9453ff9e15a1fba96cb87a814d0d"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu09iiwa/live/shard-5/live-shard.json",
+          "sha256": "4fea3851311fa2a460071691c191e42a707e1b44653fa0020d6737e26cd0a65a"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu09iiwa/live/shard-6/live-shard.json",
+          "sha256": "c94b475b1581a7f17b55a4bbd6aea5940840574691ad9f0953e6d9d1eb0d90b2"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu09iiwa/live/shard-7/live-shard.json",
+          "sha256": "7ff03ed2e7a432373e7d8b729bef44597417b55527f67ea0cf1b274b7be1c0b0"
+        }
+      ]
+    },
+    "gpu06kinova3": {
+      "launch": "465f33dc657ceab341dbceaf6b98355b94810059 job-66opmwn2j3a9-master-0 155 stage2a-live-ur5e",
+      "source_pin": "465f33dc657ceab341dbceaf6b98355b94810059",
+      "source": "/mowenjie/fluffy-bassoon-2/setups/xemb-icml-campaign-20261121-r1/source-wave2b",
+      "config": "policy=pi05 arm=Kinova3 seed=41 shards=0 1 2 3 4 5 6 7 checkpoints=/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu03v2/stage1/checkpoints,/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu04homog/stage1/checkpoints support=fresh",
+      "policy_config": "pi05_libero",
+      "checkpoint": "/mowenjie/fluffy-bassoon/inputs/pi05-libero-openpi-20261027-r1",
+      "weight_transport_manifest_sha256": "28310343bab088490f4e84110ce13861ccdeb3eda1bb4dd7c4bc26df84b8428c",
+      "checkpoint_ready": "verified",
+      "query_canonicalize_quat": false,
+      "support_passive_canonicalize_quat": false,
+      "support_active_canonicalize_quat": false,
+      "extra_delta_transform": false,
+      "action_horizon": 10,
+      "action_dim": 32,
+      "decoder_output_dim": 7,
+      "sources": {
+        "outputs/xemb-icml-campaign-20261121-r1/run_stage2a_8gpu.sh": "9e99ac1eac736d42fa0e810c49368f2e82698586337294f2cd54ac8da076af6d",
+        "outputs/xemb-icml-campaign-20261121-r1/eval_stage2a_live_ur5e.py": "51840051d2960dc56dcd5c7321769a33bb3293bc0e6b192de61dc5d88ebc8cb9",
+        "outputs/libero-xemb-ur5e-sysid-20261120-r1/ur5e_motor.py": "d59c82f37cb3996eb0d8eac688955b16dca50f63bdd21b4b21d4ffe224a01e2b"
+      },
+      "historical_shards": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu06kinova3/live/shard-0/live-shard.json",
+          "sha256": "a268abb53fde0ce446e4ad04ef886e5030167fc075c9493678b249addba96f68"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu06kinova3/live/shard-1/live-shard.json",
+          "sha256": "a85d0180e1b96f38d06e6ed136445e020ea58dba5e0f8ce1dfd70d8716fcd2b3"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu06kinova3/live/shard-2/live-shard.json",
+          "sha256": "ba022ea22d85c1a339c851327b1d92466cccb8b128b2430430351699748b50f0"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu06kinova3/live/shard-3/live-shard.json",
+          "sha256": "019099a15936c88b14a7004852162a1fd6ad8a66308273d50743f65713057425"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu06kinova3/live/shard-4/live-shard.json",
+          "sha256": "d0197c0ec50f1a0ef7bcf26b652af81f66e6b18c426758f418e6893b94fe1ea3"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu06kinova3/live/shard-5/live-shard.json",
+          "sha256": "18c81a6bdee86f82259f964046d03d3682d71bbbc3be70f17ab5bebec061730d"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu06kinova3/live/shard-6/live-shard.json",
+          "sha256": "a5e37ed4398f41a833dac933af7e5a82061de7f91ed1369732f227c7fdffe810"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu06kinova3/live/shard-7/live-shard.json",
+          "sha256": "7bbd0096115d434bb6a60a9bdfe7934662abe9aa75ff6d98c6d433d825e49ebd"
+        }
+      ]
+    },
+    "gpu08pi0fix": {
+      "launch": "490f25c5716aa067199c5b65e32caf6cd15421a4 job-bhl6rx8ok5t8-master-0 154 stage2a-live-ur5e",
+      "source_pin": "490f25c5716aa067199c5b65e32caf6cd15421a4",
+      "source": "/mowenjie/fluffy-bassoon-2/setups/xemb-icml-campaign-20261121-r1/source-wave2d",
+      "config": "policy=pi0 arm=UR5e seed=41 shards=0 1 2 3 4 5 6 7 checkpoints=/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu03v2/stage1/checkpoints,/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu04homog/stage1/checkpoints support=fresh",
+      "policy_config": "pi0_libero",
+      "checkpoint": "/mowenjie/fluffy-bassoon-2/inputs/pi0-libero-openpi-g1748456809412170-20261029-r1",
+      "weight_transport_manifest_sha256": "9d887f0a461796ed2e65ee87c9184d1ff1853efc9173b2a3ee7b47830b9fad2c",
+      "checkpoint_ready": "verified",
+      "query_canonicalize_quat": true,
+      "support_passive_canonicalize_quat": true,
+      "support_active_canonicalize_quat": false,
+      "extra_delta_transform": true,
+      "action_horizon": 50,
+      "action_dim": 32,
+      "decoder_output_dim": 7,
+      "sources": {
+        "outputs/xemb-icml-campaign-20261121-r1/run_stage2a_8gpu.sh": "9e99ac1eac736d42fa0e810c49368f2e82698586337294f2cd54ac8da076af6d",
+        "outputs/xemb-icml-campaign-20261121-r1/eval_stage2a_live_ur5e.py": "fbf7c6b2b1b58e3d421a8c218c5ab025a4ad335cedb4bdad6c715c77cd4a349f",
+        "outputs/libero-xemb-ur5e-sysid-20261120-r1/ur5e_motor.py": "d59c82f37cb3996eb0d8eac688955b16dca50f63bdd21b4b21d4ffe224a01e2b"
+      },
+      "historical_shards": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu08pi0fix/live/shard-0/live-shard.json",
+          "sha256": "651b651b3f2bb5204e0d2b3dd2cfce2464e4c9d75f56fa206f8a91198cfc00b0"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu08pi0fix/live/shard-1/live-shard.json",
+          "sha256": "1aa06dd5deda79df8a5027b724928572cffcb9d16d90523e3021674763245ffa"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu08pi0fix/live/shard-2/live-shard.json",
+          "sha256": "15494a04fe48018931ae034c422f5fef9005f5b2647c0543f01ea23888255767"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu08pi0fix/live/shard-3/live-shard.json",
+          "sha256": "7bc6090c0f1a2936ca6ccfc89ebf60e1286bddb2d4a8ac88cf4c1bd19b2036c5"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu08pi0fix/live/shard-4/live-shard.json",
+          "sha256": "5ee788241b8cc7dacf043014e1e6b4821f3d95bb3a488c4208a4b595f088c7be"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu08pi0fix/live/shard-5/live-shard.json",
+          "sha256": "1a44bd372da6b5694dd51fab432ec5b883177489dfeceada275643959f1d9637"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu08pi0fix/live/shard-6/live-shard.json",
+          "sha256": "594d536c3723ac8c071b372619e9ae5c9562b4a56e1894be18618fab0ac837fd"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu08pi0fix/live/shard-7/live-shard.json",
+          "sha256": "fad6072561ccb0f1dcf120251daa967387960e6231b71732c7f2a879ed919b68"
+        }
+      ],
+      "historical_gate": "PI0_QUATFIX_GATE arm=UR5e max_abs_rot_x=0.0341 f0_state3=3.1449"
+    }
+  }
+}
