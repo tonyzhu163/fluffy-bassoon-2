@@ -1,0 +1,741 @@
+{
+  "seed": 0,
+  "upstream": "16a98486f560676b9036d1a6d067b9dd51a5917a",
+  "policy": "7152f13e34c6c115d808aea0e5d08aca74eac14b",
+  "source": {
+    "babble": {
+      "shards": 50,
+      "manifest_rows_sha256": "219ef15bb4b58e21aaed2afbc196f884cce89799d1cfdaed34369b032217a079",
+      "episodes": 541,
+      "transitions": 104058
+    },
+    "vla_pi05": {
+      "shards": 25,
+      "manifest_rows_sha256": "0e52d4f8d4bd36e2a9af44e86dc60c6a87344cd8609fee1817209096065767ff",
+      "episodes": 340,
+      "transitions": 119460
+    }
+  },
+  "holdout": {
+    "episodes": [
+      {
+        "kind": "vla_pi05",
+        "shard": "shard010.npz",
+        "episode": 15,
+        "task": "spatial_2",
+        "length": 280
+      },
+      {
+        "kind": "vla_pi05",
+        "shard": "shard016.npz",
+        "episode": 15,
+        "task": "10_3",
+        "length": 520
+      },
+      {
+        "kind": "vla_pi05",
+        "shard": "shard017.npz",
+        "episode": 15,
+        "task": "spatial_0",
+        "length": 280
+      },
+      {
+        "kind": "vla_pi05",
+        "shard": "shard018.npz",
+        "episode": 15,
+        "task": "spatial_2",
+        "length": 280
+      },
+      {
+        "kind": "vla_pi05",
+        "shard": "shard024.npz",
+        "episode": 15,
+        "task": "10_3",
+        "length": 520
+      }
+    ],
+    "transitions": 1880,
+    "sha256": "a7ce3e3345102eb8e00eb6e47fb547a3a4a822eba9f4c53403c2927ec1064311"
+  },
+  "reference_models": {
+    "nom_fwd": {
+      "cache": "d7c2b83d22ae",
+      "model_sha256": "a89882b8b43710251a1e14abbe2cda34edef4799d6f2dddcfb06a9cee34cdd42"
+    },
+    "nom_idm": {
+      "cache": "876b29157171",
+      "model_sha256": "b3665246b858e60914308e344a449d410b18fc6a14e4b0d8bd3df62bfb9810b2"
+    },
+    "dep_fwd": {
+      "cache": "74b9512b20a6",
+      "model_sha256": "75e90f0867f84bd0726ab49ddeeae98557688eec7edcdb78e1db79a21a7dc459",
+      "init_sha256": "7f95b4602a54a06086da7b55802a54fc23c7c1fb81ad9b5eec6e815d223c0580"
+    },
+    "dep_idm": {
+      "cache": "1e361e2d004a",
+      "model_sha256": "c5391bf0a2b6343e9fabd8b5e3f0f34da71f4ea323304abc7f1069bc300cea8e",
+      "init_sha256": "b4b734cd5302ca033c46a750969ee1b8c584156ea762f2a86c3f7c5890a4c194"
+    }
+  },
+  "budgets": {
+    "15": {
+      "sha256": "f6959191e79e845a4b934dd096958b8d8bfe4e5c5852e93e042fe5de55b1a944",
+      "babble_sha256": "46a3c0a06e6f858950a61a5b015110e3f92f2ba15256c801d01c24da550a2b79",
+      "vla_sha256": "fa2a234facae699a1c1622398948c61da8e5c77f63770d10e7c4e9e98109ec8a",
+      "episodes": [
+        {
+          "kind": "babble",
+          "shard": "shard000.npz",
+          "episode": 0,
+          "task": "spatial_0",
+          "length": 200,
+          "start": 0,
+          "stop": 9
+        },
+        {
+          "kind": "vla_pi05",
+          "shard": "shard000.npz",
+          "episode": 0,
+          "task": "spatial_0",
+          "length": 280,
+          "start": 0,
+          "stop": 6
+        }
+      ],
+      "train_indices": [
+        1
+      ],
+      "val_indices": [
+        0
+      ],
+      "train_transitions": 6,
+      "val_transitions": 9,
+      "windows": {
+        "fwd": {
+          "K": 1,
+          "L": 0,
+          "training": 6,
+          "validation": 9,
+          "spec_hash": "8e9515601164"
+        },
+        "idm": {
+          "K": 1,
+          "L": 2,
+          "training": 6,
+          "validation": 9,
+          "spec_hash": "01f618f7c7e5"
+        }
+      },
+      "tape_sha256": "61d7a3b973c58d90c4aa70acdd9e3727dff123c488fef2d4cd86215f8cc1d3ff"
+    },
+    "100": {
+      "sha256": "337d1a0fa8cbe725fa7908d2ef42c5f781a1768682afc3a4b6c658490639fe08",
+      "babble_sha256": "3634791d61a3aee492cb9a5c9c1731d69f73c433cb8d3e7967dfcd790bd6616b",
+      "vla_sha256": "b0b5a633b755467620d4b961c2e1bce62909fdedc373180a183bcbdec781cf6f",
+      "episodes": [
+        {
+          "kind": "babble",
+          "shard": "shard000.npz",
+          "episode": 0,
+          "task": "spatial_0",
+          "length": 200,
+          "start": 0,
+          "stop": 60
+        },
+        {
+          "kind": "vla_pi05",
+          "shard": "shard000.npz",
+          "episode": 0,
+          "task": "spatial_0",
+          "length": 280,
+          "start": 0,
+          "stop": 40
+        }
+      ],
+      "train_indices": [
+        1
+      ],
+      "val_indices": [
+        0
+      ],
+      "train_transitions": 40,
+      "val_transitions": 60,
+      "windows": {
+        "fwd": {
+          "K": 1,
+          "L": 0,
+          "training": 40,
+          "validation": 60,
+          "spec_hash": "ba4d23129295"
+        },
+        "idm": {
+          "K": 1,
+          "L": 2,
+          "training": 40,
+          "validation": 60,
+          "spec_hash": "e7c388627a9c"
+        }
+      },
+      "tape_sha256": "ba479b44bc7761108103d48030fdf3f1897996c2d084726cf069b34078b226a6"
+    },
+    "1000": {
+      "sha256": "a5b2ddf7acc909ede3ae111769b805d3e74590a6c2a627813414c3e4b186de4a",
+      "babble_sha256": "af42efe98c69aabbf5c041f7456f708adcc46675ff41a463f47ca6bc525a18b8",
+      "vla_sha256": "df1f6aa9d0112bc505c83bd2dce6fd7b144800c01a31e65f26bfbc36edcc3c2f",
+      "episodes": [
+        {
+          "kind": "babble",
+          "shard": "shard000.npz",
+          "episode": 0,
+          "task": "spatial_0",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard001.npz",
+          "episode": 0,
+          "task": "spatial_2",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard002.npz",
+          "episode": 0,
+          "task": "object_1",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "vla_pi05",
+          "shard": "shard000.npz",
+          "episode": 0,
+          "task": "spatial_0",
+          "length": 280,
+          "start": 0,
+          "stop": 280
+        },
+        {
+          "kind": "vla_pi05",
+          "shard": "shard001.npz",
+          "episode": 0,
+          "task": "spatial_2",
+          "length": 280,
+          "start": 0,
+          "stop": 120
+        }
+      ],
+      "train_indices": [
+        4,
+        3,
+        0,
+        1
+      ],
+      "val_indices": [
+        2
+      ],
+      "train_transitions": 800,
+      "val_transitions": 200,
+      "windows": {
+        "fwd": {
+          "K": 1,
+          "L": 0,
+          "training": 800,
+          "validation": 200,
+          "spec_hash": "f6615ed97197"
+        },
+        "idm": {
+          "K": 1,
+          "L": 2,
+          "training": 800,
+          "validation": 200,
+          "spec_hash": "5c0972b57f78"
+        }
+      },
+      "tape_sha256": "b81134cabd02fb82e86ec86f692815f53880421e393b5be68c7627b6c23175dd"
+    },
+    "10000": {
+      "sha256": "a979d9dd31ea9250fd84a4dd97a34fbcfef3c4d54db6c14f199a981856fe7acd",
+      "babble_sha256": "72990bed0224a82379582b239183b121bd49a23eccc714bf6c12d3ad2a7fc11d",
+      "vla_sha256": "b6dfc537cba18ce0998fb4f752106d9ed38cf8686326e39d478cf4f375fe69b8",
+      "episodes": [
+        {
+          "kind": "babble",
+          "shard": "shard000.npz",
+          "episode": 0,
+          "task": "spatial_0",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard001.npz",
+          "episode": 0,
+          "task": "spatial_2",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard002.npz",
+          "episode": 0,
+          "task": "object_1",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard003.npz",
+          "episode": 0,
+          "task": "object_3",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard004.npz",
+          "episode": 0,
+          "task": "goal_1",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard005.npz",
+          "episode": 0,
+          "task": "goal_2",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard006.npz",
+          "episode": 0,
+          "task": "10_1",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard007.npz",
+          "episode": 0,
+          "task": "10_3",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard008.npz",
+          "episode": 0,
+          "task": "spatial_0",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard009.npz",
+          "episode": 0,
+          "task": "spatial_2",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard010.npz",
+          "episode": 0,
+          "task": "object_1",
+          "length": 186,
+          "start": 0,
+          "stop": 186
+        },
+        {
+          "kind": "babble",
+          "shard": "shard011.npz",
+          "episode": 0,
+          "task": "object_3",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard012.npz",
+          "episode": 0,
+          "task": "goal_1",
+          "length": 161,
+          "start": 0,
+          "stop": 161
+        },
+        {
+          "kind": "babble",
+          "shard": "shard013.npz",
+          "episode": 0,
+          "task": "goal_2",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard014.npz",
+          "episode": 0,
+          "task": "10_1",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard015.npz",
+          "episode": 0,
+          "task": "10_3",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard016.npz",
+          "episode": 0,
+          "task": "spatial_0",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard017.npz",
+          "episode": 0,
+          "task": "spatial_2",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard018.npz",
+          "episode": 0,
+          "task": "object_1",
+          "length": 174,
+          "start": 0,
+          "stop": 174
+        },
+        {
+          "kind": "babble",
+          "shard": "shard019.npz",
+          "episode": 0,
+          "task": "object_3",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard020.npz",
+          "episode": 0,
+          "task": "goal_1",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard021.npz",
+          "episode": 0,
+          "task": "goal_2",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard022.npz",
+          "episode": 0,
+          "task": "10_1",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard023.npz",
+          "episode": 0,
+          "task": "10_3",
+          "length": 165,
+          "start": 0,
+          "stop": 165
+        },
+        {
+          "kind": "babble",
+          "shard": "shard024.npz",
+          "episode": 0,
+          "task": "spatial_0",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard025.npz",
+          "episode": 0,
+          "task": "spatial_2",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard026.npz",
+          "episode": 0,
+          "task": "object_1",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard027.npz",
+          "episode": 0,
+          "task": "object_3",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard028.npz",
+          "episode": 0,
+          "task": "goal_1",
+          "length": 153,
+          "start": 0,
+          "stop": 153
+        },
+        {
+          "kind": "babble",
+          "shard": "shard029.npz",
+          "episode": 0,
+          "task": "goal_2",
+          "length": 72,
+          "start": 0,
+          "stop": 72
+        },
+        {
+          "kind": "babble",
+          "shard": "shard030.npz",
+          "episode": 0,
+          "task": "10_1",
+          "length": 200,
+          "start": 0,
+          "stop": 200
+        },
+        {
+          "kind": "babble",
+          "shard": "shard031.npz",
+          "episode": 0,
+          "task": "10_3",
+          "length": 200,
+          "start": 0,
+          "stop": 89
+        },
+        {
+          "kind": "vla_pi05",
+          "shard": "shard000.npz",
+          "episode": 0,
+          "task": "spatial_0",
+          "length": 280,
+          "start": 0,
+          "stop": 280
+        },
+        {
+          "kind": "vla_pi05",
+          "shard": "shard001.npz",
+          "episode": 0,
+          "task": "spatial_2",
+          "length": 280,
+          "start": 0,
+          "stop": 280
+        },
+        {
+          "kind": "vla_pi05",
+          "shard": "shard002.npz",
+          "episode": 0,
+          "task": "object_1",
+          "length": 280,
+          "start": 0,
+          "stop": 280
+        },
+        {
+          "kind": "vla_pi05",
+          "shard": "shard003.npz",
+          "episode": 0,
+          "task": "object_3",
+          "length": 280,
+          "start": 0,
+          "stop": 280
+        },
+        {
+          "kind": "vla_pi05",
+          "shard": "shard004.npz",
+          "episode": 0,
+          "task": "goal_1",
+          "length": 300,
+          "start": 0,
+          "stop": 300
+        },
+        {
+          "kind": "vla_pi05",
+          "shard": "shard005.npz",
+          "episode": 0,
+          "task": "goal_2",
+          "length": 300,
+          "start": 0,
+          "stop": 300
+        },
+        {
+          "kind": "vla_pi05",
+          "shard": "shard006.npz",
+          "episode": 0,
+          "task": "10_1",
+          "length": 520,
+          "start": 0,
+          "stop": 520
+        },
+        {
+          "kind": "vla_pi05",
+          "shard": "shard007.npz",
+          "episode": 0,
+          "task": "10_3",
+          "length": 520,
+          "start": 0,
+          "stop": 520
+        },
+        {
+          "kind": "vla_pi05",
+          "shard": "shard008.npz",
+          "episode": 0,
+          "task": "spatial_0",
+          "length": 280,
+          "start": 0,
+          "stop": 280
+        },
+        {
+          "kind": "vla_pi05",
+          "shard": "shard009.npz",
+          "episode": 0,
+          "task": "spatial_2",
+          "length": 280,
+          "start": 0,
+          "stop": 280
+        },
+        {
+          "kind": "vla_pi05",
+          "shard": "shard010.npz",
+          "episode": 0,
+          "task": "object_1",
+          "length": 280,
+          "start": 0,
+          "stop": 280
+        },
+        {
+          "kind": "vla_pi05",
+          "shard": "shard011.npz",
+          "episode": 0,
+          "task": "object_3",
+          "length": 280,
+          "start": 0,
+          "stop": 280
+        },
+        {
+          "kind": "vla_pi05",
+          "shard": "shard012.npz",
+          "episode": 0,
+          "task": "goal_1",
+          "length": 300,
+          "start": 0,
+          "stop": 120
+        }
+      ],
+      "train_indices": [
+        23,
+        32,
+        11,
+        1,
+        22,
+        19,
+        21,
+        27,
+        42,
+        10,
+        3,
+        38,
+        16,
+        30,
+        20,
+        28,
+        8,
+        35,
+        43,
+        17,
+        0,
+        24,
+        25,
+        40,
+        26,
+        39,
+        9,
+        6,
+        36,
+        37,
+        13,
+        12,
+        7,
+        44,
+        5,
+        14,
+        29,
+        41,
+        33,
+        15,
+        31
+      ],
+      "val_indices": [
+        2,
+        34,
+        4,
+        18
+      ],
+      "train_transitions": 9146,
+      "val_transitions": 854,
+      "windows": {
+        "fwd": {
+          "K": 1,
+          "L": 0,
+          "training": 9146,
+          "validation": 854,
+          "spec_hash": "74b9512b20a6"
+        },
+        "idm": {
+          "K": 1,
+          "L": 2,
+          "training": 9146,
+          "validation": 854,
+          "spec_hash": "1e361e2d004a"
+        }
+      }
+    }
+  }
+}
