@@ -1,0 +1,1024 @@
+{
+  "weights_sha256": "9a9f6413e42c0f332fccbce9a0dc796af2790f82cf002f791cdbf7e01e1afca8",
+  "params": 450046176,
+  "trainable": 0,
+  "eval": true,
+  "device": "cpu",
+  "dtype": "float32",
+  "deterministic_equal_repeat": true,
+  "noise_shape": [
+    1,
+    50,
+    32
+  ],
+  "action_shape": [
+    1,
+    50,
+    7
+  ],
+  "flow_steps": 10,
+  "fit_episodes": {
+    "ur5e/0": [
+      0,
+      1,
+      2
+    ],
+    "ur5e/1": [
+      41,
+      42,
+      43
+    ],
+    "iiwa/0": [
+      0,
+      1,
+      2
+    ],
+    "iiwa/1": [
+      46,
+      47,
+      48
+    ]
+  },
+  "n_fit_rows": 288,
+  "fit_yaw": [
+    {
+      "panel": "gpu08pi0fix",
+      "index": 1,
+      "interface": "fam_yaw90",
+      "support_sha256": "3920a9db33a116e45c92c69211d5fa52da1089aa3c20196776e8848f624f53ed",
+      "yaw_hat": 91.8640272217383
+    },
+    {
+      "panel": "gpu09iiwa",
+      "index": 11,
+      "interface": "cont_m45_075",
+      "support_sha256": "44648f9d6c8b6d9342d5b829e7cae36023817dc6c38e1608a4a28070bbc038a8",
+      "yaw_hat": -46.79864612808181
+    }
+  ],
+  "rows": [
+    {
+      "arm": "ur5e",
+      "task": 2,
+      "prompt": "pick up the butter and place it in the basket",
+      "episode": 76,
+      "frame": 83,
+      "noise_seed": 817119,
+      "noise_sha": "c1147418605f84936be3737551afc1aba1d90b7770956cf6c4d34ea932bd3744",
+      "images": {
+        "observation.images.image": "70b9afd22762e7e8ad838fe58c5a5a3e140c9973eb9ffed6f7c3f73d6ea46125",
+        "observation.images.image2": "8c14c0b47ca6205bb4c2af9f819a008d825dcf5bc9d48d39ba56eb742381c95e"
+      },
+      "known_chunk_sha": "44b9e5f3041d0578b0d2b8fff4e57f2237aea9792f96ea610fc02c8f782c215e",
+      "known_first": [
+        0.38896116614341736,
+        0.5668193697929382,
+        0.7191125750541687,
+        -0.00031731853960081935,
+        0.02123083546757698,
+        0.02984323911368847,
+        1.008618712425232
+      ],
+      "known_temporal_std": [
+        0.15037736296653748,
+        0.1419149786233902,
+        0.2528875470161438,
+        0.01610596664249897,
+        0.02841486595571041,
+        0.010345885530114174,
+        0.006566447205841541
+      ],
+      "position_error_m": 0.026095056906342506,
+      "rotation_vector_error_rad": 0.07199741899967194,
+      "first5_bounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.15486143970417626,
+        "raw_joint_slots": 0.15673394227749185,
+        "joint_to_pose": 0.014252628156418519,
+        "raw_fam_yaw90": 0.19095585753746036,
+        "fit_fam_yaw90": 0.00588953346627775,
+        "raw_cont_m45_075": 0.11883957086234415,
+        "fit_cont_m45_075": 0.005744021472427499,
+        "drop": 0.11546091239994802
+      },
+      "full50_unbounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.3658392173822474,
+        "raw_joint_slots": 0.29625784343320466,
+        "joint_to_pose": 0.019925324286791717,
+        "raw_fam_yaw90": 0.1832858081600053,
+        "fit_fam_yaw90": 0.005489086528492834,
+        "raw_cont_m45_075": 0.19200328263651123,
+        "fit_cont_m45_075": 0.005010657545831963,
+        "drop": 0.44786619405632766
+      }
+    },
+    {
+      "arm": "ur5e",
+      "task": 3,
+      "prompt": "pick up the bbq sauce and place it in the basket",
+      "episode": 111,
+      "frame": 87,
+      "noise_seed": 817120,
+      "noise_sha": "7084b9f881fa8d625784808e01f3e007bb0b5036f0e549ca29be1c43a412c33f",
+      "images": {
+        "observation.images.image": "8127e6f6bccbdc26e0620d8d38dd9475e0db9cfbbda15f15cf95a3d65fda3393",
+        "observation.images.image2": "895777ac0e7d8722c492ab8f78ba275441e3e0d380373ea48036f5bfc2cba190"
+      },
+      "known_chunk_sha": "13806292957e4bfabfebf96ac14302eace6754497555adba814f1a1a95993fb9",
+      "known_first": [
+        0.1029023826122284,
+        0.012386508285999298,
+        -0.4283832311630249,
+        -0.0005132904625497758,
+        -0.03583100065588951,
+        -0.0061637102626264095,
+        -1.0148117542266846
+      ],
+      "known_temporal_std": [
+        0.16895931959152222,
+        0.29645878076553345,
+        0.4876140058040619,
+        0.019045991823077202,
+        0.026721004396677017,
+        0.007648552302271128,
+        0.838386595249176
+      ],
+      "position_error_m": 0.0021538506262004375,
+      "rotation_vector_error_rad": 0.01034920010715723,
+      "first5_bounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.06959674894193794,
+        "raw_joint_slots": 0.05068803332091696,
+        "joint_to_pose": 0.0009043348742593,
+        "raw_fam_yaw90": 0.177020523424223,
+        "fit_fam_yaw90": 0.0013516165577356837,
+        "raw_cont_m45_075": 0.04539718434054915,
+        "fit_cont_m45_075": 0.0013615212434945126,
+        "drop": 0.15757622389037604
+      },
+      "full50_unbounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.04991120050701543,
+        "raw_joint_slots": 0.03988268173034761,
+        "joint_to_pose": 0.0010135962219423593,
+        "raw_fam_yaw90": 0.1363421434055118,
+        "fit_fam_yaw90": 0.001103687694086346,
+        "raw_cont_m45_075": 0.11614515930249299,
+        "fit_cont_m45_075": 0.001088019403996627,
+        "drop": 0.14120115386422696
+      }
+    },
+    {
+      "arm": "ur5e",
+      "task": 4,
+      "prompt": "pick up the tomato sauce and place it in the basket",
+      "episode": 145,
+      "frame": 66,
+      "noise_seed": 817121,
+      "noise_sha": "e86fab551c92eee4d4804b62ab16215912e6a55c50d108c89a25363e61985552",
+      "images": {
+        "observation.images.image": "1f624bdb6056a5e006afd3d829245b5c494ee73cc51eaa2a2dea4763b6a34755",
+        "observation.images.image2": "3eb9214c74e55ded1aa65804a051252badfcce6e564f7097c472fa1944fe527b"
+      },
+      "known_chunk_sha": "019c506ac4cafdf102b3079552c43d4ba4de4fada848a70c0df9f251108995d0",
+      "known_first": [
+        -0.07539168745279312,
+        0.28636980056762695,
+        0.7623752951622009,
+        -0.001960610505193472,
+        0.052238915115594864,
+        -0.08264821022748947,
+        0.9932170510292053
+      ],
+      "known_temporal_std": [
+        0.10983869433403015,
+        0.29454538226127625,
+        0.41951867938041687,
+        0.013643337413668633,
+        0.035701967775821686,
+        0.019960710778832436,
+        0.5474628806114197
+      ],
+      "position_error_m": 0.0050775762647390366,
+      "rotation_vector_error_rad": 0.019946003332734108,
+      "first5_bounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.09765486186388883,
+        "raw_joint_slots": 0.07593007348396591,
+        "joint_to_pose": 0.0006544260303522889,
+        "raw_fam_yaw90": 0.11627895242618458,
+        "fit_fam_yaw90": 0.003141629501837795,
+        "raw_cont_m45_075": 0.036976497515627926,
+        "fit_cont_m45_075": 0.003131857334047328,
+        "drop": 0.02014890116920812
+      },
+      "full50_unbounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.404158348878398,
+        "raw_joint_slots": 0.0585620897664664,
+        "joint_to_pose": 0.009430428246476476,
+        "raw_fam_yaw90": 0.2991651465901863,
+        "fit_fam_yaw90": 0.10974127285570062,
+        "raw_cont_m45_075": 0.4765096263867515,
+        "fit_cont_m45_075": 0.015682485863753447,
+        "drop": 0.3878295482773136
+      }
+    },
+    {
+      "arm": "ur5e",
+      "task": 5,
+      "prompt": "pick up the alphabet soup and place it in the basket",
+      "episode": 184,
+      "frame": 72,
+      "noise_seed": 817122,
+      "noise_sha": "3ed0ce4e39eaf6464c272c995da91bbc74d59a3cad8f990d1a667a33316c2b45",
+      "images": {
+        "observation.images.image": "efa2552c5dcba9cf5af7200843d25fe99000314dbbba2013491bd0700067bffb",
+        "observation.images.image2": "26711c0328773498a0ebf181722744ae29c531b9e30e62e53450161f956b864f"
+      },
+      "known_chunk_sha": "3f4f59cd165e4c53350f47dfdab82bf6071fc96dc7512678a1df7382555fdc29",
+      "known_first": [
+        0.162596195936203,
+        0.7490800023078918,
+        0.47799208760261536,
+        -0.0019905834924429655,
+        -0.017546270042657852,
+        -0.010419009253382683,
+        1.0166552066802979
+      ],
+      "known_temporal_std": [
+        0.1542111486196518,
+        0.3293772339820862,
+        0.38690024614334106,
+        0.01781172677874565,
+        0.02606159821152687,
+        0.012495542876422405,
+        0.004218963906168938
+      ],
+      "position_error_m": 0.012457157485187054,
+      "rotation_vector_error_rad": 0.046130187809467316,
+      "first5_bounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.09073212809177557,
+        "raw_joint_slots": 0.06005593894356422,
+        "joint_to_pose": 0.006780063581491366,
+        "raw_fam_yaw90": 0.06071846659661487,
+        "fit_fam_yaw90": 0.00195331944425073,
+        "raw_cont_m45_075": 0.04550057649414023,
+        "fit_cont_m45_075": 0.0018661755254696366,
+        "drop": 0.1031473604116859
+      },
+      "full50_unbounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.5224165076068741,
+        "raw_joint_slots": 0.4160188751922043,
+        "joint_to_pose": 0.010820412771620361,
+        "raw_fam_yaw90": 0.28718160405799925,
+        "fit_fam_yaw90": 0.0016981518483154782,
+        "raw_cont_m45_075": 0.10385589503488922,
+        "fit_cont_m45_075": 0.001481900351531703,
+        "drop": 0.4951648504267989
+      }
+    },
+    {
+      "arm": "ur5e",
+      "task": 6,
+      "prompt": "pick up the ketchup and place it in the basket",
+      "episode": 231,
+      "frame": 77,
+      "noise_seed": 817123,
+      "noise_sha": "1ccd7606ffce8e04501a92003e2916008a4dbb8a693e0bf25dd75c677408258c",
+      "images": {
+        "observation.images.image": "021e55e12f7930bf65a975de05ebab0637f6ba3c293c83eae5f69f41018ef0bd",
+        "observation.images.image2": "ff916a475fe130126d7876c6f572e7fd7c596230522adaaad5793692fd7caea2"
+      },
+      "known_chunk_sha": "4316005a82e37c3e5304cdfe5c04b9ce30fb173526d3bd4bcb1bf0c957998fbb",
+      "known_first": [
+        0.23706495761871338,
+        0.26581913232803345,
+        0.8707284331321716,
+        4.3081294279545546e-05,
+        0.04963347688317299,
+        -0.0058974819257855415,
+        1.0096842050552368
+      ],
+      "known_temporal_std": [
+        0.0716107189655304,
+        0.16345512866973877,
+        0.3250892162322998,
+        0.01474416721612215,
+        0.018463633954524994,
+        0.006541246548295021,
+        0.006443117279559374
+      ],
+      "position_error_m": 0.03809896484017372,
+      "rotation_vector_error_rad": 0.047527723014354706,
+      "first5_bounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.1624992452097302,
+        "raw_joint_slots": 0.12936968148127942,
+        "joint_to_pose": 0.03735689395732115,
+        "raw_fam_yaw90": 0.16423699540923056,
+        "fit_fam_yaw90": 0.008196948861984944,
+        "raw_cont_m45_075": 0.16405092113674166,
+        "fit_cont_m45_075": 0.007805839975843274,
+        "drop": 0.2132843798128789
+      },
+      "full50_unbounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.4043861766815944,
+        "raw_joint_slots": 0.2941055548272082,
+        "joint_to_pose": 0.026279261593281335,
+        "raw_fam_yaw90": 0.20680472935503028,
+        "fit_fam_yaw90": 0.007015377637504605,
+        "raw_cont_m45_075": 0.2057182327753211,
+        "fit_cont_m45_075": 0.006356601554580943,
+        "drop": 0.4748304233827618
+      }
+    },
+    {
+      "arm": "ur5e",
+      "task": 7,
+      "prompt": "pick up the salad dressing and place it in the basket",
+      "episode": 271,
+      "frame": 62,
+      "noise_seed": 817124,
+      "noise_sha": "085f3cdd7de85c5639c2e49b5777f77b0c283bea6cfec72d8331f322fcf6940c",
+      "images": {
+        "observation.images.image": "f48b80c216e4d362ece9a705d5b2d8a40a71aaa4c7499f3b9f6739147788c302",
+        "observation.images.image2": "ef1b31e99f772428623995afc2a066951638bf259703449846e3cb2e6b67fe42"
+      },
+      "known_chunk_sha": "c784dd4a459dcd464f30a47da288adc72a2bf89cf9f442d9ff3f2ae21ed7a002",
+      "known_first": [
+        -0.17721214890480042,
+        0.4250759184360504,
+        0.6809033751487732,
+        -0.00028879509773105383,
+        -0.016925454139709473,
+        -0.018177621066570282,
+        0.9942536950111389
+      ],
+      "known_temporal_std": [
+        0.09730016440153122,
+        0.30599644780158997,
+        0.3863568902015686,
+        0.014347031712532043,
+        0.01412260252982378,
+        0.008512208238244057,
+        0.2778094410896301
+      ],
+      "position_error_m": 0.005438291467726231,
+      "rotation_vector_error_rad": 0.01247098296880722,
+      "first5_bounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.11341635757199268,
+        "raw_joint_slots": 0.09765886933428401,
+        "joint_to_pose": 0.0041401865925904556,
+        "raw_fam_yaw90": 0.19047406950506487,
+        "fit_fam_yaw90": 0.004303391460958203,
+        "raw_cont_m45_075": 0.07125572866470087,
+        "fit_cont_m45_075": 0.004190291244865322,
+        "drop": 0.019815791036277425
+      },
+      "full50_unbounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.40179475245769786,
+        "raw_joint_slots": 0.11854250533909727,
+        "joint_to_pose": 0.010736136237220032,
+        "raw_fam_yaw90": 0.23113068890893104,
+        "fit_fam_yaw90": 0.10782226219431566,
+        "raw_cont_m45_075": 0.46233773972042835,
+        "fit_cont_m45_075": 0.01210833379472597,
+        "drop": 0.3534884640710403
+      }
+    },
+    {
+      "arm": "ur5e",
+      "task": 8,
+      "prompt": "pick up the chocolate pudding and place it in the basket",
+      "episode": 312,
+      "frame": 84,
+      "noise_seed": 817125,
+      "noise_sha": "e739743c6dcd140153a1380997cda7f648cecf82a9ab5c6517e080cac8cda738",
+      "images": {
+        "observation.images.image": "bab03106a0202d5bd5addbd873c2d8ccf84fa2ed465df24dfb6cebbd0dc0edc4",
+        "observation.images.image2": "583ff0b0e37ec35d1c8aed5e3595ddeaa44256b97c827a4992f0d9ef72eded0d"
+      },
+      "known_chunk_sha": "203739a8375f769a1b748a4af46f4dfc874830e349df3a7f3ba9dca43a459b8d",
+      "known_first": [
+        0.23441201448440552,
+        0.5978426337242126,
+        0.3529149293899536,
+        0.0008444259874522686,
+        -0.0032968325540423393,
+        -0.010239118710160255,
+        1.0106053352355957
+      ],
+      "known_temporal_std": [
+        0.11278411000967026,
+        0.21325887739658356,
+        0.2511015832424164,
+        0.010693213902413845,
+        0.01944413036108017,
+        0.008272064849734306,
+        0.0053175026550889015
+      ],
+      "position_error_m": 0.03195657953619957,
+      "rotation_vector_error_rad": 0.04938364028930664,
+      "first5_bounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.11647931574249366,
+        "raw_joint_slots": 0.11491007447879516,
+        "joint_to_pose": 0.015179727683922173,
+        "raw_fam_yaw90": 0.1494119941382841,
+        "fit_fam_yaw90": 0.0038431228710288103,
+        "raw_cont_m45_075": 0.06728377465644296,
+        "fit_cont_m45_075": 0.003771102534533726,
+        "drop": 0.08065977562050058
+      },
+      "full50_unbounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.42954554523095845,
+        "raw_joint_slots": 0.23084986337232277,
+        "joint_to_pose": 0.027001565160467148,
+        "raw_fam_yaw90": 0.13955736194736518,
+        "fit_fam_yaw90": 0.004569061559184144,
+        "raw_cont_m45_075": 0.1608933879216621,
+        "fit_cont_m45_075": 0.0041811918418312,
+        "drop": 0.4514130621019219
+      }
+    },
+    {
+      "arm": "ur5e",
+      "task": 9,
+      "prompt": "pick up the milk and place it in the basket",
+      "episode": 357,
+      "frame": 75,
+      "noise_seed": 817126,
+      "noise_sha": "a4713a4c0ea9168e1d585b8855478151fefa587e4f0ad33b95fe030b6cd491a0",
+      "images": {
+        "observation.images.image": "d1caee1c4f325ddc5af560dc093e60577830802456d718c365f8a0bd83b1bc87",
+        "observation.images.image2": "b3845fd129cce0c95d30b63fed2dca2bbb3fb02e0d270299a378f5a5b357b84e"
+      },
+      "known_chunk_sha": "6248b3cffbcf4f6aa32571cc46d2701a660e1354d09322120c6ca8203d0faf96",
+      "known_first": [
+        0.3607301414012909,
+        0.5945861339569092,
+        0.5191315412521362,
+        0.0013297735713422298,
+        0.081772081553936,
+        0.001165678258985281,
+        1.0045479536056519
+      ],
+      "known_temporal_std": [
+        0.12566247582435608,
+        0.22464187443256378,
+        0.31793132424354553,
+        0.015680411830544472,
+        0.03175441175699234,
+        0.020840752869844437,
+        0.005545532796531916
+      ],
+      "position_error_m": 0.03361836448311806,
+      "rotation_vector_error_rad": 0.05157448723912239,
+      "first5_bounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.14218858814517912,
+        "raw_joint_slots": 0.11031639912522073,
+        "joint_to_pose": 0.022149501554812757,
+        "raw_fam_yaw90": 0.17344640681958584,
+        "fit_fam_yaw90": 0.004688252060103797,
+        "raw_cont_m45_075": 0.09537066368590814,
+        "fit_cont_m45_075": 0.004554019956933356,
+        "drop": 0.1238118202025678
+      },
+      "full50_unbounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.4439967120942548,
+        "raw_joint_slots": 0.26540212101411703,
+        "joint_to_pose": 0.015165980440583376,
+        "raw_fam_yaw90": 0.1424516663211931,
+        "fit_fam_yaw90": 0.003827716326457103,
+        "raw_cont_m45_075": 0.15914272302754764,
+        "fit_cont_m45_075": 0.0034813361806240646,
+        "drop": 0.48781406554978757
+      }
+    },
+    {
+      "arm": "iiwa",
+      "task": 2,
+      "prompt": "pick up the butter and place it in the basket",
+      "episode": 91,
+      "frame": 83,
+      "noise_seed": 817119,
+      "noise_sha": "c1147418605f84936be3737551afc1aba1d90b7770956cf6c4d34ea932bd3744",
+      "images": {
+        "observation.images.image": "3f5bfdc89341fa0d38ea847d1a5735bd2c2532692e49d5de1eb7e2cde0614622",
+        "observation.images.image2": "dd744a65ecc3dbca60b7a45987b94a0ab43241b4224969cf3181871fb4faf487"
+      },
+      "known_chunk_sha": "0e79909149be86b33d4b2364028ac07beda6ba5029700b0b0d9106a2ccaf3879",
+      "known_first": [
+        0.4178614914417267,
+        0.6313109993934631,
+        0.6127451062202454,
+        0.001030274317599833,
+        0.015732266008853912,
+        0.02972818724811077,
+        0.9974060654640198
+      ],
+      "known_temporal_std": [
+        0.17413416504859924,
+        0.17942677438259125,
+        0.27351415157318115,
+        0.018913686275482178,
+        0.028107497841119766,
+        0.010979220271110535,
+        0.005974566098302603
+      ],
+      "position_error_m": 0.055057454854249954,
+      "rotation_vector_error_rad": 0.09770486503839493,
+      "first5_bounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.0,
+        "raw_joint_slots": 0.2672516470413053,
+        "joint_to_pose": 0.02403386526621666,
+        "raw_fam_yaw90": 0.19267276474020129,
+        "fit_fam_yaw90": 0.0052834336111500825,
+        "raw_cont_m45_075": 0.09979727488255778,
+        "fit_cont_m45_075": 0.005182405326800183,
+        "drop": 0.09559290363379762
+      },
+      "full50_unbounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.0,
+        "raw_joint_slots": 0.5346710000439633,
+        "joint_to_pose": 0.06282558921288874,
+        "raw_fam_yaw90": 0.1557943671048245,
+        "fit_fam_yaw90": 0.006152631268518249,
+        "raw_cont_m45_075": 0.19474918187983872,
+        "fit_cont_m45_075": 0.005622176224914916,
+        "drop": 0.40987650868649833
+      }
+    },
+    {
+      "arm": "iiwa",
+      "task": 3,
+      "prompt": "pick up the bbq sauce and place it in the basket",
+      "episode": 137,
+      "frame": 87,
+      "noise_seed": 817120,
+      "noise_sha": "7084b9f881fa8d625784808e01f3e007bb0b5036f0e549ca29be1c43a412c33f",
+      "images": {
+        "observation.images.image": "a0877e0492658c879f249622be8dc4b73341058bfc4c28570f8b96e6796c5f83",
+        "observation.images.image2": "cd8436cba1ff55fd506b739132c0f2b065c25f2c44ce2be5f293c0fbb494913c"
+      },
+      "known_chunk_sha": "c02ad61f1acb11e31b29e789401a000aabd986bc02b91938bf3a8dc87d179703",
+      "known_first": [
+        0.17692379653453827,
+        -0.010356336832046509,
+        -0.33660852909088135,
+        0.0004978853976354003,
+        -0.028691213577985764,
+        -0.011317135766148567,
+        -1.004969835281372
+      ],
+      "known_temporal_std": [
+        0.17620797455310822,
+        0.2957719564437866,
+        0.4925468862056732,
+        0.017720969393849373,
+        0.029473617672920227,
+        0.005746304057538509,
+        0.8589563965797424
+      ],
+      "position_error_m": 0.0023890912998467684,
+      "rotation_vector_error_rad": 0.011523138731718063,
+      "first5_bounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.0,
+        "raw_joint_slots": 0.2296135021920106,
+        "joint_to_pose": 0.0007904550696165461,
+        "raw_fam_yaw90": 0.16965972153353795,
+        "fit_fam_yaw90": 0.0015602133916973455,
+        "raw_cont_m45_075": 0.04531269263331417,
+        "fit_cont_m45_075": 0.0015635202178234842,
+        "drop": 0.14849121886407257
+      },
+      "full50_unbounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.0,
+        "raw_joint_slots": 0.44113557185313523,
+        "joint_to_pose": 0.0011318852016996765,
+        "raw_fam_yaw90": 0.13809325215493953,
+        "fit_fam_yaw90": 0.00111255090735134,
+        "raw_cont_m45_075": 0.02982070533976767,
+        "fit_cont_m45_075": 0.0010922312917395938,
+        "drop": 0.21345420516350633
+      }
+    },
+    {
+      "arm": "iiwa",
+      "task": 4,
+      "prompt": "pick up the tomato sauce and place it in the basket",
+      "episode": 183,
+      "frame": 66,
+      "noise_seed": 817121,
+      "noise_sha": "e86fab551c92eee4d4804b62ab16215912e6a55c50d108c89a25363e61985552",
+      "images": {
+        "observation.images.image": "7938701bdd2da59103abc7fe156295c0fb938c531e91b144923127f1c8548846",
+        "observation.images.image2": "f9fb9e9f2f0e7d0dad861b19aa74336d7aac5dace3a1cc43197036222c4d1492"
+      },
+      "known_chunk_sha": "e03ac3be97ff4cf4512743e6f349a3def63f4e31d2e9df4fbafdeef661c60aeb",
+      "known_first": [
+        -0.20834046602249146,
+        0.49867936968803406,
+        0.6583831906318665,
+        0.0071150558069348335,
+        -0.004053100943565369,
+        -0.04029577970504761,
+        0.9871845841407776
+      ],
+      "known_temporal_std": [
+        0.1446225345134735,
+        0.3114432394504547,
+        0.3636658191680908,
+        0.014242253266274929,
+        0.044458046555519104,
+        0.013204095885157585,
+        0.6050011515617371
+      ],
+      "position_error_m": 0.010300770401954651,
+      "rotation_vector_error_rad": 0.03560074046254158,
+      "first5_bounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.0,
+        "raw_joint_slots": 0.24618537105097718,
+        "joint_to_pose": 0.0047060446774735525,
+        "raw_fam_yaw90": 0.16836547711371416,
+        "fit_fam_yaw90": 0.0034961511139754422,
+        "raw_cont_m45_075": 0.07511245234542256,
+        "fit_cont_m45_075": 0.003422647385460626,
+        "drop": 0.05056356600909286
+      },
+      "full50_unbounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.0,
+        "raw_joint_slots": 0.6259427662485139,
+        "joint_to_pose": 0.11064262167939232,
+        "raw_fam_yaw90": 0.32595364323094334,
+        "fit_fam_yaw90": 0.10948602934514502,
+        "raw_cont_m45_075": 0.4917674102935666,
+        "fit_cont_m45_075": 0.015468491194001384,
+        "drop": 0.388067995315868
+      }
+    },
+    {
+      "arm": "iiwa",
+      "task": 5,
+      "prompt": "pick up the alphabet soup and place it in the basket",
+      "episode": 228,
+      "frame": 72,
+      "noise_seed": 817122,
+      "noise_sha": "3ed0ce4e39eaf6464c272c995da91bbc74d59a3cad8f990d1a667a33316c2b45",
+      "images": {
+        "observation.images.image": "0e72c2d9758140d8c93f44b4524252c232ba72c7effd29b35f83baaceb9fee92",
+        "observation.images.image2": "056623d6ff2b880f0d56b6a1bc3f5acdfd4c7e1b9d86745769af2c258a68cd5a"
+      },
+      "known_chunk_sha": "2b6271b17f79a18bd53c8290e96ffe46bc073acf1458af57ca8fa80746ad6268",
+      "known_first": [
+        0.11851218342781067,
+        0.791943371295929,
+        0.37341174483299255,
+        -0.002016951097175479,
+        -0.04286058247089386,
+        -0.011861024424433708,
+        1.0168182849884033
+      ],
+      "known_temporal_std": [
+        0.14504186809062958,
+        0.32964959740638733,
+        0.3552290201187134,
+        0.01769217848777771,
+        0.024300917983055115,
+        0.012453151866793633,
+        0.006258583627641201
+      ],
+      "position_error_m": 0.03443519026041031,
+      "rotation_vector_error_rad": 0.05889580026268959,
+      "first5_bounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.0,
+        "raw_joint_slots": 0.24593254207923546,
+        "joint_to_pose": 0.008310288652107275,
+        "raw_fam_yaw90": 0.049553030486330536,
+        "fit_fam_yaw90": 0.0014239837603466162,
+        "raw_cont_m45_075": 0.033652834279391516,
+        "fit_cont_m45_075": 0.0013664161491559624,
+        "drop": 0.0809158464537608
+      },
+      "full50_unbounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.0,
+        "raw_joint_slots": 0.6153797216887767,
+        "joint_to_pose": 0.056124269096685275,
+        "raw_fam_yaw90": 0.2189101148766517,
+        "fit_fam_yaw90": 0.0023707291551152525,
+        "raw_cont_m45_075": 0.12276214668923256,
+        "fit_cont_m45_075": 0.0020693370695484465,
+        "drop": 0.4600002061160979
+      }
+    },
+    {
+      "arm": "iiwa",
+      "task": 6,
+      "prompt": "pick up the ketchup and place it in the basket",
+      "episode": 274,
+      "frame": 77,
+      "noise_seed": 817123,
+      "noise_sha": "1ccd7606ffce8e04501a92003e2916008a4dbb8a693e0bf25dd75c677408258c",
+      "images": {
+        "observation.images.image": "23f4e7008cbf7f16cb3b095533c9ddba85821e94d660874b66488ba79426f248",
+        "observation.images.image2": "b07710db084d5b19e0aba286c13b948c86ff7bc1ff975d4cfd198de7c68be60b"
+      },
+      "known_chunk_sha": "dc8d1907295d4043df9ff1edfe5c5c076ef49a178f4642080dd5cbb218b06162",
+      "known_first": [
+        0.26040464639663696,
+        0.43959689140319824,
+        0.6389133334159851,
+        0.031912099570035934,
+        0.032794926315546036,
+        -0.00017519760876893997,
+        1.0077860355377197
+      ],
+      "known_temporal_std": [
+        0.07065914571285248,
+        0.15564975142478943,
+        0.2961656153202057,
+        0.017320243641734123,
+        0.012696702033281326,
+        0.007511699106544256,
+        0.005536310840398073
+      ],
+      "position_error_m": 0.04929298907518387,
+      "rotation_vector_error_rad": 0.07397329062223434,
+      "first5_bounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.0,
+        "raw_joint_slots": 0.11713156528538993,
+        "joint_to_pose": 0.04103144584688397,
+        "raw_fam_yaw90": 0.18198729197708968,
+        "fit_fam_yaw90": 0.0073245119049025285,
+        "raw_cont_m45_075": 0.12163809428572661,
+        "fit_cont_m45_075": 0.007265544468984764,
+        "drop": 0.1734493098317576
+      },
+      "full50_unbounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.0,
+        "raw_joint_slots": 0.5525927718440148,
+        "joint_to_pose": 0.03892168923818949,
+        "raw_fam_yaw90": 0.18127960732535142,
+        "fit_fam_yaw90": 0.007197435662866369,
+        "raw_cont_m45_075": 0.20139007154904148,
+        "fit_cont_m45_075": 0.006581303145509357,
+        "drop": 0.4433651921113776
+      }
+    },
+    {
+      "arm": "iiwa",
+      "task": 7,
+      "prompt": "pick up the salad dressing and place it in the basket",
+      "episode": 317,
+      "frame": 62,
+      "noise_seed": 817124,
+      "noise_sha": "085f3cdd7de85c5639c2e49b5777f77b0c283bea6cfec72d8331f322fcf6940c",
+      "images": {
+        "observation.images.image": "7fd4479a7c19f34577fda5527b93fc6c550af80ee7ea7442f15c719c90b748b9",
+        "observation.images.image2": "32ef3d91249939bdfdb89d5d10a3e4690a6611e065f38a2078674a42e3a0c77e"
+      },
+      "known_chunk_sha": "ec9f2dd9051cc09afbc830217993547fcfb47d7b59aba6807ca611ee5bb52076",
+      "known_first": [
+        -0.21582713723182678,
+        0.5212714672088623,
+        0.538213312625885,
+        0.00018190141418017447,
+        -0.019557617604732513,
+        -0.012727964669466019,
+        1.0064709186553955
+      ],
+      "known_temporal_std": [
+        0.1024649366736412,
+        0.3043421506881714,
+        0.38583967089653015,
+        0.014034612104296684,
+        0.013149610720574856,
+        0.008787698112428188,
+        0.2808433175086975
+      ],
+      "position_error_m": 0.008321174420416355,
+      "rotation_vector_error_rad": 0.029120000079274178,
+      "first5_bounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.0,
+        "raw_joint_slots": 0.14261305977701655,
+        "joint_to_pose": 0.005273197568399535,
+        "raw_fam_yaw90": 0.18692057307178156,
+        "fit_fam_yaw90": 0.003809981426358436,
+        "raw_cont_m45_075": 0.06435067296516607,
+        "fit_cont_m45_075": 0.003730417887967906,
+        "drop": 0.0250947309841726
+      },
+      "full50_unbounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.0,
+        "raw_joint_slots": 0.6039344625740652,
+        "joint_to_pose": 0.10941979305538549,
+        "raw_fam_yaw90": 0.22806250689719582,
+        "fit_fam_yaw90": 0.1089324461128046,
+        "raw_cont_m45_075": 0.46618412274334,
+        "fit_cont_m45_075": 0.012042298941396586,
+        "drop": 0.35777083348844646
+      }
+    },
+    {
+      "arm": "iiwa",
+      "task": 8,
+      "prompt": "pick up the chocolate pudding and place it in the basket",
+      "episode": 364,
+      "frame": 84,
+      "noise_seed": 817125,
+      "noise_sha": "e739743c6dcd140153a1380997cda7f648cecf82a9ab5c6517e080cac8cda738",
+      "images": {
+        "observation.images.image": "e1df9e4bee180162a5c39cca3f78a923778745d18fbbed988208da8668549294",
+        "observation.images.image2": "8773de336272f3bbc6a9960193187ffe109e7fb51d12891cf3e459f88e7710b6"
+      },
+      "known_chunk_sha": "a0a5840ead768927184bb02bc4cbac61a474ab61c98e98f8d92e450b5553334f",
+      "known_first": [
+        0.24582111835479736,
+        0.6364626884460449,
+        0.3280554413795471,
+        0.0012388811446726322,
+        -0.00894691701978445,
+        -0.01477891020476818,
+        1.0049618482589722
+      ],
+      "known_temporal_std": [
+        0.11119329929351807,
+        0.20456907153129578,
+        0.2264743596315384,
+        0.015607263892889023,
+        0.007854379713535309,
+        0.009939705953001976,
+        0.0057550943456590176
+      ],
+      "position_error_m": 0.040225740522146225,
+      "rotation_vector_error_rad": 0.11178696155548096,
+      "first5_bounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.0,
+        "raw_joint_slots": 0.22270999042355807,
+        "joint_to_pose": 0.018697877867973597,
+        "raw_fam_yaw90": 0.14732661177132667,
+        "fit_fam_yaw90": 0.004006402978267733,
+        "raw_cont_m45_075": 0.07489082066592069,
+        "fit_cont_m45_075": 0.0039545123519801875,
+        "drop": 0.08900859679137
+      },
+      "full50_unbounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.0,
+        "raw_joint_slots": 0.5836268346914399,
+        "joint_to_pose": 0.03314651229761005,
+        "raw_fam_yaw90": 0.15261976963322216,
+        "fit_fam_yaw90": 0.005117237329521801,
+        "raw_cont_m45_075": 0.16269953007317503,
+        "fit_cont_m45_075": 0.0046066800880243276,
+        "drop": 0.3940551801688639
+      }
+    },
+    {
+      "arm": "iiwa",
+      "task": 9,
+      "prompt": "pick up the milk and place it in the basket",
+      "episode": 414,
+      "frame": 75,
+      "noise_seed": 817126,
+      "noise_sha": "a4713a4c0ea9168e1d585b8855478151fefa587e4f0ad33b95fe030b6cd491a0",
+      "images": {
+        "observation.images.image": "31263124082cb2f6376ecd445dee1832769c1b2980f50aeb61588e998c323afd",
+        "observation.images.image2": "a34c2758c118f299b9ff4be0fbd26053b5b0f95d8862f4755346fa74eb6e8b7a"
+      },
+      "known_chunk_sha": "1ccca6e89f9db8b34e5495b4366e50cef982087622d7aa0b76f955ddb81a47a3",
+      "known_first": [
+        0.39536604285240173,
+        0.6899451017379761,
+        0.38275080919265747,
+        0.004504277370870113,
+        0.07840345054864883,
+        -0.004302815534174442,
+        0.9930464625358582
+      ],
+      "known_temporal_std": [
+        0.16366985440254211,
+        0.26759397983551025,
+        0.32163265347480774,
+        0.020582830533385277,
+        0.024461502209305763,
+        0.018624987453222275,
+        0.005756665486842394
+      ],
+      "position_error_m": 0.04584752395749092,
+      "rotation_vector_error_rad": 0.08591240644454956,
+      "first5_bounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.0,
+        "raw_joint_slots": 0.4050621695814369,
+        "joint_to_pose": 0.02422043762715386,
+        "raw_fam_yaw90": 0.1862096551558957,
+        "fit_fam_yaw90": 0.004198470513383604,
+        "raw_cont_m45_075": 0.08971008022555302,
+        "fit_cont_m45_075": 0.0041287283676636555,
+        "drop": 0.10490081049713165
+      },
+      "full50_unbounded_rmse": {
+        "known": 0.0,
+        "reported_tcp": 0.0,
+        "raw_joint_slots": 0.6689859772725703,
+        "joint_to_pose": 0.02126480443752752,
+        "raw_fam_yaw90": 0.13805817419040461,
+        "fit_fam_yaw90": 0.004716559844763768,
+        "raw_cont_m45_075": 0.16848217114354022,
+        "fit_cont_m45_075": 0.004344572135677482,
+        "drop": 0.45439492930577247
+      }
+    }
+  ],
+  "task_mean_bootstrap95": {
+    "known": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "reported_tcp": [
+      0.059214292829448394,
+      0.048270278525727794,
+      0.06986552602773781
+    ],
+    "raw_joint_slots": [
+      0.16701017874227803,
+      0.13930186646360876,
+      0.19887995159029145
+    ],
+    "joint_to_pose": [
+      0.014280085937937063,
+      0.006339696769205587,
+      0.023338532965214355
+    ],
+    "raw_fam_yaw90": [
+      0.15657739948165783,
+      0.12426717023429049,
+      0.17979282745041578
+    ],
+    "fit_fam_yaw90": [
+      0.0040294351827662184,
+      0.0027266644471809873,
+      0.005428853508798129
+    ],
+    "raw_cont_m45_075": [
+      0.07807123997746922,
+      0.056458552712310595,
+      0.10235942090940486
+    ],
+    "fit_cont_m45_075": [
+      0.0039399388402157134,
+      0.002680705820126981,
+      0.005293801209109721
+    ],
+    "drop": [
+      0.10012013422553741,
+      0.06353886058374411,
+      0.1376342888415228
+    ],
+    "raw_joint_slots_minus_joint_to_pose": [
+      0.15273009280434097,
+      0.12330839477443634,
+      0.18287965957232294
+    ],
+    "drop_minus_joint_to_pose": [
+      0.08584004828760033,
+      0.05397963842109184,
+      0.11898242150338384
+    ],
+    "raw_fam_yaw90_minus_fit_fam_yaw90": [
+      0.15254796429889164,
+      0.1209065754654649,
+      0.1750893781095349
+    ],
+    "raw_cont_m45_075_minus_fit_cont_m45_075": [
+      0.07413130113725351,
+      0.053768501246885925,
+      0.09713712145969243
+    ]
+  }
+}
