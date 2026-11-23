@@ -1,0 +1,1189 @@
+{
+  "comparison": "tuned Perceiver minus same-seed fresh SymMeta; percentage points",
+  "complete": true,
+  "completed_pairs": 1152,
+  "contract_sha256": "e559a9d57c1ba73e8bb8a06cb5b6b1c7e69d252aaa539718b99b212ca8669441",
+  "execution": {
+    "adopted_pairs": 0,
+    "assigned_nvml_uuids": [
+      "GPU-fae33af5-c53c-0204-aaa3-a8d33ec47be0",
+      "GPU-3fc3f968-f89c-305b-fbeb-edd2d1370e65",
+      "GPU-231ae760-9ccd-92db-e238-13080f2167a2",
+      "GPU-a474f3ea-1a29-22ac-3f6a-589a584f366e"
+    ],
+    "attempt": "native02g4090",
+    "config_sha256": "654a14a3e0628c0804b0a09b942c541b2300bd06b3199cf2ce713fb4940e270d",
+    "deployment": "d568535b758f2b97b382f9b3e280376e769b5942",
+    "devices": [
+      {
+        "cuda_name": "NVIDIA GeForce RTX 4090",
+        "cuda_total_bytes": 25250627584,
+        "cuda_uuid": "231ae760-9ccd-92db-e238-13080f2167a2",
+        "egl_device": 0,
+        "lane": 0,
+        "nvml_uuid": "GPU-231ae760-9ccd-92db-e238-13080f2167a2",
+        "pci_bus_id": "0000:61:00.0",
+        "visibility_token": "0"
+      },
+      {
+        "cuda_name": "NVIDIA GeForce RTX 4090",
+        "cuda_total_bytes": 25250627584,
+        "cuda_uuid": "a474f3ea-1a29-22ac-3f6a-589a584f366e",
+        "egl_device": 1,
+        "lane": 1,
+        "nvml_uuid": "GPU-a474f3ea-1a29-22ac-3f6a-589a584f366e",
+        "pci_bus_id": "0000:62:00.0",
+        "visibility_token": "1"
+      },
+      {
+        "cuda_name": "NVIDIA GeForce RTX 4090",
+        "cuda_total_bytes": 25250627584,
+        "cuda_uuid": "fae33af5-c53c-0204-aaa3-a8d33ec47be0",
+        "egl_device": 2,
+        "lane": 2,
+        "nvml_uuid": "GPU-fae33af5-c53c-0204-aaa3-a8d33ec47be0",
+        "pci_bus_id": "0000:64:00.0",
+        "visibility_token": "2"
+      },
+      {
+        "cuda_name": "NVIDIA GeForce RTX 4090",
+        "cuda_total_bytes": 25250627584,
+        "cuda_uuid": "3fc3f968-f89c-305b-fbeb-edd2d1370e65",
+        "egl_device": 3,
+        "lane": 3,
+        "nvml_uuid": "GPU-3fc3f968-f89c-305b-fbeb-edd2d1370e65",
+        "pci_bus_id": "0000:a1:00.0",
+        "visibility_token": "3"
+      }
+    ],
+    "execution_sha256": "63a192bc34217a41c78047786477db90a81d03b179a6b38132335b80203a2cd6",
+    "hostname": "job-2s6q9a9xe96e-master-0",
+    "prediction_source": "/mowenjie/fluffy-bassoon-2/outputs/symmeta-perceiver-retry-20261123-r1/train02pro/predictions.json",
+    "probe_sha256": "ed7d81e75e3e37c06f5c0babb0fd34d39ab9a6d526ae50e2340ad681849dee91",
+    "reuse_sources": [],
+    "software": {
+      "driver": [
+        "580.159.04"
+      ],
+      "flax": "0.10.2",
+      "jax": "0.5.3",
+      "jax-cuda12-pjrt": "0.5.3",
+      "jax-cuda12-plugin": "0.5.3",
+      "jax_matmul_precision": "",
+      "jaxlib": "0.5.3",
+      "numpy": "1.26.4",
+      "openpi-client": "0.1.0",
+      "orbax-checkpoint": "0.11.13",
+      "simulator": {
+        "PyOpenGL": "3.1.10",
+        "mujoco": "3.2.3",
+        "numpy": "1.26.4",
+        "robosuite": "1.4.0"
+      },
+      "xla_flags": ""
+    }
+  },
+  "expected_pairs": 1152,
+  "historical_outcomes_sha256": "68a3c36c91bb13dc2ea3c7d8387e19d7cca6bde7470492f0be356d6d318152c7",
+  "interval": "exact 8-task paired percentile, inverse empirical CDF, reader seeds held fixed",
+  "native_directory": "/mowenjie/fluffy-bassoon-2/outputs/symmeta-perceiver-retry-20261123-r1/native02g4090",
+  "pairs_csv_gz_sha256": "be37297b1950f4ec3463a55ce9e60617eba2318c42c363504d42844eb3d8cf1d",
+  "panels": {
+    "gpu06kinova3": {
+      "missing_index_seed": [],
+      "ood": {
+        "complete": true,
+        "historical_symmeta": {
+          "per_seed": {
+            "41": {
+              "archived_only": 0,
+              "archived_symmeta_successes": 38,
+              "fresh_minus_archived_successes": 5,
+              "fresh_only": 5
+            },
+            "42": {
+              "archived_only": 0,
+              "archived_symmeta_successes": 42,
+              "fresh_minus_archived_successes": 2,
+              "fresh_only": 2
+            },
+            "43": {
+              "archived_only": 4,
+              "archived_symmeta_successes": 43,
+              "fresh_minus_archived_successes": -4,
+              "fresh_only": 0
+            }
+          },
+          "pooled": {
+            "archived_only": 4,
+            "archived_symmeta_successes": 123,
+            "fresh_minus_archived_successes": 3,
+            "fresh_only": 7
+          }
+        },
+        "losses": 13,
+        "n": 192,
+        "per_seed": {
+          "41": {
+            "losses": 6,
+            "n": 64,
+            "success_pct": {
+              "symmeta": 67.1875,
+              "tuned": 65.625
+            },
+            "successes": {
+              "symmeta": 43,
+              "tuned": 42
+            },
+            "ties": 53,
+            "tuned_minus_symmeta_pp": -1.5625,
+            "wins": 5
+          },
+          "42": {
+            "losses": 4,
+            "n": 64,
+            "success_pct": {
+              "symmeta": 68.75,
+              "tuned": 70.3125
+            },
+            "successes": {
+              "symmeta": 44,
+              "tuned": 45
+            },
+            "ties": 55,
+            "tuned_minus_symmeta_pp": 1.5625,
+            "wins": 5
+          },
+          "43": {
+            "losses": 3,
+            "n": 64,
+            "success_pct": {
+              "symmeta": 60.9375,
+              "tuned": 65.625
+            },
+            "successes": {
+              "symmeta": 39,
+              "tuned": 42
+            },
+            "ties": 55,
+            "tuned_minus_symmeta_pp": 4.6875,
+            "wins": 6
+          }
+        },
+        "per_seed_task_cluster_ci95_pp": {
+          "41": [
+            -15.625,
+            10.9375
+          ],
+          "42": [
+            -7.8125,
+            7.8125
+          ],
+          "43": [
+            0.0,
+            10.9375
+          ]
+        },
+        "seed_sd_pp": {
+          "symmeta": 4.133986423538423,
+          "tuned": 2.7063293868263707,
+          "tuned_minus_symmeta": 3.125
+        },
+        "success_pct": {
+          "symmeta": 65.625,
+          "tuned": 67.1875
+        },
+        "successes": {
+          "symmeta": 126,
+          "tuned": 129
+        },
+        "task_cluster_ci95_pp": [
+          -6.25,
+          8.333333333333334
+        ],
+        "ties": 163,
+        "tuned_minus_symmeta_pp": 1.5625,
+        "wins": 16
+      },
+      "overall": {
+        "complete": true,
+        "historical_symmeta": {
+          "per_seed": {
+            "41": {
+              "archived_only": 0,
+              "archived_symmeta_successes": 60,
+              "fresh_minus_archived_successes": 7,
+              "fresh_only": 7
+            },
+            "42": {
+              "archived_only": 1,
+              "archived_symmeta_successes": 66,
+              "fresh_minus_archived_successes": 2,
+              "fresh_only": 3
+            },
+            "43": {
+              "archived_only": 4,
+              "archived_symmeta_successes": 65,
+              "fresh_minus_archived_successes": -3,
+              "fresh_only": 1
+            }
+          },
+          "pooled": {
+            "archived_only": 5,
+            "archived_symmeta_successes": 191,
+            "fresh_minus_archived_successes": 6,
+            "fresh_only": 11
+          }
+        },
+        "losses": 19,
+        "n": 288,
+        "per_seed": {
+          "41": {
+            "losses": 8,
+            "n": 96,
+            "success_pct": {
+              "symmeta": 69.79166666666667,
+              "tuned": 68.75
+            },
+            "successes": {
+              "symmeta": 67,
+              "tuned": 66
+            },
+            "ties": 81,
+            "tuned_minus_symmeta_pp": -1.0416666666666667,
+            "wins": 7
+          },
+          "42": {
+            "losses": 8,
+            "n": 96,
+            "success_pct": {
+              "symmeta": 70.83333333333333,
+              "tuned": 68.75
+            },
+            "successes": {
+              "symmeta": 68,
+              "tuned": 66
+            },
+            "ties": 82,
+            "tuned_minus_symmeta_pp": -2.0833333333333335,
+            "wins": 6
+          },
+          "43": {
+            "losses": 3,
+            "n": 96,
+            "success_pct": {
+              "symmeta": 64.58333333333333,
+              "tuned": 69.79166666666667
+            },
+            "successes": {
+              "symmeta": 62,
+              "tuned": 67
+            },
+            "ties": 85,
+            "tuned_minus_symmeta_pp": 5.208333333333333,
+            "wins": 8
+          }
+        },
+        "per_seed_task_cluster_ci95_pp": {
+          "41": [
+            -12.5,
+            10.416666666666666
+          ],
+          "42": [
+            -10.416666666666666,
+            5.208333333333333
+          ],
+          "43": [
+            1.0416666666666667,
+            9.375
+          ]
+        },
+        "seed_sd_pp": {
+          "symmeta": 3.3484898475670004,
+          "tuned": 0.6014065304058629,
+          "tuned_minus_symmeta": 3.94368635125019
+        },
+        "success_pct": {
+          "symmeta": 68.40277777777777,
+          "tuned": 69.09722222222223
+        },
+        "successes": {
+          "symmeta": 197,
+          "tuned": 199
+        },
+        "task_cluster_ci95_pp": [
+          -5.555555555555555,
+          6.597222222222222
+        ],
+        "ties": 248,
+        "tuned_minus_symmeta_pp": 0.6944444444444444,
+        "wins": 21
+      },
+      "task_distinct_fingerprints": {
+        "libero_10/5": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_10/8": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_goal/3": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_goal/6": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_object/1": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_object/8": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_spatial/0": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_spatial/8": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        }
+      }
+    },
+    "gpu08pi0fix": {
+      "missing_index_seed": [],
+      "ood": {
+        "complete": true,
+        "historical_symmeta": {
+          "per_seed": {
+            "41": {
+              "archived_only": 3,
+              "archived_symmeta_successes": 35,
+              "fresh_minus_archived_successes": 5,
+              "fresh_only": 8
+            },
+            "42": {
+              "archived_only": 1,
+              "archived_symmeta_successes": 28,
+              "fresh_minus_archived_successes": 9,
+              "fresh_only": 10
+            },
+            "43": {
+              "archived_only": 6,
+              "archived_symmeta_successes": 34,
+              "fresh_minus_archived_successes": -4,
+              "fresh_only": 2
+            }
+          },
+          "pooled": {
+            "archived_only": 10,
+            "archived_symmeta_successes": 97,
+            "fresh_minus_archived_successes": 10,
+            "fresh_only": 20
+          }
+        },
+        "losses": 33,
+        "n": 192,
+        "per_seed": {
+          "41": {
+            "losses": 13,
+            "n": 64,
+            "success_pct": {
+              "symmeta": 62.5,
+              "tuned": 56.25
+            },
+            "successes": {
+              "symmeta": 40,
+              "tuned": 36
+            },
+            "ties": 42,
+            "tuned_minus_symmeta_pp": -6.25,
+            "wins": 9
+          },
+          "42": {
+            "losses": 13,
+            "n": 64,
+            "success_pct": {
+              "symmeta": 57.8125,
+              "tuned": 54.6875
+            },
+            "successes": {
+              "symmeta": 37,
+              "tuned": 35
+            },
+            "ties": 40,
+            "tuned_minus_symmeta_pp": -3.125,
+            "wins": 11
+          },
+          "43": {
+            "losses": 7,
+            "n": 64,
+            "success_pct": {
+              "symmeta": 46.875,
+              "tuned": 51.5625
+            },
+            "successes": {
+              "symmeta": 30,
+              "tuned": 33
+            },
+            "ties": 47,
+            "tuned_minus_symmeta_pp": 4.6875,
+            "wins": 10
+          }
+        },
+        "per_seed_task_cluster_ci95_pp": {
+          "41": [
+            -20.3125,
+            6.25
+          ],
+          "42": [
+            -15.625,
+            14.0625
+          ],
+          "43": [
+            -6.25,
+            14.0625
+          ]
+        },
+        "seed_sd_pp": {
+          "symmeta": 8.018127249135757,
+          "tuned": 2.386758174456167,
+          "tuned_minus_symmeta": 5.633673867912483
+        },
+        "success_pct": {
+          "symmeta": 55.729166666666664,
+          "tuned": 54.166666666666664
+        },
+        "successes": {
+          "symmeta": 107,
+          "tuned": 104
+        },
+        "task_cluster_ci95_pp": [
+          -12.5,
+          8.854166666666666
+        ],
+        "ties": 129,
+        "tuned_minus_symmeta_pp": -1.5625,
+        "wins": 30
+      },
+      "overall": {
+        "complete": true,
+        "historical_symmeta": {
+          "per_seed": {
+            "41": {
+              "archived_only": 4,
+              "archived_symmeta_successes": 54,
+              "fresh_minus_archived_successes": 5,
+              "fresh_only": 9
+            },
+            "42": {
+              "archived_only": 3,
+              "archived_symmeta_successes": 49,
+              "fresh_minus_archived_successes": 8,
+              "fresh_only": 11
+            },
+            "43": {
+              "archived_only": 9,
+              "archived_symmeta_successes": 57,
+              "fresh_minus_archived_successes": -7,
+              "fresh_only": 2
+            }
+          },
+          "pooled": {
+            "archived_only": 16,
+            "archived_symmeta_successes": 160,
+            "fresh_minus_archived_successes": 6,
+            "fresh_only": 22
+          }
+        },
+        "losses": 50,
+        "n": 288,
+        "per_seed": {
+          "41": {
+            "losses": 18,
+            "n": 96,
+            "success_pct": {
+              "symmeta": 61.458333333333336,
+              "tuned": 54.166666666666664
+            },
+            "successes": {
+              "symmeta": 59,
+              "tuned": 52
+            },
+            "ties": 67,
+            "tuned_minus_symmeta_pp": -7.291666666666667,
+            "wins": 11
+          },
+          "42": {
+            "losses": 20,
+            "n": 96,
+            "success_pct": {
+              "symmeta": 59.375,
+              "tuned": 52.083333333333336
+            },
+            "successes": {
+              "symmeta": 57,
+              "tuned": 50
+            },
+            "ties": 63,
+            "tuned_minus_symmeta_pp": -7.291666666666667,
+            "wins": 13
+          },
+          "43": {
+            "losses": 12,
+            "n": 96,
+            "success_pct": {
+              "symmeta": 52.083333333333336,
+              "tuned": 56.25
+            },
+            "successes": {
+              "symmeta": 50,
+              "tuned": 54
+            },
+            "ties": 68,
+            "tuned_minus_symmeta_pp": 4.166666666666667,
+            "wins": 16
+          }
+        },
+        "per_seed_task_cluster_ci95_pp": {
+          "41": [
+            -16.666666666666668,
+            1.0416666666666667
+          ],
+          "42": [
+            -17.708333333333332,
+            6.25
+          ],
+          "43": [
+            -5.208333333333333,
+            13.541666666666666
+          ]
+        },
+        "seed_sd_pp": {
+          "symmeta": 4.9227246106798,
+          "tuned": 2.083333333333332,
+          "tuned_minus_symmeta": 6.615471834464462
+        },
+        "success_pct": {
+          "symmeta": 57.638888888888886,
+          "tuned": 54.166666666666664
+        },
+        "successes": {
+          "symmeta": 166,
+          "tuned": 156
+        },
+        "task_cluster_ci95_pp": [
+          -12.152777777777779,
+          4.861111111111111
+        ],
+        "ties": 198,
+        "tuned_minus_symmeta_pp": -3.4722222222222223,
+        "wins": 40
+      },
+      "task_distinct_fingerprints": {
+        "libero_10/5": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_10/8": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_goal/3": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_goal/6": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_object/1": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_object/8": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_spatial/0": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_spatial/8": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        }
+      }
+    },
+    "gpu09iiwa": {
+      "missing_index_seed": [],
+      "ood": {
+        "complete": true,
+        "historical_symmeta": {
+          "per_seed": {
+            "41": {
+              "archived_only": 3,
+              "archived_symmeta_successes": 52,
+              "fresh_minus_archived_successes": -2,
+              "fresh_only": 1
+            },
+            "42": {
+              "archived_only": 2,
+              "archived_symmeta_successes": 50,
+              "fresh_minus_archived_successes": 1,
+              "fresh_only": 3
+            },
+            "43": {
+              "archived_only": 4,
+              "archived_symmeta_successes": 47,
+              "fresh_minus_archived_successes": -1,
+              "fresh_only": 3
+            }
+          },
+          "pooled": {
+            "archived_only": 9,
+            "archived_symmeta_successes": 149,
+            "fresh_minus_archived_successes": -2,
+            "fresh_only": 7
+          }
+        },
+        "losses": 15,
+        "n": 192,
+        "per_seed": {
+          "41": {
+            "losses": 5,
+            "n": 64,
+            "success_pct": {
+              "symmeta": 78.125,
+              "tuned": 81.25
+            },
+            "successes": {
+              "symmeta": 50,
+              "tuned": 52
+            },
+            "ties": 52,
+            "tuned_minus_symmeta_pp": 3.125,
+            "wins": 7
+          },
+          "42": {
+            "losses": 8,
+            "n": 64,
+            "success_pct": {
+              "symmeta": 79.6875,
+              "tuned": 76.5625
+            },
+            "successes": {
+              "symmeta": 51,
+              "tuned": 49
+            },
+            "ties": 50,
+            "tuned_minus_symmeta_pp": -3.125,
+            "wins": 6
+          },
+          "43": {
+            "losses": 2,
+            "n": 64,
+            "success_pct": {
+              "symmeta": 71.875,
+              "tuned": 81.25
+            },
+            "successes": {
+              "symmeta": 46,
+              "tuned": 52
+            },
+            "ties": 54,
+            "tuned_minus_symmeta_pp": 9.375,
+            "wins": 8
+          }
+        },
+        "per_seed_task_cluster_ci95_pp": {
+          "41": [
+            -12.5,
+            20.3125
+          ],
+          "42": [
+            -10.9375,
+            3.125
+          ],
+          "43": [
+            0.0,
+            20.3125
+          ]
+        },
+        "seed_sd_pp": {
+          "symmeta": 4.133986423538423,
+          "tuned": 2.7063293868263707,
+          "tuned_minus_symmeta": 6.25
+        },
+        "success_pct": {
+          "symmeta": 76.5625,
+          "tuned": 79.6875
+        },
+        "successes": {
+          "symmeta": 147,
+          "tuned": 153
+        },
+        "task_cluster_ci95_pp": [
+          -4.166666666666667,
+          9.895833333333334
+        ],
+        "ties": 156,
+        "tuned_minus_symmeta_pp": 3.125,
+        "wins": 21
+      },
+      "overall": {
+        "complete": true,
+        "historical_symmeta": {
+          "per_seed": {
+            "41": {
+              "archived_only": 4,
+              "archived_symmeta_successes": 76,
+              "fresh_minus_archived_successes": 0,
+              "fresh_only": 4
+            },
+            "42": {
+              "archived_only": 3,
+              "archived_symmeta_successes": 76,
+              "fresh_minus_archived_successes": 1,
+              "fresh_only": 4
+            },
+            "43": {
+              "archived_only": 8,
+              "archived_symmeta_successes": 74,
+              "fresh_minus_archived_successes": -4,
+              "fresh_only": 4
+            }
+          },
+          "pooled": {
+            "archived_only": 15,
+            "archived_symmeta_successes": 226,
+            "fresh_minus_archived_successes": -3,
+            "fresh_only": 12
+          }
+        },
+        "losses": 22,
+        "n": 288,
+        "per_seed": {
+          "41": {
+            "losses": 7,
+            "n": 96,
+            "success_pct": {
+              "symmeta": 79.16666666666667,
+              "tuned": 80.20833333333333
+            },
+            "successes": {
+              "symmeta": 76,
+              "tuned": 77
+            },
+            "ties": 81,
+            "tuned_minus_symmeta_pp": 1.0416666666666667,
+            "wins": 8
+          },
+          "42": {
+            "losses": 11,
+            "n": 96,
+            "success_pct": {
+              "symmeta": 80.20833333333333,
+              "tuned": 76.04166666666667
+            },
+            "successes": {
+              "symmeta": 77,
+              "tuned": 73
+            },
+            "ties": 78,
+            "tuned_minus_symmeta_pp": -4.166666666666667,
+            "wins": 7
+          },
+          "43": {
+            "losses": 4,
+            "n": 96,
+            "success_pct": {
+              "symmeta": 72.91666666666667,
+              "tuned": 83.33333333333333
+            },
+            "successes": {
+              "symmeta": 70,
+              "tuned": 80
+            },
+            "ties": 78,
+            "tuned_minus_symmeta_pp": 10.416666666666666,
+            "wins": 14
+          }
+        },
+        "per_seed_task_cluster_ci95_pp": {
+          "41": [
+            -7.291666666666667,
+            11.458333333333334
+          ],
+          "42": [
+            -10.416666666666666,
+            1.0416666666666667
+          ],
+          "43": [
+            2.0833333333333335,
+            22.916666666666668
+          ]
+        },
+        "seed_sd_pp": {
+          "symmeta": 3.9436863512501867,
+          "tuned": 3.6582131086294183,
+          "tuned_minus_symmeta": 7.39020717145582
+        },
+        "success_pct": {
+          "symmeta": 77.43055555555556,
+          "tuned": 79.86111111111111
+        },
+        "successes": {
+          "symmeta": 223,
+          "tuned": 230
+        },
+        "task_cluster_ci95_pp": [
+          -2.7777777777777777,
+          9.027777777777779
+        ],
+        "ties": 237,
+        "tuned_minus_symmeta_pp": 2.4305555555555554,
+        "wins": 29
+      },
+      "task_distinct_fingerprints": {
+        "libero_10/5": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_10/8": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_goal/3": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_goal/6": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_object/1": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_object/8": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_spatial/0": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_spatial/8": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        }
+      }
+    },
+    "gpu09test": {
+      "missing_index_seed": [],
+      "ood": {
+        "complete": true,
+        "historical_symmeta": {
+          "per_seed": {
+            "41": {
+              "archived_only": 2,
+              "archived_symmeta_successes": 52,
+              "fresh_minus_archived_successes": -1,
+              "fresh_only": 1
+            },
+            "42": {
+              "archived_only": 1,
+              "archived_symmeta_successes": 48,
+              "fresh_minus_archived_successes": 2,
+              "fresh_only": 3
+            },
+            "43": {
+              "archived_only": 4,
+              "archived_symmeta_successes": 52,
+              "fresh_minus_archived_successes": 0,
+              "fresh_only": 4
+            }
+          },
+          "pooled": {
+            "archived_only": 7,
+            "archived_symmeta_successes": 152,
+            "fresh_minus_archived_successes": 1,
+            "fresh_only": 8
+          }
+        },
+        "losses": 26,
+        "n": 192,
+        "per_seed": {
+          "41": {
+            "losses": 9,
+            "n": 64,
+            "success_pct": {
+              "symmeta": 79.6875,
+              "tuned": 73.4375
+            },
+            "successes": {
+              "symmeta": 51,
+              "tuned": 47
+            },
+            "ties": 50,
+            "tuned_minus_symmeta_pp": -6.25,
+            "wins": 5
+          },
+          "42": {
+            "losses": 8,
+            "n": 64,
+            "success_pct": {
+              "symmeta": 78.125,
+              "tuned": 73.4375
+            },
+            "successes": {
+              "symmeta": 50,
+              "tuned": 47
+            },
+            "ties": 51,
+            "tuned_minus_symmeta_pp": -4.6875,
+            "wins": 5
+          },
+          "43": {
+            "losses": 9,
+            "n": 64,
+            "success_pct": {
+              "symmeta": 81.25,
+              "tuned": 73.4375
+            },
+            "successes": {
+              "symmeta": 52,
+              "tuned": 47
+            },
+            "ties": 51,
+            "tuned_minus_symmeta_pp": -7.8125,
+            "wins": 4
+          }
+        },
+        "per_seed_task_cluster_ci95_pp": {
+          "41": [
+            -20.3125,
+            3.125
+          ],
+          "42": [
+            -17.1875,
+            7.8125
+          ],
+          "43": [
+            -17.1875,
+            -1.5625
+          ]
+        },
+        "seed_sd_pp": {
+          "symmeta": 1.5625,
+          "tuned": 0.0,
+          "tuned_minus_symmeta": 1.5625
+        },
+        "success_pct": {
+          "symmeta": 79.6875,
+          "tuned": 73.4375
+        },
+        "successes": {
+          "symmeta": 153,
+          "tuned": 141
+        },
+        "task_cluster_ci95_pp": [
+          -15.104166666666666,
+          1.0416666666666667
+        ],
+        "ties": 152,
+        "tuned_minus_symmeta_pp": -6.25,
+        "wins": 14
+      },
+      "overall": {
+        "complete": true,
+        "historical_symmeta": {
+          "per_seed": {
+            "41": {
+              "archived_only": 3,
+              "archived_symmeta_successes": 76,
+              "fresh_minus_archived_successes": -2,
+              "fresh_only": 1
+            },
+            "42": {
+              "archived_only": 1,
+              "archived_symmeta_successes": 72,
+              "fresh_minus_archived_successes": 2,
+              "fresh_only": 3
+            },
+            "43": {
+              "archived_only": 4,
+              "archived_symmeta_successes": 77,
+              "fresh_minus_archived_successes": 1,
+              "fresh_only": 5
+            }
+          },
+          "pooled": {
+            "archived_only": 8,
+            "archived_symmeta_successes": 225,
+            "fresh_minus_archived_successes": 1,
+            "fresh_only": 9
+          }
+        },
+        "losses": 33,
+        "n": 288,
+        "per_seed": {
+          "41": {
+            "losses": 10,
+            "n": 96,
+            "success_pct": {
+              "symmeta": 77.08333333333333,
+              "tuned": 72.91666666666667
+            },
+            "successes": {
+              "symmeta": 74,
+              "tuned": 70
+            },
+            "ties": 80,
+            "tuned_minus_symmeta_pp": -4.166666666666667,
+            "wins": 6
+          },
+          "42": {
+            "losses": 11,
+            "n": 96,
+            "success_pct": {
+              "symmeta": 77.08333333333333,
+              "tuned": 71.875
+            },
+            "successes": {
+              "symmeta": 74,
+              "tuned": 69
+            },
+            "ties": 79,
+            "tuned_minus_symmeta_pp": -5.208333333333333,
+            "wins": 6
+          },
+          "43": {
+            "losses": 12,
+            "n": 96,
+            "success_pct": {
+              "symmeta": 81.25,
+              "tuned": 72.91666666666667
+            },
+            "successes": {
+              "symmeta": 78,
+              "tuned": 70
+            },
+            "ties": 80,
+            "tuned_minus_symmeta_pp": -8.333333333333334,
+            "wins": 4
+          }
+        },
+        "per_seed_task_cluster_ci95_pp": {
+          "41": [
+            -13.541666666666666,
+            2.0833333333333335
+          ],
+          "42": [
+            -14.583333333333334,
+            4.166666666666667
+          ],
+          "43": [
+            -16.666666666666668,
+            -3.125
+          ]
+        },
+        "seed_sd_pp": {
+          "symmeta": 2.4056261216234436,
+          "tuned": 0.6014065304058629,
+          "tuned_minus_symmeta": 2.168402082777222
+        },
+        "success_pct": {
+          "symmeta": 78.47222222222223,
+          "tuned": 72.56944444444444
+        },
+        "successes": {
+          "symmeta": 226,
+          "tuned": 209
+        },
+        "task_cluster_ci95_pp": [
+          -12.5,
+          -0.3472222222222222
+        ],
+        "ties": 239,
+        "tuned_minus_symmeta_pp": -5.902777777777778,
+        "wins": 16
+      },
+      "task_distinct_fingerprints": {
+        "libero_10/5": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_10/8": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_goal/3": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_goal/6": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_object/1": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_object/8": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_spatial/0": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        },
+        "libero_spatial/8": {
+          "execution": 1,
+          "opening": 1,
+          "reset": 1
+        }
+      }
+    }
+  },
+  "predictions_sha256": "c8420c2cb7d0cb38e6f0d73b3a20ce47997dbef7657b652d45eaaa8988eb6c0b",
+  "readback_sha256": "1ac2bfdfc0556fbac9d75c7ca62701738ae5278aefbb02f27ec33a2fb73c90f3",
+  "seed_sd": "sample SD (ddof=1) of exact seed percentages and paired differences",
+  "verified_summary_sha256": "916ce3ff03ace3188296b6c3427f48be61dada489d4d18d6b5ba3da45ef64c28"
+}
