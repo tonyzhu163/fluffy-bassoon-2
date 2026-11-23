@@ -155,8 +155,13 @@ def retarget_action_from_motor(
     gripper_sign_hat: int,
     low: np.ndarray,
     high: np.ndarray,
+    rotate_wrist: bool = False,
 ) -> np.ndarray:
-    """Invert estimated embodiment transform on canonical π0.5 action proposal(s)."""
+    """Invert estimated embodiment transform on canonical π0.5 action proposal(s).
+
+    `rotate_wrist` also rotates the horizontal wrist-rotation commands by the inverse yaw, for
+    interfaces that rotate the whole action frame about the vertical axis.
+    """
     arr = np.asarray(proposal, dtype=np.float32)
     if arr.shape[-1] != 7:
         raise ValueError(f"Expected trailing action dim 7, got {arr.shape}")
@@ -165,6 +170,8 @@ def retarget_action_from_motor(
     issued = arr.copy()
     issued[..., 0:2] = (arr[..., 0:2] @ r_inv.T) * scale_inv
     issued[..., 2] = arr[..., 2] * scale_inv
+    if rotate_wrist:
+        issued[..., 3:5] = arr[..., 3:5] @ r_inv.T
     issued[..., 6] = arr[..., 6] * np.float32(1 if int(gripper_sign_hat) >= 0 else -1)
     return np.clip(issued, np.asarray(low, dtype=np.float32), np.asarray(high, dtype=np.float32)).astype(np.float32)
 
