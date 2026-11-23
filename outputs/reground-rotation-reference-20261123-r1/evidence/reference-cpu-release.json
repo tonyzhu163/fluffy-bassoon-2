@@ -1,0 +1,151 @@
+{
+  "platform": "Linux-5.15.0-151-generic-x86_64-with-glibc2.35",
+  "python": "3.12.15",
+  "upstream": "16a98486f560676b9036d1a6d067b9dd51a5917a",
+  "packages": {
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "scipy": "1.18.1"
+  },
+  "plan": {
+    "cli_episode_counts": {
+      "reground": 1400,
+      "base": 1400
+    },
+    "release_units": {
+      "babble": 500,
+      "collect": 250,
+      "fit": 5,
+      "base": 90,
+      "reground": 90
+    },
+    "partitions": [
+      2,
+      4,
+      5
+    ],
+    "batch": 4,
+    "shard_episodes": [
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      8
+    ]
+  },
+  "synthetic_summary": {
+    "n_eps": 1400,
+    "success": 0.3142857142857143,
+    "success_lo": 0.2542857142857143,
+    "success_hi": 0.36571428571428577,
+    "success_mean": 0.3142857142857143,
+    "unsafe": 0.2571428571428571,
+    "unsafe_lo": 0.22428571428571428,
+    "unsafe_hi": 0.27428571428571424,
+    "unsafe_mean": 0.25142857142857145
+  },
+  "lock_exclusion_and_reacquisition": true,
+  "native_cpu": {
+    "torch": "2.11.0+cu128",
+    "device": "cpu",
+    "native_model_checkpoints": 4,
+    "reload_unchanged": true,
+    "simulated_fixture": {
+      "episodes": 16,
+      "transitions": 16
+    },
+    "matched_trace_fields": [
+      "X",
+      "A",
+      "A_vla",
+      "ref",
+      "speed"
+    ],
+    "reground_replay_live_batches": 3,
+    "collect_replay_live_batches": 2,
+    "native_data_audit": {
+      "none/0": {
+        "babble": {
+          "transitions": 100000,
+          "episodes": 500
+        },
+        "collect": {
+          "transitions": 100000,
+          "episodes": 400
+        },
+        "used_babble": 60000,
+        "used_vla": 40000,
+        "heldout_vla_episodes": 5,
+        "heldout_vla_transitions": 1250
+      },
+      "rot_z/90": {
+        "babble": {
+          "transitions": 100000,
+          "episodes": 500
+        },
+        "collect": {
+          "transitions": 100000,
+          "episodes": 400
+        },
+        "used_babble": 6000,
+        "used_vla": 4000,
+        "heldout_vla_episodes": 5,
+        "heldout_vla_transitions": 1250
+      }
+    }
+  },
+  "simulator_cpu": {
+    "fixed_states": {
+      "spatial_0": 50,
+      "spatial_2": 50,
+      "object_1": 50,
+      "object_3": 50,
+      "goal_1": 50,
+      "goal_2": 50,
+      "10_1": 50,
+      "10_3": 50
+    },
+    "unrendered_native_babble": {
+      "transitions": 2046,
+      "episodes": 12,
+      "shard_sha256": "52ec0e5f6754f8f6cea65804c63be65e841472453bca76bc6ec36f94431fc885",
+      "wall_s": 40.997914992971346
+    },
+    "real_sim_fixture_action": {
+      "task": "spatial_0",
+      "init_id": 15,
+      "rep": 0,
+      "noise_seed": 709751874,
+      "success": 0,
+      "steps": 280,
+      "contact_steps": 0,
+      "table_steps": 0,
+      "displaced": 0,
+      "fallen": 0,
+      "peak_speed": 0.0007493319758269929,
+      "speed_viol": 0,
+      "unsafe": 0,
+      "alarm_step": -1,
+      "u_dev_mean": 0.0,
+      "ms_per_step": 0.1659691333770752,
+      "ms_vla": 0.02677100045340402,
+      "wall_s": 37.102428674697876
+    },
+    "fixture_policy": "constant no-op; no frozen policy inference"
+  },
+  "elapsed_s": 108.99899396800902,
+  "gpu_hours": 0
+}
