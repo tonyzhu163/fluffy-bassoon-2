@@ -9,24 +9,30 @@
      export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl PYTHONDONTWRITEBYTECODE=1
      export TOKENIZERS_PARALLELISM=false OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
      export NCCL_P2P_DISABLE=1 REGROUND_NEXEC=10
-@@ -76,5 +76,7 @@
+@@ -76,5 +76,10 @@
  trap finish EXIT
  remaining=$((REFERENCE_STARTED + wall - 15 - $(date +%s)))
  (( remaining > 0 ))
 -timeout --kill-after=10s "${remaining}s" bash "$here/reference.sh" _payload "$attempt" "$gpus" "$phase" "$@" \
++unset REGROUND_TRANSFORMERS_PATH
 +transport=()
-+if [[ ${REGROUND_READ_CACHE:-0} == 1 ]]; then transport=(bash "$here/transport/with-cache.sh"); fi
++if [[ ${REGROUND_READ_CACHE:-0} == 1 && $phase =~ ^(collect|base|reground)$ ]]; then
++    transport=(bash "$here/transport/with-cache.sh")
++fi
 +timeout --kill-after=10s "${remaining}s" "${transport[@]}" bash "$here/reference.sh" _payload "$attempt" "$gpus" "$phase" "$@" \
      > "$attempt/launch.log" 2>&1
 --- a/outputs/reground-rotation-reference-20261123-r1/stream.sh
 +++ b/outputs/reground-rotation-reference-20261123-r1/stream.sh
-@@ -39,5 +39,7 @@
+@@ -39,5 +39,10 @@
  trap finish EXIT
  remaining=$((REFERENCE_STARTED + seconds - 15 - $(date +%s)))
  (( remaining > 0 ))
 -timeout --kill-after=10s "${remaining}s" bash "$here/stream.sh" _lanes "$attempt" "$cards" "$@" \
++unset REGROUND_TRANSFORMERS_PATH
 +transport=()
-+if [[ ${REGROUND_READ_CACHE:-0} == 1 ]]; then transport=(bash "$here/transport/with-cache.sh"); fi
++if [[ ${REGROUND_READ_CACHE:-0} == 1 ]]; then
++    transport=(bash "$here/transport/with-cache.sh")
++fi
 +timeout --kill-after=10s "${remaining}s" "${transport[@]}" bash "$here/stream.sh" _lanes "$attempt" "$cards" "$@" \
      > "$attempt/launch.log" 2>&1
 --- a/outputs/reground-rotation-reference-20261123-r1/symmeta_adapter.sh
