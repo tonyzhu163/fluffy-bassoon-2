@@ -26,6 +26,10 @@ On the eight nominal UR5e × π₀.₅ queries in the 96-query BASE retry panel,
 
 On 32 single-attempt queries across eight released tasks and four perturbation families, unadapted π₀.₅ succeeded on 19 and the same policy with the frozen streaming reader succeeded on 3. Sixteen pairs regressed and zero were rescued (paired difference −50.0 percentage points, suite-stratified task-bootstrap interval −59.4 to −40.6). Both arms issued identical commands for their first ten controls. The pilot omits Environment, which contributes to the historical five-family leaderboard. [Native readback and task-family counts](../outputs/symmeta-original-pro-20261123-r1/NATIVE-READBACK.md)
 
+## Probe direction and planar interface recovery on UR5e
+
+On 384 new simulated UR5e supports with reflected or anisotropic XY interfaces and matched endpoint jitter, an independent second command direction reduced full-map relative forward error from 0.560 to 0.270 at the same 15-control budget (paired reduction 0.290, eight-task 95% interval 0.204 to 0.363). Trusted FK supplied the displacements. On 192 archived yaw/gain supports, scaled rotation gave lower error than full ridge, 0.080 versus 0.262. These screens measure command-map recovery. [Directions, maps and observation assumptions](../outputs/frozen-vla-factory-20261123-r1/excitation/RESULT.md)
+
 ## Matched-source visual yaw on UR5e
 
 On the 64 held-out supports, uniform pooling over all three learned motion vectors gave 6.53° yaw MAE. Selecting the first or final vector gave 10.81° and 12.05°. Weighting the three by magnitude gave 6.18° (paired change −0.36°, 95% eight-task interval −0.81° to +0.03°). All readouts used the same frozen 15-control features. [Temporal pooling experiment](../outputs/frozen-vla-factory-20261123-r1/pooling/RESULT.md)

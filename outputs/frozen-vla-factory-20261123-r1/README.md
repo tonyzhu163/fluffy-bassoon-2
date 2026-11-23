@@ -27,3 +27,15 @@ Three additional CPU workers test adapters applied directly to the inputs of a p
 The coordinating session also ran [temporal pooling](pooling/RESULT.md) for both archived visual readers. Each readout reproduced its frozen archive baseline on all 96 UR5e supports.
 
 On the original paired native retries, the smaller support yaw error identified 12 of the 15 held-out cases in which only one reader succeeded. [Calibration metric versus native success](calibration-metric/RESULT.md)
+
+## Architecture decisions from the first twelve workers
+
+| Decision | Evidence and scope |
+| --- | --- |
+| Begin with a scaled rotation on the recorded yaw/gain interface. | Across 192 passive UR5e supports, a full ridge fit had forward error 0.262 against 0.080 for scaled rotation. A low-rank morphology update also lost to scaled rotation on the recorded cross-arm displacement screen. [Excitation](excitation/RESULT.md) · [Morphology](morphology/RESULT.md) |
+| Use an independent second direction when the interface may shear or reflect. | On 384 new simulated UR5e supports with matched jitter, two-direction probing reduced relative full-map error from 0.560 to 0.270. On 360 archived FK supports with a synthetic mirror, a parity-aware fit reduced direction error from 90.00° to 4.61°. Weak two-direction supports also benefited from damping the inverse, reducing clipped command error from 0.308 to 0.184 on frozen action tapes. [Support directions](excitation/RESULT.md) · [Parity](map/RESULT.md) · [Inverse damping](inverse/RESULT.md) |
+| Register the support view to a common frame. | With trusted extrinsics on physical ±30° camera orbits, mean visual yaw error fell from 28.98° to 7.61°. Trusted FK was more accurate than the tested fusion rules under optical rolls. The frozen motor's query camera stays fixed in the prepared native retry. [Camera](camera/RESULT.md) · [Fusion](fusion/RESULT.md) · [Native qualification](native/RESULT.md) |
+| Estimate delay before gain when calibrating a delayed actuator. | On the archived S20 trajectories, using the true delay reduced gain MAE from 0.593 to 0.027. Correlation plus a finite impulse response fit recovered 31/32 delays. Replay timing controls showed limited headroom for pacing rules. [Delay](delay/RESULT.md) · [Timing](timing/RESULT.md) |
+| Keep simple baselines for the remaining heads. | The gain-aware 3D fit improved the weaker half by 0.34°. Motion-only jaw forecasting had lower one-control error than bounded memory. The contact gate tied unchanged continuation at 27/32, and the uncertainty rules gave no held-out native advantage over the fixed reader. [3D rotation](so3/RESULT.md) · [Gripper](gripper/RESULT.md) · [Contact](contact/RESULT.md) · [Uncertainty](uncertainty/RESULT.md) |
+
+The native lane qualified a six-condition, 96-episode camera comparison on a fixture. Factory GPU consumption was zero at qualification. The 96-episode comparison needs authenticated Baige Distributed Training access and a verified new job receipt. The cameras, interfaces, observation privileges and motor checkpoints vary across these screens. A pooled success rate across lanes would have no common denominator.

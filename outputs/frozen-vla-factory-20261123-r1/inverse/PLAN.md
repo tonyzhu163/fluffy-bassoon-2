@@ -1,0 +1,7 @@
+# Propagate support uncertainty into the inverse
+
+The excitation screen found that two independent directions improved forward identification, while weak signals produced large inverse commands. Test a damped inverse with the same estimated forward map and the same 15 controls. Falsifying outcome: no decrease in residual operator error on weak two-direction supports, or a decrease that also sacrifices the benefit of stronger supports.
+
+Treat the two output rows of the forward map as independent with the common approximate ridge covariance from the source noise scale and issued commands. Minimize expected squared residual for a desired displacement. For an estimated map M and per-row covariance C, the correction is the solution of (MᵀM + 2C)K = Mᵀ. The ridge center is itself estimated and the added noise has temporal correlation. This makes the covariance a working approximation. The diagnostic compares the implied anisotropic damping to the original pseudoinverse and isotropic damping at the same trace. All three share the forward estimate. Set no damping parameter using target labels.
+
+Replay the excitation lane's physical support receipts with identical jitter. Score relative inverse residual before actuator clipping and mean error on the same frozen π₀.₅ commands after command clipping. Report paired whole-task intervals conditional on these eight tasks. Also replay the original, unimpaired yaw/gain supports. This is a follow-up on the same panel. Native success requires independent rollouts.

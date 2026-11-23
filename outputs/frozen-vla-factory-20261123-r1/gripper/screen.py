@@ -220,7 +220,7 @@ def main():
         train = [e for e in episodes if e.ordinary and e.task != task]
         test = [e for e in episodes if e.task == task]
         assert len(train) == 14 and len(test) == 4
-        task_switch_counts[task] = sum(np.count_nonzero(np.diff(np.sign(e.u))) for e in test)
+        task_switch_counts[task] = int(sum(np.count_nonzero(np.diff(np.sign(e.u))) for e in test))
         fits = [fit(train, m) for m in MODELS]
         config[task] = {"memory_fraction": fits[-1].fraction,
                         "dead_zone_thresholds": next(f.thresholds for f in fits if f.model == "dead_zone"),
