@@ -384,9 +384,11 @@ def run_lane(args):
     require(socket.gethostname() == read(args.attempt / "gpu.json")["hostname"], "Wrong host probe")
     device = f"cuda:{args.rank}"
     row = read(args.attempt / "gpu.json")["devices"][args.rank]
+    gpu_name = row["cuda_name"].upper()
+    qualified = (gpu_name in ("NVIDIA RPBZZZ6", "NVIDIA GEFORCE RTX 4090")
+                 or "RTX PRO 6000" in gpu_name)
     require(row["allocation_ordinal"] == args.rank and pci(row["pci_bus_id"]) == cuda_pci(args.rank)
-            and ("RTX PRO 6000" in row["cuda_name"].upper() or row["cuda_name"] == "NVIDIA RPBZZZ6"),
-            f"Unexpected GPU: {row}")
+            and qualified, f"Unexpected GPU: {row}")
     torch.cuda.set_device(args.rank)
     egl = egl_device(args.rank)
     os.environ["MUJOCO_EGL_DEVICE_ID"] = str(egl)
