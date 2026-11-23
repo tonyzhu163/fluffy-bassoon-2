@@ -4,6 +4,10 @@
 
 Over three reader seeds at 15 controls, in-family mean operator error was 0.149 for Procrustes, 6.037 for unregularized factored least squares and 0.152 for factored ridge on the same frozen reader. A continuously trained Perceiver with warmup reached 0.150. The full-map Perceiver trained across families improved axis swaps (0.413 versus 1.257 for Procrustes) and had highly variable general-map errors (mean 15.212, mean within-seed median 1.366). All comparisons use offline relabels of the same held-out traces. [Three-seed results and evidence](../outputs/symmeta-wider-family-20261123-r1/RESULT.md)
 
+## Streaming on the unmodified Panda command interface in original LIBERO-PRO
+
+On 32 single-attempt queries across eight released tasks and four perturbation families, unadapted π₀.₅ succeeded on 19 and the same policy with the frozen streaming reader succeeded on 3. Sixteen pairs regressed and zero were rescued (paired difference −50.0 percentage points, suite-stratified task-bootstrap interval −59.4 to −40.6). Both arms issued identical commands for their first ten controls. The pilot omits Environment, which contributes to the historical five-family leaderboard. [Native readback and task-family counts](../outputs/symmeta-original-pro-20261123-r1/NATIVE-READBACK.md)
+
 ## Matched-source visual yaw on UR5e
 
 On the 64 held-out π₀.₅ supports, a learned visual reader scored 6.53° mean absolute yaw error and a six-coefficient linear flow projection scored 9.16°. Both used the same 1,344 labeled source traces and the same geometric solver with equal chunk weights. The 2.63° paired advantage had a 95% task-bootstrap interval of 1.64° to 3.65°. On the 32 unseen-angle cases alone the advantage was 0.30° (−2.40° to +2.90°). [Source fit, per-task estimates and reference intervals](../outputs/symmeta-matched-flow-20261123-r1/OFFLINE.md)
