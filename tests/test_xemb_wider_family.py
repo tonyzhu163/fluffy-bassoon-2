@@ -4,16 +4,13 @@ import pytest
 from fluffy_bassoon.xemb.wider_family import (
     FAMILIES,
     delay_commands,
-    delay_keep_motion,
     interface_matrix,
-    lagged,
     operator_error,
     procrustes_yaw_deg,
     relabel,
     ridge_linear_map,
     rot2_batch,
     sample_interfaces,
-    soft_shape,
 )
 
 
@@ -90,46 +87,3 @@ def test_delay_pairs_each_motion_with_the_next_command():
     out = delay_commands(batch, 1)
     np.testing.assert_array_equal(out["issued_mean"][:, :3], batch["issued_mean"][:, 1:])
     assert out["valid"][:, :3].all() and not out["valid"][:, 3].any()
-
-
-def test_soft_shape_recovers_a_general_map_when_commands_span_the_plane():
-    rng = np.random.default_rng(3)
-    true = rng.uniform(-1.5, 1.5, (5, 2, 2))
-    cmd = rng.uniform(-1, 1, (5, 3, 2))
-    moved = np.einsum("bij,bkj->bki", true, cmd)
-    shape, _, _, share = soft_shape(cmd, moved, np.ones((5, 3), dtype=bool), 1e-9)
-    np.testing.assert_allclose(shape, true, atol=1e-5)
-    assert share.max() < 1e-5
-
-
-def test_soft_shape_completes_one_command_direction_with_a_rotation():
-    rng = np.random.default_rng(4)
-    swap = 1.2 * np.array([[0.0, 1.0], [1.0, 0.0]])
-    direction = np.array([np.cos(0.4), np.sin(0.4)])
-    cmd = rng.uniform(0.2, 1.0, (4, 3, 1)) * direction
-    moved = cmd @ swap.T
-    shape, resid, _, share = soft_shape(cmd, moved, np.ones((4, 3), dtype=bool), 0.3)
-    np.testing.assert_allclose(shape @ direction, np.tile(swap @ direction, (4, 1)), atol=1e-6)
-    np.testing.assert_allclose(np.linalg.det(shape), 1.2**2, rtol=1e-5)
-    np.testing.assert_allclose(resid, 0.0, atol=1e-6)
-    np.testing.assert_allclose(share, 1.0, atol=1e-5)
-
-
-def test_delay_keep_motion_is_explained_by_the_one_chunk_lag():
-    rng = np.random.default_rng(5)
-    batch, *_ = _recorded(rng, n=8)
-    gain = batch["xy_scale"].astype(np.float64)
-    delayed = delay_keep_motion(batch, 1, rows=np.arange(8) < 6)
-    np.testing.assert_array_equal(delayed["cmd_valid"][:6], [[True, True, False]] * 6)
-    np.testing.assert_array_equal(delayed["cmd_valid"][6:], True)
-    np.testing.assert_array_equal(delayed["issued_mean"][6:], batch["issued_mean"][6:])
-    cmd = delayed["issued_mean"][..., :2].astype(np.float64)
-    moved = delayed["delta_eef"][..., :2].astype(np.float64)
-    for lag, exact in ((1, True), (0, False)):
-        pair = delayed["valid"] & lagged(delayed["cmd_valid"], lag)
-        shape, resid, _, _ = soft_shape(lagged(cmd, lag), moved, pair, 1e3)
-        if exact:
-            np.testing.assert_allclose(resid[:6], 0.0, atol=1e-5)
-            np.testing.assert_allclose(shape[:6], gain[:6, None, None] * np.eye(2), atol=1e-3)
-        else:
-            assert resid[:6].min() > 1e-3
