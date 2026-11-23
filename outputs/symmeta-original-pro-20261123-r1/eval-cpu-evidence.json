@@ -1,0 +1,314 @@
+{
+  "benchmark_outcomes": false,
+  "check": "CPU-only synthetic motor, released simulator and learned reader",
+  "linux_host": "aibox-r855e239307b-6bfb688cdd-lz2dx",
+  "shared_workspace": "/mowenjie/fluffy-bassoon-2/outputs/symmeta-original-pro-20261123-r1/eval-check.Qq1HXI",
+  "files": {
+    "CASES.json": "b700c9c5a4af60c9b4e168458bfd9c252da005b83b882a2e527dd05da1cd72a0",
+    "eval.py": "aab0f866c07f11902168f9bb81206022b0887cf680df3e789a84c78838b1d961",
+    "eval_reader.py": "f83b1c0b9ada76c2126f366294785222e121703e02977c66bf530b1fb731b1e5",
+    "eval_sim.py": "83cc18448534640350a0f432eaead9d5a986674beeb4c35e06c614923d1c4aa1"
+  },
+  "reader_sha256": "c12bace5cb391499d6abd7cc5767f94b1519de7d77940efb0cfcb71ca0f686a4",
+  "fixture_case": {
+    "case_id": "libero_goal_object/01/28",
+    "suite": "libero_goal",
+    "task": "put_the_bowl_on_the_stove",
+    "suffix": "object",
+    "init_index": 28,
+    "env_seed": 7,
+    "noise_seed": 17590898588913329111,
+    "native_success": false,
+    "symmeta_success": false,
+    "difference": 0,
+    "native_return": 0.0,
+    "symmeta_return": 0.0,
+    "native_controls": 15,
+    "symmeta_controls": 15,
+    "matched_prefix_controls": 10,
+    "matched_noise_queries": 3,
+    "initially_solved": false,
+    "settle_success": false,
+    "completed_before_adaptation": false,
+    "reader_updates": 3,
+    "eligible_yaw_updates": 3,
+    "first_intervention_control": 10,
+    "first_changed_command_control": 10,
+    "policy_prompt": "put the bowl on the stove",
+    "bddl_prompt": "Put the bowl on the stove",
+    "bddl_differs_from_policy_prompt": false,
+    "selected_state_sha256": "afea5ff7320e146f7e82e7fadc2902749679b79d727bda7782ddce003f95a05b",
+    "bank_unique_states": 50,
+    "selected_state_multiplicity": 1,
+    "changed_controls": 5,
+    "total_action_delta_l2": 0.11222209595143795,
+    "max_action_delta_l2": 0.030706921592354774,
+    "max_abs_applied_yaw": 3.5254841981904708,
+    "max_abs_applied_log_gain": 0.07233794552832111,
+    "flipped_grip_queries": 0
+  },
+  "reset": {
+    "initial_cameras": {
+      "agentview": {
+        "xyz": [
+          0.6586131746834771,
+          0.0,
+          1.6103500240372424
+        ],
+        "world_matrix": [
+          -7.268184498698815e-08,
+          -0.6282664504107425,
+          0.7779982437565529,
+          0.9999999999999858,
+          7.268184498698815e-08,
+          1.521152659944569e-07,
+          -1.521152659944569e-07,
+          0.7779982437565529,
+          0.6282664504107283
+        ],
+        "fovy": 45.0,
+        "declared_xyz": [
+          0.6586131746834771,
+          0.0,
+          1.6103500240372424
+        ],
+        "declared_wxyz": [
+          0.6380177736282349,
+          0.3048497438430786,
+          0.30484986305236816,
+          0.6380177736282349
+        ]
+      },
+      "robot0_eye_in_hand": {
+        "xyz": [
+          -0.15303792215905415,
+          2.4631217808072937e-05,
+          1.2672841355231348
+        ],
+        "world_matrix": [
+          0.0004918296871690431,
+          0.9983867450712572,
+          0.056777331476359764,
+          -0.9999998786606131,
+          0.0004926243561613752,
+          0.0,
+          -2.7969896363104485e-05,
+          -0.05677732458703325,
+          0.9983868662149061
+        ],
+        "fovy": 75.0
+      }
+    },
+    "case_id": "libero_goal_object/01/28",
+    "seed": 7,
+    "init_index": 28,
+    "bddl_sha256": "c243a0de8e72c5e17a4b87528468504d828af1504d4e828d5f2ee437b5153b60",
+    "init_sha256": "907642a69eff5454ff1ccc9d20c4c6ff9c2963634545ae36c9598eea0bc25f5f",
+    "selected_state": "afea5ff7320e146f7e82e7fadc2902749679b79d727bda7782ddce003f95a05b",
+    "bank_unique_states": 50,
+    "selected_state_multiplicity": 1,
+    "initial_physics": "afea5ff7320e146f7e82e7fadc2902749679b79d727bda7782ddce003f95a05b",
+    "initial_public": {
+      "agentview_image": "fcd15baaf67febbf705ea87bcbb5a5cad90029f08aee7326d3e1c55fba81d1a5",
+      "robot0_eye_in_hand_image": "5e9012fd95fa6c71216d07a4cc3d997ef712f8de38077347ba3c53c3bec36e1b",
+      "robot0_eef_pos": "481ce0aba92e0469262f3be33b60e5b0872275b87600e31c4914d5450b845e32",
+      "robot0_gripper_qpos": "34c0964101e708f5cbdf8658f8a36fefef6e38ba7653a680a5c51a1a16cd3576",
+      "robot0_eef_quat_xyzw": "5cead6fe4a1fdb7e01407aeb5baaec62f986a763fedf127bef95f5daaaf44982"
+    },
+    "initial_success": false,
+    "robot": "MountedPanda",
+    "controller": "OperationalSpaceController",
+    "controller_name": "OSC_POSE",
+    "control_freq": 20,
+    "low": [
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0
+    ],
+    "high": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "vendor": "Mesa",
+    "renderer": "llvmpipe (LLVM 15.0.7, 256 bits)",
+    "prompt": "put the bowl on the stove",
+    "bddl_prompt": "Put the bowl on the stove",
+    "parsed_instruction": "put the bowl on the stove",
+    "problem": "libero_tabletop_manipulation",
+    "max_steps": 300,
+    "settle_rewards": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "settle_done": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "settled_cameras": {
+      "agentview": {
+        "xyz": [
+          0.6586131746834771,
+          0.0,
+          1.6103500240372424
+        ],
+        "world_matrix": [
+          -7.268184498698815e-08,
+          -0.6282664504107425,
+          0.7779982437565529,
+          0.9999999999999858,
+          7.268184498698815e-08,
+          1.521152659944569e-07,
+          -1.521152659944569e-07,
+          0.7779982437565529,
+          0.6282664504107283
+        ],
+        "fovy": 45.0,
+        "declared_xyz": [
+          0.6586131746834771,
+          0.0,
+          1.6103500240372424
+        ],
+        "declared_wxyz": [
+          0.6380177736282349,
+          0.3048497438430786,
+          0.30484986305236816,
+          0.6380177736282349
+        ]
+      },
+      "robot0_eye_in_hand": {
+        "xyz": [
+          -0.15303792215905418,
+          2.463122043069419e-05,
+          1.2672841355231343
+        ],
+        "world_matrix": [
+          0.0004918296908388853,
+          0.9983867450712557,
+          0.056777331476360174,
+          -0.9999998786606116,
+          0.0004926243598674662,
+          -5.339235997769975e-13,
+          -2.796989710658615e-05,
+          -0.0567773245870333,
+          0.9983868662149062
+        ],
+        "fovy": 75.0
+      }
+    },
+    "settled_physics": "008372b59b32f80b0dd49a72430eae8c16e10bfcec1da0a922dc53c7a1aca631",
+    "settled_public": {
+      "agentview_image": "d926cb3002e3809eaf5a73b5f488c51ae87af3f07a30cbc7fb4ad78dbd531cc7",
+      "robot0_eye_in_hand_image": "2b5297a0a7ab723ed0fb177018032d24b41f065aa810e7024cd340bb853a581e",
+      "robot0_eef_pos": "e554676461dcea8b3b0cabf55af83707bf7736d584aa3e002d9813bc4fe3b203",
+      "robot0_gripper_qpos": "1013aab9ca71a82519cafee5eae450957a8c2648d8710aed7d894b253d18b2f9",
+      "robot0_eef_quat_xyzw": "e7f0a5a293148e59c0eda61a4159165bb290f41c4bd8652378fdf87a0d154c8e"
+    },
+    "noise_sha256": "80abda652771aabc53f60af5ecef315f9f95f3fd996904ec38c336aebe10d618"
+  },
+  "pythonhashseed": 0,
+  "noise_hashes": [
+    "453656461c46725b0d35c0b080c2dcf60d6501062933606cab36c46bff483780",
+    "7e8cace8cf798b3acbcb8eb06c94ce359aa137736a3ad6ca34c657d071674e6c",
+    "adbc219b8699c55ffbbbd16184093dfb0aa003d32b75afafaf00cb0e668b363d"
+  ],
+  "applied_estimates": [
+    [
+      0.0,
+      1.0,
+      1
+    ],
+    [
+      0.0,
+      1.0,
+      1
+    ],
+    [
+      3.5254841981904708,
+      0.9302164801866712,
+      1
+    ]
+  ],
+  "report_and_streaming_parity": {
+    "source": "/mowenjie/fluffy-bassoon-2/setups/xemb-icml-campaign-20261121-r1/source-ff2ddf0a/outputs/xemb-icml-campaign-20261121-r1/eval_stage2a_live_ur5e.py",
+    "fixture": "same deterministic control policy; fresh original simulator",
+    "matched_chunks": 3,
+    "bit_identical_issued_controls": 15,
+    "matched_first_corrected_chunk": true,
+    "official_motor_input_matches": 4,
+    "fixture_table": [
+      4,
+      4,
+      0,
+      24
+    ],
+    "fixture_interval": [
+      -0.25,
+      0.25
+    ],
+    "bootstrap_draws": 256,
+    "incomplete_fixture_bounds": [
+      -0.75,
+      1.0
+    ]
+  },
+  "scene_checks": [
+    {
+      "case": "libero_10_swap/07/19",
+      "robot": "OnTheGroundPanda",
+      "problem": "libero_living_room_tabletop_manipulation",
+      "camera": [
+        0.6065773716836134,
+        0.0,
+        0.96
+      ],
+      "state": true
+    },
+    {
+      "case": "libero_10_swap/08/08",
+      "robot": "MountedPanda",
+      "problem": "libero_kitchen_tabletop_manipulation",
+      "camera": [
+        0.6586131746834771,
+        0.0,
+        1.6103500240372424
+      ],
+      "state": true
+    },
+    {
+      "case": "libero_object_swap/01/28",
+      "robot": "OnTheGroundPanda",
+      "problem": "libero_floor_manipulation",
+      "camera": [
+        0.8965773716836134,
+        5.216182733499864e-07,
+        0.65
+      ],
+      "state": true
+    }
+  ]
+}

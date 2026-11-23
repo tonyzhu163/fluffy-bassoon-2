@@ -135,15 +135,17 @@ def episode(sim, policy, motor, reader, reader_model, case, seed, noise, *, cpu,
         corrected = retarget_observation_for_motor(raw, anchor, estimate[0]) if estimate[0] else raw
         item = policy_input(motor, corrected, receipt["prompt"])
         before_input = motor.public_digest({k: v for k, v in item.items() if k != "prompt"})
-        proposal = np.asarray(policy.infer(item, noise=noise[qi])["actions"], np.float32)
-        if proposal.shape != (noise.shape[1], 7) or not np.isfinite(proposal).all():
+        proposal = np.asarray(policy.infer(item, noise=noise[qi])["actions"])
+        if (proposal.shape != (noise.shape[1], 7) or not np.issubdtype(proposal.dtype, np.floating)
+                or not np.isfinite(proposal).all()):
             raise ValueError(f"Invalid proposal at query {qi}: {proposal.shape}")
         commands = proposal[:min(5, limit - len(rewards))]
         issued = commands if estimate == reader.IDENTITY else retarget_action_from_motor(
             np.clip(commands, low, high), *estimate, low, high)
         start = len(rewards)
         r = dict(query=qi, start=start, estimate=list(estimate), noise=motor.array_digest(noise[qi]),
-                 input=before_input, proposal=motor.array_digest(proposal), issued=motor.array_digest(issued))
+                 input=before_input, proposal_dtype=proposal.dtype.str, issued_dtype=issued.dtype.str,
+                 proposal=motor.array_digest(proposal), issued=motor.array_digest(issued))
         if native is not None and qi < 2:
             for field in ("start", "estimate", "noise", "input", "proposal", "issued"):
                 check_equal(f"prefix query {qi}/{field}", native["queries"][qi][field], r[field])
@@ -208,6 +210,8 @@ def pair(case, env_seed, dest, policy, shape, deps, cpu):
                first_intervention_control=active[0]["start"] if active else None,
                first_changed_command_control=next((q["start"] + j for q in b["queries"]
                     for j, value in enumerate(q["action_delta_l2"]) if value != 0.), None),
+               policy_prompt=b["reset"]["prompt"], bddl_prompt=b["reset"]["bddl_prompt"],
+               bddl_differs_from_policy_prompt=b["reset"]["prompt"].casefold() != b["reset"]["bddl_prompt"].casefold(),
                selected_state_sha256=b["reset"]["selected_state"],
                bank_unique_states=b["reset"]["bank_unique_states"],
                selected_state_multiplicity=b["reset"]["selected_state_multiplicity"],
@@ -233,6 +237,7 @@ def counts(rows):
                 successes_during_settle=sum(r["settle_success"] for r in rows),
                 finished_in_prefix=sum(r["completed_before_adaptation"] for r in rows),
                 repeated_state_in_bank=sum(r["selected_state_multiplicity"] > 1 for r in rows),
+                bddl_differs_from_policy_prompt=sum(r["bddl_differs_from_policy_prompt"] for r in rows),
                 no_eligible_yaw_update=sum(r["eligible_yaw_updates"]==0 for r in rows),
                 no_intervention=sum(r["first_intervention_control"] is None for r in rows),
                 changed_controls=sum(r["changed_controls"] for r in rows),
