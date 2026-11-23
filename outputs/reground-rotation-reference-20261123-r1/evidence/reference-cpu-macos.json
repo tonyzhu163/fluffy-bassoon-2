@@ -1,0 +1,63 @@
+{
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "python": "3.12.16",
+  "upstream": "16a98486f560676b9036d1a6d067b9dd51a5917a",
+  "packages": {
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "scipy": "1.18.1"
+  },
+  "plan": {
+    "cli_episode_counts": {
+      "reground": 1400,
+      "base": 1400
+    },
+    "release_units": {
+      "babble": 500,
+      "collect": 250,
+      "fit": 5,
+      "base": 90,
+      "reground": 90
+    },
+    "partitions": [
+      2,
+      4,
+      5
+    ],
+    "batch": 4,
+    "shard_episodes": [
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      8
+    ]
+  },
+  "synthetic_summary": {
+    "n_eps": 1400,
+    "success": 0.3142857142857143,
+    "success_lo": 0.2542857142857143,
+    "success_hi": 0.36571428571428577,
+    "success_mean": 0.3142857142857143,
+    "unsafe": 0.2571428571428571,
+    "unsafe_lo": 0.22428571428571428,
+    "unsafe_hi": 0.27428571428571424,
+    "unsafe_mean": 0.25142857142857145
+  },
+  "lock_exclusion_and_reacquisition": true,
+  "elapsed_s": 19.093733957968652,
+  "gpu_hours": 0
+}

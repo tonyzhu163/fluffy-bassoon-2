@@ -36,6 +36,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--model', required=True, type=Path)
     parser.add_argument('--tokenizer', required=True, type=Path)
+    parser.add_argument('--tokenizer-config', type=Path, help='Official config.json if absent from the tokenizer cache')
     parser.add_argument('--hub', required=True, type=Path)
     args = parser.parse_args()
     manifest = json.loads(Path(__file__).with_name('hf-files.json').read_text())
@@ -49,7 +50,10 @@ def main():
         if {item.name for item in snapshot.iterdir()} - allowed:
             raise ValueError(f'Unexpected snapshot files under {snapshot}')
         for row in release['files']:
-            path = (source / row['path']).resolve(strict=True)
+            entry = source / row['path']
+            if name == TOKENIZER and row['path'] == 'config.json' and not entry.exists() and args.tokenizer_config:
+                entry = args.tokenizer_config
+            path = entry.resolve(strict=True)
             digest = verify(path, row)
             dest = snapshot / row['path']
             if dest.is_symlink():

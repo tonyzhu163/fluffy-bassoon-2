@@ -9,3 +9,5 @@ export LIBERO_CONFIG_PATH="$REGROUND_RUNTIME_ROOT/libero-config"
 export NUMBA_CACHE_DIR="$REGROUND_RUNTIME_ROOT/numba-cache"
 export PYTHONNOUSERSITE=1
 export PYTHONPATH="$REGROUND_RUNTIME_ROOT/runtime/offline:$REGROUND_RUNTIME_ROOT/upstream"
+# The release tracks Python bytecode. Keep interpreter-generated files outside its checkout.
+export PYTHONPYCACHEPREFIX="$REGROUND_RUNTIME_ROOT/pycache"

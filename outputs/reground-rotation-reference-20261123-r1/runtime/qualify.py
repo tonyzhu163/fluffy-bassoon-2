@@ -18,6 +18,7 @@ import torch
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--device', choices=('cpu', 'cuda'), required=True)
+    parser.add_argument('--cpu-policy', action='store_true', help='Also qualify the native model on CPU')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     started = time.monotonic()
@@ -51,11 +52,12 @@ def main():
         action = np.array([0.1, 0, 0, 0, 0, 0, -1], dtype=np.float32)
         if args.device == 'cuda':
             assert 'NVIDIA' in report['gl_vendor']
+        if args.device == 'cuda' or args.cpu_policy:
             rev = '7152f13e34c6c115d808aea0e5d08aca74eac14b'
             capture = io.StringIO()
             try:
                 with contextlib.redirect_stdout(capture):
-                    vla = VLA('pi05', 'cuda', revision=rev)
+                    vla = VLA('pi05', args.device, revision=rev)
             finally:
                 print(capture.getvalue(), flush=True)
             # LeRobot 0.6.1 can swallow weight-loading errors. Require its strict success branch.
@@ -69,7 +71,9 @@ def main():
             report.update(policy=type(vla.policy).__qualname__, wrapper=type(vla).__module__ + '.VLA',
                           revision=vla.revision, strict_load=True, noise_seed=0, chunk_idx=0,
                           chunk_shape=list(actions.shape), chunk_sha256=hashlib.sha256(actions.tobytes()).hexdigest(),
-                          first_action=action.tolist(), peak_cuda_bytes=torch.cuda.max_memory_allocated())
+                          first_action=action.tolist())
+            if args.device == 'cuda':
+                report['peak_cuda_bytes'] = torch.cuda.max_memory_allocated()
         step = env.step(action, render=True)
         assert env.t == 1 and reset['x'].shape == step['x'].shape == (25,)
         assert np.isfinite(step['x']).all() and np.isfinite(reset['x']).all()
