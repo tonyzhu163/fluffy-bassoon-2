@@ -1,0 +1,299 @@
+upstream/reground/eval/rollout.py
+SHA256 2cd7d36a0b97b22fdf3e4b89f9cfa4a0afc32f5b09f65652385a6097e4128b69
+  22 def _env_worker(conn, env_kwargs):
+  23     from ..envs.libero_env import TaskEnv
+  24     env, key = None, None
+  25     while True:
+  26         cmd, arg = conn.recv()
+  27         try:
+  28             if cmd == "reset":
+  29                 task, cell, init_id, seed, render = arg
+  30                 if env is None or key != task:
+  31                     if env is not None:
+  32                         env.close()
+  33                     env, key = TaskEnv(task, cell, **env_kwargs), task
+  34                 env.set_shift(cell)
+  35                 out = env.reset(init_id=init_id, seed=seed, render=render)
+  36                 out.update(max_steps=env.max_steps)
+  37             elif cmd == "step":
+  38                 a, render = arg
+  81             pass
+  82         self.procs[i].join(timeout=10)
+  83         if self.procs[i].is_alive():
+  84             self.procs[i].kill()
+  85         self._start(i)
+  86 
+  87     def __len__(self):
+  88         return len(self.conns)
+  89 
+  90     def call(self, idx, cmd, args):
+  91         if cmd == "reset":
+  92             for i, a in zip(idx, args):
+  93                 if self.tasks[i] is not None and self.tasks[i] != a[0]:
+  94                     self._respawn(i)
+  95                 self.tasks[i] = a[0]
+  96         for i, a in zip(idx, args):
+  97             self.conns[i].send((cmd, a))
+ 146     videos: dict = field(default_factory=dict)
+ 147 
+ 148 
+ 149 def run_batch(vla, pool: EnvPool, eps: list[Episode], ctrl, cell: str, speed_limit=None,
+ 150               log=None) -> BatchResult:
+ 151     B = len(eps)
+ 152     idx = list(range(B))
+ 153     t_wall = time.time()
+ 154     outs = pool.call(idx, "reset", [(e.task, cell, e.init_id, e.scene_seed, True) for e in eps])
+ 155     x = np.stack([o["x"] for o in outs])
+ 156     obs = [o["obs"] for o in outs]
+ 157     desc = [o["description"] for o in outs]
+ 158     tmax = np.array([o["max_steps"] for o in outs])
+ 159     ctrl.reset(x)
+ 160     active = np.ones(B, bool)
+ 161     success = np.zeros(B, bool)
+ 162     steps = np.zeros(B, int)
+ 163     X = [[xi.copy()] for xi in x]          # copy: x is updated in place below
+ 164     A_exec = [[] for _ in range(B)]
+ 165     A_vla = [[] for _ in range(B)]
+ 166     REF = [[] for _ in range(B)]
+ 175             tv = time.time()
+ 176             chunk = vla.predict_chunk(obs, desc, [e.noise_seed for e in eps], t // N_EXEC)
+ 177             ms_vla += 1000 * (time.time() - tv)
+ 178             n_vla += 1
+ 179             ctrl.on_chunk(x, chunk)
+ 180         sim_states = pool.call(idx, "full_state", [None] * B) if ctrl.needs_sim else None
+ 181         tc = time.time()
+ 182         a = ctrl.act(x, k, sim_states)
+ 183         ms_ctrl += 1000 * (time.time() - tc)
+ 184         n_ctrl += 1
+ 185         ref = getattr(ctrl, "ref", None)
+ 186         render_next = (t + 1) % N_EXEC == 0
+ 187         act_idx = [i for i in idx if active[i]]
+ 188         outs = pool.call(act_idx, "step", [(a[i], render_next or i in frames) for i in act_idx])
+ 189         for i, o in zip(act_idx, outs):
+ 190             x[i] = o["x"]
+
+upstream/reground/envs/libero_env.py
+SHA256 3e372fe9374878ed26f4932b77ab6655bdeff20c78bea4ba65d2ca87cee093c4
+  99         sid = r.eef_site_id
+ 100         R = d.site_xmat[sid].reshape(3, 3)
+ 101         return np.concatenate([d.site_xpos[sid], R[:, 0], R[:, 1],
+ 102                                d.qpos[r._ref_gripper_joint_pos_indexes],
+ 103                                d.qpos[r._ref_joint_pos_indexes],
+ 104                                d.qvel[r._ref_joint_vel_indexes]]).astype(np.float32)
+ 105 
+ 106     def eef_speed(self) -> float:
+ 107         return float(np.linalg.norm(self.rs.sim.data.get_site_xvelp(self.rs.sim.model.site_id2name(
+ 108             self.robot.eef_site_id))))
+ 109 
+ 110     def render_obs(self) -> dict:
+ 111         """Raw observation in lerobot LiberoEnv format (renders both cameras)."""
+ 112         self._cams(True)
+ 119         raw_obs = raw_obs or self.render_obs()
+ 120         return raw_obs["pixels"]["image"][::-1, ::-1].copy()
+ 121 
+ 122     # ------------------------------------------------------------ episode
+ 123     def reset(self, init_id: int | None = None, seed: int = 0, render=True) -> dict:
+ 124         """init_id indexes LIBERO's 50 fixed init states; None samples a fresh scene
+ 125         (used for adaptation data, never for evaluation)."""
+ 126         env = self.le._env
+ 127         np.random.seed(seed % 2 ** 32)
+ 128         env.seed(seed)
+ 129         env.reset()
+ 130         self.shift.on_reset(self.rs)            # controller was rebuilt by reset
+ 131         if init_id is not None:
+ 132             env.set_init_state(self.init_states[init_id % len(self.init_states)])
+ 133         self._cams(False)
+ 134         for _ in range(N_SETTLE):
+ 135             self.rs.step(NOOP)
+ 136         self.robot.controller.use_delta = True
+ 137         self.shift.on_reset(self.rs)            # re-assert (cheap) after settling
+ 138         self.shift.reset_state()
+ 139         self.safety = SafetyTracker(self.rs)
+ 140         self.t = 0
+ 141         out = {"x": self.robot_state(), "description": self.description}
+ 142         if render and self.cameras:
+ 143             out["obs"] = self.render_obs()
+ 144         return out
+ 145 
+ 146     def step(self, a: np.ndarray, render=False) -> dict:
+ 147         a_env = np.clip(self.shift.transform(np.asarray(a, dtype=np.float64)), -1, 1)
+ 148         _, _, done, _ = self.rs.step(a_env)
+ 149         self.t += 1
+ 150         success = bool(self.rs._check_success())
+ 151         self.safety.step(self.rs, self.eef_speed())
+ 152         out = {"x": self.robot_state(), "success": success, "done": bool(done)}
+ 153         if render and self.cameras:
+ 154             out["obs"] = self.render_obs()
+ 155         return out
+ 156 
+ 157     def summary(self) -> dict:
+ 158         return self.safety.summary(self.rs)
+ 159 
+ 160     # ------------------------------------------------------------ snapshot / restore (oracle_sim)
+ 161     def get_full_state(self):
+ 162         rs = self.rs
+ 163         return {"sim": rs.sim.get_state().flatten().copy(), "timestep": rs.timestep,
+ 164                 "cur_time": rs.cur_time, "grip": self.robot.gripper.current_action.copy(),
+ 165                 "shift": self.shift.get_state(), "done": rs.done,
+
+upstream/reground/policies/vla.py
+SHA256 a0a20fe2d4164f8b83d981e1afab1ba30c30ff67e21be129e78946b02409e35b
+  78 
+  79     def _noise(self, noise_seeds, chunk_idx):
+  80         out = []
+  81         for s in noise_seeds:
+  82             g = torch.Generator().manual_seed(chunk_seed(int(s), chunk_idx))
+  83             out.append(torch.randn(self.chunk_size, self.noise_dim, generator=g))
+  84         return torch.stack(out).to(self.device)
+  85 
+ 101         obs = preprocess_observation(_stack(obs_list))
+ 102         obs["task"] = list(tasks)
+ 103         obs = self.env_pre(obs)
+ 104         obs = self.pre(obs)
+ 105         noise = self._noise(noise_seeds, chunk_idx)
+ 106         actions = self.policy.predict_action_chunk(obs, noise=noise)     # (B, T, 7) normalised
+ 107         actions = self.post(actions)
+ 108         actions = self.env_post({"action": actions})["action"]
+ 109         return actions.float().cpu().numpy()
+
+env/lib/python3.12/site-packages/robosuite/environments/base.py
+SHA256 3d55a1d8b0350478b7e7e8d1c7a1250c8f173b69a67016ecb9e65c6965e741f6
+ 245         # Use hard reset if requested
+ 246 
+ 247         if self.hard_reset and not self.deterministic_reset:
+ 248             if self.renderer == "mujoco" or self.renderer == "default":
+ 249                 self._destroy_viewer()
+ 250                 self._destroy_sim()
+ 251             self._load_model()
+ 252             self._initialize_sim()
+ 253         # Else, we only reset the sim internally
+ 254         else:
+ 255             self.sim.reset()
+ 256 
+ 257         # Reset necessary robosuite-centric variables
+ 258         self._reset_internal()
+ 259         self.sim.forward()
+ 260         # Setup observables, reloading if
+ 261         self._obs_cache = {}
+ 262         if self.hard_reset:
+ 263             # If we're using hard reset, must re-update sensor object references
+
+env/lib/python3.12/site-packages/libero/libero/envs/bddl_base_domain.py
+SHA256 4f4da47dd241ac6590d66c7559d76e44b68669924207f53143ca3a4962921f24
+  96         # object property initializer
+  97 
+  98         if object_property_initializers is not None:
+  99             self.object_property_initializers = object_property_initializers
+ 100         else:
+ 101             self.object_property_initializers = list()
+ 102 
+ 379         self._load_sites_in_arena(mujoco_arena)
+ 380 
+ 381         self._generate_object_state_wrapper()
+ 382 
+ 383         self._setup_placement_initializer(mujoco_arena)
+ 384 
+ 398     def _setup_placement_initializer(self, mujoco_arena):
+ 399         self.placement_initializer = SequentialCompositeSampler(name="ObjectSampler")
+ 400         self.conditional_placement_initializer = SiteSequentialCompositeSampler(
+ 401             name="ConditionalSiteSampler"
+ 402         )
+ 403         self.conditional_placement_on_objects_initializer = SequentialCompositeSampler(
+ 404             name="ConditionalObjectSampler"
+ 405         )
+ 406         self._add_placement_initializer()
+ 407 
+ 646                         ]
+ 647 
+ 648                     property_initializer = OpenCloseSampler(
+ 649                         name=obj.name,
+ 650                         state_type=state[0],
+ 651                         joint_ranges=joint_ranges,
+ 652                     )
+ 653                     self.object_property_initializers.append(property_initializer)
+ 654             elif state[0] in ["turnon", "turnoff"]:
+ 739         # Reset all object positions using initializer sampler if we're not directly loading from an xml
+ 740         if not self.deterministic_reset:
+ 741 
+ 742             # Sample from the placement initializer for all objects
+ 743             for object_property_initializer in self.object_property_initializers:
+ 744                 if isinstance(object_property_initializer, OpenCloseSampler):
+ 745                     joint_pos = object_property_initializer.sample()
+ 746                     self.object_states_dict[object_property_initializer.name].set_joint(
+ 747                         joint_pos
+ 748                     )
+ 749                 elif isinstance(object_property_initializer, TurnOnOffSampler):
+ 750                     joint_pos = object_property_initializer.sample()
+ 751                     self.object_states_dict[object_property_initializer.name].set_joint(
+ 757             mujoco.mj_step1(self.sim.model._model, self.sim.data._data)
+ 758 
+ 759             object_placements = self.placement_initializer.sample()
+ 760             object_placements = self.conditional_placement_initializer.sample(
+ 761                 self.sim, object_placements
+ 762             )
+ 763             object_placements = (
+ 764                 self.conditional_placement_on_objects_initializer.sample(
+ 765                     object_placements
+ 766                 )
+ 767             )
+ 768             for obj_pos, obj_quat, obj in object_placements.values():
+ 769                 if obj.name not in list(self.fixtures_dict.keys()):
+ 770                     # This is for movable object resetting
+ 771                     self.sim.data.set_joint_qpos(
+ 772                         obj.joints[-1],
+ 773                         np.concatenate([np.array(obj_pos), np.array(obj_quat)]),
+ 774                     )
+ 775                 else:
+ 776                     # This is for fixture resetting
+ 777                     body_id = self.sim.model.body_name2id(obj.root_body)
+ 778                     self.sim.model.body_pos[body_id] = obj_pos
+ 779                     self.sim.model.body_quat[body_id] = obj_quat
+ 780 
+ 781     def _check_success(self):
+
+env/lib/python3.12/site-packages/libero/libero/envs/regions/object_property_sampler.py
+SHA256 051fbce5a9aadcdf26bd42b447c1b677e610e0e539132807a3ffb578b6feab60
+  95         assert self.joint_ranges[0] <= self.joint_ranges[1]
+  96         super().__init__(name, mujoco_objects)
+  97 
+  98     def sample(self):
+  99         return np.random.uniform(high=self.joint_ranges[1], low=self.joint_ranges[0])
+ 100 
+
+env/lib/python3.12/site-packages/libero/libero/envs/env_wrapper.py
+SHA256 a782fb76c9792268d28979474fe72849e1e98ada49c8e997a65359a8d6b6acd0
+ 126 
+ 127     def set_state(self, mujoco_state):
+ 128         self.env.sim.set_state_from_flattened(mujoco_state)
+ 129 
+ 130     def reset_from_xml_string(self, xml_string):
+ 131         self.env.reset_from_xml_string(xml_string)
+ 132 
+ 133     def seed(self, seed):
+ 134         self.env.seed(seed)
+ 135 
+ 136     def set_init_state(self, init_state):
+ 137         return self.regenerate_obs_from_state(init_state)
+ 138 
+ 139     def regenerate_obs_from_state(self, mujoco_state):
+ 140         self.set_state(mujoco_state)
+ 141         self.env.sim.forward()
+ 142         self.check_success()
+ 143         self._post_process()
+ 144         self._update_observables(force=True)
+ 145         return self.env._get_observations()
+ 146 
+ 147     def close(self):
+ 148         self.env.close()
+
+env/lib/python3.12/site-packages/lerobot/envs/libero.py
+SHA256 97c984f12331527626812ec19967ef399e545535b3571becf044db2417ae9d71
+  67 def get_task_init_states(task_suite: Any, i: int, is_libero_plus: bool = False) -> np.ndarray:
+  68     task = task_suite.tasks[i]
+  69     filename = Path(task.init_states_file)
+  70     root = Path(get_libero_path("init_states"))
+  71 
+  72     if not is_libero_plus:
+  73         init_states_path = root / task.problem_folder / filename.name
+  74         return torch.load(init_states_path, weights_only=False)  # nosec B614
+  75 
