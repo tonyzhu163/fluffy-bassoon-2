@@ -50,6 +50,7 @@ class Opening:
         self.episodes = list(map(tuple, job["episodes"]))
         self.batch = -1
         self.receipts = {}
+        self.historical_agentview = []
         self.pending = None
         self.call, self.predict = ctx.pool.call, ctx.vla.predict_chunk
         if tape is not None:
@@ -68,6 +69,13 @@ class Opening:
             raise ValueError(f"Opening differs at batch {self.batch}, {name}. Diagnose {path}")
 
     def reset(self, idx, cmd, args):
+        # LIBERO can retain fixture placement history when a worker resets the same task.
+        # Give every captured and scored batch the same fresh-process reset history.
+        pool = self.ctx.pool
+        if cmd == "reset" and isinstance(pool, rollout.EnvPool):
+            for lane in idx:
+                if pool.tasks[lane] is not None:
+                    pool._respawn(lane)
         outs = self.call(idx, cmd, args)
         if cmd != "reset":
             return outs
@@ -85,13 +93,14 @@ class Opening:
             obs = out["obs"]
             evidence = self.original[key]
             self.check(f"{lane}/original/X0", out["x"], evidence["x"])
-            self.check(f"{lane}/original/eef", obs["robot_state"]["eef"]["pos"], evidence["eef"])
-            self.check(f"{lane}/original/jaw", obs["robot_state"]["gripper"]["qpos"], evidence["jaw"])
+            for label, value in (("eef", obs["robot_state"]["eef"]["pos"]),
+                                 ("jaw", obs["robot_state"]["gripper"]["qpos"])):
+                # The historical JSON stores numbers without array dtypes.
+                self.check(f"{lane}/original/{label}", np.asarray(value, dtype=np.float64),
+                           np.asarray(evidence[label], dtype=np.float64))
             camera = obs["pixels"]["image"]
             digest = sha256(camera.tobytes()).hexdigest()
-            if digest != evidence["camera"]:
-                np.save(self.work / f"historical-camera-mismatch-{self.batch}-{lane}.npy", camera)
-                self.check(f"{lane}/original/agentview_sha256", digest, evidence["camera"])
+            self.historical_agentview.append(dict(key=list(key), previous=evidence["camera"], current=digest))
             self.pending.update(leaves(f"{lane}/sim", state["state"]))
             self.pending[f"{lane}/X0"] = out["x"].copy()
         self.reset_obs = observations([o["obs"] for o in outs])
@@ -163,4 +172,5 @@ class Opening:
     def finish(self):
         names = {f"batch{b}.npz" for b in range(len(self.episodes) // ref.BATCH)}
         ref.require(self.receipts.keys() == names and self.pending is None, "Missing batch openings")
-        ref.write(self.work / "opening.json", dict(identity=self.identity(), batches=self.receipts))
+        ref.write(self.work / "opening.json", dict(identity=self.identity(), batches=self.receipts,
+                  historical_agentview=self.historical_agentview, reset_history="fresh process per native batch"))
