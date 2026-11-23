@@ -1,0 +1,208 @@
+{
+  "status": "passed",
+  "qualification_only": true,
+  "revision": "ba3c41e25575d07d7bd8bbfaae2797e7cf9dc0a9",
+  "shared_qualification": "/mowenjie/fluffy-bassoon-2/outputs/symmeta-seven-schedule-20261123-r1/cpu03",
+  "exit": "0 1795421149 1795421111",
+  "source_sha256": [
+    "6c52837fd9be7417bf0cebd25ea92360894f6f1634ed8bb95fad3611f18d04e0  outputs/symmeta-seven-schedule-20261123-r1/run.py",
+    "608b28a79ea6c01fb19274467cfc79928e05fc87f5495ec50ff75c354504db3c  outputs/symmeta-seven-schedule-20261123-r1/paired.py",
+    "bad1fa61fa079cd3611afdd48362b0dbf53f9feda8ac1ca4b56967d7bec687d2  outputs/symmeta-seven-schedule-20261123-r1/launch.sh",
+    "34235e9c3b93380d0f29e488403f8fdd26b0eaa379e56c9d2eabd1ae9f6b8d25  outputs/xemb-icml-campaign-20261121-r1/stage1_offline_gate.py"
+  ],
+  "job_guard": "Requires a single-node Baige Distributed Training job",
+  "archive": {
+    "archive": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu01/archive/archive.json",
+    "archive_sha256": "37f062958cb63b962ceefb760f0592fdb120da966369ee308b509e2d82449076",
+    "ordered_source_sha256": "b3d0de8949ba43bfe7da57b644656da456d0fe45a85c77e9e43234b4a05612f0",
+    "source_arms": {
+      "Panda": 672,
+      "Sawyer": 672
+    },
+    "source_shifts": {
+      "nom": 192,
+      "yaw90": 192,
+      "yaw180": 192,
+      "yawm90": 192,
+      "scale_lo": 192,
+      "scale_hi": 192,
+      "grip_inv": 192
+    },
+    "n_dev": 96,
+    "nominal_gain": 0.054141017027535904
+  },
+  "ordered_test_sha256": "8729fa68343e2a7a0cc6471ab25e7c707555a866e682a3dc999079a7b9dc3554",
+  "devices": [
+    "TFRT_CPU_0"
+  ],
+  "rates_by_zero_based_optax_count": {
+    "0": 0.0,
+    "1": 1.500011421740055e-06,
+    "199": 0.00029850000282749534,
+    "200": 0.0003000000142492354,
+    "3499": 1.5000068742665462e-05,
+    "3500": 1.500000053056283e-05
+  },
+  "actual_updates_per_seed": 2,
+  "full_schedule_horizon": 3500,
+  "n_tasks": 8,
+  "n_distinct_supports": 96,
+  "n_distinct_ood_supports": 64,
+  "n_paired_seed_support_rows": 288,
+  "checked_factors_and_operators": 576,
+  "checkpoints": [
+    {
+      "seed": 41,
+      "original": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu03v2/stage1/checkpoints/perceiver_icba_dis-passive_attempt1-seed41.msgpack",
+        "sha256": "fa34e48fe12238c9f38bc68f4394690189fc6a4463de88b3486673c5e395cacb",
+        "steps": 3500,
+        "seed": 41,
+        "config": {
+          "model_type": "perceiver_icba",
+          "visual_mode": "dis_lumaflow",
+          "max_chunks": 32,
+          "cnn_width": 96,
+          "mlp_width": 192,
+          "use_dz_parallax": true,
+          "perceiver_latents": 8,
+          "perceiver_width": 192,
+          "perceiver_layers": 3,
+          "perceiver_heads": 4
+        }
+      },
+      "candidate": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/symmeta-seven-schedule-20261123-r1/cpu03/results/checkpoints/perceiver_icba_dis-passive_attempt1-seed41.msgpack",
+        "sha256": "cb4080342afea706ad98f1f1951a0ecb9362e2a0d209f211cf657ee653a8d7cf",
+        "steps": 2,
+        "seed": 41,
+        "config": {
+          "model_type": "perceiver_icba",
+          "visual_mode": "dis_lumaflow",
+          "max_chunks": 32,
+          "cnn_width": 96,
+          "mlp_width": 192,
+          "use_dz_parallax": true,
+          "perceiver_latents": 8,
+          "perceiver_width": 192,
+          "perceiver_layers": 3,
+          "perceiver_heads": 4
+        }
+      }
+    },
+    {
+      "seed": 42,
+      "original": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu03v2/stage1/checkpoints/perceiver_icba_dis-passive_attempt1-seed42.msgpack",
+        "sha256": "dc7f8c507baee04333556479a52c1f55386c45ff772c7c945f11c66e76079553",
+        "steps": 3500,
+        "seed": 42,
+        "config": {
+          "model_type": "perceiver_icba",
+          "visual_mode": "dis_lumaflow",
+          "max_chunks": 32,
+          "cnn_width": 96,
+          "mlp_width": 192,
+          "use_dz_parallax": true,
+          "perceiver_latents": 8,
+          "perceiver_width": 192,
+          "perceiver_layers": 3,
+          "perceiver_heads": 4
+        }
+      },
+      "candidate": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/symmeta-seven-schedule-20261123-r1/cpu03/results/checkpoints/perceiver_icba_dis-passive_attempt1-seed42.msgpack",
+        "sha256": "9af02c90d5a24cd42760c63f1539603d5d6fd8d0924bbaf20f990d1d4af4453d",
+        "steps": 2,
+        "seed": 42,
+        "config": {
+          "model_type": "perceiver_icba",
+          "visual_mode": "dis_lumaflow",
+          "max_chunks": 32,
+          "cnn_width": 96,
+          "mlp_width": 192,
+          "use_dz_parallax": true,
+          "perceiver_latents": 8,
+          "perceiver_width": 192,
+          "perceiver_layers": 3,
+          "perceiver_heads": 4
+        }
+      }
+    },
+    {
+      "seed": 43,
+      "original": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu03v2/stage1/checkpoints/perceiver_icba_dis-passive_attempt1-seed43.msgpack",
+        "sha256": "32fbe7d438011873f243a31d1a3880313c6ddd9c621ffe4b4caf46568f21f841",
+        "steps": 3500,
+        "seed": 43,
+        "config": {
+          "model_type": "perceiver_icba",
+          "visual_mode": "dis_lumaflow",
+          "max_chunks": 32,
+          "cnn_width": 96,
+          "mlp_width": 192,
+          "use_dz_parallax": true,
+          "perceiver_latents": 8,
+          "perceiver_width": 192,
+          "perceiver_layers": 3,
+          "perceiver_heads": 4
+        }
+      },
+      "candidate": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/symmeta-seven-schedule-20261123-r1/cpu03/results/checkpoints/perceiver_icba_dis-passive_attempt1-seed43.msgpack",
+        "sha256": "3a196f869c9c71c2ebc98d14e05842c84def8eea309f9f9d1dbb8afa313901d3",
+        "steps": 2,
+        "seed": 43,
+        "config": {
+          "model_type": "perceiver_icba",
+          "visual_mode": "dis_lumaflow",
+          "max_chunks": 32,
+          "cnn_width": 96,
+          "mlp_width": 192,
+          "use_dz_parallax": true,
+          "perceiver_latents": 8,
+          "perceiver_width": 192,
+          "perceiver_layers": 3,
+          "perceiver_heads": 4
+        }
+      }
+    }
+  ],
+  "per_seed": {
+    "41": {
+      "source_sample_sequence_le_int64_sha256": "1a4a069fa5194a019e6f310f0b90501c485a9fca3012f2ef5247e57b1fee1ad4",
+      "max_abs_param_change_from_init": 1.5497207641601562e-06,
+      "original_cpu_ood_yaw_mae_deg": 97.08268181260792,
+      "original_pr7_gpu_ood_yaw_mae_deg": 97.0752505971468,
+      "cpu_minus_pr7_gpu_ood_yaw_deg": 0.007431215461110696,
+      "original_cpu_overall_operator_error": 0.9805586008483927,
+      "original_pr7_gpu_overall_operator_error": 0.9806078677514557
+    },
+    "42": {
+      "source_sample_sequence_le_int64_sha256": "9beaa9e53e40b14ef8a7e4a340a5160b139a9975b1bdd6f2dfce4a4874bc5232",
+      "max_abs_param_change_from_init": 1.5497207641601562e-06,
+      "original_cpu_ood_yaw_mae_deg": 92.32525568036363,
+      "original_pr7_gpu_ood_yaw_mae_deg": 92.342466450762,
+      "cpu_minus_pr7_gpu_ood_yaw_deg": -0.017210770398378372,
+      "original_cpu_overall_operator_error": 0.9347430677474677,
+      "original_pr7_gpu_overall_operator_error": 0.9348016999607789
+    },
+    "43": {
+      "source_sample_sequence_le_int64_sha256": "08e87638fbe73f6a02f7e4da94c6762bd45dc57350930a0c67f85601690330c7",
+      "max_abs_param_change_from_init": 1.5497207641601562e-06,
+      "original_cpu_ood_yaw_mae_deg": 97.474176199059,
+      "original_pr7_gpu_ood_yaw_mae_deg": 97.47559262823779,
+      "cpu_minus_pr7_gpu_ood_yaw_deg": -0.001416429178789258,
+      "original_cpu_overall_operator_error": 0.9843409443393789,
+      "original_pr7_gpu_overall_operator_error": 0.9842334512553399
+    }
+  },
+  "paired_ood_yaw_bootstrap_independent_readback": "matches the saved paired mean and both task-bootstrap bounds",
+  "summary_sha256": "e3ba5821d8eb5c590748998af4df8983d75dcf479abdee3736df938a17d4016b",
+  "cases_sha256": {
+    "41": "b915bb488052631245faab7add45210e0c7b5b95e998df89f8d28ceea8f517ea",
+    "42": "7c6800412b3becce71fcfb6422fc5bdc55f600a6f59720b0081d4401cb6c74d5",
+    "43": "d2be2c8c62e54b28df0a18e50a578e27ab504c3129c0708cce56026292cc0b06"
+  }
+}
