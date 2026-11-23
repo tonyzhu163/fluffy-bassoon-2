@@ -378,6 +378,12 @@ ReGround's published success IQM of 0.98 lies within the rerun interval. Its pub
 
 All 1,400 initial robot states and policy-noise keys agreed. Seven assignments across two shards had different first policy proposals among the three arms. On the 1,395 exactly matched SymMeta/ReGround openings the methods had 401 and 1,267 successes. A separate rerun of both entire shards verified identical fresh cameras, simulator state, noise and initial 50-action proposal for all arms. Base, SymMeta and ReGround succeeded on 0, 12 and 31 of those 32 assignments, versus 0, 13 and 31 on their original runs. Table~\ref{tab:reground-native} retains every original result.
 
+\subsection{Changing the simulated arm on the native command interface}
+\label{sec:native-interface}
+We also changed the arm while preserving the Cartesian controller, gripper and command frame. On the eight nominal layout-13 queries, unadapted $\pi_{0.5}$ succeeded on 8/8 for UR5e and 6/8 each for IIWA and Kinova3. Both missed the drawer-and-bowl and two-moka-pot tasks. We selected these tasks and one previously successful task, cream cheese into the bowl, and evaluated two fresh layouts per task. A transfer experiment fitted planar and full 3D translation corrections from 15 target controls on a separate layout, using trusted metric tool positions and a source motion model estimated on Panda and Sawyer. On the six new starts, the same frozen policy succeeded on 6/6 for Panda, 4/6 for untreated Kinova3, 4/6 with the planar correction and 3/6 with the 3D correction. Both adapters rescued the same drawer start. The 3D adapter lost both untreated moka-pot successes. All initial Kinova3 proposals, inputs and policy-noise draws matched within these comparisons.
+
+In a separate set of processes, untreated Kinova3 succeeded on 2/6. Painting the simulated arm uniformly with a source colour or using a separate source colour for each link each gave 3/6, rescuing different moka-pot starts. All six untreated initial input and noise fingerprints matched across the two experiments. All six opening proposal fingerprints differed, and both untreated moka-pot outcomes changed. We compare interventions within each job. These targeted starts expose failure modes that a command-shift recovery score alone cannot distinguish.
+
 \subsection{Calibrated retries on the original panels}
 \begin{table}[!ht]
   \centering

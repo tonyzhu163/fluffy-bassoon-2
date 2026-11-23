@@ -1,0 +1,73 @@
+{
+  "reference": "/mowenjie/fluffy-bassoon-2/outputs/symmeta-matched-flow-20261123-r1/gpu01",
+  "historical_shards": [
+    {
+      "shard": 0,
+      "suite": "libero_10",
+      "task_id": 5,
+      "original_stream_seconds": 144.07999999999998,
+      "two_matched_flow_arm_seconds": 300.392
+    },
+    {
+      "shard": 1,
+      "suite": "libero_10",
+      "task_id": 8,
+      "original_stream_seconds": 156.92,
+      "two_matched_flow_arm_seconds": 378.682
+    },
+    {
+      "shard": 2,
+      "suite": "libero_goal",
+      "task_id": 3,
+      "original_stream_seconds": 98.92999999999999,
+      "two_matched_flow_arm_seconds": 237.565
+    },
+    {
+      "shard": 3,
+      "suite": "libero_goal",
+      "task_id": 6,
+      "original_stream_seconds": 89.95,
+      "two_matched_flow_arm_seconds": 130.28900000000002
+    },
+    {
+      "shard": 4,
+      "suite": "libero_object",
+      "task_id": 1,
+      "original_stream_seconds": 91.73,
+      "two_matched_flow_arm_seconds": 136.684
+    },
+    {
+      "shard": 5,
+      "suite": "libero_object",
+      "task_id": 8,
+      "original_stream_seconds": 79.68,
+      "two_matched_flow_arm_seconds": 167.231
+    },
+    {
+      "shard": 6,
+      "suite": "libero_spatial",
+      "task_id": 0,
+      "original_stream_seconds": 68.1,
+      "two_matched_flow_arm_seconds": 144.68
+    },
+    {
+      "shard": 7,
+      "suite": "libero_spatial",
+      "task_id": 8,
+      "original_stream_seconds": 74.48,
+      "two_matched_flow_arm_seconds": 157.088
+    }
+  ],
+  "reference_elapsed_seconds": 1201,
+  "reference_cards": 2,
+  "reference_job": "job-sjubp8q0tg1x",
+  "stream_extra_seconds_by_lane": [
+    402.84,
+    401.03
+  ],
+  "estimate_wall_seconds": 1603.84,
+  "estimate_two_card_gpu_hours": 0.8910222222222222,
+  "recommended_wall_seconds": 4500,
+  "recommended_gpu_hours_cap": 2.5,
+  "assumption": "Use the measured native two-arm job including overhead as proxy for two exact arms. Add measured streaming time on the busier lane. Reset, JIT and episode lengths can differ."
+}
