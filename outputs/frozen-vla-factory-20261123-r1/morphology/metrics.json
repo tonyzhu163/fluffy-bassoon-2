@@ -1,0 +1,958 @@
+{
+  "archive_provenance": {
+    "IIWA": {
+      "checkpoint": "/mowenjie/fluffy-bassoon/inputs/pi05-libero-openpi-20261027-r1",
+      "launch": "490f25c5716aa067199c5b65e32caf6cd15421a4 job-3qs72l3fcgi9-master-0 155 stage2a-live-ur5e",
+      "weight_transport_manifest_sha256": "28310343bab088490f4e84110ce13861ccdeb3eda1bb4dd7c4bc26df84b8428c"
+    },
+    "Kinova3": {
+      "checkpoint": "/mowenjie/fluffy-bassoon/inputs/pi05-libero-openpi-20261027-r1",
+      "launch": "465f33dc657ceab341dbceaf6b98355b94810059 job-66opmwn2j3a9-master-0 155 stage2a-live-ur5e",
+      "weight_transport_manifest_sha256": "28310343bab088490f4e84110ce13861ccdeb3eda1bb4dd7c4bc26df84b8428c"
+    },
+    "UR5e": {
+      "archive": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live",
+      "collector_commit": "5dd5fa914bbbfe25b9cf4ca5fa504c8a472e997b"
+    },
+    "UR5e_pi0": {
+      "checkpoint": "/mowenjie/fluffy-bassoon-2/inputs/pi0-libero-openpi-g1748456809412170-20261029-r1",
+      "launch": "490f25c5716aa067199c5b65e32caf6cd15421a4 job-bhl6rx8ok5t8-master-0 154 stage2a-live-ur5e",
+      "weight_transport_manifest_sha256": "9d887f0a461796ed2e65ee87c9184d1ff1853efc9173b2a3ee7b47830b9fad2c"
+    }
+  },
+  "baseline_revision": "757a44cd4374833cad790852df8b87ddf412e638",
+  "calibration_tasks": [
+    "libero_10/5",
+    "libero_10/8"
+  ],
+  "control_budget": {
+    "historical_passive_calibration_controls_up_to": 1440,
+    "historical_passive_score_controls_up_to": 3960,
+    "optional_active_UR5e": 288,
+    "reference_only_Panda_probes": 105,
+    "source_active_Panda": 288,
+    "source_active_Sawyer": 288,
+    "target_nominal_per_deployment": 15,
+    "target_unknown_per_setting": 15
+  },
+  "counts_unique_tapes": {
+    "morphology": 6,
+    "score": 264,
+    "unique_fit_or_support": 96,
+    "unknown_interface": 96
+  },
+  "design": {
+    "IIWA": {
+      "all_qualified": {
+        "condition_min_median_max": [
+          3.432960077214181,
+          9.697002974378357,
+          160.79239782287982
+        ],
+        "median_fraction_command_energy_on_minor_axis": 0.010544841247052843,
+        "median_mm_per_unit_weak_axis_slope_change_for_1mm_frobenius_noise": 9.272116286094365,
+        "n": 84
+      },
+      "calibration_tasks": {
+        "condition_min_median_max": [
+          3.432960077214181,
+          7.565950647653487,
+          31.65513596431877
+        ],
+        "median_fraction_command_energy_on_minor_axis": 0.017169585106615433,
+        "median_mm_per_unit_weak_axis_slope_change_for_1mm_frobenius_noise": 9.395934920775844,
+        "n": 24
+      }
+    },
+    "Kinova3": {
+      "all_qualified": {
+        "condition_min_median_max": [
+          3.3662526399901704,
+          10.680599362567476,
+          120.18086202113265
+        ],
+        "median_fraction_command_energy_on_minor_axis": 0.00869055047331397,
+        "median_mm_per_unit_weak_axis_slope_change_for_1mm_frobenius_noise": 10.826130193556057,
+        "n": 84
+      },
+      "calibration_tasks": {
+        "condition_min_median_max": [
+          3.3662526399901704,
+          9.958054926772547,
+          64.2516946401181
+        ],
+        "median_fraction_command_energy_on_minor_axis": 0.009985422808955487,
+        "median_mm_per_unit_weak_axis_slope_change_for_1mm_frobenius_noise": 11.562546776956689,
+        "n": 24
+      }
+    },
+    "Panda_active_pulse_reference": {
+      "condition_range": [
+        1.279592469641471,
+        1.279592469641471
+      ],
+      "episodes": 7
+    },
+    "UR5e": {
+      "all_qualified": {
+        "condition_min_median_max": [
+          1.0831478635608587,
+          10.091455949864656,
+          113.42328115228179
+        ],
+        "median_fraction_command_energy_on_minor_axis": 0.00973102083041257,
+        "median_mm_per_unit_weak_axis_slope_change_for_1mm_frobenius_noise": 8.98705744078496,
+        "n": 96
+      },
+      "calibration_tasks": {
+        "condition_min_median_max": [
+          3.1219447804337874,
+          7.530611646705374,
+          48.46451388491895
+        ],
+        "median_fraction_command_energy_on_minor_axis": 0.017328411006420585,
+        "median_mm_per_unit_weak_axis_slope_change_for_1mm_frobenius_noise": 8.591205785035541,
+        "n": 24
+      }
+    },
+    "UR5e_pi0": {
+      "all_qualified": {
+        "condition_min_median_max": [
+          1.4928772145412454,
+          11.103520641861323,
+          93.18863983555535
+        ],
+        "median_fraction_command_energy_on_minor_axis": 0.008046438207608793,
+        "median_mm_per_unit_weak_axis_slope_change_for_1mm_frobenius_noise": 10.880043314139922,
+        "n": 96
+      },
+      "calibration_tasks": {
+        "condition_min_median_max": [
+          1.4928772145412454,
+          10.485666399051821,
+          19.504194147825633
+        ],
+        "median_fraction_command_energy_on_minor_axis": 0.009015016671201232,
+        "median_mm_per_unit_weak_axis_slope_change_for_1mm_frobenius_noise": 13.189917147185593,
+        "n": 24
+      }
+    }
+  },
+  "evaluation_episodes_per_panel": {
+    "IIWA": 60,
+    "Kinova3": 60,
+    "UR5e": 72,
+    "UR5e_pi0": 72
+  },
+  "input_sha256": {
+    "outputs/libero-crossarm-20261120-r1/evidence/gpu01/pilot/config.json": "532017cb473e2e65effbd61f28bd176bf2308833390eac14b36e9649cfe01391",
+    "outputs/libero-crossarm-20261120-r1/evidence/gpu01/pilot/responses.json": "e9f47e35ac7bb795929f3047e22a79dc9135a6748b8af5394b92f1197387cdde",
+    "outputs/libero-xemb-joint-sysid-20261119-r1/cpu01/sensors-00.npz": "c1b287d37e83eda1e00c36ba3339f40f83d297370de611bfaf1c628f6df50a28",
+    "outputs/libero-xemb-joint-sysid-20261119-r1/cpu01/sensors-07.npz": "2f74dab01374a02e2722da7ebbbb837d63828c886281744e3f68af1aefdd002d",
+    "outputs/libero-xemb-joint-sysid-20261119-r1/cpu01/sensors-14.npz": "bfc43d3d4751e66646319f268972b0b24c55ca648cbb0b2453f04842cebd7ade",
+    "outputs/libero-xemb-joint-sysid-20261119-r1/cpu01/sensors-21.npz": "2f3cf584f54d983de72133bafee00a0ead53f44af79083312cb66f5578a5dcd2",
+    "outputs/libero-xemb-joint-sysid-20261119-r1/cpu01/sensors-28.npz": "356677dd08855dd8bb1b6f77671701836cb6535ebc39f70710c43a945968d4d3",
+    "outputs/libero-xemb-joint-sysid-20261119-r1/cpu01/sensors-29.npz": "af077ab72c0b710fa56ef0e4102fbd9a9aa82bf0830dfd8273e67775c9b90fda",
+    "outputs/libero-xemb-joint-sysid-20261119-r1/cpu01/sensors-30.npz": "e349d894e2b1b7d9bbd2c3e094f1fda3c7610e2a903906dc17c9e7ebb81b69f5",
+    "outputs/symmeta-camera-command-20261123-r1/evidence/world.json.gz": "96d9de3131348abed6afd6271dd5197c77cbb7a9159e6559fe5d3833587a3449",
+    "outputs/symmeta-fk-crossarm-20261123-r1/QUERY_CONFIG.json": "b667408e804634c17ca110ce42ca4cfa0d8d70fe3b498967fda031ba86907363",
+    "outputs/symmeta-fk-crossarm-20261123-r1/evidence/gpu06kinova3-cases.json.gz": "74587eaaf87ce69d733083b068f27b46fc62619c3a7ffe2ffe8248816949783e",
+    "outputs/symmeta-fk-crossarm-20261123-r1/evidence/gpu08pi0fix-cases.json.gz": "7ad24d6037ab7de0447ab9daab4e0f13fe18bc27ff9df2116569abe1c88941a8",
+    "outputs/symmeta-fk-crossarm-20261123-r1/evidence/gpu09iiwa-cases.json.gz": "c38a7951d22bc469f845950850191763f5803281f9480bc144d8957d52ac8e04"
+  },
+  "job": {
+    "BLAS_threads_requested": 1,
+    "GPU_hours": 0,
+    "location": "session Linux CPU",
+    "new_env_steps": 0,
+    "new_motor_calls": 0,
+    "numpy_version": "2.5.4"
+  },
+  "metrics": {
+    "nominal_no_interface_support": {
+      "IIWA": {
+        "mm": {
+          "arm_specific": 17.947019917733584,
+          "rank_one": 6.578576702966799,
+          "scaled_source": 6.396597184656547,
+          "source_shared": 12.557993271030051
+        },
+        "rank_one_minus_control_mm_mean_lo95_hi95": {
+          "arm_specific": [
+            -11.368443214766787,
+            -19.88046336213502,
+            -3.5188587940488114
+          ],
+          "scaled_source": [
+            0.18197951831025244,
+            -0.05571676838595714,
+            0.419675805006462
+          ],
+          "source_shared": [
+            -5.979416568063253,
+            -6.706759182624421,
+            -5.252073953502085
+          ]
+        },
+        "task_mean_mm": {
+          "libero_goal/3": {
+            "arm_specific": 34.03539075773628,
+            "rank_one": 9.083219331560592,
+            "scaled_source": 9.246842124589232,
+            "source_shared": 16.343849163214447
+          },
+          "libero_goal/6": {
+            "arm_specific": 9.693118263473686,
+            "rank_one": 6.094982427746793,
+            "scaled_source": 5.550677555645924,
+            "source_shared": 12.181988945694048
+          },
+          "libero_object/8": {
+            "arm_specific": 26.971973489458577,
+            "rank_one": 6.0243067930374306,
+            "scaled_source": 6.072564956883216,
+            "source_shared": 11.166074805170082
+          },
+          "libero_spatial/0": {
+            "arm_specific": 9.733072548693281,
+            "rank_one": 6.679292365413218,
+            "scaled_source": 6.246996760907465,
+            "source_shared": 13.142057231346788
+          },
+          "libero_spatial/8": {
+            "arm_specific": 9.301544529306103,
+            "rank_one": 5.0110825970759585,
+            "scaled_source": 4.865904525256893,
+            "source_shared": 9.95599620972489
+          }
+        }
+      },
+      "Kinova3": {
+        "mm": {
+          "arm_specific": 12.759750311216013,
+          "rank_one": 5.464958285653568,
+          "scaled_source": 5.795021114927946,
+          "source_shared": 10.298468447663897
+        },
+        "rank_one_minus_control_mm_mean_lo95_hi95": {
+          "arm_specific": [
+            -7.2947920255624465,
+            -11.363374967791055,
+            -3.2262090833338375
+          ],
+          "scaled_source": [
+            -0.33006282927437863,
+            -0.8795020164694008,
+            0.29430677078452555
+          ],
+          "source_shared": [
+            -4.833510162010329,
+            -6.348920408051074,
+            -3.1925893839919524
+          ]
+        },
+        "task_mean_mm": {
+          "libero_goal/3": {
+            "arm_specific": 19.974602924113796,
+            "rank_one": 6.910933012140928,
+            "scaled_source": 6.112225356265716,
+            "source_shared": 11.076011970081947
+          },
+          "libero_goal/6": {
+            "arm_specific": 7.79981292742133,
+            "rank_one": 5.661350016026109,
+            "scaled_source": 6.601148687852333,
+            "source_shared": 12.443982503163816
+          },
+          "libero_object/1": {
+            "arm_specific": 10.28254701420995,
+            "rank_one": 2.787026405592088,
+            "scaled_source": 2.771816847468873,
+            "source_shared": 4.496618970845015
+          },
+          "libero_object/8": {
+            "arm_specific": 16.77031827000951,
+            "rank_one": 5.173311066813673,
+            "scaled_source": 5.704263705207309,
+            "source_shared": 10.014467600273703
+          },
+          "libero_spatial/0": {
+            "arm_specific": 8.971470420325481,
+            "rank_one": 6.79217092769504,
+            "scaled_source": 7.785650977845501,
+            "source_shared": 13.461261193955005
+          }
+        }
+      },
+      "UR5e": {
+        "mm": {
+          "active_ur5e": 14.305123110159174,
+          "arm_specific": 54.9878026494041,
+          "rank_one": 6.967753888306466,
+          "scaled_source": 6.92783661874995,
+          "source_shared": 15.648766640710903
+        },
+        "rank_one_minus_control_mm_mean_lo95_hi95": {
+          "arm_specific": [
+            -48.02004876109765,
+            -75.18603888509962,
+            -23.683167914470484
+          ],
+          "scaled_source": [
+            0.039917269556515755,
+            -0.11301453296936821,
+            0.18800200855936375
+          ],
+          "source_shared": [
+            -8.681012752404436,
+            -10.19419897715529,
+            -7.352295219558808
+          ]
+        },
+        "task_mean_mm": {
+          "libero_goal/3": {
+            "active_ur5e": 14.46816965928882,
+            "arm_specific": 103.8747146091691,
+            "rank_one": 8.636077025085898,
+            "scaled_source": 8.857976342352352,
+            "source_shared": 20.3542254654664
+          },
+          "libero_goal/6": {
+            "active_ur5e": 16.7999725988652,
+            "arm_specific": 22.227374651637263,
+            "rank_one": 6.410836290630778,
+            "scaled_source": 6.343831632669547,
+            "source_shared": 16.597204766229524
+          },
+          "libero_object/1": {
+            "active_ur5e": 9.270281181469505,
+            "arm_specific": 75.45315518670472,
+            "rank_one": 5.623711516282977,
+            "scaled_source": 5.804623493917303,
+            "source_shared": 13.082903482339676
+          },
+          "libero_object/8": {
+            "active_ur5e": 13.004159194403972,
+            "arm_specific": 85.96049357103507,
+            "rank_one": 7.696511651200743,
+            "scaled_source": 7.632743955208069,
+            "source_shared": 14.482423319401347
+          },
+          "libero_spatial/0": {
+            "active_ur5e": 17.831225282055417,
+            "arm_specific": 19.34775266370274,
+            "rank_one": 7.682956600554638,
+            "scaled_source": 7.441726511980762,
+            "source_shared": 16.473112514039848
+          },
+          "libero_spatial/8": {
+            "active_ur5e": 14.456930744872142,
+            "arm_specific": 23.06332521417575,
+            "rank_one": 5.756430246083762,
+            "scaled_source": 5.48611777637167,
+            "source_shared": 12.90273029678863
+          }
+        }
+      },
+      "UR5e_pi0": {
+        "mm": {
+          "active_ur5e": 12.295733806852487,
+          "arm_specific": 43.809582667500926,
+          "rank_one": 6.234046212191995,
+          "scaled_source": 6.188227351201964,
+          "source_shared": 13.107757400806106
+        },
+        "rank_one_minus_control_mm_mean_lo95_hi95": {
+          "arm_specific": [
+            -37.57553645530893,
+            -64.90349504126515,
+            -15.99264493399466
+          ],
+          "scaled_source": [
+            0.045818860990030665,
+            -0.07835346179518925,
+            0.15650172942495807
+          ],
+          "source_shared": [
+            -6.87371118861411,
+            -9.467954672713121,
+            -4.253845726842006
+          ]
+        },
+        "task_mean_mm": {
+          "libero_goal/3": {
+            "active_ur5e": 14.43988056452714,
+            "arm_specific": 107.98397141423142,
+            "rank_one": 8.847816316091933,
+            "scaled_source": 9.04473808297714,
+            "source_shared": 20.22780113026958
+          },
+          "libero_goal/6": {
+            "active_ur5e": 15.359646531173768,
+            "arm_specific": 17.95200675288263,
+            "rank_one": 5.202287993572516,
+            "scaled_source": 5.075150934870301,
+            "source_shared": 15.010485519530695
+          },
+          "libero_object/1": {
+            "active_ur5e": 4.07715697694816,
+            "arm_specific": 16.151166104980167,
+            "rank_one": 2.75590414713246,
+            "scaled_source": 2.8402430982332803,
+            "source_shared": 4.500858745021555
+          },
+          "libero_object/8": {
+            "active_ur5e": 10.54547048550449,
+            "arm_specific": 63.55466959198364,
+            "rank_one": 6.402951646542126,
+            "scaled_source": 6.3567513139416665,
+            "source_shared": 11.026117476591024
+          },
+          "libero_spatial/0": {
+            "active_ur5e": 17.40493336431145,
+            "arm_specific": 29.865768332038467,
+            "rank_one": 8.956471609344533,
+            "scaled_source": 8.82887100443902,
+            "source_shared": 17.35697952998803
+          },
+          "libero_spatial/8": {
+            "active_ur5e": 11.947314918649916,
+            "arm_specific": 27.34991380888918,
+            "rank_one": 5.2388455604683974,
+            "scaled_source": 4.983609672750374,
+            "source_shared": 10.524302003435752
+          }
+        }
+      },
+      "pi05_common": {
+        "mm": {
+          "arm_specific": 30.446674591398008,
+          "rank_one": 6.903828958992154,
+          "scaled_source": 6.966387380617285,
+          "source_shared": 13.978054956503081
+        },
+        "rank_one_minus_control_mm_mean_lo95_hi95": {
+          "arm_specific": [
+            -23.54284563240585,
+            -40.67718912361384,
+            -6.408502141197866
+          ],
+          "scaled_source": [
+            -0.06255842162513159,
+            -0.1555236396509223,
+            0.07592229124801975
+          ],
+          "source_shared": [
+            -7.074225997510926,
+            -7.699977451776514,
+            -6.113543010171963
+          ]
+        },
+        "task_mean_mm": {
+          "libero_goal/3": {
+            "arm_specific": 52.628236097006386,
+            "rank_one": 8.210076456262472,
+            "scaled_source": 8.072347941069099,
+            "source_shared": 15.92469553292093
+          },
+          "libero_goal/6": {
+            "arm_specific": 13.240101947510759,
+            "rank_one": 6.055722911467893,
+            "scaled_source": 6.1652192920559346,
+            "source_shared": 13.741058738362463
+          },
+          "libero_object/8": {
+            "arm_specific": 43.23426177683439,
+            "rank_one": 6.298043170350616,
+            "scaled_source": 6.469857539099531,
+            "source_shared": 11.887655241615043
+          },
+          "libero_spatial/0": {
+            "arm_specific": 12.684098544240499,
+            "rank_one": 7.051473297887632,
+            "scaled_source": 7.158124750244576,
+            "source_shared": 14.358810313113883
+          }
+        }
+      }
+    },
+    "transfer": {
+      "IIWA": {
+        "mm": {
+          "arm_specific": 22.330127603469048,
+          "isotropic": 5.986136349627975,
+          "rank_one": 7.463674316153046,
+          "source_shared": 7.563596424880548,
+          "two_support_isotropic": 5.802380317501223,
+          "two_support_unrestricted": 6.353425429954252,
+          "unrestricted_support": 15.369446519485724,
+          "wrong_support": 65.34467822706856
+        },
+        "rank_one_minus_control_mm_mean_lo95_hi95": {
+          "arm_specific": [
+            -14.866453287316002,
+            -20.828282643870576,
+            -8.90462393076143
+          ],
+          "isotropic": [
+            1.477537966525071,
+            0.5837203023456651,
+            2.5015035848459273
+          ],
+          "source_shared": [
+            -0.09992210872750196,
+            -0.2433747677207883,
+            0.015048485860912031
+          ]
+        },
+        "task_mean_mm": {
+          "libero_goal/3": {
+            "arm_specific": 32.877623858804505,
+            "isotropic": 6.52836031580528,
+            "rank_one": 9.741979683511438,
+            "source_shared": 10.092771342004474,
+            "two_support_isotropic": 6.3325001681675515,
+            "two_support_unrestricted": 8.058315688235831,
+            "unrestricted_support": 27.290497081982068,
+            "wrong_support": 67.665213083011
+          },
+          "libero_goal/6": {
+            "arm_specific": 13.232588503100382,
+            "isotropic": 5.4756967080190195,
+            "rank_one": 6.037207841443067,
+            "source_shared": 6.058311057178758,
+            "two_support_isotropic": 5.274280981849636,
+            "two_support_unrestricted": 5.151400555649058,
+            "unrestricted_support": 7.75460371401541,
+            "wrong_support": 70.24223920987532
+          },
+          "libero_object/8": {
+            "arm_specific": 32.00036109498868,
+            "isotropic": 6.333181069482705,
+            "rank_one": 8.638329757169819,
+            "source_shared": 8.814218249098728,
+            "two_support_isotropic": 6.217481005085998,
+            "two_support_unrestricted": 7.31800791336486,
+            "unrestricted_support": 23.369928691369598,
+            "wrong_support": 50.108844299166144
+          },
+          "libero_spatial/0": {
+            "arm_specific": 16.863402216504245,
+            "isotropic": 6.882085546750301,
+            "rank_one": 7.370254147822497,
+            "source_shared": 7.358864519018424,
+            "two_support_isotropic": 6.74979920326525,
+            "two_support_unrestricted": 6.56023179807503,
+            "unrestricted_support": 10.111404615999794,
+            "wrong_support": 77.6565675083383
+          },
+          "libero_spatial/8": {
+            "arm_specific": 16.67666234394743,
+            "isotropic": 4.711358108082571,
+            "rank_one": 5.530600150818409,
+            "source_shared": 5.493816957102356,
+            "two_support_isotropic": 4.43784022913768,
+            "two_support_unrestricted": 4.679171194446483,
+            "unrestricted_support": 8.32079849406174,
+            "wrong_support": 61.05052703495199
+          }
+        }
+      },
+      "Kinova3": {
+        "mm": {
+          "arm_specific": 14.159362237024428,
+          "isotropic": 6.559618409244334,
+          "rank_one": 6.237437506137066,
+          "source_shared": 5.989004290061535,
+          "two_support_isotropic": 6.3666678366261245,
+          "two_support_unrestricted": 6.64489154745971,
+          "unrestricted_support": 24.62996863232468,
+          "wrong_support": 57.61236802905263
+        },
+        "rank_one_minus_control_mm_mean_lo95_hi95": {
+          "arm_specific": [
+            -7.921924730887362,
+            -11.831382972285358,
+            -4.012466489489365
+          ],
+          "isotropic": [
+            -0.3221809031072687,
+            -0.8741829969405963,
+            0.2091798370768208
+          ],
+          "source_shared": [
+            0.24843321607553087,
+            0.1536566374899242,
+            0.3787682111750096
+          ]
+        },
+        "task_mean_mm": {
+          "libero_goal/3": {
+            "arm_specific": 19.984017237880106,
+            "isotropic": 8.356754328823309,
+            "rank_one": 7.121496052438689,
+            "source_shared": 6.874207755562899,
+            "two_support_isotropic": 8.158175141917122,
+            "two_support_unrestricted": 8.705035441169313,
+            "unrestricted_support": 42.6680576417347,
+            "wrong_support": 65.07958560572064
+          },
+          "libero_goal/6": {
+            "arm_specific": 9.284098612828027,
+            "isotropic": 6.353858901943144,
+            "rank_one": 6.6047753542583125,
+            "source_shared": 6.383281929768021,
+            "two_support_isotropic": 6.151985047822097,
+            "two_support_unrestricted": 6.090792995278886,
+            "unrestricted_support": 10.309937186885982,
+            "wrong_support": 68.07607662880542
+          },
+          "libero_object/1": {
+            "arm_specific": 11.837620865785675,
+            "isotropic": 4.764611572292381,
+            "rank_one": 3.848554964428088,
+            "source_shared": 3.725758476724021,
+            "two_support_isotropic": 4.647968668573122,
+            "two_support_unrestricted": 4.86863576957773,
+            "unrestricted_support": 24.11822888244446,
+            "wrong_support": 34.14987956472469
+          },
+          "libero_object/8": {
+            "arm_specific": 19.03531579137575,
+            "isotropic": 6.27899094474153,
+            "rank_one": 6.313912496782563,
+            "source_shared": 5.815930052936687,
+            "two_support_isotropic": 6.073287439502198,
+            "two_support_unrestricted": 6.928629089369558,
+            "unrestricted_support": 34.52835922133912,
+            "wrong_support": 49.16666412466963
+          },
+          "libero_spatial/0": {
+            "arm_specific": 10.655758677252583,
+            "isotropic": 7.04387629842131,
+            "rank_one": 7.298448662777677,
+            "source_shared": 7.145843235316048,
+            "two_support_isotropic": 6.801922885316085,
+            "two_support_unrestricted": 6.6313644419030595,
+            "unrestricted_support": 11.525260229219137,
+            "wrong_support": 71.58963422134276
+          }
+        }
+      },
+      "UR5e": {
+        "mm": {
+          "active_ur5e": 6.103530730947814,
+          "arm_specific": 30.04433400269025,
+          "isotropic": 5.878284817495804,
+          "rank_one": 8.29456010288016,
+          "source_shared": 8.488548282387912,
+          "two_support_isotropic": 5.749103637001305,
+          "two_support_unrestricted": 6.7778598275874264,
+          "unrestricted_support": 21.57807255874751,
+          "wrong_support": 70.47090513314464
+        },
+        "rank_one_minus_control_mm_mean_lo95_hi95": {
+          "arm_specific": [
+            -21.749773899810084,
+            -28.106367008555935,
+            -15.527648258501557
+          ],
+          "isotropic": [
+            2.4162752853843563,
+            1.1506368861025453,
+            3.796123841958039
+          ],
+          "source_shared": [
+            -0.19398817950775094,
+            -0.33486159451309555,
+            -0.07339633721831144
+          ]
+        },
+        "task_mean_mm": {
+          "libero_goal/3": {
+            "active_ur5e": 6.563274973647471,
+            "arm_specific": 44.085772419985204,
+            "isotropic": 6.23378074190136,
+            "rank_one": 11.139996088871245,
+            "source_shared": 11.61095014170319,
+            "two_support_isotropic": 6.150685655353594,
+            "two_support_unrestricted": 8.719144200221342,
+            "unrestricted_support": 38.31721541784212,
+            "wrong_support": 74.20334384285502
+          },
+          "libero_goal/6": {
+            "active_ur5e": 5.989435787040857,
+            "arm_specific": 20.076614278552157,
+            "isotropic": 6.062125850780941,
+            "rank_one": 6.8715009981328015,
+            "source_shared": 6.950443753480147,
+            "two_support_isotropic": 5.863546125857746,
+            "two_support_unrestricted": 5.7270091238852885,
+            "unrestricted_support": 9.479824983014867,
+            "wrong_support": 81.35208910396364
+          },
+          "libero_object/1": {
+            "active_ur5e": 5.257056738105438,
+            "arm_specific": 30.59819640189089,
+            "isotropic": 4.910352463600542,
+            "rank_one": 7.809382716535713,
+            "source_shared": 8.107712518725629,
+            "two_support_isotropic": 4.844981790593343,
+            "two_support_unrestricted": 5.885469930386972,
+            "unrestricted_support": 27.035775256283927,
+            "wrong_support": 52.344324361701204
+          },
+          "libero_object/8": {
+            "active_ur5e": 7.392192205224181,
+            "arm_specific": 42.8605210364727,
+            "isotropic": 6.606223871512312,
+            "rank_one": 10.721549509982639,
+            "source_shared": 10.98424105308583,
+            "two_support_isotropic": 6.545917794479922,
+            "two_support_unrestricted": 8.914601565641059,
+            "unrestricted_support": 34.49040693454595,
+            "wrong_support": 60.60054992260367
+          },
+          "libero_spatial/0": {
+            "active_ur5e": 6.680531019585101,
+            "arm_specific": 21.913826303125138,
+            "isotropic": 6.7486101313941775,
+            "rank_one": 7.366945573791661,
+            "source_shared": 7.413356174195106,
+            "two_support_isotropic": 6.5922605111235155,
+            "two_support_unrestricted": 6.638388927484879,
+            "unrestricted_support": 10.640743004943245,
+            "wrong_support": 84.81095744580506
+          },
+          "libero_spatial/8": {
+            "active_ur5e": 4.738693662083844,
+            "arm_specific": 20.7310735761154,
+            "isotropic": 4.708615845785494,
+            "rank_one": 5.857985729966907,
+            "source_shared": 5.864586053137569,
+            "two_support_isotropic": 4.497229944599703,
+            "two_support_unrestricted": 4.782545217905018,
+            "unrestricted_support": 9.504469755854965,
+            "wrong_support": 69.51416612193924
+          }
+        }
+      },
+      "UR5e_pi0": {
+        "mm": {
+          "active_ur5e": 5.599596328790645,
+          "arm_specific": 27.330926820685097,
+          "isotropic": 5.446420584216256,
+          "rank_one": 7.164276403453354,
+          "source_shared": 7.297885326551932,
+          "two_support_isotropic": 5.073288384223848,
+          "two_support_unrestricted": 5.502714394748931,
+          "unrestricted_support": 19.341534506501983,
+          "wrong_support": 56.66868148301639
+        },
+        "rank_one_minus_control_mm_mean_lo95_hi95": {
+          "arm_specific": [
+            -20.166650417231743,
+            -23.054435758610726,
+            -15.157950110572921
+          ],
+          "isotropic": [
+            1.7178558192370985,
+            1.1073773389611723,
+            2.400463457996468
+          ],
+          "source_shared": [
+            -0.1336089230985781,
+            -0.23933083424762458,
+            -0.04686157217016892
+          ]
+        },
+        "task_mean_mm": {
+          "libero_goal/3": {
+            "active_ur5e": 6.8173629065941155,
+            "arm_specific": 32.06558238869824,
+            "isotropic": 6.604464721680799,
+            "rank_one": 9.331366499403435,
+            "source_shared": 9.701891339541541,
+            "two_support_isotropic": 6.224275965111314,
+            "two_support_unrestricted": 7.643420849465596,
+            "unrestricted_support": 31.147722226772405,
+            "wrong_support": 69.62289595845016
+          },
+          "libero_goal/6": {
+            "active_ur5e": 6.169749500775893,
+            "arm_specific": 29.460880914372126,
+            "isotropic": 6.055497967552117,
+            "rank_one": 6.96204381502956,
+            "source_shared": 6.978573718583788,
+            "two_support_isotropic": 5.262105094627072,
+            "two_support_unrestricted": 5.499393754073331,
+            "unrestricted_support": 14.924753782871305,
+            "wrong_support": 74.37774108281239
+          },
+          "libero_object/1": {
+            "active_ur5e": 2.9635841380191743,
+            "arm_specific": 11.720502085247835,
+            "isotropic": 2.897474398233724,
+            "rank_one": 3.7528324828093353,
+            "source_shared": 3.81028571828413,
+            "two_support_isotropic": 2.771494568955761,
+            "two_support_unrestricted": 2.742174953953968,
+            "unrestricted_support": 8.146394768075279,
+            "wrong_support": 22.391370173987372
+          },
+          "libero_object/8": {
+            "active_ur5e": 4.262144434931799,
+            "arm_specific": 28.93687074039772,
+            "isotropic": 3.9104684076719196,
+            "rank_one": 6.608341443657895,
+            "source_shared": 6.816090393684782,
+            "two_support_isotropic": 3.694517008980128,
+            "two_support_unrestricted": 4.106343689389426,
+            "unrestricted_support": 23.87665821336348,
+            "wrong_support": 37.72915763880393
+          },
+          "libero_spatial/0": {
+            "active_ur5e": 8.476683379654212,
+            "arm_specific": 31.070733093676335,
+            "isotropic": 8.499933175950925,
+            "rank_one": 9.496691853129063,
+            "source_shared": 9.604828681486206,
+            "two_support_isotropic": 8.107339968618332,
+            "two_support_unrestricted": 8.702240439374101,
+            "unrestricted_support": 18.24794067415448,
+            "wrong_support": 81.13916740070941
+          },
+          "libero_spatial/8": {
+            "active_ur5e": 4.908053612768673,
+            "arm_specific": 30.730991701718327,
+            "isotropic": 4.710684834208048,
+            "rank_one": 6.834382326690836,
+            "source_shared": 6.875642107731146,
+            "two_support_isotropic": 4.379997699050485,
+            "two_support_unrestricted": 4.32271268223717,
+            "unrestricted_support": 19.705737373774934,
+            "wrong_support": 54.75175664333506
+          }
+        }
+      },
+      "pi05_common": {
+        "mm": {
+          "arm_specific": 23.57249166923912,
+          "isotropic": 6.575295392464616,
+          "rank_one": 7.9355330139152,
+          "source_shared": 7.95853493861236,
+          "two_support_isotropic": 6.409320163311726,
+          "two_support_unrestricted": 7.120243478356513,
+          "unrestricted_support": 21.707186560241,
+          "wrong_support": 68.37931374967971
+        },
+        "rank_one_minus_control_mm_mean_lo95_hi95": {
+          "arm_specific": [
+            -15.636958655323923,
+            -22.861057975125092,
+            -8.412859335522752
+          ],
+          "isotropic": [
+            1.3602376214505842,
+            0.49714652348618715,
+            2.2233287194149813
+          ],
+          "source_shared": [
+            -0.023001924697158893,
+            -0.1338156489571105,
+            0.03983865154491939
+          ]
+        },
+        "task_mean_mm": {
+          "libero_goal/3": {
+            "arm_specific": 32.315804505556606,
+            "isotropic": 7.039631795509984,
+            "rank_one": 9.33449060827379,
+            "source_shared": 9.525976413090188,
+            "two_support_isotropic": 6.880453655146088,
+            "two_support_unrestricted": 8.494165109875496,
+            "unrestricted_support": 36.09192338051963,
+            "wrong_support": 68.98271417719555
+          },
+          "libero_goal/6": {
+            "arm_specific": 14.197767131493523,
+            "isotropic": 5.963893820247701,
+            "rank_one": 6.50449473127806,
+            "source_shared": 6.4640122468089745,
+            "two_support_isotropic": 5.763270718509826,
+            "two_support_unrestricted": 5.65640089160441,
+            "unrestricted_support": 9.181455294638754,
+            "wrong_support": 73.2234683142148
+          },
+          "libero_object/8": {
+            "arm_specific": 31.298732640945712,
+            "isotropic": 6.406131961912183,
+            "rank_one": 8.55793058797834,
+            "source_shared": 8.538129785040416,
+            "two_support_isotropic": 6.278895413022705,
+            "two_support_unrestricted": 7.720412856125159,
+            "unrestricted_support": 30.796231615751555,
+            "wrong_support": 53.29201944881314
+          },
+          "libero_spatial/0": {
+            "arm_specific": 16.477662398960653,
+            "isotropic": 6.8915239921885965,
+            "rank_one": 7.3452161281306125,
+            "source_shared": 7.306021309509859,
+            "two_support_isotropic": 6.714660866568284,
+            "two_support_unrestricted": 6.609995055820988,
+            "unrestricted_support": 10.759135950054057,
+            "wrong_support": 78.01905305849537
+          }
+        }
+      }
+    }
+  },
+  "morphology_inputs_pi05": {
+    "IIWA": [
+      [
+        "libero_10/5",
+        "274f0ba076416298f6686ca007f46142ed419dde3c2bbfea212075cf4ec0f9c5"
+      ],
+      [
+        "libero_10/8",
+        "6c690dcdc51a5c3262a72c627d3b4001ff7d98cb1a1bcbf6a8bf622007666688"
+      ]
+    ],
+    "Kinova3": [
+      [
+        "libero_10/5",
+        "8ad6cbf009287536c816fb600ea230b33f29d7a4f32d82f9f1f8567f30615404"
+      ],
+      [
+        "libero_10/8",
+        "90eacdc92b12b020762a7f789fc1018068ba9aacbe02eb3e6f4598f4408d727e"
+      ]
+    ],
+    "UR5e": [
+      [
+        "libero_10/5",
+        "072e193720763a9faf7eb0fe26a76c06c1bfa7e10278f2ceef9ec81cf3a6594f"
+      ],
+      [
+        "libero_10/8",
+        "1cd0c833815f0227f92acc7804cd0d06349072a07bc9ad88c3929913752fc960"
+      ]
+    ]
+  },
+  "primary_common_tasks": [
+    "libero_goal/3",
+    "libero_goal/6",
+    "libero_object/8",
+    "libero_spatial/0"
+  ],
+  "script_sha256": "064980d1b4f0107bf4f8196aef5045ffe0b207be72290b1e1b11903924ebc0a2",
+  "unqualified_tasks": {
+    "IIWA": [
+      "libero_object/1"
+    ],
+    "Kinova3": [
+      "libero_spatial/8"
+    ]
+  }
+}
