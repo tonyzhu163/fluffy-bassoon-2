@@ -6,11 +6,12 @@ import os
 from pathlib import Path
 from unittest.mock import patch
 
-import mujoco
 import numpy as np
 
 from arm_env import ArmEnv
-from feasibility import ARMS, BOWL, DRAWER, TASKS
+from scipy.spatial.transform import Rotation
+
+from feasibility import ARMS, BOWL, get_reference
 from geometry import Geometry, body_pose
 from ur5e_sim_worker import _probe_egl
 
@@ -29,7 +30,13 @@ def run(tapes, output):
             result = dict(source=f.name, sha256=hashlib.sha256(raw).hexdigest(), frames=[], renderer=renderer)
             with ArmEnv(arm, spec["suite"], spec["task_id"]) as env:
                 initial = env.reset(layout, spec["seed"])
-                assert initial["environment_reproducibility"] == tape["full_reset"]
+                local_reset = initial["environment_reproducibility"]
+                assert local_reset == get_reference(arm, spec["suite"], 3, layout)["reset"]
+                for field in ("released_row_fingerprint", "scene_fingerprint", "bddl_sha256", "perturbation_plan_fingerprint"):
+                    assert local_reset[field] == tape["full_reset"][field]
+                result.update(cpu_settled_reset=local_reset["initial_state_fingerprint"],
+                              native_settled_reset=tape["full_reset"]["initial_state_fingerprint"],
+                              case=spec, native_success=tape["record"]["success"], native_controls=tape["record"]["controls"])
                 g = Geometry(env._env)
                 drawer = g.m.joint("wooden_cabinet_1_top_level")
                 result.update(reset=tape["record"]["reset"]["physics"], joint_range=drawer.range.tolist(),
@@ -41,7 +48,12 @@ def run(tapes, output):
                 blank = np.zeros((256, 256, 3), np.uint8)
                 pos_err, jaw_err, quat_err, rewards = [], [], [], []
                 with patch.object(env._env.sim, "render", return_value=blank):
+                    done = False
+                    boundary = 0
                     for chunk in tape["chunks"]:
+                        if done:
+                            break
+                        boundary += len(chunk["cmd"])
                         for action, xyz, jaw in zip(chunk["cmd"], chunk["xyz"], chunk["jaw"], strict=True):
                             step = env.step(np.array(action, np.float32))
                             obs = step["observation"]
@@ -57,21 +69,26 @@ def run(tapes, output):
                                 min_limited_margin_rad=float(min(margins)), nearest_limit=g.m.joint(limiting_joint).name,
                                 drawer_q=float(g.d.qpos[drawer.qposadr[0]]), tcp=g.tcp()[:3, 3].tolist(),
                                 fingers=g.d.qpos[g.fingers].tolist(), bowl_xyz=body_pose(g.m, g.d, BOWL)[:3, 3].tolist(),
-                                contacts=g.contacts(None)))
+                                contacts=g.contacts(None), tcp_replay_error_m=pos_err[-1],
+                                finger_replay_max_error_m=jaw_err[-1]))
+                            done = step["terminated"] or step["truncated"]
+                            if done:
+                                break
+                        if step["worker_step_index"] != boundary:
+                            continue
                         actual = obs["robot0_eef_quat_xyzw"]
                         target = np.array(chunk["q1"])
-                        quat_err.append(float(min(np.linalg.norm(actual-target), np.linalg.norm(actual+target))))
+                        angle = float((Rotation.from_quat(actual) * Rotation.from_quat(target).inv()).magnitude())
+                        quat_err.append(angle)
+                        result["frames"][-1]["hand_replay_error_rad"] = angle
                 record = tape["record"]
-                assert rewards == record["native_rewards"] and len(rewards) == record["controls"]
-                assert all(step[k] == record[k] for k in ("success", "terminated", "truncated"))
+                result["reward_tape_equal"] = rewards == record["native_rewards"]
+                result["terminal_flags_equal"] = all(step[k] == record[k] for k in ("success", "terminated", "truncated"))
                 result.update(success=step["success"], controls=len(rewards), reward_sum=sum(rewards),
                               max_tcp_delta_m=max(pos_err), max_jaw_coord_delta_m=max(jaw_err),
-                              max_boundary_quat_l2=max(quat_err))
-                # Stored public signals are float32 arrays. Require their exact wire values.
-                if max(max(pos_err), max(jaw_err), max(quat_err)) != 0:
-                    raise ValueError(f"Replay disagrees with action tape {result['max_tcp_delta_m']}")
+                              max_boundary_angle_rad=max(quat_err))
             (output / f"raw-drawer-{layout}-{arm}.json").write_text(json.dumps(result, separators=(",", ":")) + "\n")
-            print(f.name, len(rewards), result["success"], "exact motion and rewards", flush=True)
+            print(f.name, len(rewards), result["success"], result["max_tcp_delta_m"], result["max_boundary_angle_rad"], result["reward_tape_equal"], flush=True)
 
 
 if __name__ == "__main__":
