@@ -20,6 +20,8 @@ On 32 single-attempt queries across eight released tasks and four perturbation f
 
 ## Matched-source visual yaw on UR5e
 
+On the 64 held-out supports, uniform pooling over all three learned motion vectors gave 6.53° yaw MAE. Selecting the first or final vector gave 10.81° and 12.05°. Weighting the three by magnitude gave 6.18° (paired change −0.36°, 95% eight-task interval −0.81° to +0.03°). All readouts used the same frozen 15-control features. [Temporal pooling experiment](../outputs/frozen-vla-factory-20261123-r1/pooling/RESULT.md)
+
 On the 64 held-out π₀.₅ supports, a learned visual reader scored 6.53° mean absolute yaw error and a six-coefficient linear flow projection scored 9.16°. Both used the same 1,344 labeled source traces and the same geometric solver with equal chunk weights. The 2.63° paired advantage had a 95% task-bootstrap interval of 1.64° to 3.65°. On the 32 unseen-angle cases alone the advantage was 0.30° (−2.40° to +2.90°). [Source fit, per-task estimates and reference intervals](../outputs/symmeta-matched-flow-20261123-r1/OFFLINE.md)
 
 On fresh, reset- and noise-matched second attempts, the learned reader succeeded on 46/64 held-out queries against 39/64 for the linear reader (+10.9 percentage points, 95% task-bootstrap interval +1.6 to +21.9). The gains were 23 versus 17 on 32 compositional shifts and 23 versus 22 on 32 continuous-angle shifts. All 96 settings gave 70 versus 62 successes (+8.3 points, +2.1 to +16.7). The visual features and pooling differ, and both methods use the same equal-weight solver. [Native outcomes and paired cases](../outputs/symmeta-matched-flow-20261123-r1/RESULT.md)

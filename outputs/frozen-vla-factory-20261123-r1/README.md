@@ -1,0 +1,22 @@
+# Frozen-VLA architecture factory
+
+The factory tests which information a lightweight adapter needs to control an unfamiliar robot with π₀ or π₀.₅ frozen. The primary benchmark is LIBERO-Pro2.0. Each lane starts from revision `757a44cd4374833cad790852df8b87ddf412e638`. For native comparisons, use paired task starts, identical proposal noise and native task reward. Keep each support budget and observation privilege explicit.
+
+Workflow `wfr-92d79c14c63342a292b2e0ea047f678a` launched all twelve workers. The native worker owns accelerator submissions with an incremental limit of 12 GPU-hours. Eleven other workers have CPU-only allocations. Existing Perceiver and FK jobs retain their original owners.
+
+| Worker | Experiment |
+| --- | --- |
+| [map](https://app.devin.ai/sessions/35af26b68f86493290db17816027c03e) | Constrained residual versus ridge and similarity for general planar maps |
+| [excitation](https://app.devin.ai/sessions/e931694d8a8c446ebe485c1920bf7db9) | Command directions at a fixed support budget |
+| [delay](https://app.devin.ai/sessions/cf7253586c924edc879ee411823217b3) | Causal temporal response and spatial gain |
+| [camera](https://app.devin.ai/sessions/d55ace1279f14de6b95656e804cbde66) | Reference-frame correction under camera perturbation |
+| [fusion](https://app.devin.ai/sessions/816c249b0bd74fb8bcab93218ab7a562) | Confidence-weighted visual and kinematic yaw |
+| [so3](https://app.devin.ai/sessions/896f5365a7114137a24de6b1df8657c8) | Gain-aware rotation in three dimensions |
+| [contact](https://app.devin.ai/sessions/b231564ab95b43f9a42a2cb533444d8c) | Causal contact-conditioned action selection |
+| [gripper](https://app.devin.ai/sessions/ea746bd559534c11a167b2c30d159808) | Direction-dependent gripper response |
+| [morphology](https://app.devin.ai/sessions/15f0e8be884c4f949d0ab08a5518ae50) | Shared versus arm-specific response across robot bodies |
+| [timing](https://app.devin.ai/sessions/087df1d39f1f44e788d28e5ea0048e4f) | Phase-dependent pacing versus fixed execution |
+| [uncertainty](https://app.devin.ai/sessions/f254f8fea7cd4ee3b6e52e24decf5838) | Selective adaptation with paired native outcomes |
+| [native](https://app.devin.ai/sessions/e44daa6ab0e641aea157c4586a8f71f1) | Matched frozen-policy native rollout qualification |
+
+The coordinating session also ran [temporal pooling](pooling/RESULT.md) for both archived visual readers. Each readout reproduced its frozen archive baseline on all 96 UR5e supports.
