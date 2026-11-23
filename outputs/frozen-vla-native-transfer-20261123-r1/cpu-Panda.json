@@ -1,0 +1,1280 @@
+[
+  {
+    "case": {
+      "arm": "Panda",
+      "suite": "libero_goal",
+      "task_id": 3,
+      "variant": "BASE",
+      "init_state_id": 14,
+      "seed": 41810314,
+      "embodiment": "nom",
+      "max_steps": 300
+    },
+    "instruction": "open the top layer of the drawer and put the bowl inside",
+    "model": {
+      "arm": "Panda",
+      "model_class": "MountedPanda",
+      "joint_count": 7,
+      "joint_names": [
+        "robot0_joint1",
+        "robot0_joint2",
+        "robot0_joint3",
+        "robot0_joint4",
+        "robot0_joint5",
+        "robot0_joint6",
+        "robot0_joint7"
+      ],
+      "joint_links": [
+        "robot0_link1",
+        "robot0_link2",
+        "robot0_link3",
+        "robot0_link4",
+        "robot0_link5",
+        "robot0_link6",
+        "robot0_link7"
+      ],
+      "model_nq": 41,
+      "model_nv": 37,
+      "xml_sha256": "51e3a4a6d54bcaf77e9d36a27372b871728590eedf53d4fd0e195525950eb988",
+      "arm_meshes": [
+        "robot0_link0",
+        "robot0_link0_vis_0",
+        "robot0_link0_vis_1",
+        "robot0_link0_vis_10",
+        "robot0_link0_vis_11",
+        "robot0_link0_vis_2",
+        "robot0_link0_vis_3",
+        "robot0_link0_vis_4",
+        "robot0_link0_vis_5",
+        "robot0_link0_vis_6",
+        "robot0_link0_vis_7",
+        "robot0_link0_vis_8",
+        "robot0_link0_vis_9",
+        "robot0_link1",
+        "robot0_link1_vis",
+        "robot0_link2",
+        "robot0_link2_vis",
+        "robot0_link3",
+        "robot0_link3_vis_0",
+        "robot0_link3_vis_1",
+        "robot0_link3_vis_2",
+        "robot0_link3_vis_3",
+        "robot0_link4",
+        "robot0_link4_vis_0",
+        "robot0_link4_vis_1",
+        "robot0_link4_vis_2",
+        "robot0_link4_vis_3",
+        "robot0_link5",
+        "robot0_link5_vis_0",
+        "robot0_link5_vis_1",
+        "robot0_link5_vis_2",
+        "robot0_link6",
+        "robot0_link6_vis_0",
+        "robot0_link6_vis_1",
+        "robot0_link6_vis_10",
+        "robot0_link6_vis_11",
+        "robot0_link6_vis_12",
+        "robot0_link6_vis_13",
+        "robot0_link6_vis_14",
+        "robot0_link6_vis_15",
+        "robot0_link6_vis_16",
+        "robot0_link6_vis_2",
+        "robot0_link6_vis_3",
+        "robot0_link6_vis_4",
+        "robot0_link6_vis_5",
+        "robot0_link6_vis_6",
+        "robot0_link6_vis_7",
+        "robot0_link6_vis_8",
+        "robot0_link6_vis_9",
+        "robot0_link7_vis_0",
+        "robot0_link7_vis_1",
+        "robot0_link7_vis_2",
+        "robot0_link7_vis_3",
+        "robot0_link7_vis_4",
+        "robot0_link7_vis_5",
+        "robot0_link7_vis_6",
+        "robot0_link7_vis_7"
+      ],
+      "mount": "RethinkMount",
+      "base_xyz": [
+        -0.66,
+        0.0,
+        0.912
+      ],
+      "gripper": "PandaGripper",
+      "gripper_xml_sha256": "d9d68123909d6910488310d0fae4e358ed4ac831c6d0957f3e30893a5412baac",
+      "gripper_joints": [
+        "gripper0_finger_joint1",
+        "gripper0_finger_joint2"
+      ],
+      "tcp_site": "gripper0_grip_site",
+      "hand_link": "robot0_right_hand",
+      "cameras": [
+        "agentview",
+        "robot0_eye_in_hand"
+      ],
+      "wrist_parent": "robot0_right_hand",
+      "wrist_fovy_deg": 75.0,
+      "controller": "OSC_POSE",
+      "control_freq": 20,
+      "osc_output_max": [
+        0.05,
+        0.05,
+        0.05,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "robosuite": "1.4.0",
+      "mujoco": "3.2.3"
+    },
+    "renderer": "llvmpipe (LLVM 15.0.7, 256 bits)",
+    "schema": {
+      "shape": [
+        7
+      ],
+      "dtype": "float32",
+      "controller": "OSC_POSE",
+      "control_mode": "relative",
+      "control_freq": 20,
+      "low": [
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "high": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "public": {
+      "agentview_image": "bb5373130aa2ee5cea1378b01a324d996dcb4bace55a8a273748678a08528dba",
+      "robot0_eye_in_hand_image": "612b8d0e1a5ed22092c796d24b0cb71cfe4b80e26afb70c240a61d5ec0a956a2",
+      "robot0_joint_pos": "9519a4cb7ad03cedb05bbdcac5315d4151114f00d193c6f01e25354e85be1fa8",
+      "robot0_joint_vel": "76451b8a062d31cb1e139b0e13c81d39e58ce20c8abf9926fc148125f194904c",
+      "robot0_eef_pos": "4a240107f8d070cb38c4d374535cf8926ec78e4da481160c6267b293f15a011c",
+      "robot0_eef_quat_xyzw": "d59cfca8092e86732f2687774f4710d60c12cdf84a286600b0fd3eee53aadbde",
+      "robot0_gripper_qpos": "3311c28feefdcb4012ade21b68b186bd0fa4414d75d900708ca9c2795a70e1e7"
+    },
+    "reset": {
+      "source_pin": "e5500c690c1498eca1b7050350654964190cdf70",
+      "manifest_sha256": "71a6e4e25a2a4a162844d77136e7bff8e6f69c839d2d8194620c4afeabde2bba",
+      "bddl_sha256": "695545a33399e12e978b1b5682b6ea2181f3289608cad3f063f5bf90f0b87e67",
+      "suite": "libero_goal",
+      "task_id": 3,
+      "init_state_id": 14,
+      "seed": 41810314,
+      "released_row_fingerprint": "e6599bd05ddd998075d83d18b0be3a5b509a6c26e84bb01c248014d3e25932a9",
+      "scene_fingerprint": "48ef7fa0f25ec8782bc019fd5fad14cdf6c6c6456d784aa1e0096f1e4d77e633",
+      "post_settle_scene_fingerprint": "2fc4c67bbe7d50b36a0dc333405c8fb151e74d3b062752a7ace9fd82984e7b4d",
+      "post_settle_scene_errors": {
+        "max_position_m": 0.0,
+        "position_body": "akita_black_bowl_1_main",
+        "max_rotation_rad": 0.0,
+        "rotation_body": "akita_black_bowl_1_main"
+      },
+      "initial_state_fingerprint": "ee208c25c79b162db088f8d3710008a970d89bf1b702c0dffa8cca64e904656b",
+      "alignment": {
+        "method": "released_panda_state"
+      },
+      "perturbation_plan": {
+        "version": "libero_nonphysical_plan_v2",
+        "case_id": "BASE",
+        "schedule": "base",
+        "operator": "none",
+        "variant": "identity",
+        "trigger": "none",
+        "targets": [],
+        "disturbance_targets": [],
+        "references": [],
+        "mechanisms": [
+          "base"
+        ],
+        "assets": [],
+        "params": {},
+        "constraints": [],
+        "seed": 41810314,
+        "event_duration_steps": 24
+      },
+      "perturbation_plan_fingerprint": "c1e274a9caf96b6e4dcd18fece0e4af00d5a811c40b13471b517dac94afbc968"
+    },
+    "observed_native_reward": [
+      0.0
+    ],
+    "first_control_success": false
+  },
+  {
+    "case": {
+      "arm": "Panda",
+      "suite": "libero_goal",
+      "task_id": 3,
+      "variant": "BASE",
+      "init_state_id": 15,
+      "seed": 41810315,
+      "embodiment": "nom",
+      "max_steps": 300
+    },
+    "instruction": "open the top layer of the drawer and put the bowl inside",
+    "model": {
+      "arm": "Panda",
+      "model_class": "MountedPanda",
+      "joint_count": 7,
+      "joint_names": [
+        "robot0_joint1",
+        "robot0_joint2",
+        "robot0_joint3",
+        "robot0_joint4",
+        "robot0_joint5",
+        "robot0_joint6",
+        "robot0_joint7"
+      ],
+      "joint_links": [
+        "robot0_link1",
+        "robot0_link2",
+        "robot0_link3",
+        "robot0_link4",
+        "robot0_link5",
+        "robot0_link6",
+        "robot0_link7"
+      ],
+      "model_nq": 41,
+      "model_nv": 37,
+      "xml_sha256": "51e3a4a6d54bcaf77e9d36a27372b871728590eedf53d4fd0e195525950eb988",
+      "arm_meshes": [
+        "robot0_link0",
+        "robot0_link0_vis_0",
+        "robot0_link0_vis_1",
+        "robot0_link0_vis_10",
+        "robot0_link0_vis_11",
+        "robot0_link0_vis_2",
+        "robot0_link0_vis_3",
+        "robot0_link0_vis_4",
+        "robot0_link0_vis_5",
+        "robot0_link0_vis_6",
+        "robot0_link0_vis_7",
+        "robot0_link0_vis_8",
+        "robot0_link0_vis_9",
+        "robot0_link1",
+        "robot0_link1_vis",
+        "robot0_link2",
+        "robot0_link2_vis",
+        "robot0_link3",
+        "robot0_link3_vis_0",
+        "robot0_link3_vis_1",
+        "robot0_link3_vis_2",
+        "robot0_link3_vis_3",
+        "robot0_link4",
+        "robot0_link4_vis_0",
+        "robot0_link4_vis_1",
+        "robot0_link4_vis_2",
+        "robot0_link4_vis_3",
+        "robot0_link5",
+        "robot0_link5_vis_0",
+        "robot0_link5_vis_1",
+        "robot0_link5_vis_2",
+        "robot0_link6",
+        "robot0_link6_vis_0",
+        "robot0_link6_vis_1",
+        "robot0_link6_vis_10",
+        "robot0_link6_vis_11",
+        "robot0_link6_vis_12",
+        "robot0_link6_vis_13",
+        "robot0_link6_vis_14",
+        "robot0_link6_vis_15",
+        "robot0_link6_vis_16",
+        "robot0_link6_vis_2",
+        "robot0_link6_vis_3",
+        "robot0_link6_vis_4",
+        "robot0_link6_vis_5",
+        "robot0_link6_vis_6",
+        "robot0_link6_vis_7",
+        "robot0_link6_vis_8",
+        "robot0_link6_vis_9",
+        "robot0_link7_vis_0",
+        "robot0_link7_vis_1",
+        "robot0_link7_vis_2",
+        "robot0_link7_vis_3",
+        "robot0_link7_vis_4",
+        "robot0_link7_vis_5",
+        "robot0_link7_vis_6",
+        "robot0_link7_vis_7"
+      ],
+      "mount": "RethinkMount",
+      "base_xyz": [
+        -0.66,
+        0.0,
+        0.912
+      ],
+      "gripper": "PandaGripper",
+      "gripper_xml_sha256": "d9d68123909d6910488310d0fae4e358ed4ac831c6d0957f3e30893a5412baac",
+      "gripper_joints": [
+        "gripper0_finger_joint1",
+        "gripper0_finger_joint2"
+      ],
+      "tcp_site": "gripper0_grip_site",
+      "hand_link": "robot0_right_hand",
+      "cameras": [
+        "agentview",
+        "robot0_eye_in_hand"
+      ],
+      "wrist_parent": "robot0_right_hand",
+      "wrist_fovy_deg": 75.0,
+      "controller": "OSC_POSE",
+      "control_freq": 20,
+      "osc_output_max": [
+        0.05,
+        0.05,
+        0.05,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "robosuite": "1.4.0",
+      "mujoco": "3.2.3"
+    },
+    "renderer": "llvmpipe (LLVM 15.0.7, 256 bits)",
+    "schema": {
+      "shape": [
+        7
+      ],
+      "dtype": "float32",
+      "controller": "OSC_POSE",
+      "control_mode": "relative",
+      "control_freq": 20,
+      "low": [
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "high": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "public": {
+      "agentview_image": "9b665aa091ca18ac01b844a837055b9a9cf959130c6c3249d28bd3c17c8f09d3",
+      "robot0_eye_in_hand_image": "3dfdcb5eb0215cf59f7c00c686ae1eb5b9043e9df873ac2b20d92f5e4507ae08",
+      "robot0_joint_pos": "d7948e278c2110a102372cc5b5dd6971b77e4cf522080c31b3ea8e0af62742ef",
+      "robot0_joint_vel": "3872f579e86e8256a89a460c8073f62aa5c09ed97bb60eb4f7a980445ce73833",
+      "robot0_eef_pos": "64cb5038b6b977fc34e1c53437ab6867bdfe99cc276f397f781f8edf2f380470",
+      "robot0_eef_quat_xyzw": "b7f20829a522a893684088b443a54472144c450377830d9d24cd25a785ba9ee3",
+      "robot0_gripper_qpos": "281b247b49b9155c810228195b377622b0e45fd35ea9645af3acf26f30d882b3"
+    },
+    "reset": {
+      "source_pin": "e5500c690c1498eca1b7050350654964190cdf70",
+      "manifest_sha256": "71a6e4e25a2a4a162844d77136e7bff8e6f69c839d2d8194620c4afeabde2bba",
+      "bddl_sha256": "695545a33399e12e978b1b5682b6ea2181f3289608cad3f063f5bf90f0b87e67",
+      "suite": "libero_goal",
+      "task_id": 3,
+      "init_state_id": 15,
+      "seed": 41810315,
+      "released_row_fingerprint": "b4fcbce0524ceba0f442110d31cc65e6f80117ce91e52174c42231800d0c7fd1",
+      "scene_fingerprint": "4fd8b5f58e656bc6c2363df3c38542d5be74bda9b1b66fa05028b632641a0d9a",
+      "post_settle_scene_fingerprint": "b824f5176042a899e33d0a5c8c0a23d2d2711804b6948b3cdf43b91ca1118204",
+      "post_settle_scene_errors": {
+        "max_position_m": 0.0,
+        "position_body": "akita_black_bowl_1_main",
+        "max_rotation_rad": 0.0,
+        "rotation_body": "akita_black_bowl_1_main"
+      },
+      "initial_state_fingerprint": "908597043dcb7957f51307ee64eef8e02ee8060c25ff19fe739837ee4b5b81cd",
+      "alignment": {
+        "method": "released_panda_state"
+      },
+      "perturbation_plan": {
+        "version": "libero_nonphysical_plan_v2",
+        "case_id": "BASE",
+        "schedule": "base",
+        "operator": "none",
+        "variant": "identity",
+        "trigger": "none",
+        "targets": [],
+        "disturbance_targets": [],
+        "references": [],
+        "mechanisms": [
+          "base"
+        ],
+        "assets": [],
+        "params": {},
+        "constraints": [],
+        "seed": 41810315,
+        "event_duration_steps": 24
+      },
+      "perturbation_plan_fingerprint": "ded8760bd11a784bf2e32947038047639b17e388074800d4155595446876adf2"
+    },
+    "observed_native_reward": [
+      0.0
+    ],
+    "first_control_success": false
+  },
+  {
+    "case": {
+      "arm": "Panda",
+      "suite": "libero_10",
+      "task_id": 8,
+      "variant": "BASE",
+      "init_state_id": 14,
+      "seed": 41800814,
+      "embodiment": "nom",
+      "max_steps": 520
+    },
+    "instruction": "put both moka pots on the stove",
+    "model": {
+      "arm": "Panda",
+      "model_class": "MountedPanda",
+      "joint_count": 7,
+      "joint_names": [
+        "robot0_joint1",
+        "robot0_joint2",
+        "robot0_joint3",
+        "robot0_joint4",
+        "robot0_joint5",
+        "robot0_joint6",
+        "robot0_joint7"
+      ],
+      "joint_links": [
+        "robot0_link1",
+        "robot0_link2",
+        "robot0_link3",
+        "robot0_link4",
+        "robot0_link5",
+        "robot0_link6",
+        "robot0_link7"
+      ],
+      "model_nq": 24,
+      "model_nv": 22,
+      "xml_sha256": "51e3a4a6d54bcaf77e9d36a27372b871728590eedf53d4fd0e195525950eb988",
+      "arm_meshes": [
+        "robot0_link0",
+        "robot0_link0_vis_0",
+        "robot0_link0_vis_1",
+        "robot0_link0_vis_10",
+        "robot0_link0_vis_11",
+        "robot0_link0_vis_2",
+        "robot0_link0_vis_3",
+        "robot0_link0_vis_4",
+        "robot0_link0_vis_5",
+        "robot0_link0_vis_6",
+        "robot0_link0_vis_7",
+        "robot0_link0_vis_8",
+        "robot0_link0_vis_9",
+        "robot0_link1",
+        "robot0_link1_vis",
+        "robot0_link2",
+        "robot0_link2_vis",
+        "robot0_link3",
+        "robot0_link3_vis_0",
+        "robot0_link3_vis_1",
+        "robot0_link3_vis_2",
+        "robot0_link3_vis_3",
+        "robot0_link4",
+        "robot0_link4_vis_0",
+        "robot0_link4_vis_1",
+        "robot0_link4_vis_2",
+        "robot0_link4_vis_3",
+        "robot0_link5",
+        "robot0_link5_vis_0",
+        "robot0_link5_vis_1",
+        "robot0_link5_vis_2",
+        "robot0_link6",
+        "robot0_link6_vis_0",
+        "robot0_link6_vis_1",
+        "robot0_link6_vis_10",
+        "robot0_link6_vis_11",
+        "robot0_link6_vis_12",
+        "robot0_link6_vis_13",
+        "robot0_link6_vis_14",
+        "robot0_link6_vis_15",
+        "robot0_link6_vis_16",
+        "robot0_link6_vis_2",
+        "robot0_link6_vis_3",
+        "robot0_link6_vis_4",
+        "robot0_link6_vis_5",
+        "robot0_link6_vis_6",
+        "robot0_link6_vis_7",
+        "robot0_link6_vis_8",
+        "robot0_link6_vis_9",
+        "robot0_link7_vis_0",
+        "robot0_link7_vis_1",
+        "robot0_link7_vis_2",
+        "robot0_link7_vis_3",
+        "robot0_link7_vis_4",
+        "robot0_link7_vis_5",
+        "robot0_link7_vis_6",
+        "robot0_link7_vis_7"
+      ],
+      "mount": "RethinkMount",
+      "base_xyz": [
+        -0.66,
+        0.0,
+        0.912
+      ],
+      "gripper": "PandaGripper",
+      "gripper_xml_sha256": "d9d68123909d6910488310d0fae4e358ed4ac831c6d0957f3e30893a5412baac",
+      "gripper_joints": [
+        "gripper0_finger_joint1",
+        "gripper0_finger_joint2"
+      ],
+      "tcp_site": "gripper0_grip_site",
+      "hand_link": "robot0_right_hand",
+      "cameras": [
+        "agentview",
+        "robot0_eye_in_hand"
+      ],
+      "wrist_parent": "robot0_right_hand",
+      "wrist_fovy_deg": 75.0,
+      "controller": "OSC_POSE",
+      "control_freq": 20,
+      "osc_output_max": [
+        0.05,
+        0.05,
+        0.05,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "robosuite": "1.4.0",
+      "mujoco": "3.2.3"
+    },
+    "renderer": "llvmpipe (LLVM 15.0.7, 256 bits)",
+    "schema": {
+      "shape": [
+        7
+      ],
+      "dtype": "float32",
+      "controller": "OSC_POSE",
+      "control_mode": "relative",
+      "control_freq": 20,
+      "low": [
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "high": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "public": {
+      "agentview_image": "4ab667aea4dfdecd54626edb4de975291a01f56d12cf3aeb6a41a5c19a7d658d",
+      "robot0_eye_in_hand_image": "7d2d47ee1aafeb7e57efed6f10520639ad261dae386fc71c7593064704353d4e",
+      "robot0_joint_pos": "65c4b4993c2700e34ad4a307ac6aa77b008b69c50f5560d29554c0dfda025914",
+      "robot0_joint_vel": "6c1a456bdfa2fe9b104631dbdc490017a35bf1cb2dd345a7883c86ee81ab21e3",
+      "robot0_eef_pos": "2dcdf2daa582f412651d81c9cc4b8e9635535044d661c9ca6b4f8fbe88d26725",
+      "robot0_eef_quat_xyzw": "85a14976d3139b43b291873ee0d604b3270e71644de569e1f5b1c24a2b458271",
+      "robot0_gripper_qpos": "491ac4dcb55684e4797bf5e450aee98a13996d6fe7dc479a5fa567af91b7a5be"
+    },
+    "reset": {
+      "source_pin": "e5500c690c1498eca1b7050350654964190cdf70",
+      "manifest_sha256": "71a6e4e25a2a4a162844d77136e7bff8e6f69c839d2d8194620c4afeabde2bba",
+      "bddl_sha256": "5663c5a0dfd24e5f934304e97fa422eb5a0b8faa8224938e6c278f914ab9f63e",
+      "suite": "libero_10",
+      "task_id": 8,
+      "init_state_id": 14,
+      "seed": 41800814,
+      "released_row_fingerprint": "f6434e67b67b609bffd5af2898854ea318dd7884f3592c0960c784e740e7fe3d",
+      "scene_fingerprint": "dd6480693fad29f225f294f4a0f419c087dc41e9ccae8ec650b004ba126a9b94",
+      "post_settle_scene_fingerprint": "b1302a8c9d88329151de0f2da4e8b5bd3dd7747f31560032cfb21164cbe1dffa",
+      "post_settle_scene_errors": {
+        "max_position_m": 0.0,
+        "position_body": "moka_pot_1_main",
+        "max_rotation_rad": 0.0,
+        "rotation_body": "moka_pot_1_main"
+      },
+      "initial_state_fingerprint": "444f25b2f0a976bc124c2a325d726da29502e2ae9937a6063529f22e7a36b472",
+      "alignment": {
+        "method": "released_panda_state"
+      },
+      "perturbation_plan": {
+        "version": "libero_nonphysical_plan_v2",
+        "case_id": "BASE",
+        "schedule": "base",
+        "operator": "none",
+        "variant": "identity",
+        "trigger": "none",
+        "targets": [],
+        "disturbance_targets": [],
+        "references": [],
+        "mechanisms": [
+          "base"
+        ],
+        "assets": [],
+        "params": {},
+        "constraints": [],
+        "seed": 41800814,
+        "event_duration_steps": 24
+      },
+      "perturbation_plan_fingerprint": "e5f2634e149618bbf16a71f8d4d69c3748afcdd7670e58149cc9ae4c73a63a19"
+    },
+    "observed_native_reward": [
+      0.0
+    ],
+    "first_control_success": false
+  },
+  {
+    "case": {
+      "arm": "Panda",
+      "suite": "libero_10",
+      "task_id": 8,
+      "variant": "BASE",
+      "init_state_id": 15,
+      "seed": 41800815,
+      "embodiment": "nom",
+      "max_steps": 520
+    },
+    "instruction": "put both moka pots on the stove",
+    "model": {
+      "arm": "Panda",
+      "model_class": "MountedPanda",
+      "joint_count": 7,
+      "joint_names": [
+        "robot0_joint1",
+        "robot0_joint2",
+        "robot0_joint3",
+        "robot0_joint4",
+        "robot0_joint5",
+        "robot0_joint6",
+        "robot0_joint7"
+      ],
+      "joint_links": [
+        "robot0_link1",
+        "robot0_link2",
+        "robot0_link3",
+        "robot0_link4",
+        "robot0_link5",
+        "robot0_link6",
+        "robot0_link7"
+      ],
+      "model_nq": 24,
+      "model_nv": 22,
+      "xml_sha256": "51e3a4a6d54bcaf77e9d36a27372b871728590eedf53d4fd0e195525950eb988",
+      "arm_meshes": [
+        "robot0_link0",
+        "robot0_link0_vis_0",
+        "robot0_link0_vis_1",
+        "robot0_link0_vis_10",
+        "robot0_link0_vis_11",
+        "robot0_link0_vis_2",
+        "robot0_link0_vis_3",
+        "robot0_link0_vis_4",
+        "robot0_link0_vis_5",
+        "robot0_link0_vis_6",
+        "robot0_link0_vis_7",
+        "robot0_link0_vis_8",
+        "robot0_link0_vis_9",
+        "robot0_link1",
+        "robot0_link1_vis",
+        "robot0_link2",
+        "robot0_link2_vis",
+        "robot0_link3",
+        "robot0_link3_vis_0",
+        "robot0_link3_vis_1",
+        "robot0_link3_vis_2",
+        "robot0_link3_vis_3",
+        "robot0_link4",
+        "robot0_link4_vis_0",
+        "robot0_link4_vis_1",
+        "robot0_link4_vis_2",
+        "robot0_link4_vis_3",
+        "robot0_link5",
+        "robot0_link5_vis_0",
+        "robot0_link5_vis_1",
+        "robot0_link5_vis_2",
+        "robot0_link6",
+        "robot0_link6_vis_0",
+        "robot0_link6_vis_1",
+        "robot0_link6_vis_10",
+        "robot0_link6_vis_11",
+        "robot0_link6_vis_12",
+        "robot0_link6_vis_13",
+        "robot0_link6_vis_14",
+        "robot0_link6_vis_15",
+        "robot0_link6_vis_16",
+        "robot0_link6_vis_2",
+        "robot0_link6_vis_3",
+        "robot0_link6_vis_4",
+        "robot0_link6_vis_5",
+        "robot0_link6_vis_6",
+        "robot0_link6_vis_7",
+        "robot0_link6_vis_8",
+        "robot0_link6_vis_9",
+        "robot0_link7_vis_0",
+        "robot0_link7_vis_1",
+        "robot0_link7_vis_2",
+        "robot0_link7_vis_3",
+        "robot0_link7_vis_4",
+        "robot0_link7_vis_5",
+        "robot0_link7_vis_6",
+        "robot0_link7_vis_7"
+      ],
+      "mount": "RethinkMount",
+      "base_xyz": [
+        -0.66,
+        0.0,
+        0.912
+      ],
+      "gripper": "PandaGripper",
+      "gripper_xml_sha256": "d9d68123909d6910488310d0fae4e358ed4ac831c6d0957f3e30893a5412baac",
+      "gripper_joints": [
+        "gripper0_finger_joint1",
+        "gripper0_finger_joint2"
+      ],
+      "tcp_site": "gripper0_grip_site",
+      "hand_link": "robot0_right_hand",
+      "cameras": [
+        "agentview",
+        "robot0_eye_in_hand"
+      ],
+      "wrist_parent": "robot0_right_hand",
+      "wrist_fovy_deg": 75.0,
+      "controller": "OSC_POSE",
+      "control_freq": 20,
+      "osc_output_max": [
+        0.05,
+        0.05,
+        0.05,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "robosuite": "1.4.0",
+      "mujoco": "3.2.3"
+    },
+    "renderer": "llvmpipe (LLVM 15.0.7, 256 bits)",
+    "schema": {
+      "shape": [
+        7
+      ],
+      "dtype": "float32",
+      "controller": "OSC_POSE",
+      "control_mode": "relative",
+      "control_freq": 20,
+      "low": [
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "high": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "public": {
+      "agentview_image": "64ab1974476835894a88fd967128fd1689f7ae363ff3a5f2b6dad951413843af",
+      "robot0_eye_in_hand_image": "32193847e0843f415d6eecce722f11fdfaf4fa2cbccf0ecdff83cfb7e197dca0",
+      "robot0_joint_pos": "6ef3385555db2f3b62082834f7cac048083064d1e580de0d4b0f6a555572fe9d",
+      "robot0_joint_vel": "d79da5b265739bceb1092c71d48afc22320c278b2ad67efb702ab8f960dffaa7",
+      "robot0_eef_pos": "ed5fca187b64d012ec081ebab78717d3fb4d60cc819e301ad08cb48b7b9f4324",
+      "robot0_eef_quat_xyzw": "c3e6eed79e712178e5dac3d3437f04f51dad3665fdbe3b37d9de351d8580c004",
+      "robot0_gripper_qpos": "0a1df0322c8c4008c8d91fa66b8b55c11324b5d5d541ceccf40abb8ef0ae2498"
+    },
+    "reset": {
+      "source_pin": "e5500c690c1498eca1b7050350654964190cdf70",
+      "manifest_sha256": "71a6e4e25a2a4a162844d77136e7bff8e6f69c839d2d8194620c4afeabde2bba",
+      "bddl_sha256": "5663c5a0dfd24e5f934304e97fa422eb5a0b8faa8224938e6c278f914ab9f63e",
+      "suite": "libero_10",
+      "task_id": 8,
+      "init_state_id": 15,
+      "seed": 41800815,
+      "released_row_fingerprint": "4b80977f5930d23de25cf0a95a91594bf3d26d460465bf5acbc32a3b89f7f26e",
+      "scene_fingerprint": "628cbd8d9b72d80813bf5abb7456c70786e521f93adc7e75dfda952bf321dbcd",
+      "post_settle_scene_fingerprint": "d9f5227771f3db23080683d84bc712c8bf46d81913698643bad7f42fd1e57311",
+      "post_settle_scene_errors": {
+        "max_position_m": 0.0,
+        "position_body": "moka_pot_1_main",
+        "max_rotation_rad": 0.0,
+        "rotation_body": "moka_pot_1_main"
+      },
+      "initial_state_fingerprint": "5aedca373cacc0f64958cf97212dcc2181ad212d27395b9bff95dd60a75cc586",
+      "alignment": {
+        "method": "released_panda_state"
+      },
+      "perturbation_plan": {
+        "version": "libero_nonphysical_plan_v2",
+        "case_id": "BASE",
+        "schedule": "base",
+        "operator": "none",
+        "variant": "identity",
+        "trigger": "none",
+        "targets": [],
+        "disturbance_targets": [],
+        "references": [],
+        "mechanisms": [
+          "base"
+        ],
+        "assets": [],
+        "params": {},
+        "constraints": [],
+        "seed": 41800815,
+        "event_duration_steps": 24
+      },
+      "perturbation_plan_fingerprint": "6f967e8a012cc1e30444bccaced22cca6910a932350f326b6fdfaa3aef77f434"
+    },
+    "observed_native_reward": [
+      0.0
+    ],
+    "first_control_success": false
+  },
+  {
+    "case": {
+      "arm": "Panda",
+      "suite": "libero_goal",
+      "task_id": 6,
+      "variant": "BASE",
+      "init_state_id": 14,
+      "seed": 41810614,
+      "embodiment": "nom",
+      "max_steps": 300
+    },
+    "instruction": "put the cream cheese on the bowl",
+    "model": {
+      "arm": "Panda",
+      "model_class": "MountedPanda",
+      "joint_count": 7,
+      "joint_names": [
+        "robot0_joint1",
+        "robot0_joint2",
+        "robot0_joint3",
+        "robot0_joint4",
+        "robot0_joint5",
+        "robot0_joint6",
+        "robot0_joint7"
+      ],
+      "joint_links": [
+        "robot0_link1",
+        "robot0_link2",
+        "robot0_link3",
+        "robot0_link4",
+        "robot0_link5",
+        "robot0_link6",
+        "robot0_link7"
+      ],
+      "model_nq": 41,
+      "model_nv": 37,
+      "xml_sha256": "51e3a4a6d54bcaf77e9d36a27372b871728590eedf53d4fd0e195525950eb988",
+      "arm_meshes": [
+        "robot0_link0",
+        "robot0_link0_vis_0",
+        "robot0_link0_vis_1",
+        "robot0_link0_vis_10",
+        "robot0_link0_vis_11",
+        "robot0_link0_vis_2",
+        "robot0_link0_vis_3",
+        "robot0_link0_vis_4",
+        "robot0_link0_vis_5",
+        "robot0_link0_vis_6",
+        "robot0_link0_vis_7",
+        "robot0_link0_vis_8",
+        "robot0_link0_vis_9",
+        "robot0_link1",
+        "robot0_link1_vis",
+        "robot0_link2",
+        "robot0_link2_vis",
+        "robot0_link3",
+        "robot0_link3_vis_0",
+        "robot0_link3_vis_1",
+        "robot0_link3_vis_2",
+        "robot0_link3_vis_3",
+        "robot0_link4",
+        "robot0_link4_vis_0",
+        "robot0_link4_vis_1",
+        "robot0_link4_vis_2",
+        "robot0_link4_vis_3",
+        "robot0_link5",
+        "robot0_link5_vis_0",
+        "robot0_link5_vis_1",
+        "robot0_link5_vis_2",
+        "robot0_link6",
+        "robot0_link6_vis_0",
+        "robot0_link6_vis_1",
+        "robot0_link6_vis_10",
+        "robot0_link6_vis_11",
+        "robot0_link6_vis_12",
+        "robot0_link6_vis_13",
+        "robot0_link6_vis_14",
+        "robot0_link6_vis_15",
+        "robot0_link6_vis_16",
+        "robot0_link6_vis_2",
+        "robot0_link6_vis_3",
+        "robot0_link6_vis_4",
+        "robot0_link6_vis_5",
+        "robot0_link6_vis_6",
+        "robot0_link6_vis_7",
+        "robot0_link6_vis_8",
+        "robot0_link6_vis_9",
+        "robot0_link7_vis_0",
+        "robot0_link7_vis_1",
+        "robot0_link7_vis_2",
+        "robot0_link7_vis_3",
+        "robot0_link7_vis_4",
+        "robot0_link7_vis_5",
+        "robot0_link7_vis_6",
+        "robot0_link7_vis_7"
+      ],
+      "mount": "RethinkMount",
+      "base_xyz": [
+        -0.66,
+        0.0,
+        0.912
+      ],
+      "gripper": "PandaGripper",
+      "gripper_xml_sha256": "d9d68123909d6910488310d0fae4e358ed4ac831c6d0957f3e30893a5412baac",
+      "gripper_joints": [
+        "gripper0_finger_joint1",
+        "gripper0_finger_joint2"
+      ],
+      "tcp_site": "gripper0_grip_site",
+      "hand_link": "robot0_right_hand",
+      "cameras": [
+        "agentview",
+        "robot0_eye_in_hand"
+      ],
+      "wrist_parent": "robot0_right_hand",
+      "wrist_fovy_deg": 75.0,
+      "controller": "OSC_POSE",
+      "control_freq": 20,
+      "osc_output_max": [
+        0.05,
+        0.05,
+        0.05,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "robosuite": "1.4.0",
+      "mujoco": "3.2.3"
+    },
+    "renderer": "llvmpipe (LLVM 15.0.7, 256 bits)",
+    "schema": {
+      "shape": [
+        7
+      ],
+      "dtype": "float32",
+      "controller": "OSC_POSE",
+      "control_mode": "relative",
+      "control_freq": 20,
+      "low": [
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "high": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "public": {
+      "agentview_image": "c49cc8ada748e9471e248dc2b7e3a4ffab2ba3b2f97d92158c641dfe178746a4",
+      "robot0_eye_in_hand_image": "78d6e5c7c31c18f5d7c5e6e1fe68ff30d9a6823722f28c54d55c9c8a2b8da8cc",
+      "robot0_joint_pos": "d28f83c87856e84a94ed863695e6c031dac5ef7e70ac1b1d060e14d58569ddde",
+      "robot0_joint_vel": "37fe3e676103411ec73ce07044d48ed34add1aed626edb9717872e94fd85cb9a",
+      "robot0_eef_pos": "8a82518ab53f61e0367e788f3d9acce908fdf6c96bd8dfebad37a5a3a44d3952",
+      "robot0_eef_quat_xyzw": "2e104c5f51c72a1a8c4bdff0f837199e9a70674cbea8edbc67b574dd71b7858a",
+      "robot0_gripper_qpos": "b2068262639bb4d0d2afc4581d733c6eeb188531ee5d90a3470955c4d9421fd8"
+    },
+    "reset": {
+      "source_pin": "e5500c690c1498eca1b7050350654964190cdf70",
+      "manifest_sha256": "71a6e4e25a2a4a162844d77136e7bff8e6f69c839d2d8194620c4afeabde2bba",
+      "bddl_sha256": "3d3af42d90dc7dde3a5a0a7580999d95a5dbc900c97f3883841abc0543a51600",
+      "suite": "libero_goal",
+      "task_id": 6,
+      "init_state_id": 14,
+      "seed": 41810614,
+      "released_row_fingerprint": "9fb2c05a8129e26e6d8162246d84104711f88158d97ac5b3be65995288280c80",
+      "scene_fingerprint": "00548bf697e977bd2f840268a5170a84901d8bdb7c38881315fde6e423435bbc",
+      "post_settle_scene_fingerprint": "90db230859f3908fbc8e9a4fe235f66bea18501adff562dddfd19cab4ad7c625",
+      "post_settle_scene_errors": {
+        "max_position_m": 0.0,
+        "position_body": "akita_black_bowl_1_main",
+        "max_rotation_rad": 0.0,
+        "rotation_body": "akita_black_bowl_1_main"
+      },
+      "initial_state_fingerprint": "9ceda7c8081a4b79c1e05f52cbda728fd0e16b191044015d9e9cd90b2633cd97",
+      "alignment": {
+        "method": "released_panda_state"
+      },
+      "perturbation_plan": {
+        "version": "libero_nonphysical_plan_v2",
+        "case_id": "BASE",
+        "schedule": "base",
+        "operator": "none",
+        "variant": "identity",
+        "trigger": "none",
+        "targets": [],
+        "disturbance_targets": [],
+        "references": [],
+        "mechanisms": [
+          "base"
+        ],
+        "assets": [],
+        "params": {},
+        "constraints": [],
+        "seed": 41810614,
+        "event_duration_steps": 24
+      },
+      "perturbation_plan_fingerprint": "06feb7ab09dee5db924336de551f9b02893acd0a6e0d3b2bbf3e6466aa3d5cd9"
+    },
+    "observed_native_reward": [
+      0.0
+    ],
+    "first_control_success": false
+  },
+  {
+    "case": {
+      "arm": "Panda",
+      "suite": "libero_goal",
+      "task_id": 6,
+      "variant": "BASE",
+      "init_state_id": 15,
+      "seed": 41810615,
+      "embodiment": "nom",
+      "max_steps": 300
+    },
+    "instruction": "put the cream cheese on the bowl",
+    "model": {
+      "arm": "Panda",
+      "model_class": "MountedPanda",
+      "joint_count": 7,
+      "joint_names": [
+        "robot0_joint1",
+        "robot0_joint2",
+        "robot0_joint3",
+        "robot0_joint4",
+        "robot0_joint5",
+        "robot0_joint6",
+        "robot0_joint7"
+      ],
+      "joint_links": [
+        "robot0_link1",
+        "robot0_link2",
+        "robot0_link3",
+        "robot0_link4",
+        "robot0_link5",
+        "robot0_link6",
+        "robot0_link7"
+      ],
+      "model_nq": 41,
+      "model_nv": 37,
+      "xml_sha256": "51e3a4a6d54bcaf77e9d36a27372b871728590eedf53d4fd0e195525950eb988",
+      "arm_meshes": [
+        "robot0_link0",
+        "robot0_link0_vis_0",
+        "robot0_link0_vis_1",
+        "robot0_link0_vis_10",
+        "robot0_link0_vis_11",
+        "robot0_link0_vis_2",
+        "robot0_link0_vis_3",
+        "robot0_link0_vis_4",
+        "robot0_link0_vis_5",
+        "robot0_link0_vis_6",
+        "robot0_link0_vis_7",
+        "robot0_link0_vis_8",
+        "robot0_link0_vis_9",
+        "robot0_link1",
+        "robot0_link1_vis",
+        "robot0_link2",
+        "robot0_link2_vis",
+        "robot0_link3",
+        "robot0_link3_vis_0",
+        "robot0_link3_vis_1",
+        "robot0_link3_vis_2",
+        "robot0_link3_vis_3",
+        "robot0_link4",
+        "robot0_link4_vis_0",
+        "robot0_link4_vis_1",
+        "robot0_link4_vis_2",
+        "robot0_link4_vis_3",
+        "robot0_link5",
+        "robot0_link5_vis_0",
+        "robot0_link5_vis_1",
+        "robot0_link5_vis_2",
+        "robot0_link6",
+        "robot0_link6_vis_0",
+        "robot0_link6_vis_1",
+        "robot0_link6_vis_10",
+        "robot0_link6_vis_11",
+        "robot0_link6_vis_12",
+        "robot0_link6_vis_13",
+        "robot0_link6_vis_14",
+        "robot0_link6_vis_15",
+        "robot0_link6_vis_16",
+        "robot0_link6_vis_2",
+        "robot0_link6_vis_3",
+        "robot0_link6_vis_4",
+        "robot0_link6_vis_5",
+        "robot0_link6_vis_6",
+        "robot0_link6_vis_7",
+        "robot0_link6_vis_8",
+        "robot0_link6_vis_9",
+        "robot0_link7_vis_0",
+        "robot0_link7_vis_1",
+        "robot0_link7_vis_2",
+        "robot0_link7_vis_3",
+        "robot0_link7_vis_4",
+        "robot0_link7_vis_5",
+        "robot0_link7_vis_6",
+        "robot0_link7_vis_7"
+      ],
+      "mount": "RethinkMount",
+      "base_xyz": [
+        -0.66,
+        0.0,
+        0.912
+      ],
+      "gripper": "PandaGripper",
+      "gripper_xml_sha256": "d9d68123909d6910488310d0fae4e358ed4ac831c6d0957f3e30893a5412baac",
+      "gripper_joints": [
+        "gripper0_finger_joint1",
+        "gripper0_finger_joint2"
+      ],
+      "tcp_site": "gripper0_grip_site",
+      "hand_link": "robot0_right_hand",
+      "cameras": [
+        "agentview",
+        "robot0_eye_in_hand"
+      ],
+      "wrist_parent": "robot0_right_hand",
+      "wrist_fovy_deg": 75.0,
+      "controller": "OSC_POSE",
+      "control_freq": 20,
+      "osc_output_max": [
+        0.05,
+        0.05,
+        0.05,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "robosuite": "1.4.0",
+      "mujoco": "3.2.3"
+    },
+    "renderer": "llvmpipe (LLVM 15.0.7, 256 bits)",
+    "schema": {
+      "shape": [
+        7
+      ],
+      "dtype": "float32",
+      "controller": "OSC_POSE",
+      "control_mode": "relative",
+      "control_freq": 20,
+      "low": [
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "high": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "public": {
+      "agentview_image": "82b418816d39179516b8e5243ea54dc6e7abc4e99bc4a9600b8cd6a253d94c32",
+      "robot0_eye_in_hand_image": "ba6d024f4044c69eb7a5cf6f585bb4556d7ca3a1056104b6bf71e9491f0519e9",
+      "robot0_joint_pos": "1c6a6226a724317dae6da7a967853a7dae8ae2ca1d7752b8ca104f71f1f29a19",
+      "robot0_joint_vel": "e6e57b138fd0e5121dacfad30480891eed867dd6cbc7ec1d83d9a8e861fda690",
+      "robot0_eef_pos": "33fd48cdc6ce76b710bf193007636f7c6390379ed7f1c127e4ae0d66a2e79efe",
+      "robot0_eef_quat_xyzw": "b2915803dd94590bc134b9fb9dcdab760b70cdb3053df14eed86348d219e54fd",
+      "robot0_gripper_qpos": "53b1d4b99cf3600dde46f2dfe0e007a545e6818f06581f70a1917c7b9cd184ae"
+    },
+    "reset": {
+      "source_pin": "e5500c690c1498eca1b7050350654964190cdf70",
+      "manifest_sha256": "71a6e4e25a2a4a162844d77136e7bff8e6f69c839d2d8194620c4afeabde2bba",
+      "bddl_sha256": "3d3af42d90dc7dde3a5a0a7580999d95a5dbc900c97f3883841abc0543a51600",
+      "suite": "libero_goal",
+      "task_id": 6,
+      "init_state_id": 15,
+      "seed": 41810615,
+      "released_row_fingerprint": "8e73af1966ece2654cdc6ca4ec205ed5208949c0dc2ca2c259a50d70c34e9d0c",
+      "scene_fingerprint": "6b87441ae5a40c6800ddb11573b68095912ad751f37f3739cbd95bc61eae1d84",
+      "post_settle_scene_fingerprint": "f65c58a714befbdb0bce4977994cd4ab1fe1b6e94c4d0c92951bcff7dd6fa61f",
+      "post_settle_scene_errors": {
+        "max_position_m": 0.0,
+        "position_body": "akita_black_bowl_1_main",
+        "max_rotation_rad": 0.0,
+        "rotation_body": "akita_black_bowl_1_main"
+      },
+      "initial_state_fingerprint": "9dd498e53943e707377d313131346fa775d0da1cb4f5afdd8ba4a3dc039a3ec4",
+      "alignment": {
+        "method": "released_panda_state"
+      },
+      "perturbation_plan": {
+        "version": "libero_nonphysical_plan_v2",
+        "case_id": "BASE",
+        "schedule": "base",
+        "operator": "none",
+        "variant": "identity",
+        "trigger": "none",
+        "targets": [],
+        "disturbance_targets": [],
+        "references": [],
+        "mechanisms": [
+          "base"
+        ],
+        "assets": [],
+        "params": {},
+        "constraints": [],
+        "seed": 41810615,
+        "event_duration_steps": 24
+      },
+      "perturbation_plan_fingerprint": "cab764c43138f34fceb49a0d08b4b530367bfe05540d00bbfb76095220b79833"
+    },
+    "observed_native_reward": [
+      0.0
+    ],
+    "first_control_success": false
+  }
+]

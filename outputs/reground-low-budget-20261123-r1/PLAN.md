@@ -1,0 +1,5 @@
+# ReGround rotation at 15, 100 and 1,000 target transitions
+
+Can the released target forward model, inverse-dynamics anchor and controller recover native task success as the target subset shrinks, conditional on each previously learned 100,000-transition nominal model? The comparison is within adaptation seed and identical test assignment against frozen Base and the existing 10,000-transition ReGround. Losses or one predicted action cannot establish task success. A decline toward Base with little paired recovery would count against useful transfer at that budget.
+
+Use both prefixes of the original rotation collection in release order, matched model initialization from the original fit, and the native episode split and optimizer. Audit the entire source collection separately from fit-time or deployment access. Account explicitly for any disjoint held-out examples read after optimization. First qualify the literal 15-transition call and sealed-data fits on two Baige CPU cores. Prepare an expandable paired evaluation for the parent. Parent owns GPUs and research decisions.

@@ -1,0 +1,353 @@
+{
+  "case": {
+    "arm": "Kinova3",
+    "suite": "libero_goal",
+    "task_id": 4,
+    "init_state_id": 16,
+    "variant": "BASE",
+    "seed": 41810416
+  },
+  "records": {
+    "stock": {
+      "reset": {
+        "arm": "Kinova3",
+        "model_class": "MountedKinova3",
+        "joint_count": 7,
+        "scene_fingerprint": "a7afadb9c24fb58b30f651f45f22b2c919a2ca7e2411cae66cd1f45249bd4020",
+        "physics": "7bc9653b5763192c4c326a871b33c66b13a04538a6b6c887e824835d3b8f67f2",
+        "perturbation_plan": "fb98372745f1b0c223b23b21c938ad9f7bec36d03c743035ed0dc762ab2bef54",
+        "public": {
+          "agentview_image": "8d855e28a5e9df5280b8259ce81ee245c1feb4318c4edcc3b244a7bb0b13a5f7",
+          "robot0_eye_in_hand_image": "f7599cbcdc48ef89a91460012e6be4486999ffaf5949906cf42fd5ee96a2c006",
+          "robot0_joint_pos": "97651e039c7a3f367b2bc420abf169257af2300ea5c04c5d127a83b2299322d7",
+          "robot0_joint_vel": "536b47a5a527155726b0c42c17154382d7f44246064a1113638b14fb1d9ddf71",
+          "robot0_eef_pos": "b94c03edfb2421fadc75395f7d9d7d13c34ce048d578f893903fb3785a0eed53",
+          "robot0_eef_quat_xyzw": "640804d110ed398b7e3b870cc4a817ec560fd34a554552c88802fb43785a5fd3",
+          "robot0_gripper_qpos": "a5123cce67eb7ffa489d1765843889f32be6cb7aa24cedf0ddca038d95266fad"
+        },
+        "motor_frame0": {
+          "observation/image": "70e3a2c4055b7c7ba4cc49f58b82114b95201aee3cd0b4e2abf197b0c675387b",
+          "observation/wrist_image": "790734817ce4d479bd49eec8ff6e2a05d2f4c682984786c2462e82877d0b8736",
+          "observation/state": "6a29813f77733488477b884c950fc5a03f17b5c9c62bf2cf22d54a09f6d69d76"
+        },
+        "reader_frame0": {
+          "image": "84597b10b1e00bce109b85a4717538fbf13b80a8138f1064985365822c59ac6f",
+          "state": "db3fe7e33bad61407470d1aa5d837a9c26fd507eff2890068831fc26d43a8bf8"
+        },
+        "worker_step_index": 0,
+        "action_schema": {
+          "shape": [
+            7
+          ],
+          "dtype": "float32",
+          "controller": "OSC_POSE",
+          "control_mode": "relative",
+          "control_freq": 20,
+          "low": [
+            -1.0,
+            -1.0,
+            -1.0,
+            -1.0,
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "high": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "renderer": "llvmpipe (LLVM 15.0.7, 256 bits)",
+        "renderer_vendor": "Mesa",
+        "noise_seed": 42627533,
+        "noise_sha256": "bd9eabc42c548672e645e21dbb707aec86b928cf25873ab33a4f95910842cdc8",
+        "horizon": 300,
+        "prompt": "put the bowl on the top of the drawer"
+      },
+      "released_prompt": "put the bowl on the top of the drawer",
+      "controls": 6,
+      "native_rewards": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "native_return": 0.0,
+      "opening_proposal_sha256": "f12008b3231cc71a8d37b8c091203dedb6238157c0c35235d226abee8959c89d",
+      "success": false,
+      "terminated": false,
+      "truncated": false,
+      "inferred": {
+        "yaw_deg": 0.0,
+        "xy_scale": 1.0,
+        "gripper_sign": 1
+      },
+      "prefix_xy_disp_15_mm": 11.316,
+      "prefix_xy_disp_30_mm": 11.316,
+      "seconds": 1.136
+    },
+    "raw": {
+      "reset": {
+        "arm": "Kinova3",
+        "model_class": "MountedKinova3",
+        "joint_count": 7,
+        "scene_fingerprint": "a7afadb9c24fb58b30f651f45f22b2c919a2ca7e2411cae66cd1f45249bd4020",
+        "physics": "7bc9653b5763192c4c326a871b33c66b13a04538a6b6c887e824835d3b8f67f2",
+        "perturbation_plan": "fb98372745f1b0c223b23b21c938ad9f7bec36d03c743035ed0dc762ab2bef54",
+        "public": {
+          "agentview_image": "8d855e28a5e9df5280b8259ce81ee245c1feb4318c4edcc3b244a7bb0b13a5f7",
+          "robot0_eye_in_hand_image": "f7599cbcdc48ef89a91460012e6be4486999ffaf5949906cf42fd5ee96a2c006",
+          "robot0_joint_pos": "97651e039c7a3f367b2bc420abf169257af2300ea5c04c5d127a83b2299322d7",
+          "robot0_joint_vel": "536b47a5a527155726b0c42c17154382d7f44246064a1113638b14fb1d9ddf71",
+          "robot0_eef_pos": "b94c03edfb2421fadc75395f7d9d7d13c34ce048d578f893903fb3785a0eed53",
+          "robot0_eef_quat_xyzw": "640804d110ed398b7e3b870cc4a817ec560fd34a554552c88802fb43785a5fd3",
+          "robot0_gripper_qpos": "a5123cce67eb7ffa489d1765843889f32be6cb7aa24cedf0ddca038d95266fad"
+        },
+        "motor_frame0": {
+          "observation/image": "70e3a2c4055b7c7ba4cc49f58b82114b95201aee3cd0b4e2abf197b0c675387b",
+          "observation/wrist_image": "790734817ce4d479bd49eec8ff6e2a05d2f4c682984786c2462e82877d0b8736",
+          "observation/state": "6a29813f77733488477b884c950fc5a03f17b5c9c62bf2cf22d54a09f6d69d76"
+        },
+        "reader_frame0": {
+          "image": "84597b10b1e00bce109b85a4717538fbf13b80a8138f1064985365822c59ac6f",
+          "state": "db3fe7e33bad61407470d1aa5d837a9c26fd507eff2890068831fc26d43a8bf8"
+        },
+        "worker_step_index": 0,
+        "action_schema": {
+          "shape": [
+            7
+          ],
+          "dtype": "float32",
+          "controller": "OSC_POSE",
+          "control_mode": "relative",
+          "control_freq": 20,
+          "low": [
+            -1.0,
+            -1.0,
+            -1.0,
+            -1.0,
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "high": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "renderer": "llvmpipe (LLVM 15.0.7, 256 bits)",
+        "renderer_vendor": "Mesa",
+        "noise_seed": 42627533,
+        "noise_sha256": "bd9eabc42c548672e645e21dbb707aec86b928cf25873ab33a4f95910842cdc8",
+        "horizon": 300,
+        "prompt": "put the bowl on the top of the drawer"
+      },
+      "released_prompt": "put the bowl on the top of the drawer",
+      "controls": 6,
+      "native_rewards": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "native_return": 0.0,
+      "opening_proposal_sha256": "f12008b3231cc71a8d37b8c091203dedb6238157c0c35235d226abee8959c89d",
+      "success": false,
+      "terminated": false,
+      "truncated": false,
+      "inferred": {
+        "yaw_deg": 0.0,
+        "xy_scale": 1.0,
+        "gripper_sign": 1
+      },
+      "prefix_xy_disp_15_mm": 11.316,
+      "prefix_xy_disp_30_mm": 11.316,
+      "seconds": 1.316
+    },
+    "uniform": {
+      "reset": {
+        "arm": "Kinova3",
+        "model_class": "MountedKinova3",
+        "joint_count": 7,
+        "scene_fingerprint": "a7afadb9c24fb58b30f651f45f22b2c919a2ca7e2411cae66cd1f45249bd4020",
+        "physics": "7bc9653b5763192c4c326a871b33c66b13a04538a6b6c887e824835d3b8f67f2",
+        "perturbation_plan": "fb98372745f1b0c223b23b21c938ad9f7bec36d03c743035ed0dc762ab2bef54",
+        "public": {
+          "agentview_image": "cb79de61ccd08db0107dd05f036291fd15243bb0b8766300e41f90357156e610",
+          "robot0_eye_in_hand_image": "f7599cbcdc48ef89a91460012e6be4486999ffaf5949906cf42fd5ee96a2c006",
+          "robot0_joint_pos": "97651e039c7a3f367b2bc420abf169257af2300ea5c04c5d127a83b2299322d7",
+          "robot0_joint_vel": "536b47a5a527155726b0c42c17154382d7f44246064a1113638b14fb1d9ddf71",
+          "robot0_eef_pos": "b94c03edfb2421fadc75395f7d9d7d13c34ce048d578f893903fb3785a0eed53",
+          "robot0_eef_quat_xyzw": "640804d110ed398b7e3b870cc4a817ec560fd34a554552c88802fb43785a5fd3",
+          "robot0_gripper_qpos": "a5123cce67eb7ffa489d1765843889f32be6cb7aa24cedf0ddca038d95266fad"
+        },
+        "motor_frame0": {
+          "observation/image": "1f90c78f37015c8065a38d44d1c0ef30d89b31ae3ead118eacd80f0dadb61950",
+          "observation/wrist_image": "790734817ce4d479bd49eec8ff6e2a05d2f4c682984786c2462e82877d0b8736",
+          "observation/state": "6a29813f77733488477b884c950fc5a03f17b5c9c62bf2cf22d54a09f6d69d76"
+        },
+        "reader_frame0": {
+          "image": "5cca5fcd9efffc3a611100523fbc7bf80eb59c8433ccf7b6af9264af4ba17ccd",
+          "state": "db3fe7e33bad61407470d1aa5d837a9c26fd507eff2890068831fc26d43a8bf8"
+        },
+        "worker_step_index": 0,
+        "action_schema": {
+          "shape": [
+            7
+          ],
+          "dtype": "float32",
+          "controller": "OSC_POSE",
+          "control_mode": "relative",
+          "control_freq": 20,
+          "low": [
+            -1.0,
+            -1.0,
+            -1.0,
+            -1.0,
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "high": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "renderer": "llvmpipe (LLVM 15.0.7, 256 bits)",
+        "renderer_vendor": "Mesa",
+        "noise_seed": 42627533,
+        "noise_sha256": "bd9eabc42c548672e645e21dbb707aec86b928cf25873ab33a4f95910842cdc8",
+        "horizon": 300,
+        "prompt": "put the bowl on the top of the drawer"
+      },
+      "released_prompt": "put the bowl on the top of the drawer",
+      "controls": 6,
+      "native_rewards": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "native_return": 0.0,
+      "opening_proposal_sha256": "f12008b3231cc71a8d37b8c091203dedb6238157c0c35235d226abee8959c89d",
+      "success": false,
+      "terminated": false,
+      "truncated": false,
+      "inferred": {
+        "yaw_deg": 0.0,
+        "xy_scale": 1.0,
+        "gripper_sign": 1
+      },
+      "prefix_xy_disp_15_mm": 11.316,
+      "prefix_xy_disp_30_mm": 11.316,
+      "seconds": 1.182
+    },
+    "linkwise": {
+      "reset": {
+        "arm": "Kinova3",
+        "model_class": "MountedKinova3",
+        "joint_count": 7,
+        "scene_fingerprint": "a7afadb9c24fb58b30f651f45f22b2c919a2ca7e2411cae66cd1f45249bd4020",
+        "physics": "7bc9653b5763192c4c326a871b33c66b13a04538a6b6c887e824835d3b8f67f2",
+        "perturbation_plan": "fb98372745f1b0c223b23b21c938ad9f7bec36d03c743035ed0dc762ab2bef54",
+        "public": {
+          "agentview_image": "1113c35ebba3b16880368376161d1ffafaa8b37a1537f96d47d3ad9cf91675ff",
+          "robot0_eye_in_hand_image": "f7599cbcdc48ef89a91460012e6be4486999ffaf5949906cf42fd5ee96a2c006",
+          "robot0_joint_pos": "97651e039c7a3f367b2bc420abf169257af2300ea5c04c5d127a83b2299322d7",
+          "robot0_joint_vel": "536b47a5a527155726b0c42c17154382d7f44246064a1113638b14fb1d9ddf71",
+          "robot0_eef_pos": "b94c03edfb2421fadc75395f7d9d7d13c34ce048d578f893903fb3785a0eed53",
+          "robot0_eef_quat_xyzw": "640804d110ed398b7e3b870cc4a817ec560fd34a554552c88802fb43785a5fd3",
+          "robot0_gripper_qpos": "a5123cce67eb7ffa489d1765843889f32be6cb7aa24cedf0ddca038d95266fad"
+        },
+        "motor_frame0": {
+          "observation/image": "d33971cd080ac53e2b3d961ab4b860733092dddb37181d4927a7ab522b1d36f7",
+          "observation/wrist_image": "790734817ce4d479bd49eec8ff6e2a05d2f4c682984786c2462e82877d0b8736",
+          "observation/state": "6a29813f77733488477b884c950fc5a03f17b5c9c62bf2cf22d54a09f6d69d76"
+        },
+        "reader_frame0": {
+          "image": "f45b501c360371b9e1d989b82e8a7aeaae04b95a556c2fa7a66da6878e9d0bb3",
+          "state": "db3fe7e33bad61407470d1aa5d837a9c26fd507eff2890068831fc26d43a8bf8"
+        },
+        "worker_step_index": 0,
+        "action_schema": {
+          "shape": [
+            7
+          ],
+          "dtype": "float32",
+          "controller": "OSC_POSE",
+          "control_mode": "relative",
+          "control_freq": 20,
+          "low": [
+            -1.0,
+            -1.0,
+            -1.0,
+            -1.0,
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "high": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "renderer": "llvmpipe (LLVM 15.0.7, 256 bits)",
+        "renderer_vendor": "Mesa",
+        "noise_seed": 42627533,
+        "noise_sha256": "bd9eabc42c548672e645e21dbb707aec86b928cf25873ab33a4f95910842cdc8",
+        "horizon": 300,
+        "prompt": "put the bowl on the top of the drawer"
+      },
+      "released_prompt": "put the bowl on the top of the drawer",
+      "controls": 6,
+      "native_rewards": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "native_return": 0.0,
+      "opening_proposal_sha256": "f12008b3231cc71a8d37b8c091203dedb6238157c0c35235d226abee8959c89d",
+      "success": false,
+      "terminated": false,
+      "truncated": false,
+      "inferred": {
+        "yaw_deg": 0.0,
+        "xy_scale": 1.0,
+        "gripper_sign": 1
+      },
+      "prefix_xy_disp_15_mm": 11.316,
+      "prefix_xy_disp_30_mm": 11.316,
+      "seconds": 1.331
+    }
+  },
+  "model": "fixed six-control diagnostic"
+}
