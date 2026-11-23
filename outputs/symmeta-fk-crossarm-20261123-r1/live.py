@@ -62,7 +62,7 @@ def verify_policy(panel, info):
     path = ev.PI0_CKPT if info["policy"] == "pi0" else ur5e_motor.OPENPI_CKPT
     require(path == Path(cfg["checkpoint"]), path)
     checked(path / "transport-manifest.json", cfg["weight_transport_manifest_sha256"])
-    ready_sha = {"pi0": "220a78caa83dd4d3ed762d14f63d981a9162a348edb777a109b8940f4ecfdbc3",
+    ready_sha = {"pi0": "220a78caa83dd4d3ed762b14f63d981a9162a348edb777a109b8940f4ecfdbc3",
                  "pi05": "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170"}
     ready = json.loads(checked(path / "READY.json", ready_sha[info["policy"]]))
     require(ready["status"] == "verified" and ready["checkpoint_path"] == str(path), path)
