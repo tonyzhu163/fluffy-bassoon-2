@@ -1,0 +1,95 @@
+{
+  "scope": "Different VLA from the primary selector. Forward-pass sensitivity only, one Panda reset frame and one noise draw. No phase, reward or rollout evaluation.",
+  "policy": "lerobot/smolvla_libero@a24f1f380461b665158d52acd140152c79e8b36d",
+  "weights_sha256": "9a9f6413e42c0f332fccbce9a0dc796af2790f82cf002f791cdbf7e01e1afca8",
+  "device": "cpu",
+  "trainable_parameters": 0,
+  "source": "cases/01.npz under appearance scratch root, LIBERO-Goal reset seed 3201",
+  "input_sha256": {
+    "source": "a9988fcb037fe8a084c117e20006eff2a9c8857733c72907a51961294ce7919a",
+    "wrist": "55b6e3a6192a1f25357deeac09e859765c436ededd7c5cd9d887738fb46259b4",
+    "pos": "c60b56b278a973d0133a8545c144bd7695037c38ec63b892ccf4e00cff59a5d9",
+    "quat": "741254eff6b137c04cf4815272f91dc8e6314f82adfe520ca352c6c4b9d9c051",
+    "grip": "591a016959091449fb88352814d9735e02f385a55292c254d4e1250233b3ea56"
+  },
+  "noise_seed": 9101,
+  "noise_sha256": "d91fd636636cd4db090d87820708e23893dc6f8d55aa47e7150827ee37b027e2",
+  "prompts": {
+    "original": "open the top drawer and put the bowl inside",
+    "open": "open the top drawer",
+    "put": "put the bowl in the top drawer",
+    "repeat": "open the top drawer and put the bowl inside"
+  },
+  "chunk_shape": [
+    50,
+    7
+  ],
+  "measured_steps": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "units": "Unnormalized SmolVLA policy commands, each component group in its own units.",
+  "chunk_sha256": {
+    "original": "dff50a364ff864d0cc0ed3acc4887708dbfd8281252b615fc7de59ba83058e99",
+    "open": "ba44abc8a5739b5bc2d945f1694b9d69b102cd0b91a680cfb7a64c86c769c820",
+    "put": "7b1b053cd3fff49e20e759f4e5ca950e0850dc233e26f0b2fdbac28afacaa7ae",
+    "repeat": "dff50a364ff864d0cc0ed3acc4887708dbfd8281252b615fc7de59ba83058e99"
+  },
+  "first_five_deltas": {
+    "repeat_vs_original": {
+      "xyz_rms": 0.0,
+      "rotation_rms": 0.0,
+      "gripper_rms": 0.0,
+      "all_channels_rms": 0.0,
+      "max_abs_by_step": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "open_vs_original": {
+      "xyz_rms": 0.16967961262463752,
+      "rotation_rms": 0.04591649829405744,
+      "gripper_rms": 0.00512104294862471,
+      "all_channels_rms": 0.1150929514715248,
+      "max_abs_by_step": [
+        0.19152724742889404,
+        0.21581216156482697,
+        0.2453085407614708,
+        0.2584206387400627,
+        0.2597908303141594
+      ]
+    },
+    "put_vs_original": {
+      "xyz_rms": 0.14822119426187072,
+      "rotation_rms": 0.03336317700333303,
+      "gripper_rms": 0.7830228908282293,
+      "all_channels_rms": 0.3122207825940552,
+      "max_abs_by_step": [
+        1.7489384412765503,
+        0.18146514892578125,
+        0.1996261104941368,
+        0.20190656185150146,
+        0.20530745387077332
+      ]
+    },
+    "open_vs_put": {
+      "xyz_rms": 0.09732444500970328,
+      "rotation_rms": 0.02037776457535036,
+      "gripper_rms": 0.7868724853042568,
+      "all_channels_rms": 0.3044503738086304,
+      "max_abs_by_step": [
+        1.7572962045669556,
+        0.12963742017745972,
+        0.12226194143295288,
+        0.12949711084365845,
+        0.11862748861312866
+      ]
+    }
+  }
+}
