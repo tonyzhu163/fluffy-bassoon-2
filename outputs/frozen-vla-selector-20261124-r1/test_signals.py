@@ -31,6 +31,16 @@ def raw(n=7, angle=0, rgb=255, xyz=(0, 0, 0), jaw=0.03):
             "robot0_gripper_qpos": np.array([jaw / 2, -jaw / 2])}
 
 
+def drawer(x, size=128, **kwargs):
+    obs = raw(**kwargs)
+    image = np.full((size, size, 3), 180, np.uint8)
+    # Draw the source cabinet scanlines in unflipped native camera storage.
+    rows = (np.arange(size) + 0.5) * 128 / size
+    image[::-1][(rows >= 73) & (rows < 81), :int(x * size / 128)] = 30
+    obs["agentview_image"] = image
+    return obs
+
+
 def support(n=7):
     # Three orthogonal calibration commands with a target response distinct
     # from the source. Include the preceding command in every response.
@@ -75,8 +85,8 @@ def test_posture_conditioned_fit_matches_ridge_and_damped_inverse(n):
 
 
 def test_history_uses_executed_delta_and_actual_preceding_command():
-    before = raw()
-    after = raw(angle=np.pi, xyz=(0.05, 0.02, -0.01), rgb=0, jaw=0.01)
+    before = drawer(32)
+    after = drawer(54, angle=np.pi, xyz=(0.05, 0.02, -0.01), jaw=0.01)
     sig = Signals(support(), before)
     fork = copy.deepcopy(sig)
     issued = -chunk()
@@ -107,26 +117,35 @@ def test_history_uses_executed_delta_and_actual_preceding_command():
     np.testing.assert_array_equal(sig.features(after, pending)[0], motion)
 
 
-def test_phase_uses_only_current_reset_relative_source_patches_and_can_reopen():
-    reset = raw(rgb=255)
-    opened = raw(rgb=255)
-    m = json.loads((HERE.parent / "frozen-vla-phase-transfer-20261123-r1/evidence/model.json").read_text())
-    # Darken precisely the four selected tiles. Other tile changes should have no effect.
-    for index in m["signed_luminance_tile_ids"]:
-        i, j = divmod(index, 16)
-        opened["agentview_image"][2*i:2*i+2, 2*j:2*j+2] = 0
+@pytest.mark.parametrize("size", [128, 256])
+def test_current_front_crosses_native_boundary_in_both_directions(size):
+    reset = drawer(32, size)
     sig = Signals(support(), reset)
-    for obs, delta, cue in ((reset, 0, "open the top drawer"), (opened, -1, "put the bowl in the top drawer")):
-        logit = m["beta"][0] + ((delta - np.array(m["mean"])) / m["scale"]) @ m["beta"][1:]
-        assert sig.features(obs, chunk())[1][0] == pytest.approx(1 / (1 + np.exp(-logit)))
-        assert sig.cue(obs) == cue
-    sig.observe(reset, chunk(), opened)
-    sig.observe(opened, chunk(), reset)
-    assert sig.cue(reset) == "open the top drawer"
-    progress = sig.features(reset, chunk())[1]
-    assert progress[0] < 0.5 < progress[6]
-    reset["agentview_image"][0, 0] = 0
-    np.testing.assert_array_equal(sig.features(reset, chunk())[1], progress)
+    previous = reset
+    # The partly reclosed front is still 18 pixels from reset.
+    for x, opened in ((48, False), (53, True), (50, False), (54, True)):
+        obs = drawer(x, size)
+        old_progress = sig.features(previous, chunk())[1][:6]
+        sig.observe(previous, chunk(), obs)
+        progress = sig.features(obs, chunk())[1]
+        np.testing.assert_array_equal(progress[6:12], old_progress)
+        assert progress[0] == float(opened)
+        assert sig.cue(obs) == ("put the bowl in the top drawer" if opened else "open the top drawer")
+        previous = obs
+
+
+def test_subpixel_front_votes_and_missing_edges():
+    reset, partial = drawer(32), drawer(51)
+    # The first bright pixel at x=51 has gray 110. Interpolation at gray
+    # 90 moves its edge by 0.75 pixels versus 0.4 at the reset's gray 180.
+    partial["agentview_image"][::-1][73:81, 51] = 110
+    thresholds = json.loads((HERE / "drawer-calibration.json").read_bytes())["crossing_px_by_demo"]
+    expected = sum(v < 19.35 for v in thresholds.values()) / len(thresholds)
+    assert 0 < expected < 1
+    sig = Signals(support(), reset)
+    assert sig.features(partial, chunk())[1][0] == pytest.approx(expected)
+    assert sig.cue(raw(rgb=0)) == "open the top drawer"
+    assert Signals(support(), raw(rgb=255)).cue(partial) == "open the top drawer"
 
 
 def test_zero_excitation_first_window_and_public_only_inputs():

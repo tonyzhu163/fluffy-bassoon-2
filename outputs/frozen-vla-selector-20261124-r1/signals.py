@@ -1,5 +1,6 @@
 """Causal motion and drawer-progress features at native five-control replans."""
 
+from functools import cache
 from importlib.util import module_from_spec, spec_from_file_location
 import json
 from pathlib import Path
@@ -47,11 +48,48 @@ def _chunk(value):
     return data
 
 
-def _patch_values(raw):
+def _image(raw):
     image = np.asarray(raw["agentview_image"])
     if image.dtype != np.uint8:
         raise ValueError("Expected the unflipped native RGB uint8 image")
-    return _tiles(image)[_patches]
+    return image
+
+
+def drawer_front(image):
+    """Drawer-front x in 128-pixel camera units, or None if no edge is visible.
+
+    Use the fixed BASE camera strip from the source phase annotator. Locate the
+    dark wood to bright table transition at native resolution on each scanline.
+    """
+    h, w, _ = image.shape
+    y = (np.arange(h) + 0.5) * (128 / h)
+    x = (np.arange(w) + 0.5) * (128 / w)
+    rows = (y >= 73) & (y < 81)
+    cols = (x >= 15) & (x < 88)
+    gray = image[::-1][rows][:, cols].mean(axis=2)
+    bright = gray >= 90
+    right = bright.argmax(axis=1)
+    visible = bright.any(axis=1) & (right > 0)
+    if not visible.any():
+        return None
+    hi = right[visible]
+    lines = gray[visible]
+    idx = np.arange(len(hi))
+    dark, light = lines[idx, hi - 1], lines[idx, hi]
+    fraction = (90 - dark) / (light - dark)
+    return float(np.median(x[cols][hi - 1] + (128 / w) * fraction))
+
+
+@cache
+def _drawer_thresholds():
+    path = Path(__file__).with_name("drawer-calibration.json")
+    return np.array(list(json.loads(path.read_bytes())["crossing_px_by_demo"].values()))
+
+
+def drawer_probability(reset_front, front, thresholds):
+    if reset_front is None or front is None:
+        return 0.0
+    return float(np.mean(front - reset_front > thresholds))
 
 
 class Signals:
@@ -65,7 +103,9 @@ class Signals:
         self._joints = _finite(support["joints"], (3, q.size)).copy()
         self._inputs = _finite(support["inputs"], (3, 6)).copy()
         self._response = _finite(support["response"], (3, 3)).copy()
-        self._reset_patches = _patch_values(initial_raw)
+        image = _image(initial_raw)
+        self._reset_patches = _tiles(image)[_patches]
+        self._reset_front = drawer_front(image)
         self._previous_object = self._object(initial_raw)
         self._previous_command = np.zeros(3)
         self._achieved = np.zeros(3)
@@ -86,10 +126,9 @@ class Signals:
         return _motion.fit_target("jacobian", _prior, trace, _ridge)
 
     def _object(self, raw):
-        patches = _patch_values(raw) - self._reset_patches
-        z = (patches - _phase["mean"]) / _phase["scale"]
-        logit = _phase["beta"][0] + z @ _phase["beta"][1:]
-        open_probability = np.exp(-np.logaddexp(0.0, -logit))
+        image = _image(raw)
+        patches = _tiles(image)[_patches] - self._reset_patches
+        open_probability = drawer_probability(self._reset_front, drawer_front(image), _drawer_thresholds())
         fingers = _finite(raw["robot0_gripper_qpos"], (2,))
         return np.r_[open_probability, patches, fingers[0] - fingers[1]]
 
@@ -138,6 +177,6 @@ class Signals:
 
     def cue(self, raw):
         """Drawer-and-bowl subinstruction. A later reclosure can select opening again."""
-        if self._object(raw)[0] >= 0.5:
+        if self._object(raw)[0] > 0.5:
             return "put the bowl in the top drawer"
         return "open the top drawer"
