@@ -1,0 +1,1343 @@
+{
+  "verified_utc": "2026-11-24T04:30:38.077677+00:00",
+  "fixture": false,
+  "native_pin": "a8a997e7d06bb131d3f9710204c58e106f0f0904",
+  "release_pin": "e5500c690c1498eca1b7050350654964190cdf70",
+  "study_pin": "ef165714d626305fa756e10fac2b5f7c45446f1c",
+  "source": "/mowenjie/fluffy-bassoon-2/setups/symmeta-perceiver-followups-20261123-r1/src-ef165714d626",
+  "shared_attempt": "/mowenjie/fluffy-bassoon-2/outputs/frozen-transfer-demonstration-20261124-r1/gpu01",
+  "reader_host": "aibox-r855e239307b-6bfb688cdd-lz2dx",
+  "cpu_cores": [
+    46,
+    47
+  ],
+  "audit_wall_seconds": 17.529,
+  "audit_cpu_seconds": 1.465,
+  "runtime": {
+    "host": "job-mbgx2xjo8rqm-master-0",
+    "job": "job-mbgx2xjo8rqm",
+    "device": "NVIDIA GeForce RTX 4090",
+    "qualification": "/mowenjie/fluffy-bassoon-2/outputs/frozen-transfer-demonstration-20261124-r1/cpu02",
+    "start_epoch": 1795493859,
+    "end_epoch": 1795494606,
+    "elapsed_seconds": 747
+  },
+  "records": 32,
+  "queries": 1555,
+  "native_controls": 7739,
+  "rows": {
+    "40": {
+      "seed": 42710340,
+      "release_row": "76b3360836dcf235adba100104e6632b4eafd7bacb3c034fc3712599e349c2ce",
+      "scene": "7cb88eae3afebbd75fc948c43267986f1e273340ee1ff229702434607c05f7bc",
+      "physics": "a90b5a1d0943cd31c01eb2acd1ef933c72a3eb37d5afba56aa7549d66dbe4e50",
+      "post_settle_scene": "f1e3a5bc0d466f7f85da273a2387f40276aa78ddf3638c4cf3910ab10c6dca52",
+      "noise_bank": "7e72be2dfad8ce23ed2835653e15e6bb1367c8f000193afba3d2eea5c2e12229",
+      "opening_proposal": "0b7d6543af54d65cf77c5927129cd8f2e97ebeb8e53f6c94a803f781e4146a74",
+      "cpu_full_tape_same_physics": false,
+      "cpu_full_tape_same_post_settle": false,
+      "episodes": {
+        "raw": {
+          "success": 0,
+          "controls": 300,
+          "terminal": "horizon",
+          "calls": 60,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 0,
+          "prefix_le_f32_sha256": null,
+          "handback": null,
+          "tuned_controls": 0,
+          "tuned_controls_different_from_raw": 0,
+          "all_actions_le_f32_sha256": "03156a6a8bfef6dc72a4f73a2160b5adb272746d30739ebab5458888f68b0df5"
+        },
+        "tuned": {
+          "success": 0,
+          "controls": 300,
+          "terminal": "horizon",
+          "calls": 60,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 0,
+          "prefix_le_f32_sha256": null,
+          "handback": null,
+          "tuned_controls": 300,
+          "tuned_controls_different_from_raw": 300,
+          "all_actions_le_f32_sha256": "6e146c584a317fa52616726420ba19b187c3b4a266b182b2887d1349af904466"
+        },
+        "IIWA34": {
+          "success": 1,
+          "controls": 220,
+          "terminal": "success",
+          "calls": 44,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 105,
+          "prefix_le_f32_sha256": "a130bd9ed16bf71d01c9f0c0153b2f444a4d2476df4d574585b2df3f58b89242",
+          "handback": {
+            "global_call": 21,
+            "first_native_control": 106,
+            "last_native_control": 110,
+            "public_sha256": "c998cb8ed131518b4b7847b0143d40ce196245570ccfcfdf5e4e652be0509b80",
+            "inputs": {
+              "observation/image": "89099cedb60ec57e3d99beb1c3aae756b84e0f41dba4a0f453324c6cb1e37e7a",
+              "observation/wrist_image": "e4f52b54cb3391fd5e5bacc61fb7750a496abda1800d275e6c08b67c6bab8282",
+              "observation/state": "71a1d32ba1e15797091ce28dbc34fab1846581a395a54de7c082f7dfee32699a"
+            },
+            "inputs_changed_since_previous_query": [
+              "observation/image",
+              "observation/state",
+              "observation/wrist_image"
+            ],
+            "noise": "4cea33333f21e84c191b8d2ecfbb058e8c9e2b2fffed98f1ca4300f424e47930",
+            "proposal": "7a31ef071cf37fe832918657153fcc63c49b2e3d7e53892705b08d3aa24f6013",
+            "outgoing_le_f32_sha256": "300a70ed5fe874d1e601dd282e6cfca35ce93e8238c0b40316f85644dc90cf70",
+            "differs_from_uncorrected": true,
+            "same_index_comparators": {
+              "raw": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              },
+              "tuned": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              }
+            }
+          },
+          "tuned_controls": 115,
+          "tuned_controls_different_from_raw": 115,
+          "all_actions_le_f32_sha256": "867701bc2a753b7494ac4f93db6c26f080941e6b4ffa4dd2a8fd3f9d7429b519"
+        },
+        "IIWA35": {
+          "success": 1,
+          "controls": 236,
+          "terminal": "success",
+          "calls": 48,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 115,
+          "prefix_le_f32_sha256": "b3d24491ee1a5e8aa515ad9e7cc6941757e0fb7daed63ae1a131efd8ac8bc07c",
+          "handback": {
+            "global_call": 23,
+            "first_native_control": 116,
+            "last_native_control": 120,
+            "public_sha256": "e2cb974b9b91dc87dedb39ee3ff03311cbbeab2a5c42a3dffc4f8f2f900bd514",
+            "inputs": {
+              "observation/image": "0b7f0982a9241c122b5a713d51d23980945f5db6e15a4fa1b380e5de6931882b",
+              "observation/wrist_image": "cfa1880567ec8e069467561f6635b5e462b391c511e4b8f21ec64e26784577e1",
+              "observation/state": "120346001cb975a0250f69a5261e55f9c5095cbd3c159508ac98af07b69e3001"
+            },
+            "inputs_changed_since_previous_query": [
+              "observation/image",
+              "observation/state",
+              "observation/wrist_image"
+            ],
+            "noise": "fc8dddbee1a7e85fb2187dc47015eaf981e7ca57d4a2ce543738be9230908e85",
+            "proposal": "8fa1b7cc4964476c4c25b9041f2b166123c76fa2a0aeaea2f84bc69347247894",
+            "outgoing_le_f32_sha256": "69f2746fd2dd3ee934408ed8c8de46fa142a527bab60b029fadb4e8f3adfefcd",
+            "differs_from_uncorrected": true,
+            "same_index_comparators": {
+              "raw": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              },
+              "tuned": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              }
+            }
+          },
+          "tuned_controls": 121,
+          "tuned_controls_different_from_raw": 121,
+          "all_actions_le_f32_sha256": "191d25c82f01e8735088c474defd0279ab80280d706b2730d2d1904e58b721e2"
+        }
+      }
+    },
+    "41": {
+      "seed": 42710341,
+      "release_row": "3f4fb4640e8bdfb5e3b08233e6988401931edafa546ff2ae70de729a0187ace3",
+      "scene": "7df2ec7847861468e912a23a22760d884b59b14092099296e67e8614aba8ca1f",
+      "physics": "53acd982444c553ef21ac3770d48cc84735b1ca979ee1c846a0bd2542fdfc3b9",
+      "post_settle_scene": "1a2e96a405e79a386261a03e00f97fa884725cb84872f279defe45e839ff9349",
+      "noise_bank": "8d0d79f8af8437e0e56ef168d9e6424806d472e76c8562914bdf8f6421cb3ac3",
+      "opening_proposal": "2999696ae02d28fc75a7d1a06c506a1e342fda50778f7fc8d93aef2b84582ab5",
+      "cpu_full_tape_same_physics": false,
+      "cpu_full_tape_same_post_settle": false,
+      "episodes": {
+        "raw": {
+          "success": 1,
+          "controls": 171,
+          "terminal": "success",
+          "calls": 35,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 0,
+          "prefix_le_f32_sha256": null,
+          "handback": null,
+          "tuned_controls": 0,
+          "tuned_controls_different_from_raw": 0,
+          "all_actions_le_f32_sha256": "7ab674edd76d3c4cd58c88718b6296462cdbf22035617d14d9c520a4214ec9a8"
+        },
+        "tuned": {
+          "success": 1,
+          "controls": 175,
+          "terminal": "success",
+          "calls": 35,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 0,
+          "prefix_le_f32_sha256": null,
+          "handback": null,
+          "tuned_controls": 175,
+          "tuned_controls_different_from_raw": 175,
+          "all_actions_le_f32_sha256": "7caab9e8743199ab548914ddd34d848ae30a758382755fb1830eb830f21ce08d"
+        },
+        "IIWA34": {
+          "success": 1,
+          "controls": 175,
+          "terminal": "success",
+          "calls": 35,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 105,
+          "prefix_le_f32_sha256": "a130bd9ed16bf71d01c9f0c0153b2f444a4d2476df4d574585b2df3f58b89242",
+          "handback": {
+            "global_call": 21,
+            "first_native_control": 106,
+            "last_native_control": 110,
+            "public_sha256": "4e030a9171edeaf4457762398f9a40060f487c665b2cafbcd2b1ee89fb9c12bb",
+            "inputs": {
+              "observation/image": "373822506f80ccb72bebb884ba91d19dacf3528f8f3b730c0a8f1b932010ed36",
+              "observation/wrist_image": "5fb8402a5c9febf06ebcde917cc3201b23aa0cf82fb758103eef8427d23feb36",
+              "observation/state": "799e699147a796a54b9098a9dd5b8d135cf4f4734b2a3760751d8deaa31388c3"
+            },
+            "inputs_changed_since_previous_query": [
+              "observation/image",
+              "observation/state",
+              "observation/wrist_image"
+            ],
+            "noise": "57a72ec52daec027111b7ad2adc0ff5a32257be49364b07be5c31041a7d128b1",
+            "proposal": "86ee4fc70720c65741f32c0cd969e5c503523a45dcdf12ebeca03d6bd55c4751",
+            "outgoing_le_f32_sha256": "0a18bab4e785647e2d8698da52805c758896bd90f34a9fd7c0d68095408a9620",
+            "differs_from_uncorrected": true,
+            "same_index_comparators": {
+              "raw": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              },
+              "tuned": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              }
+            }
+          },
+          "tuned_controls": 70,
+          "tuned_controls_different_from_raw": 70,
+          "all_actions_le_f32_sha256": "7f6cd7d3e23a8a3526d2777ffa83248dc1f1214d8b76a8dc009a50f1ddeebfd7"
+        },
+        "IIWA35": {
+          "success": 1,
+          "controls": 187,
+          "terminal": "success",
+          "calls": 38,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 115,
+          "prefix_le_f32_sha256": "b3d24491ee1a5e8aa515ad9e7cc6941757e0fb7daed63ae1a131efd8ac8bc07c",
+          "handback": {
+            "global_call": 23,
+            "first_native_control": 116,
+            "last_native_control": 120,
+            "public_sha256": "9a08d3f4cda20f8f05c94d650dd3195d80244739d1ec4be99cb146cebb5ca5b6",
+            "inputs": {
+              "observation/image": "a5dd56a516350e02d94099f8984de14839c3d563c285a024b7335f1de3c63a01",
+              "observation/wrist_image": "59c34841e3378f2edd79e53ab6ae74489c19ff80e3755cb799cf7cd7540336fc",
+              "observation/state": "313ff22b011bd598b210001ed997238fc29517e450df8f1aa4a1a158650fc61a"
+            },
+            "inputs_changed_since_previous_query": [
+              "observation/image",
+              "observation/state",
+              "observation/wrist_image"
+            ],
+            "noise": "81463b7f3730e990635d57df1aea0330d99fe24817f35b1422e300e6a4aafa20",
+            "proposal": "b7a905ab09f78a959e50ce6385c4d9512370fdc27e85a1539ff84dc35d091528",
+            "outgoing_le_f32_sha256": "c925b43800c893459774afbd5d2207d9b0a773fac17ae0fa7d9968acae386cb8",
+            "differs_from_uncorrected": true,
+            "same_index_comparators": {
+              "raw": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              },
+              "tuned": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              }
+            }
+          },
+          "tuned_controls": 72,
+          "tuned_controls_different_from_raw": 72,
+          "all_actions_le_f32_sha256": "fe1579ae70b1a816084acdabe5f2394eef93fe1b6479f0b0d09b1937b9b9a204"
+        }
+      }
+    },
+    "42": {
+      "seed": 42710342,
+      "release_row": "64d7d477b64e1f3a775ec95429309c63473e476a880dae36c1152cd8380aed4d",
+      "scene": "a3a3e5b64c0a99d2db37cd3b27c3824c8cdd067b6e98419f945e75106bd15534",
+      "physics": "40b962f0ec995167d87c5e7959845af5832647bd5efc76ff930152129a1a511c",
+      "post_settle_scene": "96a85dddd5de57bf75ddae10093d8c60364ce8e06e5fdebc9325ed842d4649cc",
+      "noise_bank": "a17e60063c8f90e24f261de0c43086fb4e7456050436994d56eddf9a6c44226a",
+      "opening_proposal": "2305c593b00186ce9676f570d0971639968777248ffacc50e3881c5867719c52",
+      "cpu_full_tape_same_physics": false,
+      "cpu_full_tape_same_post_settle": false,
+      "episodes": {
+        "raw": {
+          "success": 1,
+          "controls": 181,
+          "terminal": "success",
+          "calls": 37,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 0,
+          "prefix_le_f32_sha256": null,
+          "handback": null,
+          "tuned_controls": 0,
+          "tuned_controls_different_from_raw": 0,
+          "all_actions_le_f32_sha256": "92f3deb3a25ee4231f9aa75bd7ddbd585c13630f12c21540b096e873950567dc"
+        },
+        "tuned": {
+          "success": 1,
+          "controls": 169,
+          "terminal": "success",
+          "calls": 34,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 0,
+          "prefix_le_f32_sha256": null,
+          "handback": null,
+          "tuned_controls": 169,
+          "tuned_controls_different_from_raw": 169,
+          "all_actions_le_f32_sha256": "b97f4c00548070698939b04bebf6b886471b25cf753ec89137959c5b68500c14"
+        },
+        "IIWA34": {
+          "success": 1,
+          "controls": 179,
+          "terminal": "success",
+          "calls": 36,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 105,
+          "prefix_le_f32_sha256": "a130bd9ed16bf71d01c9f0c0153b2f444a4d2476df4d574585b2df3f58b89242",
+          "handback": {
+            "global_call": 21,
+            "first_native_control": 106,
+            "last_native_control": 110,
+            "public_sha256": "a1c2472417795779d8041621d8b9d7c15360c3b93f6674f29121906cc2c08a02",
+            "inputs": {
+              "observation/image": "1dfdbada12987fcc8f80e2605507572c84b99436b24de62a389af33bf1e7abb9",
+              "observation/wrist_image": "800c419eedf49a96e6d68db034936e8b63758915d0ba7d31dcec8d84f8d57610",
+              "observation/state": "4ce278f1b66cccaafcd2172c380d60297b07b5782cff97cde0dea9cb3237bcd6"
+            },
+            "inputs_changed_since_previous_query": [
+              "observation/image",
+              "observation/state",
+              "observation/wrist_image"
+            ],
+            "noise": "fcf1335800d6ec4ce0860e89e3e9ca8e80bf9998dd05b1e09931889d9636349d",
+            "proposal": "aa84a890158fa0524aff017942158290703bb4bb69c369a877c4459ed31cdb27",
+            "outgoing_le_f32_sha256": "d0dca2d3b41c8f6de843ca315bdbfb1ed58d072c6012e80fc45d7693fea135da",
+            "differs_from_uncorrected": true,
+            "same_index_comparators": {
+              "raw": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              },
+              "tuned": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              }
+            }
+          },
+          "tuned_controls": 74,
+          "tuned_controls_different_from_raw": 74,
+          "all_actions_le_f32_sha256": "a60e7afb3f4209872221a2948f2b480fbfaaa1e779e43c0a3425362f29433233"
+        },
+        "IIWA35": {
+          "success": 0,
+          "controls": 300,
+          "terminal": "horizon",
+          "calls": 60,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 115,
+          "prefix_le_f32_sha256": "b3d24491ee1a5e8aa515ad9e7cc6941757e0fb7daed63ae1a131efd8ac8bc07c",
+          "handback": {
+            "global_call": 23,
+            "first_native_control": 116,
+            "last_native_control": 120,
+            "public_sha256": "922b92cfb4119187b75b9c14cb57d589eb6cbddc968d9fb5628d3a9de4291f34",
+            "inputs": {
+              "observation/image": "8fb2f7dfbb310e55d37ae950a2a58f832fef2117e566b9acb19ec9dffbee082d",
+              "observation/wrist_image": "7b96f27671d41d535fb6f691d04f55367c8ad89af3e1910dafa14a147348b292",
+              "observation/state": "0842c711fcb3b034f6950ac6c01745c349935619b6b810d6a3309cfef43a9587"
+            },
+            "inputs_changed_since_previous_query": [
+              "observation/image",
+              "observation/state",
+              "observation/wrist_image"
+            ],
+            "noise": "3c4935b6b60b5065776af4df721ba587bb26dc1bdd5a6eeee42a93bfb686e3f3",
+            "proposal": "aee1d91ab27105e810d6117377eeaf79f5f4b3e2675a31912029857421464d57",
+            "outgoing_le_f32_sha256": "e8d2ad30c9bfbcad5d95d4817404e7b9fc948b34074ca111f06c2cd6a3a7d2e3",
+            "differs_from_uncorrected": true,
+            "same_index_comparators": {
+              "raw": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              },
+              "tuned": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              }
+            }
+          },
+          "tuned_controls": 185,
+          "tuned_controls_different_from_raw": 185,
+          "all_actions_le_f32_sha256": "c69a04f6d8e75c50aef2a7b8bf7bd288dc15316ff4454a767aded7d0f8f0ba0a"
+        }
+      }
+    },
+    "43": {
+      "seed": 42710343,
+      "release_row": "71c380d23b412c0fe2c6ad91d1c12092c38a25c5291d18a2da12c4b3d9f7e501",
+      "scene": "fd1d2694f15adabab27d6346a5bd514b076a31616c83f6f72cfbcef4d92d9b97",
+      "physics": "b0a99923164db47db7f97fa31c9c119a99d9a532f572304f3aa155323cb73504",
+      "post_settle_scene": "713445a2edd419b9b2aceb3d9c8eb80e7432d417df129fae23f7735621a7dc9d",
+      "noise_bank": "9fdc1d43a4ff42f61d84b3e558d6f18e5fbb5b8a318501959b2ce8565a9e5fe6",
+      "opening_proposal": "9af1bb6c65ede22998ca9252308bbc9083bad4629dc9ef1c91bc4781bdb647a3",
+      "cpu_full_tape_same_physics": false,
+      "cpu_full_tape_same_post_settle": false,
+      "episodes": {
+        "raw": {
+          "success": 0,
+          "controls": 300,
+          "terminal": "horizon",
+          "calls": 60,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 0,
+          "prefix_le_f32_sha256": null,
+          "handback": null,
+          "tuned_controls": 0,
+          "tuned_controls_different_from_raw": 0,
+          "all_actions_le_f32_sha256": "8a2c09e26f485143f7a1757dd27f92bd6255269d1a8b5b59923fb2b032ebc81d"
+        },
+        "tuned": {
+          "success": 0,
+          "controls": 300,
+          "terminal": "horizon",
+          "calls": 60,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 0,
+          "prefix_le_f32_sha256": null,
+          "handback": null,
+          "tuned_controls": 300,
+          "tuned_controls_different_from_raw": 300,
+          "all_actions_le_f32_sha256": "4d0a2726bef1b45b74fda68a9294ecb97c6f6b1b4485c20288c0f1a0b99ed241"
+        },
+        "IIWA34": {
+          "success": 1,
+          "controls": 169,
+          "terminal": "success",
+          "calls": 34,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 105,
+          "prefix_le_f32_sha256": "a130bd9ed16bf71d01c9f0c0153b2f444a4d2476df4d574585b2df3f58b89242",
+          "handback": {
+            "global_call": 21,
+            "first_native_control": 106,
+            "last_native_control": 110,
+            "public_sha256": "1f6e060581ad22dc5df359e70671433f0ade0181f7b7c51b8fb0e81993af7cfe",
+            "inputs": {
+              "observation/image": "252129dbe4f82f024243f40b969b2a028c58de6533709fcd96ed00866b655f87",
+              "observation/wrist_image": "b49cbd17f1f2f8a5557927150f05654c13445d0a783c14279e83e2038971d122",
+              "observation/state": "6c5f5c50bb1f3dd4417334afd3a97f5b9334e98ae14be38ff0f98902e28823d5"
+            },
+            "inputs_changed_since_previous_query": [
+              "observation/image",
+              "observation/state",
+              "observation/wrist_image"
+            ],
+            "noise": "24e260e2e2b4717d51e42ab77d25145f2fb617aad19311ce3a70682bdce08198",
+            "proposal": "01d4e239da0daee02617b980c0091c4c9ce8787daedad08b94b9b9cb939a4a17",
+            "outgoing_le_f32_sha256": "5575a71d4ed5e8870e0d00a71983ebdbc957251912164910da5470c2b2cf4737",
+            "differs_from_uncorrected": true,
+            "same_index_comparators": {
+              "raw": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              },
+              "tuned": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              }
+            }
+          },
+          "tuned_controls": 64,
+          "tuned_controls_different_from_raw": 64,
+          "all_actions_le_f32_sha256": "2920c9499150990f108c7d1db1dc847bae381071aad8139421f85fea57de07a1"
+        },
+        "IIWA35": {
+          "success": 1,
+          "controls": 197,
+          "terminal": "success",
+          "calls": 40,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 115,
+          "prefix_le_f32_sha256": "b3d24491ee1a5e8aa515ad9e7cc6941757e0fb7daed63ae1a131efd8ac8bc07c",
+          "handback": {
+            "global_call": 23,
+            "first_native_control": 116,
+            "last_native_control": 120,
+            "public_sha256": "264391e1642e49f8963780881e3de311fea5cc295dc5be1d25183da2342927fc",
+            "inputs": {
+              "observation/image": "0db5961b0949e48acaa31252aba925e279eca675237e5fd73e97cc9f2bac74a6",
+              "observation/wrist_image": "168f5df142a01044f49deb03aa4c3b1c7c3ea0068c3bc4af7edadc8b44b5b896",
+              "observation/state": "b83b4668ffc4929e779e386ca96f7fc405c0616a36dc93ad23eef1697fda4fd0"
+            },
+            "inputs_changed_since_previous_query": [
+              "observation/image",
+              "observation/state",
+              "observation/wrist_image"
+            ],
+            "noise": "8de0eb2407e47afe9c3d0a95ed9bf077046cb6aa4c72fcbd70849944d0dab668",
+            "proposal": "84041e780689127ed2b3da180e635ec8446b1ea980965df0e472ce922862e66a",
+            "outgoing_le_f32_sha256": "78623d89e950276f6547c415d00404e39b61a29c34f63e74bc04e8df70b564b6",
+            "differs_from_uncorrected": true,
+            "same_index_comparators": {
+              "raw": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              },
+              "tuned": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              }
+            }
+          },
+          "tuned_controls": 82,
+          "tuned_controls_different_from_raw": 82,
+          "all_actions_le_f32_sha256": "0ddba7fe748177f5a45e9e8fe3ee746ef89fd3a0400c96315426b217f2c8949d"
+        }
+      }
+    },
+    "44": {
+      "seed": 42710344,
+      "release_row": "75e3f668d58992e49b7a039d76ec3653feadd5a273eec12d83e3ef628989c048",
+      "scene": "e61a186c69dcde6043f7e4480756e8b71bac21f3107002b0e61be508fc5ada66",
+      "physics": "13fe8c732011b0c8242ce799bcd40d77bf60f877945e35191c25c366d514e1d1",
+      "post_settle_scene": "02b89698f06f2264942657505289effbb87dac2c9c68b38d0521c1e1e082c668",
+      "noise_bank": "9aad1e56155b29762b4488ea5f721f2d4bf2f294a663989a26885bf5e3e52505",
+      "opening_proposal": "b799d2478f79d44ff57c5bf8df45c8203c488b655a6fd4928e33e5028390fc94",
+      "cpu_full_tape_same_physics": false,
+      "cpu_full_tape_same_post_settle": false,
+      "episodes": {
+        "raw": {
+          "success": 0,
+          "controls": 300,
+          "terminal": "horizon",
+          "calls": 60,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 0,
+          "prefix_le_f32_sha256": null,
+          "handback": null,
+          "tuned_controls": 0,
+          "tuned_controls_different_from_raw": 0,
+          "all_actions_le_f32_sha256": "9ff517539e6a07bc2d73b2799693eb08282e87d5d0d6597acd25c9e5539266b2"
+        },
+        "tuned": {
+          "success": 0,
+          "controls": 300,
+          "terminal": "horizon",
+          "calls": 60,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 0,
+          "prefix_le_f32_sha256": null,
+          "handback": null,
+          "tuned_controls": 300,
+          "tuned_controls_different_from_raw": 300,
+          "all_actions_le_f32_sha256": "4fb1a9a2528be7cfeeb0708be7ca29048ba28bd63dad1d5aaec895bef9390968"
+        },
+        "IIWA34": {
+          "success": 0,
+          "controls": 300,
+          "terminal": "horizon",
+          "calls": 60,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 105,
+          "prefix_le_f32_sha256": "a130bd9ed16bf71d01c9f0c0153b2f444a4d2476df4d574585b2df3f58b89242",
+          "handback": {
+            "global_call": 21,
+            "first_native_control": 106,
+            "last_native_control": 110,
+            "public_sha256": "71d01c8523e94a35d570d2298754c5156285d8680225b5c9b2ab31644ec1381c",
+            "inputs": {
+              "observation/image": "f652bb73d8a1983aa18c532fc428c7a14a550d1302be272145dd45a9c7903f05",
+              "observation/wrist_image": "09740adddd79f9fd87f923942954a84d99ce1afab983396d498e0dc256075d93",
+              "observation/state": "4bc6052d86c9e8862d941011c49e382b5b4121e5039f30dec67bcb5ffbdcc7b4"
+            },
+            "inputs_changed_since_previous_query": [
+              "observation/image",
+              "observation/state",
+              "observation/wrist_image"
+            ],
+            "noise": "e71e50296516a9fd71af96f57e5cff927ef7a55dfe0952550999ff8cb9da47a8",
+            "proposal": "e6c9d3cd94f36c1b821159edc5dc33bcf0b7c21ac9e31eb4864068768f456bec",
+            "outgoing_le_f32_sha256": "0191045c8e18f32a6892779e8d80c109c7de6f4dce1371f0bdf82b64a84c0adb",
+            "differs_from_uncorrected": true,
+            "same_index_comparators": {
+              "raw": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              },
+              "tuned": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              }
+            }
+          },
+          "tuned_controls": 195,
+          "tuned_controls_different_from_raw": 195,
+          "all_actions_le_f32_sha256": "a61514f316590472e5683e87af206ef9f861ba31aba918b71a8bff4ea4ed031e"
+        },
+        "IIWA35": {
+          "success": 0,
+          "controls": 300,
+          "terminal": "horizon",
+          "calls": 60,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 115,
+          "prefix_le_f32_sha256": "b3d24491ee1a5e8aa515ad9e7cc6941757e0fb7daed63ae1a131efd8ac8bc07c",
+          "handback": {
+            "global_call": 23,
+            "first_native_control": 116,
+            "last_native_control": 120,
+            "public_sha256": "1c5a4c077a88a307cf7af6cc41b0c3bedbb5858220c8c4b6c13d5079a2439945",
+            "inputs": {
+              "observation/image": "21684579fd06f65c96edd445fd82cc31c8a055067aa0bdef364502d7d047e6da",
+              "observation/wrist_image": "351a9a9f53dc20995d5b44624787613f4070f72fb3465228017a0500ed916f00",
+              "observation/state": "28450b4221b7785ca79d0150c4ceb67de8ddc48dd83c7a3ac4f53c3373eaa528"
+            },
+            "inputs_changed_since_previous_query": [
+              "observation/image",
+              "observation/state",
+              "observation/wrist_image"
+            ],
+            "noise": "3afa7f5afa7aad3e4eb6154b6854174058954d2d4e39f23ecb2de5c541134892",
+            "proposal": "75c67009865dff35e9bf64c07bce787c25ddfa4359cb4d77e1079b0c62519d61",
+            "outgoing_le_f32_sha256": "222a8461f3b51afb11dfb7468d5ea508dd2a5f49db7a03c925a66373d18af935",
+            "differs_from_uncorrected": true,
+            "same_index_comparators": {
+              "raw": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              },
+              "tuned": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              }
+            }
+          },
+          "tuned_controls": 185,
+          "tuned_controls_different_from_raw": 185,
+          "all_actions_le_f32_sha256": "cdbbd2c7c2f8e2ee5e9e68c3241bdd28340d83352e962f057b46692c1c1d72c3"
+        }
+      }
+    },
+    "45": {
+      "seed": 42710345,
+      "release_row": "921e72e554380d5d47ff092b02275e2614a3e05a227d845d5b3c7fb5449aa46b",
+      "scene": "97c9fad41eb34bee412d07e680185c3e1c9d95492fc0e6d0dfa517fc1b3396ee",
+      "physics": "297a4336dcf9578b4a69aa3d23d0569811f4c55de6c1762cd6d29ff8d2dfc595",
+      "post_settle_scene": "985dc0d4cd4cd9067145828e76cf89c64ed1e877286a544266d888b66e8a817c",
+      "noise_bank": "374381736ca2112aa5a8e6605101577426e54a6a31d4ac61df075aeaedb7d2ff",
+      "opening_proposal": "b47ad83278d713f3020f84bfb4e39dd7f3fd7845cb78bfaa68fccbf9914dbfa2",
+      "cpu_full_tape_same_physics": false,
+      "cpu_full_tape_same_post_settle": false,
+      "episodes": {
+        "raw": {
+          "success": 0,
+          "controls": 300,
+          "terminal": "horizon",
+          "calls": 60,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 0,
+          "prefix_le_f32_sha256": null,
+          "handback": null,
+          "tuned_controls": 0,
+          "tuned_controls_different_from_raw": 0,
+          "all_actions_le_f32_sha256": "76c76ad1e31d14ac03361d3e37bd7c88c05c2fa1403834315bf20f53dfdc5881"
+        },
+        "tuned": {
+          "success": 0,
+          "controls": 300,
+          "terminal": "horizon",
+          "calls": 60,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 0,
+          "prefix_le_f32_sha256": null,
+          "handback": null,
+          "tuned_controls": 300,
+          "tuned_controls_different_from_raw": 300,
+          "all_actions_le_f32_sha256": "5f5d4e82c5ab75dcf063ba7e48da89c52bd6e1efbba4fe55e4327b05a7d1f02c"
+        },
+        "IIWA34": {
+          "success": 1,
+          "controls": 218,
+          "terminal": "success",
+          "calls": 44,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 105,
+          "prefix_le_f32_sha256": "a130bd9ed16bf71d01c9f0c0153b2f444a4d2476df4d574585b2df3f58b89242",
+          "handback": {
+            "global_call": 21,
+            "first_native_control": 106,
+            "last_native_control": 110,
+            "public_sha256": "6fab05cb1f81056705237e3eb6ccfdcd437cdef0463ffe32e9aca6c7b5242e1f",
+            "inputs": {
+              "observation/image": "1f2bac7e3f9b40d63547f9403150c7f3141376c70d005a5a3ca756e74dc8f2c9",
+              "observation/wrist_image": "70f2b79a90d1ef9bfae379b54d4567eb9c2151d61e59ecd361126061b3a0c140",
+              "observation/state": "76b1085db11f99cfb55ad987d6ecfe137b61454a70a107e5a83308a71edb20a8"
+            },
+            "inputs_changed_since_previous_query": [
+              "observation/image",
+              "observation/state",
+              "observation/wrist_image"
+            ],
+            "noise": "f81b98557f7736a13dbb86fed1fcfa295b8d62773ab4853b8b398810dd833c6c",
+            "proposal": "3ee1401029a64b0a99572f51bb334d850a6ae5e6a70ed3e06da77608bea10cad",
+            "outgoing_le_f32_sha256": "8f6f646f7ff77ba08ad5e93c0dfe57eba06bb0f2cee8fedd82814dc5a24e07e4",
+            "differs_from_uncorrected": true,
+            "same_index_comparators": {
+              "raw": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              },
+              "tuned": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              }
+            }
+          },
+          "tuned_controls": 113,
+          "tuned_controls_different_from_raw": 113,
+          "all_actions_le_f32_sha256": "efd9a9378553275f4e2897878a7fc62310e2724b76918f97eac4890830ede827"
+        },
+        "IIWA35": {
+          "success": 1,
+          "controls": 194,
+          "terminal": "success",
+          "calls": 39,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 115,
+          "prefix_le_f32_sha256": "b3d24491ee1a5e8aa515ad9e7cc6941757e0fb7daed63ae1a131efd8ac8bc07c",
+          "handback": {
+            "global_call": 23,
+            "first_native_control": 116,
+            "last_native_control": 120,
+            "public_sha256": "b5e69739d841d95b22136ecf7633cb186d6e95fbb417d4b6be976e71ef8aaab6",
+            "inputs": {
+              "observation/image": "d463c5ca4bdaeea1bf38811051afa29731c537440f47946a7cf8247fb4314f99",
+              "observation/wrist_image": "1be7873624fdcd658d91c623d5e363e93f12df547831ad8083ac0d967124f141",
+              "observation/state": "7518db0da4b38787552aeaa93f926d47abc0c7dbad6d93db3d3638b3d1cf158f"
+            },
+            "inputs_changed_since_previous_query": [
+              "observation/image",
+              "observation/state",
+              "observation/wrist_image"
+            ],
+            "noise": "544233873a4a209590bc0795a402a806823b65b53309291b1b0f665888188b6f",
+            "proposal": "4b49da5050f4babb0622ee83ba27fcea58709a269ad6ff0c53afef0b810c6215",
+            "outgoing_le_f32_sha256": "8ec57c06eaff91a954730ca86d944123981147e38b0d0e3365162aafd021959f",
+            "differs_from_uncorrected": true,
+            "same_index_comparators": {
+              "raw": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              },
+              "tuned": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              }
+            }
+          },
+          "tuned_controls": 79,
+          "tuned_controls_different_from_raw": 79,
+          "all_actions_le_f32_sha256": "dd0351326eafd9779cce5ed2b5c6ac9aea71a963849eba406f336ac7b101297c"
+        }
+      }
+    },
+    "46": {
+      "seed": 42710346,
+      "release_row": "f2733f57ba35218560fd079f81edfafffaf158788b244d03cb698224420c0720",
+      "scene": "5c0ff56e292c4590bedb5fe1b29779623f9e7bff933691f21a1e85d15f50b200",
+      "physics": "7bc1162dba19f131aa3bb509ed0875f364aa18993a97055cbde94bfe1f12bf87",
+      "post_settle_scene": "8e1ba438f6ec5a00e1ee666b4174dc041d6ffa791d47391cd4276f07b8f61870",
+      "noise_bank": "00ab1d3eaca21be36fd7338ff5874301f5452d5ca0dabe97149b90db4bf4e612",
+      "opening_proposal": "b8b65bf998a9f222f49ab9c74ccb43755e6fbdc1a3f966e384a9b508f886e5ef",
+      "cpu_full_tape_same_physics": false,
+      "cpu_full_tape_same_post_settle": false,
+      "episodes": {
+        "raw": {
+          "success": 1,
+          "controls": 200,
+          "terminal": "success",
+          "calls": 40,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 0,
+          "prefix_le_f32_sha256": null,
+          "handback": null,
+          "tuned_controls": 0,
+          "tuned_controls_different_from_raw": 0,
+          "all_actions_le_f32_sha256": "d3fd55196a6439dd063a1882c0ea879ad1623ec237f557a6843f11b1a562778d"
+        },
+        "tuned": {
+          "success": 0,
+          "controls": 300,
+          "terminal": "horizon",
+          "calls": 60,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 0,
+          "prefix_le_f32_sha256": null,
+          "handback": null,
+          "tuned_controls": 300,
+          "tuned_controls_different_from_raw": 300,
+          "all_actions_le_f32_sha256": "28d4814889583aac823cdbb5a5529c162f1901c266be6ef98de234237a26e31c"
+        },
+        "IIWA34": {
+          "success": 1,
+          "controls": 176,
+          "terminal": "success",
+          "calls": 36,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 105,
+          "prefix_le_f32_sha256": "a130bd9ed16bf71d01c9f0c0153b2f444a4d2476df4d574585b2df3f58b89242",
+          "handback": {
+            "global_call": 21,
+            "first_native_control": 106,
+            "last_native_control": 110,
+            "public_sha256": "3d089995b76a84b42ae990c4656842f34ef625dc7d54b63095673aed0da0b703",
+            "inputs": {
+              "observation/image": "742d9afd48f2f6bef38c171e4849b164e858896044287b81f021538fde0586d5",
+              "observation/wrist_image": "38616058537a727cb873b23b76f456e8c46f2d0f9f37d6b0722ea50f5f4f31c3",
+              "observation/state": "b8bd1ee2afbf788ac0bd120c7b417416ea55bedb42db5b43df0eab3bfb5a9f23"
+            },
+            "inputs_changed_since_previous_query": [
+              "observation/image",
+              "observation/state",
+              "observation/wrist_image"
+            ],
+            "noise": "92ec00aaa56c8715f1d92b381502e8de7b326897aed9c414705ce4b99844f220",
+            "proposal": "01fee44325f7e93862907592811f2fc1fadf508c57fe71301f4d5c25b850c401",
+            "outgoing_le_f32_sha256": "739cf5ad743122c5a2ca04495ea8dac39c74bef7a7d341db5d0eec62fd523ea0",
+            "differs_from_uncorrected": true,
+            "same_index_comparators": {
+              "raw": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              },
+              "tuned": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              }
+            }
+          },
+          "tuned_controls": 71,
+          "tuned_controls_different_from_raw": 71,
+          "all_actions_le_f32_sha256": "2e1f4d68d6e8aad50ae913f242b2bd0907cbeca0a7244c7a3e7304c7324b7abf"
+        },
+        "IIWA35": {
+          "success": 1,
+          "controls": 196,
+          "terminal": "success",
+          "calls": 40,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 115,
+          "prefix_le_f32_sha256": "b3d24491ee1a5e8aa515ad9e7cc6941757e0fb7daed63ae1a131efd8ac8bc07c",
+          "handback": {
+            "global_call": 23,
+            "first_native_control": 116,
+            "last_native_control": 120,
+            "public_sha256": "1b3911e66ec21514228e929e561412b5bf6ca7ce8d3ef4e0845c4d4e635eb4e2",
+            "inputs": {
+              "observation/image": "3ab0ff78b0752beec8c5045f1447bc2f85398f227a10674d91e6a0a92102563e",
+              "observation/wrist_image": "ff39d2df5ae5c92aa4d94e4ac808ac0ce9d501c85f09668ec444de201979ad00",
+              "observation/state": "b967927760799ccf725574dde96a33f039b7c50561a7e397aff1fd5aad9a2606"
+            },
+            "inputs_changed_since_previous_query": [
+              "observation/image",
+              "observation/state",
+              "observation/wrist_image"
+            ],
+            "noise": "c0e45f90516216f9e74f739c4980a6de99aff8a01185f2b33dbe103f9135891d",
+            "proposal": "5b6ff82e056b9520124215a56a6a78d5db22ac453e1accdd9578b651d7cb33a4",
+            "outgoing_le_f32_sha256": "eae13836e8ab6a24c095171edd0d803ed58884193ea8e7b59e334d87ebed8829",
+            "differs_from_uncorrected": true,
+            "same_index_comparators": {
+              "raw": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              },
+              "tuned": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              }
+            }
+          },
+          "tuned_controls": 81,
+          "tuned_controls_different_from_raw": 81,
+          "all_actions_le_f32_sha256": "8f7a047bc9662b589a65eae5d60dc8f590e855212e7f03fad5ff3de30ea87d12"
+        }
+      }
+    },
+    "47": {
+      "seed": 42710347,
+      "release_row": "b74398b355e2f1222fc9a8a35a5853735c36a759a311cf395ac853fd951c29b8",
+      "scene": "5b9733fef2b23f1c28b502242531a82e959e93be07fe15e4d47e9c563a46bdcc",
+      "physics": "7a619c9fcfdbbc00bb2508d2e2173c13737c6d3b8556474ccfd58f06092690ba",
+      "post_settle_scene": "cae056d18bd0e789b168290bfe9af0c3ab772ceea1ffb19ddf6a5d5bbf37dd0e",
+      "noise_bank": "2ff0abaeb3b28751448f686a917298d1400a6857a1f740a999a62ed5119847c3",
+      "opening_proposal": "74bd88d89ace1f1d03de760178112eb2024a9e917c3ea2f900a30a303075b0da",
+      "cpu_full_tape_same_physics": false,
+      "cpu_full_tape_same_post_settle": false,
+      "episodes": {
+        "raw": {
+          "success": 0,
+          "controls": 300,
+          "terminal": "horizon",
+          "calls": 60,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 0,
+          "prefix_le_f32_sha256": null,
+          "handback": null,
+          "tuned_controls": 0,
+          "tuned_controls_different_from_raw": 0,
+          "all_actions_le_f32_sha256": "8973a9f8f917a3d95e058de48aee0b146db3ff1c101c16eb07263687dba1d681"
+        },
+        "tuned": {
+          "success": 0,
+          "controls": 300,
+          "terminal": "horizon",
+          "calls": 60,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 0,
+          "prefix_le_f32_sha256": null,
+          "handback": null,
+          "tuned_controls": 300,
+          "tuned_controls_different_from_raw": 300,
+          "all_actions_le_f32_sha256": "f29255f8e46f0d0685841f0cd61615920692b74e27c310f2767ba20535139b32"
+        },
+        "IIWA34": {
+          "success": 0,
+          "controls": 300,
+          "terminal": "horizon",
+          "calls": 60,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 105,
+          "prefix_le_f32_sha256": "a130bd9ed16bf71d01c9f0c0153b2f444a4d2476df4d574585b2df3f58b89242",
+          "handback": {
+            "global_call": 21,
+            "first_native_control": 106,
+            "last_native_control": 110,
+            "public_sha256": "670ebcd4a5c62e0ae48d72b42ac0c45c57d3f3e8e15dc8748c42ed2bd7bbfd06",
+            "inputs": {
+              "observation/image": "0ae8363d6f4452f7a5a5df2693af3e5f0267554fc5e2ef06d0650e96df90bbf2",
+              "observation/wrist_image": "1137c6d8b540909ee5b3b426c7dd7d408e1c3094bbfa92ef40660c30ce7aefd6",
+              "observation/state": "7011d84c103061a3e5f99814ba555f2a91f3aa44202af38e035644977e93ba0f"
+            },
+            "inputs_changed_since_previous_query": [
+              "observation/image",
+              "observation/state",
+              "observation/wrist_image"
+            ],
+            "noise": "bfd1a81735e1fde7ba0e7b49f957aee81e4ffb22eeaa8abf752039bac370606f",
+            "proposal": "325734c07c895bc2c06f65f5374bcb3eec5f4fc157bbe104d101c7a0db0a0dfe",
+            "outgoing_le_f32_sha256": "4eaa371a198a4ac743014962491036f6e6d7eb859b3838620eab94966f7d1bec",
+            "differs_from_uncorrected": true,
+            "same_index_comparators": {
+              "raw": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              },
+              "tuned": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              }
+            }
+          },
+          "tuned_controls": 195,
+          "tuned_controls_different_from_raw": 195,
+          "all_actions_le_f32_sha256": "affa9dfd164049bc8f27becf210de3b8b091bdae987ae7e155f73a4c412af608"
+        },
+        "IIWA35": {
+          "success": 1,
+          "controls": 196,
+          "terminal": "success",
+          "calls": 40,
+          "reset_attempt": 1,
+          "donor_prefix_controls": 115,
+          "prefix_le_f32_sha256": "b3d24491ee1a5e8aa515ad9e7cc6941757e0fb7daed63ae1a131efd8ac8bc07c",
+          "handback": {
+            "global_call": 23,
+            "first_native_control": 116,
+            "last_native_control": 120,
+            "public_sha256": "8824e8072e5fb5adad446f32e7611d5cb25ee622b2eb4ba18e4f8dacada3de4f",
+            "inputs": {
+              "observation/image": "e15db66491e6b0c730174ed956197838305304b35784dd2934ffd70353191e2a",
+              "observation/wrist_image": "4fb3cd01ab1283a8b53eb72df31737b69654fd570fecd68e47ac6aac0d3657ac",
+              "observation/state": "20d8daf7de57e9fe99a82fab700081d641f5c4db2419a33a713e28751d890784"
+            },
+            "inputs_changed_since_previous_query": [
+              "observation/image",
+              "observation/state",
+              "observation/wrist_image"
+            ],
+            "noise": "08653215195d83d5c9c13a10cbe2bcf7dcadac6e80e8b5da5c5ce2fe3aa36812",
+            "proposal": "14080bb2a3b0e324a16fabcf9126d75c030778e9865d7ebb41e19c480e617b26",
+            "outgoing_le_f32_sha256": "00a91e4d3ee04d74f836eb006043a816add911040dc660de0fdc14ed8a959e5c",
+            "differs_from_uncorrected": true,
+            "same_index_comparators": {
+              "raw": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              },
+              "tuned": {
+                "noise_equal": true,
+                "inputs_equal": false,
+                "proposal_equal": false
+              }
+            }
+          },
+          "tuned_controls": 81,
+          "tuned_controls_different_from_raw": 81,
+          "all_actions_le_f32_sha256": "2666d2ea218cac1bad96efafa793496da937ff7f5dd510b3d7fb1530a84b8ea9"
+        }
+      }
+    }
+  },
+  "successes": {
+    "raw": 3,
+    "tuned": 2,
+    "IIWA34": 6,
+    "IIWA35": 6
+  },
+  "contrasts": {
+    "IIWA34-tuned": {
+      "rescues": [
+        40,
+        43,
+        45,
+        46
+      ],
+      "losses": [],
+      "ties": 4,
+      "effect_pp": 50.0,
+      "paired_layout_bootstrap_95_pp": [
+        12.5,
+        87.5
+      ]
+    },
+    "IIWA34-raw": {
+      "rescues": [
+        40,
+        43,
+        45
+      ],
+      "losses": [],
+      "ties": 5,
+      "effect_pp": 37.5,
+      "paired_layout_bootstrap_95_pp": [
+        12.5,
+        75.0
+      ]
+    },
+    "IIWA35-tuned": {
+      "rescues": [
+        40,
+        43,
+        45,
+        46,
+        47
+      ],
+      "losses": [
+        42
+      ],
+      "ties": 2,
+      "effect_pp": 50.0,
+      "paired_layout_bootstrap_95_pp": [
+        0.0,
+        87.5
+      ]
+    },
+    "IIWA35-raw": {
+      "rescues": [
+        40,
+        43,
+        45,
+        47
+      ],
+      "losses": [
+        42
+      ],
+      "ties": 3,
+      "effect_pp": 37.5,
+      "paired_layout_bootstrap_95_pp": [
+        -12.5,
+        87.5
+      ]
+    },
+    "tuned-raw": {
+      "rescues": [],
+      "losses": [
+        46
+      ],
+      "ties": 7,
+      "effect_pp": -12.5,
+      "paired_layout_bootstrap_95_pp": [
+        -37.5,
+        0.0
+      ]
+    }
+  },
+  "bootstrap_ordered_layout_draws": 16777216,
+  "transform_arithmetic_matching_every_tuned_control": [
+    "two_float32_products"
+  ],
+  "registered_support": {
+    "panel": "gpu06kinova3",
+    "index": 24,
+    "reader_seed": 41,
+    "suite": "libero_goal",
+    "task_id": 3,
+    "shift": "fam_nom",
+    "layout": 11,
+    "seed": 31810311,
+    "controls": 15,
+    "tape_sha256": "fce9f2729432a049709fb6b191b345ae38572ee6364000ac383a59b3411522d8",
+    "physics": "7d2ec8b3e64ab88c6a3523750d4606fb40f76ca2f88a461403a418d9220c0d41",
+    "predictions_sha256": "c8420c2cb7d0cb38e6f0d73b3a20ce47997dbef7657b652d45eaaa8988eb6c0b",
+    "tuned": {
+      "yaw_deg": 4.283361434936523,
+      "xy_scale": 0.9206030368804932,
+      "gripper_sign": 1
+    }
+  },
+  "donor_reference": {
+    "IIWA34": {
+      "member_sha256": "a610024dc57b1f8783d3dfe000454414db48b1915f858f3759abb9d700b754c9",
+      "source_controls": 171,
+      "initial_grip": -0.9999895691871643,
+      "previous_grip": -1.0,
+      "first_positive_grip": 0.992273211479187,
+      "first_positive_index": 106,
+      "cut": 105,
+      "global_call": 21,
+      "prefix_le_f32_sha256": "a130bd9ed16bf71d01c9f0c0153b2f444a4d2476df4d574585b2df3f58b89242",
+      "full_le_f32_sha256": "4325b4027d737cffccfc2a235cec3ba58163e5521e448982d2f553b9c0bcdaea"
+    },
+    "IIWA35": {
+      "member_sha256": "c5d8b4ba1a858b1f1c2b245cb1ec447d09439580ff3a1a404724042d4fe37d34",
+      "source_controls": 184,
+      "initial_grip": -1.0,
+      "previous_grip": -1.0,
+      "first_positive_grip": 0.9937626719474792,
+      "first_positive_index": 119,
+      "cut": 115,
+      "global_call": 23,
+      "prefix_le_f32_sha256": "b3d24491ee1a5e8aa515ad9e7cc6941757e0fb7daed63ae1a131efd8ac8bc07c",
+      "full_le_f32_sha256": "9fa77ce1c534e84c328cc867b338cc3e30b20a8fe4ee864a7ef9e359eba8a21f"
+    }
+  },
+  "donor_archives_sha256": {
+    "frozen-transfer-cue-20261124-r1/evidence/native01/native-tapes.tar.gz": "637383c46eabaf3f8aaf776a9534e84aef152a277ab3ca9ac191c5a68c94fd5c",
+    "frozen-transfer-donor-20261124-r1/inputs/raw-tapes.tar.gz": "5b8b787f7715a5c5ba5eb3a1f16a25d4463222589ca99cac1fd17901d37ee750"
+  },
+  "episode_and_receipt_sha256": {
+    "exit.txt": "243184ee42b61dc2125dd738390fca121e14411d065d59c41739d6317daa45e7",
+    "origin.json": "efcd83a080e53c9674f43d053946ba887c7f65f1521a5bd356d08c9286d58aee",
+    "result.json": "e2c02c9597f79c7dc012fe08c4fcbd020e4665ed788eeebe9b5d0266e94fcf7b",
+    "launch.txt": "f14885c3fa77c80640b04d14ea885dff6b288b16569b2426b2bb769dbb9eaeb8",
+    "gpu.json": "37d5e7dc63168be7b882f9fb317d92a23cd64fa6904130d3fedca6c039827797",
+    "episodes/40-raw.json": "21c32201b71d037af59465459b01a34031386e7636b9da501e01fdbd801896d5",
+    "episodes/40-tuned.json": "00691bb322cd2dac1178918b3cd9adeea38179d2fd1fd3b826ae32bf7492465d",
+    "episodes/40-IIWA34.json": "99e4853548dd47536b5df8c784233723b105c8606208d2b8e38ee6ab5a28d9fa",
+    "episodes/40-IIWA35.json": "1f7841cf114ce7a0f66817885b6530a169d0a2822d94b89b12db6b3b2b79b209",
+    "episodes/41-raw.json": "983930b1a51ddd96196ff73fcaa4717d4029afa260583647f266b5d3376596cc",
+    "episodes/41-tuned.json": "633e5f5f7f639decfd3e53bb3740090943e7088b680748a4ba5972c78c7fa1e0",
+    "episodes/41-IIWA34.json": "5f3d8e8a1b19e257936d135efd034309e031411e83eabff72d6e5a800dafbcb4",
+    "episodes/41-IIWA35.json": "d8769d87129d470f7f023452110934c1108231ddb224df89c9dd3fb1ca5218fe",
+    "episodes/42-raw.json": "ba2ae02757ab46f4ad118778665691698dac107ff7aa23c05f3b9769479e5763",
+    "episodes/42-tuned.json": "db43c4ef5848ddb0253d3af60cc8cb5c2ed4a09f902a7abb695782b5a49ee37a",
+    "episodes/42-IIWA34.json": "30ebaa045d66d9d9387555fde82e34d8d77e2dde60e688fb0bbb89791e539892",
+    "episodes/42-IIWA35.json": "2f017547555ea070ae33e2475d315da066fbadf696bf837960407e16a34090f2",
+    "episodes/43-raw.json": "3d5d44ce0de120dae2315b6c5d4c94e322821bb4f081108da6c50268bd12ea63",
+    "episodes/43-tuned.json": "521ae7c5fc3a1c1f4b0c062721c7ca2781badf62c11ac14d9f185008b4f75c68",
+    "episodes/43-IIWA34.json": "9062aa642f475e3574f818b4d6657d1f691fb990e721f783eb0ba85eeadbe7fc",
+    "episodes/43-IIWA35.json": "f0216e6fa559d8c010d32ffc1b795badaeb1ec9edf27b5775ae9020a1f7c3483",
+    "episodes/44-raw.json": "daeac553aee8f48c898cfba5551a9bf829a9d4a78ca497291e2fd37c74595286",
+    "episodes/44-tuned.json": "2324665bb0112ddd9de7a542c28b18d2b1f47a65ef5df74a02dd67c7ea9f00f2",
+    "episodes/44-IIWA34.json": "78bb532c40cc8cfaba9d906e30b493fd71bb891a8e2d2fabb54a73a1daca618b",
+    "episodes/44-IIWA35.json": "6b3e72c24407d1bb8567124f5f1ddf230d90bec6c82b3858e1d49641534c69bc",
+    "episodes/45-raw.json": "38c862ef6b6699a95bf6d31222574a72b4911f1a696e33d379c50e893059d176",
+    "episodes/45-tuned.json": "d3dd6cabbd07b20b05507076aea0b6a906765945c53f684231f1d1e3d117dd9a",
+    "episodes/45-IIWA34.json": "72ceb738ae097fde08ae65d435ba73b6965f60ac19a023c0e7dca0fee67d4b0a",
+    "episodes/45-IIWA35.json": "74bce6dc1c9a172622493f15e9cf0946c4ce6c0513aa5be81209b993406c8f77",
+    "episodes/46-raw.json": "eb8c7a6ecdc808e535419b6300eb179d4cac7df180e3d080d05eedacb1ad5917",
+    "episodes/46-tuned.json": "3ef5cc90cb09f278a42c67216dce999042ed49af13f15cf898f6e897fe79753b",
+    "episodes/46-IIWA34.json": "a84aff52337d7c4859307c0ea106d720a2658adaf05b306e7aa228b4da64922c",
+    "episodes/46-IIWA35.json": "9e1288e81a872fbefcc407216313d2b8c3b79c1ac8e13e9d8a480c06ee411255",
+    "episodes/47-raw.json": "ac1c56be51941692b4860843b7a0e1355583097c348c627d48b2f53e2b0addbf",
+    "episodes/47-tuned.json": "44aa53c44d56954fa3d60590c7ccf70a48b4e594cf3016f906fbef8dcd465b0c",
+    "episodes/47-IIWA34.json": "8505ff15f2c9152a6fb59b8bee283009ba0d624fb8831cac9f121ad403466ff7",
+    "episodes/47-IIWA35.json": "57042020390d2587e895132189e5eda52495061b4ff0a2550ab3ed033a644e72"
+  },
+  "code_sha256": {
+    "outputs/frozen-transfer-demonstration-20261124-r1/PLAN.md": "d6ee24cd8a72605ff9536f064ebfe78a811cd4dfaf934f59ed72afd64803b77c",
+    "outputs/frozen-transfer-demonstration-20261124-r1/run.py": "c4e7d4d8a2f28dacbe387fe117e76c4c87ac3499375c2a06d04c93e51bd7db71",
+    "outputs/frozen-transfer-demonstration-20261124-r1/study.py": "af47434d5fa5226c3fac95816c29539cef9eb9d6363a4dc1604fdee38b4271fd",
+    "outputs/frozen-transfer-demonstration-20261124-r1/audited_worker.py": "ffabcc5e43e0c3a9bd7afa78f0ece482620bee46d2e2dcd1fdd883b7774a6158",
+    "outputs/frozen-transfer-demonstration-20261124-r1/runtime.sh": "3e6e3e217a62925dafc5c138c2f40e1afca08cec7d74f722d29141d54f777304",
+    "outputs/frozen-transfer-demonstration-20261124-r1/job.sh": "f8634d191c922e04c22c3d3b2ebf0d812b04810e971e574b642d10328226a5fd",
+    "outputs/frozen-transfer-demonstration-20261124-r1/qualify.sh": "aaa1457ed070a698394b63b470dfcc0111d1b89cb8195a901bdb53cf98cba6a7",
+    "outputs/frozen-transfer-demonstration-20261124-r1/launch.sh": "1a6a9ec9dcf492686721d5f4f90764845711704373b0638feb475bf9a88e36f5",
+    "outputs/libero-xemb-ur5e-sysid-20261120-r1/ur5e_motor.py": "d59c82f37cb3996eb0d8eac688955b16dca50f63bdd21b4b21d4ffe224a01e2b",
+    "outputs/libero-xemb-ur5e-sysid-20261120-r1/ur5e_sim_worker.py": "a11e4624bce8abc6036c5aa852622030d8568a62e90f6cbf12004321ce3f02f2",
+    "outputs/libero-crossarm-20261120-r1/arm_env.py": "6152c403870ddbc6d4462fe8e1cde9958560762d257c4e942df4d26db0264d12",
+    "outputs/libero-crossarm-20261120-r1/sim_reset.py": "f777beb0bf6891f9fe103e93d75843c8d1f0be8db683c2a088c07662ed1a9f45",
+    "src/fluffy_bassoon/xemb/embodiment.py": "e0ed86b5fc85bbde7b4dd95b0ec2b520b792325d0e6f135465132cc2dc99c41c"
+  },
+  "simulator_openpi_sha256": {
+    "env_wrapper.py": "15471fef7340f453b72911409c511ff38f1d0abcbf98295cae49911727373e17",
+    "bddl_base_domain.py": "c6b22bc3ffa4d2b1423d3a271369d33b110b88be7dc23c1883a917faa31706c2",
+    "problems/libero_tabletop_manipulation.py": "0defb17c0bbab8f6bd34c021ac15598ea101fe1e48690cb440d4ef92762880fe",
+    "panda_gripper.py": "a3760a8fc4599fa6f79914304b82466f3c1bda1a945943ca693bb57f00dc59eb",
+    "policies/policy.py": "a2ac5236e23b11d0f5a840d4a8fef148d89dba921d5452ec5dfcd5a6ffa46f20",
+    "models/pi0.py": "24b32d7c6ed5e409459afa8ca5af96a4dae09c2dcdf48e828907e411f4f12342"
+  },
+  "separate_cpu_full_tape": {
+    "40": {
+      "IIWA34": {
+        "success": 0,
+        "controls": 171,
+        "stop": "tape_end"
+      },
+      "IIWA35": {
+        "success": 0,
+        "controls": 184,
+        "stop": "tape_end"
+      }
+    },
+    "41": {
+      "IIWA34": {
+        "success": 1,
+        "controls": 171,
+        "stop": "success"
+      },
+      "IIWA35": {
+        "success": 0,
+        "controls": 184,
+        "stop": "tape_end"
+      }
+    },
+    "42": {
+      "IIWA34": {
+        "success": 0,
+        "controls": 171,
+        "stop": "tape_end"
+      },
+      "IIWA35": {
+        "success": 0,
+        "controls": 184,
+        "stop": "tape_end"
+      }
+    },
+    "43": {
+      "IIWA34": {
+        "success": 1,
+        "controls": 171,
+        "stop": "success"
+      },
+      "IIWA35": {
+        "success": 0,
+        "controls": 184,
+        "stop": "tape_end"
+      }
+    },
+    "44": {
+      "IIWA34": {
+        "success": 0,
+        "controls": 171,
+        "stop": "tape_end"
+      },
+      "IIWA35": {
+        "success": 0,
+        "controls": 184,
+        "stop": "tape_end"
+      }
+    },
+    "45": {
+      "IIWA34": {
+        "success": 0,
+        "controls": 171,
+        "stop": "tape_end"
+      },
+      "IIWA35": {
+        "success": 0,
+        "controls": 184,
+        "stop": "tape_end"
+      }
+    },
+    "46": {
+      "IIWA34": {
+        "success": 1,
+        "controls": 168,
+        "stop": "success"
+      },
+      "IIWA35": {
+        "success": 1,
+        "controls": 184,
+        "stop": "success"
+      }
+    },
+    "47": {
+      "IIWA34": {
+        "success": 0,
+        "controls": 171,
+        "stop": "tape_end"
+      },
+      "IIWA35": {
+        "success": 1,
+        "controls": 177,
+        "stop": "success"
+      }
+    }
+  }
+}
