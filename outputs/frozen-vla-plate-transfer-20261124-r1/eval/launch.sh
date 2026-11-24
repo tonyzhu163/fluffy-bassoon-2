@@ -7,13 +7,32 @@ attempt=${3:?fresh attempt}
 [[ $(uname -s) == Linux && $EVAL_PIN =~ ^[0-9a-f]{40}$ && $attempt =~ ^[[:alnum:]_-]+$ ]]
 source "$(dirname "$0")/environment.sh"
 out="$shared/$attempt"
-mkdir "$out"
+if [[ $mode == gpu ]]; then
+    reserved="$shared/reserve-$attempt"
+    [[ ! -e $out && -s $reserved/reservation.json ]]
+    "$python" - "$reserved/reservation.json" "$EVAL_PIN" "${9}" "${10}" "${11}" <<'CHECK'
+import json, sys
+r = json.load(open(sys.argv[1]))
+assert [r["pin"], str(r["start"]), str(r["stop"]), r["lane"]] == sys.argv[2:]
+CHECK
+    mv -T "$reserved" "$out"
+else
+    mkdir "$out"
+fi
 start=$(date +%s)
-trap 'rc=$?; echo "$rc $start $(date +%s)" > "$out/exit.txt"' EXIT
+trap 'rc=$?; echo "$rc $start $(date +%s)" > "$out/.exit.txt.slot"; mv "$out/.exit.txt.slot" "$out/exit.txt"' EXIT
 exec > >(tee "$out/console.log") 2>&1
 printf '%s\n' "$EVAL_PIN" "$(hostname)" "$@" > "$out/launch.txt"
 df -h "$out" > "$out/storage.txt"
-export TMPDIR="$out/tmp" NUMBA_CACHE_DIR="$out/numba" MPLCONFIGDIR="$out/mpl"
+scratch="$out"
+if [[ $mode == gpu ]]; then
+    scratch=$(mktemp -d "/tmp/plate-$attempt-XXXXXXXX")
+    export XDG_CACHE_HOME="$scratch/cache" JAX_COMPILATION_CACHE_DIR="$scratch/jax"
+    [[ $(stat -c '%d' "$scratch") != $(stat -c '%d' "$out") ]]
+    df -h "$scratch" >> "$out/storage.txt"
+    df -i "$out" >> "$out/storage.txt"
+fi
+export TMPDIR="$scratch/tmp" NUMBA_CACHE_DIR="$scratch/numba" MPLCONFIGDIR="$scratch/mpl"
 mkdir "$TMPDIR" "$NUMBA_CACHE_DIR" "$MPLCONFIGDIR"
 if [[ $mode == cpu ]]; then
     [[ $# == 3 && $attempt == cpu* ]]
@@ -46,7 +65,10 @@ else
         export CUDA_VISIBLE_DEVICES=$(seq -s, 0 $((n-1)))
     fi
     gpu_python="$root/setups/robocasa365-native-20261101-r1/env/bin/python"
-    PYTHONPATH="$code/src" "$gpu_python" -Bu "$code/scripts/[train]gpu_probe.py" --expected-count "$n" --baige-container --purpose evaluation --output "$out/gpu.json"
+    PYTHONPATH="$code/src" "$gpu_python" -Bu "$code/scripts/[train]gpu_probe.py" --expected-count "$n" --baige-container --purpose evaluation --output "$scratch/gpu.json"
+    cat "$scratch/gpu.json" > "$out/.gpu.json.slot"
+    cmp "$scratch/gpu.json" "$out/.gpu.json.slot"
+    mv "$out/.gpu.json.slot" "$out/gpu.json"
     "$python" - "$out/gpu.json" "$n" <<'PY'
 import json, sys
 p = json.load(open(sys.argv[1]))
@@ -60,7 +82,7 @@ PY
     for ((rank=0; rank<n; rank++)); do
         shard=$lane
         if [[ $lane == all ]]; then shard=$rank; fi
-        mkdir "$out/shard$shard"
+        [[ -d $out/shard$shard ]]
         egl=$("$python" - "$code/outputs/reground-rotation-reference-20261123-r1/reference.py" "$rank" <<'PY'
 import runpy, sys
 print(runpy.run_path(sys.argv[1])["egl_device"](int(sys.argv[2])))
@@ -80,7 +102,7 @@ PY
         (
             export MUJOCO_EGL_DEVICE_ID="$egl" CUDA_VISIBLE_DEVICES="${gpu_ids[rank]}"
             printf '%s\n' "$EVAL_PIN" "$fit_pin" "$fit_sha" "$manifest_sha" "$first" "$stop" "$shard" "$egl" "$CUDA_VISIBLE_DEVICES" > "$q/run.txt"
-            timeout --kill-after=25s "$remaining" taskset -c "$cores" "$python" -Bu "$here/panel.py" "$q" --fit "$fit" --fit-sha "$fit_sha" --fit-pin "$fit_pin" "${extra[@]}" --manifest "$manifest" --manifest-sha "$manifest_sha" --start "$first" --stop "$stop" --shard "$shard"
+            timeout --kill-after=25s "$remaining" taskset -c "$cores" "$python" -Bu "$here/storage.py" run "$scratch/shard$shard" "$q" "$python" -Bu "$here/panel.py" "$scratch/shard$shard" --fit "$fit" --fit-sha "$fit_sha" --fit-pin "$fit_pin" "${extra[@]}" --manifest "$manifest" --manifest-sha "$manifest_sha" --start "$first" --stop "$stop" --shard "$shard"
         ) > "$q/console.log" 2>&1 &
         pids+=("$!")
     done
