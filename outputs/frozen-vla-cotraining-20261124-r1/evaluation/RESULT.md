@@ -1,0 +1,21 @@
+# Baige CPU qualification and locked deployment
+
+The native harness passed all **108 short simulator trials on 18 preregistered starts**. All six conditions matched the complete opening observations, prompt, physics, released row and exogenous noise bank within each start. All six Panda retention cases matched their Kinova3 counterpart on released scene, instruction, horizon and noise. The online checks admitted every reset on the first attempt. Kinova3 transfer and Panda retention scores from the offline fit are pending. [Preregistration](PANEL.md) · [Per-start CPU evidence](evidence/native-fixture.json)
+
+The deterministic CPU driver ran 15 controls per trial on Baige cores 40–41 with Mesa. It exercised 1,620 controls across the panel. On each start, the fixture's joint head first changed the issued command against stock at control 1. Its aligned history first changed the issued command against zero and lagged history at control 6. The reader reconstructed each 52-value vector from the issued prefix and measured XYZ and finger positions. It rejected separately corrupted command, history, noise and reward tapes. A historical Kinova3 drawer fixture ran 300 stationary controls, accumulated zero native reward and returned the released timeout flag. The simulator check took 1,175 seconds and used zero GPU-hours. [CPU readback](fixture_readback.py) · [Raw run location and digest](evidence/native-fixture.json)
+
+A separate CPU check restored all stock π₀.₅ weights and opened historical Panda drawer row 14. On the same observations and diffusion noise, the ordinary and injected 10×7 decoded proposals matched bitwise, with maximum absolute difference zero. The four serialized zero-update conditions also agreed. The resident stock digest was `8c163ce2d7842d52c2ef01070b51b75f0409a99627df70d6c0d19ae33fd4489e` before and after. Head and normalization digests matched. A second stock restoration, using recovery trainer revision `29e9e5e5`, explicitly sent a dynamic zero offset through the history sampler used after opening. This reproduced the same stock proposal and preserved the resident parameters, effective kernels and normalization. Both tests issued zero simulator actions. [Original sampler receipt](evidence/historical-stock-cpu.json) · [Recovery history sampler receipt](evidence/recovery-history-graph-cpu.json)
+
+On an RTX 4090, the independent source preflight found that the earlier fused zero-update sampler could differ from stock. The evaluator therefore checks both the recovered materialized kernel and its actual history graph against stock on a historical observation before using test starts. Alignment, zeroing and lagging use the same compiled history graph after opening. A divergence in the historical check leaves its measurements in `historical-noop.json` and stops before held-out scoring. The native mechanism readout retains proposal and actual-command changes separately from per-start successes and paired rescues/losses. [GPU preflight measurements](../preflight/RESULT.md) · [Evaluation inference](deployed.py)
+
+## Root launch
+
+The staged detached revision is `1adeff7e2348f33b7c37906b0e86186efdfe7130`. The launcher reads the successful fit digest from the trainer's completion receipt, verifies its data and code, then runs the full panel on one Baige Distributed Training RTX 4090 or RTX PRO 6000D with a four-hour scheduler limit. The runtime guard covers 14,340 seconds plus ten seconds of kill grace. The source manifest contains 21 fitting and eight read-only held-out Panda demonstrations, all from Object or Spatial. The evaluator's history, conversion and sampler signatures match the active direct-gradient recovery configuration.
+
+```bash
+run=/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-cotraining-20261124-r1
+pin=1adeff7e2348f33b7c37906b0e86186efdfe7130
+bash "$run/evaluation/code-$pin/outputs/frozen-vla-cotraining-20261124-r1/evaluation/deploy.sh" "$pin" gpu02 gpu01
+```
+
+The operator handoff is `/tmp/frozen-vla-cotrain-20261124/evaluation-ready.txt`. At the CPU readback, `gpu02` was fitting source data and had not exported a checkpoint. The evaluation worker used zero GPU-hours and submitted no jobs. [Launch contract and evidence locations](HANDOFF.md) · [Trainer status](../EXECUTION.md)
