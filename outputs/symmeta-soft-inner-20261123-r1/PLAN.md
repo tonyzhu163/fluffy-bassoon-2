@@ -1,5 +1,9 @@
 # Can a source-fitted rule avoid false corrections on a held-out arm?
 
+**Completed.** Baige job `job-tuffa4aobws4` executed this registered experiment
+for PR #8. See the [verified result and evidence](RESULT.md). This plan superseded
+the [broader relabel/refit proposal](../symmeta-false-correction-20261123-r1/PLAN.md).
+
 Fit an abstention rule for each of six frozen readers (seven-shift SymMeta and the tuned continuous-label Perceiver, seeds 41–43). Both readers see the same 1,466 source-arm traces, relabeled once as nominal and once with a random in-family interface. Select a threshold by minimizing equally weighted nominal and shifted mean planar operator error on *source* traces only. Reuse PR #8’s candidates 0, .05, .1, .15, .2, .3, .4 and .5 and include always abstaining. Break ties in this order. For estimated planar operator A, abstain when the Frobenius distance from identity divided by √2 is below the threshold. Abstention retains the entire identity correction including the gripper. The training objective scores planar error; we separately count incorrect gripper decisions.
 
 Freeze the source rule file before applying it to the already hashed native-readout export. Evaluate on the eight genuinely unshifted UR5e supports and 88 actually shifted supports (eight tasks × eleven shifts). Each seed sees the same cases. Record ungated, gated and always-identity planar operator error, decisions to intervene or abstain, gripper-sign accuracy and case rows. For gated-minus-ungated error, resample whole tasks, keeping all transforms and reader seeds together. A rule that reduces nominal error but forfeits the shifted correction exposes its cost. Large erroneous estimates can evade this gate.

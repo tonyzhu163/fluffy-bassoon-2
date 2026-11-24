@@ -1,5 +1,10 @@
 # How much does each reader change an interface that needs no correction?
 
+**Superseded.** The Baige relabel/refit launcher below was never run. PR #8’s
+executed experiment used frozen readers and source-only threshold fitting on
+recorded UR5e interfaces. See the [registered plan](../symmeta-soft-inner-20261123-r1/PLAN.md)
+and [verified result](../symmeta-soft-inner-20261123-r1/RESULT.md).
+
 Offline, exploratory. No simulator or VLA rollouts; three readers and three seeds at 2,500 updates each, about 0.1 GPU-hours on one RTX 4090 by scaling the wider-family run.
 
 ## Question
