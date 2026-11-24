@@ -1,0 +1,546 @@
+{
+  "timestamp": "2026-11-24T16:32:20.499678+08:00",
+  "host": "aibox-r855e239307b-6bfb688cdd-lz2dx",
+  "status": "verified runtime recovery",
+  "scope": "Baige operational recovery with one Linux CPU core, zero GPUs and zero scored episodes.",
+  "archive": {
+    "stage": "/mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1/restore-runtime-20261124-5h4_xj7d",
+    "archive_root": "/mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1/restore-runtime-20261124-5h4_xj7d/exact/fluffy-bassoon-2/setups/xemb-icml-campaign-20261121-r1",
+    "manifest": "/mnt/bos/adgfyl/strong-plant-archives/rurl-retirement-20261124-r1/xemb-icml-campaign-20261121-r1/20261124T153352-648375/MANIFEST.json",
+    "manifest_sha256": "33d215533cc3b77ce9c2b4ddde235511a89cf9be1c1a3baa0a7f465f995cc751",
+    "inventory_sha256": "13d2856c289d8c5c76c1d395b113a1461aac190a63c0b2a4dc8b95461772064c",
+    "volumes": [
+      {
+        "name": "volume-00.tar.zst.part-0000",
+        "bytes": 510756464,
+        "sha256": "e9c7e5e03c6580b333423b6e5682d983c27e14f506741024be05928f5de81a77",
+        "volume": 0,
+        "selected_members": 2357
+      },
+      {
+        "name": "volume-01.tar.zst.part-0000",
+        "bytes": 495470280,
+        "sha256": "73749714108768e3cdc3281dd81ff471cb0b63dd50ce1c839faa1eb440fbaea5",
+        "volume": 1,
+        "selected_members": 2339
+      },
+      {
+        "name": "volume-02.tar.zst.part-0000",
+        "bytes": 483149016,
+        "sha256": "8459176bbed62172f114fd9e913de5c28bc4234b30f86f2b2457a2279186cd21",
+        "volume": 2,
+        "selected_members": 2363
+      },
+      {
+        "name": "volume-03.tar.zst.part-0000",
+        "bytes": 472967427,
+        "sha256": "8388e65bc64a532201d751fcc438eb3d3eb61506b54018fbbefccc23d568d476",
+        "volume": 3,
+        "selected_members": 2339
+      },
+      {
+        "name": "volume-04.tar.zst.part-0000",
+        "bytes": 504143066,
+        "sha256": "1e38aec090aafabbeb7052e66d0cfc33e333241a4dbbbbe8c15b81e5555fd75a",
+        "volume": 4,
+        "selected_members": 2346
+      },
+      {
+        "name": "volume-05.tar.zst.part-0000",
+        "bytes": 492927255,
+        "sha256": "165dd4fa9ebf800bad3b0a97c2856575b00333c2422c0ea32cc315769e2b8fa1",
+        "volume": 5,
+        "selected_members": 2368
+      },
+      {
+        "name": "volume-06.tar.zst.part-0000",
+        "bytes": 1159255,
+        "sha256": "e50293ce4b8e23a26faf76456728d422e6fb366ac0c01db1224adc67e1109ce0",
+        "volume": 6,
+        "selected_members": 1769
+      }
+    ],
+    "trees": {
+      "cv2-headless-overlay": 2,
+      "source-ff2ddf0a": 15879
+    },
+    "inventory_checks": [
+      "exact path set",
+      "mode",
+      "uid",
+      "gid",
+      "mtime_ns",
+      "regular file size",
+      "symlink target"
+    ],
+    "cpu_affinity": [
+      0
+    ],
+    "gpu_visible": ""
+  },
+  "archive_acl": {
+    "members": 15881,
+    "acl_fields": {},
+    "stored_xattr_fields": {},
+    "acl_validation": "Only base access entries equivalent to archived POSIX mode; no named, default, or mask entries.",
+    "pfs_tar_acl_warning": "PFS rejected ACL set operations. Base permission modes passed inventory comparison."
+  },
+  "symlink_install": {
+    "marker_sha256_before_after": "aaae5a178d450ace792b94a3c42ceabf16aacf1601d05629b39607b3bfb80377",
+    "method": "PFS rename to private backup followed by atomic symlink(2) creation",
+    "installed": {
+      "cv2-headless-overlay": {
+        "verified_concurrent_members": 2,
+        "current_root_inode": 4626759313,
+        "concurrent_git_index_stage_sha256": null,
+        "original": "/mowenjie/fluffy-bassoon-2/setups/xemb-icml-campaign-20261121-r1/cv2-headless-overlay",
+        "target": "/mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1/restore-runtime-20261124-5h4_xj7d/exact/fluffy-bassoon-2/setups/xemb-icml-campaign-20261121-r1/cv2-headless-overlay",
+        "preserved": "/mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1/restore-runtime-20261124-5h4_xj7d/preserved-concurrent-restore/cv2-headless-overlay"
+      },
+      "source-ff2ddf0a": {
+        "verified_concurrent_members": 15879,
+        "current_root_inode": 4425754233,
+        "concurrent_git_index_stage_sha256": "32b8ab0e7b33b3afb12317cb3a74141ab72b8068468040fa269e8c9a6ca7a5ba",
+        "original": "/mowenjie/fluffy-bassoon-2/setups/xemb-icml-campaign-20261121-r1/source-ff2ddf0a",
+        "target": "/mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1/restore-runtime-20261124-5h4_xj7d/exact/fluffy-bassoon-2/setups/xemb-icml-campaign-20261121-r1/source-ff2ddf0a",
+        "preserved": "/mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1/restore-runtime-20261124-5h4_xj7d/preserved-concurrent-restore/source-ff2ddf0a"
+      }
+    }
+  },
+  "git": {
+    "env_git_readback": "/mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1/src-ac28987f221e336cef2ea64dc16dfffc9f0e74c9\nac28987f221e336cef2ea64dc16dfffc9f0e74c9\n/mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1/src-ac28987f221e336cef2ea64dc16dfffc9f0e74c9\n/mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1/src-ac28987f221e336cef2ea64dc16dfffc9f0e74c9/.git\n/mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1/src-ac28987f221e336cef2ea64dc16dfffc9f0e74c9/.git\n/mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1/recovery-src-d6de8c725cfaf2dbb01a6a9c4895197441b8a6af\nd6de8c725cfaf2dbb01a6a9c4895197441b8a6af\n/mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1/recovery-src-d6de8c725cfaf2dbb01a6a9c4895197441b8a6af\n/mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1/recovery-src-d6de8c725cfaf2dbb01a6a9c4895197441b8a6af/.git\n/mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1/recovery-src-d6de8c725cfaf2dbb01a6a9c4895197441b8a6af/.git\n/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/src-c3efd5042a29c68248c07b2d6375d367df6378ef\nc3efd5042a29c68248c07b2d6375d367df6378ef\n/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/src-c3efd5042a29c68248c07b2d6375d367df6378ef\n/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/source.git/worktrees/src-c3efd5042a29c68248c07b2d6375d367df6378ef\n/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/source.git\nVerified gitfile target /mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/source.git/worktrees/src-c3efd5042a29c68248c07b2d6375d367df6378ef\n/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/src-cab855a03c8ff1a3f1926513369099bf11c4b859\ncab855a03c8ff1a3f1926513369099bf11c4b859\n/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/src-cab855a03c8ff1a3f1926513369099bf11c4b859\n/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/source.git/worktrees/src-cab855a03c8ff1a3f1926513369099bf11c4b859\n/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/source.git\nVerified gitfile target /mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/source.git/worktrees/src-cab855a03c8ff1a3f1926513369099bf11c4b859\n/mowenjie/fluffy-bassoon-2/setups/xemb-icml-campaign-20261121-r1/source-ff2ddf0a\nff2ddf0ab03e6fbe243979556d8d8f2ebb9bc29c\n/mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1/restore-runtime-20261124-5h4_xj7d/exact/fluffy-bassoon-2/setups/xemb-icml-campaign-20261121-r1/source-ff2ddf0a\n/mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1/restore-runtime-20261124-5h4_xj7d/exact/fluffy-bassoon-2/setups/xemb-icml-campaign-20261121-r1/source-ff2ddf0a/.git\n/mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1/restore-runtime-20261124-5h4_xj7d/exact/fluffy-bassoon-2/setups/xemb-icml-campaign-20261121-r1/source-ff2ddf0a/.git\n/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/upstream\n16a98486f560676b9036d1a6d067b9dd51a5917a\n/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/upstream\n/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/upstream/.git\n/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/upstream/.git\na698664733a2caff0713010d8a980f47fb22bc4a9689938f7b6a50af4ac835c6  /mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1/src-ac28987f221e336cef2ea64dc16dfffc9f0e74c9/env.sh\n7fa7eaefd539a9f2f8e660142606b0b134214d3f8a1fdd8ca52b0e6f30ba7856  /mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/src-c3efd5042a29c68248c07b2d6375d367df6378ef/outputs/reground-rotation-reference-20261123-r1/common-opening/env.sh\nc46a5996c99f28b93c965873ed1fd7e40f58e782a972f9afaea1127bfaeb4041  /mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1/recovery-src-d6de8c725cfaf2dbb01a6a9c4895197441b8a6af/recovery/launch.sh\n9e6f14afaa7523370ad96e6675d3357441ee3985e60405cb3e0ced30b2ddaf76  /mowenjie/fluffy-bassoon-2/setups/libero90-full-action-20261119-r1/desktop-libs02/nvidia-vendor.json\n",
+    "linked_worktree_readback": "Backlink /mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/source.git/worktrees/src-c3efd5042a29c68248c07b2d6375d367df6378ef -> /mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/src-c3efd5042a29c68248c07b2d6375d367df6378ef/.git. Common directory /mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/source.git\nBacklink /mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/source.git/worktrees/src-cab855a03c8ff1a3f1926513369099bf11c4b859 -> /mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/src-cab855a03c8ff1a3f1926513369099bf11c4b859/.git. Common directory /mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/source.git\n",
+    "fsck": "git fsck --full --no-dangling passed",
+    "worktree": "All tracked files match pinned reader HEAD",
+    "archive_alternates_contents": "/mowenjie/fluffy-bassoon-2/setups/xemb-icml-campaign-20261121-r1/source-s2ab-v2/.git/objects",
+    "installed_relative_alternates_contents": "../../../../../../../git-retention/objects",
+    "archive_alternates_evidence": "/mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1/restore-runtime-20261124-5h4_xj7d/archived-git-alternates",
+    "git_object_pack_provenance": "Self-contained pack from the local retained Git repository, built from both archived refs/reflog roots, SHA-256 matched after SSH, checked by git index-pack --strict.",
+    "checkout_roots": [
+      "437da7f677632e9495c813aaa52071e207ba834e",
+      "ff2ddf0ab03e6fbe243979556d8d8f2ebb9bc29c"
+    ],
+    "sha256sums": "f3d6b32552620a938cb0d2eeace03103d11ebb9b2a77f3f151928932d076f917  /mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1/restore-runtime-20261124-5h4_xj7d/archived-git-alternates\n77585b2766c5d5d0dc90d33f222fc02d7a5c4557c4b7389698abdaaa52e7d2ee  /mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1/restore-runtime-20261124-5h4_xj7d/exact/fluffy-bassoon-2/setups/xemb-icml-campaign-20261121-r1/source-ff2ddf0a/.git/objects/info/alternates\n99353ff48966fd34c0b2c635bbac6e9bf63c0d5f071d29a9ee78430459d9f8da  /mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1/restore-runtime-20261124-5h4_xj7d/git-retention/objects/pack/pack-a2d9b52de1db7d6847bcef3d499de25a1b3bcec1.pack\n6bd76bdc3ceaffbe988864d7460c3935d1796e419f06655e7bc75210962f8a1b  /mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1/restore-runtime-20261124-5h4_xj7d/git-retention/objects/pack/pack-a2d9b52de1db7d6847bcef3d499de25a1b3bcec1.idx\n"
+  },
+  "dependencies": {
+    "cv2_record": "/mowenjie/fluffy-bassoon-2/setups/maniskill3-xemb/.venv/lib/python3.11/site-packages/opencv_python_headless-5.1.0.95.dist-info/RECORD",
+    "cv2_record_verified_files": 54,
+    "cv2_sha256": {
+      "cv2/Error/__init__.pyi": "03a34ab6831e640bd95870ba0eb262c0c542858ecb2f115fbee676756e0a4a6f",
+      "cv2/LICENSE-3RD-PARTY.txt": "62e642873f509a614458665c9e75522545bc6120ff45bda27617958725e22ff3",
+      "cv2/LICENSE.txt": "09d719058e782ac7bc71ba21c944e1136cde2bb957c0e888121f0218d6b5f02c",
+      "cv2/__init__.py": "d96175c67148f49b0c3265dc22728e89e34a39218eb755c666138f42074079dd",
+      "cv2/__init__.pyi": "23c5ea89afbedfef54d0ba5260f5d1a7942959303faddf203a18a0e4578216bd",
+      "cv2/aruco/__init__.pyi": "30ed9f50a8fb2b4b5ae791c8ca30f72974c79116856a0d7b11cdee2b843a020f",
+      "cv2/barcode/__init__.pyi": "8bf8506d9d73433ea28a5a18121be3b4d85c63068d3040078d34674a94828e3c",
+      "cv2/ccm/__init__.pyi": "f54f2af0e7786fb31390b6eeb97c86ba1e51601af26b5995cfceed9eb658084a",
+      "cv2/config-3.py": "9a7aadf724b822001f5e963b01fd4e375d45e2cbbe328d2ca7b42a440c083a1c",
+      "cv2/config.py": "974e2d4096ee1a9a9a341df1bf33e16973683bf1ac733006de27ff2f23bc584d",
+      "cv2/cuda/__init__.pyi": "ffefc9013eaeabbe4bc61a555670804461e68f39146327da8faf14354d147bd0",
+      "cv2/cv2.abi3.so": "79efea6e08e3ad702566e7b32d9938e5ae989551f13ea37a92ec3d857f1ed99f",
+      "cv2/data/__init__.py": "d76e4f72d7bf3ad079e59c635a0e64a3cba0a67a20675b113323f8f1db4108cc",
+      "cv2/detail/__init__.pyi": "2d940d4f91d5f509190e4f61c2ef94774572fe09f81bebfadeba36b653e6461a",
+      "cv2/dnn/__init__.pyi": "90ecedbaf0fa9ed456b67b2aabd3ca4553fb90a59731030a13285f7cfd770b99",
+      "cv2/fisheye/__init__.pyi": "45a7c104a78965010876136cbe44a00c35080ccba7644c00269b42d170539071",
+      "cv2/flann/__init__.pyi": "a26600ec71a5c9ea4ac543d208940c9f7d0a4248423d9416ac4d1ad3a12880bd",
+      "cv2/instr/__init__.pyi": "15b51587edf1c4d44f15fc7cc288c95f224ed0e32cc5693da30942f4091c5d1c",
+      "cv2/ipp/__init__.pyi": "5921d522a213f7bbe6b9db6e26384e258899d2205d631e00b41d2226ab5d0f4a",
+      "cv2/load_config_py2.py": "c4ffe1da939bcdf6cdf2d38d57b0804261a1f787d0fb4b741f2b2b5c30e5b7f4",
+      "cv2/load_config_py3.py": "9c22766454a9ac2f6869d37830b2efc699e7b8c3125484e9976c6e677c066029",
+      "cv2/mat_wrapper/__init__.py": "8b627063a9260cbfeced85f3225f8966e582315624462e05ea3eb45b78f83fd0",
+      "cv2/mcc/__init__.pyi": "6d48414da6724610e7c0c9284590573025d75e69eaf44675862c4a9b53799399",
+      "cv2/misc/__init__.py": "cabf4f9312ac97145cf3b861b482519f94689a63fd8daaa4b18afe643ba3edc5",
+      "cv2/misc/version.py": "893131ab58f01a002fde3b58407448f294a999fccfb23906f5baec1f46dd6219",
+      "cv2/ocl/__init__.pyi": "aaffe29691d9a2c7cf10c1c412aa902dee9c269b1bf4f8a2c0864c6ddfbefa1a",
+      "cv2/ogl/__init__.pyi": "bae0495b19f00149261b3ae98c31543173a226e633d40b477c0a2cf87b2fc4d3",
+      "cv2/parallel/__init__.pyi": "b5ce673685ab4e40fb5407e16da8ee98a17bf4b068969aa52a3617fa5636ffff",
+      "cv2/py.typed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "cv2/samples/__init__.pyi": "723496e6fa36a0ca48587c0ffb7218e215a394a513cfc81dd4c5fba4b38258aa",
+      "cv2/segmentation/__init__.pyi": "8f028150245a5e11c033715dce92ee1ae7067cd2d6c56bb90837cb3a991c6a7e",
+      "cv2/slam/__init__.pyi": "6c5db654e63e8d0e278a18699c6cfe9a49d481bb658b8c79d8fab9af58519abe",
+      "cv2/typing/__init__.py": "bc6b5f8c65598bacdcf7c204de3610739832965fef21e0082b7df8410d8480b7",
+      "cv2/utils/__init__.py": "7eec381871ce5ecc7129cf8069d00438a42afc8d46af81b7c8c951bc06d33f7d",
+      "cv2/utils/__init__.pyi": "4418493dce5c92e1f48e5947db22057378a6147d9f2aacd7877cf020ac6e4068",
+      "cv2/utils/fs/__init__.pyi": "96ed9c2b50db77bc114ce4e3bbf915542bd4e26341e6fe61495a41c525d7bc98",
+      "cv2/utils/logging/__init__.pyi": "0f629af3199ba4e28d785e9d92ef7d284e5433d38a8039d878953c811d6c9d3b",
+      "cv2/utils/nested/__init__.pyi": "9f6277692c42d8cacf29a29be22818fdde3d96ebae42a5bb03f613c7a799cfd4",
+      "cv2/version.py": "ca1cd72d7eca356f2bb211a26ccb5fd67129b74b82bd63de5c214256d1fdd3b5",
+      "cv2/videoio_registry/__init__.pyi": "bd051daf7609acd82f92c23686c67a1afcd0216a68dbf4827fec87953fe20af3",
+      "cv2/viz3d/__init__.pyi": "acd1aa22c86d5ca4a8a4d2b2b5d32732fbcf98d9d7b32c6991822b095fa5aaa0",
+      "opencv_python_headless.libs/libaom-1d585c11.so.3.15.3": "5a2e7225ee4fc3446ca1c6c2c2ad19e230193bd4cbaa6aac1735d720587f9b6c",
+      "opencv_python_headless.libs/libavcodec-e863e0e1.so.63.1.102": "5ca40b2c8ae71f87c3328d84d5635f7e14ac6892a677808e8282d389a2985311",
+      "opencv_python_headless.libs/libavformat-8812387e.so.63.1.102": "8b114376d5b44ce41acb824010aad341395a5f8d3e486c184ed0ce466cdf8cf8",
+      "opencv_python_headless.libs/libavif-24bb8032.so.16.4.2": "99e6620b8a4454b6a9d1f71efac13e2700c2d2dab4bac71c22eeb32666f79397",
+      "opencv_python_headless.libs/libavutil-9a3cc128.so.61.1.102": "d85571cb7f3ade577e09e19515a7c4b7fc6e43ddd2c3517877c3d760f7a0b109",
+      "opencv_python_headless.libs/libdav1d-38d127d7.so.7.0.0": "5016e4f055453f21b3c472c7ef24e8f25cc7f051fdc4556a7f1fd30fc43ace81",
+      "opencv_python_headless.libs/libgfortran-c796d592.so.5.0.0": "def96d59015036c3348aaa1a4239ec795ee73752bdfebf17fb297cc0adbf95f1",
+      "opencv_python_headless.libs/libopenblasp-r0-59ffcd50.3.15.so": "662f50460154002bd792d5e1cc921b6634123e5d195e652cf56387c0ab66fcd8",
+      "opencv_python_headless.libs/libpng16-802956e1.so.16.59.0": "e4e00c8fa09d0b6dec7f1589f140af557bd6cb091f96fef72d4cd7d78d19cb8d",
+      "opencv_python_headless.libs/libquadmath-e4014734.so.0.0.0": "8ebd51da90eb38ab760011bce06d4dd8f3d7dd3d8cedbd53ed4db949117b7862",
+      "opencv_python_headless.libs/libswresample-6cca5b1f.so.7.1.102": "4116b0b75eaaedbad372d8a48d72edf2949d28ca34d6b121ca8ac80bd1461b5d",
+      "opencv_python_headless.libs/libswscale-e2f2e790.so.10.1.102": "5530134fee474195a7ecc941bdd2d25b1a50e6206b83a83ab7cf3beaeeac0050",
+      "opencv_python_headless.libs/libvpx-4fb239ff.so.11.0.1": "c29ffc9c29e7538dc6d3b50b1082da7ffd00e96ef589f70858a8d42eb816f2e1"
+    },
+    "hf_files": [
+      {
+        "repo": "lerobot/pi05_libero_finetuned",
+        "rev": "7152f13e34c6c115d808aea0e5d08aca74eac14b",
+        "file": ".gitattributes",
+        "bytes": 1519,
+        "sha256": "11ad7efa24975ee4b0c3c3a38ed18737f0658a5f75a0a96787b576a78a023361",
+        "git_oid": "a6344aac8c09253b3b630fb776ae94478aa0275b",
+        "resolved_path": "/mowenjie/fluffy-bassoon/inputs/pi05-libero-lerobot-v044-7152f13e-20261027-r1/.gitattributes"
+      },
+      {
+        "repo": "lerobot/pi05_libero_finetuned",
+        "rev": "7152f13e34c6c115d808aea0e5d08aca74eac14b",
+        "file": "README.md",
+        "bytes": 4390,
+        "sha256": "b1ba487d27f8dfdb873e4bab1856aaecfd4b297035a829942eeda43691c71f71",
+        "git_oid": "fcfec743a2369b619b40ed97013f006df4800a4a",
+        "resolved_path": "/mowenjie/fluffy-bassoon/inputs/pi05-libero-lerobot-v044-7152f13e-20261027-r1/README.md"
+      },
+      {
+        "repo": "lerobot/pi05_libero_finetuned",
+        "rev": "7152f13e34c6c115d808aea0e5d08aca74eac14b",
+        "file": "config.json",
+        "bytes": 2170,
+        "sha256": "2f6d4b96b032593e1de65b391ee7252a70227bff398ef1b94658fea17818142f",
+        "git_oid": "397b620ba756caa4eadc424f6b0a39298fae6e7d",
+        "resolved_path": "/mowenjie/fluffy-bassoon/inputs/pi05-libero-lerobot-v044-7152f13e-20261027-r1/config.json"
+      },
+      {
+        "repo": "lerobot/pi05_libero_finetuned",
+        "rev": "7152f13e34c6c115d808aea0e5d08aca74eac14b",
+        "file": "model.safetensors",
+        "bytes": 7473096344,
+        "sha256": "877b3ec1130548b69af7f8aeef3ec9d3fc7738040f0b9beb490857ec970997ae",
+        "git_oid": "a3e1bde1ad2950b73b70ceda89aea3991e829354",
+        "resolved_path": "/mowenjie/fluffy-bassoon/inputs/pi05-libero-lerobot-v044-7152f13e-20261027-r1/model.safetensors"
+      },
+      {
+        "repo": "lerobot/pi05_libero_finetuned",
+        "rev": "7152f13e34c6c115d808aea0e5d08aca74eac14b",
+        "file": "policy_postprocessor.json",
+        "bytes": 660,
+        "sha256": "37d719a6584600988e6c343306d2eaee0575109f235ad500313577f73e47e8a1",
+        "git_oid": "c635dfa3c8b821e91d3ae7e67b31d64e92035990",
+        "resolved_path": "/mowenjie/fluffy-bassoon/inputs/pi05-libero-lerobot-v044-7152f13e-20261027-r1/policy_postprocessor.json"
+      },
+      {
+        "repo": "lerobot/pi05_libero_finetuned",
+        "rev": "7152f13e34c6c115d808aea0e5d08aca74eac14b",
+        "file": "policy_postprocessor_step_0_unnormalizer_processor.safetensors",
+        "bytes": 7668,
+        "sha256": "a002c0df7f79c5b169c5a899ad151d4ea1bed246c7d82bd93ed1556558d517a9",
+        "git_oid": "e75542de525061dee2549887013968b3516cdfdc",
+        "resolved_path": "/mowenjie/fluffy-bassoon/inputs/pi05-libero-lerobot-v044-7152f13e-20261027-r1/policy_postprocessor_step_0_unnormalizer_processor.safetensors"
+      },
+      {
+        "repo": "lerobot/pi05_libero_finetuned",
+        "rev": "7152f13e34c6c115d808aea0e5d08aca74eac14b",
+        "file": "policy_preprocessor.json",
+        "bytes": 1903,
+        "sha256": "3d669ffc18d0364536735d8203076dcc69d3a6523aa5956ccaada3f9e1e6b748",
+        "git_oid": "64b91cf3a0877e6c8704c0bc97b12e25366c9ea9",
+        "resolved_path": "/mowenjie/fluffy-bassoon/inputs/pi05-libero-lerobot-v044-7152f13e-20261027-r1/policy_preprocessor.json"
+      },
+      {
+        "repo": "lerobot/pi05_libero_finetuned",
+        "rev": "7152f13e34c6c115d808aea0e5d08aca74eac14b",
+        "file": "policy_preprocessor_step_2_normalizer_processor.safetensors",
+        "bytes": 7668,
+        "sha256": "a002c0df7f79c5b169c5a899ad151d4ea1bed246c7d82bd93ed1556558d517a9",
+        "git_oid": "e75542de525061dee2549887013968b3516cdfdc",
+        "resolved_path": "/mowenjie/fluffy-bassoon/inputs/pi05-libero-lerobot-v044-7152f13e-20261027-r1/policy_preprocessor_step_2_normalizer_processor.safetensors"
+      },
+      {
+        "repo": "lerobot/pi05_libero_finetuned",
+        "rev": "7152f13e34c6c115d808aea0e5d08aca74eac14b",
+        "file": "train_config.json",
+        "bytes": 5621,
+        "sha256": "199518b79faeaef0877e9a1eb5f2df6884902476a7d4491c7f865142c3fe90fd",
+        "git_oid": "262553d8f68fe66dd6f5416d1b1c62bfcce33003",
+        "resolved_path": "/mowenjie/fluffy-bassoon/inputs/pi05-libero-lerobot-v044-7152f13e-20261027-r1/train_config.json"
+      },
+      {
+        "repo": "google/paligemma-3b-pt-224",
+        "rev": "35e4f46485b4d07967e7e9935bc3786aad50687c",
+        "file": "added_tokens.json",
+        "bytes": 24,
+        "sha256": "7d0bad90030d638a4bf89a82e91206e25f1fbe0012f14bca21666a64b643bc49",
+        "git_oid": "ff9246e420971b10c510b39a0de289132c2bf23f",
+        "resolved_path": "/mowenjie/.cache/huggingface/hub/models--google--paligemma-3b-pt-224/blobs/ff9246e420971b10c510b39a0de289132c2bf23f"
+      },
+      {
+        "repo": "google/paligemma-3b-pt-224",
+        "rev": "35e4f46485b4d07967e7e9935bc3786aad50687c",
+        "file": "config.json",
+        "bytes": 1027,
+        "sha256": "e00c72cdff16296bf1229c3267b99f5247d8c740cae84336866338d64fa7918f",
+        "git_oid": "b89393ba09b432265173f688b8a41a2c3c9e3e4c",
+        "resolved_path": "/mowenjie/fluffy-bassoon-2/inputs/libero-witness-paligemma-pt-20261119-r1/config.json"
+      },
+      {
+        "repo": "google/paligemma-3b-pt-224",
+        "rev": "35e4f46485b4d07967e7e9935bc3786aad50687c",
+        "file": "preprocessor_config.json",
+        "bytes": 699,
+        "sha256": "ae5e5f748a642ae71344facf4012b1607852db13f080e42cd12b5db4e75ca7e8",
+        "git_oid": "28cf2b54fa2e3de2f07c11fb13a29c6541ca913b",
+        "resolved_path": "/mowenjie/.cache/huggingface/hub/models--google--paligemma-3b-pt-224/blobs/28cf2b54fa2e3de2f07c11fb13a29c6541ca913b"
+      },
+      {
+        "repo": "google/paligemma-3b-pt-224",
+        "rev": "35e4f46485b4d07967e7e9935bc3786aad50687c",
+        "file": "special_tokens_map.json",
+        "bytes": 607,
+        "sha256": "5ef37093ae4236587b6e8266acb815b46e2db8ce656c66552bfa574d32880405",
+        "git_oid": "0c18fdd94629ea652e2ef36ed9a422474ad0a8e8",
+        "resolved_path": "/mowenjie/.cache/huggingface/hub/models--google--paligemma-3b-pt-224/blobs/0c18fdd94629ea652e2ef36ed9a422474ad0a8e8"
+      },
+      {
+        "repo": "google/paligemma-3b-pt-224",
+        "rev": "35e4f46485b4d07967e7e9935bc3786aad50687c",
+        "file": "tokenizer.json",
+        "bytes": 17549604,
+        "sha256": "ef6773c135b77b834de1d13c75a4c98ab7a3684ffd602d1831e1f1bf5467c563",
+        "git_oid": "419d3c8c8da378e1f551d4348a5c2ca7616153d6",
+        "resolved_path": "/mowenjie/.cache/huggingface/hub/models--google--paligemma-3b-pt-224/blobs/ef6773c135b77b834de1d13c75a4c98ab7a3684ffd602d1831e1f1bf5467c563"
+      },
+      {
+        "repo": "google/paligemma-3b-pt-224",
+        "rev": "35e4f46485b4d07967e7e9935bc3786aad50687c",
+        "file": "tokenizer.model",
+        "bytes": 4264023,
+        "sha256": "8986bb4f423f07f8c7f70d0dbe3526fb2316056c17bae71b1ea975e77a168fc6",
+        "git_oid": "22ad048d392b4f5191be7cec47d03eb3cdb360f4",
+        "resolved_path": "/mowenjie/.cache/huggingface/hub/models--google--paligemma-3b-pt-224/blobs/8986bb4f423f07f8c7f70d0dbe3526fb2316056c17bae71b1ea975e77a168fc6"
+      },
+      {
+        "repo": "google/paligemma-3b-pt-224",
+        "rev": "35e4f46485b4d07967e7e9935bc3786aad50687c",
+        "file": "tokenizer_config.json",
+        "bytes": 39968,
+        "sha256": "3259402b1d1802e02417d7bff75a889ec61d359d15be6050a957b307c48edbbe",
+        "git_oid": "960dcec0bccc6e594d865eceb63c8078e164cfb2",
+        "resolved_path": "/mowenjie/.cache/huggingface/hub/models--google--paligemma-3b-pt-224/blobs/960dcec0bccc6e594d865eceb63c8078e164cfb2"
+      }
+    ],
+    "libero_assets": {
+      "repository": "lerobot/libero-assets",
+      "revision": "0b3ea86be5fe169d0fd036ae63d1070ec09e90f6",
+      "files": 586,
+      "bytes": 422320936,
+      "snapshot": "/mowenjie/fluffy-bassoon-2/outputs/reground-rotation-reference-20261123-r1/assets/0b3ea86be5fe169d0fd036ae63d1070ec09e90f6"
+    },
+    "seed41": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu03v2/stage1/checkpoints/equiv_v2_dis_dz-passive_attempt1-seed41.msgpack",
+      "sha256": "c12bace5cb391499d6abd7cc5767f94b1519de7d77940efb0cfcb71ca0f686a4",
+      "bytes": 1434585
+    }
+  },
+  "runtime": {
+    "reader": {
+      "archive": "ff2ddf0ab03e6fbe243979556d8d8f2ebb9bc29c",
+      "reader_revision": "fd909227c2013cc58be1ced519b03ea1328199ea",
+      "reader_sha256": "f83b1c0b9ada76c2126f366294785222e121703e02977c66bf530b1fb731b1e5",
+      "weights_sha256": "c12bace5cb391499d6abd7cc5767f94b1519de7d77940efb0cfcb71ca0f686a4",
+      "backend": "cpu",
+      "jax": "0.5.3",
+      "numpy": "1.26.4",
+      "opencv": "5.1.0",
+      "python": "3.11.17",
+      "update_limit": 24
+    },
+    "reader_native_cv2": {
+      "version": "5.1.0",
+      "package": "/mowenjie/fluffy-bassoon-2/setups/maniskill3-xemb/.venv/lib/python3.11/site-packages/cv2/__init__.py",
+      "package_sha256": "d96175c67148f49b0c3265dc22728e89e34a39218eb755c666138f42074079dd",
+      "native": "/mowenjie/fluffy-bassoon-2/setups/maniskill3-xemb/.venv/lib/python3.11/site-packages/cv2/cv2.abi3.so",
+      "native_sha256": "79efea6e08e3ad702566e7b32d9938e5ae989551f13ea37a92ec3d857f1ed99f",
+      "build_gui": "GUI:                           NONE"
+    },
+    "policy": {
+      "revision": "7152f13e34c6c115d808aea0e5d08aca74eac14b",
+      "safetensors_tensor_count": 812,
+      "tokenizer_revision": "35e4f46485b4d07967e7e9935bc3786aad50687c",
+      "local_tokenization": "passed"
+    },
+    "native_dependencies": {
+      "python": "3.12.15",
+      "torch": "2.11.0+cu128",
+      "mujoco": "3.8.1",
+      "lerobot": "0.6.1",
+      "forkserver_preload": "imported with one thread and no CUDA/EGL context"
+    },
+    "batches": {
+      "scheduled": 70,
+      "sealed_at_retry04_launch": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "remaining_at_retry04_launch": [
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "sealed_names_at_cpu_check": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ]
+    },
+    "observed_parent_launch_receipt": [
+      "ac28987f221e336cef2ea64dc16dfffc9f0e74c9",
+      "job-0ttm7yo8nha0-master-0",
+      "full",
+      "1",
+      "1795508912",
+      "5250"
+    ],
+    "cpu_affinity": [
+      0
+    ],
+    "gpu_visible": "",
+    "checks": "Pinned env activation, production reader handshake and four-lane initialization, native CV2 import and operations, offline policy revision, intact safetensors header and file boundary, native tokenizer open and tokenization, and sealed batch presence. Zero simulator resets, model inferences or scored episodes."
+  },
+  "retry03": {
+    "job": "job-bg6cc5kozt62",
+    "exit": 1,
+    "launcher_seconds": 4,
+    "gpu_probe_present": false,
+    "scored_batches": 0
+  },
+  "launch": {
+    "submitted_by_parent": {
+      "attempt": "retry04",
+      "job": "job-0ttm7yo8nha0"
+    },
+    "command": "bash /mowenjie/fluffy-bassoon-2/outputs/reground-retry-wrist-20261123-r1/recovery-src-d6de8c725cfaf2dbb01a6a9c4895197441b8a6af/recovery/launch.sh ac28987f221e336cef2ea64dc16dfffc9f0e74c9 retry04 1 5250 full",
+    "scheduler": "Baige Distributed Training. Parent owns submission. Same qualified 90-minute scheduler wall, 5,250-second payload, one exclusive RTX 4090, 10 CPUs, 64 GiB memory and 60 GiB shared memory.",
+    "constraints": [
+      "Retry04 was already submitted by the parent. Avoid a duplicate submission.",
+      "Use the canonical in-container GPU probe and CUDA/EGL binding before scoring.",
+      "Preserve the 54 sealed batches and the scored store. Retry batch054 from its registered starts as a whole pair batch with the strict native opening checks.",
+      "Preserve the run-owned PFS stage and both canonical symlinks until the retry and independent readback complete.",
+      "Paper-controls owns scheduler monitoring and native readback."
+    ]
+  }
+}
