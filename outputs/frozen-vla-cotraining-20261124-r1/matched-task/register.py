@@ -33,6 +33,24 @@ def read(path):
     return json.loads(Path(path).read_text())
 
 
+def original_xy(demo):
+    state = demo["states"][0]
+    world = ElementTree.fromstring(demo.attrs["model_file"]).find("worldbody")
+    nq = nv = 0
+    free = {}
+    for j in world.iter():
+        if j.tag not in ("joint", "freejoint"):
+            continue
+        kind = "free" if j.tag == "freejoint" else j.get("type", "hinge")
+        if kind == "free":
+            free[j.attrib["name"]] = state[1+nq:3+nq].tolist()
+        nq += {"free": 7, "ball": 4}.get(kind, 1)
+        nv += {"free": 6, "ball": 3}.get(kind, 1)
+    if len(state) != 1 + nq + nv or not free:
+        raise ValueError(f"State/XML mismatch for {demo.name}")
+    return free
+
+
 def original(inputs, out):
     import h5py
     for suite in SUITES:
@@ -42,20 +60,7 @@ def original(inputs, out):
         demos, tapes = {}, {}
         with h5py.File(path) as f:
             for name, demo in f["data"].items():
-                state = demo["states"][0]
-                world = ElementTree.fromstring(demo.attrs["model_file"]).find("worldbody")
-                nq = nv = 0
-                free = {}
-                for j in world.iter():
-                    if j.tag not in ("joint", "freejoint"):
-                        continue
-                    kind = "free" if j.tag == "freejoint" else j.get("type", "hinge")
-                    if kind == "free":
-                        free[j.attrib["name"]] = state[1+nq:3+nq].tolist()
-                    nq += {"free": 7, "ball": 4}.get(kind, 1)
-                    nv += {"free": 6, "ball": 3}.get(kind, 1)
-                if len(state) != 1 + nq + nv or not free:
-                    raise ValueError(f"State/XML mismatch for {name}")
+                free = original_xy(demo)
                 acts = []
                 for a in demo["actions"][:]:
                     # OpenVLA's published no-op filter uses the preceding retained gripper command.
