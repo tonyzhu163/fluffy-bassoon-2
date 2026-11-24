@@ -1,0 +1,31 @@
+# Camera calibration recovers tool registration under physical orbit and reference appearance under optical roll
+
+On 64 held-out UR5e paths across eight tasks, the calibrated reset-height plane reduced tool-endpoint registration error at both ±30° physical camera orbits on every task. The corrected mean was 0.66 pixels at either sign on the 64×64 reader raster. Whole-image RGB agreement varied by task and showed no consistent orbit improvement. When the center stayed fixed and the camera physically rolled ±20°, calibration aligned projected endpoints to numerical precision and reduced RGB error from about 28 to 2.88 levels. [Geometry summary](evidence/geometry-summary.json)
+
+## Physical view test
+
+Each row below uses the same physical trajectory and issued commands in all views. The primary endpoint metric uses the three post-reset tool positions. RGB MAE averages the four boundary frames on nominal pixels with valid bilinear samples for all three calibrations. The intervals are paired percentile intervals from 10,000 resamples of the eight task clusters, preserving all paths and repeated views in each cluster. They describe variation among these selected tasks. [Registered design](PLAN.md) · [Supplementary registration](COMPOSITIONAL.md)
+
+| Physical camera | TCP identity / calibrated / opposite (px) | Calibrated minus identity (95% interval, px) | RGB identity / calibrated / opposite (0–255) | Calibrated minus identity (95% interval, RGB levels) | Common pixels |
+|---|---:|---:|---:|---:|---:|
+| Nominal | 0 / 0 / 0 | 0 | 0 / 0 / 0 | 0 | 100% |
+| World-Z orbit −30° | 2.19 / 0.66 / 4.80 | −1.54 [−1.90, −1.18] | 33.24 / 32.52 / 42.19 | −0.72 [−4.66, 2.33] | 46.2% |
+| World-Z orbit +30° | 2.06 / 0.66 / 4.37 | −1.40 [−1.62, −1.17] | 34.36 / 36.73 / 44.04 | +2.36 [−1.65, 6.05] | 46.2% |
+| Local optical roll −20° | 6.00 / 0.00 / 11.82 | −6.00 [−6.53, −5.41] | 28.31 / 2.87 / 39.18 | −25.43 [−28.19, −23.00] | 80.0% |
+| Local optical roll +20° | 6.00 / 0.00 / 11.82 | −6.00 [−6.53, −5.41] | 28.04 / 2.88 / 39.04 | −25.16 [−27.94, −22.82] | 80.0% |
+
+The initial eight historical paths gave orbit TCP errors of 0.63 and 0.65 px after correction, down from 2.18 and 2.17 px. These eight are included once in the 32 continuous-control paths. The primary 32 gave 0.59 and 0.60 px at the two signs. The supplementary 32 compositional-control paths gave 0.72 px at both signs. Including the reset boundary brings the full panel’s calibrated orbit means to 0.49 and 0.50 px. Among the source examples, correction reduced mean TCP error at ±15° orbit from about 0.44 to 0.16 px on Panda and from 0.51 to 0.25 px on Sawyer. The source sample covers one task, one release start per body and four executed control yaws each. [First eight](evidence/original-summary.json) · [Continuous-control panel](evidence/continuous-summary.json) · [Both strata and source measurements](evidence/physical-records.tar.gz)
+
+## What was measured
+
+The bank has 64 UR5e paths with release layout 11 across eight official tasks and eight command interfaces per task. Its eight additional source paths come from authentic Panda/Sawyer training tapes. The source cameras used ±15° orbit and ±10° physical optical roll. Each trajectory was stepped once with three five-control chunks. At each boundary, the simulator rendered the standard view and four changed poses before resuming integration. The registered world plane uses only the public reset TCP height. Target world TCP, independently rendered diagnostic marks, nominal comparison pixels and labels enter the evaluator. The deployed image transform uses only the two physical calibrations and plane. [Projection and loading contract](CONTRACT.md) · [Rendering code](render.py)
+
+The original passive tapes preserve chunk means and omit primitive commands. All replays held each recorded seven-channel mean for five steps under the authentic interface. The eight historical orbital replays reproduced every archived image and control array, with identical extrinsics at all four boundaries. The released index points directly to those 24 untouched historical files. Relative to the original passive collection, the fresh post-reset UR5e TCP endpoints differed by 0.74 mm median and 9.56 mm maximum. Full initial-state hashes differed from the collecting host on all 72 replays. Every replay passed the archived public reset-state check. These observations support paired camera comparisons on the fresh paths. [Historical inventory](original-index.json) · [Portable original NPZs](evidence/original-native.tar.gz) · [Validation record](evidence/RESULT.md)
+
+## Update to the architecture hypothesis
+
+The evidence supports supplying calibrated coordinates to a frozen-adaptation reader. A reset-height homography gives a useful geometric reference for tool motion under orbit. Relative to that plane, post-reset TCP height differed by 5.32 mm median and up to 57.05 mm. Other scene depths, changed visibility and resampling can affect image agreement. These measurements do not identify how much each contributed. For optical roll about a fixed center, one image homography applies across depths, and the raw-image comparison verified recovery on shared pixels.
+
+Confidence increases for a reader that uses the plane near the workspace. The evidence weakens the broader claim that an orbit can be undone for the entire scene with that plane. The downstream discriminating test is held-out yaw and native reward for the frame-aware reader and the same-information Perceiver on these sealed supports. This measurement run trained zero policies or readers and selected no architecture winner. [Reader-ready index](evidence/reader-bank.json.gz)
+
+Baige Linux CPU, software EGL, cores 44–46 and zero GPU-hours. Primary source was pinned at `6dbec2ce0a54cb93ac0aa939db61d86e11a602ee`, and the supplementary slot selection at `68cedbfe546836ac6fbb8ec6129192d2deb58f94`. The collecting code was `5dd5fa914bbbfe25b9cf4ca5fa504c8a472e997b` and the original orbit replay was `67f9fbb484dd73491a8beaa401ceb908ccd319ac`. The primary and supplementary launchers exited successfully. The Baige reader index is `/mowenjie/fluffy-bassoon-2/outputs/symmeta-camera-pose-pairs-20261124-r1/cpu01/ood64/bank.json`. [Checksums and verified array counts](evidence/release-check.json)
