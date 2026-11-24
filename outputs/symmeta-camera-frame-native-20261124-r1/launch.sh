@@ -42,6 +42,7 @@ PY
     export FLUFFY_GPU_EXECUTION=baige JAX_PLATFORMS=cuda CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES-0}
     export __EGL_VENDOR_LIBRARY_FILENAMES="$root/setups/libero90-full-action-20261119-r1/desktop-libs02/nvidia-vendor.json"
     unset LIBGL_ALWAYS_SOFTWARE GALLIUM_DRIVER EGL_PLATFORM
+    export CAMNATIVE_PREPARED_PANEL="$shared/$8/panel.json"
     cmd=("$python" -Bu) ;;
   *) exit 2 ;;
 esac

@@ -9,7 +9,7 @@ from statistics import mean
 
 import numpy as np
 
-from protocol import MANIFEST_SHA, RELEASE_PIN, atomic, checked, digest, encode, parse, require
+from protocol import MANIFEST_SHA, RELEASE_PIN, atomic, digest, encode, parse, require
 
 
 def fp(a):

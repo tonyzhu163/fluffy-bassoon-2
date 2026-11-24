@@ -75,18 +75,17 @@ def episode(ev, sim, base, row, name, resets, cpu):
 
 
 def fixtures(rows):
-    picked = set()
     out = []
     for r in rows:
-        key = r["task_shard"], r["query_layout"]
-        if key in picked:
+        t, m = r["task_shard"], r["slot"] - 4
+        if m not in (t, (t+2)%8):
             continue
-        picked.add(key)
         # Known historical predictions exercise yaw-only changes on each native release layout.
         c = dict(r["nominal"])
         out.append(dict(r, study="cpu_fixture", angle_deg=0, corrections={
             "A":dict(c, yaw_deg=r["historical_symmeta"]["yaw_deg"]), "B":c}))
-    require(len(out) == 16, "two official layouts per task")
+    require(len(out) == len({(r["task_shard"],r["query_layout"]) for r in out}) == 16 and
+            len({r["embodiment"] for r in out}) == 8, "two official layouts per task, all eight actual command maps")
     return out
 
 
@@ -104,6 +103,9 @@ def main(out, pin, mode, release, sha):
                  cpu_fixture=cpu, runtime=runtime, release_sha256=sha, rows=chosen)
     raw = encode(panel)
     atomic(out/"panel.json", raw)
+    if mode == "gpu":
+        prepared = parse(Path(os.environ["CAMNATIVE_PREPARED_PANEL"]).read_bytes())
+        require(prepared == panel, "CPU-prepared panel differs from the GPU input panel")
     if mode == "prepare":
         print(f"Verified {len(chosen)} real post-view prediction pairs", flush=True)
         return

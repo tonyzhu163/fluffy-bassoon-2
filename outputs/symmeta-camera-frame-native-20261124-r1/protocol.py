@@ -94,7 +94,7 @@ def historical():
         ref = panel["refs"][r["task_shard"]]
         require(bank["horizon"] == ref["horizon"] and spec.regime == r["regime"], "official case")
         result.append(dict(**r, query=query, true_map={k: getattr(spec, k) for k in IDENTITY},
-                           nominal=old["tuned"], historical_symmeta=old["symmeta"], reference=bank,
+                           original_tape=str(tape), nominal=old["tuned"], historical_symmeta=old["symmeta"], reference=bank,
                            support_physics=old["support_physics"], prompt=ref["prompt"],
                            action_schema=ref["action_schema"], model_class=ref["model_class"]))
     return result, runtime
