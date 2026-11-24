@@ -3,6 +3,8 @@
 
 ## What changed our prior
 
+The benchmark supports two different problem statements. With an imposed command-interface change, an uncorrected UR5e π₀.₅ retry solved 8/96 queries, the seed-41 calibrated retry 76/96, and the supplied exact inverse 82/96. This establishes that knowing the command interface can preserve useful behavior in a frozen policy. With the same Cartesian interface on different arms, unadapted π₀.₅ solved 8/8 nominal UR5e starts and 6/8 on both IIWA and Kinova3. On six fresh Kinova3 starts, untreated, planar-corrected and 3-D-corrected outcomes were 4/6, 4/6 and 3/6. The broad claim that body changes generally reduce to a calibratable command map remains open. [Command-interface table and native-body control](../../papers/icml-xemb-sysid/main.tex)
+
 | Problem | Hypothesis | Matched test | Update |
 |---|---|---|---|
 | The original Perceiver failed on novel command rotations. | A geometric inner loop is necessary on these rotations. | Tune the Perceiver on source arms, freeze both readers, then score held-out command shifts and native retries. | Drop necessity. Tuned Perceiver reached 527/768 native successes and SymMeta 533/768. Each of the four panel intervals included zero. [Training and task results](../symmeta-perceiver-retry-20261123-r1/RESULT.md) |
