@@ -1,0 +1,168 @@
+{
+  "executed_sha256": {
+    "judge": "5f4f3c6b505584d2adbbb2a1967d4cfe30d040ebe6d099d189b0a09045c413ef",
+    "judge_qualify": "8ae9fd030424763af0f9e6cc3584ac02c8773e8713ae1613abbab16c4661e74d",
+    "score": "65df991526b3ceecd5f67756c00651d1261e8de2447323369aace8ff74847e58"
+  },
+  "fixture": {
+    "gate": {
+      "b": 1.0,
+      "c": 0.97,
+      "hard_default": 0,
+      "s": 40.0
+    },
+    "independent_fold_error_checks": 144,
+    "matrix": [
+      [
+        0.8571673007021124,
+        0.5150380749100542
+      ],
+      [
+        -0.515038074910054,
+        0.8571673007021123
+      ]
+    ],
+    "n": 24,
+    "probes": {
+      "ignored_flow": {
+        "advantage": {
+          "mean_absolute_change": null,
+          "n_changed_gt_1e_10": 0,
+          "n_common": 0,
+          "n_validity_changed": 24
+        },
+        "emitted_yaw": {
+          "mean_absolute_change": 20.0,
+          "n_changed_gt_1e_10": 24,
+          "n_common": 24,
+          "n_validity_changed": 0
+        },
+        "fold_errors": {
+          "mean_absolute_change": null,
+          "n_changed_gt_1e_10": 0,
+          "n_common": 0,
+          "n_validity_changed": 144
+        },
+        "weight": {
+          "mean_absolute_change": 0.5,
+          "n_changed_gt_1e_10": 24,
+          "n_common": 24,
+          "n_validity_changed": 0
+        }
+      },
+      "next_chunk_pixels": {
+        "advantage": {
+          "mean_absolute_change": 40.00000000000001,
+          "n_changed_gt_1e_10": 12,
+          "n_common": 24,
+          "n_validity_changed": 0
+        },
+        "emitted_yaw": {
+          "mean_absolute_change": 20.0,
+          "n_changed_gt_1e_10": 12,
+          "n_common": 24,
+          "n_validity_changed": 0
+        },
+        "fold_errors": {
+          "mean_absolute_change": 100.0,
+          "n_changed_gt_1e_10": 144,
+          "n_common": 144,
+          "n_validity_changed": 0
+        },
+        "weight": {
+          "mean_absolute_change": 0.5,
+          "n_changed_gt_1e_10": 12,
+          "n_common": 24,
+          "n_validity_changed": 0
+        }
+      },
+      "rotated_command": {
+        "advantage": {
+          "mean_absolute_change": 39.99999999999999,
+          "n_changed_gt_1e_10": 12,
+          "n_common": 24,
+          "n_validity_changed": 0
+        },
+        "emitted_yaw": {
+          "mean_absolute_change": 20.0,
+          "n_changed_gt_1e_10": 12,
+          "n_common": 24,
+          "n_validity_changed": 0
+        },
+        "fold_errors": {
+          "mean_absolute_change": 70.0,
+          "n_changed_gt_1e_10": 144,
+          "n_common": 144,
+          "n_validity_changed": 0
+        },
+        "weight": {
+          "mean_absolute_change": 0.5,
+          "n_changed_gt_1e_10": 12,
+          "n_common": 24,
+          "n_validity_changed": 0
+        }
+      }
+    },
+    "toy_bootstrap_draws": 32,
+    "toy_concordance_delta": {
+      "ci95": [
+        0.5,
+        0.5
+      ],
+      "draws": 32,
+      "mean": 0.5
+    },
+    "toy_mae": {
+      "ci95": [
+        0.0,
+        1.3322676295501752e-15
+      ],
+      "draws": 32,
+      "mean": 0.0
+    }
+  },
+  "host": "aibox-r855e239307b-6bfb688cdd-lz2dx",
+  "numpy": "1.26.4",
+  "opencv": "4.11.0",
+  "opencv_threads": 1,
+  "platform": "Linux-5.15.0-151-generic-x86_64-with-glibc2.35",
+  "pooling_module_sha256": "f76d1484fce5b7a82fdf0aa670a2c3cdb8cf1f820f62e99fdc07007021c9a75e",
+  "python": "3.11.17",
+  "qualification_seconds": 2.462,
+  "source_fit_qualification": {
+    "archive_sha256": "65c079f1051e347d781d950643113be9d4de6b92e952e373503d78d0eeb3b82e",
+    "before_before_nonzero": 0,
+    "by_arm": {
+      "Panda": 112,
+      "Sawyer": 112
+    },
+    "fit_physical_traces": 224,
+    "fit_tasks": [
+      "libero_10/2",
+      "libero_10/9",
+      "libero_goal/5",
+      "libero_goal/7",
+      "libero_object/2",
+      "libero_object/6",
+      "libero_spatial/2",
+      "libero_spatial/4"
+    ],
+    "matrix": [
+      [
+        0.08630515940394252,
+        -0.8059064345454281
+      ],
+      [
+        0.9583617881351778,
+        -0.052082577073328154
+      ]
+    ],
+    "max_ols_difference": 6.661338147750939e-16,
+    "note": "Only archived judge-fit tapes opened. No candidate or calibration/evaluation outcomes.",
+    "ols_rank": 2,
+    "ordered_tapes_sha256": "e586511ebf12b96f7d23df9b198217609609bd2048250e3406a55391677e2a7b",
+    "recorded_chunks": 672,
+    "traces_sharing_adjacent_boundary": 224,
+    "valid_fit_chunks": 633
+  }
+}

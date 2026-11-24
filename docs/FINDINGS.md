@@ -1,5 +1,11 @@
 # Verified findings
 
+## Frozen cross-embodiment adaptation on new arms
+
+Under identical commands, IIWA and UR5e differed in whether they held an object on 2 of 8 tasks. The carrying hand had the wider measured aperture on all 14 opposing windows. Across three target arms and five informative tasks, adding central wrist-image motion features produced Brier loss 0.0956 versus 0.0682 from proprioception (paired difference +0.0274, 95% task interval −0.0349 to +0.0756). Those 146 windows came from 17 sustained events. These data support testing which object is held as a separate question. [Physical labels, arm swap and reader comparisons](../outputs/frozen-transfer-object-20261124-r1/RESULT.md)
+
+A source-fitted vertical timing correction following gripper closure gave 0.491 mm/control held-out tracking error, compared with 0.473 for static gain and 0.492 for the same timing correction shifted within the command block. Its paired difference from static was +0.018 mm/control (95% whole-task interval −0.002 to +0.034) across two new arms, three held-out tasks and two layouts. Both static and timing completed 2/12 fixed-tape replays. The result deprioritizes this particular timing rule for a live-policy trial. [Matched simulator interventions](../outputs/frozen-transfer-timing-20261124-r1/RESULT.md)
+
 ## Public camera history identifies first drawer opening on fresh Kinova3 simulator resets
 
 A four-patch camera reader fitted on 30 human Panda demonstrations scored 0.0138 Brier on ten held-out demos versus 0.0106 for a source-fitted clock. On four fresh native Kinova3 resets, each executing the same two previously recorded policy command sequences, the reader scored 0.0090 versus 0.0395. The paired Brier reduction was 0.0305 (95% layout bootstrap interval 0.0288–0.0320, conditional on those two sequences). It ranked the open trajectory higher in all 19 same-layout, same-time comparisons with opposite physical labels. Two drawers subsequently reclosed and all eight attempts timed out. A one-replan prompt change passed a native CPU interface check. Its effect on frozen-policy success and the independently registered live-policy starts remain unmeasured. [Results, split and individual predictions](../outputs/frozen-vla-phase-transfer-20261123-r1/RESULT.md)

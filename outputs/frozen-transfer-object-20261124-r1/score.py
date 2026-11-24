@@ -71,7 +71,12 @@ def predict(model,df):
     if "constant" in model:
         return np.full(len(df),model["constant"])
     x = (df[model["cols"]].to_numpy(dtype=float)-model["mean"])/model["scale"]
-    return expit(model["coef"][0] + x @ model["coef"][1:])
+    # A BLAS matvec can change summation order with batch shape. Identical clock
+    # inputs on the two physical branches must give exactly the same probability.
+    logits = np.full(len(df),model["coef"][0],dtype=float)
+    for j,coefficient in enumerate(model["coef"][1:]):
+        logits += x[:,j] * coefficient
+    return expit(logits)
 
 
 def aggregate(df, variables, bout=False):
