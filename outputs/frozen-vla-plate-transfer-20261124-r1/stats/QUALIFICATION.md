@@ -1,0 +1,19 @@
+# Native paired test qualification and planning sensitivity
+
+The statistical design was committed at `a6e41336afbe1c13ac049614aee958b9fe9d3128` before any target policy scoring. The qualified code pin is `502d3dc9684271eb1c7e55409d090a4f554d63c3`. The parent’s extension changes the original 256-case cutoff from .035 to .010. All values below use the binding extended schedule. These are synthetic operating characteristics. [Registration](PLAN.md) · [Machine-readable checks](evidence/qualification.json)
+
+Holding the hypothetical MIXED-minus-STOCK gain at **8⅓ percentage points**, a substantial probability of an inconclusive primary result at 256 remains if the two policies both rescue and lose layouts. The motivating prior result was one rescue across 12 Kinova3 starts on three other tasks. For a hypothetical stock success rate of 8/12, all three following joint outcome distributions are feasible. No pilot observation contributes to the new N.
+
+| Probability of a discordant pair | Rescue probability | Loss probability | Primary benefit detected by 64 | By 128 | By 256 | Still unresolved at 256 |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 1/12 | 1/12 | 0 | 8.29% | 84.54% | 99.98% | 0.02% |
+| 1/4 | 1/6 | 1/12 | 4.09% | 20.25% | 52.12% | 47.88% |
+| 1/2 | 7/24 | 5/24 | 1.94% | 9.21% | 24.36% | 75.63% |
+
+The calculation convolves the trinomial rescue/loss/tie distribution for each new cohort with the mass still unresolved after the preceding look. It allows both signs to cross. The probability of first crossing for harm by 256 is zero in the loss-free scenario, 0.00084% in the second and 0.00719% in the third (up to floating-point roundoff). These probabilities concern the primary alone. Attribution also requires a positive secondary result and depends on a separate, unknown joint outcome law.
+
+Across 2,144 nonempty discordance tables through 64 discordances, rational exact two-sided p-values agreed with SciPy's binomtest. The four reference Clopper–Pearson checks agreed within 5.34×10⁻¹⁵. Under synthetic equal marginals with discordance probabilities 0, 1/12, 1/4, 1/2 and 1, the cumulative false crossing probability through each of the first three looks stayed below its cumulative spend. The analytical union-bound proof covers the full null and every later look. Synthetic trajectories verified native success on the final allowable control, full-horizon failure, rejection of premature failure, and rejection of corrupted endpoints. Gate fixtures exercised harm, earlier secondary crossings that disappeared before the primary opened, continuation after a primary benefit, all four paired cells and duplicate physical starts. [Test and power calculation](qualify.py)
+
+The first bounded CPU attempt exited 1 before release. Its independent interval reference detected swapped beta-shape arguments in the upper bound. The corrected second attempt exited 0 on Baige Linux CPU 31, using zero GPUs. Its source verification and qualification took two seconds on the existing uv Python environment. [First exit](evidence/cpu01-exit.txt) · [Qualified command context](evidence/cpu02-launch.txt) · [Second exit](evidence/cpu02-exit.txt)
+
+The second attempt independently verified the sealed physical manifest, including 256 unique noise streams and physical placements, the indexed candidate seeds, four geometry fingerprints against their prior inventory, and one native pre-policy rejection. Manifest SHA-256 is `b7996a9e110c9ceed9babb081a18476c1dc0b9a8d7e623703f5912031e44bc3f`. Source/target disjointness also receives a direct check against the actual source collection seal when available. At each analysis the program binds the evaluator’s cumulative seal to its native readback, verifies raw per-control rewards and end flags in each newly enrolled HDF5 file, and checks that previous complete prefixes are unchanged. [Enrollment and endpoint implementation](analyze.py)
