@@ -1,0 +1,79 @@
+{
+  "primary": {
+    "pairs_by_task": {
+      "libero_10/8": 94,
+      "libero_goal/3": 12,
+      "libero_goal/6": 15,
+      "libero_object/1": 9,
+      "libero_object/8": 16
+    },
+    "pairs_by_arm": {
+      "IIWA": 31,
+      "Kinova3": 72,
+      "UR5e": 43
+    },
+    "own_carries": 144.0,
+    "cross_carries": 2.0,
+    "diagnostic_unfitted_aperture_ranks_carried_higher": 1,
+    "each_loss_reconstructed": true,
+    "task_average_independently_reconstructed": true
+  },
+  "arm_swap": {
+    "pairs_by_task": {
+      "libero_object/8": 13,
+      "libero_spatial/0": 1
+    },
+    "pairs_by_arm": {
+      "IIWA": 14
+    },
+    "own_carries": 13.0,
+    "cross_carries": 1.0,
+    "diagnostic_unfitted_aperture_ranks_carried_higher": 1,
+    "each_loss_reconstructed": true,
+    "task_average_independently_reconstructed": true
+  },
+  "target_originals": 22,
+  "exact_reward_tapes_originals": 18,
+  "target_originals_same_terminal_success": 20,
+  "max_target_wrist_delta_mm": 32.158705004155195,
+  "max_target_finger_delta_mm": 7.593471556901932,
+  "worst_wrist_replays": [
+    {
+      "case": "IIWA-libero_spatial-0-tape14-layout14",
+      "delta_tcp_mm": 32.158705004155195,
+      "delta_jaw_mm": 4.989247769117355,
+      "controls": 183,
+      "archive": 183,
+      "cpu_success": false,
+      "source_success": true
+    },
+    {
+      "case": "Kinova3-libero_10-8-tape16-layout16",
+      "delta_tcp_mm": 12.36070126444176,
+      "delta_jaw_mm": 7.593471556901932,
+      "controls": 390,
+      "archive": 393,
+      "cpu_success": true,
+      "source_success": true
+    },
+    {
+      "case": "Kinova3-libero_goal-3-tape17-layout17",
+      "delta_tcp_mm": 1.8751509586477086,
+      "delta_jaw_mm": 0.40862709283828735,
+      "controls": 300,
+      "archive": 300,
+      "cpu_success": false,
+      "source_success": false
+    },
+    {
+      "case": "UR5e-libero_goal-6-tape14-layout14",
+      "delta_tcp_mm": 0.44004134027628666,
+      "delta_jaw_mm": 0.7000286132097244,
+      "controls": 123,
+      "archive": 123,
+      "cpu_success": true,
+      "source_success": true
+    }
+  ],
+  "censored_crossed_target_trajectories": 13
+}

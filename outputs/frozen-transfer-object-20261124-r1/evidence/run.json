@@ -1,0 +1,50 @@
+{
+  "purpose": "Exploratory diagnostic of physically carried versus genuinely empty closures across native arms",
+  "host": "baige-dev",
+  "cpu_affinity": [
+    32,
+    33
+  ],
+  "gpu_hours": 0,
+  "gpu_submissions": 0,
+  "base_revision": "5d2a96b9059bc0d344e8522c77427c401cfd7e72",
+  "primary_registration_and_collection_revision": "5020d94a5ce0462caa79f361468fc3bf3bf0ea92",
+  "primary_scoring_revision": "3927c3981d74fa257b164ad82278444ffd2dfdeb",
+  "secondary_registration_collection_scoring_revision": "754166ba5843d58af14ab381031210c35407c9e4",
+  "runtime_launcher_revision": "b1cf4be383c928001d5a8af2eb4ef190d043d632",
+  "native_runner_revision": "a8a997e7d06bb131d3f9710204c58e106f0f0904",
+  "libero_pro_2_revision": "e5500c690c1498eca1b7050350654964190cdf70",
+  "checkout_parent": "/mowenjie/fluffy-bassoon-2/setups/symmeta-perceiver-followups-20261123-r1",
+  "remote_output": "/mowenjie/fluffy-bassoon-2/outputs/frozen-transfer-object-20261124-r1/cpu01",
+  "source_only_models_sha256": "42c7bcb75b2bf522b72de9c9ee23053d2507afbd5f0a1311d578db713fdfdfe8",
+  "fitting_windows": {
+    "carried": 61,
+    "empty": 73,
+    "ambiguous_excluded": 25
+  },
+  "sampling_unit": "released layout x arm x donor command tape, keeping paired arms and layouts together within task for uncertainty",
+  "target_pid_or_job": "development-machine CPU via SSH, no scheduler job",
+  "reproduction_from_each_pinned_run_directory": [
+    [
+      "primary_registration_and_collection_revision",
+      "bash cpu.sh capture.py source"
+    ],
+    [
+      "primary_registration_and_collection_revision",
+      "bash cpu.sh capture.py target"
+    ],
+    [
+      "deterministic_readback_revision",
+      "bash cpu.sh score.py"
+    ],
+    [
+      "secondary_registration_collection_scoring_revision",
+      "bash cpu.sh arm_swap.py capture"
+    ],
+    [
+      "deterministic_readback_revision",
+      "bash cpu.sh arm_swap.py score"
+    ]
+  ],
+  "deterministic_readback_revision": "ce517ebca1eb17e681b049dd687086f3b74915cf"
+}
