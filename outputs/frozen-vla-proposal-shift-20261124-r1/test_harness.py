@@ -345,3 +345,22 @@ def test_panel_rejects_unmatched_reset_or_incomplete_outcome(lanes):
         panel.verify(dict(record, untreated_opening_proposal_sha256="other"), record)
     with pytest.raises(ValueError, match="Incomplete native outcome"):
         panel.verify(dict(record, native_rewards=record["native_rewards"][:-1]), record)
+
+
+def test_public_view_feeds_the_real_packer_on_an_archived_kinova_frame(monkeypatch):
+    """Archived Kinova3 layout 14 reset frame. The image resize is stubbed: openpi_client is cluster-only."""
+    import types
+
+    monkeypatch.undo()  # restore the real packer
+    tools = types.SimpleNamespace(convert_to_uint8=lambda image: image, resize_with_pad=lambda image, h, w: image)
+    monkeypatch.setitem(sys.modules, "openpi_client", types.SimpleNamespace(image_tools=tools))
+    path = Path(__file__).resolve().parents[1] / "frozen-vla-source-view-20261123-r1/evidence/cpu01/s14-t000.npz"
+    with np.load(path) as data:
+        raw = {key: data[key] for key in ("robot0_joint_pos", "robot0_joint_vel", "robot0_eef_pos",
+                                          "robot0_eef_quat_xyzw", "robot0_gripper_qpos")}
+        raw.update(agentview_image=data["raw_agentview"], robot0_eye_in_hand_image=data["raw_robot0_eye_in_hand"])
+    seen = harness.public(raw)
+    assert set(seen) == set(raw) - {"robot0_joint_vel"}
+    packed, reference = (ur5e_motor.to_openpi_observation(value, TASK) for value in (seen, raw))
+    assert harness.input_digests(packed) == harness.input_digests(reference)
+    assert packed["observation/state"].shape == (8,) and packed["observation/image"].shape == (256, 256, 3)
