@@ -11,7 +11,7 @@
 
 - [x] The related work identifies the published rotation, gain and latency experiments and the success of target-fitted linear calibration on the two static shifts. The appendix documents the target-data budgets for the released rotation condition and the passive visual reader. [Published Table 1](https://arxiv.org/html/2611.20244v1#S4)
 
-- [x] Reproduced the released ReGround 90° rotation cell and tested frozen streaming SymMeta on all 1,400 assigned episodes. The paper reports success, unsafe incidence, calibration budgets and opening agreement. [Full result](../../outputs/reground-rotation-reference-20261123-r1/RESULT.md)
+- [x] Reproduced the released ReGround 90° rotation cell and tested frozen streaming SymMeta on all 1,400 assigned episodes. The paper reports success, unsafe incidence, calibration budgets and opening agreement. A separate calibrated retry on 280 released seed-0 starts reports the paired effect of adding wrist correction. [Single-attempt result](../../outputs/reground-rotation-reference-20261123-r1/RESULT.md) · [Calibrated retry result](../../outputs/reground-retry-wrist-20261123-r1/RESULT-RETRY02.md)
 
 ## Open experiments
 

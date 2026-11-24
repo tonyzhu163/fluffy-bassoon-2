@@ -379,6 +379,8 @@ All 1,400 initial robot states and policy-noise keys agreed. Seven assignments a
 
 \paragraph{Small target-data budgets.} We refitted the released forward and inverse models on nested prefixes of 15, 100 and 1,000 target transitions, retaining the 100,000-transition nominal model for each seed. The released episode split assigns some of the budget to validation. At 15 transitions, seeds 0 and 3 use six and nine transitions for gradient updates, respectively. Each 15-transition budget draws on two logged trajectories. The frozen base policy and all fitted controllers saw the same 32 test starts (four per task). At seed 0, ReGround succeeded on 0, 0, 9 and 32 starts at budgets 15, 100, 1,000 and 10,000. Seed 3 succeeded on 0, 5, 19 and 26. All evaluated opening action prefixes matched. Pooling the two fixed seeds, the small-budget success deficits relative to 10,000 transitions were 90.6, 82.8 and 46.9 percentage points. The respective 95\% paired intervals were $[85.9,95.3]$, $[76.6,89.1]$ and $[37.5,56.3]$, resampling starts within each fixed task with both seeds together. The results concern the released sampling and fitting protocol. A single contiguous passive support has a different distribution.
 
+\paragraph{Wrist correction on calibrated retries.} For each of the 280 released seed-0 Panda task--starts, the frozen source-trained SymMeta reader (seed 41) used 15 uncorrected controls (0.75\,s) on a separate support layout, adding one reset and ten settling controls. The support attempts had zero unsafe flags. With matched opening inputs and proposals, both retries used the same fixed translation and gripper corrections from control 1. The wrist arm also inverse-rotated angular $xy$ by the estimated yaw. Native success rose from 181/280 to 230/280 (60 gains, 11 losses, $+17.50$ percentage points, 95\% interval $[13.57,21.43]$). Unsafe incidence fell from 121/280 to 91/280 ($-10.71$ points, $[-15.00,-6.43]$). Both intervals resample paired starts within each fixed task. Success rose from 0/35 to 32/35 on \texttt{goal\_2} and fell from 35/35 to 34/35 on \texttt{goal\_1}. The single-attempt streaming protocol also differs in support, correction onset and estimate updates.
+
 \subsection{Changing the simulated arm on the native command interface}
 \label{sec:native-interface}
 We also changed the arm while preserving the Cartesian controller, gripper and command frame. On the eight nominal layout-13 queries, unadapted $\pi_{0.5}$ succeeded on 8/8 for UR5e and 6/8 each for IIWA and Kinova3. Both missed the drawer-and-bowl and two-moka-pot tasks. We selected these tasks and one previously successful task, cream cheese into the bowl, and evaluated two fresh layouts per task. A transfer experiment fitted planar and full 3D translation corrections from 15 target controls on a separate layout, using trusted metric tool positions and a source motion model estimated on Panda and Sawyer. On the six new starts, the same frozen policy succeeded on 6/6 for Panda, 4/6 for untreated Kinova3, 4/6 with the planar correction and 3/6 with the 3D correction. Both adapters rescued the same drawer start. The 3D adapter lost both untreated moka-pot successes. All initial Kinova3 proposals, inputs and policy-noise draws matched within these comparisons.
@@ -451,7 +453,7 @@ Across the three $\pi_{0.5}$ arms, the Perceiver-minus-SymMeta OOD difference wa
 
 \begin{figure}[!ht]
   \centering
-  \includegraphics[width=0.95\textwidth]{figures/fig6_fewshot_sft_vs_sysid.pdf}
+  \includegraphics[width=0.88\textwidth]{figures/fig6_fewshot_sft_vs_sysid.pdf}
   \caption{\textbf{Demonstration-fitted action adapters vs.\ SymMeta on UR5e ($\pi_{0.5}$).} \textbf{(a)} Native successes by number of successful oracle demonstrations per shift. \textbf{(b)} Native successes on eight tasks at each of four OOD shifts. SymMeta, oracle and brightness-translation use the seed-41 panel. The one-demo linear adapter uses the same query resets with separate policy-noise draws.}
   \label{fig:fewshot}
 \end{figure}
@@ -460,7 +462,7 @@ Across the three $\pi_{0.5}$ arms, the Perceiver-minus-SymMeta OOD difference wa
 \label{sec:extra}
 \begin{figure}[!ht]
   \centering
-  \includegraphics[width=0.9\textwidth]{figures/fig2_scaling_law.pdf}
+  \includegraphics[width=0.80\textwidth]{figures/fig2_scaling_law.pdf}
   \caption{\textbf{Offline identification under the discrete training-shift sweep.} Five models share the sweep schedule, with three seeds at each of seven values of $M$. Bands show one standard deviation across seeds on the 64 recorded UR5e OOD supports.}
   \label{fig:scaling}
 \end{figure}
@@ -496,7 +498,7 @@ The nine methods comprise the exact oracle, unadapted policy, passive \texttt{BA
 
 \begin{figure}[!ht]
   \centering
-  \includegraphics[width=0.98\textwidth]{figures/fig5_pro2_visual_stress.pdf}
+  \includegraphics[width=0.88\textwidth]{figures/fig5_pro2_visual_stress.pdf}
   \caption{\textbf{Five LIBERO-Pro2.0 perturbations crossed with imposed command settings on UR5e.} \textbf{(A)} Success on each perturbation. \textbf{(B)} Mean yaw error, including \texttt{S15}, where the frozen VLA fails even with the exact transform.}
   \label{fig:pro2}
 \end{figure}
