@@ -19,7 +19,7 @@ def wrap(a):
     return (a+180)%360-180
 
 
-def validation(p, bank, controls):
+def validation(p, bank, controls, get_view=gather):
     stats, errors = [], []
     n = len(controls['valid'])
     for j, pose in enumerate(VALIDATION+EXTRA_VAL):
@@ -27,7 +27,7 @@ def validation(p, bank, controls):
         for start in range(0,n,32):
             idx = np.minimum(np.arange(start,start+32), n-1)
             b = {k:controls[k][idx] for k in SENSOR}
-            b.update(gather(bank,j,idx))
+            b.update(get_view(bank,j,idx))
             yaw.extend(decode(infer(p,b))[0][:min(n-start,32)])
         err = np.abs(wrap(yaw-controls['yaw_deg']))
         stats.append(dict(pose=pose,mae=float(err.mean())))
@@ -35,7 +35,7 @@ def validation(p, bank, controls):
     return stats,np.stack(errors)
 
 
-def train(out,cache,extra):
+def train(out,cache,extra,arms=('B','A'),get_view=gather):
     assert jax.default_backend()=='gpu' and len(jax.devices())==1
     probe=read(out/'gpu.json')
     name=probe['devices'][0]['cuda_name'].upper()
@@ -52,8 +52,9 @@ def train(out,cache,extra):
     val = {k:v for k,v in np.load(cache/'val-control.npz').items()}
     records, paths, exposure = [],{},{}
     checks = (1000,2000,2500,3500,4500,5000)
-    for arm in ('B','A'):
-        bank, val_bank = joined('train',arm), joined('val',arm)
+    for arm in arms:
+        representation = 'B' if arm == 'C' else arm
+        bank, val_bank = joined('train',representation), joined('val',representation)
         for seed in pr7.SEEDS:
             start = time.monotonic()
             rng = np.random.default_rng(seed*10007+31)
@@ -72,12 +73,12 @@ def train(out,cache,extra):
                 for v in (idx,pose,*labels.values()):
                     digest.update(v.tobytes())
                 obs = {k:b[k] for k in SENSOR}
-                obs.update(gather(bank,pose,idx))
+                obs.update(get_view(bank,pose,idx))
                 p,state,loss = step(p,state,obs,labels)
                 if i in checks:
                     l = float(loss)
                     assert np.isfinite(l)
-                    stats, err = validation(p,val_bank,val)
+                    stats, err = validation(p,val_bank,val,get_view)
                     np.save(out/f'val-{arm}-{seed}-{i}.npy',err)
                     records.append(dict(arm=arm,seed=seed,steps=i,loss=l,poses=stats,
                                         mae=float(err.mean()),seconds=time.monotonic()-start))
@@ -93,7 +94,8 @@ def train(out,cache,extra):
             ex=digest.hexdigest()
             assert exposure.setdefault(seed,ex)==ex
         del bank,val_bank
-    mean = {n:float(np.mean([r['mae'] for r in records if r['arm']=='B' and r['steps']==n])) for n in (2500,5000)}
+    selection_arm = 'B' if 'B' in arms else arms[0]
+    mean = {n:float(np.mean([r['mae'] for r in records if r['arm']==selection_arm and r['steps']==n])) for n in (2500,5000)}
     selected = min(mean,key=mean.get)
     write(out/'sealed.json',dict(steps=selected,source_B_mean=mean,params_per_arm=params,
           source=seal['source'],training_exposures=exposure,checkpoint_sha256=paths,

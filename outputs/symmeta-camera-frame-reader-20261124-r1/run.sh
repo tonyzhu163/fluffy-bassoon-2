@@ -26,9 +26,9 @@ start=$(date +%s)
 trap 'rc=$?; echo "$rc $(date +%s) $start" > "$out/exit.txt"' EXIT
 echo "$pin $(hostname) $mode $attempt" > "$out/launch.txt"
 df -h "$out" > "$out/storage.txt"
-if [[ $mode == fit || $mode == physical-gpu ]]; then
+if [[ $mode == fit || $mode == physical-gpu || $mode == blind ]]; then
     [[ $(hostname) == job-* ]]
-    if [[ $mode == fit ]]; then
+    if [[ $mode == fit || $mode == blind ]]; then
         [[ -s "$run/${4:?prepared bank}/bank/ready.json" ]]
     else
         [[ -s "$run/${4:?sealed fit}/sealed.json" && -s "${5:?physical bank}" ]]
@@ -44,13 +44,21 @@ if [[ $mode == fit || $mode == physical-gpu ]]; then
     date +%s > "$out/gpu-start.txt"
     "$root/setups/robocasa365-native-20261101-r1/env/bin/python" -Bu "$code/scripts/[train]gpu_probe.py" \
        --expected-count 1 --purpose training --baige-container --baige-exclusive-training --output "$out/gpu.json" > "$out/probe.log" 2>&1
-    if [[ $mode == fit ]]; then
-        "$py" -Bu "$here/train.py" train "$run/$4/bank" "$out" "$run/${5:?off-axis prep}/bank" > "$out/train.log" 2>&1
-        "$py" -Bu "$here/evaluate.py" digital "$out" "$out" > "$out/digital.log" 2>&1
-    else
-        "$py" -c 'import jax; assert jax.default_backend() == "gpu" and len(jax.devices()) == 1'
-        "$py" -Bu "$here/evaluate.py" physical "$run/$4" "$out" "$5" > "$out/run.log" 2>&1
-    fi
+    case "$mode" in
+        blind)
+            "$py" -Bu "$here/augmentation.py" fit "$out" "$run/$4/bank" "$run/$5/bank" "$run/${6:?primary fit}" > "$out/train.log" 2>&1
+            "$py" -Bu "$here/augmentation.py" digital "$out" "$out" "$run/$6/digital-predictions.json.gz" > "$out/digital.log" 2>&1
+            "$py" -Bu "$here/augmentation.py" physical "$out" "$out" "$run/${7:?primary physical}/physical-predictions.json.gz" "${8:?physical bank}" > "$out/physical.log" 2>&1
+            ;;
+        fit)
+            "$py" -Bu "$here/train.py" train "$run/$4/bank" "$out" "$run/${5:?off-axis prep}/bank" > "$out/train.log" 2>&1
+            "$py" -Bu "$here/evaluate.py" digital "$out" "$out" > "$out/digital.log" 2>&1
+            ;;
+        physical-gpu)
+            "$py" -c 'import jax; assert jax.default_backend() == "gpu" and len(jax.devices()) == 1'
+            "$py" -Bu "$here/evaluate.py" physical "$run/$4" "$out" "$5" > "$out/run.log" 2>&1
+            ;;
+    esac
     date +%s > "$out/gpu-end.txt"
 else
     export JAX_PLATFORMS=cpu CUDA_VISIBLE_DEVICES="" NVIDIA_VISIBLE_DEVICES=void
