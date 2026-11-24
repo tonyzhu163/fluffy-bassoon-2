@@ -1,0 +1,8 @@
+STATUS=READY_PARENT_ONLY_RESUME_FROM_VERIFIED_STEP_60
+PIN=7f749ae21b8d74ad58536c00ae4aafd5ffca45c5
+ATTEMPT=gpu03
+SOURCE_SHA=3e133b69d850318cb20d61549e2f96ce6a7da8548cf05d25af7401ec28047c78
+PRIOR_OPTIMIZER_SHA256=df65496e1c012e7da293a5795bb447cdac9c0baa0c0bce96fb25501a87b09b53
+COMMAND=bash /mowenjie/fluffy-bassoon-2/outputs/frozen-vla-plate-transfer-20261124-r1/fit/code-7f749ae21b8d74ad58536c00ae4aafd5ffca45c5/outputs/frozen-vla-plate-transfer-20261124-r1/fit/launch.sh 7f749ae21b8d74ad58536c00ae4aafd5ffca45c5 gpu03 3e133b69d850318cb20d61549e2f96ce6a7da8548cf05d25af7401ec28047c78 /mowenjie/fluffy-bassoon-2/outputs/frozen-vla-plate-transfer-20261124-r1/fit/gpu02
+One exclusive RTX 4090, 64 GiB, same two active cores. Set scheduler max *90 minutes* to stay under cumulative 2 GPUh fit budget even counting first 32s and second 835s. No changes to scientific inputs. GPU02 printed step 61 before its atomic checkpoint save failed on opening optimizer.part. Native readback of optimizer.msgpack confirms both Adam states and matching contract at step 60. Resume executes 61..96, identical registered seed/epoch order, counts 96 once.
+PFS reported 120 GiB free and 10,202 free inodes initially, then 11,744 free inodes. Fresh creation, write, read and removal of one test file in fit/ passed. Failure occurred opening a fresh inode; no data or checkpoint corruption. Capacity restored; ready for parent to submit now. Please also watch PFS inode capacity; do not remove any other worker's data. No active source contracts were touched. Update fit-submitted.txt on submit.
