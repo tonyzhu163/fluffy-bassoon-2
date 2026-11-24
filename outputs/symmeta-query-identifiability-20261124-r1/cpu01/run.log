@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/setups/symmeta-perceiver-followups-20261123-r1/src-8b24c2dba054/outputs/symmeta-query-identifiability-20261124-r1/score.py", line 290, in <module>
+    main(parser.parse_args().out)
+  File "/mowenjie/fluffy-bassoon-2/setups/symmeta-perceiver-followups-20261123-r1/src-8b24c2dba054/outputs/symmeta-query-identifiability-20261124-r1/score.py", line 272, in main
+    batch = [load_case(arm, suite, task, i, panel, refs, matrices) for i, (suite, task) in enumerate(TASKS)]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/setups/symmeta-perceiver-followups-20261123-r1/src-8b24c2dba054/outputs/symmeta-query-identifiability-20261124-r1/score.py", line 272, in <listcomp>
+    batch = [load_case(arm, suite, task, i, panel, refs, matrices) for i, (suite, task) in enumerate(TASKS)]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/setups/symmeta-perceiver-followups-20261123-r1/src-8b24c2dba054/outputs/symmeta-query-identifiability-20261124-r1/score.py", line 105, in load_case
+    and len(query) <= rec["reset"]["horizon"] and np.array_equal(query[:5], ref["methods"]["raw"]["issued_first_five"])
+                                                                            ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'issued_first_five'
