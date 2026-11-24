@@ -10,8 +10,8 @@ import cv2
 import jax
 import numpy as np
 import eval_wider_family as pr7
-from camera import TRAIN, VALIDATION
-from data import SENSOR, read, write, sha, gather, load_bank, prepare
+from camera import TRAIN, VALIDATION, EXTRA_TRAIN, EXTRA_VAL
+from data import SENSOR, read, write, sha, gather, load_bank, prepare, prepare_extra
 from model import CFG, LABELS, OPT, init, infer, restore, decode, step
 
 
@@ -22,7 +22,7 @@ def wrap(a):
 def validation(p, bank, controls):
     stats, errors = [], []
     n = len(controls['valid'])
-    for j, pose in enumerate(VALIDATION):
+    for j, pose in enumerate(VALIDATION+EXTRA_VAL):
         yaw = []
         for start in range(0,n,32):
             idx = np.minimum(np.arange(start,start+32), n-1)
@@ -35,7 +35,7 @@ def validation(p, bank, controls):
     return stats,np.stack(errors)
 
 
-def train(out,cache):
+def train(out,cache,extra):
     assert jax.default_backend()=='gpu' and len(jax.devices())==1
     probe=read(out/'gpu.json')
     name=probe['devices'][0]['cuda_name'].upper()
@@ -43,12 +43,17 @@ def train(out,cache):
     assert name in ('NVIDIA GEFORCE RTX 4090','NVIDIA RPBZZZ6') or 'RTX PRO 6000' in name
     seal=read(cache/'ready.json')
     assert seal['source']==sha(cache/'source.json')
+    assert read(extra/'ready.json')['source']==seal['source']
+    def joined(split, arm):
+        first = load_bank(cache,split,arm,False)
+        more = load_bank(extra,split,arm,False)
+        return {k:np.concatenate([first[k],more[k]],axis=0) for k in first}
     current = {k:v for k,v in np.load(cache/'train-control.npz').items()}
     val = {k:v for k,v in np.load(cache/'val-control.npz').items()}
     records, paths, exposure = [],{},{}
     checks = (1000,2000,2500,3500,4500,5000)
     for arm in ('B','A'):
-        bank, val_bank = load_bank(cache,'train',arm,True), load_bank(cache,'val',arm,False)
+        bank, val_bank = joined('train',arm), joined('val',arm)
         for seed in pr7.SEEDS:
             start = time.monotonic()
             rng = np.random.default_rng(seed*10007+31)
@@ -57,13 +62,13 @@ def train(out,cache):
             p = init(seed)
             state = OPT.init(p)
             params = sum(x.size for x in jax.tree.leaves(p))
-            prob = np.full(len(TRAIN), .8/(len(TRAIN)-1))
+            prob = np.full(len(TRAIN+EXTRA_TRAIN), .8/(len(TRAIN+EXTRA_TRAIN)-1))
             prob[0] = .2
             for i in range(1,5001):
                 idx = rng.choice(len(current['valid']), size=32, replace=True)
                 b = pr7.relabel({k:v[idx] for k,v in current.items()},pr7.sample_mixed(rng,('family',),32))
                 labels = {k:b[k] for k in LABELS}
-                pose = cameras.choice(len(TRAIN),size=32,p=prob)
+                pose = cameras.choice(len(TRAIN+EXTRA_TRAIN),size=32,p=prob)
                 for v in (idx,pose,*labels.values()):
                     digest.update(v.tobytes())
                 obs = {k:b[k] for k in SENSOR}
@@ -93,19 +98,23 @@ def train(out,cache):
     write(out/'sealed.json',dict(steps=selected,source_B_mean=mean,params_per_arm=params,
           source=seal['source'],training_exposures=exposure,checkpoint_sha256=paths,
           cfg=asdict(CFG),revision=(out/'launch.txt').read_text().split()[0],
-          source_poses=TRAIN,validation_poses=VALIDATION))
+          source_poses=TRAIN+EXTRA_TRAIN,validation_poses=VALIDATION+EXTRA_VAL))
     print('SEALED',selected,flush=True)
 
 
 if __name__=='__main__':
     ap=argparse.ArgumentParser()
-    ap.add_argument('mode',choices=('prepare','train'))
+    ap.add_argument('mode',choices=('prepare','train','extra'))
     ap.add_argument('cache',type=Path)
     ap.add_argument('out',type=Path,nargs='?')
+    ap.add_argument('extra',type=Path,nargs='?')
     a=ap.parse_args()
     cv2.setNumThreads(1)
     if a.mode=='prepare':
         assert os.environ['CUDA_VISIBLE_DEVICES']==''
         prepare(a.cache)
+    elif a.mode=='extra':
+        assert os.environ['CUDA_VISIBLE_DEVICES']==''
+        prepare_extra(a.cache,a.out)
     else:
-        train(a.out,a.cache)
+        train(a.out,a.cache,a.extra)

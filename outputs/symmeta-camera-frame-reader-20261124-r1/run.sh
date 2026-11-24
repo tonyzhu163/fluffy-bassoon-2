@@ -39,7 +39,7 @@ if [[ $mode == fit ]]; then
     date +%s > "$out/gpu-start.txt"
     "$root/setups/robocasa365-native-20261101-r1/env/bin/python" -Bu "$code/scripts/[train]gpu_probe.py" \
        --expected-count 1 --purpose training --baige-container --baige-exclusive-training --output "$out/gpu.json" > "$out/probe.log" 2>&1
-    "$py" -Bu "$here/train.py" train "$run/$4/bank" "$out" > "$out/train.log" 2>&1
+    "$py" -Bu "$here/train.py" train "$run/$4/bank" "$out" "$run/${5:?off-axis prep}/bank" > "$out/train.log" 2>&1
     "$py" -Bu "$here/evaluate.py" digital "$out" "$out" > "$out/digital.log" 2>&1
     date +%s > "$out/gpu-end.txt"
 else
@@ -48,6 +48,7 @@ else
     case "$mode" in
         qualify) "${cmd[@]}" "$here/qualify.py" "$out" > "$out/run.log" 2>&1 ;;
         prepare) "${cmd[@]}" "$here/train.py" prepare "$out/bank" > "$out/run.log" 2>&1 ;;
+        extra) "${cmd[@]}" "$here/train.py" extra "$out/bank" "$run/${4:?base prep}/bank" > "$out/run.log" 2>&1 ;;
         physical) "${cmd[@]}" "$here/evaluate.py" physical "$run/${4:?sealed fit}" "$out" "${5:?qualified bank.json}" > "$out/run.log" 2>&1 ;;
         *) exit 2 ;;
     esac

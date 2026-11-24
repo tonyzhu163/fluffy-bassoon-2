@@ -35,7 +35,8 @@ def tokens(p, b):
     other = jnp.einsum('bij,bhwj->bhwi',b['grid_h'].reshape(n,3,3),grid)
     xy_other = other[..., :2] / other[..., 2:3]
     local = jnp.broadcast_to(xy_other[:,None],(n,k,*xy_other.shape[1:])).reshape(x.shape[:-1]+(2,))
-    x = jnp.concatenate([x, jnp.where(mask, local, 0.), mask.astype(x.dtype)],axis=-1)
+    overlap = mask & jnp.all(jnp.abs(local) <= 1.000001, axis=-1, keepdims=True)
+    x = jnp.concatenate([x, jnp.where(overlap, local, 0.), overlap.astype(x.dtype)],axis=-1)
     v = _apply_res_cnn(p['cnn'], x).reshape(n,k,-1)
     pose = jnp.broadcast_to(b['calibration'][:,None], (n, k, 9))
     return jnp.concatenate([v, b['issued_mean'], 100*b['delta_eef'], 100*b['delta_jaw'], pose], axis=-1)

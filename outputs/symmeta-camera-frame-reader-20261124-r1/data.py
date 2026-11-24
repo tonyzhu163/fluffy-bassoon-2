@@ -5,7 +5,7 @@ import cv2
 import numpy as np
 import eval_wider_family as pr7
 from eval_stage3_scaling import build_collection_plan
-from camera import TRAIN, VALIDATION, digital, frames_of
+from camera import TRAIN, VALIDATION, EXTRA_TRAIN, EXTRA_VAL, digital, frames_of
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
@@ -112,3 +112,11 @@ def prepare(out):
     make_bank(out,'train',tr,TRAIN)
     make_bank(out,'val',val,VALIDATION)
     write(out/'ready.json',dict(source=sha(out/'source.json'),train_poses=TRAIN,val_poses=VALIDATION))
+
+def prepare_extra(out, base):
+    out.mkdir(exist_ok=False, parents=True)
+    tr,val = source(out)
+    assert sha(out/'source.json') == sha(base/'source.json')
+    make_bank(out,'train',tr,EXTRA_TRAIN)
+    make_bank(out,'val',val,EXTRA_VAL)
+    write(out/'ready.json',dict(source=sha(out/'source.json'),train_poses=EXTRA_TRAIN,val_poses=EXTRA_VAL))

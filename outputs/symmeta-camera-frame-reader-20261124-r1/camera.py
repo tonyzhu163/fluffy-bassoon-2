@@ -11,6 +11,10 @@ FULL = np.ones((SIZE, SIZE), np.uint8)
 TRAIN = [(0, 0)] + [(a*s, 0) for a in (12, 35, 60, 80) for s in (-1, 1)]
 TRAIN += [(0, -18), (0, 18), (-35, -18), (-35, 18), (35, -18), (35, 18)]
 VALIDATION = [(0, 0), (-60, 0), (60, 0), (-25, 0), (25, 0), (0, -24), (0, 24)]
+EXTRA_TRAIN = [(roll, orbit, dx, dy) for roll, orbit, dx, dy in (
+    (-12,-18,-16,0), (12,18,16,0), (-12,18,0,-16), (12,-18,0,16),
+    (-35,18,-8,-8), (35,-18,8,8), (35,18,-8,8), (-35,-18,8,-8))]
+EXTRA_VAL = [(-25,-24,-12,6), (25,24,12,-6), (-25,24,6,12), (25,-24,-6,-12)]
 TARGET = [(0, 0)] + [(a, 0) for a in (-90, -45, -20, 20, 45, 90)] + [(0, -30), (0, 30)]
 
 
@@ -27,9 +31,11 @@ def plane_projection(azimuth):
     return k @ np.column_stack([axes[:, 0], axes[:, 1], -axes @ center])
 
 
-def homography(roll, orbit):
+def homography(roll, orbit, dx=0, dy=0):
     roll_h = np.vstack([cv2.getRotationMatrix2D((C, C), roll, 1.), [0, 0, 1.]])
     h = roll_h if orbit == 0 else roll_h @ plane_projection(orbit) @ np.linalg.inv(plane_projection(0))
+    crop = np.array([[1.,0.,dx], [0.,1.,dy], [0.,0.,1.]])
+    h = crop @ h
     return h / h[2, 2]
 
 
@@ -43,10 +49,10 @@ def warp(arr, src_to_dest, fill=127):
                                borderMode=cv2.BORDER_CONSTANT, borderValue=(fill,)*3)
 
 
-def render(frames, roll, orbit):
+def render(frames, roll, orbit, dx=0, dy=0):
     """Only the digital observation renderer can access original reference pixels."""
-    h = homography(roll, orbit)
-    if orbit == 0 and roll % 90 == 0:
+    h = homography(roll, orbit, dx, dy)
+    if orbit == dx == dy == 0 and roll % 90 == 0:
         return np.ascontiguousarray(np.rot90(frames, roll//90, axes=(-3, -2))), FULL.copy(), h
     mask = warp(FULL.astype(np.float32), h, 0) >= 1.
     observed = np.stack([warp(f, h) for f in frames])
