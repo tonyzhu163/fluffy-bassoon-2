@@ -43,7 +43,11 @@ def actions(result, horizon):
 
 
 class SelectorEpisode:
-    """Observe only public inputs. Keep the native audit digest out of decisions."""
+    """Select from public inputs and audit the resulting native command window.
+
+    Candidate windows use the reset action bounds. The executed delta is the
+    largest absolute difference from nominal over simulator-consumed controls.
+    """
 
     def __init__(self, sim, policy, support, boundary, mode, model=None, repeated=False):
         if mode not in (*MENU, "factorized", "generic"):
@@ -77,19 +81,33 @@ class SelectorEpisode:
                 raise ValueError("Unexpected native prompt or robot")
             if first["environment_reproducibility"]["initial_state_fingerprint"] == self.support["physics"]:
                 raise ValueError("Calibration reused the query reset")
+            bounds = first["action_schema"]
+            self.low = np.asarray(bounds["low"], dtype=np.float32)
+            self.high = np.asarray(bounds["high"], dtype=np.float32)
             self.raw = first["observation"]
             self.signals = Signals(self.support, self.raw)
             return spec, first
         if op != "chunk":
             raise ValueError(op)
         step = self.sim.call(op, value)
-        issued = value[:step["steps"]]
+        steps = step["steps"]
+        if not 0 < steps <= len(value):
+            raise ValueError("Simulator step count is outside the submitted command window")
+        issued = value[:steps]
+        # Match this simulator receipt to the decision at the start of this chunk.
+        if self.events and self.events[-1]["control"] == self.elapsed:
+            event = self.events[-1]
+            nominal_prefix = event["nominal_bounded"][:steps]
+            event.update(
+                submitted_steps=len(value), executed_steps=steps, executed_commands=issued.tolist(),
+                executed_delta_linf=float(np.max(np.abs(issued - nominal_prefix))),
+            )
         following = step["observation"]
         if self.elapsed < self.boundary:
             self.prefix.update(array_digest(issued).encode())
         self.signals.observe(self.raw, issued, following)
         self.raw = following
-        self.elapsed += step["steps"]
+        self.elapsed += steps
         return step
 
     def infer(self, item, *, noise):
@@ -98,31 +116,36 @@ class SelectorEpisode:
         if not at_fork and not (self.repeated and self.elapsed > self.boundary):
             return result
         nominal = actions(result, self.horizon)
-        canonical = np.clip(nominal[:5], -1, 1)
+        canonical = np.clip(nominal[:5], self.low, self.high)
+        proposal_digest = array_digest(nominal)
+        noise_digest = array_digest(noise)
         motion, progress = self.signals.features(self.raw, canonical)
         if at_fork:
             self.boundary_record = dict(
                 physics=self.sim.call("fork_digest", None), prefix=self.prefix.hexdigest(),
-                proposal=array_digest(nominal), noise=array_digest(noise),
+                proposal=proposal_digest, noise=noise_digest,
                 motion=np.asarray(motion).tolist(), progress=np.asarray(progress).tolist(),
             )
         branch = self.mode if self.mode in MENU else choose(self.model, motion, progress)
-        event = dict(control=self.elapsed, branch=branch)
-        self.events.append(event)
-        if branch == RAW:
-            return result
+        # Snapshot the nominal decision before a cue can reuse the policy's output buffer.
+        event = dict(control=self.elapsed, branch=branch, nominal_prompt=item["prompt"], noise_sha256=noise_digest,
+                     nominal_proposal_sha256=proposal_digest, nominal_bounded=canonical.tolist())
+        selected = nominal
         if branch == "correct":
-            changed = nominal.copy()
-            changed[:5] = self.signals.correct(self.raw, canonical)
-            return dict(result, actions=changed)
-        if branch != "cue":
+            selected = nominal.copy()
+            selected[:5] = self.signals.correct(self.raw, canonical)
+            result = dict(result, actions=selected)
+        elif branch == "cue":
+            # One re-query on identical observations and noise. Later replans use the released task.
+            event["prompt"] = self.signals.cue(self.raw)
+            result = self.policy.infer(dict(item, prompt=event["prompt"]), noise=noise)
+            selected = actions(result, self.horizon)
+        elif branch != RAW:
             raise ValueError(f"Unexpected selector output {branch!r}")
-        # One re-query on identical observations and noise. The released task and
-        # the simulator's reward, time limit and next observation stay authoritative.
-        event["prompt"] = self.signals.cue(self.raw)
-        replacement = self.policy.infer(dict(item, prompt=event["prompt"]), noise=noise)
-        actions(replacement, self.horizon)
-        return replacement
+        event.update(selected_proposal_sha256=array_digest(selected),
+                     selected_bounded=np.clip(selected[:5], self.low, self.high).tolist())
+        self.events.append(event)
+        return result
 
 
 def rollout(sim, policy, support, case, boundary, mode, model=None, repeated=False):

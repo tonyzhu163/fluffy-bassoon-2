@@ -13,6 +13,7 @@ source "$here/../frozen-vla-native-transfer-20261123-r1/env.sh"
 [[ $(git -C /mowenjie/fluffy-bassoon/third_party/openpi-215abfb rev-parse HEAD) == 215abfb217dbac7d5f1273282331b9b1866c0479 ]]
 export PYTHONPATH="$PYTHONPATH:$here/../embodiment-sawyer-contact-fork-20261120-r1"
 export FLUFFY_GPU_EXECUTION=baige JAX_PLATFORMS=cuda
+export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES-0} NCCL_P2P_DISABLE=1
 export __EGL_VENDOR_LIBRARY_FILENAMES="$libs/nvidia-vendor.json"
 unset LIBGL_ALWAYS_SOFTWARE
 out="$root/outputs/$(basename "$here")/$attempt"
