@@ -181,6 +181,8 @@ def check(pred, bank_path):
             if physical:
                 mv = item["views"][v]
                 observed, alt = read_tape(Path(mv["passive_npz"]))
+                with np.load(mv["passive_npz"],allow_pickle=False) as z:
+                    assert np.float32(item["plane_z_m"])==z["frame0_state"][2]
                 assert all(np.array_equal(controls[k],alt[k]) for k in controls)
                 truth = np.asarray(mv["H_ref_to_view"])
                 true_hash = sha(Path(mv["passive_npz"]).read_bytes())
