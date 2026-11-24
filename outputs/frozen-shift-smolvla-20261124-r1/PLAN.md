@@ -36,3 +36,7 @@ Fresh native reward: `evidence/*.json` episodes from this VM's CPU. CPU fixture:
 ## Budget and stop
 
 CPU only, about 50 minutes of wall time including setup. Stop when the time is used and report exactly which cells ran.
+
+## Amendment 1, before any Kinova3 episode with the amended prompt finished
+
+With the LIBERO-Pro2.0 BASE instruction ("open the top layer of the drawer and put the bowl inside") Panda failed 7 of 7 starts (14, 15, 16, 17, 36, 37, 38) and the one Kinova3 episode (14) also failed. The public LIBERO release, which SmolVLA was trained on, words the task "open the top drawer and put the bowl inside". With that wording Panda solved layout 14 in 183 controls. The panel therefore uses the LIBERO-release wording on every arm through the `prompt` hook (`adapters:LiberoPrompt`, tag `libero-prompt`). Everything else is as registered. The Pro2.0-wording episodes stay in `evidence/raw` and are reported as a prompt-wording result. Two 10-control replanning probes were stopped unfinished to free CPU and are not evidence.
