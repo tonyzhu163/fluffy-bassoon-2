@@ -34,6 +34,7 @@ finish() {
     echo "$code $start $end 1 $((end-start))" > "$attempt/exit.txt"
 }
 trap finish EXIT
+sha256sum "$variant/launch.sh" > "$attempt/launcher.sha256"
 sha256sum "$variant/launch.sh" "$variant/admission.py" "$variant/dispatch.py" "$variant/pairing.py" \
     > "$attempt/paired-reset-code.sha256"
 echo "$RETRY_PIN $HOSTNAME full 1 $start $payload" > "$attempt/launch.txt"

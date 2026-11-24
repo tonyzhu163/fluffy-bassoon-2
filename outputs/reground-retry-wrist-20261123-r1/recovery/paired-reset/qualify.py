@@ -1,10 +1,10 @@
 """One-core Mesa reset qualification and inert scheduling fixtures. No model or scored actions."""
+import argparse
 from contextlib import contextmanager
 import fcntl
 import multiprocessing as mp
 import os
 from pathlib import Path
-import sys
 import time
 from types import SimpleNamespace
 from unittest.mock import patch
@@ -79,7 +79,7 @@ def scheduler(root):
                 cap=plan["pair_cap"], quarantine=progress["quarantined_starts"], exit=code)
 
 
-def resets(root):
+def resets(root, fixtures_only=False):
     import numpy as np
     import pairing
     import retry
@@ -161,7 +161,8 @@ def resets(root):
                 if i == 3 and changed:
                     wrist[79, 153] = 1
                 x = np.zeros(25)
-                if changed and fixture_tools.mode == "physical":
+                if (changed and fixture_tools.mode == "physical" or
+                        self.serial >= 3 and fixture_tools.mode == "cross_draw"):
                     x[0] = 1
                 if changed and fixture_tools.mode == "broad":
                     wrist[80, 153] = 1
@@ -175,7 +176,7 @@ def resets(root):
             fixture_tools.closed += 1
 
     fixtures = {}
-    for mode in ("retry", "cap", "physical", "broad", "external"):
+    for mode in ("retry", "cap", "physical", "broad", "external", "cross_draw"):
         fixture_tools.starts = fixture_tools.closed = 0
         fixture_tools.mode = mode
         work = root / mode
@@ -186,16 +187,20 @@ def resets(root):
             result = pairing.pair(policy, keys, fixture_support, work, 3 if mode == "retry" else 2,
                                   lambda: True, consumer(work, policy, seen), FixturePool)
         except ValueError as exc:
-            assert mode in ("physical", "broad", "external") and "Outside" in str(exc).title()
+            assert mode in ("physical", "broad", "external", "cross_draw") and "outside" in str(exc)
             result = "structural_halt"
         assert result == {"retry": "publishable", "cap": "draw_cap_quarantine"}.get(mode, "structural_halt")
-        assert fixture_tools.closed == fixture_tools.starts == (4 if mode in ("retry", "cap") else 2)
+        assert fixture_tools.closed == fixture_tools.starts == (4 if mode in ("retry", "cap", "cross_draw") else 2)
         if mode == "retry":
             assert (work / "draw001/cleanup.json").is_file() and not (work / "draw003").exists()
             assert ref.read(work / "draw001/images.json")["raw/3/obs/pixels/image2"]["yx"] == [[79, 153]]
             assert ref.read(work / "prequery.json")["ordinal"] == 2
+            assert pairing.verify_prequery(work, keys)["rejected_draws"] == 1
         assert policy.forward == (1 if mode == "retry" else 0)
         fixtures[mode] = result
+
+    if fixtures_only:
+        return dict(fixture_results=fixtures, scored_actions=0, weights_loaded=0)
 
     work = root / "native"
     work.mkdir()
@@ -205,6 +210,7 @@ def resets(root):
     result = pairing.pair(policy, keys, fixture_support, work, 1, lambda: True, consumer(work, policy, seen))
     elapsed = time.monotonic() - begin
     assert result == "publishable", f"One-draw Mesa native reset result: {result}"
+    assert pairing.verify_prequery(work, keys)["rejected_draws"] == 0
     arms = [ref.read(work / "draw001" / f"{arm}-opening.json") for arm in retry.ARMS]
     return dict(fixture_results=fixtures, native_keys=keys, native_result=result,
                 native_seconds=elapsed, native_arm_timings=[a["seconds"] for a in arms],
@@ -213,8 +219,17 @@ def resets(root):
 
 
 if __name__ == "__main__":
-    target = Path(sys.argv[1])
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("target", type=Path)
+    parser.add_argument("--fixtures-only", action="store_true")
+    parser.add_argument("--verify-native", type=Path)
+    args = parser.parse_args()
+    target = args.target
     target.mkdir(exist_ok=True)
     ref.configure()
     admission.write(target / "scheduler.json", scheduler(target))
-    admission.write(target / "reset.json", resets(target))
+    admission.write(target / "reset.json", resets(target, args.fixtures_only))
+    if args.verify_native:
+        import pairing
+        import retry
+        admission.write(target / "native-readback.json", pairing.verify_prequery(args.verify_native, retry.schedule()[54]))

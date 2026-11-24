@@ -3,7 +3,6 @@ from contextlib import ExitStack
 from dataclasses import dataclass
 from hashlib import sha256
 import os
-from pathlib import Path
 import time
 from unittest.mock import patch
 
@@ -43,7 +42,8 @@ def image_diagnostic(left, right, keys, work):
         if key not in left or key not in right:
             continue
         a, b = left[key], right[key]
-        if a.shape != b.shape or a.dtype != np.uint8 or b.dtype != np.uint8 or a.ndim != 3 or a.shape[-1] != 3:
+        if (a.shape != b.shape or a.dtype != np.uint8 or b.dtype != np.uint8
+                or a.ndim != 3 or a.shape[-1] != 3 or not a.size):
             continue
         delta = b.astype(np.int16) - a
         coords = np.argwhere(np.any(delta != 0, axis=2))
@@ -242,7 +242,7 @@ def pair(vla, keys, support, work, cap, admit, consume, pool_factory=retry.Impor
                           baseline_nonwrist=hashes(baseline),
                           arm_opening_sha256=[file_hash(round_dir / f"{arm}-opening.json") for arm in retry.ARMS],
                           decision_seconds=time.monotonic()-begin)
-            if both:
+            if both or any(drift):
                 image = image_diagnostic(a, b, both, round_dir)
                 record["images_sha256"] = file_hash(round_dir / "images.json")
             allowed = not any(drift) and (not both or retryable(a, b, both, image, len(keys)))
@@ -265,6 +265,41 @@ def pair(vla, keys, support, work, cap, admit, consume, pool_factory=retry.Impor
     return "draw_cap_quarantine"
 
 
+def verify_prequery(work, keys):
+    """Read back a complete accepted pair using only the opening, draw and cost receipts."""
+    prequery = ref.read(work / "prequery.json")
+    arms = prequery["arm_receipts"]
+    ref.require(prequery["rule"] == RULE and prequery["keys"] == list(map(list, keys)) and
+                prequery["state"] == "accepted" and not prequery["differences"] and
+                not any(prequery["cross_draw_nonwrist_differences"]) and arms[0] == arms[1],
+                "Published opening is not the exact admitted pair")
+    rounds = sorted(work.glob("draw[0-9]*"), key=lambda path: int(path.name[4:]))
+    ref.require(len(rounds) == prequery["ordinal"] and
+                [p.name for p in rounds] == [f"draw{i:03d}" for i in range(1, len(rounds) + 1)] and
+                rounds[-1].name == prequery["accepted_directory"], "Draw sequence differs")
+    for index, directory in enumerate(rounds):
+        draw = ref.read(directory / "pair.json")
+        accepted = index == len(rounds) - 1
+        mode = "accepted" if accepted else "wrist_rejected"
+        ref.require(draw["state"] == mode and not any(draw["cross_draw_nonwrist_differences"]) and
+                    draw["arm_opening_sha256"] ==
+                    [file_hash(directory / f"{arm}-opening.json") for arm in retry.ARMS],
+                    "Draw digest or ordering differs")
+        if accepted:
+            ref.require(arms == [ref.read(directory / f"{arm}-opening.json")["leaves"] for arm in retry.ARMS],
+                        "Accepted arm digests differ")
+        else:
+            ref.require(ref.read(directory / "cleanup.json")["closed"] and
+                        draw["images_sha256"] == file_hash(directory / "images.json"),
+                        "Rejected draw lacks cleanup or image evidence")
+    with np.load(work / "opening.npz", allow_pickle=False) as tape:
+        fields = set(arms[0]) - {"native_horizon"}
+        ref.require(set(tape.files) == fields | {"proposal"} and
+                    all(arms[0][key] == receipt(tape[key]) for key in fields), "Native opening changed after admission")
+    return dict(prequery_sha256=file_hash(work / "prequery.json"), opening_sha256=file_hash(work / "opening.npz"),
+                rejected_draws=len(rounds)-1)
+
+
 def run_pair(vla, pipe, reader, keys, work, cap, admit):
     with retry.fresh(work, "support", len(keys)) as (pool, meter):
         support = retry.calibrate(vla, pool, pipe, keys, work)
@@ -285,4 +320,7 @@ def run_pair(vla, pipe, reader, keys, work, cap, admit):
             ref.write(work / f"{arm}.json", dict(rows=result.rows, arm=arm, budget=bridge.pool.meter.counts,
                       queries=bridge.queries, opening_sha256=file_hash(work / "opening.npz"), speed_limit=lim))
 
-    return pair(vla, keys, support, work, cap, admit, consume)
+    status = pair(vla, keys, support, work, cap, admit, consume)
+    if status == "publishable":
+        ref.write(work / "paired-reset-verified.json", verify_prequery(work, keys))
+    return status
