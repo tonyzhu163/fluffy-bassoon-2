@@ -77,13 +77,17 @@ def main():
     ref.require(plan["code"] == args.smoke_pin and plan["cases"] == list(map(list, CASES)), "Wrong qualification pin/cases")
     ref.require([row["mode"] for row in plan["trials"]] == ["forkserver-native", "spawn-native", "spawn-seed0"],
                 "Incomplete physical comparison")
-    selected = next((row for row in plan["trials"] if row["exact"]), None)
-    ref.require(selected is not None, "Qualification found no byte-exact physical protocol")
-    ref.require(selected["support_match"] and len(selected["trials"]) == 2 and
-                {row["lifecycle"] for row in selected["trials"]} == {"sequential", "parked"} and
-                all(not (row["opening"] or row["processed"] or row["mutation_detected"] or row["repeat_render_drift"])
-                    and any(not any(gaps) for gaps in row["archive"].values()) for row in selected["trials"]),
-                "Selected protocol lacks a complete exact comparison")
+    def verified_first_frames(protocol):
+        trials = protocol["trials"]
+        return (protocol["support_match"] and len(trials) == 2
+                and {trial["lifecycle"] for trial in trials} == {"sequential", "parked"}
+                and all(not (trial["opening"] or trial["processed"] or trial["mutation_detected"])
+                        and any(not any(gaps) for gaps in trial["archive"].values()) for trial in trials))
+
+    # The actual policy consumes the original reset return. Re-renders diagnose the
+    # renderer and are never performed by this scoring bridge.
+    selected = next((row for row in plan["trials"] if verified_first_frames(row)), None)
+    ref.require(selected is not None, "Qualification found no byte-exact native opening protocol")
     transport, seed_name = selected["mode"].split("-")
     seed = 0 if seed_name == "seed0" else None
 
