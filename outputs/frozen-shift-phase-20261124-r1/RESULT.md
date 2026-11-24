@@ -36,6 +36,7 @@ These are schedules along the **original-prompt** failure trajectories. A held p
 
 - **14 and 15, audit.** The reader agrees with the simulator drawer joint (CPU replay of the same tapes, audit only) on all ten frames. That joint first passes the native open bound at replan 60 on layout 14 and stays open to control 300; on layout 15 the drawer never moves. If the reader keeps agreeing after control 90, layout 14 gets opening 0–60 then placement 60–300, the same as the clock, and layout 15 gets the opening prompt for all 300 controls while the clock asks for placement into a closed drawer from control 60.
 - **36 and 37.** The current reader was not run: these tapes hold scores and image digests, no images. The late returns to "closed" (36 raw at 245, 36 tuned at 185, 37 raw at 170) cannot be told apart from an arm or bowl covering the strip. `phase-reader` and `phase-instant` differ in exactly that case.
+- **Replay caveat.** The frames and the joint trace come from two CPU replays of the same native tape (matching tape digests). On layout 15 the CPU replay drifts from the native run after control 117 (8 mm at the TCP), so the native drawer state later in that episode is not archived.
 - **Reader coverage.** Frames exist only up to control 90 on two layouts. Reader behavior with the arm over the drawer late in an episode is untested on Kinova3.
 
 ## What the native run decides
