@@ -61,7 +61,18 @@ def summary(run, preds):
         assert len(diff)==8 and all(len(ds)==8 for ds in by_task.values())
         rng=np.random.default_rng(1124)
         boots=rng.choice(diff,(20000,8)).mean(1)
-        result.update(per_task_pp=diff.tolist(),A_minus_B_pp=float(np.mean(diff)),
+        # Eight observations per task: convolutions count every possible whole-task resample.
+        task_totals=np.array([sum(by_task[k]) for k in sorted(by_task)],dtype=int)
+        m=task_totals.min()
+        hist=np.bincount(task_totals-m)
+        weights=np.array([1],dtype=np.int64)
+        for _ in by_task:
+            weights=np.convolve(weights,hist)
+        assert weights.sum()==8**8
+        ranks=np.ceil(weights.sum()*np.array([.025,.975])).astype(int)
+        totals=np.searchsorted(weights.cumsum(),ranks)+8*m
+        result.update(exact_paired_95_interval=(100*totals/64).tolist(),
+                      per_task_pp=diff.tolist(),A_minus_B_pp=float(np.mean(diff)),
                       paired_95_interval=np.quantile(boots,[.025,.975]).tolist(),
                       A_only=sum(int(x==1) for v in by_task.values() for x in v),
                       B_only=sum(int(x==-1) for v in by_task.values() for x in v))
