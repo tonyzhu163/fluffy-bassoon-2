@@ -1,0 +1,114 @@
+{
+  "readback": "passed",
+  "reader_host": "aibox-r855e239307b-6bfb688cdd-lz2dx",
+  "records": 32,
+  "pin": "ef165714d626305fa756e10fac2b5f7c45446f1c",
+  "fixture": false,
+  "native_steps": 7739,
+  "sources": {
+    "IIWA34": {
+      "member": "gpu01/episodes/IIWA-34-raw.json",
+      "member_sha256": "a610024dc57b1f8783d3dfe000454414db48b1915f858f3759abb9d700b754c9",
+      "source_controls": 171,
+      "first_positive_index": 106,
+      "cut": 105,
+      "prefix_sha256": "8568a16bb92eb4694c7b5e302b858cb80a8ec0ebc43b56fcd21e51d1a1f90c34",
+      "original_pin": "e15eefb3f76e475acdf0795e2e17ba0e1ee46fae",
+      "initial_grip": -0.9999895691871643
+    },
+    "IIWA35": {
+      "member": "gpu01/episodes/IIWA-35-raw.json",
+      "member_sha256": "c5d8b4ba1a858b1f1c2b245cb1ec447d09439580ff3a1a404724042d4fe37d34",
+      "source_controls": 184,
+      "first_positive_index": 119,
+      "cut": 115,
+      "prefix_sha256": "7920fd9a9b82f745f8227a0936b9ddfd419ebb70f9d6b409f41e0389f6c648d8",
+      "original_pin": "e15eefb3f76e475acdf0795e2e17ba0e1ee46fae",
+      "initial_grip": -1.0
+    }
+  },
+  "contrasts": {
+    "IIWA34-tuned": {
+      "rescues": [
+        40,
+        43,
+        45,
+        46
+      ],
+      "losses": [],
+      "ties": 4,
+      "effect_pp": 50.0,
+      "paired_layout_bootstrap_95_pp": [
+        12.5,
+        87.5
+      ]
+    },
+    "IIWA34-raw": {
+      "rescues": [
+        40,
+        43,
+        45
+      ],
+      "losses": [],
+      "ties": 5,
+      "effect_pp": 37.5,
+      "paired_layout_bootstrap_95_pp": [
+        12.5,
+        75.0
+      ]
+    },
+    "IIWA35-tuned": {
+      "rescues": [
+        40,
+        43,
+        45,
+        46,
+        47
+      ],
+      "losses": [
+        42
+      ],
+      "ties": 2,
+      "effect_pp": 50.0,
+      "paired_layout_bootstrap_95_pp": [
+        0.0,
+        87.5
+      ]
+    },
+    "IIWA35-raw": {
+      "rescues": [
+        40,
+        43,
+        45,
+        47
+      ],
+      "losses": [
+        42
+      ],
+      "ties": 3,
+      "effect_pp": 37.5,
+      "paired_layout_bootstrap_95_pp": [
+        -12.5,
+        87.5
+      ]
+    },
+    "tuned-raw": {
+      "rescues": [],
+      "losses": [
+        46
+      ],
+      "ties": 7,
+      "effect_pp": -12.5,
+      "paired_layout_bootstrap_95_pp": [
+        -37.5,
+        0.0
+      ]
+    }
+  },
+  "successes": {
+    "raw": 3,
+    "tuned": 2,
+    "IIWA34": 6,
+    "IIWA35": 6
+  }
+}

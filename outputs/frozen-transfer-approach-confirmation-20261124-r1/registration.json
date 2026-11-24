@@ -1,0 +1,91 @@
+{
+  "registered_utc": "2026-11-24T04:31:37.655895+00:00",
+  "plan_sha256": "6aa3b10add2298d23b54ba47d82a944369ed47a9531c9bbf3a17dedd9760f9fc",
+  "predecessor_pin": "ef165714d626305fa756e10fac2b5f7c45446f1c",
+  "predecessor_files": {
+    "run.py": "c4e7d4d8a2f28dacbe387fe117e76c4c87ac3499375c2a06d04c93e51bd7db71",
+    "audited_worker.py": "ffabcc5e43e0c3a9bd7afa78f0ece482620bee46d2e2dcd1fdd883b7774a6158",
+    "study.py": "af47434d5fa5226c3fac95816c29539cef9eb9d6363a4dc1604fdee38b4271fd",
+    "job.sh": "f8634d191c922e04c22c3d3b2ebf0d812b04810e971e574b642d10328226a5fd",
+    "portable.py": "879bc4aede1232c0b1a4b17280f5069927ba7c26864e969c086f5ee613895eaa",
+    "evidence/cpu02/qualified.json": "6143b6de827302e639f284b2b5f2e382e5830fde5548bded44d111aa6ebba1b1",
+    "evidence/cpu02/readback.json": "570d893a60ec7e9657df98b614cdb83a1a78311d5237f510b4f0730d83b2cb01"
+  },
+  "release_contract_sha256": "b0270a0d9ecb6ab8a467e702197f33427f0c654107eac5c7b5f9cf97d97dc799",
+  "tasks": {
+    "drawer": {
+      "suite": "libero_goal",
+      "task_id": 3,
+      "prompt": "open the top layer of the drawer and put the bowl inside",
+      "seed_base": 42710300,
+      "bank": {
+        "suite": "libero_goal",
+        "task_id": 3,
+        "shape": [
+          50,
+          79
+        ],
+        "state_bank": "/mowenjie/fluffy-bassoon-2/setups/libero-meta-learning-20261117-r1/simulator-source/libero/libero/init_files/libero_goal/open_the_top_drawer_and_put_the_bowl_inside.pruned_init",
+        "bank_sha256": "1cd5354ade9ab9f323a518515f961df96123b7daeca017df1f62d3e9ff18794f",
+        "row31_fingerprint": "e6f56bcce86687f8d6b032930a15c596d61cbb2158ed81653ba78d6d48d55304",
+        "bddl_sha256": "695545a33399e12e978b1b5682b6ea2181f3289608cad3f063f5bf90f0b87e67",
+        "native_horizon": 300
+      },
+      "archive": "frozen-transfer-donor-20261124-r1/inputs/raw-tapes.tar.gz",
+      "archive_sha256": "5b8b787f7715a5c5ba5eb3a1f16a25d4463222589ca99cac1fd17901d37ee750",
+      "member": "gpu01/episodes/IIWA-34-raw.json",
+      "member_sha256": "a610024dc57b1f8783d3dfe000454414db48b1915f858f3759abb9d700b754c9",
+      "source_query": {
+        "arm": "IIWA",
+        "suite": "libero_goal",
+        "task_id": 3,
+        "variant": "BASE",
+        "init_state_id": 34,
+        "seed": 42710334
+      },
+      "source_pin": "e15eefb3f76e475acdf0795e2e17ba0e1ee46fae",
+      "first_positive": 106,
+      "source_controls": 171,
+      "initial_grip": -0.9999895691871643,
+      "cut": 105,
+      "prefix_bytes_sha256": "a130bd9ed16bf71d01c9f0c0153b2f444a4d2476df4d574585b2df3f58b89242"
+    },
+    "moka": {
+      "suite": "libero_10",
+      "task_id": 8,
+      "prompt": "put both moka pots on the stove",
+      "seed_base": 42700800,
+      "bank": {
+        "suite": "libero_10",
+        "task_id": 8,
+        "shape": [
+          50,
+          47
+        ],
+        "state_bank": "/mowenjie/fluffy-bassoon-2/setups/libero-meta-learning-20261117-r1/simulator-source/libero/libero/init_files/libero_10/KITCHEN_SCENE8_put_both_moka_pots_on_the_stove.pruned_init",
+        "bank_sha256": "44f992e911c84a1340589510ecdaf947a4872966f7678c8364d8bb5d13dc4dac",
+        "row31_fingerprint": "8a8f218db9687a787da24e353b17a7d632717a0282ebf108306e07306fa6c121",
+        "bddl_sha256": "5663c5a0dfd24e5f934304e97fa422eb5a0b8faa8224938e6c278f914ab9f63e",
+        "native_horizon": 520
+      },
+      "archive": "frozen-transfer-progress-20261124-r1/evidence/native01/episodes.tar.gz",
+      "archive_sha256": "e8fbb476e911cb965a4d467607b1ef3cadc1466af9558fad7a5c79d94ed5dc6a",
+      "member": "gpu01-IIWA/episodes/libero_10-8-raw.json",
+      "member_sha256": "b164c6b2c64a9f8a2a0c1edcb529f7ea2094ea28fd2a242d0258005e31054ad6",
+      "source_query": {
+        "arm": "IIWA",
+        "suite": "libero_10",
+        "task_id": 8,
+        "variant": "BASE",
+        "init_state_id": 31,
+        "seed": 41800831
+      },
+      "source_pin": "d70e206a00c6c5d59f190ec4a9b0bc6df2ec82c4",
+      "first_positive": 107,
+      "source_controls": 361,
+      "initial_grip": -1.0,
+      "cut": 105,
+      "prefix_bytes_sha256": "a0a0d3e3122dc057fdd1f298f4b900114969b109e56d3417d1d9b923ed74576f"
+    }
+  }
+}
