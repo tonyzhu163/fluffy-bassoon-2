@@ -1,5 +1,6 @@
 """Use the parent evaluator's native episode, parity checks and replay validator on the crossed panel."""
 import argparse
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -147,11 +148,22 @@ def run(args):
         require(len(jax.devices()) == 1 and jax.devices()[0].platform == "gpu", "one CUDA device")
         # Keep the shared fit-admission checker bound to the parent's held-out test-suite definitions.
         metadata["offline_fit"] = inspect(args.fit, args.fit_sha, args.data_manifest)
-        receipt = json.loads((args.fit/"train-cache.json").read_text())
-        expected = json.loads(args.data_manifest.read_text())["splits"]["train"]["examples"]
-        require(receipt["examples_before_draws"] == receipt["source_dataset_rows"] == expected,
-                "fit did not cover the complete registered train split")
-        metadata["all_source_examples_fitted"] = expected
+        receipt = json.loads((args.fit/"train-inputs.json").read_text())
+        part = json.loads(args.data_manifest.read_text())["splits"]["train"]
+        expected = [[r["id"], t] for r in part["trajectories"] for t in r["t"]]
+        require(receipt["native_train"] and receipt["identities"] == expected and
+                {i for i, _, _ in receipt["draws"]} == set(range(len(expected))), "fit input coverage")
+        fit_report = json.loads((args.fit/"fit.json").read_text())
+        config = json.loads((args.fit/"config.json").read_text())
+        n = len(receipt["draws"])
+        require(n == receipt["rows"] and len(fit_report["epochs"]) == config["epochs"] > 0, "fit completion")
+        for epoch, r in enumerate(fit_report["epochs"]):
+            rng = np.random.default_rng(np.random.SeedSequence([config["seed"], epoch, 193]))
+            order = rng.permutation(n).astype("<i8")
+            require(r["epoch"] == epoch+1 and r["order_sha256"] == hashlib.sha256(order.tobytes()).hexdigest()
+                    and r["batches"] == (n+config["batch"]-1)//config["batch"], "fitted epoch coverage")
+        metadata["all_source_examples_fitted"] = len(expected)
+        metadata["train_inputs_sha256"] = sha(args.fit/"train-inputs.json")
         motor = LockedPolicy.load(args.fit)
     save(args.out/"run.json", metadata)
     before = motor.digests()
