@@ -113,7 +113,6 @@ def episode(sim, base, fixture, q, support, mode, tapes, row_fp, ref, pin):
                    weight_manifest=WEIGHT_SHA, shape=[int(base._model.action_horizon), int(base._model.action_dim)],
                    accepted_reset=attempt, native=rec, env=wire.first["environment_reproducibility"],
                    body=wire.first["model_identity"], calls=wire.calls)
-        verify(obj, tapes)
         return obj
 
 
@@ -159,6 +158,7 @@ def main(out, pin, cpu):
             for m in MODES:
                 rec = episode(sim, base, fixture, q, case["support"], m, tapes, bank[row], group.get("raw"), pin)
                 save(out/"episodes"/f"{row}-{m}.json", rec)
+                verify(rec, tapes)
                 group[m] = rec
                 print(row, m, rec["native"]["controls"], flush=True)
     save(out/("qualified.json" if cpu else "result.json"), summarize(out, pin, cpu))
