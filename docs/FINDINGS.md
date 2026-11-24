@@ -1,5 +1,9 @@
 # Verified findings
 
+## Current drawer state from the fixed BASE camera
+
+A visual cue calibrated on 18 Panda demonstrations removed 20 premature placement cues across 248 archived Kinova3 replans, with zero missed openings. On four controlled Panda layouts it recognized all 16 reclosures. It missed 24 of 192 open frames, all at 0.5 mm beyond the native threshold. [Case-level validation](../outputs/frozen-vla-selector-20261124-r1/drawer-evidence.md)
+
 ## Frozen cross-embodiment adaptation on new arms
 
 Across 256 held-out-arm OOD supports on four arm–policy panels, equal-weight tuned-plus-geometric yaw estimates scored 6.133°, versus 6.132° for two independently seeded tuned Perceivers and 6.433° for one. The cross-architecture difference was +0.001° (paired 95% task interval −0.719° to +0.785°). On eight held-out Panda/Sawyer source tasks the same mixed ensemble had a 2.154° advantage. [Matched ensembles](../outputs/frozen-transfer-ensemble-20261124-r1/RESULT.md) · [Omitted-chunk selection](../outputs/symmeta-omitted-chunk-20261124-r1/SCORE.md)

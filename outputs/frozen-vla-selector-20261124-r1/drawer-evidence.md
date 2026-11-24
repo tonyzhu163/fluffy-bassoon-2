@@ -1,6 +1,6 @@
 # Current drawer opening from the public camera
 
-On the eight archived Kinova3 review trajectories, the new cue removed all 20 premature placement calls in the 248 replans from controls 45 through 195, with zero missed openings. It switched back to “open the top drawer” at the first sampled reclosure on both affected trajectories. The model was frozen on Panda data before this readback. The endpoint is cue correctness on the fixed BASE camera. [Archived cases and model digest](drawer-review-evaluation.json) · [Original review](../pr10-review-20261124-r1/drawer-state.json)
+On the eight archived Kinova3 review trajectories, the new cue removed all 20 premature placement calls in the 248 replans from controls 45 through 195, with zero missed openings. It switched back to “open the top drawer” at the first sampled reclosure on both affected trajectories. The model was frozen on Panda data before this readback. The endpoint is cue correctness on the fixed BASE camera. [Archived cases and model digest](drawer-review-evaluation.json)
 
 | Evaluation | Frames | Previous premature / missed | Current premature / missed | Previous / current mean Brier |
 | --- | ---: | ---: | ---: | ---: |
