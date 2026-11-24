@@ -1,0 +1,68 @@
+{
+  "host": "aibox-r855e239307b-6bfb688cdd-lz2dx",
+  "cpus": [
+    24,
+    25
+  ],
+  "cuda_visible": "",
+  "dataset_root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-cotraining-20261124-r1/data/dataset-v1",
+  "manifest_sha256": "05209732b5e3f04308c8acbef2f6c8c8a2f173673840fdb055e1b094ff7d6f40",
+  "splits": {
+    "train": {
+      "examples": 192,
+      "trajectories": 21,
+      "per_task": {
+        "pick up the ketchup and place it in the basket": 24,
+        "pick up the bbq sauce and place it in the basket": 24,
+        "pick up the alphabet soup and place it in the basket": 24,
+        "pick up the butter and place it in the basket": 24,
+        "pick up the black bowl next to the cookie box and place it on the plate": 24,
+        "pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate": 24,
+        "pick up the black bowl on the ramekin and place it on the plate": 24,
+        "pick up the black bowl between the plate and the ramekin and place it on the plate": 24
+      },
+      "exact_action_chunks": 192,
+      "exact_history_vectors": 192,
+      "exact_camera_arrays_after_stock_conversion": 384,
+      "direct_state_max_abs_error": 8.881784197001252e-16,
+      "exact_state_float32": 192,
+      "history_valid_slots": {
+        "0": 5,
+        "1": 6,
+        "2": 4,
+        "3": 6,
+        "4": 171
+      },
+      "h5_sha256": "eb053669d1c61cdc252f48775f0311739bd86dbdb117ea75d38fee96554a0843"
+    },
+    "heldout": {
+      "examples": 64,
+      "trajectories": 8,
+      "per_task": {
+        "pick up the ketchup and place it in the basket": 8,
+        "pick up the bbq sauce and place it in the basket": 8,
+        "pick up the alphabet soup and place it in the basket": 8,
+        "pick up the butter and place it in the basket": 8,
+        "pick up the black bowl on the ramekin and place it on the plate": 8,
+        "pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate": 8,
+        "pick up the black bowl between the plate and the ramekin and place it on the plate": 8,
+        "pick up the black bowl next to the cookie box and place it on the plate": 8
+      },
+      "exact_action_chunks": 64,
+      "exact_history_vectors": 64,
+      "exact_camera_arrays_after_stock_conversion": 128,
+      "direct_state_max_abs_error": 4.440892098500626e-16,
+      "exact_state_float32": 64,
+      "history_valid_slots": {
+        "0": 4,
+        "1": 1,
+        "2": 1,
+        "3": 2,
+        "4": 56
+      },
+      "h5_sha256": "bf8cba16d4f8f29d9f6e8c5eebc2c0ef290f9550d15628168abadaf1b60e2a13"
+    }
+  },
+  "distinct_full_trajectory_hashes": 29,
+  "reset_and_eviction": "passed"
+}
