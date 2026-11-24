@@ -1,0 +1,1619 @@
+{
+  "job": "job-8la2t917zkhi",
+  "pin": "c51e767770bc48827a1d6d3837cddefe1b7a1d6c",
+  "endpoint_directory": "/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-cotraining-20261124-r1/matched-task/gpu01",
+  "training_revision": "29e9e5e5209db26ce0cbf695387c64cdf79b98fa",
+  "start_utc": "2026-11-24T04:01:08+00:00",
+  "exit_utc": "2026-11-24T04:13:29+00:00",
+  "exit_code": 0,
+  "job_step_seconds": 741,
+  "source_windows": 192,
+  "fixed_digests": {
+    "openpi_revision": "215abfb217dbac7d5f1273282331b9b1866c0479",
+    "checkpoint_manifest": "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170",
+    "normalization": "b3a44bb2810436fb62917decaea58bd4d9110255df527dea21e8fd40c960bd84",
+    "resident_stock": "8c163ce2d7842d52c2ef01070b51b75f0409a99627df70d6c0d19ae33fd4489e",
+    "resident_heads": {
+      "original": {
+        "left": "81571f8421d3e6c66123b7dc1d226a182e64d5aab8d44e5443b442a57f03f324",
+        "right": "85560364e894f8e114595cca63e8638923b0957dcee89765163db11c7ba7e61e",
+        "history_in": "3932ea6c36c011010518c5a646712ec48bc86bcd2de7798b60451cf3dbe56daa",
+        "history_out": "879a327b0043756e5c849cae712f5f5d41d806fda9615caddd6766f7f1810f6b"
+      },
+      "policy_only": {
+        "left": "10c40785000dda994e102b7333cadccee3c19e26b4cc16f8568e575fa498d5e6",
+        "right": "83ce1a8ebe944427be12ffec937f37bda702088a8823df7d927217412b92d41b",
+        "history_in": "3932ea6c36c011010518c5a646712ec48bc86bcd2de7798b60451cf3dbe56daa",
+        "history_out": "879a327b0043756e5c849cae712f5f5d41d806fda9615caddd6766f7f1810f6b"
+      },
+      "adapter_only": {
+        "left": "81571f8421d3e6c66123b7dc1d226a182e64d5aab8d44e5443b442a57f03f324",
+        "right": "85560364e894f8e114595cca63e8638923b0957dcee89765163db11c7ba7e61e",
+        "history_in": "fabb88fea24a14f63eba261b6a0335676148320c1d440c5ca0ff40432ef54027",
+        "history_out": "0719990e6cdab9011b783f229c5d9a0c347cf2a2cbcea11ea66e0b55a7d41fd5"
+      },
+      "joint": {
+        "left": "e5b66060e4a84a4f501700add710849724ed9cfb192dcd5987e2ca96ff7e93a0",
+        "right": "0f911b0689b65db358be7d706d6d7c16b189c6a069c76911fe9d8c262831dd27",
+        "history_in": "0d07d136e356a3772b0ca11bd0e1bbf2b102db0fc6b32dbcb49c54470baeaecc",
+        "history_out": "63da05de1773325ecef270a3580e1c9c8ff5397be5e7069fbe6bbf08850e0cb6"
+      }
+    },
+    "resident_effective_kernels": {
+      "original": "4f4b7f988bca3a487947b940a079079975abe75e66d630835fd0bf06f38139ae",
+      "policy_only": "4dd09e067501c879816ac5298f4616a374488ff14fb707dfad8013f0f81dd325",
+      "adapter_only": "4f4b7f988bca3a487947b940a079079975abe75e66d630835fd0bf06f38139ae",
+      "joint": "3bd66e29fa259df3e731928634558831727612834bb0a20287baf76442a18d6d"
+    },
+    "heads_file": "ecf5cf6424421cabd292764d968728329e252c1d5665715d175182f78b0043e5",
+    "fit_file": "4855546591381f149d7509a6af3d45db32e9e82a732788c8376d504f19417dbc"
+  },
+  "probe_host": "job-8la2t917zkhi-master-0",
+  "cuda_device": "NVIDIA GeForce RTX 4090",
+  "gpu_uuid": "GPU-fef82f68-ae96-1953-48d4-d13266792e1a",
+  "probe_utc": "2026-11-24T04:02:07.532220+00:00",
+  "rows": [
+    {
+      "case": {
+        "suite": "libero_object",
+        "task_id": 0,
+        "init_state_id": 48,
+        "variant": "BASE",
+        "arm": "Kinova3",
+        "seed": 42820048
+      },
+      "modes": {
+        "original": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 195,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            194
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "policy_only": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 209,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            208
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "adapter_only": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 196,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            195
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "joint": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 260,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            259
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "joint_zero": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 225,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            224
+          ],
+          "accepted_reset_attempt": 1
+        }
+      },
+      "same_input_control_10": {
+        "at_control": 10,
+        "current": "73065a29e7b3041347a52211b757013ccbe53dc992a633feea77f0b0ea180281",
+        "proposal": "d3076ab77173b5d7fea08bf5c9844833997ff61b2f3239a0f49adbac3f8a718c",
+        "alternatives": {
+          "zero": {
+            "history": "85d648762dae2ca9e340e36053f69064fe6b2c35923d543ae8340771e085f30c",
+            "proposal": "6eb8e2cbff8ab16430c10b6bc78ac03d549a40d5d67423da31602a1124b17bc2",
+            "first_five_max": 0.005721351056814261,
+            "chunk_max": 0.007062229644298479
+          },
+          "lagged": {
+            "history": "87e512218e39bebf53e7a9cc96d102f50b3e7a1358a4d9c329a0b88fb128a147",
+            "proposal": "e237e742cb435133c9370eb49ff9f09364886128482fc3c7038485fc970335fc",
+            "first_five_max": 0.0020051580361722943,
+            "chunk_max": 0.002134999639391788
+          }
+        }
+      },
+      "stock_parity": {
+        "shape": [
+          10,
+          7
+        ],
+        "stock_sha256": "f9d4ff57fdc407135be4af7567f4f61cf4aa2c45cb109c2e2191a7a0ad33d736",
+        "noop_sha256": "f9d4ff57fdc407135be4af7567f4f61cf4aa2c45cb109c2e2191a7a0ad33d736",
+        "max_abs": 0.0,
+        "noop_engine": "materialized-native",
+        "fused_zero_sha256": "601a74d5174a27de5c275fa7de89e23c3c40ec185cb904f54a9a4d22a052f155",
+        "fused_zero_max_abs": 0.0018535730094908498,
+        "fused_zero_bitwise": false
+      },
+      "differences": {
+        "original": {
+          "first_different_proposal_replan": 0,
+          "first_different_issued_control": 0,
+          "index_base": 0,
+          "first_different_observation_replan": 5,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.0010347962379455566
+        },
+        "policy_only": {
+          "first_different_proposal_replan": 0,
+          "first_different_issued_control": 0,
+          "index_base": 0,
+          "first_different_observation_replan": 5,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.0018306896090507507
+        },
+        "adapter_only": {
+          "first_different_proposal_replan": 0,
+          "first_different_issued_control": 0,
+          "index_base": 0,
+          "first_different_observation_replan": 5,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.0010347962379455566
+        },
+        "joint_zero": {
+          "first_different_proposal_replan": 5,
+          "first_different_issued_control": 5,
+          "index_base": 0,
+          "first_different_observation_replan": 10,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.003624841570854187
+        }
+      },
+      "scene": "2a89c9c17dc8335a05392101210721c0e760b9416502fcf91c2479a7d389ff49",
+      "reset_physics": "a8015e26ae466ebd4fbc8e7e4f66be5a5978ac68be258d2df2f681dff6e6c508",
+      "noise": "c75dd61181c2f0ace31ef31f424c2030bf57f94ee56ee1c678748871ab77dc0a",
+      "renderer": "NVIDIA GeForce RTX 4090/PCIe/SSE2"
+    },
+    {
+      "case": {
+        "suite": "libero_object",
+        "task_id": 0,
+        "init_state_id": 48,
+        "variant": "BASE",
+        "arm": "Panda",
+        "seed": 42820048
+      },
+      "modes": {
+        "original": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 146,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            145
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "policy_only": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 147,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            146
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "adapter_only": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 141,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            140
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "joint": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 147,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            146
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "joint_zero": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 137,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            136
+          ],
+          "accepted_reset_attempt": 1
+        }
+      },
+      "same_input_control_10": {
+        "at_control": 10,
+        "current": "985d6e6627445cce7f030380e6f2d9c9e05dee6bffdaedaf12cd3a0c35653c38",
+        "proposal": "365d979d0d78abc49d1cdf8dd17887d6a7656c2580c32f9fc849fa7cd7886ad6",
+        "alternatives": {
+          "zero": {
+            "history": "85d648762dae2ca9e340e36053f69064fe6b2c35923d543ae8340771e085f30c",
+            "proposal": "980de6d4b3bfdb020bdd043bb640490869c3895109ce0739da590ab3b53abd5c",
+            "first_five_max": 0.0050956273747087,
+            "chunk_max": 0.007565547716617438
+          },
+          "lagged": {
+            "history": "0224bbf09d7a9f96e8955aad6f94f575dd7d61b453759d926c62ee2d735fbac9",
+            "proposal": "9489368b2cd2d7481864dc3fcb2364601828bd68a7d19ddb6dff2dce8bcededd",
+            "first_five_max": 0.0028977538650033496,
+            "chunk_max": 0.004311852979302255
+          }
+        }
+      },
+      "stock_parity": {
+        "shape": [
+          10,
+          7
+        ],
+        "stock_sha256": "4122d2ff62a74ca921fcdec6310424e5bf6916ae0e6f391d327612a4b61cd156",
+        "noop_sha256": "4122d2ff62a74ca921fcdec6310424e5bf6916ae0e6f391d327612a4b61cd156",
+        "max_abs": 0.0,
+        "noop_engine": "materialized-native",
+        "fused_zero_sha256": "30a9ad010de2468d91828b48bb6bd6e2c12bd25e92a08e9cfa65cc50a496500e",
+        "fused_zero_max_abs": 0.0013787379484175855,
+        "fused_zero_bitwise": false
+      },
+      "differences": {
+        "original": {
+          "first_different_proposal_replan": 0,
+          "first_different_issued_control": 0,
+          "index_base": 0,
+          "first_different_observation_replan": 5,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.004576720297336578
+        },
+        "policy_only": {
+          "first_different_proposal_replan": 0,
+          "first_different_issued_control": 0,
+          "index_base": 0,
+          "first_different_observation_replan": 5,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.0036613792181015015
+        },
+        "adapter_only": {
+          "first_different_proposal_replan": 0,
+          "first_different_issued_control": 0,
+          "index_base": 0,
+          "first_different_observation_replan": 5,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.004576720297336578
+        },
+        "joint_zero": {
+          "first_different_proposal_replan": 5,
+          "first_different_issued_control": 5,
+          "index_base": 0,
+          "first_different_observation_replan": 10,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.005175180733203888
+        }
+      },
+      "scene": "2a89c9c17dc8335a05392101210721c0e760b9416502fcf91c2479a7d389ff49",
+      "reset_physics": "737081f1b650ee2582c571077d027f26758580643b60517d59f7c503a6071e20",
+      "noise": "c75dd61181c2f0ace31ef31f424c2030bf57f94ee56ee1c678748871ab77dc0a",
+      "renderer": "NVIDIA GeForce RTX 4090/PCIe/SSE2"
+    },
+    {
+      "case": {
+        "suite": "libero_object",
+        "task_id": 0,
+        "init_state_id": 49,
+        "variant": "BASE",
+        "arm": "Kinova3",
+        "seed": 42820049
+      },
+      "modes": {
+        "original": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 141,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            140
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "policy_only": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 145,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            144
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "adapter_only": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 152,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            151
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "joint": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 147,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            146
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "joint_zero": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 146,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            145
+          ],
+          "accepted_reset_attempt": 1
+        }
+      },
+      "same_input_control_10": {
+        "at_control": 10,
+        "current": "3ba4cf406a813be9e9dbbc4852ffd6e028ca6449fb7b8d1c382e9476e9f6b7c3",
+        "proposal": "2299757b1c995f00f73402f74c1b7d636710d756b37b67ea6d490ac5e98ffb5c",
+        "alternatives": {
+          "zero": {
+            "history": "85d648762dae2ca9e340e36053f69064fe6b2c35923d543ae8340771e085f30c",
+            "proposal": "ead5da3e8ccf1636fd5c5676fab6806c947fe06aa2d26ceda300ac6676e79b55",
+            "first_five_max": 0.004635496695697405,
+            "chunk_max": 0.0061518549991844695
+          },
+          "lagged": {
+            "history": "4a7fe22f3384ac9c0af4c5581b4f3ee2148e76eb9d0fc85ca7986bf6f4440b33",
+            "proposal": "9152dba411f05083202e683c0a351938d20d91b44fa6ec84185efdba1f98203b",
+            "first_five_max": 0.0013077665792702309,
+            "chunk_max": 0.002250264617323805
+          }
+        }
+      },
+      "stock_parity": {
+        "shape": [
+          10,
+          7
+        ],
+        "stock_sha256": "0c2b1f2b58503f82470096c22cbe91956ce757b513ea4e89b2db1db74ca01986",
+        "noop_sha256": "0c2b1f2b58503f82470096c22cbe91956ce757b513ea4e89b2db1db74ca01986",
+        "max_abs": 0.0,
+        "noop_engine": "materialized-native",
+        "fused_zero_sha256": "5b6b58183327705db44985ee924a21085f00a0116b197a8b9983fdaa10a2d1c0",
+        "fused_zero_max_abs": 0.0014856473979950602,
+        "fused_zero_bitwise": false
+      },
+      "differences": {
+        "original": {
+          "first_different_proposal_replan": 0,
+          "first_different_issued_control": 0,
+          "index_base": 0,
+          "first_different_observation_replan": 5,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.008430734276771545
+        },
+        "policy_only": {
+          "first_different_proposal_replan": 0,
+          "first_different_issued_control": 0,
+          "index_base": 0,
+          "first_different_observation_replan": 5,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.001645013689994812
+        },
+        "adapter_only": {
+          "first_different_proposal_replan": 0,
+          "first_different_issued_control": 0,
+          "index_base": 0,
+          "first_different_observation_replan": 5,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.008430734276771545
+        },
+        "joint_zero": {
+          "first_different_proposal_replan": 5,
+          "first_different_issued_control": 5,
+          "index_base": 0,
+          "first_different_observation_replan": 10,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.0048635490238666534
+        }
+      },
+      "scene": "35374f24f781e0a81c7529fcfcbd1b2fbfff77fa274547e4866ea4ba57b204e1",
+      "reset_physics": "dcc7c3819fbe1148ca958f3b664e18e20fa690b3148863b793aef75ab8f6fd11",
+      "noise": "9b759facee3f9394ac1cb5d476c989196b8e03cc61a218c3f312cb28dcbbb279",
+      "renderer": "NVIDIA GeForce RTX 4090/PCIe/SSE2"
+    },
+    {
+      "case": {
+        "suite": "libero_object",
+        "task_id": 0,
+        "init_state_id": 49,
+        "variant": "BASE",
+        "arm": "Panda",
+        "seed": 42820049
+      },
+      "modes": {
+        "original": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 133,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            132
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "policy_only": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 143,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            142
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "adapter_only": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 135,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            134
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "joint": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 133,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            132
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "joint_zero": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 133,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            132
+          ],
+          "accepted_reset_attempt": 1
+        }
+      },
+      "same_input_control_10": {
+        "at_control": 10,
+        "current": "ec61cf1c341e03360d37179a37caa03b783ac35c794b75816cee026073a67486",
+        "proposal": "fa6dcf5edcf4539e7e7ccc8b2e7bfc8ebccf798ccf066a2726c226010e70f09c",
+        "alternatives": {
+          "zero": {
+            "history": "85d648762dae2ca9e340e36053f69064fe6b2c35923d543ae8340771e085f30c",
+            "proposal": "fc9f6b3d416dd71b232313fe97e850411f7de4ef335f5c1817e3fb899551a1e7",
+            "first_five_max": 0.005829456659078525,
+            "chunk_max": 0.008227513118564955
+          },
+          "lagged": {
+            "history": "7d2c39655c3a5b5b7f7e452a7675168cfd971c2e9dad3b54041d01f23ca2bce6",
+            "proposal": "2d9709430c3ed3f7bd6356d6b4f8fcf8bc9bf78c91d21318cd1a270714f3bab2",
+            "first_five_max": 0.0031256669073104204,
+            "chunk_max": 0.0031256669073104204
+          }
+        }
+      },
+      "stock_parity": {
+        "shape": [
+          10,
+          7
+        ],
+        "stock_sha256": "b0814713b8188ce9976607ea42ff83e34cad879a04522a839a9bb6e06c0baab2",
+        "noop_sha256": "b0814713b8188ce9976607ea42ff83e34cad879a04522a839a9bb6e06c0baab2",
+        "max_abs": 0.0,
+        "noop_engine": "materialized-native",
+        "fused_zero_sha256": "ce545ed2fd90a1c90dd96dec78c667d4f8b49a32dbf96250e605df873bd81ba7",
+        "fused_zero_max_abs": 0.0013796914324759602,
+        "fused_zero_bitwise": false
+      },
+      "differences": {
+        "original": {
+          "first_different_proposal_replan": 0,
+          "first_different_issued_control": 0,
+          "index_base": 0,
+          "first_different_observation_replan": 5,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.008019477128982544
+        },
+        "policy_only": {
+          "first_different_proposal_replan": 0,
+          "first_different_issued_control": 0,
+          "index_base": 0,
+          "first_different_observation_replan": 5,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.0016450285911560059
+        },
+        "adapter_only": {
+          "first_different_proposal_replan": 0,
+          "first_different_issued_control": 0,
+          "index_base": 0,
+          "first_different_observation_replan": 5,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.008019477128982544
+        },
+        "joint_zero": {
+          "first_different_proposal_replan": 5,
+          "first_different_issued_control": 5,
+          "index_base": 0,
+          "first_different_observation_replan": 10,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.0036213770508766174
+        }
+      },
+      "scene": "35374f24f781e0a81c7529fcfcbd1b2fbfff77fa274547e4866ea4ba57b204e1",
+      "reset_physics": "e46f562cbc749642f378c5396f80dd04d54bb15934cd04a0857216503cbc1bf1",
+      "noise": "9b759facee3f9394ac1cb5d476c989196b8e03cc61a218c3f312cb28dcbbb279",
+      "renderer": "NVIDIA GeForce RTX 4090/PCIe/SSE2"
+    },
+    {
+      "case": {
+        "suite": "libero_spatial",
+        "task_id": 0,
+        "init_state_id": 48,
+        "variant": "BASE",
+        "arm": "Kinova3",
+        "seed": 42830048
+      },
+      "modes": {
+        "original": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 106,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            105
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "policy_only": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 180,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            179
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "adapter_only": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 105,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            104
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "joint": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 105,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            104
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "joint_zero": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 105,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            104
+          ],
+          "accepted_reset_attempt": 1
+        }
+      },
+      "same_input_control_10": {
+        "at_control": 10,
+        "current": "48bdb16b27ec6cc29c36fb736a5a42f017266087e0b0d3956d9d829e6dc199bd",
+        "proposal": "d3473d94391e330222a5d481807f1bc24b87ae8aceeb569950021550ee9cf294",
+        "alternatives": {
+          "zero": {
+            "history": "85d648762dae2ca9e340e36053f69064fe6b2c35923d543ae8340771e085f30c",
+            "proposal": "73239f59038e30dfdce31a7a57fc2bb9b4cd0ad6c481d660c416b3374814379d",
+            "first_five_max": 0.00629790886569026,
+            "chunk_max": 0.006629034757256402
+          },
+          "lagged": {
+            "history": "80682d076998110e9ec78c8ea751e01cab677e801eccccd4581061721c840186",
+            "proposal": "abbfc86192fe72d80bb852ec29ecadd99d6afca6268af32320e0e0556408be90",
+            "first_five_max": 0.0020532555483582238,
+            "chunk_max": 0.0020532555483582238
+          }
+        }
+      },
+      "stock_parity": {
+        "shape": [
+          10,
+          7
+        ],
+        "stock_sha256": "be08e39923478c4dee2958399f0e722304de165babf66c569a6b08e43a08c29a",
+        "noop_sha256": "be08e39923478c4dee2958399f0e722304de165babf66c569a6b08e43a08c29a",
+        "max_abs": 0.0,
+        "noop_engine": "materialized-native",
+        "fused_zero_sha256": "35f583f755a14aecd5ee4b1b662698bf07f65ced113e4f29f5982edb7fbb2a99",
+        "fused_zero_max_abs": 0.0013290375918746378,
+        "fused_zero_bitwise": false
+      },
+      "differences": {
+        "original": {
+          "first_different_proposal_replan": 0,
+          "first_different_issued_control": 0,
+          "index_base": 0,
+          "first_different_observation_replan": 5,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.007813841104507446
+        },
+        "policy_only": {
+          "first_different_proposal_replan": 0,
+          "first_different_issued_control": 0,
+          "index_base": 0,
+          "first_different_observation_replan": 5,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.002467513084411621
+        },
+        "adapter_only": {
+          "first_different_proposal_replan": 0,
+          "first_different_issued_control": 0,
+          "index_base": 0,
+          "first_different_observation_replan": 5,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.007813841104507446
+        },
+        "joint_zero": {
+          "first_different_proposal_replan": 5,
+          "first_different_issued_control": 5,
+          "index_base": 0,
+          "first_different_observation_replan": 10,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.004496719688177109
+        }
+      },
+      "scene": "1c96a1a46dadef7de97f1859eacb740afd570910acc4e4a00c0a10496c1233f9",
+      "reset_physics": "c36b3097eec2447a9c14a5b557872d740e5f8348d0720420af42eb6426ba7e8e",
+      "noise": "957eb6babd6b9ed2f77b49077d4d79990b85a425f000df1ed5595d056b4a8ea4",
+      "renderer": "NVIDIA GeForce RTX 4090/PCIe/SSE2"
+    },
+    {
+      "case": {
+        "suite": "libero_spatial",
+        "task_id": 0,
+        "init_state_id": 48,
+        "variant": "BASE",
+        "arm": "Panda",
+        "seed": 42830048
+      },
+      "modes": {
+        "original": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 104,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            103
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "policy_only": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 103,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            102
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "adapter_only": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 104,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            103
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "joint": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 104,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            103
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "joint_zero": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 104,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            103
+          ],
+          "accepted_reset_attempt": 1
+        }
+      },
+      "same_input_control_10": {
+        "at_control": 10,
+        "current": "ce3fd76879cb09dd836490a928ba911cb8b7bbfe4c27f5d76f964fe57ac95b6a",
+        "proposal": "829c67467c02a3d1de0e7187fc764e8d072c7525e7904ae960e1dea1dffc5c66",
+        "alternatives": {
+          "zero": {
+            "history": "85d648762dae2ca9e340e36053f69064fe6b2c35923d543ae8340771e085f30c",
+            "proposal": "a5404c21bff2ba0d450a938c3c78e182c98bfce6606ec7eda43dd432fea9d943",
+            "first_five_max": 0.006262995912790337,
+            "chunk_max": 0.009715046105027159
+          },
+          "lagged": {
+            "history": "f2da1975b79fa2b08f9ed07b2504d2efb9997e7f6d1c31d2e209b886c9e87e8b",
+            "proposal": "235fb049a98877e9e0150054e0831e94a5a7efc86f7f2ab798574d3d274b5e98",
+            "first_five_max": 0.002128163052320775,
+            "chunk_max": 0.005761311725616336
+          }
+        }
+      },
+      "stock_parity": {
+        "shape": [
+          10,
+          7
+        ],
+        "stock_sha256": "d037702e7a37ff498dff390ee0519a880a852c3d405302b84c310abd5f6f001b",
+        "noop_sha256": "d037702e7a37ff498dff390ee0519a880a852c3d405302b84c310abd5f6f001b",
+        "max_abs": 0.0,
+        "noop_engine": "materialized-native",
+        "fused_zero_sha256": "6fa79e247e2be41d25dd330f0774c960fe70a944b057a501209ef09bd391782a",
+        "fused_zero_max_abs": 0.0016190159311294527,
+        "fused_zero_bitwise": false
+      },
+      "differences": {
+        "original": {
+          "first_different_proposal_replan": 0,
+          "first_different_issued_control": 0,
+          "index_base": 0,
+          "first_different_observation_replan": 5,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.005355730652809143
+        },
+        "policy_only": {
+          "first_different_proposal_replan": 0,
+          "first_different_issued_control": 0,
+          "index_base": 0,
+          "first_different_observation_replan": 5,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.0022231340408325195
+        },
+        "adapter_only": {
+          "first_different_proposal_replan": 0,
+          "first_different_issued_control": 0,
+          "index_base": 0,
+          "first_different_observation_replan": 5,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.005355730652809143
+        },
+        "joint_zero": {
+          "first_different_proposal_replan": 5,
+          "first_different_issued_control": 5,
+          "index_base": 0,
+          "first_different_observation_replan": 10,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.00583934411406517
+        }
+      },
+      "scene": "1c96a1a46dadef7de97f1859eacb740afd570910acc4e4a00c0a10496c1233f9",
+      "reset_physics": "34562ace5c2b50d8e72b2311a2508fe99830f01476978bfb591c8065b3c58d28",
+      "noise": "957eb6babd6b9ed2f77b49077d4d79990b85a425f000df1ed5595d056b4a8ea4",
+      "renderer": "NVIDIA GeForce RTX 4090/PCIe/SSE2"
+    },
+    {
+      "case": {
+        "suite": "libero_spatial",
+        "task_id": 0,
+        "init_state_id": 49,
+        "variant": "BASE",
+        "arm": "Kinova3",
+        "seed": 42830049
+      },
+      "modes": {
+        "original": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 79,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            78
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "policy_only": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 76,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            75
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "adapter_only": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 78,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            77
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "joint": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 79,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            78
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "joint_zero": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 80,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            79
+          ],
+          "accepted_reset_attempt": 1
+        }
+      },
+      "same_input_control_10": {
+        "at_control": 10,
+        "current": "ae6e99e9787f35657a609f0d1fd54c41f3e468774002ec64e9bcf7da683c867d",
+        "proposal": "fe292a56084ed5c154584a59eaf7dc19612631d938ea6fbacb2b84709977eaf4",
+        "alternatives": {
+          "zero": {
+            "history": "85d648762dae2ca9e340e36053f69064fe6b2c35923d543ae8340771e085f30c",
+            "proposal": "30bd828e01d67f219f6ba377bc52771c33d19bc7d7300dc833847cef3c4d6262",
+            "first_five_max": 0.006899607891559634,
+            "chunk_max": 0.006899607891559634
+          },
+          "lagged": {
+            "history": "caff65e6eec7634309fc7f1280d5bc363c464e4bf97ac35aa59500605cf7e56e",
+            "proposal": "e2854fc2a3e870a780fe66891ff288fca94cd6a71f8c84b2cc8818b75b815fca",
+            "first_five_max": 0.001747612093985329,
+            "chunk_max": 0.0033153457994459234
+          }
+        }
+      },
+      "stock_parity": {
+        "shape": [
+          10,
+          7
+        ],
+        "stock_sha256": "a3f9abe4788eda23b77397bebfae60bbe86c9a6c65066fb1a35951039281665c",
+        "noop_sha256": "a3f9abe4788eda23b77397bebfae60bbe86c9a6c65066fb1a35951039281665c",
+        "max_abs": 0.0,
+        "noop_engine": "materialized-native",
+        "fused_zero_sha256": "cceb14fd3d4a381c088a8cabe286f5ea7fb7574513e450393af6fa0d69bfec92",
+        "fused_zero_max_abs": 0.0017992411804199637,
+        "fused_zero_bitwise": false
+      },
+      "differences": {
+        "original": {
+          "first_different_proposal_replan": 0,
+          "first_different_issued_control": 0,
+          "index_base": 0,
+          "first_different_observation_replan": 5,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.005949739366769791
+        },
+        "policy_only": {
+          "first_different_proposal_replan": 0,
+          "first_different_issued_control": 0,
+          "index_base": 0,
+          "first_different_observation_replan": 5,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.0024252384901046753
+        },
+        "adapter_only": {
+          "first_different_proposal_replan": 0,
+          "first_different_issued_control": 0,
+          "index_base": 0,
+          "first_different_observation_replan": 5,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.005949739366769791
+        },
+        "joint_zero": {
+          "first_different_proposal_replan": 5,
+          "first_different_issued_control": 5,
+          "index_base": 0,
+          "first_different_observation_replan": 10,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.0037665218114852905
+        }
+      },
+      "scene": "ea687cc5294962e75e28779b1d9e6f297e2f7b43cb3702b9cd6a375f9c85c3a2",
+      "reset_physics": "4601b77a58c202040fdfb18156df4ef477d7f45b14bce6b753cab1ecde2f224b",
+      "noise": "4399973b1e029c56c0afb5ac6ea761137846497eb7b76696d8bb192b4749e846",
+      "renderer": "NVIDIA GeForce RTX 4090/PCIe/SSE2"
+    },
+    {
+      "case": {
+        "suite": "libero_spatial",
+        "task_id": 0,
+        "init_state_id": 49,
+        "variant": "BASE",
+        "arm": "Panda",
+        "seed": 42830049
+      },
+      "modes": {
+        "original": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 69,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            68
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "policy_only": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 69,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            68
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "adapter_only": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 68,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            67
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "joint": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 68,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            67
+          ],
+          "accepted_reset_attempt": 1
+        },
+        "joint_zero": {
+          "success": true,
+          "native_return": 1.0,
+          "controls": 70,
+          "terminated": true,
+          "truncated": false,
+          "nonzero_reward_indices": [
+            69
+          ],
+          "accepted_reset_attempt": 1
+        }
+      },
+      "same_input_control_10": {
+        "at_control": 10,
+        "current": "1eb1eb1f595e8e688d4525a974b3d94c9e55b5582a173f370b4b636a7cf4c287",
+        "proposal": "8a4eee8caa37639c257f2b5ad04016034f9e6163b6d165cce972296b36a65b4d",
+        "alternatives": {
+          "zero": {
+            "history": "85d648762dae2ca9e340e36053f69064fe6b2c35923d543ae8340771e085f30c",
+            "proposal": "dc62757fff92fb157a3df58ee2a27a6d6465d7bd18e5ea883e117a1ce708ae7a",
+            "first_five_max": 0.007524947649478975,
+            "chunk_max": 0.008506839569926261
+          },
+          "lagged": {
+            "history": "91c79ad736595269ecd6a3f6429e477e12a675aa131e25c01316ea357692a582",
+            "proposal": "0d64a9c2797cbe7413b650dccbe2def6951a8af608d3a0767fc5ae07a35c6d0b",
+            "first_five_max": 0.002044209832310906,
+            "chunk_max": 0.002880755657911127
+          }
+        }
+      },
+      "stock_parity": {
+        "shape": [
+          10,
+          7
+        ],
+        "stock_sha256": "916bfaf0874edab5e113c075f6a39edabaf5d2c1ca0ea3bd98bfdf744ea51048",
+        "noop_sha256": "916bfaf0874edab5e113c075f6a39edabaf5d2c1ca0ea3bd98bfdf744ea51048",
+        "max_abs": 0.0,
+        "noop_engine": "materialized-native",
+        "fused_zero_sha256": "9a18c9d36c66b9b8d530b7a6e3ed8caebfda1bf12a0703a5010c0ebe99a4d889",
+        "fused_zero_max_abs": 0.0011277386684416246,
+        "fused_zero_bitwise": false
+      },
+      "differences": {
+        "original": {
+          "first_different_proposal_replan": 0,
+          "first_different_issued_control": 0,
+          "index_base": 0,
+          "first_different_observation_replan": 5,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.008430734276771545
+        },
+        "policy_only": {
+          "first_different_proposal_replan": 0,
+          "first_different_issued_control": 0,
+          "index_base": 0,
+          "first_different_observation_replan": 5,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.0027315467596054077
+        },
+        "adapter_only": {
+          "first_different_proposal_replan": 0,
+          "first_different_issued_control": 0,
+          "index_base": 0,
+          "first_different_observation_replan": 5,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.008430734276771545
+        },
+        "joint_zero": {
+          "first_different_proposal_replan": 5,
+          "first_different_issued_control": 5,
+          "index_base": 0,
+          "first_different_observation_replan": 10,
+          "same_observations_until_first_action_difference": true,
+          "max_abs_at_first_issued_difference": 0.004525547847151756
+        }
+      },
+      "scene": "ea687cc5294962e75e28779b1d9e6f297e2f7b43cb3702b9cd6a375f9c85c3a2",
+      "reset_physics": "e89a0db6961c628180c6d77b2f0bf8f561b0cecd948e23a4c3d68dc9d98daf41",
+      "noise": "4399973b1e029c56c0afb5ac6ea761137846497eb7b76696d8bb192b4749e846",
+      "renderer": "NVIDIA GeForce RTX 4090/PCIe/SSE2"
+    }
+  ],
+  "joint_minus_comparator": {
+    "success": {
+      "original": {
+        "Kinova3": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0,
+          "leave_one_start_out_means": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rescues": 0,
+          "losses": 0,
+          "pairs": 4
+        },
+        "Panda": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0,
+          "leave_one_start_out_means": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rescues": 0,
+          "losses": 0,
+          "pairs": 4
+        },
+        "kinova_minus_panda": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0,
+          "leave_one_start_out_means": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "policy_only": {
+        "Kinova3": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0,
+          "leave_one_start_out_means": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rescues": 0,
+          "losses": 0,
+          "pairs": 4
+        },
+        "Panda": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0,
+          "leave_one_start_out_means": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rescues": 0,
+          "losses": 0,
+          "pairs": 4
+        },
+        "kinova_minus_panda": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0,
+          "leave_one_start_out_means": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "adapter_only": {
+        "Kinova3": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0,
+          "leave_one_start_out_means": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rescues": 0,
+          "losses": 0,
+          "pairs": 4
+        },
+        "Panda": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0,
+          "leave_one_start_out_means": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rescues": 0,
+          "losses": 0,
+          "pairs": 4
+        },
+        "kinova_minus_panda": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0,
+          "leave_one_start_out_means": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "joint_zero": {
+        "Kinova3": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0,
+          "leave_one_start_out_means": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rescues": 0,
+          "losses": 0,
+          "pairs": 4
+        },
+        "Panda": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0,
+          "leave_one_start_out_means": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rescues": 0,
+          "losses": 0,
+          "pairs": 4
+        },
+        "kinova_minus_panda": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0,
+          "leave_one_start_out_means": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    "native_return": {
+      "original": {
+        "Kinova3": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0,
+          "leave_one_start_out_means": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Panda": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0,
+          "leave_one_start_out_means": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "kinova_minus_panda": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0,
+          "leave_one_start_out_means": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "policy_only": {
+        "Kinova3": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0,
+          "leave_one_start_out_means": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Panda": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0,
+          "leave_one_start_out_means": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "kinova_minus_panda": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0,
+          "leave_one_start_out_means": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "adapter_only": {
+        "Kinova3": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0,
+          "leave_one_start_out_means": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Panda": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0,
+          "leave_one_start_out_means": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "kinova_minus_panda": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0,
+          "leave_one_start_out_means": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "joint_zero": {
+        "Kinova3": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0,
+          "leave_one_start_out_means": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Panda": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0,
+          "leave_one_start_out_means": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "kinova_minus_panda": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0,
+          "leave_one_start_out_means": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    }
+  },
+  "source_artifacts_sha256": {
+    "data/dataset-v1/manifest.json": "05209732b5e3f04308c8acbef2f6c8c8a2f173673840fdb055e1b094ff7d6f40",
+    "matched-task/gpu01/console.log": "1ed367c066bad09a43283dccf6258c416d0d199ae19e6f6d5c475686de2ad367",
+    "matched-task/gpu01/episodes/Kinova3-libero_object-0-48-adapter_only.json": "ee1b72edde3c3e7b8865b8244b5c2d9137632122f818aed89ceb546d2c360e2b",
+    "matched-task/gpu01/episodes/Kinova3-libero_object-0-48-joint.json": "3ab39f89440acc49e7446174a8aa484db4e80daff6bf95f3884159e43a180b0f",
+    "matched-task/gpu01/episodes/Kinova3-libero_object-0-48-joint_zero.json": "37c4dcb85fc91935eb71be88d8b545c1bb5f042792ae722e174a836b46ffbd43",
+    "matched-task/gpu01/episodes/Kinova3-libero_object-0-48-original.json": "729a635633917de3a358857894260da34671e7222843f7b84d557540d9871b39",
+    "matched-task/gpu01/episodes/Kinova3-libero_object-0-48-policy_only.json": "8b9242b47ec8bf051db69910edaadb87da29361aa2cdcea15f8482aa1b086bca",
+    "matched-task/gpu01/episodes/Kinova3-libero_object-0-49-adapter_only.json": "aef54a51dfb12551d336b47e8ccd2b4b6994be81c0466f9fce68619864a7117c",
+    "matched-task/gpu01/episodes/Kinova3-libero_object-0-49-joint.json": "08915dde5243e3c522fcc2926df04bed87f8f46ba397878b671fbcbd354e861d",
+    "matched-task/gpu01/episodes/Kinova3-libero_object-0-49-joint_zero.json": "9afa0596bd10927f4059b3d6274b669c4ef323f34c40034fabab3918ea2c4ade",
+    "matched-task/gpu01/episodes/Kinova3-libero_object-0-49-original.json": "c59a30615284ffc3973258f04093b6bb1405f51f3589ab3849b1c10a24603800",
+    "matched-task/gpu01/episodes/Kinova3-libero_object-0-49-policy_only.json": "c9979af98ce86daf4ea283ec31ad92de34d1af9e1e265072140bd3baa535eee7",
+    "matched-task/gpu01/episodes/Kinova3-libero_spatial-0-48-adapter_only.json": "41ee281b994959e44c3c667e537fff060756a3c71467e8d0ad2fe8bc73642667",
+    "matched-task/gpu01/episodes/Kinova3-libero_spatial-0-48-joint.json": "53e6c1916dd6c646eacc17943650c7211f5bf97fd02a2627156fd67109a6a8f0",
+    "matched-task/gpu01/episodes/Kinova3-libero_spatial-0-48-joint_zero.json": "34b33cfe99dab9184a08a098224a39899d3fa5e57cf4ebecf311f2f9ab6f8bcf",
+    "matched-task/gpu01/episodes/Kinova3-libero_spatial-0-48-original.json": "6879fd971483866c98c86a459ff4ce7b8194e9c23bfe3ce0ad1dd16e988ce3ee",
+    "matched-task/gpu01/episodes/Kinova3-libero_spatial-0-48-policy_only.json": "e6cb6703fc6ae0fbf069cc1fad1c9b1a8ff1bf2599f6afea404c1b359cd566f7",
+    "matched-task/gpu01/episodes/Kinova3-libero_spatial-0-49-adapter_only.json": "7e5aad9597a71704c2db045fe516c1596085bedc4aee74b0b31673a9d5770d50",
+    "matched-task/gpu01/episodes/Kinova3-libero_spatial-0-49-joint.json": "58ef05902f56993e0cbbd5edf9d41002ebdb203210b426413f7c63d86ad2d87c",
+    "matched-task/gpu01/episodes/Kinova3-libero_spatial-0-49-joint_zero.json": "217cbfe037d9496009a86256e4df5ee78cb4e596dd4fce95b70d10c2a255ea67",
+    "matched-task/gpu01/episodes/Kinova3-libero_spatial-0-49-original.json": "b52611983f6e4c3d66a2e981d53089c10109d1e50ad0e320835be65a7e2b814e",
+    "matched-task/gpu01/episodes/Kinova3-libero_spatial-0-49-policy_only.json": "a870a1e9d48d6da34e4357f4222526d9c4a6314cc1b9328b83ef67d555dedfa2",
+    "matched-task/gpu01/episodes/Panda-libero_object-0-48-adapter_only.json": "c2590d8e85fc4459bcd5f565f208ee8040bc8ec56191af347ac4079350966196",
+    "matched-task/gpu01/episodes/Panda-libero_object-0-48-joint.json": "9e2c854696291bdff11673dcda7f0b106d8101e64ab293c0da1d32d7fb12317c",
+    "matched-task/gpu01/episodes/Panda-libero_object-0-48-joint_zero.json": "eabc9f390d900acc38bc9970b33aa700b76970ab1ab14529613eb612b66e8563",
+    "matched-task/gpu01/episodes/Panda-libero_object-0-48-original.json": "9cb5bb687fea4185e8d0857fcb7a1befbf6d4c41972796a3db26f9687b731bcd",
+    "matched-task/gpu01/episodes/Panda-libero_object-0-48-policy_only.json": "313e89143cf7dadd419f1cfc03deba0da283684bd628e69c1c02e59cb2deef03",
+    "matched-task/gpu01/episodes/Panda-libero_object-0-49-adapter_only.json": "a402d51b5efac447e62ebfedbd786a25a98decdccc19a3c10ffd65dbf4441d6b",
+    "matched-task/gpu01/episodes/Panda-libero_object-0-49-joint.json": "a61edd905ece8e1121872aa8f713cb3afee33d67456fcfab6bb3b779e656d723",
+    "matched-task/gpu01/episodes/Panda-libero_object-0-49-joint_zero.json": "43d15b2b5a34f1b0d8ab6a9dbfb4817b1489118d0eaf8bb9da8528d9bcda491c",
+    "matched-task/gpu01/episodes/Panda-libero_object-0-49-original.json": "ef7ec7d793f2dad1db01f11ae72b4f2c440078addca2acebb4d35a475ab12a64",
+    "matched-task/gpu01/episodes/Panda-libero_object-0-49-policy_only.json": "54cd2f94659a1c0d22197ae04c919ab8f9d1634264868a5db94853bb7866436e",
+    "matched-task/gpu01/episodes/Panda-libero_spatial-0-48-adapter_only.json": "6910229570c5094b8262bf71cf22eba11bbc915366a8985d97325dc093e704a3",
+    "matched-task/gpu01/episodes/Panda-libero_spatial-0-48-joint.json": "c0e059bcf47a454d63f20adcb994a9425f554c9f26910988b0531316354316ff",
+    "matched-task/gpu01/episodes/Panda-libero_spatial-0-48-joint_zero.json": "49b2ab06d838493f4d205e7693f631bdfc1e6b187927426b81f48611449af6b5",
+    "matched-task/gpu01/episodes/Panda-libero_spatial-0-48-original.json": "7f28576d1a66459866afca1c2c50a2f2e3b3d07566d50699e5ca990af42816c9",
+    "matched-task/gpu01/episodes/Panda-libero_spatial-0-48-policy_only.json": "886a922f89696b8bb230be0799e3e56f8d660e6a6388b08d6adff6ebbe8f6a92",
+    "matched-task/gpu01/episodes/Panda-libero_spatial-0-49-adapter_only.json": "ee6c87922c5d8a8d39a39a5ea016bb32b563188cfdd1e3099d545fcb91f0d632",
+    "matched-task/gpu01/episodes/Panda-libero_spatial-0-49-joint.json": "cf4fb816bf339c39b8bc0810f8efba9694156eef7945dba032a509aef5b19962",
+    "matched-task/gpu01/episodes/Panda-libero_spatial-0-49-joint_zero.json": "529466e8a480f38f2674b1c34a93bdd4d7d82a0fcc72c327fb9198a2bb737767",
+    "matched-task/gpu01/episodes/Panda-libero_spatial-0-49-original.json": "d67c4898baf6d76d32faa1399706913a6866190a971f305dbae24bf2e792edb3",
+    "matched-task/gpu01/episodes/Panda-libero_spatial-0-49-policy_only.json": "1e1099958506ffcc255039fb9d7ebf183698187d2d77612de9a63371175ff8cb",
+    "matched-task/gpu01/exit.txt": "685bd81f444a78231aee46300593e289a582d686beb65fcf7432ae299121591e",
+    "matched-task/gpu01/frozen-after.json": "24557d1397635f49a9c6508993bc60197ed679aeb27b97f82212702955dc13e9",
+    "matched-task/gpu01/frozen-before.json": "24557d1397635f49a9c6508993bc60197ed679aeb27b97f82212702955dc13e9",
+    "matched-task/gpu01/gpu.json": "72f1970cbcbc763db05f3039045f43feb4344bef99ed40e7639272f49f7c46e7",
+    "matched-task/gpu01/native-summary.json": "5845a7f8eff4464f946ef7007e7bd7cd10c3442526df71bb05038fd09700ae5c",
+    "matched-task/gpu01/run.json": "d9f20396f435a8be9b6355a12070bbcc9835b9e75b484d9c75de0aab8dc20e8f",
+    "matched-task/gpu01/storage.txt": "95f10b47e0c088ef06ca53023232934e5b58accea5d5f4070f82ba77f1af817c",
+    "model/gpu02/config.json": "6ce1af6b0f575a435966d716f3c1c84f873486d363c9fdb2ed4ecea1828fe72f",
+    "model/gpu02/exit.txt": "366ecb730dd4d9c5d112d6ab0195863920765e6cdf298c0ff4026b60f75d77df",
+    "model/gpu02/fit.json": "4855546591381f149d7509a6af3d45db32e9e82a732788c8376d504f19417dbc",
+    "model/gpu02/heads.npz": "ecf5cf6424421cabd292764d968728329e252c1d5665715d175182f78b0043e5",
+    "model/gpu02/train-inputs.json": "6105f31c612d6c8920bdc292a9b8cc60fcd0b813d7b45352df9498af5299063c"
+  },
+  "readback_affinity": [
+    42,
+    43
+  ]
+}
