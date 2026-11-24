@@ -1,0 +1,202 @@
+{
+ "weights": [
+  0.1470113768655497,
+  0.1334527727871297,
+  0.23606617123565396,
+  -0.2402729315739188,
+  0.44978009768822824,
+  -0.03665380081801107,
+  -0.0038611030747383807,
+  -0.017854199012607482,
+  -0.0493929895537517,
+  0.08359512706051496,
+  0.04122367153987433,
+  0.1182402140534235,
+  -0.06999949933503033,
+  0.17541681431246725
+ ],
+ "source_gain": [
+  [
+   0.010389566490099748,
+   -0.0008606654557718565,
+   -0.000621922010648241
+  ],
+  [
+   -0.001743382644604161,
+   0.010644645696696226,
+   0.0036856083631425594
+  ],
+  [
+   -0.0013869549233710716,
+   0.0005033605788120057,
+   0.01019737706981466
+  ]
+ ],
+ "scale": 0.1,
+ "ridge": 0.01,
+ "sources": [
+  {
+   "name": "libero_goal-3-14-Panda-adaptive",
+   "kind": "pi05",
+   "success": false,
+   "layout": 14,
+   "frames": 175
+  },
+  {
+   "name": "libero_goal-3-14-Panda-raw",
+   "kind": "pi05",
+   "success": true,
+   "layout": 14,
+   "frames": 173
+  },
+  {
+   "name": "libero_goal-3-14-Panda-sham",
+   "kind": "pi05",
+   "success": true,
+   "layout": 14,
+   "frames": 174
+  },
+  {
+   "name": "libero_goal-3-15-Panda-adaptive",
+   "kind": "pi05",
+   "success": false,
+   "layout": 15,
+   "frames": 233
+  },
+  {
+   "name": "libero_goal-3-15-Panda-raw",
+   "kind": "pi05",
+   "success": true,
+   "layout": 15,
+   "frames": 233
+  },
+  {
+   "name": "libero_goal-3-15-Panda-sham",
+   "kind": "pi05",
+   "success": false,
+   "layout": 15,
+   "frames": 233
+  },
+  {
+   "name": "demo-demo_0",
+   "kind": "human",
+   "success": true,
+   "layout": null,
+   "frames": 170
+  },
+  {
+   "name": "demo-demo_1",
+   "kind": "human",
+   "success": true,
+   "layout": null,
+   "frames": 187
+  }
+ ],
+ "fitted_on": [
+  "libero_goal-3-14-Panda-raw",
+  "libero_goal-3-14-Panda-sham",
+  "libero_goal-3-15-Panda-raw",
+  "demo-demo_0",
+  "demo-demo_1"
+ ],
+ "held_out": {
+  "episodes": [
+   {
+    "name": "libero_goal-3-14-Panda-raw",
+    "train": 3,
+    "ordered": [
+     11026,
+     11026
+    ],
+    "windows": [
+     9,
+     34
+    ]
+   },
+   {
+    "name": "libero_goal-3-14-Panda-sham",
+    "train": 3,
+    "ordered": [
+     11129,
+     11175
+    ],
+    "windows": [
+     10,
+     34
+    ]
+   },
+   {
+    "name": "libero_goal-3-15-Panda-raw",
+    "train": 4,
+    "ordered": [
+     19707,
+     21736
+    ],
+    "windows": [
+     10,
+     46
+    ]
+   },
+   {
+    "name": "demo-demo_0",
+    "train": 4,
+    "ordered": [
+     10156,
+     10585
+    ]
+   },
+   {
+    "name": "demo-demo_1",
+    "train": 4,
+    "ordered": [
+     12744,
+     13203
+    ]
+   }
+  ],
+  "pairs": {
+   "pi05": [
+    41862,
+    43937
+   ],
+   "human": [
+    22900,
+    23788
+   ]
+  },
+  "windows": [
+   29,
+   114
+  ],
+  "windows_by_quarter": [
+   [
+    0,
+    30
+   ],
+   [
+    0,
+    30
+   ],
+   [
+    7,
+    28
+   ],
+   [
+    22,
+    26
+   ]
+  ],
+  "success_over_failure": [
+   5,
+   9
+  ],
+  "final_values": {
+   "libero_goal-3-14-Panda-raw": 0.9158667272449575,
+   "libero_goal-3-14-Panda-adaptive": 0.943576400078101,
+   "libero_goal-3-14-Panda-sham": 0.8689313032310523,
+   "libero_goal-3-15-Panda-raw": 0.8373672694130307,
+   "libero_goal-3-15-Panda-adaptive": 0.8435562747112139,
+   "libero_goal-3-15-Panda-sham": 0.8217919516855346
+  }
+ }
+}
