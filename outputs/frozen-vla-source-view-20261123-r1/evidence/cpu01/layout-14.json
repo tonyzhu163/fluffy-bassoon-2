@@ -1,0 +1,1721 @@
+{
+  "case": {
+    "suite": "libero_goal",
+    "task_id": 3,
+    "arm": "Kinova3",
+    "variant": "BASE",
+    "init_state_id": 14,
+    "seed": 41810314
+  },
+  "tape_sha256": "5a5bd5bd03d521468bf32afee52bc1ea653b64fec6b8baaa53dd59aad9f75bec",
+  "target_reset": {
+    "source_pin": "e5500c690c1498eca1b7050350654964190cdf70",
+    "manifest_sha256": "71a6e4e25a2a4a162844d77136e7bff8e6f69c839d2d8194620c4afeabde2bba",
+    "bddl_sha256": "695545a33399e12e978b1b5682b6ea2181f3289608cad3f063f5bf90f0b87e67",
+    "suite": "libero_goal",
+    "task_id": 3,
+    "init_state_id": 14,
+    "seed": 41810314,
+    "released_row_fingerprint": "e6599bd05ddd998075d83d18b0be3a5b509a6c26e84bb01c248014d3e25932a9",
+    "scene_fingerprint": "48ef7fa0f25ec8782bc019fd5fad14cdf6c6c6456d784aa1e0096f1e4d77e633",
+    "post_settle_scene_fingerprint": "295bb0a22976727876fe96dbaa6fb3595bdce1ad42c49bf40ba18f70d32d8293",
+    "post_settle_scene_errors": {
+      "max_position_m": 0.0,
+      "position_body": "akita_black_bowl_1_main",
+      "max_rotation_rad": 2.263765208679926e-17,
+      "rotation_body": "akita_black_bowl_1_main"
+    },
+    "initial_state_fingerprint": "79dca78b29e20715d9c89e64ccb7f8e131c8937ea1c03b233d2dd36c668011f4",
+    "alignment": {
+      "method": "joint_limited_grip_site_ik",
+      "seed_qpos": [
+        0.0,
+        0.65,
+        0.0,
+        1.89,
+        0.0,
+        0.6,
+        -1.5707963267948966
+      ],
+      "qpos": [
+        -0.21259820949398966,
+        0.47591156665050516,
+        0.20808833954129893,
+        1.566808868338437,
+        -0.058354210363655956,
+        1.1974502826536033,
+        -1.5395331028008634
+      ],
+      "position_error_m": 1.865628321251569e-14,
+      "rotation_error_rad": 4.5040317417575994e-14,
+      "settled_tcp_error_m": 0.003924759570509195,
+      "settled_rotation_error_rad": 0.058512281626462936,
+      "settled_jaw_difference_m": -2.7812703251584026e-09
+    },
+    "perturbation_plan": {
+      "version": "libero_nonphysical_plan_v2",
+      "case_id": "BASE",
+      "schedule": "base",
+      "operator": "none",
+      "variant": "identity",
+      "trigger": "none",
+      "targets": [],
+      "disturbance_targets": [],
+      "references": [],
+      "mechanisms": [
+        "base"
+      ],
+      "assets": [],
+      "params": {},
+      "constraints": [],
+      "seed": 41810314,
+      "event_duration_steps": 24
+    },
+    "perturbation_plan_fingerprint": "c1e274a9caf96b6e4dcd18fece0e4af00d5a811c40b13471b517dac94afbc968"
+  },
+  "historical_reset": "d47ce8cda1f757cc12b7a05eb7d25406f6129d62fb4ebd52246e5c21ae6a14b1",
+  "target_model": {
+    "arm": "Kinova3",
+    "model_class": "MountedKinova3",
+    "joint_count": 7,
+    "joint_names": [
+      "robot0_Actuator1",
+      "robot0_Actuator2",
+      "robot0_Actuator3",
+      "robot0_Actuator4",
+      "robot0_Actuator5",
+      "robot0_Actuator6",
+      "robot0_Actuator7"
+    ],
+    "joint_links": [
+      "robot0_shoulder_link",
+      "robot0_HalfArm1_Link",
+      "robot0_HalfArm2_Link",
+      "robot0_forearm_link",
+      "robot0_SphericalWrist1_Link",
+      "robot0_SphericalWrist2_Link",
+      "robot0_Bracelet_Link"
+    ],
+    "model_nq": 41,
+    "model_nv": 37,
+    "xml_sha256": "2884d72a0427223d333dc00fa2c199c3f86406184c234f436436c7d149002cd7",
+    "arm_meshes": [
+      "robot0_base_link",
+      "robot0_bracelet_with_vision_link",
+      "robot0_forearm_link",
+      "robot0_half_arm_1_link",
+      "robot0_half_arm_2_link",
+      "robot0_shoulder_link",
+      "robot0_spherical_wrist_1_link",
+      "robot0_spherical_wrist_2_link"
+    ],
+    "mount": "RethinkMount",
+    "base_xyz": [
+      -0.66,
+      0.0,
+      0.912
+    ],
+    "gripper": "PandaGripper",
+    "gripper_xml_sha256": "d9d68123909d6910488310d0fae4e358ed4ac831c6d0957f3e30893a5412baac",
+    "gripper_joints": [
+      "gripper0_finger_joint1",
+      "gripper0_finger_joint2"
+    ],
+    "tcp_site": "gripper0_grip_site",
+    "hand_link": "robot0_right_hand",
+    "cameras": [
+      "agentview",
+      "robot0_eye_in_hand"
+    ],
+    "wrist_parent": "robot0_right_hand",
+    "wrist_fovy_deg": 75.0,
+    "controller": "OSC_POSE",
+    "control_freq": 20,
+    "osc_output_max": [
+      0.05,
+      0.05,
+      0.05,
+      0.5,
+      0.5,
+      0.5
+    ],
+    "robosuite": "1.4.0",
+    "mujoco": "3.2.3"
+  },
+  "source_model": {
+    "arm": "Panda",
+    "model_class": "MountedPanda",
+    "joint_count": 7,
+    "joint_names": [
+      "robot0_joint1",
+      "robot0_joint2",
+      "robot0_joint3",
+      "robot0_joint4",
+      "robot0_joint5",
+      "robot0_joint6",
+      "robot0_joint7"
+    ],
+    "joint_links": [
+      "robot0_link1",
+      "robot0_link2",
+      "robot0_link3",
+      "robot0_link4",
+      "robot0_link5",
+      "robot0_link6",
+      "robot0_link7"
+    ],
+    "model_nq": 41,
+    "model_nv": 37,
+    "xml_sha256": "51e3a4a6d54bcaf77e9d36a27372b871728590eedf53d4fd0e195525950eb988",
+    "arm_meshes": [
+      "robot0_link0",
+      "robot0_link0_vis_0",
+      "robot0_link0_vis_1",
+      "robot0_link0_vis_10",
+      "robot0_link0_vis_11",
+      "robot0_link0_vis_2",
+      "robot0_link0_vis_3",
+      "robot0_link0_vis_4",
+      "robot0_link0_vis_5",
+      "robot0_link0_vis_6",
+      "robot0_link0_vis_7",
+      "robot0_link0_vis_8",
+      "robot0_link0_vis_9",
+      "robot0_link1",
+      "robot0_link1_vis",
+      "robot0_link2",
+      "robot0_link2_vis",
+      "robot0_link3",
+      "robot0_link3_vis_0",
+      "robot0_link3_vis_1",
+      "robot0_link3_vis_2",
+      "robot0_link3_vis_3",
+      "robot0_link4",
+      "robot0_link4_vis_0",
+      "robot0_link4_vis_1",
+      "robot0_link4_vis_2",
+      "robot0_link4_vis_3",
+      "robot0_link5",
+      "robot0_link5_vis_0",
+      "robot0_link5_vis_1",
+      "robot0_link5_vis_2",
+      "robot0_link6",
+      "robot0_link6_vis_0",
+      "robot0_link6_vis_1",
+      "robot0_link6_vis_10",
+      "robot0_link6_vis_11",
+      "robot0_link6_vis_12",
+      "robot0_link6_vis_13",
+      "robot0_link6_vis_14",
+      "robot0_link6_vis_15",
+      "robot0_link6_vis_16",
+      "robot0_link6_vis_2",
+      "robot0_link6_vis_3",
+      "robot0_link6_vis_4",
+      "robot0_link6_vis_5",
+      "robot0_link6_vis_6",
+      "robot0_link6_vis_7",
+      "robot0_link6_vis_8",
+      "robot0_link6_vis_9",
+      "robot0_link7_vis_0",
+      "robot0_link7_vis_1",
+      "robot0_link7_vis_2",
+      "robot0_link7_vis_3",
+      "robot0_link7_vis_4",
+      "robot0_link7_vis_5",
+      "robot0_link7_vis_6",
+      "robot0_link7_vis_7"
+    ],
+    "mount": "RethinkMount",
+    "base_xyz": [
+      -0.66,
+      0.0,
+      0.912
+    ],
+    "gripper": "PandaGripper",
+    "gripper_xml_sha256": "d9d68123909d6910488310d0fae4e358ed4ac831c6d0957f3e30893a5412baac",
+    "gripper_joints": [
+      "gripper0_finger_joint1",
+      "gripper0_finger_joint2"
+    ],
+    "tcp_site": "gripper0_grip_site",
+    "hand_link": "robot0_right_hand",
+    "cameras": [
+      "agentview",
+      "robot0_eye_in_hand"
+    ],
+    "wrist_parent": "robot0_right_hand",
+    "wrist_fovy_deg": 75.0,
+    "controller": "OSC_POSE",
+    "control_freq": 20,
+    "osc_output_max": [
+      0.05,
+      0.05,
+      0.05,
+      0.5,
+      0.5,
+      0.5
+    ],
+    "robosuite": "1.4.0",
+    "mujoco": "3.2.3"
+  },
+  "instruction": "open the top layer of the drawer and put the bowl inside",
+  "frames": [
+    {
+      "step": 0,
+      "drawer_q_m": 0.0,
+      "exposure": {
+        "exposure_time": 0.5000000000000003,
+        "fk_candidate": "pre_step",
+        "reconstruction": {
+          "geom_xpos": 0.0,
+          "geom_xmat": 0.0,
+          "site_xpos": 0.0,
+          "site_xmat": 0.0,
+          "cam_xpos": 0.0,
+          "cam_xmat": 0.0
+        }
+      },
+      "control": {
+        "admissible": true,
+        "attempts": [],
+        "jaw_error_m": 0.0,
+        "tcp_error_m": 0.0,
+        "tcp_error_rad": 0.0,
+        "tool_body_errors_max_m_rad": [
+          0.0,
+          0.0
+        ],
+        "task_body_count": 15,
+        "scene_max_m": 0.0,
+        "scene_max_rad": 0.0,
+        "joint_names": [
+          "akita_black_bowl_1_joint0",
+          "cream_cheese_1_joint0",
+          "flat_stove_1_button",
+          "plate_1_joint0",
+          "wine_bottle_1_joint0",
+          "wooden_cabinet_1_bottom_level",
+          "wooden_cabinet_1_middle_level",
+          "wooden_cabinet_1_top_level",
+          "gripper0_finger_joint1",
+          "gripper0_finger_joint2",
+          "robot0_Actuator1",
+          "robot0_Actuator2",
+          "robot0_Actuator3",
+          "robot0_Actuator4",
+          "robot0_Actuator5",
+          "robot0_Actuator6",
+          "robot0_Actuator7"
+        ],
+        "fixtures": [
+          "flat_stove_1_main",
+          "wine_rack_1_main",
+          "wooden_cabinet_1_main"
+        ],
+        "camera_before_lock": {
+          "agentview": {
+            "m": 0.0,
+            "rad": 0.0
+          },
+          "robot0_eye_in_hand": {
+            "m": 0.0,
+            "rad": 0.0
+          }
+        }
+      },
+      "panda": {
+        "admissible": true,
+        "attempts": [
+          {
+            "q": [
+              -0.05422508693955245,
+              -0.13994904624270582,
+              0.0644953685154796,
+              -2.437055926670016,
+              -0.04065535744905383,
+              2.2086237032910607,
+              0.7904146305384505
+            ],
+            "pos_error_m": 2.6219048425060747e-16,
+            "rot_error_rad": 2.811697192926522e-16,
+            "nfev": 6,
+            "pose_ok": true,
+            "min_limited_margin_rad": 0.6347440733299843,
+            "nearest_limit": "robot0_joint4",
+            "contacts": [],
+            "arm_collision": false
+          }
+        ],
+        "jaw_error_m": 0.0,
+        "tcp_error_m": 2.6219048425060747e-16,
+        "tcp_error_rad": 2.811697192926522e-16,
+        "tool_body_errors_max_m_rad": [
+          3.377324398933778e-16,
+          2.957921487344726e-16
+        ],
+        "task_body_count": 15,
+        "scene_max_m": 0.0,
+        "scene_max_rad": 0.0,
+        "joint_names": [
+          "akita_black_bowl_1_joint0",
+          "cream_cheese_1_joint0",
+          "flat_stove_1_button",
+          "plate_1_joint0",
+          "wine_bottle_1_joint0",
+          "wooden_cabinet_1_bottom_level",
+          "wooden_cabinet_1_middle_level",
+          "wooden_cabinet_1_top_level",
+          "gripper0_finger_joint1",
+          "gripper0_finger_joint2"
+        ],
+        "fixtures": [
+          "flat_stove_1_main",
+          "wine_rack_1_main",
+          "wooden_cabinet_1_main"
+        ],
+        "camera_before_lock": {
+          "agentview": {
+            "m": 0.0,
+            "rad": 0.0
+          },
+          "robot0_eye_in_hand": {
+            "m": 2.787728152484798e-16,
+            "rad": 2.820573574101483e-16
+          }
+        }
+      },
+      "images": {
+        "agentview": {
+          "raw_vs_full_control": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "raw_vs_sham": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "sham_vs_swap": {
+            "changed": 2432,
+            "mae": 1.6599273681640625,
+            "max": 203
+          },
+          "clean_plate": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "clean_depth_max": 0.0,
+          "orig_arm_px": 1528,
+          "source_arm_px": 2165,
+          "uncovered_px": 286,
+          "source_arm_hidden_px": 680,
+          "source_only_px": 923,
+          "changed_outside_union": 0,
+          "visible_depth_ahead_px": 2118,
+          "visible_depth_behind_px": 0
+        },
+        "robot0_eye_in_hand": {
+          "raw_vs_full_control": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "raw_vs_sham": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "sham_vs_swap": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "clean_plate": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "clean_depth_max": 0.0,
+          "orig_arm_px": 0,
+          "source_arm_px": 0,
+          "uncovered_px": 0,
+          "source_arm_hidden_px": 0,
+          "source_only_px": 0,
+          "changed_outside_union": 0,
+          "visible_depth_ahead_px": 0,
+          "visible_depth_behind_px": 0
+        }
+      },
+      "target_state_sha256": "b723f93dddfcdd74674320b4b9fb71f3fbd32f000841cb459997825aebaffcd1"
+    },
+    {
+      "step": 30,
+      "drawer_q_m": 3.4457196854353204e-05,
+      "exposure": {
+        "exposure_time": 1.9960000000000016,
+        "fk_candidate": "pre_step",
+        "reconstruction": {
+          "geom_xpos": 0.0,
+          "geom_xmat": 0.0,
+          "site_xpos": 0.0,
+          "site_xmat": 0.0,
+          "cam_xpos": 0.0,
+          "cam_xmat": 0.0
+        }
+      },
+      "control": {
+        "admissible": true,
+        "attempts": [],
+        "jaw_error_m": 0.0,
+        "tcp_error_m": 0.0,
+        "tcp_error_rad": 0.0,
+        "tool_body_errors_max_m_rad": [
+          0.0,
+          0.0
+        ],
+        "task_body_count": 15,
+        "scene_max_m": 0.0,
+        "scene_max_rad": 0.0,
+        "joint_names": [
+          "akita_black_bowl_1_joint0",
+          "cream_cheese_1_joint0",
+          "flat_stove_1_button",
+          "plate_1_joint0",
+          "wine_bottle_1_joint0",
+          "wooden_cabinet_1_bottom_level",
+          "wooden_cabinet_1_middle_level",
+          "wooden_cabinet_1_top_level",
+          "gripper0_finger_joint1",
+          "gripper0_finger_joint2",
+          "robot0_Actuator1",
+          "robot0_Actuator2",
+          "robot0_Actuator3",
+          "robot0_Actuator4",
+          "robot0_Actuator5",
+          "robot0_Actuator6",
+          "robot0_Actuator7"
+        ],
+        "fixtures": [
+          "flat_stove_1_main",
+          "wine_rack_1_main",
+          "wooden_cabinet_1_main"
+        ],
+        "camera_before_lock": {
+          "agentview": {
+            "m": 0.0,
+            "rad": 0.0
+          },
+          "robot0_eye_in_hand": {
+            "m": 0.0,
+            "rad": 0.0
+          }
+        }
+      },
+      "panda": {
+        "admissible": true,
+        "attempts": [
+          {
+            "q": [
+              -0.12401864516584366,
+              0.4533229772206367,
+              -0.016772655549210633,
+              -1.836960924386065,
+              -0.11152500513512671,
+              2.3281169658448655,
+              0.4929321317902263
+            ],
+            "pos_error_m": 2.92937222087948e-16,
+            "rot_error_rad": 2.971321781162346e-16,
+            "nfev": 8,
+            "pose_ok": true,
+            "min_limited_margin_rad": 1.2348390756139351,
+            "nearest_limit": "robot0_joint4",
+            "contacts": [
+              {
+                "kind": "other_hand_scene",
+                "body1": "gripper0_leftfinger",
+                "geom1": "gripper0_finger1_collision",
+                "body2": "wooden_cabinet_1_cabinet_top",
+                "geom2": "wooden_cabinet_1_g18",
+                "distance_m": -0.00047650634693093897
+              }
+            ],
+            "arm_collision": false
+          }
+        ],
+        "jaw_error_m": 0.0,
+        "tcp_error_m": 2.92937222087948e-16,
+        "tcp_error_rad": 2.971321781162346e-16,
+        "tool_body_errors_max_m_rad": [
+          5.390609589105639e-16,
+          3.7805300942716777e-16
+        ],
+        "task_body_count": 15,
+        "scene_max_m": 0.0,
+        "scene_max_rad": 0.0,
+        "joint_names": [
+          "akita_black_bowl_1_joint0",
+          "cream_cheese_1_joint0",
+          "flat_stove_1_button",
+          "plate_1_joint0",
+          "wine_bottle_1_joint0",
+          "wooden_cabinet_1_bottom_level",
+          "wooden_cabinet_1_middle_level",
+          "wooden_cabinet_1_top_level",
+          "gripper0_finger_joint1",
+          "gripper0_finger_joint2"
+        ],
+        "fixtures": [
+          "flat_stove_1_main",
+          "wine_rack_1_main",
+          "wooden_cabinet_1_main"
+        ],
+        "camera_before_lock": {
+          "agentview": {
+            "m": 0.0,
+            "rad": 0.0
+          },
+          "robot0_eye_in_hand": {
+            "m": 5.06313452971668e-16,
+            "rad": 2.977419034937616e-16
+          }
+        }
+      },
+      "images": {
+        "agentview": {
+          "raw_vs_full_control": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "raw_vs_sham": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "sham_vs_swap": {
+            "changed": 6811,
+            "mae": 6.2009735107421875,
+            "max": 212
+          },
+          "clean_plate": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "clean_depth_max": 0.0,
+          "orig_arm_px": 4928,
+          "source_arm_px": 6038,
+          "uncovered_px": 795,
+          "source_arm_hidden_px": 57,
+          "source_only_px": 1905,
+          "changed_outside_union": 0,
+          "visible_depth_ahead_px": 5986,
+          "visible_depth_behind_px": 0
+        },
+        "robot0_eye_in_hand": {
+          "raw_vs_full_control": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "raw_vs_sham": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "sham_vs_swap": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "clean_plate": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "clean_depth_max": 0.0,
+          "orig_arm_px": 0,
+          "source_arm_px": 0,
+          "uncovered_px": 0,
+          "source_arm_hidden_px": 0,
+          "source_only_px": 0,
+          "changed_outside_union": 0,
+          "visible_depth_ahead_px": 0,
+          "visible_depth_behind_px": 0
+        }
+      },
+      "target_state_sha256": "516f0de4c442c16933df6a151c489c1427ad7067e0b276878919b3c0d5c6b254"
+    },
+    {
+      "step": 45,
+      "drawer_q_m": -0.03691451801413783,
+      "exposure": {
+        "exposure_time": 2.745999999999919,
+        "fk_candidate": "pre_step",
+        "reconstruction": {
+          "geom_xpos": 0.0,
+          "geom_xmat": 0.0,
+          "site_xpos": 0.0,
+          "site_xmat": 0.0,
+          "cam_xpos": 0.0,
+          "cam_xmat": 0.0
+        }
+      },
+      "control": {
+        "admissible": true,
+        "attempts": [],
+        "jaw_error_m": 0.0,
+        "tcp_error_m": 0.0,
+        "tcp_error_rad": 0.0,
+        "tool_body_errors_max_m_rad": [
+          0.0,
+          0.0
+        ],
+        "task_body_count": 15,
+        "scene_max_m": 0.0,
+        "scene_max_rad": 0.0,
+        "joint_names": [
+          "akita_black_bowl_1_joint0",
+          "cream_cheese_1_joint0",
+          "flat_stove_1_button",
+          "plate_1_joint0",
+          "wine_bottle_1_joint0",
+          "wooden_cabinet_1_bottom_level",
+          "wooden_cabinet_1_middle_level",
+          "wooden_cabinet_1_top_level",
+          "gripper0_finger_joint1",
+          "gripper0_finger_joint2",
+          "robot0_Actuator1",
+          "robot0_Actuator2",
+          "robot0_Actuator3",
+          "robot0_Actuator4",
+          "robot0_Actuator5",
+          "robot0_Actuator6",
+          "robot0_Actuator7"
+        ],
+        "fixtures": [
+          "flat_stove_1_main",
+          "wine_rack_1_main",
+          "wooden_cabinet_1_main"
+        ],
+        "camera_before_lock": {
+          "agentview": {
+            "m": 0.0,
+            "rad": 0.0
+          },
+          "robot0_eye_in_hand": {
+            "m": 0.0,
+            "rad": 0.0
+          }
+        }
+      },
+      "panda": {
+        "admissible": true,
+        "attempts": [
+          {
+            "q": [
+              -0.09142400611547069,
+              0.4499226405917477,
+              0.014209484126678442,
+              -1.8264891632992106,
+              -0.08106115434097738,
+              2.274001140010932,
+              0.5293139319590275
+            ],
+            "pos_error_m": 2.6251129656189234e-16,
+            "rot_error_rad": 3.2894090483991494e-16,
+            "nfev": 6,
+            "pose_ok": true,
+            "min_limited_margin_rad": 1.2453108367007895,
+            "nearest_limit": "robot0_joint4",
+            "contacts": [
+              {
+                "kind": "other_hand_scene",
+                "body1": "gripper0_leftfinger",
+                "geom1": "gripper0_finger1_collision",
+                "body2": "wooden_cabinet_1_cabinet_top",
+                "geom2": "wooden_cabinet_1_g18",
+                "distance_m": -9.317326354429945e-05
+              }
+            ],
+            "arm_collision": false
+          }
+        ],
+        "jaw_error_m": 0.0,
+        "tcp_error_m": 2.6251129656189234e-16,
+        "tcp_error_rad": 3.2894090483991494e-16,
+        "tool_body_errors_max_m_rad": [
+          3.338711823126878e-16,
+          3.2894090483991494e-16
+        ],
+        "task_body_count": 15,
+        "scene_max_m": 0.0,
+        "scene_max_rad": 0.0,
+        "joint_names": [
+          "akita_black_bowl_1_joint0",
+          "cream_cheese_1_joint0",
+          "flat_stove_1_button",
+          "plate_1_joint0",
+          "wine_bottle_1_joint0",
+          "wooden_cabinet_1_bottom_level",
+          "wooden_cabinet_1_middle_level",
+          "wooden_cabinet_1_top_level",
+          "gripper0_finger_joint1",
+          "gripper0_finger_joint2"
+        ],
+        "fixtures": [
+          "flat_stove_1_main",
+          "wine_rack_1_main",
+          "wooden_cabinet_1_main"
+        ],
+        "camera_before_lock": {
+          "agentview": {
+            "m": 0.0,
+            "rad": 0.0
+          },
+          "robot0_eye_in_hand": {
+            "m": 2.343867565875809e-16,
+            "rad": 3.271779296677529e-16
+          }
+        }
+      },
+      "images": {
+        "agentview": {
+          "raw_vs_full_control": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "raw_vs_sham": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "sham_vs_swap": {
+            "changed": 6357,
+            "mae": 5.891337076822917,
+            "max": 215
+          },
+          "clean_plate": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "clean_depth_max": 0.0,
+          "orig_arm_px": 4404,
+          "source_arm_px": 5661,
+          "uncovered_px": 720,
+          "source_arm_hidden_px": 90,
+          "source_only_px": 1977,
+          "changed_outside_union": 0,
+          "visible_depth_ahead_px": 5612,
+          "visible_depth_behind_px": 0
+        },
+        "robot0_eye_in_hand": {
+          "raw_vs_full_control": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "raw_vs_sham": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "sham_vs_swap": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "clean_plate": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "clean_depth_max": 0.0,
+          "orig_arm_px": 0,
+          "source_arm_px": 0,
+          "uncovered_px": 0,
+          "source_arm_hidden_px": 0,
+          "source_only_px": 0,
+          "changed_outside_union": 0,
+          "visible_depth_ahead_px": 0,
+          "visible_depth_behind_px": 0
+        }
+      },
+      "target_state_sha256": "338d396bc6cd348d6008706edfd9340922dd684bc7e133f99602b0d60fcae156"
+    },
+    {
+      "step": 60,
+      "drawer_q_m": -0.14555313977689197,
+      "exposure": {
+        "exposure_time": 3.4959999999998366,
+        "fk_candidate": "pre_step",
+        "reconstruction": {
+          "geom_xpos": 0.0,
+          "geom_xmat": 0.0,
+          "site_xpos": 0.0,
+          "site_xmat": 0.0,
+          "cam_xpos": 0.0,
+          "cam_xmat": 0.0
+        }
+      },
+      "control": {
+        "admissible": true,
+        "attempts": [],
+        "jaw_error_m": 0.0,
+        "tcp_error_m": 0.0,
+        "tcp_error_rad": 0.0,
+        "tool_body_errors_max_m_rad": [
+          0.0,
+          0.0
+        ],
+        "task_body_count": 15,
+        "scene_max_m": 0.0,
+        "scene_max_rad": 0.0,
+        "joint_names": [
+          "akita_black_bowl_1_joint0",
+          "cream_cheese_1_joint0",
+          "flat_stove_1_button",
+          "plate_1_joint0",
+          "wine_bottle_1_joint0",
+          "wooden_cabinet_1_bottom_level",
+          "wooden_cabinet_1_middle_level",
+          "wooden_cabinet_1_top_level",
+          "gripper0_finger_joint1",
+          "gripper0_finger_joint2",
+          "robot0_Actuator1",
+          "robot0_Actuator2",
+          "robot0_Actuator3",
+          "robot0_Actuator4",
+          "robot0_Actuator5",
+          "robot0_Actuator6",
+          "robot0_Actuator7"
+        ],
+        "fixtures": [
+          "flat_stove_1_main",
+          "wine_rack_1_main",
+          "wooden_cabinet_1_main"
+        ],
+        "camera_before_lock": {
+          "agentview": {
+            "m": 0.0,
+            "rad": 0.0
+          },
+          "robot0_eye_in_hand": {
+            "m": 0.0,
+            "rad": 0.0
+          }
+        }
+      },
+      "panda": {
+        "admissible": true,
+        "attempts": [
+          {
+            "q": [
+              0.006566055369938649,
+              0.4606425001159577,
+              0.0970371058949691,
+              -1.8078846049209751,
+              -0.1455125611627776,
+              2.2394885500270028,
+              0.7412241447656062
+            ],
+            "pos_error_m": 1.6493562521320161e-16,
+            "rot_error_rad": 1.5074693550098745e-15,
+            "nfev": 7,
+            "pose_ok": true,
+            "min_limited_margin_rad": 1.263915395079025,
+            "nearest_limit": "robot0_joint4",
+            "contacts": [
+              {
+                "kind": "other_hand_scene",
+                "body1": "gripper0_leftfinger",
+                "geom1": "gripper0_finger1_collision",
+                "body2": "wooden_cabinet_1_cabinet_top",
+                "geom2": "wooden_cabinet_1_g18",
+                "distance_m": -7.913810713677805e-05
+              }
+            ],
+            "arm_collision": false
+          }
+        ],
+        "jaw_error_m": 0.0,
+        "tcp_error_m": 1.6493562521320161e-16,
+        "tcp_error_rad": 1.5074693550098745e-15,
+        "tool_body_errors_max_m_rad": [
+          3.7218612447275885e-16,
+          1.5074693550098745e-15
+        ],
+        "task_body_count": 15,
+        "scene_max_m": 0.0,
+        "scene_max_rad": 0.0,
+        "joint_names": [
+          "akita_black_bowl_1_joint0",
+          "cream_cheese_1_joint0",
+          "flat_stove_1_button",
+          "plate_1_joint0",
+          "wine_bottle_1_joint0",
+          "wooden_cabinet_1_bottom_level",
+          "wooden_cabinet_1_middle_level",
+          "wooden_cabinet_1_top_level",
+          "gripper0_finger_joint1",
+          "gripper0_finger_joint2"
+        ],
+        "fixtures": [
+          "flat_stove_1_main",
+          "wine_rack_1_main",
+          "wooden_cabinet_1_main"
+        ],
+        "camera_before_lock": {
+          "agentview": {
+            "m": 0.0,
+            "rad": 0.0
+          },
+          "robot0_eye_in_hand": {
+            "m": 3.6188843062238402e-16,
+            "rad": 1.5071855427137903e-15
+          }
+        }
+      },
+      "images": {
+        "agentview": {
+          "raw_vs_full_control": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "raw_vs_sham": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "sham_vs_swap": {
+            "changed": 6939,
+            "mae": 6.056640625,
+            "max": 202
+          },
+          "clean_plate": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "clean_depth_max": 0.0,
+          "orig_arm_px": 4945,
+          "source_arm_px": 6356,
+          "uncovered_px": 599,
+          "source_arm_hidden_px": 49,
+          "source_only_px": 2010,
+          "changed_outside_union": 0,
+          "visible_depth_ahead_px": 6289,
+          "visible_depth_behind_px": 0
+        },
+        "robot0_eye_in_hand": {
+          "raw_vs_full_control": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "raw_vs_sham": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "sham_vs_swap": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "clean_plate": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "clean_depth_max": 0.0,
+          "orig_arm_px": 0,
+          "source_arm_px": 0,
+          "uncovered_px": 0,
+          "source_arm_hidden_px": 0,
+          "source_only_px": 0,
+          "changed_outside_union": 0,
+          "visible_depth_ahead_px": 0,
+          "visible_depth_behind_px": 0
+        }
+      },
+      "target_state_sha256": "f1a89b2449ccc7ab4d72d3c23db99fc25682ff10951b4d9c22ff8d58b289ca71"
+    },
+    {
+      "step": 90,
+      "drawer_q_m": -0.15091640466520723,
+      "exposure": {
+        "exposure_time": 4.995999999999672,
+        "fk_candidate": "pre_step",
+        "reconstruction": {
+          "geom_xpos": 0.0,
+          "geom_xmat": 0.0,
+          "site_xpos": 0.0,
+          "site_xmat": 0.0,
+          "cam_xpos": 0.0,
+          "cam_xmat": 0.0
+        }
+      },
+      "control": {
+        "admissible": true,
+        "attempts": [],
+        "jaw_error_m": 0.0,
+        "tcp_error_m": 0.0,
+        "tcp_error_rad": 0.0,
+        "tool_body_errors_max_m_rad": [
+          0.0,
+          0.0
+        ],
+        "task_body_count": 15,
+        "scene_max_m": 0.0,
+        "scene_max_rad": 0.0,
+        "joint_names": [
+          "akita_black_bowl_1_joint0",
+          "cream_cheese_1_joint0",
+          "flat_stove_1_button",
+          "plate_1_joint0",
+          "wine_bottle_1_joint0",
+          "wooden_cabinet_1_bottom_level",
+          "wooden_cabinet_1_middle_level",
+          "wooden_cabinet_1_top_level",
+          "gripper0_finger_joint1",
+          "gripper0_finger_joint2",
+          "robot0_Actuator1",
+          "robot0_Actuator2",
+          "robot0_Actuator3",
+          "robot0_Actuator4",
+          "robot0_Actuator5",
+          "robot0_Actuator6",
+          "robot0_Actuator7"
+        ],
+        "fixtures": [
+          "flat_stove_1_main",
+          "wine_rack_1_main",
+          "wooden_cabinet_1_main"
+        ],
+        "camera_before_lock": {
+          "agentview": {
+            "m": 0.0,
+            "rad": 0.0
+          },
+          "robot0_eye_in_hand": {
+            "m": 0.0,
+            "rad": 0.0
+          }
+        }
+      },
+      "panda": {
+        "admissible": true,
+        "attempts": [
+          {
+            "q": [
+              0.014139258830164368,
+              0.31500258125647684,
+              0.11282550373799315,
+              -2.1039371775768294,
+              -0.2779499740920633,
+              2.369978908220039,
+              0.9559943549131368
+            ],
+            "pos_error_m": 8.092071311423672e-17,
+            "rot_error_rad": 1.9431207175770905e-16,
+            "nfev": 8,
+            "pose_ok": true,
+            "min_limited_margin_rad": 0.9678628224231707,
+            "nearest_limit": "robot0_joint4",
+            "contacts": [
+              {
+                "kind": "other_hand_scene",
+                "body1": "gripper0_right_gripper",
+                "geom1": "gripper0_hand_collision",
+                "body2": "wooden_cabinet_1_cabinet_top",
+                "geom2": "wooden_cabinet_1_g11",
+                "distance_m": -8.457779174238663e-05
+              }
+            ],
+            "arm_collision": false
+          }
+        ],
+        "jaw_error_m": 0.0,
+        "tcp_error_m": 8.092071311423672e-17,
+        "tcp_error_rad": 1.9431207175770905e-16,
+        "tool_body_errors_max_m_rad": [
+          1.8094421531119201e-16,
+          2.7158079070970603e-16
+        ],
+        "task_body_count": 15,
+        "scene_max_m": 0.0,
+        "scene_max_rad": 0.0,
+        "joint_names": [
+          "akita_black_bowl_1_joint0",
+          "cream_cheese_1_joint0",
+          "flat_stove_1_button",
+          "plate_1_joint0",
+          "wine_bottle_1_joint0",
+          "wooden_cabinet_1_bottom_level",
+          "wooden_cabinet_1_middle_level",
+          "wooden_cabinet_1_top_level",
+          "gripper0_finger_joint1",
+          "gripper0_finger_joint2"
+        ],
+        "fixtures": [
+          "flat_stove_1_main",
+          "wine_rack_1_main",
+          "wooden_cabinet_1_main"
+        ],
+        "camera_before_lock": {
+          "agentview": {
+            "m": 0.0,
+            "rad": 0.0
+          },
+          "robot0_eye_in_hand": {
+            "m": 1.6199010924212654e-16,
+            "rad": 1.9740086775656868e-16
+          }
+        }
+      },
+      "images": {
+        "agentview": {
+          "raw_vs_full_control": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "raw_vs_sham": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "sham_vs_swap": {
+            "changed": 6094,
+            "mae": 4.869608561197917,
+            "max": 203
+          },
+          "clean_plate": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "clean_depth_max": 0.0,
+          "orig_arm_px": 4419,
+          "source_arm_px": 5588,
+          "uncovered_px": 537,
+          "source_arm_hidden_px": 85,
+          "source_only_px": 1706,
+          "changed_outside_union": 0,
+          "visible_depth_ahead_px": 5532,
+          "visible_depth_behind_px": 0
+        },
+        "robot0_eye_in_hand": {
+          "raw_vs_full_control": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "raw_vs_sham": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "sham_vs_swap": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "clean_plate": {
+            "changed": 0,
+            "mae": 0.0,
+            "max": 0
+          },
+          "clean_depth_max": 0.0,
+          "orig_arm_px": 0,
+          "source_arm_px": 0,
+          "uncovered_px": 0,
+          "source_arm_hidden_px": 0,
+          "source_only_px": 0,
+          "changed_outside_union": 0,
+          "visible_depth_ahead_px": 0,
+          "visible_depth_behind_px": 0
+        }
+      },
+      "target_state_sha256": "37305f867cda2e15499456c0bc3fdcc7a1aae79e86a7eb9538ec7f34bb1a5e25"
+    }
+  ],
+  "replay_errors_step_m_m_rad": [
+    [
+      1,
+      5.820766091346741e-11,
+      0.0
+    ],
+    [
+      2,
+      1.1641532182693481e-10,
+      0.0
+    ],
+    [
+      3,
+      2.3283064365386963e-10,
+      0.0
+    ],
+    [
+      4,
+      4.656612873077393e-10,
+      0.0
+    ],
+    [
+      5,
+      1.4917523115539316e-08,
+      0.0,
+      3.7241366836231057e-09
+    ],
+    [
+      6,
+      1.4930236657970956e-08,
+      0.0
+    ],
+    [
+      7,
+      1.862645149230957e-09,
+      0.0
+    ],
+    [
+      8,
+      1.862645149230957e-09,
+      0.0
+    ],
+    [
+      9,
+      1.862645149230957e-09,
+      0.0
+    ],
+    [
+      10,
+      3.725290298461914e-09,
+      0.0,
+      1.116403774227251e-08
+    ],
+    [
+      11,
+      3.725290298461914e-09,
+      0.0
+    ],
+    [
+      12,
+      3.725290298461914e-09,
+      0.0
+    ],
+    [
+      13,
+      3.725290298461914e-09,
+      0.0
+    ],
+    [
+      14,
+      3.725290298461914e-09,
+      0.0
+    ],
+    [
+      15,
+      1.0536712127723509e-08,
+      0.0,
+      1.6015918363100105e-08
+    ],
+    [
+      16,
+      8.33000234328132e-09,
+      0.0
+    ],
+    [
+      17,
+      8.33000234328132e-09,
+      0.0
+    ],
+    [
+      18,
+      7.450580596923828e-09,
+      0.0
+    ],
+    [
+      19,
+      3.725290298461914e-09,
+      0.0
+    ],
+    [
+      20,
+      8.33000234328132e-09,
+      0.0,
+      2.7761169486707637e-08
+    ],
+    [
+      21,
+      7.450580596923828e-09,
+      0.0
+    ],
+    [
+      22,
+      8.33000234328132e-09,
+      3.725290298461914e-09
+    ],
+    [
+      23,
+      3.725290298461914e-09,
+      0.0
+    ],
+    [
+      24,
+      3.725290298461914e-09,
+      0.0
+    ],
+    [
+      25,
+      8.33000234328132e-09,
+      0.0,
+      2.4176737148048575e-08
+    ],
+    [
+      26,
+      8.33000234328132e-09,
+      0.0
+    ],
+    [
+      27,
+      3.725290298461914e-09,
+      0.0
+    ],
+    [
+      28,
+      3.725290298461914e-09,
+      0.0
+    ],
+    [
+      29,
+      9.313225746154785e-09,
+      3.725290298461914e-09
+    ],
+    [
+      30,
+      3.725290298461914e-09,
+      3.725290298461914e-09,
+      1.860880051220291e-08
+    ],
+    [
+      31,
+      3.725290298461914e-09,
+      1.862645149230957e-09
+    ],
+    [
+      32,
+      3.725290298461914e-09,
+      1.862645149230957e-09
+    ],
+    [
+      33,
+      3.725290298461914e-09,
+      0.0
+    ],
+    [
+      34,
+      3.725290298461914e-09,
+      0.0
+    ],
+    [
+      35,
+      3.725290298461914e-09,
+      1.862645149230957e-09,
+      1.6656308565703943e-08
+    ],
+    [
+      36,
+      8.33000234328132e-09,
+      0.0
+    ],
+    [
+      37,
+      1.862645149230957e-09,
+      0.0
+    ],
+    [
+      38,
+      8.33000234328132e-09,
+      0.0
+    ],
+    [
+      39,
+      1.862645149230957e-09,
+      0.0
+    ],
+    [
+      40,
+      3.725290298461914e-09,
+      0.0,
+      1.4457668143641546e-08
+    ],
+    [
+      41,
+      3.725290298461914e-09,
+      0.0
+    ],
+    [
+      42,
+      3.725290298461914e-09,
+      0.0
+    ],
+    [
+      43,
+      3.725290298461914e-09,
+      0.0
+    ],
+    [
+      44,
+      8.33000234328132e-09,
+      0.0
+    ],
+    [
+      45,
+      8.33000234328132e-09,
+      0.0,
+      1.1780343050096846e-08
+    ],
+    [
+      46,
+      5.268356063861754e-09,
+      0.0
+    ],
+    [
+      47,
+      5.268356063861754e-09,
+      0.0
+    ],
+    [
+      48,
+      5.268356063861754e-09,
+      0.0
+    ],
+    [
+      49,
+      6.7158625935464895e-09,
+      0.0
+    ],
+    [
+      50,
+      6.7158625935464895e-09,
+      0.0,
+      8.329968387294478e-09
+    ],
+    [
+      51,
+      6.7158625935464895e-09,
+      0.0
+    ],
+    [
+      52,
+      6.7158625935464895e-09,
+      0.0
+    ],
+    [
+      53,
+      6.910796314317654e-09,
+      0.0
+    ],
+    [
+      54,
+      7.1080110606149524e-09,
+      0.0
+    ],
+    [
+      55,
+      7.508562643358995e-09,
+      0.0,
+      9.311931398780222e-09
+    ],
+    [
+      56,
+      6.7158625935464895e-09,
+      0.0
+    ],
+    [
+      57,
+      8.33000234328132e-09,
+      0.0
+    ],
+    [
+      58,
+      8.33000234328132e-09,
+      0.0
+    ],
+    [
+      59,
+      5.268356063861754e-09,
+      0.0
+    ],
+    [
+      60,
+      8.33000234328132e-09,
+      0.0,
+      8.327126866736387e-09
+    ],
+    [
+      61,
+      8.33000234328132e-09,
+      0.0
+    ],
+    [
+      62,
+      8.33000234328132e-09,
+      0.0
+    ],
+    [
+      63,
+      3.725290298461914e-09,
+      3.725290298461914e-09
+    ],
+    [
+      64,
+      9.313225746154785e-09,
+      0.0
+    ],
+    [
+      65,
+      9.313225746154785e-09,
+      0.0,
+      1.653104422640847e-08
+    ],
+    [
+      66,
+      5.587935447692871e-09,
+      0.0
+    ],
+    [
+      67,
+      1.0536712127723509e-08,
+      0.0
+    ],
+    [
+      68,
+      1.0536712127723509e-08,
+      0.0
+    ],
+    [
+      69,
+      7.450580596923828e-09,
+      0.0
+    ],
+    [
+      70,
+      9.313225746154785e-09,
+      0.0,
+      8.320802641033478e-09
+    ],
+    [
+      71,
+      7.450580596923828e-09,
+      0.0
+    ],
+    [
+      72,
+      9.313225746154785e-09,
+      0.0
+    ],
+    [
+      73,
+      7.450580596923828e-09,
+      0.0
+    ],
+    [
+      74,
+      8.33000234328132e-09,
+      0.0
+    ],
+    [
+      75,
+      7.450580596923828e-09,
+      0.0,
+      7.4449809997233e-09
+    ],
+    [
+      76,
+      8.33000234328132e-09,
+      0.0
+    ],
+    [
+      77,
+      8.33000234328132e-09,
+      0.0
+    ],
+    [
+      78,
+      8.33000234328132e-09,
+      0.0
+    ],
+    [
+      79,
+      8.33000234328132e-09,
+      0.0
+    ],
+    [
+      80,
+      1.0536712127723509e-08,
+      0.0,
+      1.6596296350268373e-08
+    ],
+    [
+      81,
+      3.725290298461914e-09,
+      0.0
+    ],
+    [
+      82,
+      8.33000234328132e-09,
+      0.0
+    ],
+    [
+      83,
+      7.450580596923828e-09,
+      3.725290298461914e-09
+    ],
+    [
+      84,
+      8.33000234328132e-09,
+      0.0
+    ],
+    [
+      85,
+      3.725290298461914e-09,
+      0.0,
+      2.1065200330285597e-08
+    ],
+    [
+      86,
+      8.33000234328132e-09,
+      0.0
+    ],
+    [
+      87,
+      8.33000234328132e-09,
+      0.0
+    ],
+    [
+      88,
+      1.0536712127723509e-08,
+      0.0
+    ],
+    [
+      89,
+      8.33000234328132e-09,
+      0.0
+    ],
+    [
+      90,
+      8.33000234328132e-09,
+      0.0,
+      1.3037846376053703e-08
+    ]
+  ]
+}

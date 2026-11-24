@@ -1,0 +1,19 @@
+time_Asia_Shanghai	source	observation
+2026-11-23T19:12:33+08:00	PFS	gpu01 absent
+2026-11-23T19:12+08:00	Baige Distributed Training	job-69hluhi5wgb7 queued (排队中), created 2026-11-23 19:12:00, GPU-4090, 1 × RTX 4090, 12 CPU, 48 GiB, no end time or duration
+2026-11-23T19:16+08:00	Baige CPU readback	Detached checkout equals qualified pin. Both CPU01 copies match all 12 checksums. Independently reconstructed external RGB, wrist RGB, state and noise for ten archived frames; CPU03 hashes agree. No gpu01 receipt yet.
+2026-11-23T19:33:41+08:00	Baige Distributed Training + PFS	job-69hluhi5wgb7 queued (排队中); no gpu01 launch receipt; elapsed 21 min, next 19:52 or first launcher artifact.
+2026-11-23T19:52:02+08:00	Baige Distributed Training + PFS	job-69hluhi5wgb7 queued (排队中); no gpu01 launch receipt; elapsed 40 min, next 20:12 or first launcher artifact.
+2026-11-23T20:12:41+08:00	Baige Distributed Training + PFS	job-69hluhi5wgb7 queued (排队中); no gpu01 launch receipt; elapsed 60 min, next 20:32 or first launcher artifact.
+2026-11-23T20:32:05+08:00	Baige job detail	Creation/queue stage lasted 1h20m05s from 19:12:00; startup began at 20:32:05.
+2026-11-23T20:32:10+08:00	Baige job detail	Running after 5s of startup, one RTX 4090.
+2026-11-23T20:32:25+08:00	PFS	launch.txt confirms job-69hluhi5wgb7-master-0, pin 2b59cff7e173ee8064905256b98a1dd3fd0f79d5, OpenPI 215abfb217dbac7d5f1273282331b9b1866c0479.
+2026-11-23T20:33:10+08:00	gpu.json	Passed: one NVIDIA GeForce RTX 4090, CUDA/PCI allocation identity and own-PID tensor result 2097152 on 1048576 elements.
+2026-11-23T20:37:41+08:00	PFS first matched proposal	Layout 14 control 0, real four-way 10x7 proposal file written. Independent reconstruction gives L2 0.112867 for the first five bounded commands; raw vs Kinova render and raw repeat vs raw exactly zero.
+2026-11-23T20:37:44+08:00	PFS last proposal	All ten quartet files written. Reconstructed every input/noise digest and all saved action differences. Ten changed Panda chunks; both negative controls byte-identical across all ten.
+2026-11-23T20:39:19+08:00	PFS first native episode	Layout 16 raw terminated at control 206 with reward 1 after 205 zeros; 42 real frozen replans.
+2026-11-23T20:39:37+08:00	PFS matched Kinova native control	Layout 16 control terminated at 206, return 1. All 42 input/noise/proposal digests and all 206 native rewards matched raw, complete reset equal.
+2026-11-23T20:40:01+08:00	PFS native artifact	Layout 16 Panda terminated on control 284 with reward 1 after 283 zeros.
+2026-11-23T20:41:02+08:00	PFS final triplet	Layout 17 raw/control/Panda each reached 300 controls with 300 zeros; all six branch outcomes present, two complete triplets, no censored pairs.
+2026-11-23T20:41:14+08:00	PFS launcher	Exit 0, launcher start/end epochs 1795437132/1795437674, 542 seconds.
+2026-11-23T20:41:21+08:00	Baige job detail	成功 / 任务成功; job-69hluhi5wgb7. Scheduler running stage 9m11s. Startup through success 556s on one RTX 4090 (0.1544 GPUh).

@@ -42,7 +42,7 @@
 \printAffiliationsAndNotice{}
 
 \begin{abstract}
-A frozen policy can propose an appropriate motion even when a new controller interprets its commands in a different frame. SymMeta estimates that frame from 15 controls (0.75\,s). A reader trained on Panda and Sawyer infers motion from fixed-camera images, then aligns it with issued commands. We evaluate twelve settings of planar rotation, gain and gripper polarity on eight held-out LIBERO-Pro2.0 tasks. With frozen $\pi_{0.5}$ on UR5e, the same reader succeeds on 20/96 uninterrupted attempts and 76/96 calibrated retries, versus 8/96 uncorrected retries. On the eight unshifted queries, the uncorrected policy succeeds on all eight and calibrated retries succeed on six for each of three reader seeds. A tuned Perceiver estimates yaw more accurately but succeeds on 141/192 held-out UR5e retries versus 153/192 for SymMeta. On ReGround's released single-attempt Panda rotation test, success IQMs are 0.000 for the frozen policy, 0.186 for streaming SymMeta and 0.974 for target-fitted ReGround. On a separate unshifted LIBERO-PRO pilot, streaming correction reduces success from 19/32 to 3/32.
+A frozen robot policy can propose useful motion in the wrong command frame. Trained on Panda and Sawyer, SymMeta estimates the frame from 15 controls (0.75\,s) by aligning commands to motion inferred from fixed-camera images. Across eight held-out LIBERO-Pro2.0 tasks and twelve imposed interfaces, frozen $\pi_{0.5}$ on UR5e succeeds on 20/96 uninterrupted attempts, 76/96 calibrated retries and 8/96 uncorrected retries. Calibration loses two of eight unshifted successes at each reader seed. A direct Perceiver trained with continuous labels reaches $5.58^\circ$ mean absolute yaw error on 64 held-out UR5e supports, versus $7.04^\circ$ for seven-shift SymMeta. Changing only the seven-shift Perceiver schedule improves error from $95.63^\circ$ to $83.37^\circ$. On fresh held-out retries, fixed Perceiver refits ($5.82^\circ$ offline) succeed on 54.2--79.7\%. They trail fresh SymMeta by 6.25 percentage points on UR5e, lead by 3.13 on IIWA and 1.56 on Kinova3 with $\pi_{0.5}$, and trail by 1.56 on UR5e with $\pi_0$. All four eight-task intervals include zero. On ReGround's released single-attempt Panda rotation test, success IQMs are 0.000 for the frozen policy, 0.186 for streaming SymMeta and 0.974 for target-fitted ReGround. On a separate unshifted LIBERO-PRO pilot, streaming correction reduces success from 19/32 to 3/32.
 \end{abstract}
 
 \section{Introduction}
@@ -58,7 +58,7 @@ We train SymMeta to read motion on Panda and Sawyer and deploy the frozen reader
   \label{fig:multiarm}
 \end{figure}
 
-A single-attempt controller must collect evidence while its uncorrected actions are already changing the scene. On a retry, the controller applies the prior estimate from the first action. We measure both protocols (Fig.~\ref{fig:multiarm}) and include an uncorrected retry under the same shifts (Table~\ref{tab:headline}). We then test which signals identify the rotation, how the learned reader transfers to unseen command settings, and how the estimate changes when the camera moves or joint kinematics supply the reference frame.
+A single-attempt controller must collect evidence while its uncorrected actions are already changing the scene. On a retry, the controller applies the prior estimate from the first action. We measure both protocols (Fig.~\ref{fig:multiarm}) and include an uncorrected retry under the same shifts (Table~\ref{tab:headline}). We compare explicit alignment with a Perceiver that predicts yaw, gain and gripper polarity directly. The Perceiver estimates yaw more accurately offline. Which reader succeeds more often on held-out retries varies across arm--policy pairs (Fig.~\ref{fig:native-retry}). We also test how the estimate changes when the camera moves or joint kinematics supply the reference frame.
 
 \section{Related Work}
 
@@ -160,15 +160,15 @@ We specify the three interface factors and their inverse. We train the reader fr
   \item \emph{compositional OOD}: training factor values never combined in training, e.g.\ yaw $180^\circ$ with gain $0.65$ and inverted gripper;
   \item \emph{continuous OOD}: unseen yaws $\pm 45^\circ$ and $\pm 135^\circ$, combined with gains $0.75$, $1.0$, or $1.35$ and either gripper sign.
 \end{itemize}
-``OOD'' pools the 64 compositional and continuous queries. All arms are simulated in MuJoCo. A step is one control at 20\,Hz of simulated time.
+``OOD'' pools the 64 compositional and continuous-angle queries. The designation is relative to the seven training shifts. The continuously relabeled reader sees oblique angles during training. All arms are simulated in MuJoCo. A step is one control at 20\,Hz of simulated time.
 
 \paragraph{Protocol.} For each task and command setting, the unadapted frozen VLA executes 15 controls on initial layout 11 (Attempt~1). All passive readers and training seeds share three five-control chunks from that trace. A fresh episode on layout 13 scores native success (Attempt~2). The calibrated retry starts with the estimated correction and holds it fixed. The uncorrected retry uses the identity wrapper on the same scheduled query. Active methods collect a separate 15-control probe. Support lasts 0.75\,s of simulated motion, excluding reset and inference time.
 
 The single-attempt test starts uncorrected on layout 13 and updates from its own motion. Its first correction can take effect after ten controls. The seed-matched calibrated retry uses the same seed-41 checkpoint, query reset and policy-noise bank. Each protocol contributes one scored episode per query.
 
-\paragraph{Statistics.} For the four native retry panels, we train seven-shift SymMeta and Perceiver readers with three seeds (41--43) and evaluate each checkpoint on all 96 queries. The three seeds share the same 96 queries and support traces, so the reported mean $\pm$ standard deviation reflects reader-training variance only, and the independent units are the 8 tasks. Deterministic baselines are run once. We bootstrap paired differences by resampling eight whole tasks. For three-seed contrasts we first average the paired differences for each query. Appendix~\ref{sec:paired} reports per-seed gains and paired sign-flip tests at the query and task levels.
+\paragraph{Statistics.} On each original retry panel, the seven-shift SymMeta and Perceiver checkpoints cover all 96 queries at seeds 41--43. Figure~\ref{fig:native-retry} uses fresh rollouts for both the tuned Perceiver and these SymMeta checkpoints. The three seeds share the same 96 queries and support traces, so the reported mean $\pm$ standard deviation reflects reader-training variance only, and the independent units are the 8 tasks. Deterministic baselines are run once. We bootstrap paired differences by resampling eight whole tasks. For three-seed contrasts we first average the paired differences for each query. Appendix~\ref{sec:paired} reports per-seed gains and paired sign-flip tests at the query and task levels.
 
-\paragraph{Baseline implementations.} The brightness-translation reader fits one global translation per frame pair by weighted least squares on brightness constancy, weighting pixels by absolute temporal intensity change. It computes no dense flow field. Both this reader and the DIS comparator project image motion to planar motion using nominal Panda and Sawyer active probes. Broyden updates its Jacobian on the target probe. The passive brightness-translation and learned readers share target traces, but differ in source supervision and in their gain and gripper estimators. Their native success difference compares the complete adapters. Our Perceiver proxy predicts the transform from the same support as SymMeta. Our affine proxy fits a ridge-regularized map from issued planar commands to local displacements and projects it onto a scaled rotation. It uses only the passive trace.
+\paragraph{Baseline implementations.} The brightness-translation reader fits one global translation per frame pair by weighted least squares on brightness constancy, weighting pixels by absolute temporal intensity change. It computes no dense flow field. Both this reader and the DIS comparator project image motion to planar motion using nominal Panda and Sawyer active probes. Broyden updates its Jacobian on the target probe. The passive brightness-translation and learned readers share target traces, but differ in source supervision and in their gain and gripper estimators. Their native success difference compares the complete adapters. Our passive Perceiver predicts all three factors directly from the same support as SymMeta. Our affine proxy fits a ridge-regularized map from issued planar commands to local displacements and projects it onto a scaled rotation. It uses only the passive trace.
 
 \paragraph{$\pi_0$ state encoding.} $\pi_0$ adds the end-effector axis-angle from \texttt{observation/state[3:6]} to its predicted actions. UR5e and Panda share the same downward gripper pose at reset. However, UR5e's MuJoCo quaternion lies on the opposite sign of the $SO(3)$ double cover (axis-angle $x = -3.133$ vs.\ $+3.141$), which produced a $2\pi$ jump that saturated the wrist command. Even the exact oracle succeeded on 0 of 96 queries. We canonicalize $q \equiv -q$ on the downward-gripper hemisphere in the $\pi_0$ state observation for every method, including the oracle. With this fix, the oracle reaches 54.2\%.
 
@@ -196,12 +196,14 @@ The single-attempt test starts uncorrected on layout 13 and updates from its own
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=0.98\textwidth]{figures/fig4_memorization_cliff_matrix.pdf}
-  \caption{\textbf{Native retry success for the original seven-shift checkpoints.} The historical Perceiver baseline succeeds on 59.4--86.5\% of familiar queries and 2.1--5.7\% of OOD queries across four arm--policy pairs (32 familiar and 64 OOD queries per seed, three-seed means). Table~\ref{tab:recorded} compares readers offline on the recorded UR5e traces.}
-  \label{fig:cliff}
+  \includegraphics[width=0.98\textwidth]{figures/fig3_horizon_and_so3.pdf}
+  \caption{\textbf{(A)} OOD yaw error vs.\ length of the passive support trace on UR5e (3 seeds). \textbf{(B)} Full 3D rotations with per-axis gains on UR5e ($n{=}96$): SymMeta improves on the unadapted policy and the 3D command-frame affine baseline but remains far below the oracle, especially on continuous $SO(3)$ transforms.}
+  \label{fig:horizon_so3}
 \end{figure*}
 
 With one uninterrupted attempt, the seed-41 reader succeeds on 9--26 of 96 queries per panel. The seed-matched calibrated retry succeeds on 54--76, while an uncorrected retry succeeds on 6--8 (Table~\ref{tab:headline}). A retry changes both when correction begins and which trajectory supplies evidence. Replacing the support trace with one from a different command setting reduces calibrated retry success to 0--1\% (Appendix Table~\ref{tab:additional_baselines}).
+
+\paragraph{Direct prediction on the retry.} With the same support and opening policy proposal, the tuned Perceiver succeeds on 141, 153 and 129 of 192 held-out retries on UR5e, IIWA and Kinova3 with $\pi_{0.5}$. Fresh same-seed SymMeta succeeds on 153, 147 and 126. With $\pi_0$ on UR5e the counts are 104 and 107. Figure~\ref{fig:native-retry} gives paired task intervals. Across all twelve settings, UR5e with $\pi_{0.5}$ favors SymMeta by 17 successes in 288 pairs (5.9 points, 95\% interval $[0.3,12.5]$). Appendix Table~\ref{tab:fresh-retry} gives all four panels.
 
 \paragraph{What the visual reader contributes.} Across three seeds the calibrated retry gains 19.8, 24.3 and 22.6 percentage points over brightness-translation on the three $\pi_{0.5}$ arms. All eight task means favor SymMeta on each arm. On UR5e with $\pi_0$ the gain is 9.7 points and six tasks favor SymMeta (task-level $p=0.078$; Appendix~\ref{sec:paired}).
 
@@ -210,6 +212,13 @@ For a stronger control, we fit a six-coefficient projection of pooled DIS flow a
 \paragraph{Original LIBERO-PRO with native commands.} We compared the frozen $\pi_{0.5}$ policy and the seed-41 streaming reader on 32 paired Panda episodes from original LIBERO-PRO~\citep{zhou2025liberopro}. Eight sampled tasks each contributed one start crossed with four released variants (object appearance, position swap, semantic rewording and changed goal). Both methods used one attempt, the native controller and identical policy-noise draws. Without an imposed action shift, the base policy succeeded on 19 queries and the reader on three (16 regressions, zero rescues). The paired difference was $-50.0$ points (95\% suite-stratified task-bootstrap interval $[-59.4,-40.6]$). Both arms issued the same first ten controls in every pair. Across episodes the median peak absolute yaw correction was $64.6^\circ$, and the reader never flipped the gripper. The published 53\% leaderboard includes a fifth environment family and many more task starts.
 
 \paragraph{Released ReGround rotation test.} On the released $90^\circ$ Panda shift, success IQM was 0.000 for frozen $\pi_{0.5}$, 0.186 for streaming SymMeta and 0.974 for fitted ReGround (published 0.98)~\citep{siddique2026reground}. The corresponding unsafe-episode IQMs were 0.843, 0.200 and 0.339 (published ReGround 0.29). ReGround used 10,000 target transitions per fit. The streaming reader used only the scored episode and passed wrist commands through, although the shift rotates both translation and wrist commands. Appendix~\ref{sec:reground-native} reports counts, uncertainty and sensitivity to the opening actions.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=0.98\textwidth]{figures/fig4_native_retry.pdf}
+  \caption{\textbf{Fresh native retries on held-out command shifts.} The tuned Perceiver refits and original seven-shift SymMeta checkpoints each predict yaw, gain and gripper polarity from the same 15 controls. Within each pair, the simulator reset, policy noise and first uncorrected proposal match. Points give Perceiver minus SymMeta in percentage points. Bars give the 95\% percentile intervals over all $8^8$ whole-task resamples, with all shifts and seeds retained within each task.}
+  \label{fig:native-retry}
+\end{figure*}
 
 \paragraph{Forward kinematics.} The FK reader uses additional information from encoder measurements for all six arm joints, their reset configuration and a trusted model of the UR5e and its gripper in a known base frame. It aligns the resulting world-frame tool displacements to the issued commands. On UR5e with $\pi_{0.5}$, we reran FK and the seed-41 visual reader on the same 96 query resets and policy-noise draws. Both used identical learned gain and gripper estimates. Changing only yaw gave 78/96 native successes for FK and 76/96 for vision (7 FK-only, 5 vision-only, 84 ties). FK minus vision was $+2.1$ percentage points (95\% task-cluster bootstrap interval $[-2.1,+7.3]$). FK reduced mean absolute yaw error from $6.67^\circ$ to $1.93^\circ$ overall and from $6.83^\circ$ to $2.02^\circ$ on the 64 OOD supports. The native-success interval admits effects in either direction.
 
@@ -241,11 +250,11 @@ We fit a linear or MLP action adapter to $K\in\{1,3,10\}$ successful demonstrati
 \subsection{Identifying Held-Out Command Shifts}
 \label{sec:scaling}
 
-The seven-shift SymMeta checkpoints estimate yaw by aligning visual motion to issued commands. Can a Perceiver learn yaw directly from the same three chunks? We evaluate both readers offline on recorded UR5e supports (Table~\ref{tab:recorded}). The Perceiver trained with continuous labels and a tuned schedule has lower OOD yaw error than seven-shift SymMeta in each seed. Their mean planar operator errors on all 96 supports are 0.146 and 0.154, respectively.
+On the same 64 recorded UR5e OOD supports, the tuned direct Perceiver reaches $5.58^\circ$ mean absolute yaw error, compared with $7.04^\circ$ for seven-shift SymMeta and $6.03^\circ$ for continuously trained SymMeta (Table~\ref{tab:recorded}). On all 96 supports their mean planar operator errors are 0.146, 0.154 and 0.147, respectively.
 
 \begin{table*}[t]
   \centering
-  \caption{\textbf{Offline identification on the recorded UR5e traces.} Yaw MAE uses the 64 supports classified as compositional or continuous-angle OOD relative to the seven training shifts. Planar operator error uses all 96 supports, including the 32 familiar ones. For true map $A$ and estimated map $\hat A$, this error is $\lVert A\hat A^{-1}-I\rVert_F/\sqrt{2}$. Both errors are lower for more accurate estimates. SD is the population standard deviation of the three seed means (divisor 3).}
+  \caption{\textbf{Offline identification on the recorded UR5e traces.} Yaw MAE uses the 64 supports classified as compositional or continuous-angle OOD relative to the seven training shifts. Planar operator error uses all 96 supports, including the 32 familiar ones. For true map $A$ and estimated map $\hat A$, this error is $\lVert A\hat A^{-1}-I\rVert_F/\sqrt{2}$. The seven-shift schedule control reuses the historical archive. Continuous rows use a separate source archive. Entries summarize the three seed means with population SD.}
   \label{tab:recorded}
   \small
   \begin{tabular}{llrrrrr}
@@ -266,7 +275,9 @@ The seven-shift SymMeta checkpoints estimate yaw by aligning visual motion to is
 
 On the original 1,344 seven-shift traces, we hold the Perceiver's 32 positional slots, per-seed initialization and sampled minibatches fixed (batch 64, 3,500 updates). Lowering the peak learning rate from $10^{-3}$ to $3\times10^{-4}$ with 200 warmup updates and a proportionally lower cosine endpoint reduces OOD yaw MAE from $95.63^\circ$ to $83.37^\circ$. The paired change is $-12.26^\circ$ (95\% bootstrap interval $[-17.04,-7.39]^\circ$, resampling eight whole tasks with seeds 41--43 fixed). Across all 96 supports the operator error changes by $-0.0676$ (95\% interval $[-0.1003,-0.0358]$).
 
-For continuous-label training we re-express source commands and local displacements under sampled interfaces. Each recorded motion can supply many labels without an additional rollout. Both continuous-label Perceivers use 1,466 source traces, 24 slots and identical relabeled minibatches (batch 32, 2,500 updates). Lowering the peak from $1.5\times10^{-3}$ to $3\times10^{-4}$ with 200 warmup updates reduces OOD yaw MAE from $96.86^\circ$ to $5.58^\circ$. Each within-archive comparison isolates its schedule change. The two tuned readers ($83.37^\circ$ versus $5.58^\circ$) differ in source archive, interface labels, positional slots, minibatch sampling and update budget. A refit of the tuned Perceiver reached $5.82^\circ$ OOD yaw MAE. On fresh UR5e $\pi_{0.5}$ retries, the full predicted correction gave 209/288 successes across seeds 41--43, versus 226/288 for the same-seed seven-shift SymMeta readers. The paired difference was $-5.9$ percentage points (95\% task-bootstrap interval $[-12.5,-0.3]$). On the 64 OOD queries repeated over three seeds, the counts were 141/192 versus 153/192 ($-6.25$ points, $[-15.10,+1.04]$). Both readers used the same support tape, query reset, policy noise and first proposal within every pair.
+For continuous-label training we re-express source commands and local displacements under uniformly sampled yaw, log-uniform gain ($0.65$--$1.50$) and either gripper sign. Each recorded motion can supply many labels without an additional rollout. Both continuous-label Perceivers use 1,466 source traces, 24 slots and identical relabeled minibatches (batch 32, 2,500 updates). Lowering the peak from $1.5\times10^{-3}$ to $3\times10^{-4}$ with 200 warmup updates reduces OOD yaw MAE from $96.86^\circ$ to $5.58^\circ$. Each within-archive comparison measures the combined schedule change. The $83.37^\circ$ and $5.58^\circ$ fits also differ in source traces, label sampling, positional slots, batch size and update budget. These differences also confound comparisons with the historical Perceiver native baseline (Appendix Table~\ref{tab:comparators}).
+
+The offline experiment retained scores but no tuned Perceiver weights. Before rollouts, we refitted its exact recipe at seeds 41--43 and froze the predictions from the reloaded checkpoints ($5.82^\circ$ mean OOD yaw error on UR5e). We ran both the refits and the original seven-shift SymMeta checkpoints on fresh retries. The comparison measures the entire predicted correction. All four OOD intervals span effects in both directions (Fig.~\ref{fig:native-retry}). Formal equivalence would require a prespecified margin.
 
 In the discrete training-shift sweep, five models trained on subsets of 1,466 Panda and Sawyer traces at seven levels of diversity ($M{=}2$ to 128, three seeds each). Under the sweep schedule, SymMeta recovers all three factors on 96\% of OOD supports at $M{=}7$ and 99\% at $M{=}128$. The width-192 Perceiver reaches at most 45\% joint recovery and width 384 at most 20\% (Appendix Fig.~\ref{fig:scaling} and Table~\ref{tab:scaling}). On four additional in-family relabelings per UR5e support, mean operator errors are 0.149 for the seven-shift SymMeta reader, 0.152 for ridge using the same reader and 0.150 for the tuned Perceiver.
 
@@ -281,13 +292,6 @@ This extension is partial. The 3D reader is trained on 10 axis-aligned 3D transf
 
 With a scripted motor in a second simulator, the parallax-corrected reader on xArm6 reaches 30.6\% success against a 66.7\% oracle (Appendix~\ref{sec:extra}).
 
-\begin{figure*}[t]
-  \centering
-  \includegraphics[width=0.98\textwidth]{figures/fig3_horizon_and_so3.pdf}
-  \caption{\textbf{(A)} OOD yaw error vs.\ length of the passive support trace on UR5e (3 seeds). \textbf{(B)} Full 3D rotations with per-axis gains on UR5e ($n{=}96$): SymMeta improves on the unadapted policy and the 3D command-frame affine baseline but remains far below the oracle, especially on continuous $SO(3)$ transforms.}
-  \label{fig:horizon_so3}
-\end{figure*}
-
 \subsection{LIBERO-Pro2.0 Visual and Camera Perturbations}
 
 We test the \texttt{BASE}-trained SymMeta, without retraining, on 48 UR5e queries for each of five LIBERO-Pro2.0 visual and camera perturbations~\citep{liberopro2026}. We cross six command settings with each catalogue entry on all eight tasks~\citep[Table~15]{liberopro2026}. We use the object appearance (S13) variant that recolors objects, contrast or scene domain (S14) changes to palette and lighting, camera extrinsics (S15) offsets, camera image formation (S16) changes to field of view, and observation quality (S19) changes to RGB intensity and noise. Each of nine methods runs on all 240 queries (2,160 scored episodes). Table~\ref{tab:pro2} reports six methods. Figure~\ref{fig:pro2} compares the two passive readers with the exact inverse as a success reference.
@@ -295,7 +299,7 @@ Under \texttt{S15}, every method scores 0/48, including the exact inverse. Yaw e
 
 \begin{table*}[t]
   \centering
-  \caption{\textbf{Five LIBERO-Pro2.0 perturbations crossed with imposed command settings on UR5e ($\pi_{0.5}$, $n{=}48$ per row).} Cells give success (\%) and, for readers, mean yaw error in degrees. SymMeta is trained on \texttt{BASE} scenes only, while the Perceiver is retrained on Pro2 variants. All methods score 0/48 under \texttt{S15}. Over all 240 queries, the paired gain over brightness-translation is $+10.0$ points (95\% CI $[+4.2, +15.8]$, 35 wins / 11 losses).}
+  \caption{\textbf{Five LIBERO-Pro2.0 perturbations crossed with imposed command settings on UR5e ($\pi_{0.5}$, $n{=}48$ per row).} Cells give success (\%) and, for readers, mean yaw error in degrees. SymMeta is trained on \texttt{BASE} scenes. This active Perceiver is trained on Pro2 variants. Figure~\ref{fig:native-retry} evaluates a separate passive Perceiver in base scenes. All methods score 0/48 under \texttt{S15}. Over all 240 queries, the paired gain over brightness-translation is $+10.0$ points (95\% CI $[+4.2, +15.8]$, 35 wins / 11 losses).}
   \label{tab:pro2}
   \footnotesize
   \setlength{\tabcolsep}{4pt}
@@ -317,13 +321,6 @@ Under \texttt{S15}, every method scores 0/48, including the exact inverse. Yaw e
   \end{tabular}}
 \end{table*}
 
-\begin{figure*}[t]
-  \centering
-  \includegraphics[width=0.98\textwidth]{figures/fig5_pro2_visual_stress.pdf}
-  \caption{\textbf{Five LIBERO-Pro2.0 perturbations crossed with imposed command settings on UR5e.} \textbf{(A)} Success on each perturbation. \textbf{(B)} Mean yaw error, including \texttt{S15}, where the frozen VLA fails even with the exact transform.}
-  \label{fig:pro2}
-\end{figure*}
-
 \section{Limitations}
 \label{sec:limits}
 
@@ -332,14 +329,21 @@ Under \texttt{S15}, every method scores 0/48, including the exact inverse. Yaw e
   \item \textbf{Camera pose.} The reader is not invariant to the camera. In an offline test on the 64 UR5e OOD support traces with the seed-41 reader, rotating the image by $\mp 90^\circ$ about the optical axis raised yaw error from $6.83^\circ$ to $84.5^\circ$ and $101.2^\circ$, and the estimate moved by about the roll angle on every trace. The brightness-translation reader behaved the same way ($12.3^\circ$ to $84.4^\circ$ and $101.6^\circ$). Orbiting the simulated camera by $\pm 30^\circ$ about the vertical on eight fresh trajectories shifted SymMeta's estimate by $28$--$30^\circ$. SymMeta therefore estimates the command rotation relative to the camera, and recovers the command-frame rotation only when the camera is mounted as in training. Task success under camera rotation is not measured.
   \item \textbf{Information available.} The visual reader assumes a fixed camera. FK needs measured joints, calibrated geometry and a known base frame. The native comparison holds gain and gripper estimates fixed and covers one arm--policy pair.
   \item \textbf{Simulation only.} All arms are simulated (MuJoCo and SAPIEN). We have not tested on physical hardware.
-  \item \textbf{Shift model.} We model the interface as a global rotation, gain, and gripper sign on end-effector commands. Other differences between arms, such as workspace, dynamics, and joint limits, are left to the frozen VLA. The oracle results suggest it handles them for these arms.
+  \item \textbf{Shift model.} We model the interface as a global rotation, gain, and gripper sign on end-effector commands. The direct-reader comparison covers twelve fixed settings on one query layout. Its success on new perturbation magnitudes remains unmeasured. Other differences between arms, such as workspace, dynamics, and joint limits, are left to the frozen VLA. The oracle results suggest it handles them for these arms.
   \item \textbf{Full 3D rotations.} With a single camera, out-of-plane rotations are poorly observed: $24.5^\circ$ geodesic error and 38.5\% success against an 88.5\% oracle. This motivates multi-view or wrist-camera depth.
   \item \textbf{Camera shifts that break the VLA.} Under \texttt{S15}, SymMeta has a mean yaw error of $6.94^\circ$. Both camera views change, and even the exact inverse gives 0/48 successes.
 \end{enumerate}
 
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=0.98\textwidth]{figures/fig5_pro2_visual_stress.pdf}
+  \caption{\textbf{Five LIBERO-Pro2.0 perturbations crossed with imposed command settings on UR5e.} \textbf{(A)} Success on each perturbation. \textbf{(B)} Mean yaw error, including \texttt{S15}, where the frozen VLA fails even with the exact transform.}
+  \label{fig:pro2}
+\end{figure*}
+
 \section{Conclusion}
 
-On eight held-out LIBERO-Pro2.0 task identities in base scenes, a frozen policy can use a short trace to calibrate a second attempt under researcher-imposed planar command shifts. A fixed camera supplies the direction that command-frame displacements alone cannot identify. With the same reader seed and query schedule, success is substantially lower when calibration must take place within a single attempt. On the native Panda interface, streaming correction lost 16 base-policy successes in 32 paired trials. The released ReGround rotation test favors fitting a controller when target-state calibration data are available. Our matched-source control supports a learned visual readout for a retry after a short passive trace, with most of its gain on novel factor combinations. Physical deployment and transfer across camera poses remain open.
+On eight held-out LIBERO-Pro2.0 task identities in base scenes, a frozen policy can use a short trace to calibrate a second attempt under researcher-imposed planar command shifts. A fixed camera supplies the direction that command-frame displacements alone cannot identify. With the same reader seed and query schedule, success is substantially lower when calibration must take place within a single attempt. On the native Panda interface, streaming correction lost 16 base-policy successes in 32 paired trials. A direct Perceiver learned yaw more accurately on the recorded UR5e supports. Changing the schedule alone improved seven-shift yaw error by $12.26^\circ$, and the continuous-label recipe reached $5.58^\circ$. The tuned direct reader succeeded on 54.2--79.7\% of held-out retries across four panels. Each reader led on two, and all four paired intervals included zero. The released ReGround rotation test favors fitting a controller when target-state calibration data are available. Our matched-source control supports a learned visual readout for a retry after a short passive trace, with most of its gain on novel factor combinations. Physical deployment and transfer across camera poses remain open.
 
 \section*{Impact Statement}
 
@@ -378,11 +382,38 @@ ReGround's published success IQM of 0.98 lies within the rerun interval. Its pub
 
 All 1,400 initial robot states and policy-noise keys agreed. Seven assignments across two shards had different first policy proposals among the three arms. On the 1,395 exactly matched SymMeta/ReGround openings the methods had 401 and 1,267 successes. A separate rerun of both entire shards verified identical fresh cameras, simulator state, noise and initial 50-action proposal for all arms. Base, SymMeta and ReGround succeeded on 0, 12 and 31 of those 32 assignments, versus 0, 13 and 31 on their original runs. Table~\ref{tab:reground-native} retains every original result.
 
+\paragraph{Small target-data budgets.} We refitted the released forward and inverse models on nested prefixes of 15, 100 and 1,000 target transitions, retaining the 100,000-transition nominal model for each seed. The released episode split assigns some of the budget to validation. At 15 transitions, seeds 0 and 3 use six and nine transitions for gradient updates, respectively. Each 15-transition budget draws on two logged trajectories. The frozen base policy and all fitted controllers saw the same 32 test starts (four per task). At seed 0, ReGround succeeded on 0, 0, 9 and 32 starts at budgets 15, 100, 1,000 and 10,000. Seed 3 succeeded on 0, 5, 19 and 26. All evaluated opening action prefixes matched. Pooling the two fixed seeds, the small-budget success deficits relative to 10,000 transitions were 90.6, 82.8 and 46.9 percentage points. The respective 95\% paired intervals were $[85.9,95.3]$, $[76.6,89.1]$ and $[37.5,56.3]$, resampling starts within each fixed task with both seeds together. The results concern the released sampling and fitting protocol. A single contiguous passive support has a different distribution.
+
 \subsection{Changing the simulated arm on the native command interface}
 \label{sec:native-interface}
 We also changed the arm while preserving the Cartesian controller, gripper and command frame. On the eight nominal layout-13 queries, unadapted $\pi_{0.5}$ succeeded on 8/8 for UR5e and 6/8 each for IIWA and Kinova3. Both missed the drawer-and-bowl and two-moka-pot tasks. We selected these tasks and one previously successful task, cream cheese into the bowl, and evaluated two fresh layouts per task. A transfer experiment fitted planar and full 3D translation corrections from 15 target controls on a separate layout, using trusted metric tool positions and a source motion model estimated on Panda and Sawyer. On the six new starts, the same frozen policy succeeded on 6/6 for Panda, 4/6 for untreated Kinova3, 4/6 with the planar correction and 3/6 with the 3D correction. Both adapters rescued the same drawer start. The 3D adapter lost both untreated moka-pot successes. All initial Kinova3 proposals, inputs and policy-noise draws matched within these comparisons.
 
 In a separate set of processes, untreated Kinova3 succeeded on 2/6. Painting the simulated arm uniformly with a source colour or using a separate source colour for each link each gave 3/6, rescuing different moka-pot starts. All six untreated initial input and noise fingerprints matched across the two experiments. All six opening proposal fingerprints differed, and both untreated moka-pot outcomes changed. We compare interventions within each job. These targeted starts expose failure modes that a command-shift recovery score alone cannot distinguish.
+
+\subsection{Fresh comparison of the tuned Perceiver and SymMeta}
+
+\begin{table}[!ht]
+  \centering\small
+  \caption{Native successes for the fixed Perceiver refits and the original seven-shift SymMeta checkpoints. Both readers ran fresh. Counts pool three reader seeds on the same 96 queries (eight tasks $\times$ twelve interfaces), including 64 OOD queries. Each pair contributes one episode per reader. Brackets give paired 95\% whole-task intervals in percentage points.}
+  \label{tab:fresh-retry}
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{lrrlrrl}
+    \toprule
+    & \multicolumn{3}{c}{All settings (288 pairs)} & \multicolumn{3}{c}{OOD settings (192 pairs)} \\
+    \cmidrule(lr){2-4}\cmidrule(lr){5-7}
+    Arm (policy) & Perceiver & SymMeta & Difference [95\% CI] & Perceiver & SymMeta & Difference [95\% CI] \\
+    \midrule
+    UR5e ($\pi_{0.5}$) & 209 & 226 & $-5.90\ [-12.50,-0.35]$ & 141 & 153 & $-6.25\ [-15.10,+1.04]$ \\
+    IIWA ($\pi_{0.5}$) & 230 & 223 & $+2.43\ [-2.78,+9.03]$ & 153 & 147 & $+3.13\ [-4.17,+9.90]$ \\
+    Kinova3 ($\pi_{0.5}$) & 199 & 197 & $+0.69\ [-5.56,+6.60]$ & 129 & 126 & $+1.56\ [-6.25,+8.33]$ \\
+    UR5e ($\pi_0$) & 156 & 166 & $-3.47\ [-12.15,+4.86]$ & 104 & 107 & $-1.56\ [-12.50,+8.85]$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The four panels contribute 1,152 pairs (2,304 native episodes), including 768 OOD pairs. Each Perceiver refit used 2,500 updates, batch 32, 24 positional slots and the tuned continuous-label schedule. The three refits reached $5.64^\circ$, $5.98^\circ$ and $5.84^\circ$ OOD yaw MAE on the recorded UR5e supports. These were the first completed refits, trained on RTX PRO 6000D. We fixed their predictions before collecting any native success outcomes. A later RTX 4090 refit was evaluated offline.
+
+Across the three $\pi_{0.5}$ arms, the Perceiver-minus-SymMeta OOD difference was 9.4 points greater on IIWA than on UR5e (95\% interval $[-1.6,+21.9]$), 7.8 greater on Kinova3 than on UR5e ($[-2.1,+19.3]$) and 1.6 greater on IIWA than on Kinova3 ($[-5.7,+9.9]$). These descriptive contrasts resample the same eight task identities jointly across arms. Each arm supplies its own support motion and query trajectories.
 
 \subsection{Calibrated retries on the original panels}
 \begin{table}[!ht]
@@ -406,7 +437,7 @@ In a separate set of processes, untreated Kinova3 succeeded on 2/6. Painting the
 
 \begin{table}[!ht]
   \centering
-  \caption{Native task success on calibrated retries. The nominal VLA runs once on each of eight tasks. The remaining columns use the imposed settings. The historical seven-shift Perceiver columns give the mean and SD across seeds 41--43. Gain is the seed-average SymMeta success rate minus brightness-translation, with the smallest seed gain in parentheses. The uncorrected retry had zero OOD successes on every panel.}
+  \caption{Native task success on calibrated retries. The nominal VLA runs once on each of eight tasks. The remaining columns use the imposed settings. The historical seven-shift Perceiver columns give the mean and SD across seeds 41--43. On the 32 familiar queries its means were 86.5, 86.5, 81.2 and 59.4\% in row order, versus 76.0, 80.2, 70.8 and 65.6\% for the original SymMeta runs. Gain is the seed-average SymMeta success rate minus brightness-translation, with the smallest seed gain in parentheses. The uncorrected retry had zero OOD successes on every panel.}
   \label{tab:comparators}
   \small
   \begin{tabular}{lrrrrr}

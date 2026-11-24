@@ -1,0 +1,217 @@
+{
+  "inputs": {
+    "outputs/symmeta-perceiver-retry-20261123-r1/evidence/train02pro/predictions.json": {
+      "bytes": 638266,
+      "sha256": "c8420c2cb7d0cb38e6f0d73b3a20ce47997dbef7657b652d45eaaa8988eb6c0b"
+    },
+    "outputs/symmeta-perceiver-retry-20261123-r1/evidence/native02g4090/pairs.csv.gz": {
+      "bytes": 98999,
+      "sha256": "be37297b1950f4ec3463a55ce9e60617eba2318c42c363504d42844eb3d8cf1d"
+    },
+    "src/fluffy_bassoon/xemb/embodiment.py": {
+      "bytes": 8170,
+      "sha256": "e0ed86b5fc85bbde7b4dd95b0ec2b520b792325d0e6f135465132cc2dc99c41c"
+    }
+  },
+  "reader_seeds": [
+    41,
+    42,
+    43
+  ],
+  "task_clusters": [
+    [
+      "libero_10",
+      5
+    ],
+    [
+      "libero_10",
+      8
+    ],
+    [
+      "libero_goal",
+      3
+    ],
+    [
+      "libero_goal",
+      6
+    ],
+    [
+      "libero_object",
+      1
+    ],
+    [
+      "libero_object",
+      8
+    ],
+    [
+      "libero_spatial",
+      0
+    ],
+    [
+      "libero_spatial",
+      8
+    ]
+  ],
+  "bootstrap": {
+    "draws": 20000,
+    "seed": 1796,
+    "ci": "paired percentile, linear interpolation"
+  },
+  "offline_ood": {
+    "gpu09test": {
+      "pairs": 192,
+      "yaw_mae_deg": {
+        "tuned": 5.821949223677318,
+        "blend": 5.082504957914352,
+        "blend_minus_tuned": -0.7394442657629648,
+        "task_ci95": [
+          -1.7246625920136769,
+          -0.04355465372403444
+        ]
+      },
+      "mean_operator_error": {
+        "tuned": 0.15834057239289268,
+        "blend": 0.1484523874445004,
+        "blend_minus_tuned": -0.009888184948392283,
+        "task_ci95": [
+          -0.024158619297710605,
+          -0.00042544663105888517
+        ]
+      }
+    },
+    "gpu09iiwa": {
+      "pairs": 192,
+      "yaw_mae_deg": {
+        "tuned": 4.499455829461415,
+        "blend": 3.9867718120416007,
+        "blend_minus_tuned": -0.5126840174198151,
+        "task_ci95": [
+          -1.4307340753575166,
+          0.48816417654355365
+        ]
+      },
+      "mean_operator_error": {
+        "tuned": 0.13157507958761008,
+        "blend": 0.12319316255685185,
+        "blend_minus_tuned": -0.008381917030758234,
+        "task_ci95": [
+          -0.023233724859377622,
+          0.007113385073497976
+        ]
+      }
+    },
+    "gpu06kinova3": {
+      "pairs": 192,
+      "yaw_mae_deg": {
+        "tuned": 5.832497576872508,
+        "blend": 5.591675092776616,
+        "blend_minus_tuned": -0.24082248409589135,
+        "task_ci95": [
+          -0.8089043242235977,
+          0.34090870668490714
+        ]
+      },
+      "mean_operator_error": {
+        "tuned": 0.15896021710779723,
+        "blend": 0.15662689266602353,
+        "blend_minus_tuned": -0.002333324441773711,
+        "task_ci95": [
+          -0.009218838977070027,
+          0.005267934157523966
+        ]
+      }
+    },
+    "gpu08pi0fix": {
+      "pairs": 192,
+      "yaw_mae_deg": {
+        "tuned": 9.57815106709798,
+        "blend": 9.709740734348694,
+        "blend_minus_tuned": 0.13158966725071308,
+        "task_ci95": [
+          -1.149608782182137,
+          2.176323067645233
+        ]
+      },
+      "mean_operator_error": {
+        "tuned": 0.21506567298153068,
+        "blend": 0.21633062961858032,
+        "blend_minus_tuned": 0.001264956637049633,
+        "task_ci95": [
+          -0.01739695804010274,
+          0.031034088382610226
+        ]
+      }
+    },
+    "pooled": {
+      "pairs": 768,
+      "yaw_mae_deg": {
+        "tuned": 6.433013424277306,
+        "blend": 6.092673149270316,
+        "blend_minus_tuned": -0.3403402750069897,
+        "task_ci95": [
+          -1.0489654079700514,
+          0.4467520169292888
+        ]
+      },
+      "mean_operator_error": {
+        "tuned": 0.16598538551745767,
+        "blend": 0.16115076807148904,
+        "blend_minus_tuned": -0.004834617445968645,
+        "task_ci95": [
+          -0.015665014999716974,
+          0.006871490365051668
+        ]
+      }
+    }
+  },
+  "gripper_sign": {
+    "gpu09test": {
+      "all_pairs": 288,
+      "all_agree": 288,
+      "ood_pairs": 192,
+      "ood_tuned_correct": 192,
+      "ood_symmeta_correct": 192
+    },
+    "gpu09iiwa": {
+      "all_pairs": 288,
+      "all_agree": 288,
+      "ood_pairs": 192,
+      "ood_tuned_correct": 192,
+      "ood_symmeta_correct": 192
+    },
+    "gpu06kinova3": {
+      "all_pairs": 288,
+      "all_agree": 288,
+      "ood_pairs": 192,
+      "ood_tuned_correct": 192,
+      "ood_symmeta_correct": 192
+    },
+    "gpu08pi0fix": {
+      "all_pairs": 288,
+      "all_agree": 288,
+      "ood_pairs": 192,
+      "ood_tuned_correct": 192,
+      "ood_symmeta_correct": 192
+    },
+    "pooled": {
+      "all_pairs": 1152,
+      "all_agree": 1152,
+      "ood_pairs": 768,
+      "ood_tuned_correct": 768,
+      "ood_symmeta_correct": 768
+    }
+  },
+  "archived_ur5e_pi05_compositional": {
+    "pairs": 96,
+    "outcomes": {
+      "symmeta_only": 17,
+      "neither": 15,
+      "both": 60,
+      "tuned_only": 4
+    },
+    "symmeta_closer_on_symmeta_only": {
+      "yaw": 15,
+      "gain": 12
+    }
+  }
+}

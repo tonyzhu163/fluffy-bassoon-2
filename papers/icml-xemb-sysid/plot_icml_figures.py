@@ -4,12 +4,18 @@ from __future__ import annotations
 
 import argparse
 import json
+from functools import partial
 from pathlib import Path
 
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+
+if __package__:
+    from .fig4_native_retry import fig4_native_retry
+else:
+    from fig4_native_retry import fig4_native_retry
 
 
 plt.rcParams.update({
@@ -209,55 +215,13 @@ def plot_fig3_horizon_and_so3(ev_dir: Path, out_dir: Path):
     plt.close(fig)
 
 
-def _three_seed_rate(seed41: dict, ms: dict, method: str, regime: str) -> float:
-    """Average reader seeds 41–43, including seed 41 from the original panel."""
-    original = seed41["by_regime"][regime]
-    repeats = ms["by_regime"][regime]
-    if original["trials"] != repeats["trials"]:
-        raise ValueError(f"Different trial counts for {regime}")
-    successes = original["successes"][method]
-    for seed in (42, 43):
-        successes += repeats["successes"][f"{method}_s{seed}"]
-    return 100 * successes / (3 * original["trials"])
-
-
-def plot_fig4_memorization_cliff(ev_dir: Path, out_dir: Path, scale_ev_dir: Path):
-    def _ms(fn):
-        return load_json(scale_ev_dir / fn)
-    benches = [
-        ("UR5e ($\\pi_{0.5}$)", load_json(ev_dir / "ur5e-pi05-summary.json"), _ms("multiseed-zeroshot-ur5e-pi05.json")),
-        ("IIWA ($\\pi_{0.5}$)", load_json(ev_dir / "iiwa-pi05-summary.json"), _ms("multiseed-zeroshot-iiwa-pi05.json")),
-        ("Kinova3 ($\\pi_{0.5}$)", load_json(ev_dir / "kinova3-pi05-summary.json"), _ms("multiseed-zeroshot-kinova3-pi05.json")),
-        ("UR5e ($\\pi_0$)", load_json(ev_dir / "ur5e-pi0-summary.json"), _ms("multiseed-zeroshot-ur5e-pi0.json")),
-    ]
-    x = np.arange(len(benches))
-    w = 0.18
-
-    fig, ax = plt.subplots(figsize=(9.5, 4.1))
-    groups = [
-        ("ours_equiv_v2_passive", "familiar", "SymMeta · Familiar", PALETTE["ours_v2"], 1.0, None),
-        ("ours_equiv_v2_passive", "ood_combined", "SymMeta · OOD", PALETTE["ours_v2"], 0.55, "///"),
-        ("perceiver_icba_passive", "familiar", "Seven-shift Perceiver · Familiar", PALETTE["perceiver"], 1.0, None),
-        ("perceiver_icba_passive", "ood_combined", "Seven-shift Perceiver · OOD", PALETTE["perceiver"], 0.55, "///"),
-    ]
-    for i, (m, reg, lbl, col, alp, hat) in enumerate(groups):
-        vals = [_three_seed_rate(d, ms, m, reg) for _, d, ms in benches]
-        offs = x + (i - 1.5) * w
-        ax.bar(offs, vals, width=w, label=lbl, color=col, alpha=alp, hatch=hat, edgecolor="#222222", linewidth=0.5)
-        for xi, v in zip(offs, vals):
-            ax.text(xi, v + 1.5, f"{v:.1f}%", ha="center", va="bottom", fontsize=7.8, fontweight="bold" if reg == "ood_combined" else "normal")
-
-    ax.set_xticks(x)
-    ax.set_xticklabels([b for b, _, _ in benches], fontsize=9.5, fontweight="bold")
-    ax.set_ylim(0, 106)
-    ax.set_ylabel("Native task success (%)")
-    ax.set_title("Second-attempt success on familiar and held-out command shifts")
-    ax.legend(ncol=2, loc="upper center", bbox_to_anchor=(0.5, -0.12), frameon=False, fontsize=9)
-    ax.grid(axis="y")
-    plt.tight_layout()
-    for ext in ("png", "pdf"):
-        fig.savefig(out_dir / f"fig4_memorization_cliff_matrix.{ext}")
-    plt.close(fig)
+def plot_fig4_native_retry(native_dir: Path, readback_dir: Path, out_dir: Path):
+    fig = fig4_native_retry(native_dir, readback_dir, PALETTE)
+    try:
+        for ext in ("pdf", "png"):
+            fig.savefig(out_dir / f"fig4_native_retry.{ext}", bbox_inches=fig.bbox_inches)
+    finally:
+        plt.close(fig)
 
 
 def plot_fig5_pro2_visual_stress(ev_dir: Path, out_dir: Path):
@@ -353,19 +317,34 @@ def plot_fig6_fewshot_sft_vs_sysid(ev_dir: Path, scale_ev_dir: Path, out_dir: Pa
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--evidence-dir", type=Path, required=True)
-    parser.add_argument("--scale-evidence-dir", type=Path, required=True)
+    outputs = Path(__file__).resolve().parents[2] / "outputs"
+    retry_root = outputs / "symmeta-perceiver-retry-20261123-r1"
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--figure", type=int, choices=range(1, 7),
+                        help="Render only this figure (default: render all six).")
+    parser.add_argument("--evidence-dir", type=Path,
+                        default=outputs / "xemb-icml-campaign-20261121-r1/evidence")
+    parser.add_argument("--scale-evidence-dir", type=Path,
+                        default=outputs / "libero-xemb-ur5e-scale-20261120-r1/evidence")
+    parser.add_argument("--native-retry-dir", type=Path, default=retry_root / "native02g4090",
+                        help="Figure 4 directory containing the official summary.json.")
+    parser.add_argument("--native-readback-dir", type=Path, default=retry_root / "evidence/native02g4090",
+                        help="Figure 4 directory containing the independent readback.json and pairs.csv.gz.")
     parser.add_argument("--out-dir", type=Path, required=True)
     args = parser.parse_args()
     args.out_dir.mkdir(parents=True, exist_ok=True)
-    plot_fig1_multiarm_multivla(args.evidence_dir, args.out_dir)
-    plot_fig2_scaling_law(args.evidence_dir, args.out_dir)
-    plot_fig3_horizon_and_so3(args.evidence_dir, args.out_dir)
-    plot_fig4_memorization_cliff(args.evidence_dir, args.out_dir, scale_ev_dir=args.scale_evidence_dir)
-    plot_fig5_pro2_visual_stress(args.evidence_dir, args.out_dir)
-    plot_fig6_fewshot_sft_vs_sysid(args.evidence_dir, args.scale_evidence_dir, args.out_dir)
-    print(f"Wrote six PDF/PNG figure pairs to {args.out_dir}")
+    plots = {
+        1: partial(plot_fig1_multiarm_multivla, args.evidence_dir, args.out_dir),
+        2: partial(plot_fig2_scaling_law, args.evidence_dir, args.out_dir),
+        3: partial(plot_fig3_horizon_and_so3, args.evidence_dir, args.out_dir),
+        4: partial(plot_fig4_native_retry, args.native_retry_dir, args.native_readback_dir, args.out_dir),
+        5: partial(plot_fig5_pro2_visual_stress, args.evidence_dir, args.out_dir),
+        6: partial(plot_fig6_fewshot_sft_vs_sysid, args.evidence_dir, args.scale_evidence_dir, args.out_dir),
+    }
+    selected = plots.keys() if args.figure is None else (args.figure,)
+    for number in selected:
+        plots[number]()
+        print(f"Wrote figure {number} (PDF and PNG) to {args.out_dir}")
 
 
 if __name__ == "__main__":

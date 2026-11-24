@@ -1,0 +1,92 @@
+{
+  "prediction_file_sha256": "77df01f250d57f7d5be564f0a6b00b10652efdc63ad28e5afeeb45734f9d4147",
+  "cases": {
+    "row14-tape14": {
+      "sample_count": 61,
+      "positives": 49,
+      "first_open": 60,
+      "methods": {
+        "visual": {
+          "brier": 0.0035647943331766747,
+          "fp": 0,
+          "fn": 0,
+          "first": 60
+        },
+        "clock": {
+          "brier": 0.0020677982597892305,
+          "fp": 0,
+          "fn": 0,
+          "first": 60
+        },
+        "constant": {
+          "brier": 0.16804287019520264,
+          "fp": 12,
+          "fn": 0,
+          "first": 0
+        },
+        "instant": {
+          "brier": 0.0036807286174710425,
+          "fp": 0,
+          "fn": 0,
+          "first": 60
+        }
+      }
+    },
+    "row15-tape15": {
+      "sample_count": 61,
+      "positives": 0,
+      "first_open": null,
+      "methods": {
+        "visual": {
+          "brier": 0.0009568986864332145,
+          "fp": 0,
+          "fn": 0,
+          "first": null
+        },
+        "clock": {
+          "brier": 0.7959895676116798,
+          "fp": 49,
+          "fn": 0,
+          "first": 60
+        },
+        "constant": {
+          "brier": 0.49445448599010916,
+          "fp": 61,
+          "fn": 0,
+          "first": 0
+        },
+        "instant": {
+          "brier": 7.697922027695927e-05,
+          "fp": 0,
+          "fn": 0,
+          "first": null
+        }
+      }
+    }
+  },
+  "cluster_ids": [
+    "row14",
+    "row15"
+  ],
+  "mean_brier": {
+    "visual": 0.0022608465098049447,
+    "clock": 0.3990286829357345,
+    "constant": 0.3312486780926559,
+    "instant": 0.001878853918874001
+  },
+  "visual_minus_clock_by_cluster": [
+    0.0014969960733874441,
+    -0.7950326689252466
+  ],
+  "paired_start_bootstrap_95": [
+    -0.7950326689252466,
+    0.0014969960733874441
+  ],
+  "time_matched_opposite_label_pairs": 49,
+  "time_matched_ranking": {
+    "visual": 1.0,
+    "clock": 0.5,
+    "constant": 0.5,
+    "instant": 1.0
+  }
+}

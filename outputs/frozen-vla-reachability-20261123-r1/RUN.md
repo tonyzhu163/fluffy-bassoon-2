@@ -15,7 +15,7 @@ bash cpu.sh realized_drawer.py "$native" "$dest"
 bash cpu.sh summarize.py "$dest" "$dest"
 ```
 
-The three small HDF5s in `demos/` contain two groups per task and omit images. They retain recorded states, joint and tool observations, episode outcome, recorded joint order and fixture transforms. To recreate them from the original public HDF5s, use the commands below with an environment that contains NumPy and h5py. Full downloads total 3.61 GB. The packer checks the release SHA-256 before it copies any state.
+The three small HDF5s in `demos/` contain two groups per task and omit images. They retain recorded states, joint and tool observations, episode outcome, recorded joint order and fixture transforms. To recreate them from the original public HDF5s, use the commands below with an environment that contains NumPy and h5py. Full downloads total 3.62 GB. The packer checks the release SHA-256 before it copies any state. [Pinned original demonstrations](https://huggingface.co/datasets/yifengzhu-hf/LIBERO-datasets/tree/f13aa24a3da8c43c7225569f28c562979fa0e35a)
 
 ```bash
 bash fetch.sh inputs
