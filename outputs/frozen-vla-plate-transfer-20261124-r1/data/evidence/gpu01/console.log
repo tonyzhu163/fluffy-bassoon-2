@@ -1,0 +1,94 @@
+error: /mowenjie/fluffy-bassoon-2/outputs/symmeta-camera-command-20261123-r1/git/objects: ignoring alternate object stores, nesting too deep
+{"status": "passed", "purpose": "training", "timing_comparison_eligible": false, "allocation_type": "baige_container", "hostname": "job-h3fk587i4jg2-master-0", "probe_pid": 981, "created_at_utc": "2026-11-24T05:55:13.385671+00:00", "devices": [{"allocation_ordinal": 0, "visibility_token": "0", "cuda_uuid": "bcfa485f-70fe-d903-7568-c282680b130e", "cuda_name": "NVIDIA GeForce RTX 4090", "cuda_total_bytes": 25250627584, "pci_bus_id": "0000:62:00.0", "uuid": "GPU-bcfa485f-70fe-d903-7568-c282680b130e", "inventory": {"index": 0, "uuid": "GPU-bcfa485f-70fe-d903-7568-c282680b130e", "name": "NVIDIA GeForce RTX 4090", "memory_total_mib": 24564.0, "memory_used_mib": 1.0, "utilization_percent": 0.0, "pci_bus_id": "00000000:62:00.0"}, "allocation_check": {"elements": 1048576, "result": 2097152.0, "touched_gpu_uuids": ["GPU-bcfa485f-70fe-d903-7568-c282680b130e"], "own_pid_gpu_uuids": ["GPU-bcfa485f-70fe-d903-7568-c282680b130e"]}}], "idle_utilization_required": false, "exclusive_training_admission": true, "admission_policy": "exclusive_scheduler_cuda_pci_pid_memory", "utilization_role": "telemetry_only", "utilization_telemetry": {"GPU-bcfa485f-70fe-d903-7568-c282680b130e": 0.0}, "maximum_initial_memory_mib": 256, "gpu_identity_mapping": {"method": "scheduler NVIDIA UUID set + CUDA/NVML PCI bijection + own-PID allocation", "assigned_nvml_uuids": ["GPU-bcfa485f-70fe-d903-7568-c282680b130e"]}, "compute_processes_before": [], "compute_processes_after": [{"gpu_uuid": "GPU-bcfa485f-70fe-d903-7568-c282680b130e", "pid": 981, "process_name": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python", "memory_used_mib": "448"}], "topology": "\t\u001b[4mGPU0\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \t0-55\t0\t\tN/A\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks"}
+[robosuite WARNING] No private macro file found! (__init__.py:7)
+[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)
+[robosuite WARNING] To setup, run: python /mowenjie/fluffy-bassoon-2/setups/libero-meta-learning-20261117-r1/env/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+/mowenjie/fluffy-bassoon-2/setups/libero-meta-learning-20261117-r1/simulator-source/libero/libero/benchmark/__init__.py:273: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  init_states = torch.load(init_states_path)
+0 0 Panda 301090 True 98
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+/mowenjie/fluffy-bassoon-2/setups/libero-meta-learning-20261117-r1/simulator-source/libero/libero/benchmark/__init__.py:273: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  init_states = torch.load(init_states_path)
+0 0 Sawyer 301090 True 82
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+1 1 Panda 301095 True 93
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+1 1 Sawyer 301095 True 175
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+2 2 Panda 302059 True 78
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+2 2 Sawyer 302059 True 94
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+3 3 Panda 301050 True 76
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+3 3 Sawyer 301050 True 212
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+4 4 Panda 300113 True 131
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+4 4 Sawyer 300113 True 101
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+5 5 Panda 301151 True 131
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+5 5 Sawyer 301151 True 93
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+6 6 Panda 301107 True 78
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+6 6 Sawyer 301107 True 96
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+7 7 Panda 302046 True 75
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+7 7 Sawyer 302046 True 84
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+8 8 Panda 302058 True 88
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+8 8 Sawyer 302058 True 82
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+9 9 Panda 300108 True 110
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+9 9 Sawyer 300108 True 86
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+10 10 Panda 301066 True 131
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+10 10 Sawyer 301066 True 87
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+11 11 Panda 302000 True 74
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+11 11 Sawyer 302000 True 79
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+12 12 Panda 302045 True 96
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+12 12 Sawyer 302045 True 94
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+13 13 Panda 301129 True 77
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+13 13 Sawyer 301129 True 135
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+14 14 Panda 301126 True 89
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+14 14 Sawyer 301126 True 91
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+15 15 Panda 301150 True 130
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+15 15 Sawyer 301150 True 102
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+16 16 Panda 302133 True 140
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+16 16 Sawyer 302133 True 105
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+17 17 Panda 300084 True 128
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+17 17 Sawyer 300084 True 120
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+18 18 Panda 300087 True 94
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+18 18 Sawyer 300087 True 89
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+19 19 Panda 300073 True 182
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+19 19 Sawyer 300073 True 83
+Sealed /mowenjie/fluffy-bassoon-2/outputs/frozen-vla-plate-transfer-20261124-r1/data/dataset-v1/seal.json 3e133b69d850318cb20d61549e2f96ce6a7da8548cf05d25af7401ec28047c78
