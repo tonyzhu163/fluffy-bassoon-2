@@ -1,0 +1,23 @@
+# Both source-trained history adapters failed on Kinova3 plate pushing
+
+Frozen stock π₀.₅ pushed the plate to its goal on 62 of 64 independent Kinova3 placements. Both source-trained adapters failed on all 64. The mixed Panda–Sawyer adapter lost all 62 stock successes and rescued neither of the two stock failures. The registered two-sided test crossed its harm boundary at the first look. Evaluation for these fits ended after 192 native trajectories. [Native case records](eval/evidence/look-64.json) · [Independent statistics](stats/evidence/look-64.json) · [Stopping rule](stats/PLAN.md)
+
+| Frozen policy on Kinova3 | Native successes | Success rate |
+| --- | ---: | ---: |
+| Original published π₀.₅ sampler | 62/64 | 96.9% |
+| π₀.₅ with the Panda-only history adapter | 0/64 | 0% |
+| π₀.₅ with the mixed Panda–Sawyer history adapter | 0/64 | 0% |
+
+The mixed adapter changed success by **−96.9 percentage points** relative to stock (simultaneous 95% interval **−99.9 to −64.3 points**). Its two-sided exact paired McNemar p-value was 4.34 × 10⁻¹⁹ against a first-look threshold of 0.005. The p-value adjusted across the registered looks was **4.34 × 10⁻¹⁸**. The two adapter arms failed together on all 64 placements. Their observed difference was zero (simultaneous 95% interval −10.9 to +10.9 points). The registered source-diversity test required a mixed-adapter benefit over stock and its gate stayed closed. [Exact cells, intervals and decisions](stats/evidence/look-64.json)
+
+## What was tested
+
+Each adapter reads the last four issued commands with the observed gripper motion and opening, processes 52 inputs through 16 hidden units and adds a learned offset to the policy’s ten-step denoising velocity prediction. Only its 5,952 parameters were fitted. Both arms saw 192 expert windows on the same 16 source plate layouts and received 96 optimizer updates. One used Panda throughout. The other replaced half the windows on each layout with corresponding Sawyer examples. On four fresh source layouts the mixed fit reduced held-out Sawyer imitation loss relative to the Panda-only fit, from 1.0253 to 0.9746. That source-side improvement accompanied a native target score of zero. [Source collection](data/RESULT.md) · [Fit, held-out losses and frozen-weight verification](fit/RESULT.md)
+
+The target was simulated LIBERO-Pro2.0 BASE, libero_goal task 5. We drew fresh physical placements from the released sampler and one independent noise stream per placement, then ran all three policies from the same verified state, camera images and noise. They shared the first five controls. Each policy then saw its own execution and ran to native success or the 300-control horizon. The analysis applies to this task, robot, placement distribution and pair of fixed fits. These are generated starts, separate from a score on the published fixed-layout bank. [Physical enrollment](eval/evidence/manifest.json) · [Native readback](eval/evidence/readback-64.json)
+
+## Research decision
+
+Retire both tested fits for deployment on this task. Stock left only two eligible rescues among the 64 placements, so this task chiefly tests whether an adapter preserves a working base policy. After the shared opening, the adapted policies also use a separately compiled sampler. An unissued zero-offset check measures numerical differences in a proposal. A closed-loop zero-offset comparison can determine whether the learned offset is responsible for the lost successes. The primary experiment establishes harm for the deployed combination and leaves that mechanism open. [Sampler contract](eval/PLAN.md) · [Source-side zero-offset checks](fit/RESULT.md)
+
+Baige recorded 4,204 allocated GPU-seconds for the four successful evaluation jobs and 2,000 for source collection and the three fit submissions combined. Total scheduler time was **1.723 GPU-hours**. The original four-GPU request stopped in queue without an allocation. The science inputs, training recovery, job IDs and immutable evaluation receipts are in the execution record. [Execution record](EXECUTION.md) · [Scheduler ledger](eval/cohort-scheduler-ledger.jpg)
