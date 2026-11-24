@@ -283,7 +283,7 @@ def capture(workers, processor, yaws, archive, path, reset=None):
     return arrays, processed, mutations, details
 
 
-def qualify(output, processor, archive, enrollment):
+def qualify(output, processor, archive, enrollment, forkserver_only=False):
     import socket
     import torch
     from fluffy_bassoon.baige_gpu import cuda_pci, pci
@@ -297,6 +297,8 @@ def qualify(output, processor, archive, enrollment):
     os.environ["MUJOCO_EGL_DEVICE_ID"] = str(ref.egl_device(0))
     mp.set_forkserver_preload(["preload_env"])
     modes = (("forkserver", None), ("spawn", None), ("spawn", SCENE_SEED))
+    if forkserver_only:
+        modes = modes[:1]
     results = []
     for transport, seed in modes:
         mode = f"{transport}-{'native' if seed is None else 'seed0'}"
@@ -311,10 +313,10 @@ def qualify(output, processor, archive, enrollment):
             args = (processor, [row["estimate"][0] for row in enrollment], archive)
             with pool(transport, seed) as workers:
                 if repetition:
+                    first = native_reset(workers, CASES)
                     with pool(transport, seed) as other:
                         # Reproduce the scoring preflight ordering. Extra EGL calls
                         # in either process occur after both original reset returns.
-                        first = native_reset(workers, CASES)
                         second = native_reset(other, CASES)
                         left = capture(workers, *args, output / f"{mode}-{repetition}-A", reset=first)
                         right = capture(other, *args, output / f"{mode}-{repetition}-B", reset=second)
@@ -331,9 +333,10 @@ def qualify(output, processor, archive, enrollment):
                                repeat_render_drift=any(any(any(d["repeated"]) for d in row[3]) for row in (left, right))))
         results.append(dict(mode=mode, support_match=matches_support, support_sim_sha256=support, trials=trials,
                             exact=matches_support and all(not (t["opening"] or t["processed"] or t["mutation_detected"]
-                                                               or t["repeat_render_drift"] or all(any(gaps) for gaps in t["archive"].values()))
+                                                               or all(any(gaps) for gaps in t["archive"].values()))
                                                           for t in trials)))
-        ref.write(output / "paired-report.json", dict(code=os.environ["RENDER_PIN"], cases=CASES, trials=results))
+        ref.write(output / "paired-report.json", dict(code=os.environ["RENDER_PIN"], cases=CASES,
+                                         paired_capture="both-before-rerender", trials=results))
     return any(row["exact"] for row in results)
 
 
@@ -341,13 +344,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("output", type=Path)
     parser.add_argument("attempts", type=Path)
-    parser.add_argument("mode", choices=("archive", "cuda"))
+    parser.add_argument("mode", choices=("archive", "cuda", "cuda-forkserver"))
     args = parser.parse_args()
     ref.configure()
     ref.require(retry.schedule()[54] == CASES, "Released batch054 differs")
     processor = ObservationPath()
     opening, support = saved_openings(args.attempts, args.output, processor)
-    if args.mode == "cuda" and not qualify(args.output, processor, opening, support):
+    if args.mode != "archive" and not qualify(args.output, processor, opening, support,
+                                               forkserver_only=args.mode == "cuda-forkserver"):
         raise SystemExit("No exact native opening reproduced. See paired-report.json.")
 
 

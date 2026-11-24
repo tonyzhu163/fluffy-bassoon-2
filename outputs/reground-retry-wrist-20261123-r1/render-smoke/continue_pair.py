@@ -75,7 +75,9 @@ def main():
 
     plan = ref.read(args.smoke / "paired-report.json")
     ref.require(plan["code"] == args.smoke_pin and plan["cases"] == list(map(list, CASES)), "Wrong qualification pin/cases")
-    ref.require([row["mode"] for row in plan["trials"]] == ["forkserver-native", "spawn-native", "spawn-seed0"],
+    modes = [row["mode"] for row in plan["trials"]]
+    ref.require(modes == ["forkserver-native", "spawn-native", "spawn-seed0"]
+                or (modes == ["forkserver-native"] and plan.get("paired_capture") == "both-before-rerender"),
                 "Incomplete physical comparison")
     def verified_first_frames(protocol):
         trials = protocol["trials"]

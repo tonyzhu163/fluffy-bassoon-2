@@ -2,7 +2,7 @@
 # Run inside an allocated one-4090 Distributed Training container, or on the
 # existing CPU development endpoint for the archive/preprocessor check only.
 set -euo pipefail
-[[ $# == 3 && $1 =~ ^[0-9a-f]{40}$ && $2 =~ ^[a-zA-Z0-9._-]+$ && $3 =~ ^(cuda|archive)$ ]]
+[[ $# == 3 && $1 =~ ^[0-9a-f]{40}$ && $2 =~ ^[a-zA-Z0-9._-]+$ && $3 =~ ^(cuda|cuda-forkserver|archive)$ ]]
 render_pin=$1
 mode=$3
 project=/mowenjie/fluffy-bassoon-2
@@ -21,7 +21,7 @@ attempt=$wrist_root/render-smoke/attempts/$2
 mkdir "$attempt"
 sha256sum "$render_script" "$script" > "$attempt/code.sha256"
 source "$here/env.sh"
-if [[ $mode == cuda ]]; then
+if [[ $mode != archive ]]; then
     unset LIBGL_ALWAYS_SOFTWARE GALLIUM_DRIVER MUJOCO_EGL_DEVICE_ID
     export __EGL_VENDOR_LIBRARY_FILENAMES="$libs/nvidia-vendor.json"
     if [[ -z ${CUDA_VISIBLE_DEVICES:-} ]]; then
@@ -34,5 +34,9 @@ else
     export CUDA_VISIBLE_DEVICES=""
 fi
 # Positional arguments remain absolute across the transport wrapper.
-timeout --kill-after=15s 1080s bash "$control/$name/transport/with-cache.sh" \
+seconds=1080
+if [[ $mode == cuda-forkserver ]]; then
+    seconds=480
+fi
+timeout --kill-after=15s "${seconds}s" bash "$control/$name/transport/with-cache.sh" \
     "$py" -Bu "$script" "$attempt" "$wrist_root/scored/attempts" "$mode" > "$attempt/launch.log" 2>&1
