@@ -21,9 +21,10 @@ class FixturePolicy:
 
 
 class Observe:
-    def __init__(self, sim, policy, row, estimate):
+    def __init__(self, sim, policy, row, estimate, anchor):
         self.sim, self.policy, self.row, self.estimate = sim, policy, row, estimate
         self._model = policy._model
+        self.anchor = anchor
 
     def call(self, op, value):
         if op == "create":
@@ -50,8 +51,12 @@ class Observe:
         assert set(expected) == set(item) == {"prompt","observation/image","observation/wrist_image","observation/state"}
         assert all(np.array_equal(v, item[k]) for k,v in expected.items())
         pred = self.policy.infer(item, noise=noise)
-        self.chunks.append(dict(raw=np.asarray(pred["actions"], np.float32).tolist(), noise=array_sha(noise),
-                                motor_inputs={k:array_sha(v) for k,v in item.items() if k!="prompt"}))
+        proposal = np.asarray(pred["actions"],np.float32)
+        inputs = {k:array_sha(v) for k,v in item.items() if k!="prompt"}
+        if not self.chunks and self.anchor:
+            require(array_sha(proposal)==self.anchor["proposal_sha256"] and inputs==self.anchor["motor_inputs"] and
+                    array_sha(noise)==self.anchor["first_noise"], "unpaired opening before action")
+        self.chunks.append(dict(raw=proposal.tolist(),noise=array_sha(noise),motor_inputs=inputs))
         return pred
 
 
@@ -62,7 +67,7 @@ def episode(sim, motor, row, name, anchor, cpu):
 
     estim = row["estimates"][name]
     a = np.asarray(estim["A"], dtype=estim["dtype"]) if estim else None
-    obs = Observe(sim, motor, row, a)
+    obs = Observe(sim, motor, row, a, anchor)
 
     class CreateMismatch(ValueError):
         pass
@@ -116,10 +121,12 @@ def run(a):
         atomic(a.out/"cpu-cases.json", encode(cases))
     else:
         panel = parse(checked(a.panel, a.sha256))
-        require(panel["assignments"] == assignments() and panel["registration"] == digest((HERE/"PLAN.md").read_bytes()),
+        require(panel["assignments"] == assignments() and panel["registration"] == digest((HERE/"PLAN.md").read_bytes())
+                and panel["assignments"]==parse((HERE/"cases.json").read_bytes()),
                 "native registration changed")
         cases = [r for r in panel["cases"] if r["arm"] == a.arm]
-        require(len(cases)==16 and [r["index"] for r in cases]==[r["index"] for r in assignments() if r["arm"]==a.arm],
+        require(len(cases)<=16 and len({r["index"] for r in cases})==len(cases) and
+                all(all(row[k]==v for k,v in assignments()[row["index"]].items()) for row in cases),
                 "wrong arm shard")
         checked(OPENPI_CKPT/"transport-manifest.json","28310343bab088490f4e84110ce13861ccdeb3eda1bb4dd7c4bc26df84b8428c")
         ready = parse(checked(OPENPI_CKPT/"READY.json","ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170"))
@@ -135,24 +142,31 @@ def run(a):
     with patch.dict(os.environ, {"CUDA_VISIBLE_DEVICES":""}), patch.object(worker,"__file__",str(HERE/"map_worker.py")):
         sim = worker.UR5eSimulator(allow_mesa=cpu)
     anchors = {}
+    layout_anchors = {}
+    completed = 0
     with sim:
         for methods in methods_by_phase:
             previous = None
             for row in cases:
+                names = [m for m in order(row,methods) if m in row["estimates"]]
+                if not names:
+                    continue
                 if (row["arm"],row["task_index"]) != previous:
                     previous = row["arm"],row["task_index"]
                     sim.call("create", dict(query(row), embodiment="nom", forward_map=row["true_map"]))
                 i = row["index"]
-                for name in order(row, methods):
-                    obj = episode(sim,policy,row,name,anchors.get(i),cpu)
-                    anchors[i] = opening(obj)
+                layout_key = (row["arm"], row["suite"], row["task"], row["layout"])
+                for name in names:
+                    obj = episode(sim,policy,row,name,layout_anchors.get(layout_key),cpu)
+                    anchors[i] = layout_anchors[layout_key] = opening(obj)
+                    completed += 1
                     receipt = dict(panel_sha256=panel_sha,index=i,method=name,cpu_fixture=cpu,episode=obj)
                     atomic(a.out/"episodes"/f"{i:02d}-{name}.json.gz",gzip.compress(encode(receipt),compresslevel=2,mtime=0))
-                group = dict(index=i,panel_sha256=panel_sha,methods=list(order(row,methods)),opening=anchors[i])
+                group = dict(index=i,panel_sha256=panel_sha,methods=names,opening=anchors[i])
                 atomic(a.out/"groups"/f"{i:02d}-{methods[0]}.json", encode(group))
                 print("verified group",i,methods[0],flush=True)
     atomic(a.out/"completed.json",encode(dict(cpu_fixture=cpu,groups=len(anchors),panel_sha256=panel_sha,
-           episodes=sum(len(m) for m in methods_by_phase)*len(cases),scored_native_retries=0 if cpu else 128)))
+           episodes=completed,scored_native_retries=0 if cpu else completed)))
 
 
 if __name__ == "__main__":

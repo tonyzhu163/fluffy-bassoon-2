@@ -30,6 +30,7 @@ def inspect_episode(row, method, obj, cpu=False):
     require(r["horizon"]==ref["horizon"] and r["prompt"]==rec["released_prompt"] and r["prompt"] and
             rec["inferred"]==dict(yaw_deg=0.,xy_scale=1.,gripper_sign=1), "nominal motor interface")
     if not cpu:
+        require(r["prompt"]==row["prompt"], "released task prompt")
         require(all(body[k]==row["support_model"][k] for k in ("xml_sha256","arm","model_class","joint_count","gripper","controller")),
                 "query model vs support")
     horizon = r["horizon"]
