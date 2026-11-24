@@ -1,0 +1,3 @@
+# Common absolute targets
+
+Before inspecting any replay outcomes, extend the conditional cross-arm readback in PLAN.md to every common case. Take the absolute OSC goal at every executed step of each arm's tape and test it statically on both mounted models of that task/start. The target geometry stays fixed in world coordinates. This distinguishes two questions even when every arm can execute its own goals. The Panda policy may visit points the Kinova policy never requests. The crossed readback has no physical time pairing, reward or unobserved target-arm action. Rate limits apply only to the arm with a measured contemporaneous starting configuration.

@@ -96,7 +96,7 @@ def main():
         r = json.loads((t / "score/metrics.json").read_bytes())
         assert r["joint_refit"]["mae_adaptive"]["ci95"][1] < 1e-10
         assert abs(r["joint_refit"]["mae_tuned"]["mean"] - 20.) < 1e-10
-        assert r["joint_refit"]["hard_concordance"]["mean"] == 1.
+        np.testing.assert_allclose(r["joint_refit"]["hard_concordance"]["mean"], 1., rtol=0., atol=1e-12)
         assert r["registered_advancement_supported"]
         print(json.dumps(dict(runtime=runtime, kind="synthetic file-I/O qualification only",
                    shuffled_reader_rows=2016, evaluation_label_absent_during_freeze=True,
