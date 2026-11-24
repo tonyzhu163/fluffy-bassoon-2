@@ -18,6 +18,7 @@ from flow_head import CONDITIONS
 from direct_fit import SEED, BATCH, EPOCHS, LR, DRAWS, direct_scores, native_functions, train_heads
 import native_check
 
+
 def json_write(path, value):
     tmp = path.with_suffix(".part")
     tmp.write_text(json.dumps(value, indent=2, allow_nan=False) + "\n")
