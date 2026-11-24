@@ -1,0 +1,2257 @@
+{
+  "revision": "d3d1b45a459db248a3bf113ffdecc5d8a37545e5",
+  "train_pin": "ba3c41e25575d07d7bd8bbfaae2797e7cf9dc0a9",
+  "pr7_recipe": "perceiver_cont_warm",
+  "archive": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/symmeta-perceiver-retry-20261123-r1/train02pro/predictions.json",
+    "sha256": "c8420c2cb7d0cb38e6f0d73b3a20ce47997dbef7657b652d45eaaa8988eb6c0b"
+  },
+  "checkpoints": {
+    "41": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/symmeta-perceiver-retry-20261123-r1/train02pro/checkpoints/perceiver_cont_warm-passive_attempt1-seed41.msgpack",
+      "sha256": "54157016de0af4f60c63ba8f9fbf782ee3832ef66699dac9dff0028d9ff15c86",
+      "seed": 41,
+      "config": {
+        "model_type": "perceiver_icba",
+        "visual_mode": "dis_lumaflow",
+        "max_chunks": 24,
+        "cnn_width": 96,
+        "mlp_width": 192,
+        "use_dz_parallax": true,
+        "perceiver_latents": 8,
+        "perceiver_width": 192,
+        "perceiver_layers": 3,
+        "perceiver_heads": 4
+      },
+      "source_lock_sha256": "08b9a6c158af9915e2edd880515e5f53d3473003791839af2df70db867348245"
+    },
+    "42": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/symmeta-perceiver-retry-20261123-r1/train02pro/checkpoints/perceiver_cont_warm-passive_attempt1-seed42.msgpack",
+      "sha256": "45945ea1745fa245bd4c6517a1d935f041b361d4ef2caa8058cbf2392f4f0ef9",
+      "seed": 42,
+      "config": {
+        "model_type": "perceiver_icba",
+        "visual_mode": "dis_lumaflow",
+        "max_chunks": 24,
+        "cnn_width": 96,
+        "mlp_width": 192,
+        "use_dz_parallax": true,
+        "perceiver_latents": 8,
+        "perceiver_width": 192,
+        "perceiver_layers": 3,
+        "perceiver_heads": 4
+      },
+      "source_lock_sha256": "08b9a6c158af9915e2edd880515e5f53d3473003791839af2df70db867348245"
+    },
+    "43": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/symmeta-perceiver-retry-20261123-r1/train02pro/checkpoints/perceiver_cont_warm-passive_attempt1-seed43.msgpack",
+      "sha256": "986040df348f2c8abb1aa7bb995f601197566bc80faebca2a950de1939a8f9e9",
+      "seed": 43,
+      "config": {
+        "model_type": "perceiver_icba",
+        "visual_mode": "dis_lumaflow",
+        "max_chunks": 24,
+        "cnn_width": 96,
+        "mlp_width": 192,
+        "use_dz_parallax": true,
+        "perceiver_latents": 8,
+        "perceiver_width": 192,
+        "perceiver_layers": 3,
+        "perceiver_heads": 4
+      },
+      "source_lock_sha256": "08b9a6c158af9915e2edd880515e5f53d3473003791839af2df70db867348245"
+    }
+  },
+  "plan_sha256": "c8f19500331638009b63847088b947c2d6361690b7018034369ac18a4055c445",
+  "panel": {
+    "name": "official_UR5e_pi05_passive",
+    "splits": {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/symmeta-perceiver-followups-20261123-r1/src-d3d1b45a459d/outputs/libero-meta-learning-20261117-r1/SPLITS.json",
+      "sha256": "9b363ba704b628b34839a854e19118e7dd7958241e4b28530fa40241cc2cde2f"
+    },
+    "support_manifests": [
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-0/support-meta.json",
+        "sha256": "30a3f21cbcdcee1ef714bcb0487add322e7a7b8f48c07b2a4a6ed1ab511042e9"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-1/support-meta.json",
+        "sha256": "65d138963fa95e8dbfa6e5f53d960454682a50f9220edbdd7e715a0426552814"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-2/support-meta.json",
+        "sha256": "6232afd8b7605c35607fd737bff7c63081389e0951ab8d565f30fe0098b0914f"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-3/support-meta.json",
+        "sha256": "4f5da8417b285b06871c02337483162b97647b68fb98479ed242d507203cb04a"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-4/support-meta.json",
+        "sha256": "05cfccbb248d8a07845948d369f890d404834efc432a69ed57b2ebeae9f58105"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-5/support-meta.json",
+        "sha256": "0b25cbb368ecddb6726f707b073082f2e732b7b9bbd08351654b7bc881f9032e"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-6/support-meta.json",
+        "sha256": "6e0f1acafd6a182160dcd7b7fdce26071f9c6501e3a8903b782ee8c574ac5c7d"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-7/support-meta.json",
+        "sha256": "409648aa5b1db54eb947d124f3dede367196ff446c0869de0615fb2e3f14de57"
+      }
+    ],
+    "reference_shards": [
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu03s2a/live/shard-0/live-shard.json",
+        "sha256": "f24129969de4daa253942457c948a634fe6571c4c70865ac9338167c19505f1c"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu03s2a/live/shard-1/live-shard.json",
+        "sha256": "fa2489ad203fc945220dcbe1883759187e7855917dca8baebec687d863f3a1eb"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu03s2a/live/shard-2/live-shard.json",
+        "sha256": "818b939ec29bc6c71314b5ce4a75f7fb9184e4ad96b7661bafd04ece7930ab88"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu04s2agoal6/live/shard-3/live-shard.json",
+        "sha256": "86935576fd91bd49f0054fbb32fec68a44f444d16ee4df1f3e1c4d377803b1f3"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu03s2a/live/shard-4/live-shard.json",
+        "sha256": "ad4fdf991b86ae99eb4bc9ad0b3ea1396fa0bdab30286d5dbce8799d48c8e404"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu03s2a/live/shard-5/live-shard.json",
+        "sha256": "576755b5da2e46ab4221c64a3f41d103dfde4d1b3a5c33fb306fa2658f6a8b19"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu03s2a/live/shard-6/live-shard.json",
+        "sha256": "36a4ea1c574f43d93c905b880d8bfa18fc53677cbba6e42d73dfa1fd8b21ca37"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu03s2a/live/shard-7/live-shard.json",
+        "sha256": "314eafa8929663072559f898b55660c2603aa2916081ab600d31711bce3569c1"
+      }
+    ],
+    "reference_set_sha256": "52fa154a6becd989d0bdaa19246694289e9ac33d1fbfe1b299b870c81cf179ae"
+  },
+  "inputs": {
+    "frame0_img": {
+      "dtype": "uint8",
+      "shape_per_trace": [
+        64,
+        64,
+        3
+      ]
+    },
+    "valid": {
+      "dtype": "bool",
+      "shape_per_trace": [
+        3
+      ]
+    },
+    "img_before": {
+      "dtype": "uint8",
+      "shape_per_trace": [
+        3,
+        64,
+        64,
+        3
+      ]
+    },
+    "img_after": {
+      "dtype": "uint8",
+      "shape_per_trace": [
+        3,
+        64,
+        64,
+        3
+      ]
+    },
+    "issued_mean": {
+      "dtype": "float32",
+      "shape_per_trace": [
+        3,
+        7
+      ]
+    },
+    "delta_eef": {
+      "dtype": "float32",
+      "shape_per_trace": [
+        3,
+        3
+      ]
+    },
+    "delta_jaw": {
+      "dtype": "float32",
+      "shape_per_trace": [
+        3,
+        2
+      ]
+    },
+    "dis_flow": {
+      "dtype": "float32",
+      "shape_per_trace": [
+        3,
+        64,
+        64,
+        2
+      ]
+    }
+  },
+  "supports": [
+    {
+      "index": 0,
+      "id": "libero_10/5/fam_nom",
+      "task_id": 5,
+      "suite": "libero_10",
+      "embodiment": "fam_nom",
+      "regime": "familiar",
+      "true_yaw_deg": 0.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-0/support/00-fam_nom-passive.npz",
+      "sha256": "072e193720763a9faf7eb0fe26a76c06c1bfa7e10278f2ceef9ec81cf3a6594f"
+    },
+    {
+      "index": 1,
+      "id": "libero_10/5/fam_yaw90",
+      "task_id": 5,
+      "suite": "libero_10",
+      "embodiment": "fam_yaw90",
+      "regime": "familiar",
+      "true_yaw_deg": 90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-0/support/01-fam_yaw90-passive.npz",
+      "sha256": "fb7344094134d7e024775dbeff60e4fdf5ab92bfd6913c418e2d80985d93f380"
+    },
+    {
+      "index": 2,
+      "id": "libero_10/5/fam_yaw180",
+      "task_id": 5,
+      "suite": "libero_10",
+      "embodiment": "fam_yaw180",
+      "regime": "familiar",
+      "true_yaw_deg": 180.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-0/support/02-fam_yaw180-passive.npz",
+      "sha256": "b434cbc07d9119ee32b2c51672ef5897cada421c5d4403c98b17262ced04283c"
+    },
+    {
+      "index": 3,
+      "id": "libero_10/5/fam_grip_inv",
+      "task_id": 5,
+      "suite": "libero_10",
+      "embodiment": "fam_grip_inv",
+      "regime": "familiar",
+      "true_yaw_deg": 0.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-0/support/03-fam_grip_inv-passive.npz",
+      "sha256": "733c4093cc513f2aa45a221ab9a73b536ce0de3a91a22b389925d50b57e67a6e"
+    },
+    {
+      "index": 4,
+      "id": "libero_10/5/comp_180_lo_inv",
+      "task_id": 5,
+      "suite": "libero_10",
+      "embodiment": "comp_180_lo_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": 180.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-0/support/04-comp_180_lo_inv-passive.npz",
+      "sha256": "c75469eb8da0d7f7bb2caaecbd3b3ac98e55566dcd6b64bf03099772f41fa04f"
+    },
+    {
+      "index": 5,
+      "id": "libero_10/5/comp_m90_hi_inv",
+      "task_id": 5,
+      "suite": "libero_10",
+      "embodiment": "comp_m90_hi_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": -90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-0/support/05-comp_m90_hi_inv-passive.npz",
+      "sha256": "aeefd19c54d5bf77793d4eb6228d4b654f46e80d7a458c5c4a716634c20146d8"
+    },
+    {
+      "index": 6,
+      "id": "libero_10/5/comp_90_hi_inv",
+      "task_id": 5,
+      "suite": "libero_10",
+      "embodiment": "comp_90_hi_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": 90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-0/support/06-comp_90_hi_inv-passive.npz",
+      "sha256": "51822e84800cfa7a3843cf48eada3532f417deddda0da715a9841b44a46f8372"
+    },
+    {
+      "index": 7,
+      "id": "libero_10/5/comp_m90_lo_inv",
+      "task_id": 5,
+      "suite": "libero_10",
+      "embodiment": "comp_m90_lo_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": -90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-0/support/07-comp_m90_lo_inv-passive.npz",
+      "sha256": "a0981834cd3f91abf2bc4927541ceb2ff02b132a991953208a212ae1bfb439b6"
+    },
+    {
+      "index": 8,
+      "id": "libero_10/5/cont_45_nom",
+      "task_id": 5,
+      "suite": "libero_10",
+      "embodiment": "cont_45_nom",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": 45.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-0/support/08-cont_45_nom-passive.npz",
+      "sha256": "c595c7b49888fe983d950e59f3105f131a105d8e0a24ebcbe0f577e75bc86d6b"
+    },
+    {
+      "index": 9,
+      "id": "libero_10/5/cont_135_075_inv",
+      "task_id": 5,
+      "suite": "libero_10",
+      "embodiment": "cont_135_075_inv",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": 135.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-0/support/09-cont_135_075_inv-passive.npz",
+      "sha256": "fa313aee3476b5290e16837f524bcf306d1624791c52272f3c098f8f5c811f3c"
+    },
+    {
+      "index": 10,
+      "id": "libero_10/5/cont_m135_135_inv",
+      "task_id": 5,
+      "suite": "libero_10",
+      "embodiment": "cont_m135_135_inv",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": -135.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-0/support/10-cont_m135_135_inv-passive.npz",
+      "sha256": "a46ad92a6f772711dd832862e9e9a666bd305c30a57a66917c1f080518657f7f"
+    },
+    {
+      "index": 11,
+      "id": "libero_10/5/cont_m45_075",
+      "task_id": 5,
+      "suite": "libero_10",
+      "embodiment": "cont_m45_075",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": -45.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-0/support/11-cont_m45_075-passive.npz",
+      "sha256": "af6546b55549ea555825f91b9aacab24102965a0d203bbc0040ac5675a2255de"
+    },
+    {
+      "index": 12,
+      "id": "libero_10/8/fam_nom",
+      "task_id": 8,
+      "suite": "libero_10",
+      "embodiment": "fam_nom",
+      "regime": "familiar",
+      "true_yaw_deg": 0.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-1/support/00-fam_nom-passive.npz",
+      "sha256": "1cd0c833815f0227f92acc7804cd0d06349072a07bc9ad88c3929913752fc960"
+    },
+    {
+      "index": 13,
+      "id": "libero_10/8/fam_yaw90",
+      "task_id": 8,
+      "suite": "libero_10",
+      "embodiment": "fam_yaw90",
+      "regime": "familiar",
+      "true_yaw_deg": 90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-1/support/01-fam_yaw90-passive.npz",
+      "sha256": "dfe94bacacb82313cced526735b3f1ae1e75e91686c793916a8d04c0f5a47481"
+    },
+    {
+      "index": 14,
+      "id": "libero_10/8/fam_yaw180",
+      "task_id": 8,
+      "suite": "libero_10",
+      "embodiment": "fam_yaw180",
+      "regime": "familiar",
+      "true_yaw_deg": 180.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-1/support/02-fam_yaw180-passive.npz",
+      "sha256": "367b79eeec18429363df2a2b6d03e6ee6ce51a518156d375ff9509c23ce4ddfa"
+    },
+    {
+      "index": 15,
+      "id": "libero_10/8/fam_grip_inv",
+      "task_id": 8,
+      "suite": "libero_10",
+      "embodiment": "fam_grip_inv",
+      "regime": "familiar",
+      "true_yaw_deg": 0.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-1/support/03-fam_grip_inv-passive.npz",
+      "sha256": "a966c6060e685b9781b4f7e7135c076dfe4c7bcabad216d7bbccf81e6c93432c"
+    },
+    {
+      "index": 16,
+      "id": "libero_10/8/comp_180_lo_inv",
+      "task_id": 8,
+      "suite": "libero_10",
+      "embodiment": "comp_180_lo_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": 180.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-1/support/04-comp_180_lo_inv-passive.npz",
+      "sha256": "95d91633c07515375f4827508035e83cb4039d44eb82054a8d29646ea7015499"
+    },
+    {
+      "index": 17,
+      "id": "libero_10/8/comp_m90_hi_inv",
+      "task_id": 8,
+      "suite": "libero_10",
+      "embodiment": "comp_m90_hi_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": -90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-1/support/05-comp_m90_hi_inv-passive.npz",
+      "sha256": "c2c6f59b8c76bf25bac33d4935caeacf60238cd754b2407697ff5e5f719d5aff"
+    },
+    {
+      "index": 18,
+      "id": "libero_10/8/comp_90_hi_inv",
+      "task_id": 8,
+      "suite": "libero_10",
+      "embodiment": "comp_90_hi_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": 90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-1/support/06-comp_90_hi_inv-passive.npz",
+      "sha256": "23b6c341de65b392a7eb65d9a7dce542b64b3c327e059e33d1973710daf17aee"
+    },
+    {
+      "index": 19,
+      "id": "libero_10/8/comp_m90_lo_inv",
+      "task_id": 8,
+      "suite": "libero_10",
+      "embodiment": "comp_m90_lo_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": -90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-1/support/07-comp_m90_lo_inv-passive.npz",
+      "sha256": "f7f7026e9114e9ea03338169668823eba31381037ee95a4fa84933d701d12a1a"
+    },
+    {
+      "index": 20,
+      "id": "libero_10/8/cont_45_nom",
+      "task_id": 8,
+      "suite": "libero_10",
+      "embodiment": "cont_45_nom",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": 45.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-1/support/08-cont_45_nom-passive.npz",
+      "sha256": "da90e0f17484af00dfec5161308e1db1bd2ab6b73a81bbc4354d873fb94d8467"
+    },
+    {
+      "index": 21,
+      "id": "libero_10/8/cont_135_075_inv",
+      "task_id": 8,
+      "suite": "libero_10",
+      "embodiment": "cont_135_075_inv",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": 135.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-1/support/09-cont_135_075_inv-passive.npz",
+      "sha256": "176f73ec6fa1947f730dc39aed6c27fbcff6d4eb4543dfe66ac3598e000f73ed"
+    },
+    {
+      "index": 22,
+      "id": "libero_10/8/cont_m135_135_inv",
+      "task_id": 8,
+      "suite": "libero_10",
+      "embodiment": "cont_m135_135_inv",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": -135.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-1/support/10-cont_m135_135_inv-passive.npz",
+      "sha256": "5fc2bf2e18f727f771932468143599e743c736b9767c07693cb0d0a5bcc8437e"
+    },
+    {
+      "index": 23,
+      "id": "libero_10/8/cont_m45_075",
+      "task_id": 8,
+      "suite": "libero_10",
+      "embodiment": "cont_m45_075",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": -45.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-1/support/11-cont_m45_075-passive.npz",
+      "sha256": "5d5ad6785df727dca466fa9bd5ac7e75105fc4e08e0836e9495d02215849b683"
+    },
+    {
+      "index": 24,
+      "id": "libero_goal/3/fam_nom",
+      "task_id": 3,
+      "suite": "libero_goal",
+      "embodiment": "fam_nom",
+      "regime": "familiar",
+      "true_yaw_deg": 0.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-2/support/00-fam_nom-passive.npz",
+      "sha256": "080fcef347fcff4ad57722f823ed83109a4e21990fa856b93e0eb4bbe10660d5"
+    },
+    {
+      "index": 25,
+      "id": "libero_goal/3/fam_yaw90",
+      "task_id": 3,
+      "suite": "libero_goal",
+      "embodiment": "fam_yaw90",
+      "regime": "familiar",
+      "true_yaw_deg": 90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-2/support/01-fam_yaw90-passive.npz",
+      "sha256": "6a3790444d0369c85670c06a6aa5db635c36be4f0fb789f19fb787328b38ce0a"
+    },
+    {
+      "index": 26,
+      "id": "libero_goal/3/fam_yaw180",
+      "task_id": 3,
+      "suite": "libero_goal",
+      "embodiment": "fam_yaw180",
+      "regime": "familiar",
+      "true_yaw_deg": 180.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-2/support/02-fam_yaw180-passive.npz",
+      "sha256": "4636743f3e5fb8eac72977005a7ce7fcb586b798a73c836337d1112af065813b"
+    },
+    {
+      "index": 27,
+      "id": "libero_goal/3/fam_grip_inv",
+      "task_id": 3,
+      "suite": "libero_goal",
+      "embodiment": "fam_grip_inv",
+      "regime": "familiar",
+      "true_yaw_deg": 0.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-2/support/03-fam_grip_inv-passive.npz",
+      "sha256": "72ee525a05e8baed02c32d0e17bc8b4c7a06324845f47da59e854fe72cb2c48e"
+    },
+    {
+      "index": 28,
+      "id": "libero_goal/3/comp_180_lo_inv",
+      "task_id": 3,
+      "suite": "libero_goal",
+      "embodiment": "comp_180_lo_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": 180.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-2/support/04-comp_180_lo_inv-passive.npz",
+      "sha256": "0229737a64cb5d8041df7b528c058302abe8a3e57d211902173bef0b1ad90648"
+    },
+    {
+      "index": 29,
+      "id": "libero_goal/3/comp_m90_hi_inv",
+      "task_id": 3,
+      "suite": "libero_goal",
+      "embodiment": "comp_m90_hi_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": -90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-2/support/05-comp_m90_hi_inv-passive.npz",
+      "sha256": "8130ee7c1bb65b4eefa59d465b42059268187b32b441ac06739c8d6605f7a169"
+    },
+    {
+      "index": 30,
+      "id": "libero_goal/3/comp_90_hi_inv",
+      "task_id": 3,
+      "suite": "libero_goal",
+      "embodiment": "comp_90_hi_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": 90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-2/support/06-comp_90_hi_inv-passive.npz",
+      "sha256": "cd7151d824d6a868dc597c092f2ce1ecc153fcde03045b543888f2a0643a8924"
+    },
+    {
+      "index": 31,
+      "id": "libero_goal/3/comp_m90_lo_inv",
+      "task_id": 3,
+      "suite": "libero_goal",
+      "embodiment": "comp_m90_lo_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": -90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-2/support/07-comp_m90_lo_inv-passive.npz",
+      "sha256": "3921afc9f7f67291470e254ea2e085e06ab9d47a190546fd84c860cb54c68c80"
+    },
+    {
+      "index": 32,
+      "id": "libero_goal/3/cont_45_nom",
+      "task_id": 3,
+      "suite": "libero_goal",
+      "embodiment": "cont_45_nom",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": 45.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-2/support/08-cont_45_nom-passive.npz",
+      "sha256": "d17db331bca38431b874a0ad9b793902a2eabd5120ca9563040df2ab2c3a87dd"
+    },
+    {
+      "index": 33,
+      "id": "libero_goal/3/cont_135_075_inv",
+      "task_id": 3,
+      "suite": "libero_goal",
+      "embodiment": "cont_135_075_inv",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": 135.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-2/support/09-cont_135_075_inv-passive.npz",
+      "sha256": "d4fd7d852368d63a7e0a5d91ea63e3d248ad7728a04e0aadcf803fb605ef687e"
+    },
+    {
+      "index": 34,
+      "id": "libero_goal/3/cont_m135_135_inv",
+      "task_id": 3,
+      "suite": "libero_goal",
+      "embodiment": "cont_m135_135_inv",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": -135.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-2/support/10-cont_m135_135_inv-passive.npz",
+      "sha256": "0a90cc4beb6c3be7de9aa1c6c9a748108dca27e7216834520f68bcea283ac3c4"
+    },
+    {
+      "index": 35,
+      "id": "libero_goal/3/cont_m45_075",
+      "task_id": 3,
+      "suite": "libero_goal",
+      "embodiment": "cont_m45_075",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": -45.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-2/support/11-cont_m45_075-passive.npz",
+      "sha256": "26f9e2d8fe8d1826726f9481ef0e8d6ef81514a25a89d2b9724de9344cfda0a2"
+    },
+    {
+      "index": 36,
+      "id": "libero_goal/6/fam_nom",
+      "task_id": 6,
+      "suite": "libero_goal",
+      "embodiment": "fam_nom",
+      "regime": "familiar",
+      "true_yaw_deg": 0.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-3/support/00-fam_nom-passive.npz",
+      "sha256": "43149667322e3da491399519cc79f3cd1abed190c55a0a70ef9348d14db8dcac"
+    },
+    {
+      "index": 37,
+      "id": "libero_goal/6/fam_yaw90",
+      "task_id": 6,
+      "suite": "libero_goal",
+      "embodiment": "fam_yaw90",
+      "regime": "familiar",
+      "true_yaw_deg": 90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-3/support/01-fam_yaw90-passive.npz",
+      "sha256": "4c054a2efc2dfc8b4a732a1924ea6f92e38c9b6202dba33511b75c1f145dff48"
+    },
+    {
+      "index": 38,
+      "id": "libero_goal/6/fam_yaw180",
+      "task_id": 6,
+      "suite": "libero_goal",
+      "embodiment": "fam_yaw180",
+      "regime": "familiar",
+      "true_yaw_deg": 180.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-3/support/02-fam_yaw180-passive.npz",
+      "sha256": "5fb7b69b239812f9dd4ef35deb69160822660cf1407fbfc835ee916e5306b69b"
+    },
+    {
+      "index": 39,
+      "id": "libero_goal/6/fam_grip_inv",
+      "task_id": 6,
+      "suite": "libero_goal",
+      "embodiment": "fam_grip_inv",
+      "regime": "familiar",
+      "true_yaw_deg": 0.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-3/support/03-fam_grip_inv-passive.npz",
+      "sha256": "8e5c40831a5deef7fb1c74744a9385dbf28a0fbc9519b013b00c292122dd4beb"
+    },
+    {
+      "index": 40,
+      "id": "libero_goal/6/comp_180_lo_inv",
+      "task_id": 6,
+      "suite": "libero_goal",
+      "embodiment": "comp_180_lo_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": 180.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-3/support/04-comp_180_lo_inv-passive.npz",
+      "sha256": "5b387ec15b47c7daee7ddd563ab4df56f89bf4bcd25b60972e6aed44232e0aa6"
+    },
+    {
+      "index": 41,
+      "id": "libero_goal/6/comp_m90_hi_inv",
+      "task_id": 6,
+      "suite": "libero_goal",
+      "embodiment": "comp_m90_hi_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": -90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-3/support/05-comp_m90_hi_inv-passive.npz",
+      "sha256": "afce5a50222d4a97746f6ea3ce2874e0b8bc4d4f98b61bd3b5ffa1e82c49dca0"
+    },
+    {
+      "index": 42,
+      "id": "libero_goal/6/comp_90_hi_inv",
+      "task_id": 6,
+      "suite": "libero_goal",
+      "embodiment": "comp_90_hi_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": 90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-3/support/06-comp_90_hi_inv-passive.npz",
+      "sha256": "41145885e5d8e3f37cabdfd955c5de7ed545868880645a52f00e720b686aefb6"
+    },
+    {
+      "index": 43,
+      "id": "libero_goal/6/comp_m90_lo_inv",
+      "task_id": 6,
+      "suite": "libero_goal",
+      "embodiment": "comp_m90_lo_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": -90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-3/support/07-comp_m90_lo_inv-passive.npz",
+      "sha256": "9f53fd2975e3fdcddfc0793ef9919431046b3168df9896ac333c7f396130e94f"
+    },
+    {
+      "index": 44,
+      "id": "libero_goal/6/cont_45_nom",
+      "task_id": 6,
+      "suite": "libero_goal",
+      "embodiment": "cont_45_nom",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": 45.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-3/support/08-cont_45_nom-passive.npz",
+      "sha256": "7fb5a73f5b39ffaec4a702f302ddb08f76529f2f046741e17f54d6701261f35b"
+    },
+    {
+      "index": 45,
+      "id": "libero_goal/6/cont_135_075_inv",
+      "task_id": 6,
+      "suite": "libero_goal",
+      "embodiment": "cont_135_075_inv",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": 135.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-3/support/09-cont_135_075_inv-passive.npz",
+      "sha256": "fee21ece8a302cd8dbafbd03917b6c3e52fc0629b193d93864e9c42a11056552"
+    },
+    {
+      "index": 46,
+      "id": "libero_goal/6/cont_m135_135_inv",
+      "task_id": 6,
+      "suite": "libero_goal",
+      "embodiment": "cont_m135_135_inv",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": -135.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-3/support/10-cont_m135_135_inv-passive.npz",
+      "sha256": "e075c454c4ed3a39e10e115bb5e3543e1b5033766a7d2be564976ab650c18743"
+    },
+    {
+      "index": 47,
+      "id": "libero_goal/6/cont_m45_075",
+      "task_id": 6,
+      "suite": "libero_goal",
+      "embodiment": "cont_m45_075",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": -45.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-3/support/11-cont_m45_075-passive.npz",
+      "sha256": "d666a6aaceda226993ba5a7e0aca0834d3eadb765b394553eda59937a9ff71b3"
+    },
+    {
+      "index": 48,
+      "id": "libero_object/1/fam_nom",
+      "task_id": 1,
+      "suite": "libero_object",
+      "embodiment": "fam_nom",
+      "regime": "familiar",
+      "true_yaw_deg": 0.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-4/support/00-fam_nom-passive.npz",
+      "sha256": "9145392919b7c1b65c056eac58a2cab02715a2de1a3c8a1c01909388fbfbcf6f"
+    },
+    {
+      "index": 49,
+      "id": "libero_object/1/fam_yaw90",
+      "task_id": 1,
+      "suite": "libero_object",
+      "embodiment": "fam_yaw90",
+      "regime": "familiar",
+      "true_yaw_deg": 90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-4/support/01-fam_yaw90-passive.npz",
+      "sha256": "77002eadc1a8c75f81699a6cd4b54f51f598d7d5a986c0164dfd91912cc08c2a"
+    },
+    {
+      "index": 50,
+      "id": "libero_object/1/fam_yaw180",
+      "task_id": 1,
+      "suite": "libero_object",
+      "embodiment": "fam_yaw180",
+      "regime": "familiar",
+      "true_yaw_deg": 180.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-4/support/02-fam_yaw180-passive.npz",
+      "sha256": "07244d12b4c79d510c0cd47a7e70527c4aa11c1804e67e53bb3de182d9d7f9e6"
+    },
+    {
+      "index": 51,
+      "id": "libero_object/1/fam_grip_inv",
+      "task_id": 1,
+      "suite": "libero_object",
+      "embodiment": "fam_grip_inv",
+      "regime": "familiar",
+      "true_yaw_deg": 0.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-4/support/03-fam_grip_inv-passive.npz",
+      "sha256": "779680f6cab75b5d7751b9f4e76fc560bdc091533ef97eb874e19cd9564ca0b2"
+    },
+    {
+      "index": 52,
+      "id": "libero_object/1/comp_180_lo_inv",
+      "task_id": 1,
+      "suite": "libero_object",
+      "embodiment": "comp_180_lo_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": 180.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-4/support/04-comp_180_lo_inv-passive.npz",
+      "sha256": "924f7fb90017943b618651c0f0c39c12039f8b24765659e574a7f96230e9715b"
+    },
+    {
+      "index": 53,
+      "id": "libero_object/1/comp_m90_hi_inv",
+      "task_id": 1,
+      "suite": "libero_object",
+      "embodiment": "comp_m90_hi_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": -90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-4/support/05-comp_m90_hi_inv-passive.npz",
+      "sha256": "539a8d3a0765e1f16cabb301a345d3f0be90c25b759dad9379ed6bf1b568caa4"
+    },
+    {
+      "index": 54,
+      "id": "libero_object/1/comp_90_hi_inv",
+      "task_id": 1,
+      "suite": "libero_object",
+      "embodiment": "comp_90_hi_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": 90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-4/support/06-comp_90_hi_inv-passive.npz",
+      "sha256": "cc0132d0972ea6068648bc7706aa3b9eb6ba261da02765cb31756a722c16ce5d"
+    },
+    {
+      "index": 55,
+      "id": "libero_object/1/comp_m90_lo_inv",
+      "task_id": 1,
+      "suite": "libero_object",
+      "embodiment": "comp_m90_lo_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": -90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-4/support/07-comp_m90_lo_inv-passive.npz",
+      "sha256": "ab14e7e40f9b72ffca769671bac2e4f2abdbac0a7ae419883502404ae3219843"
+    },
+    {
+      "index": 56,
+      "id": "libero_object/1/cont_45_nom",
+      "task_id": 1,
+      "suite": "libero_object",
+      "embodiment": "cont_45_nom",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": 45.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-4/support/08-cont_45_nom-passive.npz",
+      "sha256": "7baaf6f42e916fffe0afb9113b2ee695c225a5e1a35949006cea0a112ae5b790"
+    },
+    {
+      "index": 57,
+      "id": "libero_object/1/cont_135_075_inv",
+      "task_id": 1,
+      "suite": "libero_object",
+      "embodiment": "cont_135_075_inv",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": 135.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-4/support/09-cont_135_075_inv-passive.npz",
+      "sha256": "8d3d7acbb7aab5a7e1ef75061a683770e4911ed2aa040a5b8bad3a47b394dc0f"
+    },
+    {
+      "index": 58,
+      "id": "libero_object/1/cont_m135_135_inv",
+      "task_id": 1,
+      "suite": "libero_object",
+      "embodiment": "cont_m135_135_inv",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": -135.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-4/support/10-cont_m135_135_inv-passive.npz",
+      "sha256": "4ddbc1fab7c9527f63c5ce319f997a43cb02b3f09735f5cc3424617530260e55"
+    },
+    {
+      "index": 59,
+      "id": "libero_object/1/cont_m45_075",
+      "task_id": 1,
+      "suite": "libero_object",
+      "embodiment": "cont_m45_075",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": -45.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-4/support/11-cont_m45_075-passive.npz",
+      "sha256": "5e381ce7ed281b08bc4e57b8a1a62f42c8644e8a7753f94a8d352e5c974b6467"
+    },
+    {
+      "index": 60,
+      "id": "libero_object/8/fam_nom",
+      "task_id": 8,
+      "suite": "libero_object",
+      "embodiment": "fam_nom",
+      "regime": "familiar",
+      "true_yaw_deg": 0.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-5/support/00-fam_nom-passive.npz",
+      "sha256": "507ba74a80135b036f8f942745ba18a40501a72a7b69d7e5ed10e246ba3676bf"
+    },
+    {
+      "index": 61,
+      "id": "libero_object/8/fam_yaw90",
+      "task_id": 8,
+      "suite": "libero_object",
+      "embodiment": "fam_yaw90",
+      "regime": "familiar",
+      "true_yaw_deg": 90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-5/support/01-fam_yaw90-passive.npz",
+      "sha256": "a9c831a45eab275748e2e79f26c53dbfb79c990cc72ece3753d77680235c52c2"
+    },
+    {
+      "index": 62,
+      "id": "libero_object/8/fam_yaw180",
+      "task_id": 8,
+      "suite": "libero_object",
+      "embodiment": "fam_yaw180",
+      "regime": "familiar",
+      "true_yaw_deg": 180.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-5/support/02-fam_yaw180-passive.npz",
+      "sha256": "fe11d51e9901ef15554170234330c160328973019acd7d223f37350ce2950fcb"
+    },
+    {
+      "index": 63,
+      "id": "libero_object/8/fam_grip_inv",
+      "task_id": 8,
+      "suite": "libero_object",
+      "embodiment": "fam_grip_inv",
+      "regime": "familiar",
+      "true_yaw_deg": 0.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-5/support/03-fam_grip_inv-passive.npz",
+      "sha256": "ddd0f7247689f0d7da3022fbd3074e765ecbfda2d0420e612086af804d94118e"
+    },
+    {
+      "index": 64,
+      "id": "libero_object/8/comp_180_lo_inv",
+      "task_id": 8,
+      "suite": "libero_object",
+      "embodiment": "comp_180_lo_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": 180.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-5/support/04-comp_180_lo_inv-passive.npz",
+      "sha256": "513424b79cc50809423199fb1bd44f073eb67d255a11ebc518e282b263b6722f"
+    },
+    {
+      "index": 65,
+      "id": "libero_object/8/comp_m90_hi_inv",
+      "task_id": 8,
+      "suite": "libero_object",
+      "embodiment": "comp_m90_hi_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": -90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-5/support/05-comp_m90_hi_inv-passive.npz",
+      "sha256": "6bbd2c13bb8764d7037a4a701884ddf810544183e14577c965877fb537d34def"
+    },
+    {
+      "index": 66,
+      "id": "libero_object/8/comp_90_hi_inv",
+      "task_id": 8,
+      "suite": "libero_object",
+      "embodiment": "comp_90_hi_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": 90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-5/support/06-comp_90_hi_inv-passive.npz",
+      "sha256": "19d8db21524f6e20e0923d4c885bd69e6bd19abc8f333ebc03abe2355736d35c"
+    },
+    {
+      "index": 67,
+      "id": "libero_object/8/comp_m90_lo_inv",
+      "task_id": 8,
+      "suite": "libero_object",
+      "embodiment": "comp_m90_lo_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": -90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-5/support/07-comp_m90_lo_inv-passive.npz",
+      "sha256": "53bb58fc5f1e41367190b1cf141f9a38f9937de98ccec7178fb4cc5a9191ad5a"
+    },
+    {
+      "index": 68,
+      "id": "libero_object/8/cont_45_nom",
+      "task_id": 8,
+      "suite": "libero_object",
+      "embodiment": "cont_45_nom",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": 45.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-5/support/08-cont_45_nom-passive.npz",
+      "sha256": "d6bf43658ad5608c8c79afdcb2d2df12607a22fba0a5b3fd09d8eb9c48302ea8"
+    },
+    {
+      "index": 69,
+      "id": "libero_object/8/cont_135_075_inv",
+      "task_id": 8,
+      "suite": "libero_object",
+      "embodiment": "cont_135_075_inv",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": 135.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-5/support/09-cont_135_075_inv-passive.npz",
+      "sha256": "e1b0f09d0c358b771048c8505699bf6e82e1efcbaea8b6cc334a32c128ca7561"
+    },
+    {
+      "index": 70,
+      "id": "libero_object/8/cont_m135_135_inv",
+      "task_id": 8,
+      "suite": "libero_object",
+      "embodiment": "cont_m135_135_inv",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": -135.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-5/support/10-cont_m135_135_inv-passive.npz",
+      "sha256": "59664018c1a493d5a248214daf7b2d77f6a878c3886a91da3e233797830caacc"
+    },
+    {
+      "index": 71,
+      "id": "libero_object/8/cont_m45_075",
+      "task_id": 8,
+      "suite": "libero_object",
+      "embodiment": "cont_m45_075",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": -45.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-5/support/11-cont_m45_075-passive.npz",
+      "sha256": "aedbf0436056d45a20a713fc7867f2a845cb06d3881e50fa81fd311808732a95"
+    },
+    {
+      "index": 72,
+      "id": "libero_spatial/0/fam_nom",
+      "task_id": 0,
+      "suite": "libero_spatial",
+      "embodiment": "fam_nom",
+      "regime": "familiar",
+      "true_yaw_deg": 0.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-6/support/00-fam_nom-passive.npz",
+      "sha256": "effb9bda119bbc7e365154cb5b1b88b27a0792eaf54e4169838c9b19ded9795d"
+    },
+    {
+      "index": 73,
+      "id": "libero_spatial/0/fam_yaw90",
+      "task_id": 0,
+      "suite": "libero_spatial",
+      "embodiment": "fam_yaw90",
+      "regime": "familiar",
+      "true_yaw_deg": 90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-6/support/01-fam_yaw90-passive.npz",
+      "sha256": "bb3cec716d7a5802c4e0c8a0724a62b0982c0e3b429a38ca30aa2ea1af5d5fc9"
+    },
+    {
+      "index": 74,
+      "id": "libero_spatial/0/fam_yaw180",
+      "task_id": 0,
+      "suite": "libero_spatial",
+      "embodiment": "fam_yaw180",
+      "regime": "familiar",
+      "true_yaw_deg": 180.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-6/support/02-fam_yaw180-passive.npz",
+      "sha256": "980f0c770e0f3b0ce40a7e6b9decb9c79e8c4aed1442e0dff7763a52db03b283"
+    },
+    {
+      "index": 75,
+      "id": "libero_spatial/0/fam_grip_inv",
+      "task_id": 0,
+      "suite": "libero_spatial",
+      "embodiment": "fam_grip_inv",
+      "regime": "familiar",
+      "true_yaw_deg": 0.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-6/support/03-fam_grip_inv-passive.npz",
+      "sha256": "ac2b71ca6ed0232d6a9d0705e151182069e690d183a6b650b83f48842036feb5"
+    },
+    {
+      "index": 76,
+      "id": "libero_spatial/0/comp_180_lo_inv",
+      "task_id": 0,
+      "suite": "libero_spatial",
+      "embodiment": "comp_180_lo_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": 180.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-6/support/04-comp_180_lo_inv-passive.npz",
+      "sha256": "c514268ac8ce4019fad25044aaff9377d7b432612769108e4ee04ac5e30ffe85"
+    },
+    {
+      "index": 77,
+      "id": "libero_spatial/0/comp_m90_hi_inv",
+      "task_id": 0,
+      "suite": "libero_spatial",
+      "embodiment": "comp_m90_hi_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": -90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-6/support/05-comp_m90_hi_inv-passive.npz",
+      "sha256": "8b99885f764aaf6a6ff59b34e6041c317caf0f792a4ed21299cefe34c2bb55ad"
+    },
+    {
+      "index": 78,
+      "id": "libero_spatial/0/comp_90_hi_inv",
+      "task_id": 0,
+      "suite": "libero_spatial",
+      "embodiment": "comp_90_hi_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": 90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-6/support/06-comp_90_hi_inv-passive.npz",
+      "sha256": "5135067c4f072baacb035c67db06f306d39446165260e270c469a810f13df692"
+    },
+    {
+      "index": 79,
+      "id": "libero_spatial/0/comp_m90_lo_inv",
+      "task_id": 0,
+      "suite": "libero_spatial",
+      "embodiment": "comp_m90_lo_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": -90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-6/support/07-comp_m90_lo_inv-passive.npz",
+      "sha256": "9c4c5282a729c32d1a1237b6e3f728ca0bd44a132f237b08aaa241f80b397d12"
+    },
+    {
+      "index": 80,
+      "id": "libero_spatial/0/cont_45_nom",
+      "task_id": 0,
+      "suite": "libero_spatial",
+      "embodiment": "cont_45_nom",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": 45.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-6/support/08-cont_45_nom-passive.npz",
+      "sha256": "e4bef1213fa8600f305fa5a0873a0edddda6c21c8a73b2c063b03f9dc83b013f"
+    },
+    {
+      "index": 81,
+      "id": "libero_spatial/0/cont_135_075_inv",
+      "task_id": 0,
+      "suite": "libero_spatial",
+      "embodiment": "cont_135_075_inv",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": 135.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-6/support/09-cont_135_075_inv-passive.npz",
+      "sha256": "b8a451a9a77495c1a9a555ca23e1c122c27e49dd4cba530181a6fa6b2e036066"
+    },
+    {
+      "index": 82,
+      "id": "libero_spatial/0/cont_m135_135_inv",
+      "task_id": 0,
+      "suite": "libero_spatial",
+      "embodiment": "cont_m135_135_inv",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": -135.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-6/support/10-cont_m135_135_inv-passive.npz",
+      "sha256": "0333cdbaefea168d34db66b58ef7357208c7c51068af4a06e1476ae08495a984"
+    },
+    {
+      "index": 83,
+      "id": "libero_spatial/0/cont_m45_075",
+      "task_id": 0,
+      "suite": "libero_spatial",
+      "embodiment": "cont_m45_075",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": -45.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-6/support/11-cont_m45_075-passive.npz",
+      "sha256": "3eef95fba1e43d15a85a456ec7ff0edfb9b7b53d9471986bd4b1b5af71b9dbc9"
+    },
+    {
+      "index": 84,
+      "id": "libero_spatial/8/fam_nom",
+      "task_id": 8,
+      "suite": "libero_spatial",
+      "embodiment": "fam_nom",
+      "regime": "familiar",
+      "true_yaw_deg": 0.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-7/support/00-fam_nom-passive.npz",
+      "sha256": "8de68e66fd4f251152db6010a8448d6a5b7fc98490933fe60de289328faaa2ea"
+    },
+    {
+      "index": 85,
+      "id": "libero_spatial/8/fam_yaw90",
+      "task_id": 8,
+      "suite": "libero_spatial",
+      "embodiment": "fam_yaw90",
+      "regime": "familiar",
+      "true_yaw_deg": 90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-7/support/01-fam_yaw90-passive.npz",
+      "sha256": "4e8fdc315d300bbd6c6671a29faff90078c631a2c12d6e049c33bbf4d37bad12"
+    },
+    {
+      "index": 86,
+      "id": "libero_spatial/8/fam_yaw180",
+      "task_id": 8,
+      "suite": "libero_spatial",
+      "embodiment": "fam_yaw180",
+      "regime": "familiar",
+      "true_yaw_deg": 180.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-7/support/02-fam_yaw180-passive.npz",
+      "sha256": "0378b74e09b9210fafc378f7d1dd16d2d9367dcfb31a0a22aa9fc1f3b2f52bde"
+    },
+    {
+      "index": 87,
+      "id": "libero_spatial/8/fam_grip_inv",
+      "task_id": 8,
+      "suite": "libero_spatial",
+      "embodiment": "fam_grip_inv",
+      "regime": "familiar",
+      "true_yaw_deg": 0.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-7/support/03-fam_grip_inv-passive.npz",
+      "sha256": "91dfca205cf79687f9a34738e826617dbf326f73a896b24d8a18ef9eb4f4d486"
+    },
+    {
+      "index": 88,
+      "id": "libero_spatial/8/comp_180_lo_inv",
+      "task_id": 8,
+      "suite": "libero_spatial",
+      "embodiment": "comp_180_lo_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": 180.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-7/support/04-comp_180_lo_inv-passive.npz",
+      "sha256": "2b0fc85bd3d52dff861475227166db7a7792eefeaa9af25a130c7fb8588e4154"
+    },
+    {
+      "index": 89,
+      "id": "libero_spatial/8/comp_m90_hi_inv",
+      "task_id": 8,
+      "suite": "libero_spatial",
+      "embodiment": "comp_m90_hi_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": -90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-7/support/05-comp_m90_hi_inv-passive.npz",
+      "sha256": "06a0837981ff8909d392a72ede552ecfac2c9d98fb1407d750795935929f7eb2"
+    },
+    {
+      "index": 90,
+      "id": "libero_spatial/8/comp_90_hi_inv",
+      "task_id": 8,
+      "suite": "libero_spatial",
+      "embodiment": "comp_90_hi_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": 90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-7/support/06-comp_90_hi_inv-passive.npz",
+      "sha256": "fab8a40309b37ce5fa9d14fb3b5821ee41095e3f2716a45621f5a185272b5e0a"
+    },
+    {
+      "index": 91,
+      "id": "libero_spatial/8/comp_m90_lo_inv",
+      "task_id": 8,
+      "suite": "libero_spatial",
+      "embodiment": "comp_m90_lo_inv",
+      "regime": "compositional_ood",
+      "true_yaw_deg": -90.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-7/support/07-comp_m90_lo_inv-passive.npz",
+      "sha256": "2b10ef2587b5e8fcfd5d0abe604db202c6095e13c3082da0d3d81e96da66448d"
+    },
+    {
+      "index": 92,
+      "id": "libero_spatial/8/cont_45_nom",
+      "task_id": 8,
+      "suite": "libero_spatial",
+      "embodiment": "cont_45_nom",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": 45.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-7/support/08-cont_45_nom-passive.npz",
+      "sha256": "6a675d265a89eeda0bf722f9c0a100cf82235d791c90406c398c121898f66554"
+    },
+    {
+      "index": 93,
+      "id": "libero_spatial/8/cont_135_075_inv",
+      "task_id": 8,
+      "suite": "libero_spatial",
+      "embodiment": "cont_135_075_inv",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": 135.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-7/support/09-cont_135_075_inv-passive.npz",
+      "sha256": "6c114390faa421f0854e04ba4a97554165bdb9338d515ffbe0bd946e0fac1dec"
+    },
+    {
+      "index": 94,
+      "id": "libero_spatial/8/cont_m135_135_inv",
+      "task_id": 8,
+      "suite": "libero_spatial",
+      "embodiment": "cont_m135_135_inv",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": -135.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-7/support/10-cont_m135_135_inv-passive.npz",
+      "sha256": "eb3fed1bbcaeb55a983a1a460af624a1e5906e9b34976f536cf1393c6819d5db"
+    },
+    {
+      "index": 95,
+      "id": "libero_spatial/8/cont_m45_075",
+      "task_id": 8,
+      "suite": "libero_spatial",
+      "embodiment": "cont_m45_075",
+      "regime": "continuous_angle_ood",
+      "true_yaw_deg": -45.0,
+      "selected_chunks": [
+        0,
+        1,
+        2
+      ],
+      "valid": [
+        true,
+        true,
+        true
+      ],
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-ur5e-scale-20261120-r1/gpu09test/test_live/shard-7/support/11-cont_m45_075-passive.npz",
+      "sha256": "9e5d755acd5694c77ea611ead3c75ac11f1ffc2a8eef7fcec839e035f7a8717c"
+    }
+  ],
+  "checks": {
+    "max_world_command_residual": 2.220446049250313e-16,
+    "support_set_sha256": "8729fa68343e2a7a0cc6471ab25e7c707555a866e682a3dc999079a7b9dc3554",
+    "counts_by_regime": {
+      "familiar": 32,
+      "compositional_ood": 32,
+      "continuous_angle_ood": 32
+    },
+    "original_seed_trace_pairs": 288,
+    "all_inverse_inputs_dis_nine_channels_outputs_exact": true,
+    "max_archived_yaw_diff_deg": 0.11739730834960938,
+    "max_archived_gain_diff": 0.002124786376953125,
+    "archived_gripper_mismatches": 0
+  },
+  "runtime": {
+    "backend": "cpu",
+    "jax": "0.5.3",
+    "flax": "0.10.2",
+    "numpy": "1.26.4",
+    "opencv": "5.1.0",
+    "python": "3.11.17",
+    "host": "aibox-r855e239307b-6bfb688cdd-lz2dx",
+    "cores": [
+      38,
+      39
+    ],
+    "wall_s": 19.55457211693283,
+    "system_cpu_s": 0.844003,
+    "user_cpu_s": 29.660698,
+    "peak_rss_kib": 584048,
+    "batch_traces": 12,
+    "gpu_hours": 0
+  }
+}
