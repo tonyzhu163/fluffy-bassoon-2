@@ -1,6 +1,5 @@
 """Run the complete locked native panel or its cue-free CPU interface fixture."""
 import argparse
-import hashlib
 import json
 import os
 from pathlib import Path
@@ -8,14 +7,11 @@ import socket
 import subprocess
 from unittest.mock import patch
 
+from check_fit import inspect, sha
 from panel import MODES, cases, key, require, save
 from rollout import episode
 from ur5e_sim_worker import UR5eSimulator
 from verify import validate, summarize
-
-
-def sha(path):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
 def main(args):
@@ -35,6 +31,7 @@ def main(args):
         import jax
         require(len(jax.devices()) == 1 and jax.devices()[0].platform == "gpu", "allocated CUDA device")
         require(args.fit and args.fit_sha and sha(args.fit/"fit.json") == args.fit_sha, "source checkpoint lock")
+        metadata["offline_fit"] = inspect(args.fit, args.fit_sha, args.data_manifest)
         motor = LockedPolicy.load(args.fit)
         metadata.update(fit=str(args.fit.resolve()), fit_sha256=args.fit_sha)
     save(args.out/"run.json", metadata)
@@ -75,4 +72,5 @@ if __name__ == "__main__":
     parser.add_argument("--fixture", action="store_true")
     parser.add_argument("--fit", type=Path)
     parser.add_argument("--fit-sha")
+    parser.add_argument("--data-manifest", type=Path)
     main(parser.parse_args())

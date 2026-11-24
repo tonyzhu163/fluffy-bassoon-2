@@ -71,6 +71,25 @@ def validate(row, fixture):
                 opening_proposal=r["opening_proposal_sha256"])
 
 
+def first_change(calls, reference):
+    """Compare acquired trajectories only up to the first observed difference in a given quantity."""
+    proposal_at = None
+    issued_at = None
+    for a, b in zip(calls, reference):
+        require(a["t"] == b["t"] and a["noise"] == b["noise"], "action comparisons require paired noise")
+        if proposal_at is None and a["proposal"] != b["proposal"]:
+            proposal_at = a["t"]
+        aa, bb = f32(a["issued"]), f32(b["issued"])
+        count = min(len(aa), len(bb))
+        differed = np.flatnonzero(np.any(aa[:count] != bb[:count], axis=1))
+        if issued_at is None and len(differed):
+            issued_at = a["t"] + int(differed[0])
+        if proposal_at is not None and issued_at is not None:
+            break
+    return dict(first_different_proposal_replan=proposal_at, first_different_issued_control=issued_at,
+                index_base=0)
+
+
 def summarize(out, fixture):
     before = json.loads((out/"frozen-before.json").read_text())
     after = json.loads((out/"frozen-after.json").read_text())
@@ -80,6 +99,7 @@ def summarize(out, fixture):
         casekey = key(c)
         modes = {}
         opening = {}
+        tapes = {}
         for mode in MODES:
             v = json.loads((out/"episodes"/f"{casekey}-{mode}.json").read_text())
             require(v["case"] == c and v["mode"] == mode, "incorrect join key")
@@ -90,12 +110,15 @@ def summarize(out, fixture):
                 require(v["native"]["reset"] == reference and v["environment"] == env and v["body"] == body,
                         "mismatched within-arm reset/observation/noise")
             opening[mode] = modes[mode]["opening_proposal"]
+            tapes[mode] = v["calls"]
             if mode == "joint":
                 mechanism = v["mechanism"]
             if mode == "original":
                 parity = v["parity"]
         require(len({opening[m] for m in ("joint", "joint_zero", "joint_lagged")}) == 1,
                 "joint checkpoints diverged at empty history")
+        require(opening["adapter_only"] == opening["original"], "bias-free adapter changed empty-history opening")
+        first_changes = {m: first_change(tapes["joint"], tapes[m]) for m in MODES if m != "joint"}
         common = [env[k] for k in ("scene_fingerprint", "released_row_fingerprint", "bddl_sha256",
                                    "perturbation_plan_fingerprint")] + [
             reference[k] for k in ("horizon", "prompt", "noise_sha256", "action_schema")]
@@ -104,7 +127,7 @@ def summarize(out, fixture):
             require(common == kinova[scene], "unmatched Panda subset")
         else:
             kinova[scene] = common
-        rows.append(dict(case=c, modes=modes, mechanism=mechanism, parity=parity,
+        rows.append(dict(case=c, modes=modes, mechanism=mechanism, parity=parity, first_changes=first_changes,
                          released_row=env["released_row_fingerprint"], physics=reference["physics"],
                          noise=reference["noise_sha256"]))
     require(len(rows) == 18 and len(list((out/"episodes").glob("*.json"))) == 108, "panel completeness")
@@ -113,14 +136,21 @@ def summarize(out, fixture):
     if not fixture:
         result["arms"] = {arm: statistics([r for r in rows if r["case"]["arm"] == arm])
                           for arm in ("Kinova3", "Panda")}
+        shared_arms = [r for r in rows if r["case"]["init_state_id"] >= 48]
+        result["matched_arms"] = {
+            m: [dict(task=[k["case"]["suite"], k["case"]["task_id"]], layout=k["case"]["init_state_id"],
+                     kinova_effect=int(k["modes"]["joint"]["success"])-int(k["modes"][m]["success"]),
+                     panda_effect=int(p["modes"]["joint"]["success"])-int(p["modes"][m]["success"]))
+                for k, p in zip(shared_arms[::2], shared_arms[1::2], strict=True)]
+            for m in MODES if m != "joint"}
     return result
 
 
 def statistics(rows):
     # The selected tasks are fixed. Resample paired rows within each task, keeping all six treatments together.
-    tasks = np.array([[int(r["modes"][m]["success"]) for r in rows
-                       if (r["case"]["suite"], r["case"]["task_id"]) == task for m in MODES]
-                      for task in TASKS]).reshape(len(TASKS), -1, len(MODES))
+    tasks = np.array([[[int(r["modes"][m]["success"]) for m in MODES]
+                       for r in rows if (r["case"]["suite"], r["case"]["task_id"]) == task]
+                      for task in TASKS])
     t, l, _ = tasks.shape
     rng = np.random.default_rng(20261124)
     indices = rng.integers(l, size=(20000, t, l))

@@ -18,7 +18,7 @@ attempt=${3:?fresh attempt name}
 if [[ $mode == cpu ]]; then
     [[ $# == 3 && $attempt == cpu* ]]
 elif [[ $mode == timed-gpu ]]; then
-    [[ $# == 5 && $attempt == gpu* && $(hostname) == job-*-master-0 && $5 =~ ^[0-9a-f]{64}$ ]]
+    [[ $# == 6 && -r $6 && $attempt == gpu* && $(hostname) == job-*-master-0 && $5 =~ ^[0-9a-f]{64}$ ]]
     [[ -f $4/fit.json && -f $4/heads.npz && $(sha256sum "$4/fit.json" | cut -d' ' -f1) == "$5" ]]
 else
     exit 2
@@ -63,5 +63,5 @@ PY
 )
     [[ $MUJOCO_EGL_DEVICE_ID =~ ^[0-9]+$ ]]
     export MUJOCO_EGL_DEVICE_ID
-    "$python" -Bu "$here/run.py" "$out" "$pin" --fit "$4" --fit-sha "$5"
+    "$python" -Bu "$here/run.py" "$out" "$pin" --fit "$4" --fit-sha "$5" --data-manifest "$6"
 fi
