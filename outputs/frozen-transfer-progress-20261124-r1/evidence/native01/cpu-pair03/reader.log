@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/setups/symmeta-perceiver-followups-20261123-r1/src-d70e206a00c6/outputs/frozen-transfer-progress-20261124-r1/readback.py", line 227, in <module>
+    group, details = analyze(folder, arm)
+                     ^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/setups/symmeta-perceiver-followups-20261123-r1/src-d70e206a00c6/outputs/frozen-transfer-progress-20261124-r1/readback.py", line 205, in analyze
+    diagnostics[mode] = verify(obj, row, mode, cpu=cpu)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/setups/symmeta-perceiver-followups-20261123-r1/src-d70e206a00c6/outputs/frozen-transfer-progress-20261124-r1/readback.py", line 134, in verify
+    require(np.array_equal(sent, native_commands(expected[:count], c)), "issued command mismatch")
+  File "/mowenjie/fluffy-bassoon-2/setups/symmeta-perceiver-followups-20261123-r1/src-d70e206a00c6/outputs/frozen-transfer-progress-20261124-r1/contract.py", line 27, in require
+    raise ValueError(str(message))
+ValueError: issued command mismatch

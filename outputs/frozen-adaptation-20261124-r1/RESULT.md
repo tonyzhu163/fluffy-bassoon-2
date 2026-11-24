@@ -25,3 +25,15 @@ With two equally weighted yaw estimates, the geometry–Perceiver ensemble reach
 ## Wrist feasibility and actual failure
 
 Static kinematics admitted all 600 goals that Kinova3 itself requested on the two failed drawer runs. By contrast, 110 goals were provably infeasible at their requested orientations on the two moka-pot runs that originally succeeded. Allowing wrist tilt can reduce instantaneous position error under a joint-speed envelope. Acting on that calculation rescued neither drawer. On fixed-command replays the wrist intervention reduced Kinova3 successes from 3/6 to 1/6 and Panda successes from 6/6 to 0/6. One Kinova3 moka-pot replay also missed the historical native success under raw commands. The physical geometry is real; choosing a wrist change by positional feasibility alone damaged task execution. [Kinematic certificates, native replays and intervention controls](../frozen-transfer-pose-20261124-r1/RESULT.md)
+
+## Reusing the previous action plan on new arms
+
+The frozen π₀.₅ policy made a fresh prediction every five controls. Two variants averaged its current translations with the previous prediction. One advanced five positions by the clock. The other chose the position whose predicted displacement best matched how far the robot had moved. The initial support, task policy, random noise and control budgets matched across modes. Sixteen paired starts covered the eight official task identities on one new closed-loop layout of each arm. The simulated command interface was nominal.
+
+| Native successes | Raw π₀.₅ | Tuned Perceiver | Tuned + fixed averaging | Tuned + measured progress |
+| --- | ---: | ---: | ---: | ---: |
+| IIWA | 8/8 | 7/8 | 6/8 | 6/8 |
+| Kinova3 | 8/8 | 7/8 | 4/8 | 6/8 |
+| Both | 16/16 | 14/16 | 10/16 | 12/16 |
+
+Against tuned, progress alignment lost the drawer task on both arms and rescued zero starts. Against fixed, it gained three starts and lost one. The paired difference was −12.5 percentage points against tuned (95% task-bootstrap interval −37.5 to 0) and +12.5 against fixed (−12.5 to +37.5). The adaptive index differed from the clock on 371 of 711 replan boundaries. The raw policy solved every start on this panel. These comparisons establish that the intervention changed actual execution and that it fell short of the tuned baseline despite outperforming fixed averaging on this sample. More diverse starts would be needed to measure rescue of raw failures. [Paired native evidence](../frozen-transfer-progress-20261124-r1/NATIVE.md)
