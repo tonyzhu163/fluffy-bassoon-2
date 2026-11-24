@@ -51,5 +51,18 @@ for (tag, task, arm, layout), e in rows.items():
         if tag == "libero-prompt" and r is not None:
             summary["repeats"][f"{other}/goal{task}/{arm}/{layout}"] = dict(
                 first=e["success"], repeat=r["success"], identical_commands=e["command_digest"] == r["command_digest"])
+# Pooled over the two noise draws with the LIBERO-release wording; Fisher exact, two-sided, episodes as units.
+pool = {arm: [e["success"] for k, e in rows.items()
+              if k[0] in ("libero-prompt", "libero-prompt-noise2") and k[1] == 3 and k[2] == arm] for arm in arms}
+summary["pooled"] = {}
+for arm in arms[1:]:
+    a, b, c, d = sum(pool["Panda"]), len(pool["Panda"]) - sum(pool["Panda"]), sum(pool[arm]), len(pool[arm]) - sum(pool[arm])
+    if not a + b or not c + d:
+        continue
+    def prob(x):
+        return comb(a + b, x) * comb(c + d, a + c - x) / comb(a + b + c + d, a + c)
+    p = sum(prob(x) for x in range(max(0, a - d), min(a + b, a + c) + 1) if prob(x) <= prob(a) * (1 + 1e-9))
+    summary["pooled"][f"goal3/Panda-vs-{arm}"] = dict(panda=[a, a + b], arm=[c, c + d], fisher_two_sided_p=round(p, 4))
+    print(f"pooled Panda {a}/{a + b} vs {arm} {c}/{c + d}, Fisher exact two-sided p {p:.3f}")
 (here / "summary.json").write_text(json.dumps(summary, indent=1) + "\n")
 print("\nrepeats", json.dumps(summary["repeats"]))
