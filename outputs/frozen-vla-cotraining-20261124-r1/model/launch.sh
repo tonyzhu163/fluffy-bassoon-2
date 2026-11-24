@@ -2,7 +2,7 @@
 # Run inside the exclusive single-GPU Baige Distributed Training job step.
 set -euo pipefail
 if [[ ${1:-} != --timed ]]; then
-    exec timeout --kill-after=10s 21500s bash "$0" --timed "$@"
+    exec timeout --kill-after=10s 5340s bash "$0" --timed "$@"
 fi
 shift
 [[ $# == 4 || $# == 5 ]]

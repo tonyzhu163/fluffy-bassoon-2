@@ -14,8 +14,14 @@ manifest=$run/data/dataset-v1/manifest.json
 [[ $(git -C "$repo" rev-parse HEAD) == "$pin" && -z $(git -C "$repo" status --porcelain) ]]
 case "$mode" in
 cpu) [[ $# == 3 && $attempt == cpu* ]] ;;
-gpu) [[ $# == 5 && $attempt == gpu* && $(hostname) == job-*-master-0 && $5 =~ ^[0-9a-f]{64}$ ]]
-     [[ $(sha256sum "$4/fit.json" | cut -d' ' -f1) == "$5" ]] ;;
+gpu) [[ $# == 4 && $attempt == gpu* && $(hostname) == job-*-master-0 && $4 =~ ^gpu[A-Za-z0-9_-]+$ ]]
+     fit="$run/model/$4"
+     read -r rc _ < "$fit/exit.txt"
+     [[ $rc == 0 ]]
+     mapfile -t receipts < <(awk -v path="$fit/fit.json" '$1 == "Ready" && $2 == path && NF == 3 {print $3}' "$fit/console.log")
+     [[ ${#receipts[@]} == 1 && ${receipts[0]} =~ ^[0-9a-f]{64}$ ]]
+     fit_sha=${receipts[0]}
+     [[ $(sha256sum "$fit/fit.json" | cut -d' ' -f1) == "$fit_sha" ]] ;;
 *) exit 2 ;;
 esac
 native=a8a997e7d06bb131d3f9710204c58e106f0f0904
@@ -39,6 +45,12 @@ if [[ $mode == cpu ]]; then
     export __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json
     taskset -c 42,43 "$python" -Bu "$here/matched.py" "$out" "$pin" "$manifest" --fixture
 else
+    training_pin=$("$python" -B -c 'import json,sys; print(json.load(open(sys.argv[1]))["code_revision"])' "$fit/fit.json")
+    [[ $training_pin =~ ^[0-9a-f]{40}$ ]]
+    tree="$run/model/code-$training_pin"
+    [[ $(git -C "$tree" rev-parse HEAD) == "$training_pin" && -z $(git -C "$tree" status --porcelain) ]]
+    training="$tree/outputs/frozen-vla-cotraining-20261124-r1"
+    export PYTHONPATH="$training/model:$training/data:$PYTHONPATH"
     export FLUFFY_GPU_EXECUTION=baige JAX_PLATFORMS=cuda NCCL_P2P_DISABLE=1
     export __EGL_VENDOR_LIBRARY_FILENAMES="$libs/nvidia-vendor.json" CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES-0}
     unset LIBGL_ALWAYS_SOFTWARE GALLIUM_DRIVER EGL_PLATFORM
@@ -57,5 +69,5 @@ PY
 )
     [[ $MUJOCO_EGL_DEVICE_ID =~ ^[0-9]+$ ]]
     export MUJOCO_EGL_DEVICE_ID
-    "$python" -Bu "$here/matched.py" "$out" "$pin" "$manifest" --fit "$4" --fit-sha "$5"
+    "$python" -Bu "$here/matched.py" "$out" "$pin" "$manifest" --fit "$fit" --fit-sha "$fit_sha"
 fi

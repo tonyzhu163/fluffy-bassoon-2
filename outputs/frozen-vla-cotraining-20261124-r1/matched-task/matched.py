@@ -1,5 +1,6 @@
 """Use the parent evaluator's native episode, parity checks and replay validator on the crossed panel."""
 import argparse
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -11,7 +12,9 @@ import numpy as np
 import rollout
 import verify
 from check_fit import inspect, sha
-from panel import key, require, save
+from fluffy_bassoon.xemb.embodiment import get_embodiment_spec
+from ur5e_motor import run_episode
+from panel import MANIFEST, RELEASE, key, require, save
 from ur5e_sim_worker import UR5eSimulator
 
 HERE = Path(__file__).resolve().parent
@@ -33,6 +36,46 @@ def contract():
                                   arm=arm, seed=task["seed_base"]+row))
     require(len(tasks) == 2 and len({key(c) for c in cases}) == len(cases) == 8, "eight crossed cases")
     return data, cases, tasks
+
+
+def episode(sim, motor, case, mode, reference, fixture, task):
+    # The held-out parent's episode admits only tabletop-mounted arms. Object uses the
+    # released floor-placement factory. Keep its public Wire and native motor unchanged.
+    mount = "OnTheGround" if case["suite"] == "libero_object" else "Mounted"
+    for attempt in range(1, 4):
+        wire = rollout.Wire(sim, motor, mode)
+
+        def check(reset):
+            env = wire.first["environment_reproducibility"]
+            body = wire.first["model_identity"]
+            require(all(env[k] == case[k] for k in ("suite", "task_id", "init_state_id", "seed"))
+                    and env["source_pin"] == RELEASE and env["manifest_sha256"] == MANIFEST
+                    and env["bddl_sha256"] == task["bddl"]["bddl_sha256"]
+                    and env["released_row_fingerprint"] == task["layouts"][str(case["init_state_id"])]
+                    and env["perturbation_plan"]["case_id"] == "BASE", "registered BASE row")
+            require(reset["worker_step_index"] == 0 and reset["prompt"] == task["native_prompt"]
+                    and reset["horizon"] == task["bddl"]["max_steps"] and body["arm"] == case["arm"]
+                    and body["model_class"] == mount+case["arm"] and body["joint_count"] == 7
+                    and body["control_freq"] == 20 and body["controller"] == "OSC_POSE"
+                    and body["gripper"] == "PandaGripper", "registered native interface")
+            require("llvmpipe" in reset["renderer"].lower() if fixture else reset["renderer_vendor"] == "NVIDIA Corporation",
+                    "wrong renderer")
+            if reference and (reset != reference["native"]["reset"] or env != reference["environment"]):
+                raise rollout.UnmatchedReset("opening differs before first action")
+
+        try:
+            native = run_episode(wire, wire, case, get_embodiment_spec("nom"), check_reset=check,
+                                 max_controls=15 if fixture else None, canonicalize_quat=False)
+        except rollout.UnmatchedReset:
+            if attempt == 3:
+                raise
+            continue
+        first = wire.first
+        raw = first["observation"]
+        return dict(case=case, mode=mode, fixture=fixture, accepted_reset_attempt=attempt, native=native,
+                    initial_xyz=raw["robot0_eef_pos"].tolist(), initial_fingers=raw["robot0_gripper_qpos"].tolist(),
+                    environment=first["environment_reproducibility"], body=first["model_identity"],
+                    parity=wire.parity_result, mechanism=wire.mechanism, calls=wire.calls)
 
 
 def estimate(values):
@@ -105,11 +148,22 @@ def run(args):
         require(len(jax.devices()) == 1 and jax.devices()[0].platform == "gpu", "one CUDA device")
         # Keep the shared fit-admission checker bound to the parent's held-out test-suite definitions.
         metadata["offline_fit"] = inspect(args.fit, args.fit_sha, args.data_manifest)
-        receipt = json.loads((args.fit/"train-cache.json").read_text())
-        expected = json.loads(args.data_manifest.read_text())["splits"]["train"]["examples"]
-        require(receipt["examples_before_draws"] == receipt["source_dataset_rows"] == expected,
-                "fit did not cover the complete registered train split")
-        metadata["all_source_examples_fitted"] = expected
+        receipt = json.loads((args.fit/"train-inputs.json").read_text())
+        part = json.loads(args.data_manifest.read_text())["splits"]["train"]
+        expected = [[r["id"], t] for r in part["trajectories"] for t in r["t"]]
+        require(receipt["native_train"] and receipt["identities"] == expected and
+                {i for i, _, _ in receipt["draws"]} == set(range(len(expected))), "fit input coverage")
+        fit_report = json.loads((args.fit/"fit.json").read_text())
+        config = json.loads((args.fit/"config.json").read_text())
+        n = len(receipt["draws"])
+        require(n == receipt["rows"] and len(fit_report["epochs"]) == config["epochs"] > 0, "fit completion")
+        for epoch, r in enumerate(fit_report["epochs"]):
+            rng = np.random.default_rng(np.random.SeedSequence([config["seed"], epoch, 193]))
+            order = rng.permutation(n).astype("<i8")
+            require(r["epoch"] == epoch+1 and r["order_sha256"] == hashlib.sha256(order.tobytes()).hexdigest()
+                    and r["batches"] == (n+config["batch"]-1)//config["batch"], "fitted epoch coverage")
+        metadata["all_source_examples_fitted"] = len(expected)
+        metadata["train_inputs_sha256"] = sha(args.fit/"train-inputs.json")
         motor = LockedPolicy.load(args.fit)
     save(args.out/"run.json", metadata)
     before = motor.digests()
@@ -120,12 +174,12 @@ def run(args):
     (args.out/"episodes").mkdir()
     with patch.dict(os.environ, {"CUDA_VISIBLE_DEVICES": ""}):
         sim = UR5eSimulator(allow_mesa=args.fixture)
-    with sim, patch.object(rollout, "TASKS", tasks), patch.object(verify, "TASKS", tasks):
+    with sim, patch.object(verify, "TASKS", tasks):
         for c in cases:
             ref = None
             sim.call("create", dict(c, embodiment="nom"))
             for mode in MODES:
-                v = rollout.episode(sim, motor, c, mode, ref, args.fixture)
+                v = episode(sim, motor, c, mode, ref, args.fixture, registered["tasks"][c["suite"]])
                 verify.validate(v, args.fixture)
                 save(args.out/"episodes"/f"{key(c)}-{mode}.json", v)
                 if mode == "original":

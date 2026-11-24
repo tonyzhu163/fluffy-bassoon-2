@@ -46,6 +46,13 @@ if [[ $mode == cpu ]]; then
     export __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json
     taskset -c 40,41 "$python" -Bu "$here/run.py" "$out" "$pin" --fixture
 else
+    # Use the publishing trainer's detached code even if a recovery changed the training implementation.
+    fit_pin=$("$python" -B -c 'import json,sys; print(json.load(open(sys.argv[1]))["code_revision"])' "$4/fit.json")
+    [[ $fit_pin =~ ^[0-9a-f]{40}$ ]]
+    fit_tree="$root/outputs/frozen-vla-cotraining-20261124-r1/model/code-$fit_pin"
+    [[ $(git -C "$fit_tree" rev-parse HEAD) == "$fit_pin" && -z $(git -C "$fit_tree" status --porcelain --untracked-files=no) ]]
+    training="$fit_tree/outputs/frozen-vla-cotraining-20261124-r1"
+    export PYTHONPATH="$training/model:$training/data:$PYTHONPATH"
     export FLUFFY_GPU_EXECUTION=baige JAX_PLATFORMS=cuda NCCL_P2P_DISABLE=1
     export __EGL_VENDOR_LIBRARY_FILENAMES="$libs/nvidia-vendor.json" CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES-0}
     unset LIBGL_ALWAYS_SOFTWARE GALLIUM_DRIVER EGL_PLATFORM
