@@ -23,7 +23,7 @@ def stats(row,key,v):
     row.update({key+"_"+k:float(x) for k,x in (("mean",np.mean(v)),("median",np.median(v)),("max",np.max(v)))})
 
 
-def main(root):
+def main(root,out):
     rows=[]
     files=sorted(root.glob("*-adaptive.json"))
     assert len(files)==12
@@ -58,20 +58,20 @@ def main(root):
                 hits=np.flatnonzero(d[k]) if k in d else []
                 row["first_"+k]=int(hits[0]+1) if len(hits) else ""
                 row["n_"+k]=len(hits) if k in d else ""
-            row["max_drawer_travel_mm"]=max(d["drawer_travel_m"])*1000 if "drawer_travel_m" in d else ""
+            row["max_drawer_travel_mm"]=np.max(np.abs(d["drawer_travel_m"]))*1000 if "drawer_travel_m" in d else ""
             row["max_bowl_lift_mm"]=max(d["bowl_lift_m"])*1000 if "bowl_lift_m" in d else ""
             rows.append(row)
         assert len({r["reset_hash"] for r in rows[-3:]})==1
-    with (root/"treatment.csv").open("w") as f:
+    with (out/"treatment.csv").open("w") as f:
         writer=csv.DictWriter(f,fieldnames=list(rows[0]))
         writer.writeheader()
         writer.writerows(rows)
     revision=subprocess.check_output(["git","-C",Path(__file__).parent,"rev-parse","HEAD"],text=True).strip()
-    (root/"score-receipt.json").write_text(json.dumps(dict(revision=revision,
+    (out/"score-receipt.json").write_text(json.dumps(dict(revision=revision,
         script_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),affinity=sorted(os.sched_getaffinity(0)),
         cuda_visible=os.environ["CUDA_VISIBLE_DEVICES"],num_triplets=len(files)),indent=2)+"\n")
 
 
 if __name__=="__main__":
     assert not os.environ["CUDA_VISIBLE_DEVICES"] and set(os.sched_getaffinity(0))<={46,47}
-    main(Path(sys.argv[1]))
+    main(Path(sys.argv[1]),Path(sys.argv[2]) if len(sys.argv)>2 else Path(sys.argv[1]))
