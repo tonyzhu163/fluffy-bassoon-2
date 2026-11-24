@@ -1,0 +1,30 @@
+{
+  "schema": "pi05-libero-native-flow-v1",
+  "engine": "direct-differentiable-Pi0.compute_loss",
+  "data_manifest_sha256": "05209732b5e3f04308c8acbef2f6c8c8a2f173673840fdb055e1b094ff7d6f40",
+  "source_code": "ceedfb073ee2e83713163882e3c7db5c36ca966d849ddd571ca0454eafda39aa",
+  "model_code": {
+    "qualify.py": "cf22e5263dff93f5a8f38f36299b3bbbf26c2e907fe76f5004e3bd2932fcd63e",
+    "flow_head.py": "a99421f06b980bfa030ce9cd594e6ea198827756305f75b7f80d32a82513152b",
+    "native_check.py": "bb3f492d4acd0a637fa89c53f01808e25ac4617da51d22df8ed4fd4c56c83cb4",
+    "preflight.py": "a81607483f6fa0f6b14c73beef936613723b3ce3a316f114a10de15bc2f2e3c4",
+    "direct_fit.py": "618092f470561243c7773ed8e3264583c134bcebad859cef7149b922f1c94d14",
+    "train.py": "12f45decbae6d8fcdc0e3a953a7094192f59b282c129bfcac73c2bad3a8ed4cd",
+    "cotrain_policy.py": "4a6f544010d8920ca8f2cc63e370bc6789db3f72d2d2880acc8d79881b925f17"
+  },
+  "conversion_code": "d59c82f37cb3996eb0d8eac688955b16dca50f63bdd21b4b21d4ffe224a01e2b",
+  "base": {
+    "openpi_revision": "215abfb217dbac7d5f1273282331b9b1866c0479",
+    "checkpoint_manifest": "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170",
+    "normalization": "b3a44bb2810436fb62917decaea58bd4d9110255df527dea21e8fd40c960bd84"
+  },
+  "seed": 20261124,
+  "draws": {
+    "train": 2,
+    "heldout": 2
+  },
+  "batch": 32,
+  "epochs": 8,
+  "optimizer": "Adam",
+  "lr": 0.001
+}
