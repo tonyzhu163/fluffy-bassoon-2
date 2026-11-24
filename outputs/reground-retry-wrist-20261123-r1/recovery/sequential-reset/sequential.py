@@ -23,7 +23,8 @@ RECOVERY_SHA = "c46a5996c99f28b93c965873ed1fd7e40f58e782a972f9afaea1127bfaeb4041
 DRAIN_SHA = "7638ca269111d3bf505038dc7dbb1bba87c6585c68ba0666a2f68262351a8d53"
 ORIGINS = {"retry02": ("job-7nq10tvhsewa", 20550, RECOVERY_SHA),
            "retry04": ("job-0ttm7yo8nha0", 5250, RECOVERY_SHA),
-           "retry05": ("job-c2yodm5r90kh", 5250, DRAIN_SHA)}
+           "retry05": ("job-c2yodm5r90kh", 5250, DRAIN_SHA),
+           "retry06": ("job-q90tsmxqn5z6", 5250, DRAIN_SHA)}
 LEFT = "retry02"
 BATCH = "batch054"
 KEYS = [("spatial_0", i, 0) for i in range(21, 25)]
@@ -158,7 +159,7 @@ def validate_previous(store, retry, grid, units, drain):
         number = int(group.name[5:])
         producer = ref.read(group / "producer.json")
         name = producer["attempt"]
-        ref.require(name in ("retry02", "retry05") and number in units and number != 54,
+        ref.require(name in ("retry02", "retry05", "retry06") and number in units and number != 54,
                     "Prior producer or enrollment is unregistered")
         scheduled = units if name == "retry02" else list(range(55, 70))
         if name not in admitted:
@@ -167,7 +168,7 @@ def validate_previous(store, retry, grid, units, drain):
         ref.require(number in scheduled and producer["host"] == host and producer["egl"] == egl and
                     producer["rank"] == 0 and producer["code"] == SCIENCE, "Prior producer admission differs")
         sidecar = group / "dispatch.json"
-        if name == "retry05":
+        if name in ("retry05", "retry06"):
             receipt = ref.read(sidecar)
             ref.require(receipt["dispatch_pin"] == DRAIN and receipt["scheduler_id"] == ORIGINS[name][0],
                         "Drain dispatch receipt differs")
