@@ -59,17 +59,39 @@ def prior():
     return denied, sources
 
 
-def prepare(out, count):
+def prepare(out, count, prefix=None):
     import generated_layouts as g
     require(os.uname().sysname == "Linux" and len(os.sched_getaffinity(0)) <= 2 and
             os.environ.get("CUDA_VISIBLE_DEVICES") == "", "use bounded Linux CPU")
     out.mkdir()
-    denied, provenance = prior()
-    bind(out / "prior.json", dict(files=provenance, fingerprints={k: sorted(v) for k, v in denied.items()}))
     attempts, cases = [], []
+    parent_sha = None
+    if prefix is None:
+        denied, provenance = prior()
+        inventory = dict(files=provenance, fingerprints={k: sorted(v) for k, v in denied.items()})
+    else:
+        previous = read(prefix)
+        parent_sha = sha(prefix)
+        inventory = read(prefix.with_name("prior.json"))
+        require(sha(prefix.with_name("prior.json")) == previous["prior_sha256"] and previous["domain"] == DOMAIN,
+                "invalid prior panel")
+        denied = {k: set(v) for k,v in inventory["fingerprints"].items()}
+        cases = list(previous["cases"])
+        attempts = list(previous["rejected"])
+        require(len(cases) >= 256 and count == 2*len(cases), "extension must double the frozen prefix")
+        for r in attempts:
+            require(r["seed"] not in denied["layout_seed"], "previous candidate repeated")
+            denied["layout_seed"].add(r["seed"])
+        for i, row in enumerate(cases):
+            require(row["index"] == i and row["layout_seed"] == seed("layout", i, row["draw"]) and
+                    row["noise_seed"] == seed("noise", i), "original enrollment changed")
+            for k in (*GEOMETRY_FIELDS, "layout_seed"):
+                require(row[k] not in denied[k], "previous physical placement repeated")
+                denied[k].add(row[k])
+    bind(out / "prior.json", inventory)
     with closing(g.make_sampler()) as sampler:
         public = g.released_fingerprints()
-        for index in range(count):
+        for index in range(len(cases), count):
             noise = seed("noise", index)
             draw = 0
             while True:
@@ -97,7 +119,8 @@ def prepare(out, count):
                 print("physical placements", len(cases), flush=True)
     require(len({r["noise_seed"] for r in cases}) == count, "noise seed collision")
     bind(out / "manifest.json", dict(domain=DOMAIN, prior_sha256=sha(out / "prior.json"),
-                                     prepare_pin=os.environ["EVAL_PIN"], rejected=attempts, cases=cases))
+                                     prepare_pin=os.environ["EVAL_PIN"], rejected=attempts, cases=cases,
+                                     **({"prefix_sha256": parent_sha} if parent_sha else {})))
     print("manifest", sha(out / "manifest.json"), flush=True)
 
 
@@ -105,5 +128,6 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("out", type=Path)
     p.add_argument("--count", type=int, default=256)
+    p.add_argument("--prefix", type=Path, help="immutable parent manifest for a registered doubling look")
     args = p.parse_args()
-    prepare(args.out, args.count)
+    prepare(args.out, args.count, args.prefix)
