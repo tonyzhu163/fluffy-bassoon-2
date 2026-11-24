@@ -1,5 +1,7 @@
 """Check all original demonstration resets underlying every source task against the four locked scene rows."""
 import argparse
+import gzip
+import json
 import math
 from pathlib import Path
 
@@ -9,26 +11,40 @@ from register import dump, original_xy, read, sha
 HERE = Path(__file__).resolve().parent
 
 
-def audit(inputs, manifest_path, output):
+def audit(inputs, manifest_path, output, geometry=None):
     index = read(HERE / "original-files.json")
     registered = read(HERE / "contract.json")
     manifest = read(manifest_path)
-    bank = read(inputs / "release.json")
     if sha(manifest_path) != registered["data_manifest"]:
         raise ValueError("Staged manifest changed")
     staged = [r for s in manifest["splits"].values() for r in s["trajectories"]]
     if {r["prompt"] for r in staged} != set(index):
         raise ValueError("Original archives do not cover the staged split")
+    coordinates = None
+    if geometry:
+        with gzip.open(geometry, "rt") as f:
+            extract = json.load(f)
+        coordinates, bank = extract["original"], extract["released"]
+        if set(coordinates) != {v["path"] for v in index.values()}:
+            raise ValueError("Original geometry coverage")
+    else:
+        bank = {s: {str(i): row for i, row in enumerate(task["rows"])}
+                for s, task in read(inputs / "release.json").items()}
     comparisons = []
     for task, spec in index.items():
         path = inputs / Path(spec["path"]).name
-        if sha(path) != spec["sha256"]:
-            raise ValueError(f"Original archive bytes differ for {task}")
-        with h5py.File(path) as f:
-            sources = {k:original_xy(v) for k, v in f["data"].items()}
+        if coordinates is None:
+            if sha(path) != spec["sha256"]:
+                raise ValueError(f"Original archive bytes differ for {task}")
+            with h5py.File(path) as f:
+                sources = {k:original_xy(v) for k, v in f["data"].items()}
+        else:
+            sources = coordinates[spec["path"]]
+        if not sources:
+            raise ValueError(f"Missing original resets for {task}")
         for suite, target in registered["tasks"].items():
             for row_nr, fingerprint in target["layouts"].items():
-                released = bank[suite]["rows"][int(row_nr)]
+                released = bank[suite][row_nr]
                 if released["fingerprint"] != fingerprint:
                     raise ValueError("Released states changed since registration")
                 xy = released["xy"]
@@ -58,4 +74,5 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     for name in ("inputs", "manifest_path", "output"):
         p.add_argument(name, type=Path)
+    p.add_argument("--geometry", type=Path, help="Use the archived named-object XY extract")
     audit(**vars(p.parse_args()))
