@@ -1,0 +1,118 @@
+{
+  "native": {
+    "stock_sha256": "efcd2a9d1592e111afbb7c3f550abca9142e58c2ca19f43d551395d722f6e894",
+    "zero_actions_sha256": {
+      "panda": "efcd2a9d1592e111afbb7c3f550abca9142e58c2ca19f43d551395d722f6e894",
+      "mixed": "efcd2a9d1592e111afbb7c3f550abca9142e58c2ca19f43d551395d722f6e894",
+      "stock": "efcd2a9d1592e111afbb7c3f550abca9142e58c2ca19f43d551395d722f6e894"
+    },
+    "zero_offsets_sha256": {
+      "panda": "afe02c1d8134d2c2cb64de1becfda417b76fbcddee576c2f95411be4143bea92",
+      "mixed": "afe02c1d8134d2c2cb64de1becfda417b76fbcddee576c2f95411be4143bea92",
+      "stock": "afe02c1d8134d2c2cb64de1becfda417b76fbcddee576c2f95411be4143bea92"
+    },
+    "zero_max_abs": 0.0,
+    "forced_add_sha256": "efcd2a9d1592e111afbb7c3f550abca9142e58c2ca19f43d551395d722f6e894",
+    "forced_add_max_abs": 0.0,
+    "graph_sha256": {
+      "plain": "26c2391fcddb7233f10a6fb210074c5e2d42e88b2e3ddabf7be3d56aca093fbe",
+      "history": "679dbfedf2a0cd23ee07d5978bb8a5c7b882ae5020d11b1c2caa8aac43181a16"
+    },
+    "trajectory_id": "panda/episode_000808",
+    "t": 19,
+    "nonempty_history": {
+      "stock": {
+        "actions_sha256": "efcd2a9d1592e111afbb7c3f550abca9142e58c2ca19f43d551395d722f6e894",
+        "route": {
+          "graph": "stock_native",
+          "hlo_sha256": null,
+          "offset_sha256": null,
+          "condition": "stock"
+        }
+      },
+      "panda": {
+        "actions_sha256": "95cad974475269dfaecbebbecf6c6cedf4286ce2278e9296e689caa54983d103",
+        "route": {
+          "graph": "history",
+          "hlo_sha256": "679dbfedf2a0cd23ee07d5978bb8a5c7b882ae5020d11b1c2caa8aac43181a16",
+          "offset_sha256": "c77349c8bc6152701ab3b75140ba0d2f24a675546cf4de50a61b1feb31ab73fa",
+          "condition": "panda"
+        }
+      },
+      "mixed": {
+        "actions_sha256": "fcb8e0390fbc2b4542e071fc5f61745732d69ef1c394bf0a72d9a3decc4a889b",
+        "route": {
+          "graph": "history",
+          "hlo_sha256": "679dbfedf2a0cd23ee07d5978bb8a5c7b882ae5020d11b1c2caa8aac43181a16",
+          "offset_sha256": "153fee309d020cc46e2899874f7a9119476551d6e087830b117727ee26f4a639",
+          "condition": "mixed"
+        }
+      }
+    }
+  },
+  "score": {
+    "fixture": {
+      "mixed": {
+        "native_mse_32": 1.3887821435928345,
+        "issued_mse_7": 1.5390252768993378,
+        "per_layout_native_and_issued": {
+          "0": [
+            1.3773791790008545,
+            1.521959364414215
+          ],
+          "1": [
+            1.4001851081848145,
+            1.5560911893844604
+          ]
+        }
+      },
+      "panda": {
+        "native_mse_32": 1.389327198266983,
+        "issued_mse_7": 1.5427214205265045,
+        "per_layout_native_and_issued": {
+          "0": [
+            1.3767020106315613,
+            1.5220677256584167
+          ],
+          "1": [
+            1.4019523859024048,
+            1.5633751153945923
+          ]
+        }
+      },
+      "stock": {
+        "native_mse_32": 1.3913681209087372,
+        "issued_mse_7": 1.5459341704845428,
+        "per_layout_native_and_issued": {
+          "0": [
+            1.3788267374038696,
+            1.5245707035064697
+          ],
+          "1": [
+            1.4039095044136047,
+            1.567297637462616
+          ]
+        }
+      }
+    }
+  },
+  "update": [
+    {
+      "step": 1,
+      "epoch": 1,
+      "batch": 1,
+      "rows": 2,
+      "order_sha256": "9d34149fbd1fe777eb238799054c8cbfbce372255f219f8740838def9bfd02db",
+      "seconds": 1.1741281700087711,
+      "train_mse": {
+        "panda": 1.3931934833526611,
+        "mixed": 1.4243979454040527
+      }
+    }
+  ],
+  "cpu_affinity": [
+    32,
+    33
+  ],
+  "model": "pilot lightweight tower plus restored stock projection"
+}
