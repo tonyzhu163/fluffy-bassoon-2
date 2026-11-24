@@ -7,7 +7,7 @@ test "$revision" = "${1:?expected deployed commit}"
 source "$code/outputs/frozen-vla-native-transfer-20261123-r1/env.sh"
 out="$root/outputs/$(basename "$here")/${2:-cpu01}"
 mkdir "$out"
-exec >"$out/run.log" 2>&1
+exec >>"$out/run.log" 2>&1
 trap 'echo $? > "$out/exit.txt"' EXIT
 export PYTHONPATH="$PYTHONPATH:$code/outputs/frozen-vla-native-controller-20261123-r1"
 export CUDA_VISIBLE_DEVICES='' NUMEXPR_NUM_THREADS=1 JAX_PLATFORMS=cpu

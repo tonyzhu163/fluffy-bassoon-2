@@ -1,0 +1,57 @@
+{
+  "source": "/mowenjie/fluffy-bassoon-2/outputs/symmeta-perceiver-retry-20261123-r1/native02g4090",
+  "source_job": "job-2s6q9a9xe96e-master-0",
+  "device": "NVIDIA GeForce RTX 4090",
+  "probe_sha256": "ed7d81e75e3e37c06f5c0babb0fd34d39ab9a6d526ae50e2340ad681849dee91",
+  "execution_sha256": "63a192bc34217a41c78047786477db90a81d03b179a6b38132335b80203a2cd6",
+  "panel": "gpu09test",
+  "source_layout": 13,
+  "source_support_layout": 11,
+  "ood_episodes": 384,
+  "controls": 82777,
+  "by_task": {
+    "libero_10/5": {
+      "episodes": 48,
+      "mean_seconds": 10.90275,
+      "sum_seconds": 523.332
+    },
+    "libero_10/8": {
+      "episodes": 48,
+      "mean_seconds": 16.1616875,
+      "sum_seconds": 775.761
+    },
+    "libero_goal/3": {
+      "episodes": 48,
+      "mean_seconds": 7.531270833333333,
+      "sum_seconds": 361.501
+    },
+    "libero_goal/6": {
+      "episodes": 48,
+      "mean_seconds": 3.5698958333333333,
+      "sum_seconds": 171.355
+    },
+    "libero_object/1": {
+      "episodes": 48,
+      "mean_seconds": 4.452333333333334,
+      "sum_seconds": 213.712
+    },
+    "libero_object/8": {
+      "episodes": 48,
+      "mean_seconds": 5.400666666666667,
+      "sum_seconds": 259.23199999999997
+    },
+    "libero_spatial/0": {
+      "episodes": 48,
+      "mean_seconds": 4.6133125,
+      "sum_seconds": 221.439
+    },
+    "libero_spatial/8": {
+      "episodes": 48,
+      "mean_seconds": 4.345104166666666,
+      "sum_seconds": 208.565
+    }
+  },
+  "native_motor_loop_seconds_per_episode": 7.122127604166667,
+  "four_panel_launcher_seconds_per_episode": 14.831597222222221,
+  "notes": "Motor loop excludes pre-action reset and setup. Launcher includes those costs across all four panels."
+}

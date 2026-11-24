@@ -14,7 +14,7 @@ from scipy.spatial.transform import Rotation
 from arm_env import ARM_XML_SHA, CAMERAS, GRIPPER_XML_SHA, _register_arm, _reset_wrapper
 from libero.libero.envs.env_wrapper import ControlEnv
 from libero_remote.reproducibility import canonical_fingerprint, numerical_state_fingerprint
-from native import Chain, Decoder, JOINT, Pair
+from native import Chain, Decoder, JOINT, Pair, digest
 from sim_reset import pose_errors, scene_body_poses, scene_state, tool_state, transfer_scene
 
 HERE = Path(__file__).resolve().parent
@@ -94,18 +94,18 @@ def rollout(out, arm, env, chain, obs, tape, base):
     schema = identity(env, arm)
     scratch = mujoco.MjData(env.sim.model._model)
     kin = boundary(env, scratch, obs)
-    decoder = Decoder(chain, obs["robot0_joint_pos"], "ik", {})
+    decoder = Decoder(chain, obs["robot0_joint_pos"].astype(np.float32), "ik", {})
     robot = env.robots[0]
     names = set(robot.robot_model.contact_geoms) | set(robot.gripper.contact_geoms)
     robot_geoms = {env.sim.model.geom_name2id(n) for n in names}
     assert robot_geoms and not env.check_success()
     rows = {k: [v] for k, v in kin.items()}
     J, actions, rewards, contacts, clipped_torque, decoded_difference = [], [], [], [], [], []
-    cmds = np.array(tape["canonical"])
+    cmds = np.array(tape["canonical"], dtype=np.float32)
     archived = np.array(tape["native"])
     for t, proposal in enumerate(cmds):
         jac = chain.jac(kin["q"])
-        pred_action = decoder.action(obs["robot0_joint_pos"], proposal)
+        pred_action = decoder.action(obs["robot0_joint_pos"].astype(np.float32), proposal)
         action = archived[t].copy() if arm == "Panda" else pred_action
         assert action.shape == (8,) and np.all(np.isfinite(action)) and np.all(abs(action) <= 1)
         assert action[-1] == proposal[-1]
@@ -128,8 +128,8 @@ def rollout(out, arm, env, chain, obs, tape, base):
         if done:
             break
     n = len(actions)
-    if arm == "Panda":
-        assert len(rewards) == tape["controls"] and rewards == tape["rewards"]
+    # The archived source proposal stays fixed even if later CPU contacts diverge.
+    archive_reward_match = rewards == tape["rewards"] if arm == "Panda" else None
     initial_q = np.array(rows["q"][0])
     J0 = J[0]
     h = 1e-6
@@ -146,6 +146,7 @@ def rollout(out, arm, env, chain, obs, tape, base):
     np.savez_compressed(out/f"{base}-{arm}.npz", **arrays)
     return dict(identity=schema, controls=n, success=bool(rewards[-1]), jacobian_fd_max=fd,
                 archive_action_max_abs=max(decoded_difference) if decoded_difference else None,
+                archive_native_reward_match=archive_reward_match,
                 q_clock_max_rad=np.max(abs(np.subtract(rows["q"], rows["emitted_q"]))),
                 velocity_clock_max_rad_s=np.max(abs(np.subtract(rows["v"], rows["emitted_v"]))),
                 tcp_clock_max_m=np.max(np.linalg.norm(np.subtract(rows["xyz"], rows["emitted_xyz"]),axis=1)),
@@ -156,6 +157,8 @@ def collect(out):
     _register_arm("Kinova3")
     assert version("robosuite") == "1.4.0" and mujoco.__version__ == "3.2.3"
     recorded = json.loads((PRIOR/"evidence/gpu01/readback.json").read_text())
+    cpu_panel = json.loads((PRIOR/"evidence/panel/panel.json").read_text())["cases"]
+    cpu_states = {(r["suite"], r["layout"]): r["state"] for r in cpu_panel}
     for case in recorded["cases"]:
         suite, layout, seed = (case[k] for k in ("suite", "layout", "seed"))
         key = f"{suite}-{layout}"
@@ -167,10 +170,13 @@ def collect(out):
         pair = Pair(suite, layout, seed)
         target = None
         try:
-            assert pair.reset_hash == tape["meta"]["physics"] and pair.row_hash == tape["meta"]["row"]
-            assert pair.full_hash == tape["meta"]["state"] and pair.prompt == tape["meta"]["prompt"]
+            assert pair.row_hash == tape["meta"]["row"] and pair.prompt == tape["meta"]["prompt"]
+            assert pair.full_hash == cpu_states[suite, layout], (key, pair.full_hash, cpu_states[suite, layout])
             source = pair.envs[JOINT]
             src_obs = pair.start(JOINT)
+            proprio = {k: digest(src_obs[k.removesuffix("_xyzw")].astype(np.float32))
+                      for k in tape["public"] if "image" not in k}
+            assert len(proprio) == 5 and all(v == tape["public"][k] for k, v in proprio.items())
             np.random.seed(seed)
             target = ControlEnv(bddl_file_name=str(pair.bddl), robots=["Kinova3"], controller=JOINT,
                                 gripper_types="PandaGripper", control_freq=20, has_offscreen_renderer=False,
@@ -196,8 +202,9 @@ def collect(out):
             assert Rotation.from_matrix(a["rot"] @ b["rot"].T).magnitude() <= .01
             receipt = dict(case=tape["case"], prompt=pair.prompt, archive=str(path), sha256=sha(path),
                            archive_noise=tape["noise_sha256"], archive_opening=tape["opening"],
-                           scene_sha=canonical_fingerprint(scene_state(source)), archive_state=pair.full_hash,
-                           archive_row=pair.row_hash, archive_physics=pair.reset_hash,
+                           scene_sha=canonical_fingerprint(scene_state(source)), cpu_state=pair.full_hash,
+                           archive_state=tape["meta"]["state"], cpu_physics=pair.reset_hash, source_proprio=proprio,
+                           archive_row=pair.row_hash, archive_physics=tape["meta"]["physics"],
                            target_physics=numerical_state_fingerprint(target.get_sim_state()),
                            bddl_sha=sha(pair.bddl), scene_error=error, alignment=align, start=start)
             for arm, env, c, obs in [("Panda", source, pair.chain, src_obs),

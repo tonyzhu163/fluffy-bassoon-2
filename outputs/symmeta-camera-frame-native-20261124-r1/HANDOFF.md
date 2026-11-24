@@ -38,3 +38,5 @@ timeout --kill-after=5s "${seconds}s" bash "$study/launch.sh" gpu "$pin" "$gpu_a
 ~~~
 
 Retain the GPU probe, source pin, launch and exit, sealed panel, per-case traces, and `native-results.json`. A first genuine A/B pair qualifies motor inference and the native reward path in that allocation. A partial run gives evidence on pairing and runtime, with no completed-panel claim. The local record distinguishes CPU fixtures, physical-support retries and digital-support retries. Native here means closed-loop simulation with the released success predicate. No physical robot trial is involved.
+
+The published 4090 run's 384 UR5e π₀.₅ OOD episodes averaged 7.12 seconds inside the recorded motor loop. Across the four complete panels the launcher consumed 14.83 GPU-seconds per episode, including setup and resets. The first number excludes reset and compile overhead. Neither number includes the new per-control audit overhead. [4090 runtime readback](evidence/pr7-4090-runtime.json)
