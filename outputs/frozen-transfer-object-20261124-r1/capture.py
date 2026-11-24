@@ -88,12 +88,12 @@ def write(path, data):
     path.write_text(json.dumps(data, allow_nan=False, separators=(",", ":"))+"\n")
 
 
-def record(out, path, spec, layout, split):
+def record(out, path, spec, layout, split, *, actuated_arm=None):
     blob = path.read_bytes()
     tape = json.loads(blob)
     donor = spec["init_state_id"]
     seed = spec["seed"] + layout - donor
-    arm_name, suite, task = spec["arm"], spec["suite"], spec["task_id"]
+    arm_name, suite, task = actuated_arm or spec["arm"], spec["suite"], spec["task_id"]
     case = f"{arm_name}-{suite}-{task}-tape{donor}-layout{layout}"
     out.mkdir(exist_ok=True, parents=True)
     if (out/f"{case}.lineage.json").exists():
@@ -143,7 +143,7 @@ def record(out, path, spec, layout, split):
                     break
     source_reward = tape["record"]["native_rewards"]
     lineage = dict(split=split,case=case,spec=spec,layout=layout,seed=seed,original=layout==donor,
-                   input_path=str(path),input_sha256=hashlib.sha256(blob).hexdigest(),reset=reset,
+                   actuated_arm=arm_name,donor_arm=spec["arm"],input_path=str(path),input_sha256=hashlib.sha256(blob).hexdigest(),reset=reset,
                    model=init["model_identity"], source_controls=len(commands),cpu_controls=t,
                    cpu_rewards=rewards,original_rewards=source_reward,cpu_success=bool(step["success"]),
                    original_success=tape["record"]["success"],cpu_terminated=bool(step["terminated"]),
