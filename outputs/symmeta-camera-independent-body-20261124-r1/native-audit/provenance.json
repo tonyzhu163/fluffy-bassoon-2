@@ -1,0 +1,130 @@
+{
+  "checked_at": "2026-11-24T14:00:25.516625+08:00",
+  "cpu": [
+    37
+  ],
+  "trees": {
+    "/mowenjie/fluffy-bassoon-2/setups/symmeta-perceiver-followups-20261123-r1/src-d2b307bc4ca8": {
+      "commit": "d2b307bc4ca8c0cf723b3aaba31755d14a2f8303",
+      "sha256": {
+        "outputs/symmeta-camera-independent-body-20261124-r1/cases.csv": "7a7f704bab9cc9d33ce6c1fbeb7e9722f22ed72553c67cac8303582a22769795",
+        "outputs/symmeta-camera-independent-body-20261124-r1/native_panel.py": "5cd4603e0601bd7702626adfd55fa8b742a874d3ee6c4f5d1c5b0f07362176f7",
+        "outputs/symmeta-camera-independent-body-20261124-r1/native.sh": "3727d6c1d048df82150b8cc964acc665876dfe725ee810c3fe840d7444c1ed74",
+        "outputs/symmeta-camera-independent-body-20261124-r1/score_frozen.py": "c21ca0fa516d6e8f07945e48fe5d2bc935ac9eb480f428005f8167f6160ae392",
+        "outputs/symmeta-camera-frame-native-20261124-r1/native.py": "07dbd46cbbae902ab78117ff83d140527de739753d5ed65c4f6505e33d572de7",
+        "outputs/symmeta-camera-frame-native-20261124-r1/audited_worker.py": "ff9448163db63c1760a89be7b5f7a68e3bef68ff32098f09afc7ca38af259e68",
+        "outputs/symmeta-perceiver-retry-20261123-r1/paired_inputs.py": "5251f3ea2c85b93305d4cc33c20c95261469e45a339e2e6edfefc686be47b902"
+      }
+    },
+    "/mowenjie/fluffy-bassoon-2/setups/xemb-icml-campaign-20261121-r1/source-wave2b": {
+      "commit": "465f33dc657ceab341dbceaf6b98355b94810059",
+      "sha256": {
+        "src/fluffy_bassoon/xemb/embodiment.py": "e0ed86b5fc85bbde7b4dd95b0ec2b520b792325d0e6f135465132cc2dc99c41c",
+        "outputs/libero-crossarm-20261120-r1/arm_env.py": "e43381f6d91de1113e67df9f7d472e65c4b30bd2227f2751fae0d707ae313e18",
+        "outputs/libero-xemb-ur5e-sysid-20261120-r1/ur5e_motor.py": "d59c82f37cb3996eb0d8eac688955b16dca50f63bdd21b4b21d4ffe224a01e2b",
+        "outputs/libero-xemb-ur5e-sysid-20261120-r1/ur5e_sim_worker.py": "a11e4624bce8abc6036c5aa852622030d8568a62e90f6cbf12004321ce3f02f2",
+        "outputs/xemb-icml-campaign-20261121-r1/eval_stage2a_live_ur5e.py": "51840051d2960dc56dcd5c7321769a33bb3293bc0e6b192de61dc5d88ebc8cb9"
+      }
+    }
+  },
+  "native01": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/symmeta-camera-independent-body-20261124-r1/native01",
+    "launch": "3a6f90a25fbb6b2de0b06b02a9c11aff1f34b3f3 job-70ie4pfjdgat-master-0 3a6f90a25fbb6b2de0b06b02a9c11aff1f34b3f3 native01 /mowenjie/fluffy-bassoon-2/outputs/symmeta-camera-independent-body-20261124-r1/score01/full-head-release.json 50e320040e06c70d2b0924f14afc24f0608e5951bfc7bcec37f5781384c7820f /mowenjie/fluffy-bassoon-2/outputs/symmeta-camera-independent-body-20261124-r1/cpu01/query-resets.json cb4309ddea85347bf06798cfd8156222a827f94bc8a0d06153ed157f2fa69ec4 7800 1795498979",
+    "gpu": {
+      "status": "failed",
+      "error_type": "ValueError",
+      "error": "CUDA_VISIBLE_DEVICES must list distinct allocated GPU indices/UUIDs",
+      "hostname": "job-70ie4pfjdgat-master-0",
+      "probe_pid": 2303,
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": null,
+        "SLURM_JOB_ID": null,
+        "SLURM_STEP_ID": null,
+        "SLURM_JOB_GPUS": null,
+        "SLURM_STEP_GPUS": null,
+        "SLURM_GPUS_ON_NODE": null
+      },
+      "nvml_inventory": [
+        {
+          "index": 0,
+          "uuid": "GPU-4d2ed0ec-ac54-b832-501f-8e0570c28387",
+          "name": "NVIDIA GeForce RTX 4090",
+          "memory_total_mib": 24564.0,
+          "memory_used_mib": 1.0,
+          "utilization_percent": 0.0,
+          "pci_bus_id": "00000000:63:00.0"
+        }
+      ]
+    },
+    "exit": "1 1795498979 1795499046",
+    "pairs": 0,
+    "last_log_line": "ValueError: CUDA_VISIBLE_DEVICES must list distinct allocated GPU indices/UUIDs"
+  },
+  "native02": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/symmeta-camera-independent-body-20261124-r1/native02",
+    "launch": "d2b307bc4ca8c0cf723b3aaba31755d14a2f8303 job-nn97ohkc3wf8-master-0 d2b307bc4ca8c0cf723b3aaba31755d14a2f8303 native02 /mowenjie/fluffy-bassoon-2/outputs/symmeta-camera-independent-body-20261124-r1/score01/full-head-release.json 50e320040e06c70d2b0924f14afc24f0608e5951bfc7bcec37f5781384c7820f /mowenjie/fluffy-bassoon-2/outputs/symmeta-camera-independent-body-20261124-r1/cpu01/query-resets.json cb4309ddea85347bf06798cfd8156222a827f94bc8a0d06153ed157f2fa69ec4 7800 1795499188",
+    "gpu": {
+      "status": "passed",
+      "purpose": "evaluation",
+      "timing_comparison_eligible": false,
+      "allocation_type": "baige_container",
+      "hostname": "job-nn97ohkc3wf8-master-0",
+      "probe_pid": 1658,
+      "created_at_utc": "2026-11-24T05:47:46.503502+00:00",
+      "devices": [
+        {
+          "allocation_ordinal": 0,
+          "visibility_token": "0",
+          "cuda_uuid": "aabfb4a6-278d-7631-bb09-3f1d9cf1a34e",
+          "cuda_name": "NVIDIA GeForce RTX 4090",
+          "cuda_total_bytes": 25250627584,
+          "pci_bus_id": "0000:a4:00.0",
+          "uuid": "GPU-aabfb4a6-278d-7631-bb09-3f1d9cf1a34e",
+          "inventory": {
+            "index": 0,
+            "uuid": "GPU-aabfb4a6-278d-7631-bb09-3f1d9cf1a34e",
+            "name": "NVIDIA GeForce RTX 4090",
+            "memory_total_mib": 24564.0,
+            "memory_used_mib": 1.0,
+            "utilization_percent": 0.0,
+            "pci_bus_id": "00000000:A4:00.0"
+          },
+          "allocation_check": {
+            "elements": 1048576,
+            "result": 2097152.0,
+            "touched_gpu_uuids": [
+              "GPU-aabfb4a6-278d-7631-bb09-3f1d9cf1a34e"
+            ],
+            "own_pid_gpu_uuids": [
+              "GPU-aabfb4a6-278d-7631-bb09-3f1d9cf1a34e"
+            ]
+          }
+        }
+      ],
+      "idle_utilization_required": false,
+      "exclusive_training_admission": false,
+      "admission_policy": "exclusive_scheduler_evaluation",
+      "utilization_role": "telemetry_only",
+      "utilization_telemetry": {
+        "GPU-aabfb4a6-278d-7631-bb09-3f1d9cf1a34e": 0.0
+      },
+      "maximum_initial_memory_mib": 256,
+      "gpu_identity_mapping": {
+        "method": "scheduler NVIDIA UUID set + CUDA/NVML PCI bijection + own-PID allocation",
+        "assigned_nvml_uuids": [
+          "GPU-aabfb4a6-278d-7631-bb09-3f1d9cf1a34e"
+        ]
+      },
+      "compute_processes_before": [],
+      "compute_processes_after": [
+        {
+          "gpu_uuid": "GPU-aabfb4a6-278d-7631-bb09-3f1d9cf1a34e",
+          "pid": 1658,
+          "process_name": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python",
+          "memory_used_mib": "448"
+        }
+      ],
+      "topology": "\t\u001b[4mGPU0\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \t56-111\t1\t\tN/A\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks"
+    }
+  }
+}
