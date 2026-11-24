@@ -1,0 +1,144 @@
+{
+  "environment": {
+    "source_pin": "e5500c690c1498eca1b7050350654964190cdf70",
+    "manifest_sha256": "71a6e4e25a2a4a162844d77136e7bff8e6f69c839d2d8194620c4afeabde2bba",
+    "bddl_sha256": "695545a33399e12e978b1b5682b6ea2181f3289608cad3f063f5bf90f0b87e67",
+    "suite": "libero_goal",
+    "task_id": 3,
+    "init_state_id": 31,
+    "seed": 41810331,
+    "released_row_fingerprint": "e6f56bcce86687f8d6b032930a15c596d61cbb2158ed81653ba78d6d48d55304",
+    "scene_fingerprint": "3befdc2c52b1203b28bc53a7e0460cd00d1523e1712d1ce23eb58ba5b919f9e0",
+    "post_settle_scene_fingerprint": "3af8d7009e078f0a969959d62ceb29b32c1d7c2aca7e84a3807ca19edfd237cb",
+    "post_settle_scene_errors": {
+      "max_position_m": 0.0,
+      "position_body": "akita_black_bowl_1_main",
+      "max_rotation_rad": 2.2970995828348826e-17,
+      "rotation_body": "plate_1_main"
+    },
+    "initial_state_fingerprint": "3130a90e199fb8932d1a57dcdc000fe63c50dd10b55b41cc4f2b581aaeffee26",
+    "alignment": {
+      "method": "joint_limited_grip_site_ik",
+      "seed_qpos": [
+        0.0,
+        0.65,
+        0.0,
+        1.89,
+        0.0,
+        0.6,
+        -1.5707963267948966
+      ],
+      "qpos": [
+        -0.6539445533455789,
+        0.6229860365435369,
+        0.9903756462131904,
+        1.5574710615827136,
+        -0.5260097006186721,
+        1.2972470187729408,
+        -1.1415130155398645
+      ],
+      "position_error_m": 4.918644807829412e-10,
+      "rotation_error_rad": 1.2521273898900512e-09,
+      "settled_tcp_error_m": 0.004561792593449354,
+      "settled_rotation_error_rad": 0.01810729317367077,
+      "settled_jaw_difference_m": 2.1152370521804187e-08
+    },
+    "perturbation_plan": {
+      "version": "libero_nonphysical_plan_v2",
+      "case_id": "BASE",
+      "schedule": "base",
+      "operator": "none",
+      "variant": "identity",
+      "trigger": "none",
+      "targets": [],
+      "disturbance_targets": [],
+      "references": [],
+      "mechanisms": [
+        "base"
+      ],
+      "assets": [],
+      "params": {},
+      "constraints": [],
+      "seed": 41810331,
+      "event_duration_steps": 24
+    },
+    "perturbation_plan_fingerprint": "dc019771e48dac4b178791b56247a8b7cd47ab9979ffec8a0c3f1c216fae394d"
+  },
+  "public": {
+    "agentview_image": "fdce15cbb92d98fa84894c8d261dc8e1d6c60859908a6ac46abf057bc5ccd871",
+    "robot0_eye_in_hand_image": "5fed896579ed4d999868ea4d4abe1d67c5c42fe5d365d66149e07a8cae432a15",
+    "robot0_joint_pos": "25a2530350ceebac9c0f3cf0ed37329f4a60e27758da2d991942ffc4899309a4",
+    "robot0_joint_vel": "29481b00487c8714765e04565a02d78630992c1dd7feab79179f5e7fa788e6eb",
+    "robot0_eef_pos": "943da1afb03c69e38aed6c8b0a1df5b6d5a9a718d763915855868385989ea48f",
+    "robot0_eef_quat_xyzw": "1563c76d92e98e4cf45aeb569aa00dbc60d05f065bd5908695ebfc0593d4b6d6",
+    "robot0_gripper_qpos": "1651d2c1e18a76c9b24ceca00e49cd8a4a11a5e8357e2568a16123d276fbbf81"
+  },
+  "body": {
+    "arm": "Kinova3",
+    "model_class": "MountedKinova3",
+    "joint_count": 7,
+    "joint_names": [
+      "robot0_Actuator1",
+      "robot0_Actuator2",
+      "robot0_Actuator3",
+      "robot0_Actuator4",
+      "robot0_Actuator5",
+      "robot0_Actuator6",
+      "robot0_Actuator7"
+    ],
+    "joint_links": [
+      "robot0_shoulder_link",
+      "robot0_HalfArm1_Link",
+      "robot0_HalfArm2_Link",
+      "robot0_forearm_link",
+      "robot0_SphericalWrist1_Link",
+      "robot0_SphericalWrist2_Link",
+      "robot0_Bracelet_Link"
+    ],
+    "model_nq": 41,
+    "model_nv": 37,
+    "xml_sha256": "2884d72a0427223d333dc00fa2c199c3f86406184c234f436436c7d149002cd7",
+    "arm_meshes": [
+      "robot0_base_link",
+      "robot0_bracelet_with_vision_link",
+      "robot0_forearm_link",
+      "robot0_half_arm_1_link",
+      "robot0_half_arm_2_link",
+      "robot0_shoulder_link",
+      "robot0_spherical_wrist_1_link",
+      "robot0_spherical_wrist_2_link"
+    ],
+    "mount": "RethinkMount",
+    "base_xyz": [
+      -0.66,
+      0.0,
+      0.912
+    ],
+    "gripper": "PandaGripper",
+    "gripper_xml_sha256": "d9d68123909d6910488310d0fae4e358ed4ac831c6d0957f3e30893a5412baac",
+    "gripper_joints": [
+      "gripper0_finger_joint1",
+      "gripper0_finger_joint2"
+    ],
+    "tcp_site": "gripper0_grip_site",
+    "hand_link": "robot0_right_hand",
+    "cameras": [
+      "agentview",
+      "robot0_eye_in_hand"
+    ],
+    "wrist_parent": "robot0_right_hand",
+    "wrist_fovy_deg": 75.0,
+    "controller": "OSC_POSE",
+    "control_freq": 20,
+    "osc_output_max": [
+      0.05,
+      0.05,
+      0.05,
+      0.5,
+      0.5,
+      0.5
+    ],
+    "robosuite": "1.4.0",
+    "mujoco": "3.2.3"
+  }
+}
