@@ -108,7 +108,7 @@ class LockedPolicy:
         """Reread deployed arrays, on-disk fit and normalization. Streams one stock leaf at a time."""
         state = nnx.state(self.stock._model, nnx.Param).flat_state()
         resident = hashlib.sha256()
-        for path, variable in sorted(state):
+        for path, variable in sorted(state.items()):
             resident.update(json.dumps([path, array_sha(variable.value)]).encode())
         return {**base_identity(verify_files=False), "resident_stock": resident.hexdigest(),
                 "resident_heads": {c: {k: array_sha(v) for k, v in p.items()} for c, p in self._heads.items()},
