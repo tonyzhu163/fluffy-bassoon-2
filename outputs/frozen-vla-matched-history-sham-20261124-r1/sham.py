@@ -17,6 +17,7 @@ import rollout
 import verify
 from check_fit import inspect, sha
 from cotrain_policy import LockedPolicy, NativeSampler, array_sha, transformed
+from openpi.shared.array_typing import disable_typechecking
 from panel import key, require, save
 from ur5e_motor import array_digest
 from ur5e_sim_worker import UR5eSimulator
@@ -46,8 +47,11 @@ class Sampler:
         require(actual.shape == (1, 10, 32) and actual.dtype == np.float32 and np.isfinite(actual).all(),
                 "computed offset")
         if not self.graphs:
-            self.graphs["plain"] = self.native.plain.lower(*args, noise=noise).compile()
-            self.graphs["history"] = self.native.with_history.lower(*args, noise=noise, offset=offset).compile()
+            # AOT lowering unflattens Observation with JAX ArgInfo placeholders.
+            # OpenPI's type annotations describe concrete arrays on normal calls.
+            with disable_typechecking():
+                self.graphs["plain"] = self.native.plain.lower(*args, noise=noise).compile()
+                self.graphs["history"] = self.native.with_history.lower(*args, noise=noise, offset=offset).compile()
             for name, exe in self.graphs.items():
                 self.graph_ids[name] = dict(hlo_sha256=hashlib.sha256(exe.as_text().encode()).hexdigest(),
                                             process_object=id(exe))
