@@ -1,0 +1,142 @@
+{
+  "reference": "original",
+  "method": "Exact paired layout bootstrap within the three fixed tasks and robot. One fixed noise bank per case. Adapter-only and policy-only vs stock are exploratory.",
+  "results": {
+    "Kinova3": {
+      "joint": {
+        "pairs": 12,
+        "rescued": 0,
+        "lost": 1,
+        "difference": -0.08333333333333333,
+        "interval95": [
+          -0.25,
+          0.0
+        ],
+        "discordant": [
+          [
+            "libero_goal",
+            3,
+            46,
+            -1
+          ]
+        ]
+      },
+      "adapter_only": {
+        "pairs": 12,
+        "rescued": 1,
+        "lost": 0,
+        "difference": 0.08333333333333333,
+        "interval95": [
+          0.0,
+          0.25
+        ],
+        "discordant": [
+          [
+            "libero_10",
+            8,
+            49,
+            1
+          ]
+        ]
+      },
+      "policy_only": {
+        "pairs": 12,
+        "rescued": 2,
+        "lost": 2,
+        "difference": 0.0,
+        "interval95": [
+          -0.3333333333333333,
+          0.25
+        ],
+        "discordant": [
+          [
+            "libero_goal",
+            3,
+            46,
+            -1
+          ],
+          [
+            "libero_10",
+            8,
+            47,
+            -1
+          ],
+          [
+            "libero_10",
+            8,
+            48,
+            1
+          ],
+          [
+            "libero_10",
+            8,
+            49,
+            1
+          ]
+        ]
+      }
+    },
+    "Panda": {
+      "joint": {
+        "pairs": 6,
+        "rescued": 1,
+        "lost": 0,
+        "difference": 0.16666666666666666,
+        "interval95": [
+          0.0,
+          0.3333333333333333
+        ],
+        "discordant": [
+          [
+            "libero_goal",
+            6,
+            49,
+            1
+          ]
+        ]
+      },
+      "adapter_only": {
+        "pairs": 6,
+        "rescued": 0,
+        "lost": 1,
+        "difference": -0.16666666666666666,
+        "interval95": [
+          -0.3333333333333333,
+          0.0
+        ],
+        "discordant": [
+          [
+            "libero_10",
+            8,
+            49,
+            -1
+          ]
+        ]
+      },
+      "policy_only": {
+        "pairs": 6,
+        "rescued": 1,
+        "lost": 1,
+        "difference": 0.0,
+        "interval95": [
+          -0.3333333333333333,
+          0.3333333333333333
+        ],
+        "discordant": [
+          [
+            "libero_goal",
+            6,
+            49,
+            1
+          ],
+          [
+            "libero_10",
+            8,
+            49,
+            -1
+          ]
+        ]
+      }
+    }
+  }
+}
