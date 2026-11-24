@@ -101,8 +101,11 @@ def load_case(arm, suite, task, idx, panel, refs, matrices):
     require(all(x.shape == (5, 7) for x in chunks[:-1]) and chunks[-1].shape[1] == 7
             and 0 < len(chunks[-1]) <= 5, "chunk length")
     query = np.concatenate(chunks)
+    prefix = np.ascontiguousarray(query[:5])
+    prefix_digest = sha256(repr((prefix.shape, prefix.dtype.str)).encode() + prefix.tobytes()).hexdigest()
+    require(prefix_digest == ref["methods"]["raw"]["issued_first_five_sha256"], (key, "opening controls"))
     require(len(query) == rec["controls"] == ref["methods"]["raw"]["controls"] and len(query) > 25
-            and len(query) <= rec["reset"]["horizon"] and np.array_equal(query[:5], ref["methods"]["raw"]["issued_first_five"])
+            and len(query) <= rec["reset"]["horizon"]
             and np.isfinite(query).all() and np.isfinite(support).all()
             and np.abs(query).max() <= 1 and np.abs(support).max() <= 1, key)
     info = dict(arm=arm, task=key, query_path=str(path), query_sha256=digest, case=case, support=sup,
