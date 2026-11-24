@@ -18,7 +18,7 @@ from ur5e_motor import array_digest, public_digest
 
 MODEL_SHA = "ca8906c86514d8917c1743726929c1e70aaf1f45e07de8892574c58a9ddf7008"
 BANK_SHA = "1cd5354ade9ab9f323a518515f961df96123b7daeca017df1f62d3e9ff18794f"
-TASK = "open the top drawer and put the bowl inside"
+TASK = "open the top layer of the drawer and put the bowl inside"
 CUE = "put the bowl in the top drawer"
 ARMS = ("Kinova3", "IIWA")
 MODES = ("raw", "tuned", "clock", "visual")
