@@ -12,7 +12,7 @@ If the sign branch is what stops Kinova3, giving the policy the same rotation on
 
 ## Arms
 
-LIBERO-Pro2.0 BASE `libero_goal/3`, layouts 14, 15, 17, 36, 37, 38, LIBERO-release wording, reset seed 42710300 + layout, noise offsets 0 and 1000. All arms rerun on this VM so comparisons are within one machine.
+LIBERO-Pro2.0 BASE `libero_goal/3`, layouts 14, 15, 17, 36, 37, 38, LIBERO-release wording, reset seed 42710300 + layout, noise offsets 0 and 1000003, the two used in the arm comparison. All arms rerun on this VM so comparisons are within one machine.
 
 | Arm | State given to the policy |
 | --- | --- |
