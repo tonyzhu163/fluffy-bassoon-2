@@ -1,0 +1,132 @@
+{
+  "utc": "2026-11-24T04:34:20.923984+00:00",
+  "tasks": {
+    "drawer": {
+      "suite": "libero_goal",
+      "task_id": 3,
+      "prompt": "open the top layer of the drawer and put the bowl inside",
+      "horizon": 300,
+      "seed_base": 42710300,
+      "goal": "(And (In akita_black_bowl_1 wooden_cabinet_1_top_region))\n  )",
+      "bank_sha256": "1cd5354ade9ab9f323a518515f961df96123b7daeca017df1f62d3e9ff18794f",
+      "bddl_sha256": "695545a33399e12e978b1b5682b6ea2181f3289608cad3f063f5bf90f0b87e67",
+      "release_rows": {
+        "20": "8432134e943e3bec74c276a2e18d79a0b88c8b0017bd6e6143ad41c6989f67f9",
+        "21": "1021a08b9a5effb8be05ac95d604693de708ec8b66c5ef0f88b5171f87604cc8",
+        "22": "d07e3f0f08d8b21f77687cf95c19add8ab4d76cca3150bdbf866237c1dd1a6be",
+        "23": "0d7ad99557a4e8e854a9d3d34d8e0222dfafae10544603271075ab424347cfff",
+        "24": "c506eb7cbbf3573527065c749f4aea866a7cf8d7ecc5f756d4ab53d18314e162",
+        "25": "4d5d820ba79e39a925c09025ccacd58549e9ed11d59de87ea503198e5ffec883"
+      },
+      "support": {
+        "panel": "gpu06kinova3",
+        "index": 24,
+        "reader_seed": 41,
+        "suite": "libero_goal",
+        "task_id": 3,
+        "shift": "fam_nom",
+        "layout": 11,
+        "seed": 31810311,
+        "controls": 15,
+        "tape_sha256": "fce9f2729432a049709fb6b191b345ae38572ee6364000ac383a59b3411522d8",
+        "physics": "7d2ec8b3e64ab88c6a3523750d4606fb40f76ca2f88a461403a418d9220c0d41",
+        "predictions_sha256": "c8420c2cb7d0cb38e6f0d73b3a20ce47997dbef7657b652d45eaaa8988eb6c0b",
+        "tuned": {
+          "yaw_deg": 4.283361434936523,
+          "xy_scale": 0.9206030368804932,
+          "gripper_sign": 1
+        }
+      },
+      "source": {
+        "archive": "frozen-transfer-cue-20261124-r1/evidence/native01/native-tapes.tar.gz",
+        "archive_sha256": "637383c46eabaf3f8aaf776a9534e84aef152a277ab3ca9ac191c5a68c94fd5c",
+        "member": "gpu01/episodes/IIWA-34-raw.json",
+        "member_sha256": "a610024dc57b1f8783d3dfe000454414db48b1915f858f3759abb9d700b754c9",
+        "pin": "e15eefb3f76e475acdf0795e2e17ba0e1ee46fae",
+        "query": {
+          "arm": "IIWA",
+          "suite": "libero_goal",
+          "task_id": 3,
+          "variant": "BASE",
+          "init_state_id": 34,
+          "seed": 42710334
+        },
+        "controls": 171,
+        "native_return": 1.0,
+        "first_positive_index": 106,
+        "cut": 105,
+        "grip_previous": -1.0,
+        "grip_first_positive": 0.992273211479187,
+        "full_commands_sha256": "4325b4027d737cffccfc2a235cec3ba58163e5521e448982d2f553b9c0bcdaea",
+        "prefix_commands_sha256": "a130bd9ed16bf71d01c9f0c0153b2f444a4d2476df4d574585b2df3f58b89242"
+      },
+      "original_successful_iiwa_source_lengths": {
+        "34": 171,
+        "35": 184,
+        "36": 248,
+        "37": 251
+      }
+    },
+    "moka": {
+      "suite": "libero_10",
+      "task_id": 8,
+      "prompt": "put both moka pots on the stove",
+      "horizon": 520,
+      "seed_base": 42700800,
+      "goal": "(And (On moka_pot_1 flat_stove_1_cook_region) (On moka_pot_2 flat_stove_1_cook_region) (Turnon flat_stove_1))\n  )",
+      "bank_sha256": "44f992e911c84a1340589510ecdaf947a4872966f7678c8364d8bb5d13dc4dac",
+      "bddl_sha256": "5663c5a0dfd24e5f934304e97fa422eb5a0b8faa8224938e6c278f914ab9f63e",
+      "release_rows": {
+        "20": "c90a3bd255d93595681db0bb7d8e0fe66ae9ab120892637af758f89f9604b185",
+        "21": "dbfd4880209e8dc2ffa303762d17d0f5ebca05bb38af31ebd87d6fd5a8184485",
+        "22": "9fc5353c95688a0de1bd2cce32179be19258e335fe3ead270f7553527d10a62b",
+        "23": "c7e6c8966fbbff5d86da8b944681f411d5b2286a36b7b4651765b0a3515826fd",
+        "24": "d976392849b75f4742a94163faefd3a679a0cf1d7fd70f783319eb5a63ac2807",
+        "25": "25d87295a8cdf6d504a22666a3b753c17945f13c37d867b846845691172cb7bd"
+      },
+      "support": {
+        "panel": "gpu06kinova3",
+        "index": 12,
+        "reader_seed": 41,
+        "suite": "libero_10",
+        "task_id": 8,
+        "shift": "fam_nom",
+        "layout": 11,
+        "seed": 31800811,
+        "controls": 15,
+        "tape_sha256": "90eacdc92b12b020762a7f789fc1018068ba9aacbe02eb3e6f4598f4408d727e",
+        "physics": "42b9c48f4d3bbf8c80e165ac0c986d95f8658d6b630b0881668fc4ee8601d07b",
+        "predictions_sha256": "c8420c2cb7d0cb38e6f0d73b3a20ce47997dbef7657b652d45eaaa8988eb6c0b",
+        "tuned": {
+          "yaw_deg": 0.9162205457687378,
+          "xy_scale": 0.9555807709693909,
+          "gripper_sign": 1
+        }
+      },
+      "source": {
+        "archive": "frozen-transfer-progress-20261124-r1/evidence/native01/episodes.tar.gz",
+        "archive_sha256": "e8fbb476e911cb965a4d467607b1ef3cadc1466af9558fad7a5c79d94ed5dc6a",
+        "member": "gpu01-IIWA/episodes/libero_10-8-raw.json",
+        "member_sha256": "b164c6b2c64a9f8a2a0c1edcb529f7ea2094ea28fd2a242d0258005e31054ad6",
+        "pin": "d70e206a00c6c5d59f190ec4a9b0bc6df2ec82c4",
+        "query": {
+          "arm": "IIWA",
+          "suite": "libero_10",
+          "task_id": 8,
+          "variant": "BASE",
+          "init_state_id": 31,
+          "seed": 41800831
+        },
+        "controls": 361,
+        "native_return": 1.0,
+        "first_positive_index": 107,
+        "cut": 105,
+        "grip_previous": -1.0,
+        "grip_first_positive": 0.9990161657333374,
+        "full_commands_sha256": "ab2906fb2f05b5af61e7f121d851131fe82f9330387eb8a6543a264863fdccb8",
+        "prefix_commands_sha256": "a0a0d3e3122dc057fdd1f298f4b900114969b109e56d3417d1d9b923ed74576f"
+      }
+    }
+  },
+  "cpu_seconds": 1.1059175669999999
+}
