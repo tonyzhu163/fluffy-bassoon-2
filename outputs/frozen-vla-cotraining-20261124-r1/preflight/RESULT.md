@@ -1,0 +1,5 @@
+# A zero-update sampler can change GPU outputs
+
+On three source demonstration frames, two calls to the stock π₀.₅ policy returned bitwise identical decoded action chunks with identical noise. The original general-purpose projection-injection path, given zero parameters, differed from the stock action by 0.00191, 0.00203 and 0.00174 at the largest differing coordinate of each chunk. The 4090 job `job-fimd24r7bs48` exited zero after 321 seconds. These source frames qualify a numerical comparison. They do not estimate native reward or identify which compiler operation caused the difference. [Per-frame digests and chunk differences](measured.json)
+
+The direct-gradient fitter implements zero history and an unchanged kernel using the ordinary stock sampler and verifies both by independent calls. When testing whether recent observations help, the controller comparison must also retain the same fitted model and the same external sampling noise. [Deployment implementation](../model/cotrain_policy.py)

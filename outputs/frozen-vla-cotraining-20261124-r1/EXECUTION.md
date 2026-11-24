@@ -1,0 +1,9 @@
+# Baige co-training and native evaluation
+
+Baige Distributed Training accepted `job-9v3iytmhh9ig` on November 24 at 11:35:10 Shanghai, on one RTX 4090, 12 CPU cores and 64 GiB, with a 90-minute allocation limit. The job's in-container training probe passed at 11:35:27. The trainer is pinned to `6785abc8323473b81973b9d69c93863bf523e4d0`; its source-only manifest hash is `05209732b5e3f04308c8acbef2f6c8c8a2f173673840fdb055e1b094ff7d6f40`. [Scheduler receipt](training-job.jpg) · [Source data](data/RESULT.md) · [Training and freeze verification](model/README.md)
+
+The parent owns training and evaluation submissions. The native held-out-task and task-matched panels consume the same read-only fit. Each requires a completed export and verifies its identity before scoring.
+
+Attempt 1 stopped before fitting after 94 seconds on one GPU. The on-device comparison found an absolute history-input gradient difference of 0.00000771 against a direct native gradient norm of 0.00010505, despite exact CPU agreement. No fitted bundle or test scores were emitted. The recovery uses this as an execution discrepancy to diagnose and preserves the source split and output contracts. [Attempt 1 evidence](evidence/training-attempt01.json)
+
+The direct-gradient recovery, `job-7hmrgbcahi6l`, was submitted at 11:45 Shanghai on one RTX 4090, with a 150-minute maximum. Revision `29e9e5e5209db26ce0cbf695387c64cdf79b98fa` uses the native π₀.₅ loss for each fitted condition and accumulates microbatches before applying the shared batch-32 optimizer update. The trained output matrices are materialized before inference. An independent 12-minute-capped job, `job-fimd24r7bs48`, compares the previous zero-injection sampler against two same-noise stock calls. [Recovery receipt](training-recovery-job.jpg) · [No-op sampler receipt](preflight/scheduler.jpg)

@@ -1,0 +1,417 @@
+{
+  "data_manifest": "05209732b5e3f04308c8acbef2f6c8c8a2f173673840fdb055e1b094ff7d6f40",
+  "selection_sha256": "2af69153471b8d1631140f343a221c2ac537fa97ed4dc6e15c9521e52c35d71c",
+  "tasks": {
+    "libero_object": {
+      "task_id": 0,
+      "native_prompt": "pick the alphabet soup and place it in the basket",
+      "source_prompt": "pick up the alphabet soup and place it in the basket",
+      "available_train_prompts": [
+        "pick up the alphabet soup and place it in the basket",
+        "pick up the bbq sauce and place it in the basket",
+        "pick up the butter and place it in the basket",
+        "pick up the ketchup and place it in the basket"
+      ],
+      "original_hdf5_sha256": "42189d4415d4c51aaaf0708300653fccc39239cd3f2709079a713cd8d1678a8d",
+      "trajectories": [
+        {
+          "id": "panda/episode_000813",
+          "split": "train",
+          "samples": 12,
+          "times": [
+            1,
+            13,
+            26,
+            39,
+            52,
+            65,
+            79,
+            92,
+            105,
+            118,
+            131,
+            145
+          ],
+          "steps": 155,
+          "staged_windows_sha256": "0f90e818f1af40c445f83dbed192098c331b59d9dc04e4686acb15c5287515c2",
+          "original_matches": [
+            "demo_30"
+          ]
+        },
+        {
+          "id": "panda/episode_000818",
+          "split": "train",
+          "samples": 12,
+          "times": [
+            2,
+            14,
+            28,
+            42,
+            56,
+            70,
+            84,
+            98,
+            112,
+            126,
+            140,
+            154
+          ],
+          "steps": 164,
+          "staged_windows_sha256": "2d0371291809638f24ce2d81dc055534bdf278d4c9a8439b0b8ad4d3c599bc67",
+          "original_matches": [
+            "demo_12"
+          ]
+        },
+        {
+          "id": "panda/episode_000825",
+          "split": "heldout",
+          "samples": 8,
+          "times": [
+            1,
+            20,
+            40,
+            61,
+            81,
+            102,
+            122,
+            143
+          ],
+          "steps": 153,
+          "staged_windows_sha256": "f9f4995989c11518b5f7889a18a78a200be48afe3c4a2e2202577ae4c7d4f94d",
+          "original_matches": [
+            "demo_20"
+          ]
+        }
+      ],
+      "exact_original_demo_join": true,
+      "compared_demo_ids": [
+        "demo_12",
+        "demo_20",
+        "demo_30"
+      ],
+      "layout_disjoint": true,
+      "comparison_tolerance_m": 0.001,
+      "compared_rows": {
+        "49": {
+          "demo_12": {
+            "joint": "basket_1_joint0",
+            "source_xy": [
+              0.010677192627942615,
+              0.263543273107775
+            ],
+            "released_xy": [
+              0.0007147141394045504,
+              0.26026258589987494
+            ],
+            "separation_m": 0.010488750458975684
+          },
+          "demo_20": {
+            "joint": "milk_1_joint0",
+            "source_xy": [
+              0.10260660570299145,
+              -0.20158552801365215
+            ],
+            "released_xy": [
+              0.09519302603637814,
+              -0.19501343511625785
+            ],
+            "separation_m": 0.009907248282202425
+          },
+          "demo_30": {
+            "joint": "milk_1_joint0",
+            "source_xy": [
+              0.09748295399194351,
+              -0.20462362908158868
+            ],
+            "released_xy": [
+              0.09519302603637814,
+              -0.19501343511625785
+            ],
+            "separation_m": 0.009879250887236388
+          }
+        },
+        "48": {
+          "demo_12": {
+            "joint": "basket_1_joint0",
+            "source_xy": [
+              0.010677192627942615,
+              0.263543273107775
+            ],
+            "released_xy": [
+              0.0034049178193764785,
+              0.26382664325645117
+            ],
+            "separation_m": 0.007277793589575511
+          },
+          "demo_20": {
+            "joint": "basket_1_joint0",
+            "source_xy": [
+              -0.002868096516675311,
+              0.26867617694746804
+            ],
+            "released_xy": [
+              0.0034049178193764785,
+              0.26382664325645117
+            ],
+            "separation_m": 0.007928977606262927
+          },
+          "demo_30": {
+            "joint": "milk_1_joint0",
+            "source_xy": [
+              0.09748295399194351,
+              -0.20462362908158868
+            ],
+            "released_xy": [
+              0.10278897134597717,
+              -0.19705342344718987
+            ],
+            "separation_m": 0.009244556966582542
+          }
+        }
+      },
+      "bddl": {
+        "suite": "libero_object",
+        "base_task_id": 0,
+        "case_id": "BASE",
+        "case_kind": "base",
+        "bddl_path": "bddl/libero-pro2.0-1680-v1/libero_object/00_base/BASE__pick_up_the_alphabet_soup_and_place_it_in_the_basket.bddl",
+        "bddl_sha256": "04435a67d866287112f8952460941d2ac26fc96b88df343155dfde32e5a7df7c",
+        "task_version": "libero-pro2.0-1706-v1",
+        "max_steps": 280,
+        "reset_stabilization_steps": 10,
+        "observation_schema_version": "libero_standard_v1",
+        "action_schema_version": "libero_action_v1"
+      },
+      "bank_length": 50,
+      "seed_base": 42820000,
+      "layouts": {
+        "48": "8bcba998d960d9861c2d37cc11dcd0b1e64b0ecea0d6b2f7fe90189b88649987",
+        "49": "49eb2f9fe8da24a17e45c62487f78ee3b7b0fecf9d6fe13c5ccf0159017c3d31"
+      }
+    },
+    "libero_spatial": {
+      "task_id": 0,
+      "native_prompt": "pick the akita black bowl between the plate and the ramekin and place it on the plate",
+      "source_prompt": "pick up the black bowl between the plate and the ramekin and place it on the plate",
+      "available_train_prompts": [
+        "pick up the black bowl between the plate and the ramekin and place it on the plate",
+        "pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate",
+        "pick up the black bowl next to the cookie box and place it on the plate",
+        "pick up the black bowl on the ramekin and place it on the plate"
+      ],
+      "original_hdf5_sha256": "ff6f26121653c77280eb40a38773a74141c11a8509f3466058cb56dd2cc60ead",
+      "trajectories": [
+        {
+          "id": "panda/episode_001272",
+          "split": "train",
+          "samples": 8,
+          "times": [
+            0,
+            10,
+            21,
+            31,
+            42,
+            52,
+            63,
+            74
+          ],
+          "steps": 84,
+          "staged_windows_sha256": "e996cba3753b6f227ca2988affb3559b0b56c2080a7abcc706e7097daa367a96",
+          "original_matches": [
+            "demo_15"
+          ]
+        },
+        {
+          "id": "panda/episode_001273",
+          "split": "train",
+          "samples": 8,
+          "times": [
+            1,
+            10,
+            21,
+            32,
+            42,
+            53,
+            64,
+            75
+          ],
+          "steps": 85,
+          "staged_windows_sha256": "672f12538afda94f6fda25fbcee4d4375de6d028b37392c3bf68f1ce80174df6",
+          "original_matches": [
+            "demo_46"
+          ]
+        },
+        {
+          "id": "panda/episode_001275",
+          "split": "train",
+          "samples": 8,
+          "times": [
+            3,
+            16,
+            33,
+            50,
+            67,
+            84,
+            101,
+            118
+          ],
+          "steps": 128,
+          "staged_windows_sha256": "d5609e2e4d15fd87f98e6bb63e022506fe8f67c25e6ad171618d5e69b6a9678b",
+          "original_matches": [
+            "demo_11"
+          ]
+        },
+        {
+          "id": "panda/episode_001282",
+          "split": "heldout",
+          "samples": 8,
+          "times": [
+            2,
+            10,
+            21,
+            31,
+            42,
+            52,
+            63,
+            74
+          ],
+          "steps": 84,
+          "staged_windows_sha256": "313211ce21d15b0848865dcad91cff2b0cf64473456125e0cfd364bfe965b93d",
+          "original_matches": [
+            "demo_1"
+          ]
+        }
+      ],
+      "exact_original_demo_join": true,
+      "compared_demo_ids": [
+        "demo_1",
+        "demo_11",
+        "demo_15",
+        "demo_46"
+      ],
+      "layout_disjoint": true,
+      "comparison_tolerance_m": 0.001,
+      "compared_rows": {
+        "49": {
+          "demo_1": {
+            "joint": "plate_1_joint0",
+            "source_xy": [
+              0.07227960459413489,
+              0.18833406618514278
+            ],
+            "released_xy": [
+              0.05733699950230049,
+              0.21252070504451975
+            ],
+            "separation_m": 0.028430176683313796
+          },
+          "demo_11": {
+            "joint": "cookies_1_joint0",
+            "source_xy": [
+              0.08475557797479559,
+              0.043711097819000726
+            ],
+            "released_xy": [
+              0.058915062243081295,
+              0.02496284172446162
+            ],
+            "separation_m": 0.0319253717263777
+          },
+          "demo_15": {
+            "joint": "cookies_1_joint0",
+            "source_xy": [
+              0.08371271873369124,
+              0.028595811609650062
+            ],
+            "released_xy": [
+              0.058915062243081295,
+              0.02496284172446162
+            ],
+            "separation_m": 0.025062366959506747
+          },
+          "demo_46": {
+            "joint": "cookies_1_joint0",
+            "source_xy": [
+              0.07833656056067763,
+              0.04237556402314671
+            ],
+            "released_xy": [
+              0.058915062243081295,
+              0.02496284172446162
+            ],
+            "separation_m": 0.026084430121272005
+          }
+        },
+        "48": {
+          "demo_1": {
+            "joint": "akita_black_bowl_1_joint0",
+            "source_xy": [
+              -0.057505701955291616,
+              0.1865541207008236
+            ],
+            "released_xy": [
+              -0.06119160320723575,
+              0.21164027069326866
+            ],
+            "separation_m": 0.025355488350306602
+          },
+          "demo_11": {
+            "joint": "glazed_rim_porcelain_ramekin_1_joint0",
+            "source_xy": [
+              -0.21021616951594066,
+              0.18640434856937194
+            ],
+            "released_xy": [
+              -0.19716035864436404,
+              0.20904105105704232
+            ],
+            "separation_m": 0.02613186746158186
+          },
+          "demo_15": {
+            "joint": "akita_black_bowl_2_joint0",
+            "source_xy": [
+              -0.18542551573841023,
+              0.32407800076183424
+            ],
+            "released_xy": [
+              -0.1658855874295718,
+              0.31029747324663787
+            ],
+            "separation_m": 0.023910494284134533
+          },
+          "demo_46": {
+            "joint": "akita_black_bowl_1_joint0",
+            "source_xy": [
+              -0.05901689338752,
+              0.18985762894989522
+            ],
+            "released_xy": [
+              -0.06119160320723575,
+              0.21164027069326866
+            ],
+            "separation_m": 0.021890930636227483
+          }
+        }
+      },
+      "bddl": {
+        "suite": "libero_spatial",
+        "base_task_id": 0,
+        "case_id": "BASE",
+        "case_kind": "base",
+        "bddl_path": "bddl/libero-pro2.0-1680-v1/libero_spatial/00_base/BASE__pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate.bddl",
+        "bddl_sha256": "0cb4525db8d9271216e309e25a4729b9fd01217ee36903695228494cf390846f",
+        "task_version": "libero-pro2.0-1706-v1",
+        "max_steps": 220,
+        "reset_stabilization_steps": 10,
+        "observation_schema_version": "libero_standard_v1",
+        "action_schema_version": "libero_action_v1"
+      },
+      "bank_length": 50,
+      "seed_base": 42830000,
+      "layouts": {
+        "48": "9d9af1538aeb812c3ced8f1bced233bf11ce9da24e24503e341d2976fe202750",
+        "49": "469d43ed5bb53850b2aa9300783b22b1fed3df8139ae8ecefb0aeaa0b4b53b00"
+      }
+    }
+  }
+}

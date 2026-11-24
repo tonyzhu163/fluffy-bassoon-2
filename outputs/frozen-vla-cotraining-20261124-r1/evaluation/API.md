@@ -1,0 +1,5 @@
+# Evaluation interface
+
+Use sibling data/source_data.PublicHistory and model/cotrain_policy.LockedPolicy as documented in their API files. The held-out identifiers are in PANEL.md. Reserve those released rows on shared tasks from all offline data, including source validation. Store the fit.json SHA in the root handoff from the completed source-only training run. The launcher takes the immutable fit directory and that digest separately.
+
+Evaluation also needs the loaded stock OpenPI Policy for independent ordinary inference, a no-op path through the injected sampler, and the actual resident NNX parameter tree plus fitted head arrays for before/after hashing. The model implementation can expose an explicit parity method and live hashes in digests(). Parity must compare decoded stock versus zero-update injected inference under the same noise, independent of which path supplies the original condition. The frozen VLA loads once per test job. The evaluation fixture uses a deterministic actuator driver solely to exercise the simulator and causal routing on Linux CPU.
