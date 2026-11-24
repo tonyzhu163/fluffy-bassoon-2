@@ -32,7 +32,7 @@ check_tree "$legacy/third_party/openpi-215abfb" 215abfb217dbac7d5f1273282331b9b1
 export PAIRED_DEPS="$setup/source-wave2b"
 check_tree "$PAIRED_DEPS" 465f33dc657ceab341dbceaf6b98355b94810059
 export PYTHONPATH="$setup/cv2-headless-overlay:$PAIRED_DEPS/src:$CROSSARM_RELEASE:$LIBERO_PRO_ROOT:$PAIRED_DEPS/outputs/libero-crossarm-20261120-r1:$PAIRED_DEPS/outputs/libero-xemb-ur5e-sysid-20261120-r1:$PAIRED_DEPS/outputs/libero-xemb-ur5e-scale-20261120-r1:$PAIRED_DEPS/outputs/$campaign"
-export JAX_PLATFORMS=cuda FLUFFY_GPU_EXECUTION=baige
+export JAX_PLATFORMS=cuda FLUFFY_GPU_EXECUTION=baige CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0}"
 export __EGL_VENDOR_LIBRARY_FILENAMES="$root/setups/libero90-full-action-20261119-r1/desktop-libs02/nvidia-vendor.json"
 unset LIBGL_ALWAYS_SOFTWARE GALLIUM_DRIVER EGL_PLATFORM
 export XDG_CACHE_HOME="$out/cache" TMPDIR="$out/tmp" MPLCONFIGDIR="$out/cache/mpl" NUMBA_CACHE_DIR="$out/cache/numba"
