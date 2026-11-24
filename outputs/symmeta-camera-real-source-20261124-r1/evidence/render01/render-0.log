@@ -1,0 +1,67 @@
+[robosuite WARNING] No private macro file found! (__init__.py:7)
+[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)
+[robosuite WARNING] To setup, run: python /mowenjie/fluffy-bassoon-2/setups/libero-meta-learning-20261117-r1/env/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_10' (10 tasks).
+/mowenjie/fluffy-bassoon-2/setups/libero-meta-learning-20261117-r1/simulator-source/libero/libero/benchmark/__init__.py:273: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  init_states = torch.load(init_states_path)
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/setups/symmeta-perceiver-followups-20261123-r1/src-8b24c2dba054/outputs/symmeta-camera-real-source-20261124-r1/render_source.py", line 80, in <module>
+    main()
+  File "/mowenjie/fluffy-bassoon-2/setups/symmeta-perceiver-followups-20261123-r1/src-8b24c2dba054/outputs/symmeta-camera-real-source-20261124-r1/render_source.py", line 76, in main
+    render_one(out,c)
+  File "/mowenjie/fluffy-bassoon-2/setups/symmeta-perceiver-followups-20261123-r1/src-8b24c2dba054/outputs/symmeta-camera-real-source-20261124-r1/render_source.py", line 43, in render_one
+    row,diag = render.collect(out,case['arm'],{k:case[k] for k in keys},entry,None)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/setups/symmeta-perceiver-followups-20261123-r1/src-8b24c2dba054/outputs/symmeta-camera-pose-pairs-20261124-r1/render.py", line 150, in collect
+    frames = [cams.frame0(obs)]
+              ^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/setups/symmeta-perceiver-followups-20261123-r1/src-8b24c2dba054/outputs/symmeta-camera-command-20261123-r1/replay_worker.py", line 79, in frame0
+    self.candidates = [self.record(self.render(**settings), settings)]
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/setups/symmeta-perceiver-followups-20261123-r1/src-8b24c2dba054/outputs/symmeta-camera-real-source-20261124-r1/render_source.py", line 32, in record
+    return super().record(nominal,settings)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/setups/symmeta-perceiver-followups-20261123-r1/src-8b24c2dba054/outputs/symmeta-camera-pose-pairs-20261124-r1/render.py", line 104, in record
+    self.marker_checks.append(dict(view=name, **self.check_marks(world, cams[name])))
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/setups/symmeta-perceiver-followups-20261123-r1/src-8b24c2dba054/outputs/symmeta-camera-pose-pairs-20261124-r1/render.py", line 69, in check_marks
+    raise ValueError(f"Independent mark count {n} != {len(world)}")
+ValueError: Independent mark count 2 != 3
+Exception ignored in: <function MjRenderContext.__del__ at 0x7feb5574b060>
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/setups/libero-meta-learning-20261117-r1/env/lib/python3.11/site-packages/robosuite/utils/binding_utils.py", line 199, in __del__
+    self.gl_ctx.free()
+  File "/mowenjie/fluffy-bassoon-2/setups/libero-meta-learning-20261117-r1/env/lib/python3.11/site-packages/robosuite/renderers/context/egl_context.py", line 150, in free
+    EGL.eglDestroyContext(EGL_DISPLAY, self._context)
+  File "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/OpenGL/error.py", line 230, in glCheckError
+    raise self._errorClass(
+OpenGL.raw.EGL._errors.EGLError: EGLError(
+	err = EGL_NOT_INITIALIZED,
+	baseOperation = eglDestroyContext,
+	cArguments = (
+		<OpenGL._opaque.EGLDisplay_pointer object at 0x7feb4a9ef920>,
+		<OpenGL._opaque.EGLContext_pointer object at 0x7feb401b5a30>,
+	),
+	result = 0
+)
+Exception ignored in: <function EGLGLContext.__del__ at 0x7feb5574af20>
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/setups/libero-meta-learning-20261117-r1/env/lib/python3.11/site-packages/robosuite/renderers/context/egl_context.py", line 155, in __del__
+    self.free()
+  File "/mowenjie/fluffy-bassoon-2/setups/libero-meta-learning-20261117-r1/env/lib/python3.11/site-packages/robosuite/renderers/context/egl_context.py", line 150, in free
+    EGL.eglDestroyContext(EGL_DISPLAY, self._context)
+  File "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/OpenGL/error.py", line 230, in glCheckError
+    raise self._errorClass(
+OpenGL.raw.EGL._errors.EGLError: EGLError(
+	err = EGL_NOT_INITIALIZED,
+	baseOperation = eglDestroyContext,
+	cArguments = (
+		<OpenGL._opaque.EGLDisplay_pointer object at 0x7feb4a9ef920>,
+		<OpenGL._opaque.EGLContext_pointer object at 0x7feb401b5a30>,
+	),
+	result = 0
+)
