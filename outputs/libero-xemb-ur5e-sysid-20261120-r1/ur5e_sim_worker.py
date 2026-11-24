@@ -171,6 +171,14 @@ def serve(fd: int):
                         renderer_vendor=renderer_vendor,
                     )
                     result = create_spec, initial_out
+                elif op == "fork_digest":
+                    # Opt-in audit in the simulator process. The selector launcher provides
+                    # the existing contact-fork audit module on PYTHONPATH.
+                    from fork import fingerprint, snapshot
+
+                    if env is None or done:
+                        raise RuntimeError("A fork requires a live episode")
+                    result = fingerprint(snapshot(env, local_raw))
                 elif op == "chunk":
                     if env is None or done:
                         raise RuntimeError("Call create before stepping a new or completed episode")

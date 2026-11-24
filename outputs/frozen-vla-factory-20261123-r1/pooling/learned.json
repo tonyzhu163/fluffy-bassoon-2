@@ -1,0 +1,323 @@
+{
+  "reader": "learned",
+  "source_sha256": "00af4761a8954e2816242d84bc1907e910c9926ec3801bca6fb084e39fd55d26",
+  "bootstrap_seed": 20261123,
+  "bootstrap_draws": 20000,
+  "groups": {
+    "all": {
+      "n": 96,
+      "tasks": [
+        "libero_10/5",
+        "libero_10/8",
+        "libero_goal/3",
+        "libero_goal/6",
+        "libero_object/1",
+        "libero_object/8",
+        "libero_spatial/0",
+        "libero_spatial/8"
+      ],
+      "heads": {
+        "uniform": {
+          "mae_deg": 6.374519615835007,
+          "paired_delta_deg": 0.0,
+          "ci95_delta_deg": [
+            0.0,
+            0.0
+          ]
+        },
+        "magnitude": {
+          "mae_deg": 6.0095154696926505,
+          "paired_delta_deg": -0.3650041461423569,
+          "ci95_delta_deg": [
+            -0.6314223023017271,
+            -0.07555930640920938
+          ]
+        },
+        "medoid": {
+          "mae_deg": 6.255033853646624,
+          "paired_delta_deg": -0.11948576218838403,
+          "ci95_delta_deg": [
+            -0.8914666462414342,
+            0.6969218981539866
+          ]
+        },
+        "last": {
+          "mae_deg": 10.077512909609752,
+          "paired_delta_deg": 3.7029932937747443,
+          "ci95_delta_deg": [
+            1.5655385244932956,
+            5.727830562244518
+          ]
+        },
+        "first": {
+          "mae_deg": 11.56311236190248,
+          "paired_delta_deg": 5.188592746067474,
+          "ci95_delta_deg": [
+            3.8651345535014454,
+            6.596241896077967
+          ]
+        },
+        "nominal": {
+          "mae_deg": 90.0,
+          "paired_delta_deg": 83.625480384165,
+          "ci95_delta_deg": [
+            82.6690408775163,
+            84.36817894231874
+          ]
+        }
+      }
+    },
+    "ood": {
+      "n": 64,
+      "tasks": [
+        "libero_10/5",
+        "libero_10/8",
+        "libero_goal/3",
+        "libero_goal/6",
+        "libero_object/1",
+        "libero_object/8",
+        "libero_spatial/0",
+        "libero_spatial/8"
+      ],
+      "heads": {
+        "uniform": {
+          "mae_deg": 6.533742365518323,
+          "paired_delta_deg": 0.0,
+          "ci95_delta_deg": [
+            0.0,
+            0.0
+          ]
+        },
+        "magnitude": {
+          "mae_deg": 6.175978318888477,
+          "paired_delta_deg": -0.3577640466298462,
+          "ci95_delta_deg": [
+            -0.8055557599500576,
+            0.025381238746469137
+          ]
+        },
+        "medoid": {
+          "mae_deg": 6.261131241795562,
+          "paired_delta_deg": -0.2726111237227622,
+          "ci95_delta_deg": [
+            -0.9856592030312089,
+            0.4850422168914612
+          ]
+        },
+        "last": {
+          "mae_deg": 12.05202201888319,
+          "paired_delta_deg": 5.518279653364866,
+          "ci95_delta_deg": [
+            3.118507236495062,
+            8.25221916149774
+          ]
+        },
+        "first": {
+          "mae_deg": 10.810005301950845,
+          "paired_delta_deg": 4.276262936432521,
+          "ci95_delta_deg": [
+            2.8350926223733635,
+            6.112339844367675
+          ]
+        },
+        "nominal": {
+          "mae_deg": 101.25,
+          "paired_delta_deg": 94.71625763448168,
+          "ci95_delta_deg": [
+            94.03032968490088,
+            95.33314408066367
+          ]
+        }
+      }
+    },
+    "compositional_ood": {
+      "n": 32,
+      "tasks": [
+        "libero_10/5",
+        "libero_10/8",
+        "libero_goal/3",
+        "libero_goal/6",
+        "libero_object/1",
+        "libero_object/8",
+        "libero_spatial/0",
+        "libero_spatial/8"
+      ],
+      "heads": {
+        "uniform": {
+          "mae_deg": 6.202103752909552,
+          "paired_delta_deg": 0.0,
+          "ci95_delta_deg": [
+            0.0,
+            0.0
+          ]
+        },
+        "magnitude": {
+          "mae_deg": 5.322089778178858,
+          "paired_delta_deg": -0.8800139747306934,
+          "ci95_delta_deg": [
+            -1.9454222210397694,
+            0.12977083495906197
+          ]
+        },
+        "medoid": {
+          "mae_deg": 5.279513965890933,
+          "paired_delta_deg": -0.9225897870186186,
+          "ci95_delta_deg": [
+            -2.477124602773473,
+            0.6747970479952494
+          ]
+        },
+        "last": {
+          "mae_deg": 15.873337971361533,
+          "paired_delta_deg": 9.67123421845198,
+          "ci95_delta_deg": [
+            5.3382585841846755,
+            14.767446898728231
+          ]
+        },
+        "first": {
+          "mae_deg": 10.711008672880938,
+          "paired_delta_deg": 4.508904919971386,
+          "ci95_delta_deg": [
+            2.1906651677245974,
+            6.988731098668911
+          ]
+        },
+        "nominal": {
+          "mae_deg": 112.5,
+          "paired_delta_deg": 106.29789624709045,
+          "ci95_delta_deg": [
+            104.73566930331468,
+            107.92901827275986
+          ]
+        }
+      }
+    },
+    "continuous_angle_ood": {
+      "n": 32,
+      "tasks": [
+        "libero_10/5",
+        "libero_10/8",
+        "libero_goal/3",
+        "libero_goal/6",
+        "libero_object/1",
+        "libero_object/8",
+        "libero_spatial/0",
+        "libero_spatial/8"
+      ],
+      "heads": {
+        "uniform": {
+          "mae_deg": 6.865380978127096,
+          "paired_delta_deg": 0.0,
+          "ci95_delta_deg": [
+            0.0,
+            0.0
+          ]
+        },
+        "magnitude": {
+          "mae_deg": 7.029866859598097,
+          "paired_delta_deg": 0.16448588147100107,
+          "ci95_delta_deg": [
+            -0.4309494384932897,
+            0.715016931211343
+          ]
+        },
+        "medoid": {
+          "mae_deg": 7.24274851770019,
+          "paired_delta_deg": 0.3773675395730942,
+          "ci95_delta_deg": [
+            -0.2454840758914969,
+            1.052347809918925
+          ]
+        },
+        "last": {
+          "mae_deg": 8.230706066404846,
+          "paired_delta_deg": 1.3653250882777508,
+          "ci95_delta_deg": [
+            -0.19134680342194946,
+            3.124014725538234
+          ]
+        },
+        "first": {
+          "mae_deg": 10.90900193102075,
+          "paired_delta_deg": 4.043620952893655,
+          "ci95_delta_deg": [
+            2.046500433215427,
+            6.013334802762996
+          ]
+        },
+        "nominal": {
+          "mae_deg": 90.0,
+          "paired_delta_deg": 83.13461902187291,
+          "ci95_delta_deg": [
+            82.1630677523892,
+            84.34789014384008
+          ]
+        }
+      }
+    },
+    "familiar": {
+      "n": 32,
+      "tasks": [
+        "libero_10/5",
+        "libero_10/8",
+        "libero_goal/3",
+        "libero_goal/6",
+        "libero_object/1",
+        "libero_object/8",
+        "libero_spatial/0",
+        "libero_spatial/8"
+      ],
+      "heads": {
+        "uniform": {
+          "mae_deg": 6.056074116468376,
+          "paired_delta_deg": 0.0,
+          "ci95_delta_deg": [
+            0.0,
+            0.0
+          ]
+        },
+        "magnitude": {
+          "mae_deg": 5.676589771300997,
+          "paired_delta_deg": -0.37948434516737883,
+          "ci95_delta_deg": [
+            -1.1524417436194332,
+            0.39289397841105683
+          ]
+        },
+        "medoid": {
+          "mae_deg": 6.242839077348748,
+          "paired_delta_deg": 0.18676496088037187,
+          "ci95_delta_deg": [
+            -1.1814284735904188,
+            1.5151556141161295
+          ]
+        },
+        "last": {
+          "mae_deg": 6.128494691062877,
+          "paired_delta_deg": 0.07242057459450102,
+          "ci95_delta_deg": [
+            -3.5525937337955913,
+            3.5088585559466106
+          ]
+        },
+        "first": {
+          "mae_deg": 13.069326481805753,
+          "paired_delta_deg": 7.013252365337378,
+          "ci95_delta_deg": [
+            4.818330793123442,
+            9.382441088800244
+          ]
+        },
+        "nominal": {
+          "mae_deg": 67.5,
+          "paired_delta_deg": 61.44392588353163,
+          "ci95_delta_deg": [
+            58.377192108736,
+            63.522117881724874
+          ]
+        }
+      }
+    }
+  }
+}

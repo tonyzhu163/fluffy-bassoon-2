@@ -1,0 +1,1555 @@
+{
+  "receipt": {
+    "base": "757a44cd4374833cad790852df8b87ddf412e638",
+    "release": "e5500c690c1498eca1b7050350654964190cdf70",
+    "tape_run": "c45aa965db73ad0644382da578ff03a30b2083d7",
+    "friction_run": "a6d6cb8d208bf8df744986e03c802a89343fe8d3",
+    "motor": "/mowenjie/fluffy-bassoon/inputs/pi05-libero-openpi-20261027-r1",
+    "packages": {
+      "numpy": "1.26.4",
+      "mujoco": "3.2.3",
+      "robosuite": "1.4.0",
+      "scipy": "1.17.1",
+      "numba": "0.61.2",
+      "torch": "2.11.0+cu128"
+    },
+    "python": "3.12.16",
+    "workers": 4,
+    "started_unix": 1795429638.5447557,
+    "seconds": 154.62,
+    "gpu_hours": 0,
+    "branch_order": [
+      "continue",
+      "slow",
+      "regrasp"
+    ],
+    "paired_cells": 32,
+    "episodes": 96
+  },
+  "cells": [
+    {
+      "task": "libero_10-0",
+      "cadence": "default",
+      "material": "ordinary",
+      "seed": 19110001,
+      "horizon": 520,
+      "tape_length": 281,
+      "cut": 75,
+      "features": {
+        "command": [
+          -0.09798968784328559,
+          0.000699017593895318,
+          0.02931894693637882,
+          0.07627147671976675,
+          -0.00031884409379967504,
+          0.46337163771915435
+        ],
+        "contact": [
+          0.06337807327508926,
+          -0.016756907105445862,
+          -5.017220973968506e-05,
+          0.009152205660939217,
+          6.768852472305298e-05,
+          -0.003216885030269623,
+          0.0024942010641098022,
+          0.00818943977355957
+        ]
+      },
+      "prefix_hash": "c1210dd48c6c1ff49b88e2843060ad4ea78b99a341b364d529af89b623570b6c",
+      "reset_hash": "84d8d9b5dbb538bc8fcb353deed8a854738c3fab261c441c919f4bbacbf63e40",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 0.0,
+        "robot0_eef_quat_xyzw": 0.0,
+        "robot0_gripper_qpos": 0.0
+      },
+      "archive_success": 1,
+      "archive_controls": 281,
+      "archive_first_finger": 60,
+      "native_hits": [
+        1,
+        1,
+        0
+      ],
+      "stops": [
+        281,
+        290,
+        520
+      ]
+    },
+    {
+      "task": "libero_10-0",
+      "cadence": "default",
+      "material": "reduced",
+      "seed": 19110001,
+      "horizon": 520,
+      "tape_length": 281,
+      "cut": 75,
+      "features": {
+        "command": [
+          -0.09798968784328559,
+          0.000699017593895318,
+          0.02931894693637882,
+          0.07627147671976675,
+          -0.00031884409379967504,
+          0.46337163771915435
+        ],
+        "contact": [
+          0.06335179507732391,
+          -0.01661108434200287,
+          -1.8574297428131104e-05,
+          0.0025944747030735016,
+          0.0,
+          -0.012596577405929565,
+          -0.0007355660200119019,
+          0.0020055770874023438
+        ]
+      },
+      "prefix_hash": "e0b05a23f0d3476506922fe99b7043c9578930f772e78d1ee0039fe2ac6a7664",
+      "reset_hash": "84d8d9b5dbb538bc8fcb353deed8a854738c3fab261c441c919f4bbacbf63e40",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 0.00018547102808952332,
+        "robot0_eef_quat_xyzw": 0.00012424588203430176,
+        "robot0_gripper_qpos": 9.427592158317566e-05
+      },
+      "archive_success": 0,
+      "archive_controls": 281,
+      "archive_first_finger": 60,
+      "native_hits": [
+        0,
+        0,
+        0
+      ],
+      "stops": [
+        520,
+        520,
+        520
+      ]
+    },
+    {
+      "task": "libero_10-0",
+      "cadence": "paced",
+      "material": "ordinary",
+      "seed": 19110001,
+      "horizon": 520,
+      "tape_length": 520,
+      "cut": 157,
+      "features": {
+        "command": [
+          -0.09261269769571479,
+          0.0017664467604507628,
+          -0.04098670764519774,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "contact": [
+          0.0636318251490593,
+          -0.016350217163562775,
+          -0.00013240426778793335,
+          0.008590614423155785,
+          0.0,
+          -0.005261726677417755,
+          0.002401292324066162,
+          -0.0015946030616760254
+        ]
+      },
+      "prefix_hash": "7643ea2423861155c30f08cb8cb0fc2e7f3b52104b04e7460fc5a656bf9852f2",
+      "reset_hash": "84d8d9b5dbb538bc8fcb353deed8a854738c3fab261c441c919f4bbacbf63e40",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 0.0,
+        "robot0_eef_quat_xyzw": 0.0,
+        "robot0_gripper_qpos": 3.725290298461914e-09
+      },
+      "archive_success": 0,
+      "archive_controls": 520,
+      "archive_first_finger": 147,
+      "native_hits": [
+        0,
+        0,
+        0
+      ],
+      "stops": [
+        520,
+        520,
+        520
+      ]
+    },
+    {
+      "task": "libero_10-0",
+      "cadence": "paced",
+      "material": "reduced",
+      "seed": 19110001,
+      "horizon": 520,
+      "tape_length": 520,
+      "cut": 157,
+      "features": {
+        "command": [
+          -0.09261269769571479,
+          0.0017664467604507628,
+          -0.04098670764519774,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "contact": [
+          0.06268107146024704,
+          -0.01730097085237503,
+          -4.754960536956787e-05,
+          0.0015845075249671936,
+          3.0778348445892334e-05,
+          -0.012421846389770508,
+          0.00011640787124633789,
+          -0.0065850019454956055
+        ]
+      },
+      "prefix_hash": "f3f6050faadd54291e276925e01d2b638034298c93c1aad306ca815defc98d63",
+      "reset_hash": "84d8d9b5dbb538bc8fcb353deed8a854738c3fab261c441c919f4bbacbf63e40",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 0.0,
+        "robot0_eef_quat_xyzw": 0.0,
+        "robot0_gripper_qpos": 6.367918103933334e-08
+      },
+      "archive_success": 0,
+      "archive_controls": 520,
+      "archive_first_finger": 147,
+      "native_hits": [
+        0,
+        0,
+        0
+      ],
+      "stops": [
+        520,
+        520,
+        520
+      ]
+    },
+    {
+      "task": "libero_10-3",
+      "cadence": "default",
+      "material": "ordinary",
+      "seed": 19110301,
+      "horizon": 520,
+      "tape_length": 206,
+      "cut": 86,
+      "features": {
+        "command": [
+          0.03328287421378981,
+          0.007998965024570565,
+          -0.05834198263650641,
+          0.13984387859594816,
+          0.0052482586462496705,
+          0.225401674422264
+        ],
+        "contact": [
+          0.00848373956978321,
+          -0.0713692232966423,
+          -0.03324417024850845,
+          0.00018519163131713867,
+          0.0,
+          0.0038441382348537445,
+          -0.0016650184988975525,
+          -0.013753235340118408
+        ]
+      },
+      "prefix_hash": "4e1ad3960955480f836071f4aef9c2784c17a06292818b1b4e51fd7da53486f4",
+      "reset_hash": "859e6a966dd354a3c3eabc84c1d21a74b94b802d5defaa8400a0d387666f50a9",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 0.0,
+        "robot0_eef_quat_xyzw": 0.0,
+        "robot0_gripper_qpos": 0.0
+      },
+      "archive_success": 1,
+      "archive_controls": 206,
+      "archive_first_finger": 83,
+      "native_hits": [
+        1,
+        1,
+        1
+      ],
+      "stops": [
+        206,
+        216,
+        286
+      ]
+    },
+    {
+      "task": "libero_10-3",
+      "cadence": "default",
+      "material": "reduced",
+      "seed": 19110301,
+      "horizon": 520,
+      "tape_length": 206,
+      "cut": 86,
+      "features": {
+        "command": [
+          0.03328287421378981,
+          0.007998965024570565,
+          -0.05834198263650641,
+          0.13984387859594816,
+          0.0052482586462496705,
+          0.225401674422264
+        ],
+        "contact": [
+          0.008329988457262516,
+          -0.07152297347784042,
+          -0.033397920429706573,
+          0.0001886943355202675,
+          0.0,
+          0.0038437172770500183,
+          -0.001661837100982666,
+          -0.013752996921539307
+        ]
+      },
+      "prefix_hash": "059d0274103202142e7a10de54230c6b18935e5650bccfbcc1aaf882cdb15ea6",
+      "reset_hash": "859e6a966dd354a3c3eabc84c1d21a74b94b802d5defaa8400a0d387666f50a9",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 1.1548399925231934e-06,
+        "robot0_eef_quat_xyzw": 5.327165126800537e-07,
+        "robot0_gripper_qpos": 7.543712854385376e-07
+      },
+      "archive_success": 1,
+      "archive_controls": 206,
+      "archive_first_finger": 83,
+      "native_hits": [
+        1,
+        1,
+        1
+      ],
+      "stops": [
+        206,
+        216,
+        287
+      ]
+    },
+    {
+      "task": "libero_10-3",
+      "cadence": "paced",
+      "material": "ordinary",
+      "seed": 19110301,
+      "horizon": 520,
+      "tape_length": 507,
+      "cut": 183,
+      "features": {
+        "command": [
+          0.02479888540550564,
+          0.0007205014227926373,
+          -0.01631267017716172,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "contact": [
+          0.00907827727496624,
+          -0.07072147727012634,
+          -0.03264746814966202,
+          0.00043703289702534676,
+          0.0,
+          0.0024923868477344513,
+          -0.002082623541355133,
+          -0.0052890777587890625
+        ]
+      },
+      "prefix_hash": "3a62bf233c3ce463edccb40f0466b3d8601f78187d85cde40c120a5c15b553f7",
+      "reset_hash": "859e6a966dd354a3c3eabc84c1d21a74b94b802d5defaa8400a0d387666f50a9",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 9.268522262573242e-05,
+        "robot0_eef_quat_xyzw": 0.00026676058769226074,
+        "robot0_gripper_qpos": 1.3697892427444458e-05
+      },
+      "archive_success": 1,
+      "archive_controls": 507,
+      "archive_first_finger": 180,
+      "native_hits": [
+        1,
+        1,
+        0
+      ],
+      "stops": [
+        507,
+        516,
+        520
+      ]
+    },
+    {
+      "task": "libero_10-3",
+      "cadence": "paced",
+      "material": "reduced",
+      "seed": 19110301,
+      "horizon": 520,
+      "tape_length": 507,
+      "cut": 183,
+      "features": {
+        "command": [
+          0.02479888540550564,
+          0.0007205014227926373,
+          -0.01631267017716172,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "contact": [
+          0.005638166330754757,
+          -0.0741615891456604,
+          -0.036087580025196075,
+          0.0003924968186765909,
+          0.0,
+          0.0024311840534210205,
+          -0.0023194849491119385,
+          -0.0053910017013549805
+        ]
+      },
+      "prefix_hash": "fcea5ec903f434edde7905fece0cd06c3c4fa5730f2f94dddcca2153d9eb1845",
+      "reset_hash": "859e6a966dd354a3c3eabc84c1d21a74b94b802d5defaa8400a0d387666f50a9",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 0.0014766007661819458,
+        "robot0_eef_quat_xyzw": 0.002327457070350647,
+        "robot0_gripper_qpos": 0.0009840615093708038
+      },
+      "archive_success": 1,
+      "archive_controls": 506,
+      "archive_first_finger": 180,
+      "native_hits": [
+        1,
+        1,
+        0
+      ],
+      "stops": [
+        506,
+        516,
+        520
+      ]
+    },
+    {
+      "task": "libero_goal-0",
+      "cadence": "default",
+      "material": "ordinary",
+      "seed": 19120001,
+      "horizon": 300,
+      "tape_length": 106,
+      "cut": null,
+      "features": null,
+      "prefix_hash": "d1eb7c92e3bf4e0614a444f3400eda32d239a64d8e1c8b9cec3de47a4a99dc03",
+      "reset_hash": "517a4208ddd29f2626f08b48b45547aeadd6f48db12aa3ba8f82b8f4587e3528",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 0.0,
+        "robot0_eef_quat_xyzw": 0.0,
+        "robot0_gripper_qpos": 0.0
+      },
+      "archive_success": 1,
+      "archive_controls": 106,
+      "archive_first_finger": 80,
+      "native_hits": [
+        1,
+        1,
+        1
+      ],
+      "stops": [
+        106,
+        106,
+        106
+      ]
+    },
+    {
+      "task": "libero_goal-0",
+      "cadence": "default",
+      "material": "reduced",
+      "seed": 19120001,
+      "horizon": 300,
+      "tape_length": 106,
+      "cut": null,
+      "features": null,
+      "prefix_hash": "fc9c2ddaae91cb205f3e174fdb7e0fefd50c06bbb41e15095a0860351996f9a7",
+      "reset_hash": "517a4208ddd29f2626f08b48b45547aeadd6f48db12aa3ba8f82b8f4587e3528",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 0.0,
+        "robot0_eef_quat_xyzw": 0.0,
+        "robot0_gripper_qpos": 0.0
+      },
+      "archive_success": 1,
+      "archive_controls": 106,
+      "archive_first_finger": 80,
+      "native_hits": [
+        1,
+        1,
+        1
+      ],
+      "stops": [
+        106,
+        106,
+        106
+      ]
+    },
+    {
+      "task": "libero_goal-0",
+      "cadence": "paced",
+      "material": "ordinary",
+      "seed": 19120001,
+      "horizon": 300,
+      "tape_length": 267,
+      "cut": null,
+      "features": null,
+      "prefix_hash": "eb336d332efbf869aa1d87d39cc541762278bfb235251f6a7f196e70957cd98c",
+      "reset_hash": "517a4208ddd29f2626f08b48b45547aeadd6f48db12aa3ba8f82b8f4587e3528",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 0.0,
+        "robot0_eef_quat_xyzw": 0.0,
+        "robot0_gripper_qpos": 0.0
+      },
+      "archive_success": 1,
+      "archive_controls": 267,
+      "archive_first_finger": 193,
+      "native_hits": [
+        1,
+        1,
+        1
+      ],
+      "stops": [
+        267,
+        267,
+        267
+      ]
+    },
+    {
+      "task": "libero_goal-0",
+      "cadence": "paced",
+      "material": "reduced",
+      "seed": 19120001,
+      "horizon": 300,
+      "tape_length": 267,
+      "cut": null,
+      "features": null,
+      "prefix_hash": "0bef5864f2e34b6d407a59dde99b29cf1c6204fbb92983e441294c89f1f67423",
+      "reset_hash": "517a4208ddd29f2626f08b48b45547aeadd6f48db12aa3ba8f82b8f4587e3528",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 0.0,
+        "robot0_eef_quat_xyzw": 0.0,
+        "robot0_gripper_qpos": 0.0
+      },
+      "archive_success": 1,
+      "archive_controls": 267,
+      "archive_first_finger": 193,
+      "native_hits": [
+        1,
+        1,
+        1
+      ],
+      "stops": [
+        267,
+        267,
+        267
+      ]
+    },
+    {
+      "task": "libero_goal-1",
+      "cadence": "default",
+      "material": "ordinary",
+      "seed": 19120101,
+      "horizon": 300,
+      "tape_length": 82,
+      "cut": 48,
+      "features": {
+        "command": [
+          0.04076671432020008,
+          -0.001509832768937014,
+          0.22593340009579055,
+          0.15734290473270407,
+          0.06510433337724197,
+          0.6761419104042052
+        ],
+        "contact": [
+          0.0052335383370518684,
+          -0.07427637279033661,
+          -0.036594144999980927,
+          0.00019608461298048496,
+          0.0,
+          -0.011419728398323059,
+          0.001202419400215149,
+          0.019460201263427734
+        ]
+      },
+      "prefix_hash": "e050967ef768b73930f73123abadfa70c58d100b382f072968d22085e0461aec",
+      "reset_hash": "5e1ee7d31ec12879c1799949687a21dfc6e04318f4cdcac3ba2f9a7a97c14478",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 0.0,
+        "robot0_eef_quat_xyzw": 0.0,
+        "robot0_gripper_qpos": 0.0
+      },
+      "archive_success": 1,
+      "archive_controls": 82,
+      "archive_first_finger": 42,
+      "native_hits": [
+        1,
+        1,
+        1
+      ],
+      "stops": [
+        82,
+        92,
+        162
+      ]
+    },
+    {
+      "task": "libero_goal-1",
+      "cadence": "default",
+      "material": "reduced",
+      "seed": 19120101,
+      "horizon": 300,
+      "tape_length": 82,
+      "cut": 48,
+      "features": {
+        "command": [
+          0.04076671432020008,
+          -0.001509832768937014,
+          0.22593340009579055,
+          0.15734290473270407,
+          0.06510433337724197,
+          0.6761419104042052
+        ],
+        "contact": [
+          0.005047507584095001,
+          -0.0744624063372612,
+          -0.03677540272474289,
+          0.00019440916366875172,
+          0.0,
+          -0.011382900178432465,
+          0.0011987611651420593,
+          0.01949077844619751
+        ]
+      },
+      "prefix_hash": "e07ee25fc43c35ec74c17fe409e2241f2fdb3f814c22d801b57502fe99372c53",
+      "reset_hash": "5e1ee7d31ec12879c1799949687a21dfc6e04318f4cdcac3ba2f9a7a97c14478",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 0.0,
+        "robot0_eef_quat_xyzw": 0.0,
+        "robot0_gripper_qpos": 0.0
+      },
+      "archive_success": 1,
+      "archive_controls": 82,
+      "archive_first_finger": 42,
+      "native_hits": [
+        1,
+        1,
+        1
+      ],
+      "stops": [
+        82,
+        92,
+        162
+      ]
+    },
+    {
+      "task": "libero_goal-1",
+      "cadence": "paced",
+      "material": "ordinary",
+      "seed": 19120101,
+      "horizon": 300,
+      "tape_length": 267,
+      "cut": 108,
+      "features": {
+        "command": [
+          0.03912793284365775,
+          -0.015533534155716547,
+          0.05368380508339896,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "contact": [
+          0.020068906247615814,
+          -0.05986405909061432,
+          -0.021698705852031708,
+          0.00020542927086353302,
+          0.0,
+          0.002885788679122925,
+          5.613639950752258e-05,
+          0.008906424045562744
+        ]
+      },
+      "prefix_hash": "6adccc844422ecbab758829b359280262dd2813de19f32e3f41cdd194fcc7140",
+      "reset_hash": "5e1ee7d31ec12879c1799949687a21dfc6e04318f4cdcac3ba2f9a7a97c14478",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 4.359520971775055e-05,
+        "robot0_eef_quat_xyzw": 2.477318048477173e-05,
+        "robot0_gripper_qpos": 0.00032430514693260193
+      },
+      "archive_success": 1,
+      "archive_controls": 267,
+      "archive_first_finger": 80,
+      "native_hits": [
+        1,
+        1,
+        0
+      ],
+      "stops": [
+        267,
+        277,
+        300
+      ]
+    },
+    {
+      "task": "libero_goal-1",
+      "cadence": "paced",
+      "material": "reduced",
+      "seed": 19120101,
+      "horizon": 300,
+      "tape_length": 267,
+      "cut": 108,
+      "features": {
+        "command": [
+          0.03912793284365775,
+          -0.015533534155716547,
+          0.05368380508339896,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "contact": [
+          0.01997380703687668,
+          -0.05996096879243851,
+          -0.021788790822029114,
+          0.00016883853822946548,
+          0.0,
+          0.0028252601623535156,
+          7.076002657413483e-05,
+          0.008835077285766602
+        ]
+      },
+      "prefix_hash": "aefb059840257d86a71e741b4bdad349bb1131cbde7c1d57a6fc3dc6f7abfb1c",
+      "reset_hash": "5e1ee7d31ec12879c1799949687a21dfc6e04318f4cdcac3ba2f9a7a97c14478",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 0.00011667609214782715,
+        "robot0_eef_quat_xyzw": 2.475827932357788e-05,
+        "robot0_gripper_qpos": 0.001984239090234041
+      },
+      "archive_success": 1,
+      "archive_controls": 267,
+      "archive_first_finger": 80,
+      "native_hits": [
+        1,
+        1,
+        0
+      ],
+      "stops": [
+        267,
+        278,
+        300
+      ]
+    },
+    {
+      "task": "libero_object-0",
+      "cadence": "default",
+      "material": "ordinary",
+      "seed": 19130001,
+      "horizon": 280,
+      "tape_length": 133,
+      "cut": 64,
+      "features": {
+        "command": [
+          -0.14514919312545413,
+          -0.004902237687602691,
+          0.011257271938885205,
+          0.08910382144889228,
+          -0.0009351194263697016,
+          0.6217818084136246
+        ],
+        "contact": [
+          0.049396149814128876,
+          -0.030361510813236237,
+          -0.00042685866355895996,
+          0.0005000103265047073,
+          0.0,
+          -0.025717325508594513,
+          -0.0027243345975875854,
+          -0.007400982081890106
+        ]
+      },
+      "prefix_hash": "ef9af67c3b4ed96e0876b4b70c74fdcf6a11dca5e3d772a998fcbf06ccdc293a",
+      "reset_hash": "da7652adab21ea5f98bd46b02c53a7b3e5a2f7cfb26f138604b6bc1dcdf6ee22",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 4.656612873077393e-10,
+        "robot0_eef_quat_xyzw": 3.725290298461914e-09,
+        "robot0_gripper_qpos": 1.043081283569336e-07
+      },
+      "archive_success": 1,
+      "archive_controls": 133,
+      "archive_first_finger": 57,
+      "native_hits": [
+        1,
+        1,
+        0
+      ],
+      "stops": [
+        133,
+        143,
+        280
+      ]
+    },
+    {
+      "task": "libero_object-0",
+      "cadence": "default",
+      "material": "reduced",
+      "seed": 19130001,
+      "horizon": 280,
+      "tape_length": 133,
+      "cut": 64,
+      "features": {
+        "command": [
+          -0.14514919312545413,
+          -0.004902237687602691,
+          0.011257271938885205,
+          0.08910382144889228,
+          -0.0009351194263697016,
+          0.6217818084136246
+        ],
+        "contact": [
+          0.04896463453769684,
+          -0.030793026089668274,
+          -0.00037144869565963745,
+          0.000105319544672966,
+          0.0,
+          -0.02629627287387848,
+          -0.002870306372642517,
+          -0.00786515325307846
+        ]
+      },
+      "prefix_hash": "22a51f40ab57d17fc1307e7fc9d39cbd9d5748fcdfcd11b89dc5f7385577ea51",
+      "reset_hash": "da7652adab21ea5f98bd46b02c53a7b3e5a2f7cfb26f138604b6bc1dcdf6ee22",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 0.0,
+        "robot0_eef_quat_xyzw": 0.0,
+        "robot0_gripper_qpos": 0.0
+      },
+      "archive_success": 1,
+      "archive_controls": 133,
+      "archive_first_finger": 57,
+      "native_hits": [
+        1,
+        1,
+        0
+      ],
+      "stops": [
+        133,
+        143,
+        280
+      ]
+    },
+    {
+      "task": "libero_object-0",
+      "cadence": "paced",
+      "material": "ordinary",
+      "seed": 19130001,
+      "horizon": 280,
+      "tape_length": 280,
+      "cut": 116,
+      "features": {
+        "command": [
+          -0.059188146033138045,
+          -0.010312776301930357,
+          -0.0564453145519048,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "contact": [
+          0.06244194880127907,
+          -0.017625149339437485,
+          -2.8859823942184448e-05,
+          0.0018860064446926117,
+          0.0,
+          -0.015139773488044739,
+          -0.005487218499183655,
+          -0.012219741940498352
+        ]
+      },
+      "prefix_hash": "f5058be0084528794baffe68451c8136b7beb3c31def4490ec7c11f178b3a43a",
+      "reset_hash": "da7652adab21ea5f98bd46b02c53a7b3e5a2f7cfb26f138604b6bc1dcdf6ee22",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 2.9802322387695312e-08,
+        "robot0_eef_quat_xyzw": 1.955777406692505e-08,
+        "robot0_gripper_qpos": 6.332993507385254e-08
+      },
+      "archive_success": 0,
+      "archive_controls": 280,
+      "archive_first_finger": 102,
+      "native_hits": [
+        0,
+        0,
+        0
+      ],
+      "stops": [
+        280,
+        280,
+        280
+      ]
+    },
+    {
+      "task": "libero_object-0",
+      "cadence": "paced",
+      "material": "reduced",
+      "seed": 19130001,
+      "horizon": 280,
+      "tape_length": 280,
+      "cut": 116,
+      "features": {
+        "command": [
+          -0.059188146033138045,
+          -0.010312776301930357,
+          -0.0564453145519048,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "contact": [
+          0.06242237240076065,
+          -0.017596252262592316,
+          -4.9136579036712646e-05,
+          0.0006317421793937683,
+          5.266070365905762e-05,
+          -0.016978316009044647,
+          -0.0038234442472457886,
+          -0.01413024589419365
+        ]
+      },
+      "prefix_hash": "3ee856d44cb183bf07dfe2787274d618f08af2a15e0cfff5a8f8c583c14a6217",
+      "reset_hash": "da7652adab21ea5f98bd46b02c53a7b3e5a2f7cfb26f138604b6bc1dcdf6ee22",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 1.7039477825164795e-05,
+        "robot0_eef_quat_xyzw": 8.696690201759338e-06,
+        "robot0_gripper_qpos": 8.434057235717773e-06
+      },
+      "archive_success": 0,
+      "archive_controls": 280,
+      "archive_first_finger": 102,
+      "native_hits": [
+        0,
+        0,
+        0
+      ],
+      "stops": [
+        280,
+        280,
+        280
+      ]
+    },
+    {
+      "task": "libero_object-7",
+      "cadence": "default",
+      "material": "ordinary",
+      "seed": 19130701,
+      "horizon": 280,
+      "tape_length": 127,
+      "cut": 56,
+      "features": {
+        "command": [
+          0.05695660926074774,
+          0.040422535090352034,
+          0.14982022435081493,
+          0.29837831225669376,
+          0.03382271064758291,
+          0.5707114500069617
+        ],
+        "contact": [
+          0.0543709471821785,
+          -0.025288425385951996,
+          -0.002826474606990814,
+          0.015427947044372559,
+          5.221366882324219e-05,
+          0.012049108743667603,
+          0.0018045306205749512,
+          0.033903323113918304
+        ]
+      },
+      "prefix_hash": "1e38fa4aad5db1acda00b6031fd685d7ff5ca2185247e1f3c75c8365d98da7cc",
+      "reset_hash": "832987378b670c90773820a7ad71b17d2e1dd050c1043c6059b05b9f3e0fe693",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 2.9198825359344482e-05,
+        "robot0_eef_quat_xyzw": 1.745671033859253e-05,
+        "robot0_gripper_qpos": 8.932873606681824e-05
+      },
+      "archive_success": 1,
+      "archive_controls": 127,
+      "archive_first_finger": 46,
+      "native_hits": [
+        1,
+        1,
+        1
+      ],
+      "stops": [
+        127,
+        137,
+        208
+      ]
+    },
+    {
+      "task": "libero_object-7",
+      "cadence": "default",
+      "material": "reduced",
+      "seed": 19130701,
+      "horizon": 280,
+      "tape_length": 127,
+      "cut": 56,
+      "features": {
+        "command": [
+          0.05695660926074774,
+          0.040422535090352034,
+          0.14982022435081493,
+          0.29837831225669376,
+          0.03382271064758291,
+          0.5707114500069617
+        ],
+        "contact": [
+          0.054559431970119476,
+          -0.025099940598011017,
+          -0.002203129231929779,
+          0.015259698033332825,
+          4.3936073780059814e-05,
+          0.012904092669487,
+          0.0020816028118133545,
+          0.034720949828624725
+        ]
+      },
+      "prefix_hash": "fd9a25fd3727e8198230104a6d804a3a2278c819b0e752b2b93c8c978f8abafb",
+      "reset_hash": "832987378b670c90773820a7ad71b17d2e1dd050c1043c6059b05b9f3e0fe693",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 2.8423964977264404e-06,
+        "robot0_eef_quat_xyzw": 2.5760382413864136e-06,
+        "robot0_gripper_qpos": 3.45129519701004e-05
+      },
+      "archive_success": 0,
+      "archive_controls": 127,
+      "archive_first_finger": 46,
+      "native_hits": [
+        1,
+        1,
+        1
+      ],
+      "stops": [
+        128,
+        137,
+        208
+      ]
+    },
+    {
+      "task": "libero_object-7",
+      "cadence": "paced",
+      "material": "ordinary",
+      "seed": 19130701,
+      "horizon": 280,
+      "tape_length": 272,
+      "cut": 112,
+      "features": {
+        "command": [
+          -0.04589979809537783,
+          -0.0007923501356542443,
+          -0.0562910654639751,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "contact": [
+          0.053886979818344116,
+          -0.025403186678886414,
+          -0.0004530772566795349,
+          0.0005266573280096054,
+          4.887580871582031e-06,
+          -0.005898714065551758,
+          -0.00018256902694702148,
+          -0.010220140218734741
+        ]
+      },
+      "prefix_hash": "2d07945d1c5ccfdc41e7183eb037a9e517d08bee222fc35295ef0a41dbbc7bac",
+      "reset_hash": "832987378b670c90773820a7ad71b17d2e1dd050c1043c6059b05b9f3e0fe693",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 7.337331771850586e-05,
+        "robot0_eef_quat_xyzw": 2.4549663066864014e-05,
+        "robot0_gripper_qpos": 0.0002366676926612854
+      },
+      "archive_success": 1,
+      "archive_controls": 272,
+      "archive_first_finger": 80,
+      "native_hits": [
+        1,
+        0,
+        0
+      ],
+      "stops": [
+        272,
+        280,
+        280
+      ]
+    },
+    {
+      "task": "libero_object-7",
+      "cadence": "paced",
+      "material": "reduced",
+      "seed": 19130701,
+      "horizon": 280,
+      "tape_length": 272,
+      "cut": 112,
+      "features": {
+        "command": [
+          -0.04589979809537783,
+          -0.0007923501356542443,
+          -0.0562910654639751,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "contact": [
+          0.05380503833293915,
+          -0.02548203617334366,
+          -0.00025012344121932983,
+          0.0006272569298744202,
+          5.248934030532837e-06,
+          -0.006005719304084778,
+          -6.355345249176025e-05,
+          -0.010422877967357635
+        ]
+      },
+      "prefix_hash": "f7ab071a6a567730a50a03bbe4fa09bd150c1758763884b125024e72a1eb8ab6",
+      "reset_hash": "832987378b670c90773820a7ad71b17d2e1dd050c1043c6059b05b9f3e0fe693",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 7.806718349456787e-05,
+        "robot0_eef_quat_xyzw": 3.445334732532501e-05,
+        "robot0_gripper_qpos": 0.0001790504902601242
+      },
+      "archive_success": 1,
+      "archive_controls": 272,
+      "archive_first_finger": 80,
+      "native_hits": [
+        1,
+        0,
+        0
+      ],
+      "stops": [
+        272,
+        280,
+        280
+      ]
+    },
+    {
+      "task": "libero_spatial-1",
+      "cadence": "default",
+      "material": "ordinary",
+      "seed": 19140101,
+      "horizon": 220,
+      "tape_length": 95,
+      "cut": 56,
+      "features": {
+        "command": [
+          0.008468837437413529,
+          -0.01893643225368365,
+          0.08477559287612633,
+          0.08477063220536696,
+          0.00460445075678817,
+          0.4617700079205036
+        ],
+        "contact": [
+          0.006569430232048035,
+          -0.07309474050998688,
+          -0.03515062853693962,
+          0.00022040377371013165,
+          0.0,
+          -0.030501574277877808,
+          -0.0020839571952819824,
+          -0.015402555465698242
+        ]
+      },
+      "prefix_hash": "b49751ac41cc22a5580d49fea411b8464c05bb620a1ad6c69a6a22075ed56022",
+      "reset_hash": "a4237bf8323c7afb51ecb5d7c034169e6a17e2daee191c73d56ed73afc362ae9",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 0.0,
+        "robot0_eef_quat_xyzw": 0.0,
+        "robot0_gripper_qpos": 0.0
+      },
+      "archive_success": 1,
+      "archive_controls": 95,
+      "archive_first_finger": 51,
+      "native_hits": [
+        1,
+        1,
+        1
+      ],
+      "stops": [
+        95,
+        105,
+        175
+      ]
+    },
+    {
+      "task": "libero_spatial-1",
+      "cadence": "default",
+      "material": "reduced",
+      "seed": 19140101,
+      "horizon": 220,
+      "tape_length": 95,
+      "cut": 56,
+      "features": {
+        "command": [
+          0.008468837437413529,
+          -0.01893643225368365,
+          0.08477559287612633,
+          0.08477063220536696,
+          0.00460445075678817,
+          0.4617700079205036
+        ],
+        "contact": [
+          0.006312841549515724,
+          -0.07335133105516434,
+          -0.03540721535682678,
+          0.00023106415756046772,
+          0.0,
+          -0.030464187264442444,
+          -0.002079576253890991,
+          -0.01537543535232544
+        ]
+      },
+      "prefix_hash": "b8f6c8a66f703d57bbe068d3a767c8688b0f36d5b433be434d0918bf3aa7efcf",
+      "reset_hash": "a4237bf8323c7afb51ecb5d7c034169e6a17e2daee191c73d56ed73afc362ae9",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 0.0,
+        "robot0_eef_quat_xyzw": 0.0,
+        "robot0_gripper_qpos": 0.0
+      },
+      "archive_success": 1,
+      "archive_controls": 95,
+      "archive_first_finger": 51,
+      "native_hits": [
+        1,
+        1,
+        1
+      ],
+      "stops": [
+        95,
+        105,
+        174
+      ]
+    },
+    {
+      "task": "libero_spatial-1",
+      "cadence": "paced",
+      "material": "ordinary",
+      "seed": 19140101,
+      "horizon": 220,
+      "tape_length": 200,
+      "cut": 111,
+      "features": {
+        "command": [
+          0.04953289594364657,
+          -0.008170623028983701,
+          0.006478071746105911,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "contact": [
+          0.006540453527122736,
+          -0.07341460883617401,
+          -0.038902923464775085,
+          0.000957100186496973,
+          0.0,
+          -0.0074177086353302,
+          0.00452837347984314,
+          -0.0090445876121521
+        ]
+      },
+      "prefix_hash": "013412157ef7e6090475abfdf7bff52d59caa9884433b2b0439d366350e8c7f0",
+      "reset_hash": "a4237bf8323c7afb51ecb5d7c034169e6a17e2daee191c73d56ed73afc362ae9",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 0.0,
+        "robot0_eef_quat_xyzw": 0.0,
+        "robot0_gripper_qpos": 0.0
+      },
+      "archive_success": 1,
+      "archive_controls": 200,
+      "archive_first_finger": 104,
+      "native_hits": [
+        1,
+        1,
+        0
+      ],
+      "stops": [
+        200,
+        210,
+        220
+      ]
+    },
+    {
+      "task": "libero_spatial-1",
+      "cadence": "paced",
+      "material": "reduced",
+      "seed": 19140101,
+      "horizon": 220,
+      "tape_length": 200,
+      "cut": 111,
+      "features": {
+        "command": [
+          0.04953289594364657,
+          -0.008170623028983701,
+          0.006478071746105911,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "contact": [
+          0.006519144866615534,
+          -0.07343591749668121,
+          -0.03536447137594223,
+          0.0003851833753287792,
+          0.0,
+          -0.008878618478775024,
+          -0.00019049644470214844,
+          -0.012923717498779297
+        ]
+      },
+      "prefix_hash": "539db6ec089ea31e6dd17c1cff036d77cadfe16d36454d1ab4fbebead4e454b9",
+      "reset_hash": "a4237bf8323c7afb51ecb5d7c034169e6a17e2daee191c73d56ed73afc362ae9",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 0.0,
+        "robot0_eef_quat_xyzw": 0.0,
+        "robot0_gripper_qpos": 0.0
+      },
+      "archive_success": 1,
+      "archive_controls": 197,
+      "archive_first_finger": 104,
+      "native_hits": [
+        1,
+        1,
+        0
+      ],
+      "stops": [
+        197,
+        210,
+        220
+      ]
+    },
+    {
+      "task": "libero_spatial-7",
+      "cadence": "default",
+      "material": "ordinary",
+      "seed": 19140701,
+      "horizon": 220,
+      "tape_length": 118,
+      "cut": 44,
+      "features": {
+        "command": [
+          0.025284011359892694,
+          -0.17228996989710632,
+          -0.036326761281207265,
+          -0.0010060323833526175,
+          -0.15910975745069988,
+          0.037058546763181655
+        ],
+        "contact": [
+          0.01369057223200798,
+          -0.06573143601417542,
+          -0.039059460163116455,
+          0.00035286834463477135,
+          0.0,
+          0.002103477716445923,
+          -0.00500112771987915,
+          -0.0009559392929077148
+        ]
+      },
+      "prefix_hash": "01613afe99c58c8f55ce8aa266a32355cc1dfefc8e4f10f7fbc5c7443633cbd1",
+      "reset_hash": "c534e28de0849897fe8f2a2dc5cf9bd816c659a073cb9c8876b2c2c203879869",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 3.844499588012695e-06,
+        "robot0_eef_quat_xyzw": 2.9765069484710693e-06,
+        "robot0_gripper_qpos": 0.00011899345554411411
+      },
+      "archive_success": 1,
+      "archive_controls": 118,
+      "archive_first_finger": 34,
+      "native_hits": [
+        1,
+        1,
+        1
+      ],
+      "stops": [
+        118,
+        129,
+        196
+      ]
+    },
+    {
+      "task": "libero_spatial-7",
+      "cadence": "default",
+      "material": "reduced",
+      "seed": 19140701,
+      "horizon": 220,
+      "tape_length": 118,
+      "cut": 44,
+      "features": {
+        "command": [
+          0.025284011359892694,
+          -0.17228996989710632,
+          -0.036326761281207265,
+          -0.0010060323833526175,
+          -0.15910975745069988,
+          0.037058546763181655
+        ],
+        "contact": [
+          0.013724971562623978,
+          -0.06569704413414001,
+          -0.03902506083250046,
+          0.0003612213768064976,
+          0.0,
+          0.002113908529281616,
+          -0.004989013075828552,
+          -0.0009692907333374023
+        ]
+      },
+      "prefix_hash": "8e62300a25c64ff6ba0353d74e99c7876ce741955766ca1d2b8d9f3fa3d5a956",
+      "reset_hash": "c534e28de0849897fe8f2a2dc5cf9bd816c659a073cb9c8876b2c2c203879869",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 1.1920928955078125e-07,
+        "robot0_eef_quat_xyzw": 8.195638656616211e-08,
+        "robot0_gripper_qpos": 2.0781299099326134e-05
+      },
+      "archive_success": 1,
+      "archive_controls": 118,
+      "archive_first_finger": 34,
+      "native_hits": [
+        1,
+        1,
+        1
+      ],
+      "stops": [
+        118,
+        128,
+        196
+      ]
+    },
+    {
+      "task": "libero_spatial-7",
+      "cadence": "paced",
+      "material": "ordinary",
+      "seed": 19140701,
+      "horizon": 220,
+      "tape_length": 202,
+      "cut": 68,
+      "features": {
+        "command": [
+          -0.018869304847523583,
+          -0.0426174991418471,
+          -0.04534561909974615,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "contact": [
+          0.020372925326228142,
+          -0.05942527949810028,
+          -0.021355757489800453,
+          0.0008005853742361069,
+          0.0,
+          -0.014942377805709839,
+          -0.008815519511699677,
+          -0.015399158000946045
+        ]
+      },
+      "prefix_hash": "4c341dd6bc02c1d9926ca13a9c6f1da51bdba5ac2ef4f191607aafbc2803e7d9",
+      "reset_hash": "c534e28de0849897fe8f2a2dc5cf9bd816c659a073cb9c8876b2c2c203879869",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 3.933906555175781e-06,
+        "robot0_eef_quat_xyzw": 6.541609764099121e-06,
+        "robot0_gripper_qpos": 1.2735836207866669e-05
+      },
+      "archive_success": 1,
+      "archive_controls": 202,
+      "archive_first_finger": 62,
+      "native_hits": [
+        1,
+        1,
+        0
+      ],
+      "stops": [
+        202,
+        213,
+        220
+      ]
+    },
+    {
+      "task": "libero_spatial-7",
+      "cadence": "paced",
+      "material": "reduced",
+      "seed": 19140701,
+      "horizon": 220,
+      "tape_length": 202,
+      "cut": 68,
+      "features": {
+        "command": [
+          -0.018869304847523583,
+          -0.0426174991418471,
+          -0.04534561909974615,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "contact": [
+          0.019571632146835327,
+          -0.060226574540138245,
+          -0.022157050669193268,
+          0.0005359873175621033,
+          0.0,
+          -0.015151947736740112,
+          -0.008938074111938477,
+          -0.01551210880279541
+        ]
+      },
+      "prefix_hash": "844a667f76262296bb366a6ac6b2493d306cdff70cadeca29c675f5acdebc167",
+      "reset_hash": "c534e28de0849897fe8f2a2dc5cf9bd816c659a073cb9c8876b2c2c203879869",
+      "archive_reset_match": false,
+      "archive_max_abs": {
+        "robot0_eef_pos": 3.172829747200012e-05,
+        "robot0_eef_quat_xyzw": 3.0465424060821533e-05,
+        "robot0_gripper_qpos": 4.2871106415987015e-05
+      },
+      "archive_success": 1,
+      "archive_controls": 202,
+      "archive_first_finger": 62,
+      "native_hits": [
+        1,
+        1,
+        0
+      ],
+      "stops": [
+        202,
+        213,
+        220
+      ]
+    }
+  ]
+}

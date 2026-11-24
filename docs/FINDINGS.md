@@ -1,5 +1,13 @@
 # Verified findings
 
+## Native frozen-policy intervention selection
+
+On the four held-out Kinova3 drawer-and-bowl layouts, the factorized and pooled selectors chose different one-shot branches on all four and both succeeded only on layout 39. Continuing, correcting and cueing also succeeded only on 39, leaving zero failures that one-shot selection could rescue. Source-arm forks supplied zero rescues and one loss from cueing. The 116-episode native run verified 596 decision records, including 1,524 executed controls that differed from nominal. [Paired results and independent readback](../outputs/selector-native-launch-20261124-r1/RESULT.md)
+
+## Current drawer state from the fixed BASE camera
+
+A visual cue calibrated on 18 Panda demonstrations removed 20 premature placement cues across 248 archived Kinova3 replans, with zero missed openings. On four controlled Panda layouts it recognized all 16 reclosures. It missed 24 of 192 open frames, all at 0.5 mm beyond the native threshold. [Case-level validation](../outputs/frozen-vla-selector-20261124-r1/drawer-evidence.md)
+
 ## Frozen cross-embodiment adaptation on new arms
 
 On six fresh Kinova3 starts from three selected tasks, recent source-trained motion feedback reduced displacement error against its own forecast at the first intervention from 13.73 to 7.38 mm. Native successes fell from 5/6 untreated to 1/6 with feedback, with four losses and zero rescues. A static correction scored 4/6, and stale feedback scored 0/6. The untreated and two feedback branches shared exactly the first 15 physical controls. On a separate test of the same Panda arm with a different native controller, posture-dependent inverse kinematics retained 5/6 successes under joint-position control, versus 6/6 under original Cartesian control and 0/6 with a fixed calibrated inverse. [Feedback and native reward tapes](../outputs/frozen-vla-tracking-feedback-20261123-r1/RESULT.md) · [Controller comparison](../outputs/frozen-vla-native-controller-20261123-r1/RESULT-NATIVE.md)
@@ -71,7 +79,21 @@ On the eight nominal UR5e × π₀.₅ queries in the 96-query BASE retry panel,
 
 On 32 single-attempt queries across eight released tasks and four perturbation families, unadapted π₀.₅ succeeded on 19 and the same policy with the frozen streaming reader succeeded on 3. Sixteen pairs regressed and zero were rescued (paired difference −50.0 percentage points, suite-stratified task-bootstrap interval −59.4 to −40.6). Both arms issued identical commands for their first ten controls. The pilot omits Environment, which contributes to the historical five-family leaderboard. [Native readback and task-family counts](../outputs/symmeta-original-pro-20261123-r1/NATIVE-READBACK.md)
 
+## Probe direction and planar interface recovery on UR5e
+
+On open-loop frozen π₀.₅ action tapes, damping the inverse reduced clipped command error from 0.308 to 0.184 on 64 weak two-direction supports. Isotropic damping scored 0.189. A scaled rotation gave 0.039 on the 192 recorded yaw/gain supports where the damped full inverse gave 0.136. [Task-level intervals, strong-support controls and command replay](../outputs/frozen-vla-factory-20261123-r1/inverse/RESULT.md)
+
+On 384 new simulated UR5e supports with reflected or anisotropic XY interfaces and matched endpoint jitter, an independent second command direction reduced full-map relative forward error from 0.560 to 0.270 at the same 15-control budget (paired reduction 0.290, eight-task 95% interval 0.204 to 0.363). Trusted FK supplied the displacements. On 192 archived yaw/gain supports, scaled rotation gave lower error than full ridge, 0.080 versus 0.262. These screens measure command-map recovery. [Directions, maps and observation assumptions](../outputs/frozen-vla-factory-20261123-r1/excitation/RESULT.md)
+
+## Observation adapters for frozen SmolVLA
+
+An affine joint-to-pose adapter fitted on the opposite robot gave first-five-action RMSE of 0.2346 on UR5e and 0.3193 on IIWA relative to the frozen policy using the measured target tool pose. Dropping state gave 0.1001 pooled RMSE. Fitting the same adapter on 15 joint/pose pairs from three separate target episodes gave 0.0141, improving over opposite-arm calibration on all 16 held-out frames (paired mean reduction 0.2629, 95% eight-task interval 0.2097–0.3262). Unknown source-frame registration and downstream task success remain open. [Leave-one-arm-out and few-shot comparison](../outputs/frozen-vla-factory-20261123-r1/state-transfer/RESULT.md)
+
+On eight standard LIBERO Panda tasks with physical quarter-turn camera rolls, frozen SmolVLA's full-chunk action RMSE relative to the upright reference fell from 0.2069 to 0.0172 with an image-estimated correction. One upright scene was falsely rotated. In a separate experiment with one near-reset Panda/UR5e pose per task, rendering the source arm using only the target tool pose, jaw and installation geometry reduced 50-step translation RMS from 0.0596 to 0.0282 on ten full UR5e images. The displaced-render control scored 0.0922. These CPU forward passes compared proposals at fixed inputs and noise. The native success of these two input adapters remains unmeasured. [Camera controls](../outputs/frozen-vla-factory-20261123-r1/view/RESULT.md) · [Rendered arm and occlusion controls](../outputs/frozen-vla-factory-20261123-r1/rendered-appearance/RESULT.md)
+
 ## Matched-source visual yaw on UR5e
+
+On the 64 held-out supports, uniform pooling over all three learned motion vectors gave 6.53° yaw MAE. Selecting the first or final vector gave 10.81° and 12.05°. Weighting the three by magnitude gave 6.18° (paired change −0.36°, 95% eight-task interval −0.81° to +0.03°). All readouts used the same frozen 15-control features. [Temporal pooling experiment](../outputs/frozen-vla-factory-20261123-r1/pooling/RESULT.md)
 
 On the 64 held-out π₀.₅ supports, a learned visual reader scored 6.53° mean absolute yaw error and a six-coefficient linear flow projection scored 9.16°. Both used the same 1,344 labeled source traces and the same geometric solver with equal chunk weights. The 2.63° paired advantage had a 95% task-bootstrap interval of 1.64° to 3.65°. On the 32 unseen-angle cases alone the advantage was 0.30° (−2.40° to +2.90°). [Source fit, per-task estimates and reference intervals](../outputs/symmeta-matched-flow-20261123-r1/OFFLINE.md)
 

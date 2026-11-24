@@ -1,0 +1,7 @@
+# Temporal pooling on transferred UR5e motion vectors
+
+The matched-flow comparison retained the three per-chunk planar motion estimates for each of 96 passive UR5e supports collected with frozen π₀.₅. Its learned and linear visual readers were fitted on Panda/Sawyer. This experiment changes only how the three chunks vote on yaw. The hypothesis is that a fixed motion-magnitude weighting reduces the influence of short, noisy displacements. An equal or higher paired circular error than uniform pooling on held-out interfaces counts against it.
+
+Use the same issued directions, motion features and validity mask for each readout. Compare equal weights, motion magnitude, a circular medoid and the final valid chunk. Use the first valid chunk and zero yaw as controls. Reproduce the archived equal-weight prediction on every support before scoring. Fit no target parameters. Report absolute wrapped error by interface group, with paired differences from equal weights. Resample whole task identities for the interval. The primary comparison is motion magnitude versus uniform on the 64 held-out interfaces within each reader. Other heads and splits are exploratory.
+
+Data pin `757a44cd4374833cad790852df8b87ddf412e638`. The score is offline yaw error. All three vector estimates come from the archived 15-control feature extraction, so selecting a single chunk is an ablation of the pooling operation, not a shorter live attempt.
