@@ -1,0 +1,319 @@
+{
+  "method": "independent full-tape native reward and action readback",
+  "counts": {
+    "OSC_POSE": {
+      "cases": 6,
+      "all_success": 6,
+      "eligible": 6,
+      "eligible_success": 6
+    },
+    "hold": {
+      "cases": 6,
+      "all_success": 0,
+      "eligible": 6,
+      "eligible_success": 0
+    },
+    "ik": {
+      "cases": 6,
+      "all_success": 5,
+      "eligible": 6,
+      "eligible_success": 5
+    },
+    "calibrated": {
+      "cases": 6,
+      "all_success": 0,
+      "eligible": 6,
+      "eligible_success": 0
+    }
+  },
+  "cases": [
+    {
+      "suite": "libero_spatial",
+      "layout": 0,
+      "seed": 171117,
+      "task": "pick the akita black bowl next to the ramekin and place it on the plate",
+      "horizon": 220,
+      "physics": "acf69786c0ab41fe595be9a258c38c42f99cdb15dbe7f35e7122b222247138b1",
+      "opening": "c8139ead40cb763c40dfed20c6d773c0d39d73086d9aa9e11d58ca30fa7cfc52",
+      "noise": "82b8771a93eb1eb267d2e31ac83afb5ea96cb8b497394d681007ea02b506459c",
+      "methods": {
+        "OSC_POSE": {
+          "success": true,
+          "controls": 108,
+          "reward": 1.0,
+          "saturated_controls_exact": 0,
+          "saturated_controls_within_1e_6": 0,
+          "peak_normalized_non_gripper": 0.9337815046310425,
+          "raw_file_sha256": "e54bab46fbac4b81a4843bcfd85255de623de9ffd9ea2f02120167db92d408a9"
+        },
+        "hold": {
+          "success": false,
+          "controls": 220,
+          "reward": 0.0,
+          "saturated_controls_exact": 0,
+          "saturated_controls_within_1e_6": 0,
+          "peak_normalized_non_gripper": 0.0,
+          "raw_file_sha256": "7c016faaf54ef23ad45ac1e97c99fca9e2ee2b964046e6786ce22f7beffe8e0e"
+        },
+        "ik": {
+          "success": true,
+          "controls": 204,
+          "reward": 1.0,
+          "saturated_controls_exact": 197,
+          "saturated_controls_within_1e_6": 197,
+          "peak_normalized_non_gripper": 1.0,
+          "raw_file_sha256": "8e4aabe5996e341ab8b8df327d61a7ee2968d7cb68d5921f4494499f6a8b78f4"
+        },
+        "calibrated": {
+          "success": false,
+          "controls": 220,
+          "reward": 0.0,
+          "saturated_controls_exact": 218,
+          "saturated_controls_within_1e_6": 218,
+          "peak_normalized_non_gripper": 1.0,
+          "raw_file_sha256": "8d7c1b2ef4f0735e464f2cf7f1500cf5a6bd1e5f99f26aa2b80d6156eb95d400"
+        }
+      }
+    },
+    {
+      "suite": "libero_goal",
+      "layout": 0,
+      "seed": 171118,
+      "task": "put the bowl on the stove",
+      "horizon": 300,
+      "physics": "33166b370e90695d03dbb41e91d18696cec63d4480718bbb4cb97bfceab5317f",
+      "opening": "30569af73e1384aad2a62ecd8ed9e4a428af91c8da13cfeb4c677b643ee2e70a",
+      "noise": "073f0582b4aefd4e7b73b76f9c850331ca493b88501ccfee9f5a1d8dc74ba92e",
+      "methods": {
+        "OSC_POSE": {
+          "success": true,
+          "controls": 85,
+          "reward": 1.0,
+          "saturated_controls_exact": 0,
+          "saturated_controls_within_1e_6": 0,
+          "peak_normalized_non_gripper": 0.9742447733879089,
+          "raw_file_sha256": "179433d61b9fee31763bc5bc509da8cc41d74eec5c1ea2e82f869ee837446824"
+        },
+        "hold": {
+          "success": false,
+          "controls": 300,
+          "reward": 0.0,
+          "saturated_controls_exact": 0,
+          "saturated_controls_within_1e_6": 0,
+          "peak_normalized_non_gripper": 0.0,
+          "raw_file_sha256": "74968a3481e2b4acc8556117ea7d6f489654e6ffb2eebfb00606aa7eea6d1806"
+        },
+        "ik": {
+          "success": true,
+          "controls": 168,
+          "reward": 1.0,
+          "saturated_controls_exact": 154,
+          "saturated_controls_within_1e_6": 154,
+          "peak_normalized_non_gripper": 1.0,
+          "raw_file_sha256": "d793e048596b909aa8d1aacfcaee70495ef71ef4b63cd35049d54d5e3a991bc0"
+        },
+        "calibrated": {
+          "success": false,
+          "controls": 300,
+          "reward": 0.0,
+          "saturated_controls_exact": 246,
+          "saturated_controls_within_1e_6": 246,
+          "peak_normalized_non_gripper": 1.0,
+          "raw_file_sha256": "aae4e3286f585a5169f9a3d462e27740bd6bef3ae209bf800c79d5a70e66d474"
+        }
+      }
+    },
+    {
+      "suite": "libero_spatial",
+      "layout": 2,
+      "seed": 171317,
+      "task": "pick the akita black bowl next to the ramekin and place it on the plate",
+      "horizon": 220,
+      "physics": "a99a5dabbb9939aa2f1ce88056b4d7246c54230007873c343e1e3dd6c17d51c6",
+      "opening": "b445b56c80965e9f6c11ccfa5abdc369974dd3f06244001d2a1252bcd8bc6588",
+      "noise": "b11b4a382b4ac5def200f2b8429f11d973546a4909f7c726982a96406af8b728",
+      "methods": {
+        "OSC_POSE": {
+          "success": true,
+          "controls": 113,
+          "reward": 1.0,
+          "saturated_controls_exact": 0,
+          "saturated_controls_within_1e_6": 0,
+          "peak_normalized_non_gripper": 0.9270509481430054,
+          "raw_file_sha256": "22db0c66967a3f2cee4a531ae2bfd6edf5270a843bf1d5345b899e263f1e358e"
+        },
+        "hold": {
+          "success": false,
+          "controls": 220,
+          "reward": 0.0,
+          "saturated_controls_exact": 0,
+          "saturated_controls_within_1e_6": 0,
+          "peak_normalized_non_gripper": 0.0,
+          "raw_file_sha256": "cb1e63f0c4c80c866039ef54e983daa7aa190f64e067f5658a07094b5ad4f11b"
+        },
+        "ik": {
+          "success": false,
+          "controls": 220,
+          "reward": 0.0,
+          "saturated_controls_exact": 210,
+          "saturated_controls_within_1e_6": 210,
+          "peak_normalized_non_gripper": 1.0,
+          "raw_file_sha256": "4c5b4013e6ad4e5cdafe55648ded8fd704cfc091c17e832a88cc95c08bc72364"
+        },
+        "calibrated": {
+          "success": false,
+          "controls": 220,
+          "reward": 0.0,
+          "saturated_controls_exact": 187,
+          "saturated_controls_within_1e_6": 187,
+          "peak_normalized_non_gripper": 1.0,
+          "raw_file_sha256": "c7281595a852e641fb90074e1f9ecd112860a2020a10ea1120ff4a37dcd711c2"
+        }
+      }
+    },
+    {
+      "suite": "libero_goal",
+      "layout": 2,
+      "seed": 171318,
+      "task": "put the bowl on the stove",
+      "horizon": 300,
+      "physics": "6e7b11d3e0ac6a780964269e4ce3d4ef772936ef5b205151c45d3eca3d6ff77c",
+      "opening": "15346d9eb5c738c20516816b902f88b06fea21ad1d3997a4e8445890574a54ac",
+      "noise": "50da70ad25f2582158b387bec50aa6d5870cf9f0b5afa96da1a144db4d9df0a6",
+      "methods": {
+        "OSC_POSE": {
+          "success": true,
+          "controls": 79,
+          "reward": 1.0,
+          "saturated_controls_exact": 0,
+          "saturated_controls_within_1e_6": 0,
+          "peak_normalized_non_gripper": 0.9642865657806396,
+          "raw_file_sha256": "7bead4f3e488fce8642236de207173782f9fd26acb6edb8acf0e10165d0e9cc8"
+        },
+        "hold": {
+          "success": false,
+          "controls": 300,
+          "reward": 0.0,
+          "saturated_controls_exact": 0,
+          "saturated_controls_within_1e_6": 0,
+          "peak_normalized_non_gripper": 0.0,
+          "raw_file_sha256": "5ab65ee34b8bd90964f72d755488bb5aecb4c5031b5abfd91421b949b192ba7f"
+        },
+        "ik": {
+          "success": true,
+          "controls": 161,
+          "reward": 1.0,
+          "saturated_controls_exact": 154,
+          "saturated_controls_within_1e_6": 154,
+          "peak_normalized_non_gripper": 1.0,
+          "raw_file_sha256": "6439be70482e15291c191b4be5acf2d56e4eff685e1a9addd3682237cb735847"
+        },
+        "calibrated": {
+          "success": false,
+          "controls": 300,
+          "reward": 0.0,
+          "saturated_controls_exact": 291,
+          "saturated_controls_within_1e_6": 291,
+          "peak_normalized_non_gripper": 1.0,
+          "raw_file_sha256": "c287d287356e7cb5a0fdd978b8721a0092b22e2e5bb4b124c633e9a03e6a7eb1"
+        }
+      }
+    },
+    {
+      "suite": "libero_spatial",
+      "layout": 3,
+      "seed": 171417,
+      "task": "pick the akita black bowl next to the ramekin and place it on the plate",
+      "horizon": 220,
+      "physics": "6ed6f02f0f3c6c5eb69cc86ee11aa1431d0d6622d79eaa8dc1c2aca64e13c560",
+      "opening": "2ff908303c5fd73ae5df239abf0c62cd733c5d5d820185c46ad0477a0ee369cc",
+      "noise": "0dcb23293e93be11f10ecf71bb64a6a9624cec5a5f5abd637b7f22198d590d98",
+      "methods": {
+        "OSC_POSE": {
+          "success": true,
+          "controls": 108,
+          "reward": 1.0,
+          "saturated_controls_exact": 0,
+          "saturated_controls_within_1e_6": 0,
+          "peak_normalized_non_gripper": 0.9766932129859924,
+          "raw_file_sha256": "e124057a0c95fee3477409cc4fbf8364e13c3608f155b8f03a0378f7e92c6a3a"
+        },
+        "hold": {
+          "success": false,
+          "controls": 220,
+          "reward": 0.0,
+          "saturated_controls_exact": 0,
+          "saturated_controls_within_1e_6": 0,
+          "peak_normalized_non_gripper": 0.0,
+          "raw_file_sha256": "9d72734a13258fa31ff5c477b4b856af958b599bf69e0adf0cf3d0dbb528667f"
+        },
+        "ik": {
+          "success": true,
+          "controls": 194,
+          "reward": 1.0,
+          "saturated_controls_exact": 190,
+          "saturated_controls_within_1e_6": 190,
+          "peak_normalized_non_gripper": 1.0,
+          "raw_file_sha256": "2eeee7af6686be80503364b081c5be3d050273bff38e618a498a9fe0aecd6a6b"
+        },
+        "calibrated": {
+          "success": false,
+          "controls": 220,
+          "reward": 0.0,
+          "saturated_controls_exact": 220,
+          "saturated_controls_within_1e_6": 220,
+          "peak_normalized_non_gripper": 1.0,
+          "raw_file_sha256": "cde25f8ebbd28e00beedf2a4a5300cef0af21624b4cd32ac28245b6e1914b612"
+        }
+      }
+    },
+    {
+      "suite": "libero_goal",
+      "layout": 3,
+      "seed": 171418,
+      "task": "put the bowl on the stove",
+      "horizon": 300,
+      "physics": "1dc3dc541e4b8f67bcf4c6c66006f4cc2841b9e9473e9ec2772fb3907d1939d6",
+      "opening": "6d85764e3c633650b4822fd6c7b5995c7aa96acddf8eb6531e02ce9072fc786e",
+      "noise": "68e2fb34a3a97f35446bcfdc646043abbfb8c946a220c918851dfb35fa39f60b",
+      "methods": {
+        "OSC_POSE": {
+          "success": true,
+          "controls": 89,
+          "reward": 1.0,
+          "saturated_controls_exact": 0,
+          "saturated_controls_within_1e_6": 0,
+          "peak_normalized_non_gripper": 0.9538782238960266,
+          "raw_file_sha256": "679ac860dd216cf5085dcd4075b8608f72559947b777befa265a1cf8ced28a50"
+        },
+        "hold": {
+          "success": false,
+          "controls": 300,
+          "reward": 0.0,
+          "saturated_controls_exact": 0,
+          "saturated_controls_within_1e_6": 0,
+          "peak_normalized_non_gripper": 0.0,
+          "raw_file_sha256": "cd7271ed96d3620da38fc4070c7b1397064496dede113b3f6851dda264474547"
+        },
+        "ik": {
+          "success": true,
+          "controls": 169,
+          "reward": 1.0,
+          "saturated_controls_exact": 154,
+          "saturated_controls_within_1e_6": 154,
+          "peak_normalized_non_gripper": 1.0,
+          "raw_file_sha256": "6937a53ea5df1df5471d5a335c3606838c141e317d4a2eeeb639e321e07da14a"
+        },
+        "calibrated": {
+          "success": false,
+          "controls": 300,
+          "reward": 0.0,
+          "saturated_controls_exact": 258,
+          "saturated_controls_within_1e_6": 258,
+          "peak_normalized_non_gripper": 1.0,
+          "raw_file_sha256": "21653666239b6245f0bf7d79260b872b93429d71d40f00c6a4495e182b40f099"
+        }
+      }
+    }
+  ]
+}
