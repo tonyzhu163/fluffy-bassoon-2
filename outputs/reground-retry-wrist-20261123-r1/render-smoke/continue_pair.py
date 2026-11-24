@@ -1,7 +1,6 @@
 """Exact-opening continuation using pinned ReGround rollout, support and scoring."""
 import argparse
 from contextlib import ExitStack
-from functools import partial
 import os
 from pathlib import Path
 from unittest.mock import patch
