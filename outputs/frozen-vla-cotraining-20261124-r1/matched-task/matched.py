@@ -11,7 +11,9 @@ import numpy as np
 import rollout
 import verify
 from check_fit import inspect, sha
-from panel import key, require, save
+from fluffy_bassoon.xemb.embodiment import get_embodiment_spec
+from ur5e_motor import run_episode
+from panel import MANIFEST, RELEASE, key, require, save
 from ur5e_sim_worker import UR5eSimulator
 
 HERE = Path(__file__).resolve().parent
@@ -33,6 +35,46 @@ def contract():
                                   arm=arm, seed=task["seed_base"]+row))
     require(len(tasks) == 2 and len({key(c) for c in cases}) == len(cases) == 8, "eight crossed cases")
     return data, cases, tasks
+
+
+def episode(sim, motor, case, mode, reference, fixture, task):
+    # The held-out parent's episode admits only tabletop-mounted arms. Object uses the
+    # released floor-placement factory. Keep its public Wire and native motor unchanged.
+    mount = "OnTheGround" if case["suite"] == "libero_object" else "Mounted"
+    for attempt in range(1, 4):
+        wire = rollout.Wire(sim, motor, mode)
+
+        def check(reset):
+            env = wire.first["environment_reproducibility"]
+            body = wire.first["model_identity"]
+            require(all(env[k] == case[k] for k in ("suite", "task_id", "init_state_id", "seed"))
+                    and env["source_pin"] == RELEASE and env["manifest_sha256"] == MANIFEST
+                    and env["bddl_sha256"] == task["bddl"]["bddl_sha256"]
+                    and env["released_row_fingerprint"] == task["layouts"][str(case["init_state_id"])]
+                    and env["perturbation_plan"]["case_id"] == "BASE", "registered BASE row")
+            require(reset["worker_step_index"] == 0 and reset["prompt"] == task["native_prompt"]
+                    and reset["horizon"] == task["bddl"]["max_steps"] and body["arm"] == case["arm"]
+                    and body["model_class"] == mount+case["arm"] and body["joint_count"] == 7
+                    and body["control_freq"] == 20 and body["controller"] == "OSC_POSE"
+                    and body["gripper"] == "PandaGripper", "registered native interface")
+            require("llvmpipe" in reset["renderer"].lower() if fixture else reset["renderer_vendor"] == "NVIDIA Corporation",
+                    "wrong renderer")
+            if reference and (reset != reference["native"]["reset"] or env != reference["environment"]):
+                raise rollout.UnmatchedReset("opening differs before first action")
+
+        try:
+            native = run_episode(wire, wire, case, get_embodiment_spec("nom"), check_reset=check,
+                                 max_controls=15 if fixture else None, canonicalize_quat=False)
+        except rollout.UnmatchedReset:
+            if attempt == 3:
+                raise
+            continue
+        first = wire.first
+        raw = first["observation"]
+        return dict(case=case, mode=mode, fixture=fixture, accepted_reset_attempt=attempt, native=native,
+                    initial_xyz=raw["robot0_eef_pos"].tolist(), initial_fingers=raw["robot0_gripper_qpos"].tolist(),
+                    environment=first["environment_reproducibility"], body=first["model_identity"],
+                    parity=wire.parity_result, mechanism=wire.mechanism, calls=wire.calls)
 
 
 def estimate(values):
@@ -120,12 +162,12 @@ def run(args):
     (args.out/"episodes").mkdir()
     with patch.dict(os.environ, {"CUDA_VISIBLE_DEVICES": ""}):
         sim = UR5eSimulator(allow_mesa=args.fixture)
-    with sim, patch.object(rollout, "TASKS", tasks), patch.object(verify, "TASKS", tasks):
+    with sim, patch.object(verify, "TASKS", tasks):
         for c in cases:
             ref = None
             sim.call("create", dict(c, embodiment="nom"))
             for mode in MODES:
-                v = rollout.episode(sim, motor, c, mode, ref, args.fixture)
+                v = episode(sim, motor, c, mode, ref, args.fixture, registered["tasks"][c["suite"]])
                 verify.validate(v, args.fixture)
                 save(args.out/"episodes"/f"{key(c)}-{mode}.json", v)
                 if mode == "original":
