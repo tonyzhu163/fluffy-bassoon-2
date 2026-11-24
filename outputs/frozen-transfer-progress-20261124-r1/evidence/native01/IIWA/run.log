@@ -1,0 +1,84 @@
+{"status": "passed", "purpose": "evaluation", "timing_comparison_eligible": false, "allocation_type": "baige_container", "hostname": "job-xrzslhwy0nni-master-0", "probe_pid": 2449, "created_at_utc": "2026-11-24T02:59:18.279428+00:00", "devices": [{"allocation_ordinal": 0, "visibility_token": "0", "cuda_uuid": "cde8a4ac-4fde-69ec-5158-e23d43f4ebe8", "cuda_name": "NVIDIA GeForce RTX 4090", "cuda_total_bytes": 25250627584, "pci_bus_id": "0000:a2:00.0", "uuid": "GPU-cde8a4ac-4fde-69ec-5158-e23d43f4ebe8", "inventory": {"index": 0, "uuid": "GPU-cde8a4ac-4fde-69ec-5158-e23d43f4ebe8", "name": "NVIDIA GeForce RTX 4090", "memory_total_mib": 24564.0, "memory_used_mib": 1.0, "utilization_percent": 0.0, "pci_bus_id": "00000000:A2:00.0"}, "allocation_check": {"elements": 1048576, "result": 2097152.0, "touched_gpu_uuids": ["GPU-cde8a4ac-4fde-69ec-5158-e23d43f4ebe8"], "own_pid_gpu_uuids": ["GPU-cde8a4ac-4fde-69ec-5158-e23d43f4ebe8"]}}], "idle_utilization_required": false, "exclusive_training_admission": false, "admission_policy": "exclusive_scheduler_evaluation", "utilization_role": "telemetry_only", "utilization_telemetry": {"GPU-cde8a4ac-4fde-69ec-5158-e23d43f4ebe8": 0.0}, "maximum_initial_memory_mib": 256, "gpu_identity_mapping": {"method": "scheduler NVIDIA UUID set + CUDA/NVML PCI bijection + own-PID allocation", "assigned_nvml_uuids": ["GPU-cde8a4ac-4fde-69ec-5158-e23d43f4ebe8"]}, "compute_processes_before": [], "compute_processes_after": [{"gpu_uuid": "GPU-cde8a4ac-4fde-69ec-5158-e23d43f4ebe8", "pid": 2449, "process_name": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python", "memory_used_mib": "448"}], "topology": "\t\u001b[4mGPU0\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \t56-111\t1\t\tN/A\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks"}
+[robosuite WARNING] No private macro file found! (__init__.py:7)
+[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)
+[robosuite WARNING] To setup, run: python /mowenjie/fluffy-bassoon-2/setups/libero-meta-learning-20261117-r1/env/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_10' (10 tasks).
+/mowenjie/fluffy-bassoon-2/setups/libero-meta-learning-20261117-r1/simulator-source/libero/libero/benchmark/__init__.py:273: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  init_states = torch.load(init_states_path)
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_10' (10 tasks).
+/mowenjie/fluffy-bassoon-2/setups/libero-meta-learning-20261117-r1/simulator-source/libero/libero/benchmark/__init__.py:273: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  init_states = torch.load(init_states_path)
+IIWA libero_10 5 raw controls 155
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_10' (10 tasks).
+IIWA libero_10 5 tuned controls 520
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_10' (10 tasks).
+IIWA libero_10 5 fixed controls 520
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_10' (10 tasks).
+IIWA libero_10 5 progress controls 520
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_10' (10 tasks).
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_10' (10 tasks).
+IIWA libero_10 8 raw controls 361
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_10' (10 tasks).
+IIWA libero_10 8 tuned controls 347
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_10' (10 tasks).
+IIWA libero_10 8 fixed controls 348
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_10' (10 tasks).
+IIWA libero_10 8 progress controls 355
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+IIWA libero_goal 3 raw controls 179
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+IIWA libero_goal 3 tuned controls 181
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+IIWA libero_goal 3 fixed controls 248
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+IIWA libero_goal 3 progress controls 300
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+IIWA libero_goal 6 raw controls 87
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+IIWA libero_goal 6 tuned controls 85
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+IIWA libero_goal 6 fixed controls 88
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_goal' (10 tasks).
+IIWA libero_goal 6 progress controls 86
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_object' (10 tasks).
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_object' (10 tasks).
+IIWA libero_object 1 raw controls 127
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_object' (10 tasks).
+IIWA libero_object 1 tuned controls 205
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_object' (10 tasks).
+IIWA libero_object 1 fixed controls 280
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_object' (10 tasks).
+IIWA libero_object 1 progress controls 279
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_object' (10 tasks).
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_object' (10 tasks).
+IIWA libero_object 8 raw controls 143
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_object' (10 tasks).
+IIWA libero_object 8 tuned controls 148
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_object' (10 tasks).
+IIWA libero_object 8 fixed controls 143
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_object' (10 tasks).
+IIWA libero_object 8 progress controls 160
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_spatial' (10 tasks).
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_spatial' (10 tasks).
+IIWA libero_spatial 0 raw controls 75
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_spatial' (10 tasks).
+IIWA libero_spatial 0 tuned controls 76
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_spatial' (10 tasks).
+IIWA libero_spatial 0 fixed controls 74
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_spatial' (10 tasks).
+IIWA libero_spatial 0 progress controls 75
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_spatial' (10 tasks).
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_spatial' (10 tasks).
+IIWA libero_spatial 8 raw controls 90
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_spatial' (10 tasks).
+IIWA libero_spatial 8 tuned controls 94
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_spatial' (10 tasks).
+IIWA libero_spatial 8 fixed controls 91
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_spatial' (10 tasks).
+IIWA libero_spatial 8 progress controls 95
