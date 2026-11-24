@@ -1,0 +1,30 @@
+{
+  "schema": "pi05-plate-history-adapter-v1",
+  "data_seal_sha256": "3e133b69d850318cb20d61549e2f96ce6a7da8548cf05d25af7401ec28047c78",
+  "code_revision": "7f749ae21b8d74ad58536c00ae4aafd5ffca45c5",
+  "base": {
+    "openpi_revision": "215abfb217dbac7d5f1273282331b9b1866c0479",
+    "checkpoint_manifest": "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170",
+    "normalization": "b3a44bb2810436fb62917decaea58bd4d9110255df527dea21e8fd40c960bd84"
+  },
+  "seed": 20261124,
+  "draws": {
+    "train": 2,
+    "heldout": 2
+  },
+  "batch": 32,
+  "epochs": 8,
+  "optimizer": "Adam",
+  "lr": 0.001,
+  "engine": "direct-differentiable-Pi0.compute_loss",
+  "trainable_shapes": {
+    "history_in": [
+      52,
+      16
+    ],
+    "history_out": [
+      16,
+      320
+    ]
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "pi05-plate-history-adapter-v1",
+  "data_seal_sha256": "3e133b69d850318cb20d61549e2f96ce6a7da8548cf05d25af7401ec28047c78",
+  "code_revision": "7f749ae21b8d74ad58536c00ae4aafd5ffca45c5",
+  "base": {
+    "openpi_revision": "215abfb217dbac7d5f1273282331b9b1866c0479",
+    "checkpoint_manifest": "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170",
+    "normalization": "b3a44bb2810436fb62917decaea58bd4d9110255df527dea21e8fd40c960bd84"
+  },
+  "seed": 20261124,
+  "draws": {
+    "train": 2,
+    "heldout": 2
+  },
+  "batch": 32,
+  "epochs": 8,
+  "optimizer": "Adam",
+  "lr": 0.001,
+  "engine": "direct-differentiable-Pi0.compute_loss",
+  "trainable_shapes": {
+    "history_in": [
+      52,
+      16
+    ],
+    "history_out": [
+      16,
+      320
+    ]
+  },
+  "resident_stock": "8c163ce2d7842d52c2ef01070b51b75f0409a99627df70d6c0d19ae33fd4489e",
+  "initial_parameters": {
+    "history_in": "0c382a2ee654ca51152c193751a42e222f38a86335af7f70eb3888ddfcbcd861",
+    "history_out": "879a327b0043756e5c849cae712f5f5d41d806fda9615caddd6766f7f1810f6b"
+  },
+  "updates_per_fit": 96,
+  "exports": {
+    "panda": "d9bdda69e6de529bdbda7b4d2afd1437c2ede6908bb4aa1a16b89b2f65db2afc",
+    "mixed": "976d2ecdf5554c0a49b34cc5ea86834255cd8fa2a2f1c872fc28d02e4c2d268c"
+  },
+  "source_metrics": {
+    "before": "b89fb80e32b3345ba9df28640d17bfe7c3a5ed6bf4b9f35796b376a099efb600",
+    "after": "2f7a3b64f713e27c9f8815e440c983a17c8162ffbafa7ecf941965ce8c997d18"
+  },
+  "deployed_stock": "8c163ce2d7842d52c2ef01070b51b75f0409a99627df70d6c0d19ae33fd4489e",
+  "native_before_sha256": "6b46a0c91885ab54e6e5d68508af322b3c7433b0196dd69093c0d34b5bbbc666",
+  "native_after_sha256": "27200ac87047fc988c67ed5e75eba651dcfa7e2005e9ad078b94e2b362cbea9e",
+  "optimizer_sha256": "23c3d5313f43adc6fcc20f48eba410761c7ea99b7cb843fe8b5aa1bcd299a615",
+  "progress_sha256": "cb115ed3654bb7882e7154df15930d49920ed82fc20bc230e982cf40d338d551",
+  "heldout_draws_sha256": "84dc8e39a846f1652d440088b1a8b1519b56fd98dd5ac8660c915794943ee760",
+  "heldout_windows_sha256": "0e5a26cf14de086b9181a54b46a7af39e46fdd9701b164f2a771da4de865f123",
+  "resources": {
+    "device": "NVIDIA GeForce RTX 4090",
+    "seconds": 547.9309385190718,
+    "max_rss_kib": 16694500
+  }
+}

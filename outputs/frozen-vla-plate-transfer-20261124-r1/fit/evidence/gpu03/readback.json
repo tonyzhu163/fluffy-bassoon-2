@@ -1,0 +1,102 @@
+{
+  "pin": "7f749ae21b8d74ad58536c00ae4aafd5ffca45c5",
+  "fit": "7d845ce26bbb7f7f5da45b4885660023dd0e33b622cb9913547d50290ca16fe2",
+  "seal": "3e133b69d850318cb20d61549e2f96ce6a7da8548cf05d25af7401ec28047c78",
+  "exports": {
+    "panda": {
+      "head": "2cc43ba2534f48b2f7f3e0e7548d4799ac7f517d3a5a0d23ce000c35dca69b8d",
+      "fit": "d9bdda69e6de529bdbda7b4d2afd1437c2ede6908bb4aa1a16b89b2f65db2afc"
+    },
+    "mixed": {
+      "head": "86a26caf81832e02f8dc6f823904eb8214fc2b529ff9f652b983340cf6080d54",
+      "fit": "976d2ecdf5554c0a49b34cc5ea86834255cd8fa2a2f1c872fc28d02e4c2d268c"
+    }
+  },
+  "stock": "8c163ce2d7842d52c2ef01070b51b75f0409a99627df70d6c0d19ae33fd4489e",
+  "phase_draws_paired": true,
+  "updates": 96,
+  "heldout_windows": 64,
+  "measured_gpu_seconds": 690,
+  "last_update": {
+    "step": 96,
+    "epoch": 8,
+    "batch": 12,
+    "rows": 32,
+    "order_sha256": "7bff077850755dd1112a86223de915825c08d17e8b59e5465490a21f0c46bb35",
+    "seconds": 3.166142348665744,
+    "train_mse": {
+      "panda": 0.9106585383415222,
+      "mixed": 0.8268492817878723
+    }
+  },
+  "validation_mse": {
+    "Panda": {
+      "mixed": 1.5807085185078904,
+      "panda": 1.549858980695717,
+      "stock": 2.0605833657318726
+    },
+    "Sawyer": {
+      "mixed": 0.9745982340537012,
+      "panda": 1.025305962888524,
+      "stock": 1.3525268302764744
+    }
+  },
+  "source_contrasts": {
+    "Panda": {
+      "mixed_minus_stock": {
+        "delta": -0.4798748472239822,
+        "layout_deltas": [
+          -0.6832707105204463,
+          -0.4288172088563442,
+          -0.46710630040615797,
+          -0.34030516911298037
+        ],
+        "paired_layout_bootstrap95": [
+          -0.6196573351044208,
+          -0.37200545193627477
+        ]
+      },
+      "mixed_minus_panda": {
+        "delta": 0.030849537812173367,
+        "layout_deltas": [
+          0.06886697188019753,
+          -0.032476858235895634,
+          0.0910865692421794,
+          -0.004078531637787819
+        ],
+        "paired_layout_bootstrap95": [
+          -0.018277694936841726,
+          0.07997677056118846
+        ]
+      }
+    },
+    "Sawyer": {
+      "mixed_minus_stock": {
+        "delta": -0.3779285962227732,
+        "layout_deltas": [
+          -0.451876207254827,
+          -0.5066059082746506,
+          -0.3420553905889392,
+          -0.211176878772676
+        ],
+        "paired_layout_bootstrap95": [
+          -0.4792410577647388,
+          -0.27135171089321375
+        ]
+      },
+      "mixed_minus_panda": {
+        "delta": -0.050707728834822774,
+        "layout_deltas": [
+          -0.07505424320697784,
+          -0.03531496599316597,
+          -0.04216801933944225,
+          -0.05029368679970503
+        ],
+        "paired_layout_bootstrap95": [
+          -0.06683268724009395,
+          -0.03874149266630411
+        ]
+      }
+    }
+  }
+}
