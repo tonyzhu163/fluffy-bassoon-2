@@ -1,0 +1,188 @@
+{
+  "backend": "cpu",
+  "rows": 37,
+  "restored_bitwise": true,
+  "epochs": [
+    {
+      "epoch": 1,
+      "batches": 2,
+      "seconds": 0.7442712590564042,
+      "order_sha256": "a665eb79818cc9824cee4e984737b5693edca1f63c01422ff37eb9689d69915b",
+      "training_mse": {
+        "policy_only": 1.3636629678107597,
+        "adapter_only": 1.363732308954806,
+        "joint": 1.3637234649142704
+      }
+    },
+    {
+      "epoch": 2,
+      "batches": 2,
+      "seconds": 0.003958670073188841,
+      "order_sha256": "bca2218ff0051105f4fd4dba74e99c4f68c913a49b068eb8548d7e7a11806e04",
+      "training_mse": {
+        "policy_only": 1.363071061469413,
+        "adapter_only": 1.356249586955921,
+        "joint": 1.35565608256572
+      }
+    },
+    {
+      "epoch": 3,
+      "batches": 2,
+      "seconds": 0.003154580947011709,
+      "order_sha256": "38b8331fb87beb484d4b979524e7a3ca3be122f38017f5797fbd75a3fc83a9cc",
+      "training_mse": {
+        "policy_only": 1.3624682168702822,
+        "adapter_only": 1.3503780332771507,
+        "joint": 1.3491744995117188
+      }
+    },
+    {
+      "epoch": 4,
+      "batches": 2,
+      "seconds": 0.0031245140125975013,
+      "order_sha256": "7a8abfecc5fa6244ef8b573a7225987b3cdcd949eac7b6f1b539917530cd9334",
+      "training_mse": {
+        "policy_only": 1.3616228006981514,
+        "adapter_only": 1.3448880363155056,
+        "joint": 1.3428618070241567
+      }
+    },
+    {
+      "epoch": 5,
+      "batches": 2,
+      "seconds": 0.003040533047169447,
+      "order_sha256": "fee5dc7205c2ed3e12c87fac7c7f60e86bc0449093f0ddc29244f1b8d2d71cc4",
+      "training_mse": {
+        "policy_only": 1.3606627792925448,
+        "adapter_only": 1.3398177688186232,
+        "joint": 1.336847498610213
+      }
+    },
+    {
+      "epoch": 6,
+      "batches": 2,
+      "seconds": 0.0029770350083708763,
+      "order_sha256": "6bc6bc6a125fdb83573c55c4a59452999bd6f2c805a9fe93f827c1220db135ed",
+      "training_mse": {
+        "policy_only": 1.3593998986321527,
+        "adapter_only": 1.3347822749936902,
+        "joint": 1.330533150080088
+      }
+    },
+    {
+      "epoch": 7,
+      "batches": 2,
+      "seconds": 0.003055898007005453,
+      "order_sha256": "2933497a5bf57dedd234620d88b5dc86b64b6ea833a1c547ed6a8b843cfde490",
+      "training_mse": {
+        "policy_only": 1.3579748611192446,
+        "adapter_only": 1.329934616346617,
+        "joint": 1.3243815383395634
+      }
+    },
+    {
+      "epoch": 8,
+      "batches": 2,
+      "seconds": 0.0029091190081089735,
+      "order_sha256": "21f36fafed2c508c5c5630f2401110003a12073cdf3ae4f6c39c4c471e3ad226",
+      "training_mse": {
+        "policy_only": 1.3562619525033075,
+        "adapter_only": 1.3250407592670337,
+        "joint": 1.3177621364593506
+      }
+    }
+  ],
+  "parameters": {
+    "original": {
+      "action_out_proj/kernel": "4f4b7f988bca3a487947b940a079079975abe75e66d630835fd0bf06f38139ae",
+      "action_out_proj/bias": "2815b12acd6e515fe91eb9e2e432cca172634faef3b4fd0055005ca8941b1756",
+      "fitted": {}
+    },
+    "policy_only": {
+      "action_out_proj/kernel": "5fc47fa1f18c1fd9b31ad4a5258241d30fcdcdddf92c2a63bc355cad87e58c13",
+      "action_out_proj/bias": "2815b12acd6e515fe91eb9e2e432cca172634faef3b4fd0055005ca8941b1756",
+      "fitted": {
+        "left": "aa0bde85f8130e6576adec2c090401da99ac0e14b6fe503ab594aaa8ec73d4f1",
+        "right": "143f136bbb2e98d69ce409bc1e36bdb5adb8a5428c9f05fe08986503fd2211ed"
+      }
+    },
+    "adapter_only": {
+      "action_out_proj/kernel": "4f4b7f988bca3a487947b940a079079975abe75e66d630835fd0bf06f38139ae",
+      "action_out_proj/bias": "2815b12acd6e515fe91eb9e2e432cca172634faef3b4fd0055005ca8941b1756",
+      "fitted": {
+        "history_in": "106108963ca3eb8fe6efd0e28e70f5a93472854ec604588444271110f4efd388",
+        "history_out": "215a7d446fe2648249fad687614809faa31e8ae344b5ac3b9dd816c00f11b9da"
+      }
+    },
+    "joint": {
+      "action_out_proj/kernel": "e648fa3045feb223d55bf8500601432e5101003e81abfc5eea0ff2a1c04d1fdb",
+      "action_out_proj/bias": "2815b12acd6e515fe91eb9e2e432cca172634faef3b4fd0055005ca8941b1756",
+      "fitted": {
+        "history_in": "283130ed6174d0fff5b452f1585b4a68d56abeab57ac04f209e4951686d73673",
+        "history_out": "4db3e10b81e9f69784dcceeb4a2a1e658ca0ed33f19483c01147f996402aa59c",
+        "left": "cffca07862143bcfde4b4affb5b7668b1bead891df729de1556815a4d70972ef",
+        "right": "69ca6fbc5edc7bce53df2cbeab458cec6eb0e05510bb1abf4d85ae91d990fbea"
+      }
+    }
+  },
+  "metrics": {
+    "conditions": {
+      "original": {
+        "native_mse_32": 1.3636729717254639,
+        "first_five_physical_mse_7": 1.370123028755188,
+        "trajectory_mse_32": {
+          "a": 1.3847378492355347,
+          "b": 1.341437816619873
+        }
+      },
+      "policy_only": {
+        "native_mse_32": 1.3544656038284302,
+        "first_five_physical_mse_7": 1.3619577884674072,
+        "trajectory_mse_32": {
+          "a": 1.3746176958084106,
+          "b": 1.3331938982009888
+        }
+      },
+      "adapter_only": {
+        "native_mse_32": 1.3205925226211548,
+        "first_five_physical_mse_7": 1.3290287256240845,
+        "trajectory_mse_32": {
+          "a": 1.3377293348312378,
+          "b": 1.3025039434432983
+        }
+      },
+      "joint": {
+        "native_mse_32": 1.3116207122802734,
+        "first_five_physical_mse_7": 1.3211027383804321,
+        "trajectory_mse_32": {
+          "a": 1.3278447389602661,
+          "b": 1.2944954633712769
+        }
+      }
+    },
+    "paired_contrasts": {
+      "original": {
+        "trajectory_mean_joint_minus_control": -0.05191773176193237,
+        "bootstrap_trajectory_ci95": [
+          -0.056893110275268555,
+          -0.04694235324859619
+        ]
+      },
+      "policy_only": {
+        "trajectory_mean_joint_minus_control": -0.04273569583892822,
+        "bootstrap_trajectory_ci95": [
+          -0.04677295684814453,
+          -0.038698434829711914
+        ]
+      },
+      "adapter_only": {
+        "trajectory_mean_joint_minus_control": -0.008946537971496582,
+        "bootstrap_trajectory_ci95": [
+          -0.00988459587097168,
+          -0.008008480072021484
+        ]
+      }
+    },
+    "trajectory_count": 2
+  }
+}
