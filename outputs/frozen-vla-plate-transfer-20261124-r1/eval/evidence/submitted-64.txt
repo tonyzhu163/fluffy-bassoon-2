@@ -1,0 +1,8 @@
+STATUS=SUBMITTED_AND_ALL_FOUR_GPU_PROBES_PRESENT
+Original unscheduled distributed job job-d8zxjzwaqfo6 stopped 14:58:43 with zero instance runtime and zero evaluated cases before resubmission.
+New Baige Distributed Training lanes, all started 15:00–15:01 Shanghai. One RTX 4090 per lane, 8 CPU, 64 GiB, 120 min limit each; same pin fit manifest and protocol.
+gpu01s0 job-7ox4z7a84yd6
+gpu01s1 job-jtk91dats32z
+gpu01s2 job-ft1k3i7ds5zy
+gpu01s3 job-6igzxeqdhhuz
+eval worker: run wait-read-look.sh 64 prepare01 gpu01s0 gpu01s1 gpu01s2 gpu01s3. Monitor individual shard failure for recovery. Stats worker: wait for its seal.
