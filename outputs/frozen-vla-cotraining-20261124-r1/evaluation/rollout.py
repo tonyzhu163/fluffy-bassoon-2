@@ -64,13 +64,18 @@ class Wire:
             p = self.parity_result
             require(p["stock_sha256"] == p["noop_sha256"] and p["max_abs"] == 0 and p["shape"] == [10, 7],
                     "stock and zero-update injected sampler diverged")
-        result = self.motor.infer(item, noise=noise, condition=condition, history=used)
+            require(p.get("history_graph_noop_max_abs", p["max_abs"]) == 0,
+                    f"explicit no-op history injection mismatch: {p}")
+        infer = self.motor.infer
+        if self.controls and condition in ("adapter_only", "joint"):
+            infer = getattr(self.motor, "history_infer", infer)
+        result = infer(item, noise=noise, condition=condition, history=used)
         proposal = np.asarray(result["actions"], dtype=np.float32)
         if self.mode == "joint" and self.controls == 10:
             # Same joint trajectory, same observation/noise. Counterfactual proposals are never issued.
             effects = {}
             for label, h in (("zero", np.zeros_like(current)), ("lagged", self.lag)):
-                alt = np.asarray(self.motor.infer(item, noise=noise, condition="joint", history=h)["actions"])
+                alt = np.asarray(infer(item, noise=noise, condition="joint", history=h)["actions"])
                 diff = np.abs(proposal - alt)
                 effects[label] = dict(history=array_digest(h), proposal=array_digest(alt),
                                       first_five_max=float(diff[:5].max()), chunk_max=float(diff.max()))
