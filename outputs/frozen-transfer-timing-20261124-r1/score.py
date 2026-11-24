@@ -13,12 +13,15 @@ def rms(x):
     return float(np.sqrt(np.mean(np.square(x))))
 
 
-def row_for(ref, raw, r, model):
+def row_for(ref, raw, r, model, archive_positions):
     start = ref["trigger_start"]
     assert r["case"] == ref["case"] and r["scene"] == raw["scene"] == ref["scene"]
     for k in ("reset", "before_window", "prefix_xyz_hash", "prefix_actions_hash", "trigger_start"):
         assert r[k] == raw[k], k
     assert r["files"] == ref["files"] and r["n"] == len(r["rewards"]) == len(r["issued"])
+    assert r["sim_model"]["arm"] == r["arm"] and ref["sim_model"]["arm"] == "Panda"
+    assert r["sim_model"]["xml_sha256"] != ref["sim_model"]["xml_sha256"]
+    assert r["sim_model"]["gripper_xml_sha256"] == ref["sim_model"]["gripper_xml_sha256"]
     assert r["n"] <= r["horizon"] and r["native_return"] in (0,1)
     assert sum(r["rewards"]) == r["native_return"] and (not r["native_return"] or r["terminal"])
     assert r["n"] == r["tape_length"] or r["terminal"] or r["exhausted_horizon"]
@@ -46,7 +49,9 @@ def row_for(ref, raw, r, model):
             "timing":model["g"]*vr[sl]+model["b"]*np.diff(vr[start-1:start+10])}
     acc = np.diff(vr[start-1:start+10]).reshape(2,5)
     pred["shifted"] = model["g"]*vr[sl]+model["b"]*np.roll(acc,2,axis=1).reshape(-1)
+    arch_v = 1000*np.diff(archive_positions[start-1:start+10,2])
     return dict(**row, complete=True, v_rmse_mm=rms(vz[sl]-vp[sl]),
+                archived_ref_v_rmse_mm=rms(vz[sl]-arch_v),
                 anchored_z_rmse_mm=rms(1000*((z[start+1:start+11]-z[start])-(p[start+1:start+11]-p[start]))),
                 prefix_z_gap_mm=float(1000*(z[start]-p[start])), forecast_rmse_mm=rms(pred[r["mode"]]-vp[sl]),
                 changed_actions=int(np.sum(window_u!=orig)), z_change_rms=rms(window_u-orig), differential_rms=rms(corr))
@@ -84,15 +89,42 @@ def task_intervals(rows, key, arms=TARGETS, contacts=False):
     return stats
 
 
+def source_sensitivity(root, model):
+    """Describe variation in the source coefficient when an entire fitting task is omitted."""
+    cells = []
+    traces = []
+    for case in model["fit_cases"]:
+        if not case["complete"]:
+            continue
+        suite,t,layout,start = (case[k] for k in ("suite","task","layout","start"))
+        pair = [read(root/f"fit-{suite}-{t}-{layout}-{a}-identity.json") for a in ("Panda","Sawyer")]
+        raw = [np.diff(np.asarray(x["xyz_m"])[:,2]) for x in pair]
+        cells.append((f"{suite}/{t}",raw[0][start:start+10],raw[1][start:start+10],np.diff(raw[1][start-1:start+10])))
+        traces.append(dict(case=case, panda_replay_max_mm=pair[0]["archive_panda_max_abs_mm"],
+                           source_input_files=pair[0]["files"], both_have_contact=all(
+                               any(x["finger_contacts"][start:start+10]) for x in pair)))
+    held = []
+    for task in sorted({c[0] for c in cells}):
+        _, y, v, dv = zip(*(c for c in cells if c[0]!=task))
+        x = np.column_stack([np.concatenate(v),np.concatenate(dv)])
+        g,b = np.linalg.lstsq(x,np.concatenate(y),rcond=None)[0]
+        held.append(dict(omitted=task,g=float(g),b=float(b),effective_lead_ticks=float(b/g)))
+    return dict(leave_one_task_out=held,trace_details=traces)
+
+
 def score(base):
+    from hashlib import sha256
     root = base/"test"
     model = read(base/"fit/model.json")
+    assert model["plan_sha256"] == sha256(Path(__file__).with_name("PLAN.md").read_bytes()).hexdigest()
+    fit_donors = {p for source in (base/"fit").glob("fit-*.json") for p in read(source)["files"]}
     read(root/"completed.json")
     rows, donor = [], []
     for suite,t in QUERIES:
         for layout in (14,15):
             stem = f"test-{suite}-{t}-{layout}"
             p = read(root/f"{stem}-Panda-identity.json")
+            assert fit_donors.isdisjoint(p["files"])
             archive = read(Path(next(iter(p["files"]))))
             positions = np.concatenate([c["xyz"] for c in archive["chunks"]])
             tick = p["trigger_start"]
@@ -118,11 +150,11 @@ def score(base):
                     np.testing.assert_array_equal(np.roll(np.reshape(timing["derivative"],(2,5)),2,axis=1).ravel(),
                                                   shifted["derivative"])
                 for r in group:
-                    rows.append(row_for(p, raw, r, model))
+                    rows.append(row_for(p, raw, r, model, positions))
     assert len(rows)==48 and len(donor)==6
     summary = {}
     for name, arm in (("pooled",TARGETS),*((a,(a,)) for a in TARGETS)):
-        summary[name]={key:task_intervals(rows,key,arm) for key in ("v_rmse_mm","anchored_z_rmse_mm","forecast_rmse_mm","native")}
+        summary[name]={key:task_intervals(rows,key,arm) for key in ("v_rmse_mm","anchored_z_rmse_mm","forecast_rmse_mm","archived_ref_v_rmse_mm","native")}
         summary[name]["contact_v_rmse_mm"] = task_intervals(rows, "v_rmse_mm", arm, contacts=True)
     def pairs(m):
         lookup={(r["suite"],r["task"],r["layout"],r["arm"],r["mode"]):r for r in rows}
@@ -130,7 +162,7 @@ def score(base):
         cand=[r for k,r in lookup.items() if k[-1]=="timing"]
         return dict(gains=sum(b["native"]>a["native"] for a,b in zip(ref,cand)),
                     losses=sum(b["native"]<a["native"] for a,b in zip(ref,cand)))
-    write(base/"scores.json",dict(model=model,donors=donor,summary=summary,native_timing_vs={m:pairs(m) for m in MODES if m!="timing"}))
+    write(base/"scores.json",dict(model=model,source_sensitivity=source_sensitivity(base/"fit",model),donors=donor,summary=summary,native_timing_vs={m:pairs(m) for m in MODES if m!="timing"}))
     cols=list(dict.fromkeys(k for r in rows for k in r))
     with (base/"pairs.csv").open("x") as f:
         w=csv.DictWriter(f,cols)

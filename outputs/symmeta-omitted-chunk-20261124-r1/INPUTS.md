@@ -57,3 +57,7 @@ bash "$run/run_readers.sh" predict "$PIN" pred01 data01 reader01
 ```
 
 The shared output root is `/mowenjie/fluffy-bassoon-2/outputs/symmeta-omitted-chunk-20261124-r1`. `data01` contains the sealed source archives, `reader01` contains the six restored checkpoints and `pred01/readers.npz` carries full and omitted yaw predictions. `pred01/prediction-receipt.json` authenticates the prediction file and its dependencies. Repeats must use new attempt names. [Source builder](source.py) · [Reader driver](readers.py) · [Launcher](run_readers.sh)
+
+## Pinned Linux input readback
+
+Source packaging and checkpoint qualification both exited zero on detached revision `8159883b3483b26357eb851e36d285990891bc54`. Source packaging took 27 seconds on two allowed cores. The input seal SHA-256 is `c1442a9c972ee1c7d4255956c98d19186bd174814af2251d451685516ec2bbd1`. A separate label-blind readback compared the same camera endpoints and issued planar commands across all five populations. All 2,300 physical prefixes were distinct both within and across populations. Recomputing the DIS map with a new estimator on each of the 2,016 individual calibration and evaluation frame pairs reproduced every archived map exactly. In particular, no neighboring pair influenced a retained chunk's flow through OpenCV state. [Pinned source seal](reader-evidence/data01/source-seal.json) · [Pinned decoder qualification](reader-evidence/qual01/qualification.json) · [Cross-archive overlap and individual flow readback](reader-evidence/archivecheck01/receipt.json)
