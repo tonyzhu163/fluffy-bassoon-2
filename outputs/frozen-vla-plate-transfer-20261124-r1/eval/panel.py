@@ -1,6 +1,7 @@
 """Execute immutable, paired, native Goal 5 triplets on one shard."""
 import argparse
 import os
+import signal
 from pathlib import Path
 import time
 
@@ -45,9 +46,9 @@ def episode(sim, motor, row, noise, mode, dst, opening, fixture):
             proposal = np.asarray(result["actions"])
             require(route["graph"] in (("stock_native",) if mode == "stock" else
                     ("plain", "stock_native") if t == 0 else ("history",)), "incorrect issued sampler")
-            if t == 0 and mode == "stock":
+            if t == 0:
                 stock = motor.stock.infer(item, noise=z)["actions"]
-                require(np.array_equal(stock, proposal), "stock opening differs from original policy")
+                require(np.array_equal(stock, proposal), f"{mode} opening differs from original policy")
             if t == 5 and mode == "mixed":
                 original = np.asarray(motor.stock.infer(item, noise=z)["actions"])
                 forced, graph = motor.forced_zero(item, noise=z)
@@ -95,32 +96,64 @@ def run(args):
         require(sha(args.manifest) == args.manifest_sha, "physical manifest changed")
         rows = read(args.manifest)["cases"]
         require(0 <= args.start < args.stop <= len(rows), "shard bounds")
+        fit_receipt = read(args.fit / "fit.json")
+        data = args.fit.parent.parent / "data/dataset-v1/seal.json"
+        require(fit_receipt["code_revision"] == args.fit_pin and sha(data) == fit_receipt["data_seal_sha256"],
+                "fit code revision or source collection changed")
+        sources = read(data)["layouts"]
+        require(len(sources) == 20, "incomplete source layout seal")
+        for k, source_key in (("scene_hash", "scene_hash"), ("initial_state_sha256", "generated_row_fingerprint"),
+                              ("movable_xy_hash", "movable_xy_hash"), ("layout_seed", "layout_seed")):
+            require({r[k] for r in rows}.isdisjoint(r[source_key] for r in sources), f"source overlap at {k}")
         motor = PlatePolicy.load(args.fit)
         frozen = motor.digests()
     bind(out / "before.json", frozen)
-    with Simulator(fixture) as sim:
-        owned = [sim.call("fixture")] if fixture else rows[args.start + args.shard:args.stop:4]
-        require(bool(owned), "empty shard")
-        # Force first-time model registration outside recorded resets, using no control or policy.
-        sim.call("reset", owned[0])
-        for row in owned:
-            index = row["index"]
-            require(fixture or index % 4 == args.shard, "manifest shard assignment changed")
-            case = out / f"case-{index:05}"
-            case.mkdir()
-            started = time.monotonic()
-            noise = bank(row)
-            opening = None
-            for mode in (("stock",) if fixture else MODES):
-                opening = episode(sim, motor, row, noise, mode, case, opening, fixture)
-            seconds = time.monotonic() - started
-            bind(case / "complete.json", dict(case_id=index, layout_seed=row["layout_seed"], noise_seed=row["noise_seed"],
-                 scene_hash=row["scene_hash"], movable_xy_hash=row["movable_xy_hash"], seconds=seconds,
-                 receipts={m: sha(case / f"{m}.json") for m in (("stock",) if fixture else MODES)}))
-            print("sealed case", index, "seconds", round(seconds, 2), flush=True)
-    after = frozen if fixture else motor.digests()
-    bind(out / "after.json", after)
-    require(frozen == after, "frozen weights changed")
+    def timed_out(signum, frame):
+        raise TimeoutError(f"shard received signal {signum}")
+
+    signal.signal(signal.SIGTERM, timed_out)
+    try:
+        with Simulator(fixture) as sim:
+            owned = [sim.call("fixture")] if fixture else rows[args.start + args.shard:args.stop:4]
+            require(bool(owned), "empty shard")
+            # Force first-time model registration outside recorded resets, using no control or policy.
+            sim.call("reset", owned[0])
+            for row in owned:
+                index = row["index"]
+                require(fixture or index % 4 == args.shard, "manifest shard assignment changed")
+                case = out / f"case-{index:05}"
+                if args.resume is not None:
+                    earlier = args.resume / case.name
+                    if (earlier / "complete.json").is_file():
+                        require(read(args.resume / "before.json") == read(args.resume / "after.json") == frozen,
+                                "recovery weights differ")
+                        require((out / "run.txt").read_text().splitlines()[:7] ==
+                                (args.resume / "run.txt").read_text().splitlines()[:7], "recovery contract mismatch")
+                        seal = read(earlier / "complete.json")
+                        require(seal["case_id"] == index and seal["layout_seed"] == row["layout_seed"] and
+                                seal["noise_seed"] == row["noise_seed"] and set(seal["receipts"]) == set(MODES),
+                                "recovery case mismatch")
+                        for m in MODES:
+                            require(seal["receipts"][m] == sha(earlier / f"{m}.json") and
+                                    read(earlier / f"{m}.json")["tape_sha256"] == sha(earlier / f"{m}.h5"),
+                                    "recovery tape mismatch")
+                        case.symlink_to(earlier.resolve(), target_is_directory=True)
+                        continue
+                case.mkdir()
+                started = time.monotonic()
+                noise = bank(row)
+                opening = None
+                for mode in (("stock",) if fixture else MODES):
+                    opening = episode(sim, motor, row, noise, mode, case, opening, fixture)
+                seconds = time.monotonic() - started
+                bind(case / "complete.json", dict(case_id=index, layout_seed=row["layout_seed"], noise_seed=row["noise_seed"],
+                     scene_hash=row["scene_hash"], movable_xy_hash=row["movable_xy_hash"], seconds=seconds,
+                     receipts={m: sha(case / f"{m}.json") for m in (("stock",) if fixture else MODES)}))
+                print("sealed case", index, "seconds", round(seconds, 2), flush=True)
+    finally:
+        after = frozen if fixture else motor.digests()
+        bind(out / "after.json", after)
+        require(frozen == after, "frozen weights changed")
 
 
 if __name__ == "__main__":
@@ -131,6 +164,8 @@ if __name__ == "__main__":
     parser.add_argument("--manifest-sha")
     parser.add_argument("--fit", type=Path)
     parser.add_argument("--fit-sha")
+    parser.add_argument("--fit-pin")
+    parser.add_argument("--resume", type=Path)
     parser.add_argument("--start", type=int)
     parser.add_argument("--stop", type=int)
     parser.add_argument("--shard", type=int)

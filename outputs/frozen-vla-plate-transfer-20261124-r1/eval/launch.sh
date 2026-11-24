@@ -49,6 +49,8 @@ p = json.load(open(sys.argv[1]))
 assert p["status"] == "passed" and len(p["devices"]) == int(sys.argv[2])
 assert all(d["cuda_name"].upper() == "NVIDIA GEFORCE RTX 4090" for d in p["devices"]), p["devices"]
 PY
+    cpuset=$("$python" -c 'import os; print(",".join(map(str,sorted(os.sched_getaffinity(0)))))')
+    IFS=, read -ra cpu_ids <<< "$cpuset"
     declare -a gpu_ids pids
     IFS=, read -ra gpu_ids <<< "${CUDA_VISIBLE_DEVICES:-0,1,2,3}"
     for ((rank=0; rank<n; rank++)); do
@@ -60,13 +62,21 @@ import runpy, sys
 print(runpy.run_path(sys.argv[1])["egl_device"](int(sys.argv[2])))
 PY
 )
+        i=$((2*rank % ${#cpu_ids[@]}))
+        j=$(((i+1) % ${#cpu_ids[@]}))
+        cores="${cpu_ids[i]},${cpu_ids[j]}"
+        extra=()
+        if [[ -n ${EVAL_RESUME_FROM:-} ]]; then
+            [[ $EVAL_RESUME_FROM =~ ^gpu[[:alnum:]_-]+$ ]]
+            extra+=(--resume "$shared/$EVAL_RESUME_FROM/shard$shard")
+        fi
         remaining=$((wall - $(date +%s) + start))
         [[ $remaining -gt 0 && $egl =~ ^[0-9]+$ ]]
         q="$out/shard$shard"
         (
             export MUJOCO_EGL_DEVICE_ID="$egl" CUDA_VISIBLE_DEVICES="${gpu_ids[rank]}"
             printf '%s\n' "$EVAL_PIN" "$fit_pin" "$fit_sha" "$manifest_sha" "$first" "$stop" "$shard" "$egl" "$CUDA_VISIBLE_DEVICES" > "$q/run.txt"
-            timeout --kill-after=10s "$remaining" "$python" -Bu "$here/panel.py" "$q" --fit "$fit" --fit-sha "$fit_sha" --manifest "$manifest" --manifest-sha "$manifest_sha" --start "$first" --stop "$stop" --shard "$shard"
+            timeout --kill-after=25s "$remaining" taskset -c "$cores" "$python" -Bu "$here/panel.py" "$q" --fit "$fit" --fit-sha "$fit_sha" --fit-pin "$fit_pin" "${extra[@]}" --manifest "$manifest" --manifest-sha "$manifest_sha" --start "$first" --stop "$stop" --shard "$shard"
         ) > "$q/console.log" 2>&1 &
         pids+=("$!")
     done
