@@ -17,6 +17,10 @@ After both trials we computed the highest success a chooser could achieve if it 
 
 Four Baige distributed jobs each used one RTX 4090. Launchers ran for 3,086 seconds in total (0.86 GPU-hours). The scheduler displayed 3,186 seconds across the four jobs (0.89 GPU-hours). The native readbacks verified 64 motion-alignment and 32 cue episodes. Offline reader fitting was the fourth job. [Scheduler receipt](completed-jobs.jpg) · [Motion trial and paired intervals](../frozen-transfer-progress-20261124-r1/NATIVE.md)
 
+## Where an embodied decoder already changes native success
+
+There is a separate positive control for the broader research question. On Panda, changing the control interface from Cartesian actions to joint increments made a decoder necessary. A decoder that recomputed differential inverse kinematics at the current joint pose preserved 5/6 frozen-policy successes. A fixed calibrated inverse and holding the joints each got 0/6. That comparison held the body fixed, used two tasks, and lacked a tuned, pose-informed learned decoder. It shows when current robot configuration can matter to a frozen policy, and leaves open whether geometry helps a matched learned decoder generalize across bodies. [Matched joint-control trial](../frozen-vla-native-controller-20261123-r1/RESULT-NATIVE.md)
+
 ## Post-grasp timing
 
 Panda and Sawyer supplied a source estimate of the vertical response after commanded gripper closure. The experiment replayed the source commands on native IIWA and UR5e models, across three held-out tasks and two layouts. Mean vertical tracking error was 0.481 mm/control untreated, 0.473 with static gain, 0.491 with the source timing rule and 0.492 after shifting its corrections by two controls. The timing rule's difference from static was +0.018 mm/control (95% task interval −0.002 to +0.034). The two rules completed 2/12 fixed-tape continuations each. The source result gives no reason to carry this particular timing rule into a live-policy trial. [Motion, rewards and uncertainty](../frozen-transfer-timing-20261124-r1/RESULT.md)
