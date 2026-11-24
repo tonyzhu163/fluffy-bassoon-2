@@ -9,6 +9,8 @@ from collections import Counter, defaultdict
 from fractions import Fraction
 from pathlib import Path
 
+import h5py
+import numpy as np
 from scipy.stats import beta
 
 
@@ -181,8 +183,41 @@ def validate_rows(rows, n):
         require(len({row[field] for row in rows}) == n, f"duplicate {field}; stop and audit")
 
 
-def analyze(manifest_files, seals, budget_stop=False):
+def read_endpoint(tape):
+    """Reconstruct the endpoint from per-control native flags, including a success on control 300."""
+    rewards = np.asarray(tape["reward"])
+    n = len(rewards)
+    require(0 < n <= 300 and rewards.shape == (n,), "invalid number of native controls")
+    steps = np.asarray(tape["worker_step_index"])
+    require(np.array_equal(steps, np.arange(1, n + 1)), "missing or repeated native control")
+    require(np.isin(rewards, [0, 1]).all() and not rewards[:-1].any(), "invalid sparse reward sequence")
+    win = int(rewards[-1])
+    for key in ("success", "terminated", "truncated"):
+        flags = np.asarray(tape[key])
+        require(flags.shape == (n,) and np.isin(flags, [0, 1]).all() and not flags[:-1].any(),
+                f"invalid native {key} trace")
+    terminated, truncated = bool(tape["terminated"][-1]), bool(tape["truncated"][-1])
+    require(terminated != truncated and bool(tape["success"][-1]) == bool(win), "inconsistent terminal flags")
+    require(terminated if win else n == 300, "success must terminate; failure must exhaust the horizon")
+    return win
+
+
+def check_sources(path, sha, manifests):
+    require(digest(path) == sha, "source seal SHA mismatch")
+    source = load(path)["layouts"]
+    require(Counter(row["split"] for row in source) == {"train": 16, "heldout": 4}, "wrong source split")
+    for source_key, target_key in (("layout_seed", "layout_seed"), ("scene_hash", "scene_hash"),
+                                   ("movable_xy_hash", "movable_xy_hash"),
+                                   ("generated_row_fingerprint", "initial_state_sha256")):
+        sources = {row[source_key] for row in source}
+        require(len(sources) == 20, "non-distinct source layouts")
+        for doc in manifests.values():
+            require(sources.isdisjoint(row[target_key] for row in doc["cases"]), f"source/target {source_key} overlap")
+
+
+def analyze(manifest_files, source_file, source_sha, seals, budget_stop=False):
     manifests = {digest(path): check_manifest(path) for path in manifest_files}
+    check_sources(source_file, source_sha, manifests)
     prefixes, receipts, previous = [], [], []
     registered = []
     for j, (file, expected_sha) in enumerate(seals):
@@ -203,6 +238,19 @@ def analyze(manifest_files, seals, budget_stop=False):
         for i, row in enumerate(rows):
             for key in ("noise_seed", "layout_seed", "movable_xy_hash", "scene_hash"):
                 require(row[key] == panel[i][key], f"{key} differs from sealed physical enrollment")
+        for row in rows[len(previous):]:
+            case_dir = path.parent / row["case_dir"]
+            complete = load(case_dir / "complete.json")
+            for key in ("case_id", "layout_seed", "noise_seed", "scene_hash", "movable_xy_hash"):
+                require(row[key] == complete[key], f"case receipt mismatch: {key}")
+            for mode in MODES:
+                episode_file = case_dir / f"{mode}.json"
+                require(digest(episode_file) == complete["receipts"][mode], "episode receipt hash mismatch")
+                episode = load(episode_file)
+                require(episode["mode"] == mode and episode["case_id"] == row["case_id"], "wrong episode identity")
+                with h5py.File(case_dir / f"{mode}.h5", "r") as tape:
+                    require(episode["controls"] == len(tape["reward"]), "raw tape controls differ from receipt")
+                    require(read_endpoint(tape) == row[mode], "native endpoint differs from sealed outcome")
         prefixes.append(rows)
         receipts.append({"n": n, "file": path.name, "seal_sha256": expected_sha,
                          "manifest_sha256": seal["manifest_sha256"], "native_readback_sha256": seal["native_readback_sha256"]})
@@ -210,17 +258,18 @@ def analyze(manifest_files, seals, budget_stop=False):
     report = decide(prefixes)
     if budget_stop and report["decision"].startswith("continue_"):
         report["decision"] = report["decision"].replace("continue_", "inconclusive_")
-    return {"receipts": receipts, **report}
+    return {"source_seal_sha256": source_sha, "receipts": receipts, **report}
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest", type=Path, action="append", required=True)
+    parser.add_argument("--source", nargs=2, metavar=("SOURCE_SEAL", "SHA256"), required=True)
     parser.add_argument("--budget-stop", action="store_true", help="Parent closed allocation at or after last complete look.")
     parser.add_argument("--seal", nargs=2, action="append", metavar=("FILE", "SHA256"), required=True)
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
-    report = analyze(args.manifest, args.seal, args.budget_stop)
+    report = analyze(args.manifest, Path(args.source[0]), args.source[1], args.seal, args.budget_stop)
     with args.out.open("x") as out:
         json.dump(report, out, indent=2, allow_nan=False)
         out.write("\n")
