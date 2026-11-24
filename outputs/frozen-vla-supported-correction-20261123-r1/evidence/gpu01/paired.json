@@ -1,0 +1,199 @@
+{
+  "complete": true,
+  "cases": [
+    {
+      "case": {
+        "arm": "Kinova3",
+        "suite": "libero_goal",
+        "task_id": 3,
+        "init_state_id": 14,
+        "variant": "BASE",
+        "seed": 41810314
+      },
+      "success": {
+        "identity": false,
+        "rank1": false,
+        "rank1_free": true,
+        "smooth_df": true
+      },
+      "controls": {
+        "identity": 300,
+        "rank1": 300,
+        "rank1_free": 173,
+        "smooth_df": 180
+      }
+    },
+    {
+      "case": {
+        "arm": "Kinova3",
+        "suite": "libero_goal",
+        "task_id": 3,
+        "init_state_id": 15,
+        "variant": "BASE",
+        "seed": 41810315
+      },
+      "success": {
+        "identity": false,
+        "rank1": false,
+        "rank1_free": false,
+        "smooth_df": false
+      },
+      "controls": {
+        "identity": 300,
+        "rank1": 300,
+        "rank1_free": 300,
+        "smooth_df": 300
+      }
+    },
+    {
+      "case": {
+        "arm": "Kinova3",
+        "suite": "libero_10",
+        "task_id": 8,
+        "init_state_id": 14,
+        "variant": "BASE",
+        "seed": 41800814
+      },
+      "success": {
+        "identity": true,
+        "rank1": false,
+        "rank1_free": true,
+        "smooth_df": false
+      },
+      "controls": {
+        "identity": 404,
+        "rank1": 520,
+        "rank1_free": 470,
+        "smooth_df": 520
+      }
+    },
+    {
+      "case": {
+        "arm": "Kinova3",
+        "suite": "libero_10",
+        "task_id": 8,
+        "init_state_id": 15,
+        "variant": "BASE",
+        "seed": 41800815
+      },
+      "success": {
+        "identity": false,
+        "rank1": true,
+        "rank1_free": false,
+        "smooth_df": false
+      },
+      "controls": {
+        "identity": 520,
+        "rank1": 475,
+        "rank1_free": 520,
+        "smooth_df": 520
+      }
+    },
+    {
+      "case": {
+        "arm": "Kinova3",
+        "suite": "libero_goal",
+        "task_id": 6,
+        "init_state_id": 14,
+        "variant": "BASE",
+        "seed": 41810614
+      },
+      "success": {
+        "identity": true,
+        "rank1": true,
+        "rank1_free": true,
+        "smooth_df": true
+      },
+      "controls": {
+        "identity": 95,
+        "rank1": 93,
+        "rank1_free": 94,
+        "smooth_df": 93
+      }
+    },
+    {
+      "case": {
+        "arm": "Kinova3",
+        "suite": "libero_goal",
+        "task_id": 6,
+        "init_state_id": 15,
+        "variant": "BASE",
+        "seed": 41810615
+      },
+      "success": {
+        "identity": true,
+        "rank1": true,
+        "rank1_free": true,
+        "smooth_df": true
+      },
+      "controls": {
+        "identity": 99,
+        "rank1": 99,
+        "rank1_free": 98,
+        "smooth_df": 99
+      }
+    }
+  ],
+  "contrasts": {
+    "rank1_minus_identity": {
+      "pairs": 6,
+      "rescued": 1,
+      "harmed": 1,
+      "both_success": 2,
+      "both_failure": 2,
+      "reference_successes": 3,
+      "reference_failures": 3,
+      "harm_per_reference_success": 0.3333333333333333,
+      "rescue_per_reference_failure": 0.3333333333333333,
+      "difference": 0.0
+    },
+    "rank1_free_minus_identity": {
+      "pairs": 6,
+      "rescued": 1,
+      "harmed": 0,
+      "both_success": 3,
+      "both_failure": 2,
+      "reference_successes": 3,
+      "reference_failures": 3,
+      "harm_per_reference_success": 0.0,
+      "rescue_per_reference_failure": 0.3333333333333333,
+      "difference": 0.16666666666666666
+    },
+    "smooth_df_minus_identity": {
+      "pairs": 6,
+      "rescued": 1,
+      "harmed": 1,
+      "both_success": 2,
+      "both_failure": 2,
+      "reference_successes": 3,
+      "reference_failures": 3,
+      "harm_per_reference_success": 0.3333333333333333,
+      "rescue_per_reference_failure": 0.3333333333333333,
+      "difference": 0.0
+    },
+    "rank1_minus_rank1_free": {
+      "pairs": 6,
+      "rescued": 1,
+      "harmed": 2,
+      "both_success": 2,
+      "both_failure": 1,
+      "reference_successes": 4,
+      "reference_failures": 2,
+      "harm_per_reference_success": 0.5,
+      "rescue_per_reference_failure": 0.5,
+      "difference": -0.16666666666666666
+    },
+    "rank1_minus_smooth_df": {
+      "pairs": 6,
+      "rescued": 1,
+      "harmed": 1,
+      "both_success": 2,
+      "both_failure": 2,
+      "reference_successes": 3,
+      "reference_failures": 3,
+      "harm_per_reference_success": 0.3333333333333333,
+      "rescue_per_reference_failure": 0.3333333333333333,
+      "difference": 0.0
+    }
+  }
+}

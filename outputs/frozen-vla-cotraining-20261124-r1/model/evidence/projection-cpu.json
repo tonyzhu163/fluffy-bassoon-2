@@ -1,0 +1,46 @@
+{
+  "base": {
+    "openpi_revision": "215abfb217dbac7d5f1273282331b9b1866c0479",
+    "checkpoint_manifest": "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170",
+    "normalization": "b3a44bb2810436fb62917decaea58bd4d9110255df527dea21e8fd40c960bd84"
+  },
+  "backend": "cpu",
+  "cpu_affinity": [
+    32,
+    33
+  ],
+  "kernel_shape": [
+    1024,
+    32
+  ],
+  "hidden_shape": [
+    2,
+    10,
+    1024
+  ],
+  "velocity_shape": [
+    2,
+    10,
+    32
+  ],
+  "base_kernel": "4f4b7f988bca3a487947b940a079079975abe75e66d630835fd0bf06f38139ae",
+  "changed_kernel": "e498b1a867402bf01db462ae63417c9fedc904154d43afc058b9104f68f56d74",
+  "stock_hidden_fixture_velocity": "b84235fdedbadd67f97492a68468bb207971a6541180e36e0f710ac2db09dc50",
+  "zero_init_bitwise": true,
+  "merged_stock_layer_zero_history_bitwise": true,
+  "initial_grad_norm": {
+    "history_in": 0.0,
+    "history_out": 0.38022470474243164,
+    "left": 0.0,
+    "right": 0.20011024177074432
+  },
+  "updated_grad_norm": {
+    "history_in": 0.0003694075276143849,
+    "history_out": 0.37993624806404114,
+    "left": 0.0017970951739698648,
+    "right": 0.19986659288406372
+  },
+  "jax": "0.5.3",
+  "wall_s": 3.0966347970534116,
+  "peak_rss_kib": 885196
+}
