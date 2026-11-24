@@ -178,4 +178,10 @@ if __name__ == "__main__":
     p.add_argument("out", type=Path)
     p.add_argument("--fixture", action="store_true")
     a = p.parse_args()
-    save(a.out/("cpu-summary.json" if a.fixture else "native-summary.json"), summarize(a.out, a.fixture))
+    result = summarize(a.out, a.fixture)
+    target = a.out/("cpu-summary.json" if a.fixture else "native-summary.json")
+    if target.exists():
+        require(json.loads(target.read_text()) == result, "stored summary differs from complete readback")
+    else:
+        save(target, result)
+    print(f"Verified {result['episodes']} episodes on {result['starts']} paired starts.")
