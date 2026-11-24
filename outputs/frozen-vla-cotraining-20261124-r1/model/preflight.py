@@ -66,6 +66,9 @@ def run(args):
     for p, q in zip(jax.tree.leaves(params), jax.tree.leaves(restored), strict=True):
         np.testing.assert_array_equal(p, q)
     assert logs == replay
+    # The three zero-output initialized conditions execute the same native graph.
+    if len(set(logs[0]["training_mse"].values())) != 1:
+        raise AssertionError("Unmatched initial per-condition losses")
     scores = direct_fit.direct_scores(engine, params, samples, "train")
     template = initial_params(1024, "joint")
     motor = NativeSampler(stock, {c: full_params(p, template) for c,p in params.items()})

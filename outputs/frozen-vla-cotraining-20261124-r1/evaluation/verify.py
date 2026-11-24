@@ -61,6 +61,7 @@ def validate(row, fixture):
         p = row["parity"]
         require(p["shape"] == [10, 7] and p["max_abs"] == 0 and p["stock_sha256"] == p["noop_sha256"],
                 "stock/no-op decoded action parity")
+        require(p.get("history_graph_noop_max_abs", p["max_abs"]) == 0, "explicit no-op history graph parity")
     if mode == "joint" and n > 10:
         m = row["mechanism"]
         require(m["at_control"] == 10 and m["proposal"] == calls[2]["proposal"]

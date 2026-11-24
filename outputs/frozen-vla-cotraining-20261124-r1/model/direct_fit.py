@@ -11,7 +11,7 @@ import jax.numpy as jnp
 import numpy as np
 import optax
 
-from flow_head import CONDITIONS, initial_params, install, live_loss, token_loss
+from flow_head import CONDITIONS, full_params, initial_params, install, live_loss, token_loss
 
 SEED, BATCH, EPOCHS, LR = 20261124, 32, 8, .001
 DRAWS = {"train": 2, "heldout": 2}
@@ -26,32 +26,44 @@ def native_functions(model):
         m = nnx.merge(graph, state)
         return live_loss(m, key, obs, action, p, history, train=True).mean()
 
+    names = CONDITIONS[1:]
+    template = initial_params(model.action_out_proj.in_features, "joint")
+
+    def stack_conditions(params):
+        expanded = [full_params(params[c], template) for c in names]
+        return jax.tree.map(lambda *xs: jnp.stack(xs), *expanded)
+
+    # vmap differentiates genuine singleton Pi0.compute_loss calls. Only heads have
+    # a mapped axis; observations, model state and RNG (including image aug) do not.
+    row_grad = jax.vmap(jax.value_and_grad(scalar_loss), in_axes=(0, None, None, None, None, None))
+
     @jax.jit
     def accumulate(state, key, obs, action, history, params, totals, losses):
-        sums, values = {}, {}
-        for c, p in params.items():
-            value, grad = jax.value_and_grad(scalar_loss)(p, state, key, obs, action, history)
-            sums[c] = jax.tree.map(jnp.add, totals[c], grad)
-            values[c] = losses[c] + value
-        return sums, values
+        val, grad = row_grad(stack_conditions(params), state, key, obs, action, history)
+        sums = {c: {k: totals[c][k] + grad[k][i] for k in params[c]} for i, c in enumerate(names)}
+        return sums, {c: losses[c] + val[i] for i, c in enumerate(names)}
 
     def score(state, key, obs, action, history, params, *, train):
         _, noise_key, _ = jax.random.split(key, 3)
         target = jax.random.normal(noise_key, action.shape) - action
-        result = {}
-        for c, p in params.items():
+
+        def measure(p):
             m = nnx.merge(graph, state)
             layer = install(m.action_out_proj, p, history)
             velocity = []
+
             def record(h):
                 v = layer(h)
                 velocity.append(v)
                 return v
+
             m.action_out_proj = record
             native = m.compute_loss(key, obs, action, train=train)
             physical = token_loss(velocity[0][:, :5, :7], target[:, :5, :7]).mean()
-            result[c] = jnp.stack([native.mean(), physical])
-        return result
+            return jnp.stack([native.mean(), physical])
+
+        fitted = jax.vmap(measure)(stack_conditions(params))
+        return {"original": measure({}), **{c: fitted[i] for i, c in enumerate(names)}}
 
     return frozen, accumulate, jax.jit(score, static_argnames=("train",))
 

@@ -32,7 +32,8 @@ def main(args):
         require(len(jax.devices()) == 1 and jax.devices()[0].platform == "gpu", "allocated CUDA device")
         require(args.fit and args.fit_sha and sha(args.fit/"fit.json") == args.fit_sha, "source checkpoint lock")
         metadata["offline_fit"] = inspect(args.fit, args.fit_sha, args.data_manifest)
-        motor = LockedPolicy.load(args.fit)
+        from deployed import Deployed
+        motor = Deployed(LockedPolicy.load(args.fit))
         metadata.update(fit=str(args.fit.resolve()), fit_sha256=args.fit_sha)
     save(args.out/"run.json", metadata)
     before = motor.digests()
@@ -48,6 +49,17 @@ def main(args):
         if fixture:
             from fixture import native_timeout
             save(args.out/"native-timeout-fixture.json", native_timeout(sim))
+        else:
+            from ur5e_motor import NOISE_SEED_OFFSET, to_openpi_observation
+            import numpy as np
+            historical = dict(arm="Panda", suite="libero_goal", task_id=3, variant="BASE", init_state_id=14, seed=41810314)
+            _, opening = sim.call("create", dict(historical, embodiment="nom"))
+            item = to_openpi_observation(opening["observation"], opening["language_instruction"])
+            noise = np.random.default_rng(historical["seed"] + NOISE_SEED_OFFSET).standard_normal((10,32)).astype(np.float32)
+            parity = motor.parity(item, noise=noise)
+            save(args.out/"historical-noop.json", dict(case=historical, parity=parity))
+            require(parity.get("history_graph_noop_max_abs", parity["max_abs"]) == 0,
+                    "deployed history graph with a zero update diverged on historical stock readback; see historical-noop.json")
         for case in cases():
             reference = None
             # Warm the release's first-time model registration before capturing the reference physics.
