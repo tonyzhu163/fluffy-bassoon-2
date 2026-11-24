@@ -96,7 +96,7 @@ def verify(obj, tapes):
         elif m == "raw":
             expected = np.clip(plan[:k], -1, 1)
         else:
-            expected = native_commands(plan[:k], correction)
+            expected = native_commands(plan, correction)[:k]
         steps = r["native_steps"]
         issued = np.asarray([s["action"] for s in steps], dtype="f4")
         require(issued.shape == (k, 7) and issued.tobytes() == expected.tobytes(), "physical action")
