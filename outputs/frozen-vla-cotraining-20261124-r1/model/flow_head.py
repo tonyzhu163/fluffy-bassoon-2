@@ -39,19 +39,24 @@ def effective_kernel(base, params):
     return (base.astype(jnp.float32) + update).astype(base.dtype)
 
 
+def history_offset(params, history):
+    z = jnp.tanh((history * UNITS) @ params["history_in"])
+    return (z @ params["history_out"]).reshape(-1, HORIZON, ACTION_DIM)
+
+
+def add_offset(layer, offset):
+    def project(hidden):
+        native = layer(hidden)
+        return (native.astype(jnp.float32) + offset).astype(native.dtype)
+    return project
+
+
 def install(layer, params, history):
     """Change the actual Linear kernel on the trace-local module, preserving native precision and bias."""
     layer.kernel.value = effective_kernel(layer.kernel.value, params)
     if "history_in" not in params:
         return layer
-    z = jnp.tanh((history * UNITS) @ params["history_in"])
-    offset = (z @ params["history_out"]).reshape(-1, HORIZON, ACTION_DIM)
-
-    def project(hidden):
-        native = layer(hidden)
-        return (native.astype(jnp.float32) + offset).astype(native.dtype)
-
-    return project
+    return add_offset(layer, history_offset(params, history))
 
 
 def cached_forward(layer):
