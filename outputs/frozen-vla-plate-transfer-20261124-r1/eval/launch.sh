@@ -46,7 +46,10 @@ else
     [[ $fit_pin =~ ^[0-9a-f]{40}$ && $fit_attempt =~ ^gpu[[:alnum:]_-]+$ && $fit_sha =~ ^[0-9a-f]{64}$ ]]
     [[ $prepared =~ ^prepare[0-9]+$ && $manifest_sha =~ ^[0-9a-f]{64}$ && $first =~ ^[0-9]+$ && $stop =~ ^[0-9]+$ ]]
     [[ $wall =~ ^[0-9]+$ && $wall -gt 0 && $wall -le 32400 && $lane =~ ^(all|[0-3])$ ]]
-    [[ ($first -eq 0 && $stop -eq 64) || ($first -ge 64 && $stop -eq 2*first && $((first & (first - 1))) -eq 0) ]]
+    # One launch may compute a disjoint part of a registered cohort. Readback still requires the full prefix.
+    bound=64
+    while ((first >= bound)); do bound=$((2*bound)); done
+    [[ $first -lt $stop && $stop -le $bound && $((first % 4)) -eq 0 && $((stop % 4)) -eq 0 ]]
     fit_shared="$shared/../fit"
     fit="$fit_shared/$fit_attempt"
     fit_tree="$fit_shared/code-$fit_pin"
