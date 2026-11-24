@@ -26,7 +26,8 @@ runtime="$here/../frozen-vla-reachability-20261123-r1/cpu.sh"
 collect() (
     ulimit -t "${PROBE_CPU_LIMIT:-540}"
     export REACH_CPUS="$1" REACH_CACHE="$out/cache/$1"
-    /usr/bin/time -f 'wall=%e user=%U sys=%S' -o "$out/time-$1.txt" bash "$runtime" "$here/collect.py" "$out" "$1" "$2" > "$out/$1.log" 2>&1
+    TIMEFORMAT='wall=%R user=%U sys=%S'
+    { time bash "$runtime" "$here/collect.py" "$out" "$1" "$2" > "$out/$1.log" 2>&1; } 2>"$out/time-$1.txt"
 )
 collect 38 UR5e &
 p38=$!
@@ -38,4 +39,5 @@ wait "$p39" || rc=$?
 ((rc == 0))
 ulimit -t 45
 export REACH_CPUS=38 REACH_CACHE="$out/cache/38"
-/usr/bin/time -f 'wall=%e user=%U sys=%S' -o "$out/time-score.txt" bash "$runtime" "$here/score.py" "$out" > "$out/score.log" 2>&1
+TIMEFORMAT='wall=%R user=%U sys=%S'
+{ time bash "$runtime" "$here/score.py" "$out" > "$out/score.log" 2>&1; } 2>"$out/time-score.txt"
