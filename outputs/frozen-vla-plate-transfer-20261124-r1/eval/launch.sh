@@ -41,6 +41,10 @@ else
     unset LIBGL_ALWAYS_SOFTWARE GALLIUM_DRIVER EGL_PLATFORM
     n=1
     if [[ $lane == all ]]; then n=4; fi
+    if [[ -z ${CUDA_VISIBLE_DEVICES:-} ]]; then
+        # The exclusive Baige container can export only NVIDIA_VISIBLE_DEVICES.
+        export CUDA_VISIBLE_DEVICES=$(seq -s, 0 $((n-1)))
+    fi
     gpu_python="$root/setups/robocasa365-native-20261101-r1/env/bin/python"
     PYTHONPATH="$code/src" "$gpu_python" -Bu "$code/scripts/[train]gpu_probe.py" --expected-count "$n" --baige-container --purpose evaluation --output "$out/gpu.json"
     "$python" - "$out/gpu.json" "$n" <<'PY'
