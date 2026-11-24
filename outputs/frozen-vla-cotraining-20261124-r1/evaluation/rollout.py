@@ -64,7 +64,8 @@ class Wire:
             p = self.parity_result
             require(p["stock_sha256"] == p["noop_sha256"] and p["max_abs"] == 0 and p["shape"] == [10, 7],
                     "stock and zero-update injected sampler diverged")
-            require(p.get("history_graph_noop_max_abs", p["max_abs"]) == 0,
+            require(p.get("deployed_noop_sha256", p["noop_sha256"]) == p["stock_sha256"] and
+                    p.get("deployed_noop_max_abs", p["max_abs"]) == 0,
                     f"explicit no-op history injection mismatch: {p}")
         infer = self.motor.infer
         if self.controls and condition in ("adapter_only", "joint"):
@@ -79,6 +80,14 @@ class Wire:
                 diff = np.abs(proposal - alt)
                 effects[label] = dict(history=array_digest(h), proposal=array_digest(alt),
                                       first_five_max=float(diff[:5].max()), chunk_max=float(diff.max()))
+            if hasattr(self.motor, "forced_zero"):
+                forced = np.asarray(self.motor.forced_zero(item, noise, "joint"))
+                zero = np.asarray(infer(item, noise=noise, condition="joint", history=np.zeros_like(current))["actions"])
+                effects["forced_zero"] = dict(proposal=array_digest(forced), history=effects["zero"]["history"],
+                    first_five_max=float(np.max(np.abs(proposal[:5] - forced[:5]))),
+                    chunk_max=float(np.max(np.abs(proposal - forced))),
+                    compiler_only_first_five_max=float(np.max(np.abs(zero[:5] - forced[:5]))),
+                    compiler_only_chunk_max=float(np.max(np.abs(zero - forced))))
             self.mechanism = dict(at_control=self.controls, current=array_digest(current),
                                   proposal=array_digest(proposal), alternatives=effects)
         self.calls.append(dict(t=self.controls, obs={k: array_digest(v) for k, v in item.items() if k != "prompt"},

@@ -58,7 +58,8 @@ def main(args):
             noise = np.random.default_rng(historical["seed"] + NOISE_SEED_OFFSET).standard_normal((10,32)).astype(np.float32)
             parity = motor.parity(item, noise=noise)
             save(args.out/"historical-noop.json", dict(case=historical, parity=parity))
-            require(parity.get("history_graph_noop_max_abs", parity["max_abs"]) == 0,
+            require(parity["deployed_noop_sha256"] == parity["repeated_stock_sha256"] == parity["stock_sha256"] and
+                    parity["deployed_noop_max_abs"] == 0,
                     "deployed history graph with a zero update diverged on historical stock readback; see historical-noop.json")
         for case in cases():
             reference = None
