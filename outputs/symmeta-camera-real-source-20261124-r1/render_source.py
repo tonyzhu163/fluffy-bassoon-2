@@ -27,6 +27,15 @@ def render_one(out, case):
             rot = render.rz(names[name])
             return self.pivot + rot @ (pos-self.pivot), rot @ mat
 
+        def check_marks(self, world, calib):
+            # At wide azimuths the original world-triplet can overlap in projection.
+            # Place a visible non-collinear triangle in the actual MuJoCo camera
+            # frame; the primary independent rasterizer still verifies calibration.
+            gl=np.asarray(self.sim.data._data.cam_xmat[self.cam]).reshape(3,3)
+            center=np.asarray(self.sim.data._data.cam_xpos[self.cam])
+            markers=center+np.array([[-.09,-.06,-.65],[.02,.09,-.72],[.10,-.07,-.78]])@gl.T
+            return super().check_marks(markers,calib)
+
         def record(self, nominal, settings):
             with patch.object(render,'VIEWS',tuple(names)):
                 return super().record(nominal,settings)
