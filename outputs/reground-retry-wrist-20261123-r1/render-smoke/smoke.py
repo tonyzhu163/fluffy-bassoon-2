@@ -235,7 +235,7 @@ def saved_openings(attempts, output, processor):
                     [row["query"] for row in enrollment] == pins["keys"], "Archived support assignment differs")
         with np.load(path / "opening.npz", allow_pickle=False) as tape:
             opening = {key: tape[key] for key in tape.files if key != "proposal"}
-        ref.require(opening["starts"].tolist() == pins["keys"], "Opening tape enrollment differs")
+        ref.require(identical(opening["starts"], np.array(CASES)), "Opening tape enrollment differs")
         yaws = [row["estimate"][0] for row in enrollment]
         mapped, processed, mutations = processor.inspect(saved_observations(opening), yaws,
                                                          opening["tasks"].tolist(), opening["noise_seeds"].tolist())
@@ -250,7 +250,7 @@ def saved_openings(attempts, output, processor):
                                                     support_equal=left[1] == right[1],
                                                     processed=compare(left[2], right[2])))
     ref.require(left[1] == right[1], "Archived support metadata differs")
-    return right[0], right[1]
+    return {name: record[0] for name, record in archive.items()}, right[1]
 
 
 def capture(workers, processor, yaws, archive, path):
@@ -279,7 +279,7 @@ def capture(workers, processor, yaws, archive, path):
                             repeated=[compare(record["original"], obs) for obs in record["repeated"]],
                             render_leaves={k: leaf_receipt(v) for k, v in render["arrays"].items()}))
     ref.write(path.with_suffix(".json"), dict(leaves={k: leaf_receipt(v) for k, v in arrays.items()},
-              mutations=mutations, archive=compare(archive, arrays), renderer=details))
+              mutations=mutations, archive={name: compare(tape, arrays) for name, tape in archive.items()}, renderer=details))
     return arrays, processed, mutations, details
 
 
@@ -318,14 +318,14 @@ def qualify(output, processor, archive, enrollment):
                 with pool(transport, seed) as other:
                     right = capture(other, *args, output / f"{mode}-{repetition}-B")
             trials.append(dict(lifecycle=("parked" if repetition else "sequential"), opening=compare(left[0], right[0]),
-                               processed=compare(left[1], right[1]), archive=[compare(archive, row[0]) for row in (left, right)],
+                               processed=compare(left[1], right[1]), archive={name: [compare(tape, row[0]) for row in (left, right)] for name, tape in archive.items()},
                                mutation_detected=any(any(row[2].values()) or any(
                                    d["parent_vs_child"] or d["child_retained_after_render"] for d in row[3])
                                    for row in (left, right)),
                                repeat_render_drift=any(any(any(d["repeated"]) for d in row[3]) for row in (left, right))))
         results.append(dict(mode=mode, support_match=matches_support, support_sim_sha256=support, trials=trials,
                             exact=matches_support and all(not (t["opening"] or t["processed"] or t["mutation_detected"]
-                                                               or t["repeat_render_drift"] or any(t["archive"]))
+                                                               or t["repeat_render_drift"] or all(any(gaps) for gaps in t["archive"].values()))
                                                           for t in trials)))
         ref.write(output / "paired-report.json", dict(code=os.environ["RENDER_PIN"], cases=CASES, trials=results))
     return any(row["exact"] for row in results)
