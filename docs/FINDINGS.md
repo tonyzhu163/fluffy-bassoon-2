@@ -1,5 +1,9 @@
 # Verified findings
 
+## Rotation sign branch in the policy state on Kinova3 (frozen SmolVLA, exploratory)
+
+The simulator reports the Kinova3 hand quaternion with the opposite sign from Panda and IIWA, so the packed rotation X is near −3.2 where every source arm gives about +3.1. On six drawer-and-bowl layouts with two noise seeds, frozen SmolVLA scored 0/12 on Kinova3 as reported and 4/12 with the same rotation written on the source branch; Panda scored 3/12 as reported and 0/12 when written on the Kinova3 branch. All seven changed outcomes went the predicted way (sign test p = 0.016). Every native π₀.₅ Kinova3 run packed the raw sign; the effect on π₀.₅ is unmeasured. [Native CPU results](../outputs/frozen-shift-smolvla-state-20261124-r1/RESULT.md)
+
 ## Native frozen-policy intervention selection
 
 On the four held-out Kinova3 drawer-and-bowl layouts, the factorized and pooled selectors chose different one-shot branches on all four and both succeeded only on layout 39. Continuing, correcting and cueing also succeeded only on 39, leaving zero failures that one-shot selection could rescue. Source-arm forks supplied zero rescues and one loss from cueing. The 116-episode native run verified 596 decision records, including 1,524 executed controls that differed from nominal. [Paired results and independent readback](../outputs/selector-native-launch-20261124-r1/RESULT.md)

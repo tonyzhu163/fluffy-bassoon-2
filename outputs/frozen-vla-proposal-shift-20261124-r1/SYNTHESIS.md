@@ -13,6 +13,10 @@ Workflow `wfr-ee7ff79a408f4313ad384aa33fea172c` finished. No π₀.₅ forward p
 | [Attribution](../frozen-shift-attribution-20261124-r1/RESULT.md) | Archived proposals | Panda render moves 10 archived proposals 0.0045–0.0077 closer to donor controls from about 0.18–0.21. No noise floor is archived, so this is not a shift beyond noise | Forward-only job |
 | [Embodiment prefix](../frozen-shift-prefix-20261124-r1/RESULT.md) | CPU stand-in | Fitting code keeps every base tensor byte-identical on a stand-in model. 171 fit rows from two IIWA tapes. OpenPI paths never executed | Not ready, needs a GPU smoke |
 
+## Follow-up: the sign branch decides SmolVLA's outcome
+
+[Native CPU test](../frozen-shift-smolvla-state-20261124-r1/RESULT.md), 48 episodes on the six failed layouts with two noise seeds. Kinova3 0/12 as reported and 4/12 with the rotation on the source branch. Panda 3/12 as reported and 0/12 on the Kinova3 branch. All 7 changed outcomes go the predicted way (sign test p = 0.016). This is SmolVLA only.
+
 ## Reading
 
 - The state lane gives the most specific lead. A sign-branch error in the same packed channel took frozen π₀ on UR5e to 0/96 until the quaternion was canonicalized ([FINDINGS](../../docs/FINDINGS.md)). Kinova3 has run with the raw sign in every native study here. Whether that explains any of the six π₀.₅ failures is unmeasured, and Kinova3 does solve layouts 16, 31, 34, 35 and 39 with the raw sign, so it cannot be the whole story.
