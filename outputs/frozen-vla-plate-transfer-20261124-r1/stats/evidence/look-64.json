@@ -1,0 +1,91 @@
+{
+  "source_seal_sha256": "3e133b69d850318cb20d61549e2f96ce6a7da8548cf05d25af7401ec28047c78",
+  "receipts": [
+    {
+      "n": 64,
+      "file": "look-64.json",
+      "seal_sha256": "c37059501e6fe4eaffba5b9e8d4ebdb8ca5f07d6e5f85b0e481e562022aa134d",
+      "manifest_sha256": "b7996a9e110c9ceed9babb081a18476c1dc0b9a8d7e623703f5912031e44bc3f",
+      "native_readback_sha256": "1ca596e03cf4ff9373ed8227cfc2c63fc4ea154434cdf11eef6b4dd9a7711384"
+    }
+  ],
+  "decision": "primary_harm",
+  "crossings": {
+    "primary": {
+      "n": 64,
+      "direction": "harm",
+      "authorized_at": 64
+    },
+    "secondary": null
+  },
+  "looks": [
+    {
+      "primary": {
+        "n": 64,
+        "both_succeed": 0,
+        "both_fail": 2,
+        "rescues": 0,
+        "losses": 62,
+        "successes": {
+          "mixed": 0,
+          "stock": 62
+        },
+        "rates": {
+          "mixed": 0.0,
+          "stock": 0.96875
+        },
+        "paired_risk_difference": -0.96875,
+        "simultaneous_95": {
+          "risk_difference": [
+            -0.999436694039661,
+            -0.6432272001375341
+          ],
+          "discordance": [
+            0.8293044554960042,
+            0.999436694039661
+          ],
+          "win_given_discordance": [
+            0.0,
+            0.11218874692236998
+          ]
+        },
+        "test": {
+          "p_two_sided": 4.336808689942018e-19,
+          "alpha_increment": 0.005,
+          "across_look_adjusted_p": 4.336808689942018e-18,
+          "authorized_at": 64
+        }
+      },
+      "secondary": {
+        "n": 64,
+        "both_succeed": 0,
+        "both_fail": 64,
+        "rescues": 0,
+        "losses": 0,
+        "successes": {
+          "mixed": 0,
+          "panda": 0
+        },
+        "rates": {
+          "mixed": 0.0,
+          "panda": 0.0
+        },
+        "paired_risk_difference": 0.0,
+        "simultaneous_95": {
+          "risk_difference": [
+            -0.1088811606793529,
+            0.1088811606793529
+          ],
+          "discordance": [
+            0.0,
+            0.1088811606793529
+          ],
+          "win_given_discordance": [
+            0.0,
+            1.0
+          ]
+        }
+      }
+    }
+  ]
+}
