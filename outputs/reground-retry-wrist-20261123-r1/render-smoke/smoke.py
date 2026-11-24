@@ -253,8 +253,8 @@ def saved_openings(attempts, output, processor):
     return {name: record[0] for name, record in archive.items()}, right[1]
 
 
-def capture(workers, processor, yaws, archive, path):
-    rows, states = native_reset(workers, CASES)
+def capture(workers, processor, yaws, archive, path, reset=None):
+    rows, states = native_reset(workers, CASES) if reset is None else reset
     raw = [row["obs"] for row in rows]
     first = observations(raw)
     mapped, processed, mutations = processor.inspect(raw, yaws, [row["description"] for row in rows],
@@ -310,10 +310,16 @@ def qualify(output, processor, archive, enrollment):
             # pools, as needed for comparison before either live arm queries the model.
             args = (processor, [row["estimate"][0] for row in enrollment], archive)
             with pool(transport, seed) as workers:
-                left = capture(workers, *args, output / f"{mode}-{repetition}-A")
                 if repetition:
                     with pool(transport, seed) as other:
-                        right = capture(other, *args, output / f"{mode}-{repetition}-B")
+                        # Reproduce the scoring preflight ordering. Extra EGL calls
+                        # in either process occur after both original reset returns.
+                        first = native_reset(workers, CASES)
+                        second = native_reset(other, CASES)
+                        left = capture(workers, *args, output / f"{mode}-{repetition}-A", reset=first)
+                        right = capture(other, *args, output / f"{mode}-{repetition}-B", reset=second)
+                else:
+                    left = capture(workers, *args, output / f"{mode}-{repetition}-A")
             if not repetition:
                 with pool(transport, seed) as other:
                     right = capture(other, *args, output / f"{mode}-{repetition}-B")
