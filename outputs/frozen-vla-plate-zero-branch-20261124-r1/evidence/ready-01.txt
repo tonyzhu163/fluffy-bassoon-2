@@ -1,0 +1,15 @@
+STATUS=READY_PARENT_SUBMITS
+PIN=0db6cec5a66e3f7ed024bc87f9c4ffff2dd3c34d
+SCHEDULER=Baige Distributed Training only, each submission exactly one RTX 4090, 64 GiB RAM and two CPU cores, 45 min max (launcher deadline 2400 s). Expected ~1.15 gross GPUh from prior measured four-lane runtime; first-look provisional allocation remains 4 GPUh.
+COHORT=64..127 inclusive; each lane takes case i where i%4=lane. Four independent one-GPU jobs; start with fewer in parallel if required by quota.
+PRIOR_INVENTORY_SHA256=cc5d8aae55c5346ab36adde51abcdb44a19a89954e2ec18201fd1732f149b824
+MANIFEST_SHA256=b7996a9e110c9ceed9babb081a18476c1dc0b9a8d7e623703f5912031e44bc3f
+FIT_SHA256=7d845ce26bbb7f7f5da45b4885660023dd0e33b622cb9913547d50290ca16fe2
+MIXED_HEAD_SHA256=86a26caf81832e02f8dc6f823904eb8214fc2b529ff9f652b983340cf6080d54
+PFS=/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-plate-zero-branch-20261124-r1
+PFS preallocation verified: 192 HDF5 slots each 48 MiB with reported blocks, plus all receipts and audit slots, across reserve-gpu01s0..3 (9.00 GiB). 172 GiB and 184175 free inodes at reservation. Each job atomically takes its own reserve path and writes to node-local scratch before durable publication. Independent CPU enrollment audit passed; receipt /mowenjie/fluffy-bassoon-2/outputs/frozen-vla-plate-zero-branch-20261124-r1/enrollment-01.json.
+LANE 0: bash /mowenjie/fluffy-bassoon-2/outputs/frozen-vla-plate-zero-branch-20261124-r1/code-0db6cec5a66e3f7ed024bc87f9c4ffff2dd3c34d/outputs/frozen-vla-plate-zero-branch-20261124-r1/launch.sh 0db6cec5a66e3f7ed024bc87f9c4ffff2dd3c34d gpu01s0 0 64 128 2400
+LANE 1: bash /mowenjie/fluffy-bassoon-2/outputs/frozen-vla-plate-zero-branch-20261124-r1/code-0db6cec5a66e3f7ed024bc87f9c4ffff2dd3c34d/outputs/frozen-vla-plate-zero-branch-20261124-r1/launch.sh 0db6cec5a66e3f7ed024bc87f9c4ffff2dd3c34d gpu01s1 1 64 128 2400
+LANE 2: bash /mowenjie/fluffy-bassoon-2/outputs/frozen-vla-plate-zero-branch-20261124-r1/code-0db6cec5a66e3f7ed024bc87f9c4ffff2dd3c34d/outputs/frozen-vla-plate-zero-branch-20261124-r1/launch.sh 0db6cec5a66e3f7ed024bc87f9c4ffff2dd3c34d gpu01s2 2 64 128 2400
+LANE 3: bash /mowenjie/fluffy-bassoon-2/outputs/frozen-vla-plate-zero-branch-20261124-r1/code-0db6cec5a66e3f7ed024bc87f9c4ffff2dd3c34d/outputs/frozen-vla-plate-zero-branch-20261124-r1/launch.sh 0db6cec5a66e3f7ed024bc87f9c4ffff2dd3c34d gpu01s3 3 64 128 2400
+Write zero-submitted.txt with every attempt, job ID and queue/terminal receipts. Worker verifies the first complete native triplet and independently audits the complete registered prefix.
