@@ -32,11 +32,15 @@ def write_json(path, obj):
     tmp.replace(path)
 
 
-def stock_digest(stock):
+def state_digest(state):
     resident = hashlib.sha256()
-    for path, var in sorted(nnx.state(stock._model, nnx.Param).flat_state().items()):
+    for path, var in sorted(state.flat_state().items()):
         resident.update(json.dumps([path, array_sha(var.value)]).encode())
     return resident.hexdigest()
+
+
+def stock_digest(stock):
+    return state_digest(nnx.state(stock._model, nnx.Param))
 
 
 def head_digest(params):
@@ -90,8 +94,11 @@ class PlatePolicy:
 
     def digests(self):
         result = dict(base=base_identity(verify_files=False), resident_stock=stock_digest(self.stock),
+                      deployed_stock=state_digest(self.state.filter(nnx.Param)),
                       resident_heads={k: head_digest(v) for k, v in self.heads.items()},
                       deployed_kernel=array_sha(self.native.kernels["stock"]))
+        if result["resident_stock"] != result["deployed_stock"]:
+            raise ValueError("Materialized sampler parameters differ from genuine stock")
         if self.directory is not None:
             result["files"] = {f: file_sha(self.directory / f) for f in (
                 "fit.json", *(f"{c}/{f}" for c in FITS for f in ("fit.json", "head.npz")))}

@@ -14,7 +14,7 @@ import jax.numpy as jnp
 import numpy as np
 import optax
 
-from plate_policy import FITS, SCHEMA, PlatePolicy, head_digest, read_json, stock_digest, write_json
+from plate_policy import FITS, SCHEMA, PlatePolicy, head_digest, read_json, state_digest, stock_digest, write_json
 from cotrain_policy import array_sha, base_identity, file_sha, load_stock
 from direct_fit import BATCH, DRAWS, EPOCHS, LR, SEED
 from flow_head import initial_params, install, live_loss, token_loss
@@ -251,7 +251,9 @@ def run(args):
     motor = PlatePolicy.restore(stock, out, family)
     post = {b: source_sample(motor, row, noise) for b, row in valid.items()}
     write_json(out / "native-after.json", post)
-    require(stock_digest(stock) == frozen_sha, "published resident stock changed during fit")
+    deployed_stock = state_digest(motor.state.filter(nnx.Param))
+    require(stock_digest(stock) == frozen_sha == deployed_stock, "published or deployed stock changed during fit")
+    family["deployed_stock"] = deployed_stock
     for b in BODIES:
         require(before[b]["stock_sha256"] == post[b]["stock_sha256"] and pre[b]["stock"] == after[b]["stock"],
                 f"{b}: stock outputs changed")

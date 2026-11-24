@@ -40,6 +40,8 @@ def main(out):
     scores = fit_plate.evaluate(engine, params, val, [{"body":"fixture", "layout":i} for i in range(2)])
     motor = PlatePolicy(stock, params)
     parity = fit_plate.source_sample(motor, rows[0], np.random.default_rng(11).normal(size=(10,32)).astype(np.float32))
+    receipts = motor.digests()
+    assert receipts["deployed_stock"] == receipts["resident_stock"]
     assert len({array_sha(params[c]["history_out"]) for c in FITS}) == 2
     assert len({parity["nonempty_history"][c]["route"]["hlo_sha256"] for c in FITS}) == 1
     write_json(out / "qualify.json", dict(native=parity, score=scores, update=progress,
