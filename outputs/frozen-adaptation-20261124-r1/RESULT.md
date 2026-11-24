@@ -2,6 +2,21 @@
 
 The reference is a frozen π₀.₅ or π₀ motor with a tuned Perceiver at its command interface. In the earlier four-panel comparison the tuned reader completed 527/768 held-out command-shift retries and SymMeta completed 533/768. Each panel's paired task interval included zero. Native policy success, measured from the simulator reward, is the deciding comparison for a proposed adapter. This run also uses physical replay and source prediction screens to find out whether a mechanism has enough headroom to warrant a closed-loop experiment. [Earlier native comparator](../symmeta-perceiver-retry-20261123-r1/RESULT.md) · [Literature and registered comparisons](REVIEW.md)
 
+## What happened in closed loop
+
+We ran 96 new LIBERO-Pro2.0 episodes from 24 paired starts on simulated Kinova3 and IIWA arms. Each start had four deployments of the same frozen π₀.₅ policy on the nominal command interface. Every comparison used the simulator's terminal reward. Each new intervention changed what the robot actually did. None recovered a tuned Perceiver failure on the starts where it was tested.
+
+| Experiment | Starts | Raw policy | Tuned Perceiver | First intervention | Second intervention |
+| --- | ---: | ---: | ---: | --- | --- |
+| Motion alignment, eight tasks on one layout | 16 | 16 | 14 | Fixed averaging 10 | Measured motion 12 |
+| Placement instruction, one drawer task on four other layouts | 8 | 6 | 6 | Clock trigger 4 | Camera trigger 4 |
+
+On the drawer panel the visual cue fired earlier than the clock on three starts, together on four, and later on one. It changed the next executed action on all eight starts versus tuned. Against the clock it rescued one start and lost another. Against tuned it lost two and rescued zero (−25 percentage points, paired 95% layout interval −50 to 0). Camera-based phase prediction on recorded motion had previously improved over the clock. Timing this one policy instruction with that prediction did not improve the native reward. [Drawer trial, controls and complete episode records](../frozen-transfer-cue-20261124-r1/NATIVE.md)
+
+After both trials we computed the highest success a chooser could achieve if it knew every recorded outcome and selected one complete deployment at the start. With the tuned reader and the two new interventions available in each trial, hindsight achieved 14/16 and 6/8, exactly the tuned baseline. Adding the unadapted policy gave 16/16 and 6/8. Thus learning a better selector over these whole-episode options cannot recover another success on these starts. Switching actions partway through a trajectory remains a different question. The two failed Kinova3 drawer starts also failed under every tested live mode, while IIWA solved the same layouts under the original instruction. [Per-start results and input hashes](episode-choices.json) · [Linux scoring source](episode_choices.py)
+
+Four Baige distributed jobs each used one RTX 4090. Launchers ran for 3,086 seconds in total (0.86 GPU-hours). The scheduler displayed 3,186 seconds across the four jobs (0.89 GPU-hours). The native readbacks verified 64 motion-alignment and 32 cue episodes. Offline reader fitting was the fourth job. [Scheduler receipt](completed-jobs.jpg) · [Motion trial and paired intervals](../frozen-transfer-progress-20261124-r1/NATIVE.md)
+
 ## Post-grasp timing
 
 Panda and Sawyer supplied a source estimate of the vertical response after commanded gripper closure. The experiment replayed the source commands on native IIWA and UR5e models, across three held-out tasks and two layouts. Mean vertical tracking error was 0.481 mm/control untreated, 0.473 with static gain, 0.491 with the source timing rule and 0.492 after shifting its corrections by two controls. The timing rule's difference from static was +0.018 mm/control (95% task interval −0.002 to +0.034). The two rules completed 2/12 fixed-tape continuations each. The source result gives no reason to carry this particular timing rule into a live-policy trial. [Motion, rewards and uncertainty](../frozen-transfer-timing-20261124-r1/RESULT.md)
