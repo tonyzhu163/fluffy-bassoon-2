@@ -1,6 +1,17 @@
-# Native selector launch
+# Native selector results
 
-Baige Distributed Training started `job-umsgs123dma7` on one RTX 4090 on November 24 at 11:21 Shanghai. The two-hour attempt uses the registered 80 source and 36 held-arm query episodes with three independent 15-control calibrations. The shared attempt directory is `/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-selector-20261124-r1/native01`. [Plan](PLAN.md) · [Baige job](https://console.bce.baidu.com/aihc/infoTaskIndex/detail?clusterUuid=aihc-serverless&k8sNamespace=default&k8sName=job-umsgs123dma7&kind=PyTorchJob&name=frozen-vla-selector-pr10-native01&jobId=job-umsgs123dma7&queueID=aihcq-chqrelndaaj4&from=list)
+The run completed all 116 native frozen-policy episodes. All nine branches on Kinova3 failed on layouts 36–38 and succeeded on layout 39. The two learned selectors chose different one-shot branches on all four layouts, with identical success outcomes. Even choosing the best of continue, correct and cue in hindsight rescued none of the three failures. Every paired difference in success was zero, so the layout bootstrap interval for factorized minus pooled was also zero on these four layouts. The experiment supplies no estimate of selection benefit on layouts where one of these interventions rescues an untreated failure. [Independent case readback](case-readback.json) · [Native summary](summary.json)
+
+| Source arm | Continue | Untreated repeat | Correct | Cue |
+| --- | ---: | ---: | ---: | ---: |
+| Panda | 10/10 | 10/10 | 10/10 | 10/10 |
+| UR5e | 10/10 | 10/10 | 10/10 | 9/10 |
+
+Source fitting observed zero intervention rescues and one loss from cueing. Across the panel, the simulator consumed 24,980 query controls. At the 596 logged decisions it consumed 2,977 controls, including two shortened decision windows. A total of 1,524 consumed controls differed from nominal. The next discriminating question is whether a different intervention or decision time can rescue even one matched failure before fitting another selector. [Fitted selectors](selectors.json) · [Independent verification script](native_readback.py)
+
+## Execution
+
+Baige Distributed Training started `job-umsgs123dma7` on one RTX 4090 on November 24 at 11:21 Shanghai. The scheduler marked it successful at 11:48:21 Shanghai. The launcher ran for 1,564 seconds (0.434 GPU-hours) and exited 0. The panel included 80 source and 36 held-arm query episodes, plus three independent 15-control calibrations. [Exit receipt](exit.txt) The shared attempt directory is `/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-selector-20261124-r1/native01`. [Plan](PLAN.md) · [Baige job](https://console.bce.baidu.com/aihc/infoTaskIndex/detail?clusterUuid=aihc-serverless&k8sNamespace=default&k8sName=job-umsgs123dma7&kind=PyTorchJob&name=frozen-vla-selector-pr10-native01&jobId=job-umsgs123dma7&queueID=aihcq-chqrelndaaj4&from=list)
 
 The job's launcher verified commit `85696bd8231b8115cc0d7959a1662dad46bb71b2`. The allocation probe verified the scheduler-assigned GPU and completed a CUDA computation on the RTX 4090. [Launch pin](launch.txt) · [Device probe](gpu.json)
 

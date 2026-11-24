@@ -1,6 +1,6 @@
 # Choosing a continuation for a frozen VLA
 
-Can a robot tell from its own motion and the state of a task object which intervention would improve its chance of finishing? This pilot implements that choice for frozen OpenPI π₀.₅ on the LIBERO-Pro2.0 BASE drawer-and-bowl task. The end-to-end driver collects its training labels from simulated source-arm forks. A fitted selector checkpoint and native success estimates require the Baige run below.
+Can a robot tell from its own motion and the state of a task object which intervention would improve its chance of finishing? This pilot implements that choice for frozen OpenPI π₀.₅ on the LIBERO-Pro2.0 BASE drawer-and-bowl task. The end-to-end driver collects its training labels from simulated source-arm forks. The completed 116-episode Baige run found that all nine branches succeeded on the same one of four held-out Kinova3 layouts. [Native results and fitted selectors](../selector-native-launch-20261124-r1/RESULT.md)
 
 ## What would distinguish this from ICBA?
 

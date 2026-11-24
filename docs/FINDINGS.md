@@ -1,5 +1,9 @@
 # Verified findings
 
+## Native frozen-policy intervention selection
+
+On the four held-out Kinova3 drawer-and-bowl layouts, the factorized and pooled selectors chose different one-shot branches on all four and both succeeded only on layout 39. Continuing, correcting and cueing also succeeded only on 39, leaving zero failures that one-shot selection could rescue. Source-arm forks supplied zero rescues and one loss from cueing. The 116-episode native run verified 596 decision records, including 1,524 executed controls that differed from nominal. [Paired results and independent readback](../outputs/selector-native-launch-20261124-r1/RESULT.md)
+
 ## Current drawer state from the fixed BASE camera
 
 A visual cue calibrated on 18 Panda demonstrations removed 20 premature placement cues across 248 archived Kinova3 replans, with zero missed openings. On four controlled Panda layouts it recognized all 16 reclosures. It missed 24 of 192 open frames, all at 0.5 mm beyond the native threshold. [Case-level validation](../outputs/frozen-vla-selector-20261124-r1/drawer-evidence.md)
