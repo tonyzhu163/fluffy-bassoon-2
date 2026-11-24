@@ -1,0 +1,43 @@
+{
+  "rows": 4224,
+  "views": {
+    "nominal": 64,
+    "orbit+": 64,
+    "orbit-": 64,
+    "roll+": 64,
+    "roll-": 64
+  },
+  "exact_nominal_and_digital_inverse_checked": true,
+  "nominal_cpu_gpu_residuals": [],
+  "sha256": "abf7ec349e6e1a0b6fe52cf0328b62bc18f372d49a197de8139cdfe0cc3902d4",
+  "physical_bank": "/mowenjie/fluffy-bassoon-2/outputs/symmeta-camera-pose-pairs-20261124-r1/cpu01/ood64/bank.json",
+  "bank_sha256": "8071d5d451fb625fc3cf611cfb94ff3d16bf43ae280b565f7d564cc51f494f08",
+  "checkpoints": {
+    "41": {
+      "checkpoint_path": "/mowenjie/fluffy-bassoon-2/outputs/symmeta-perceiver-retry-20261123-r1/train02pro/checkpoints/perceiver_cont_warm-passive_attempt1-seed41.msgpack",
+      "checkpoint_sha256": "54157016de0af4f60c63ba8f9fbf782ee3832ef66699dac9dff0028d9ff15c86"
+    },
+    "42": {
+      "checkpoint_path": "/mowenjie/fluffy-bassoon-2/outputs/symmeta-perceiver-retry-20261123-r1/train02pro/checkpoints/perceiver_cont_warm-passive_attempt1-seed42.msgpack",
+      "checkpoint_sha256": "45945ea1745fa245bd4c6517a1d935f041b361d4ef2caa8058cbf2392f4f0ef9"
+    },
+    "43": {
+      "checkpoint_path": "/mowenjie/fluffy-bassoon-2/outputs/symmeta-perceiver-retry-20261123-r1/train02pro/checkpoints/perceiver_cont_warm-passive_attempt1-seed43.msgpack",
+      "checkpoint_sha256": "986040df348f2c8abb1aa7bb995f601197566bc80faebca2a950de1939a8f9e9"
+    }
+  },
+  "elapsed_wall_s": 23.225089590996504,
+  "model_input_fields": [
+    "delta_eef",
+    "delta_jaw",
+    "dis_flow",
+    "img_after",
+    "img_before",
+    "issued_mean",
+    "valid"
+  ],
+  "regime_counts_for_nominal_seed41": {
+    "compositional_ood": 32,
+    "continuous_angle_ood": 32
+  }
+}
