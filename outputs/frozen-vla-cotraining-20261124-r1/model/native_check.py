@@ -25,7 +25,7 @@ def check(stock, item, history, *, gradient=True):
     key1, key2 = jax.random.split(rng)
     perturbed = dict(template, right=1e-3 * jax.random.normal(key1, template["right"].shape),
                      history_out=1e-3 * jax.random.normal(key2, template["history_out"].shape))
-    cached_stock = token_loss(predict({}, hidden, history), target)
+    cached_stock = jax.jit(lambda h, z, y: token_loss(predict({}, h, z), y))(hidden, history, target)
     np.testing.assert_allclose(cached_stock, stock_loss, rtol=3e-6, atol=3e-6)
     report = dict(hidden_shape=list(hidden.shape), hidden_dtype=str(hidden.dtype),
                   target_shape=list(target.shape), native_loss=float(stock_loss.mean()),
@@ -33,13 +33,12 @@ def check(stock, item, history, *, gradient=True):
     if gradient:
         direct = bind(stock._model, live_loss, static_argnames=("train",))
 
-        def cached_loss(p):
-            return token_loss(predict(p, hidden, history), target).mean()
-
         def native_loss(p):
             return direct(rng, obs, actions, p, history, train=True).mean()
 
-        cached_val, cached_grad = jax.jit(jax.value_and_grad(cached_loss))(perturbed)
+        cached_val, cached_grad = jax.value_and_grad(lambda p: jax.jit(
+            lambda weights, h, hist, y: token_loss(predict(weights, h, hist), y).mean()
+        )(p, hidden, history, target))(perturbed)
         live_val, live_grad = jax.value_and_grad(native_loss)(perturbed)
         np.testing.assert_allclose(cached_val, live_val, rtol=3e-6, atol=3e-6)
         for k in cached_grad:
