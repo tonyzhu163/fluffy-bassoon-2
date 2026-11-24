@@ -37,3 +37,5 @@ The parent ran the full offline inference in Baige Distributed job `job-m8k5ugoq
 | Shared `score01/full-head-release.json` | `50e320040e06c70d2b0924f14afc24f0608e5951bfc7bcec37f5781384c7820f` |
 
 Shared files are under `/mowenjie/fluffy-bassoon-2/outputs/symmeta-camera-independent-body-20261124-r1`. Parent native checkout `3a6f90a25fbb6b2de0b06b02a9c11aff1f34b3f3` contains the pinned launcher, full-head verifier, analysis and single-case fixture. The parent owns submission and the remaining share of the 2.5 additional RTX 4090 GPU-hour envelope.
+
+The first native job stopped before its first episode because the GPU probe received no device index. The retry explicitly sets the one allocated device, uses the original full-factor predictions and reset hashes, and writes to a fresh directory. Baige assigned job-nn97ohkc3wf8 to the retry. [First probe](evidence/native01/gpu.json)
