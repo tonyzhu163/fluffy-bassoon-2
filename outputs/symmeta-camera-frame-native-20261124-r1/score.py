@@ -24,7 +24,7 @@ def xy_rotation(yaw):
 
 
 def commands(proposal, correction, truth):
-    """Independent vectorized decode of the native inverse and forward transforms, including both clips."""
+    """The motor inverts a chunk. The simulator applies its forward map to one control at a time."""
     issued = np.clip(proposal, -1, 1).astype(np.float32)
     inv = np.float32(1 / np.clip(correction["xy_scale"], 0.25, 4))
     issued[:, :2] = (issued[:, :2] @ xy_rotation(-correction["yaw_deg"]).T) * inv
@@ -32,7 +32,10 @@ def commands(proposal, correction, truth):
     issued[:, 6] *= correction["gripper_sign"]
     issued = np.clip(issued, -1, 1)
     actual = issued.copy()
-    actual[:, :2] = (issued[:, :2] * np.float32(truth["xy_scale"])) @ xy_rotation(truth["yaw_deg"]).T
+    rotation = xy_rotation(truth["yaw_deg"]).T
+    for i, command in enumerate(issued):
+        # A batched matrix product rounds differently from the native per-control dot at oblique angles.
+        actual[i, :2] = (command[:2] * np.float32(truth["xy_scale"])) @ rotation
     actual[:, 2] *= truth["xy_scale"]
     actual[:, 6] *= truth["gripper_sign"]
     return issued, np.clip(actual, -1, 1)
