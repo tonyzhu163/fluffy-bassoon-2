@@ -1,0 +1,18 @@
+# Reproduction and scope
+
+This is a retrospective diagnostic of the frozen LIBERO π₀.₅ BASE panel. It uses the packed per-control contact sets and matched command/reward lineage from the prior study. No new simulation, model inference, third-party training examples or GPU allocation entered this readout. The original [archive and checksums](../frozen-transfer-object-20261124-r1/evidence/SHA256SUMS) distinguish the physical records from the previous fitted readers. Their predictions are unused.
+
+On Baige, extract the task roles with `taskset -c 32,33 python3 definitions.py`. Its output must equal [tasks.json](tasks.json). The extractor checks all eight BASE BDDL hashes against the released manifest at LIBERO-Pro2.0 commit `e5500c690c1498eca1b7050350654964190cdf70`. The public motor prompts in all 16 IIWA/UR5e receipts match the eight BDDL instructions after lowercasing. [Production prompts](../frozen-vla-multiarm-confirmation-20261123-r1/evidence/production-native.json)
+
+The parent pinned the [rules](PLAN.md), role map and initial scorer at `d9cab94afd93`. The first attempt stopped with a schema error before emitting scores. The earlier original-arm replays have the physical arm in `model.arm` and the command donor in `spec.arm`. Explicit donor/actuated-arm fields were added to the later arm swaps. The repair reads the realized physical model in every case, verifies the original arms coincide and checks the two explicit fields for swaps. This repair leaves the task and contact definitions in the original registration intact. The next attempt uses a new output location. Source and target observation sets, replays and published native rewards remain those of the preceding wrist study. [Original replay provenance](../frozen-transfer-object-20261124-r1/evidence/run.json)
+
+From the run directory of the parent-supplied pinned checkout, score on Baige using the command below. The score process reads only the fixed task map and original compressed trajectory archive. It checks that the processor affinity is exactly 32,33 and CUDA visibility is empty. Provide a fresh attempt directory under the run's shared output path.
+
+```sh
+CUDA_VISIBLE_DEVICES='' PYTHONDONTWRITEBYTECODE=1 taskset -c 32,33 \
+    python3 -Bu score.py /mowenjie/fluffy-bassoon-2/outputs/frozen-transfer-identity-20261124-r1/cpu02
+```
+
+The episode ledger records command-tape hashes, released scenes, seeds, outcomes, observed windows and carried/touched names. In the matched-pair record, each original control is joined only to the same command hash, task and absolute control in its specified alternative. The same-start arm swap also checks seed, row, scene, BDDL and perturbation hashes. The within-layout fingerprint names the released initial scene; post-settle paths can diverge. The field `native_success` always names the donor's original native rollout. On a changed branch only `replay_success` describes that physical execution. A changed branch that exhausts the donor tape before termination is censored. Native outcomes on changed branches must not be pooled as if the policy had replanned on those trajectories.
+
+The corrected scoring commit was `aa3621e856bcab229be70b4b75c6299716f2f516`. The two definitions exports agreed byte-for-byte with the registered file. The completed [runtime receipt](evidence/runtime.json) records host, affinity, code, plan, role-map and archive digests. The initial [schema error](evidence/cpu01-schema.log) and [successful scoring log](evidence/score.log) correspond to different Baige attempt directories. No simulator, fitting or random resampling ran in the scoring process for the observed zero-event case.

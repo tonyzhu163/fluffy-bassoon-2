@@ -2,6 +2,8 @@
 
 ## Frozen cross-embodiment adaptation on new arms
 
+On the original 22 target-arm command tapes, all 253 sustained, strictly identified pickups were compatible with the released task instruction. Of the three original native failures, two had no eligible closed-gripper window and one carried a permitted bowl. This archive supplies no definite distractor pickups with which to test identity recognition. [Role definitions and episode-level exposure](../outputs/frozen-transfer-identity-20261124-r1/RESULT.md)
+
 Under identical commands, IIWA and UR5e differed in whether they held an object on 2 of 8 tasks. The carrying hand had the wider measured aperture on all 14 opposing windows. Across three target arms and five informative tasks, adding central wrist-image motion features produced Brier loss 0.0956 versus 0.0682 from proprioception (paired difference +0.0274, 95% task interval −0.0349 to +0.0756). Those 146 windows came from 17 sustained events. These data support testing which object is held as a separate question. [Physical labels, arm swap and reader comparisons](../outputs/frozen-transfer-object-20261124-r1/RESULT.md)
 
 A source-fitted vertical timing correction following gripper closure gave 0.491 mm/control held-out tracking error, compared with 0.473 for static gain and 0.492 for the same timing correction shifted within the command block. Its paired difference from static was +0.018 mm/control (95% whole-task interval −0.002 to +0.034) across two new arms, three held-out tasks and two layouts. Both static and timing completed 2/12 fixed-tape replays. The result deprioritizes this particular timing rule for a live-policy trial. [Matched simulator interventions](../outputs/frozen-transfer-timing-20261124-r1/RESULT.md)
