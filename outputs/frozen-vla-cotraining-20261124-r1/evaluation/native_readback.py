@@ -5,7 +5,6 @@ import hashlib
 import json
 from pathlib import Path
 
-
 from panel import MODES, cases, key, require
 from verify import summarize
 
@@ -56,12 +55,21 @@ def readback(out, job):
                      else r["controls"] == r["reset"]["horizon"] and not any(rewards)), "sparse endpoint")
             attempts[tape["accepted_reset_attempt"]] += 1
             steps += len(rewards)
-            entries[mode] = [int(metrics["success"]), metrics["controls"]]
+            entries[mode] = [int(sum(rewards)), len(rewards)]
+            require(entries[mode] == [int(metrics["success"]), metrics["controls"]], "terminal endpoint disagreement")
         diffs = {m:[v["first_different_proposal_replan"],v["first_different_issued_control"]]
                  for m,v in row["first_changes"].items()}
         rows.append(dict(case=case, outcomes=entries, first_divergences=diffs, mechanism=row["mechanism"],
                          reset=dict(physics=row["physics"],released_row=row["released_row"],noise=row["noise"]),
                          opening_parity=row["parity"]))
+    for arm, stats in summary["arms"].items():
+        group = [r["outcomes"] for r in rows if r["case"]["arm"] == arm]
+        require(len(group) == stats["starts"] and stats["successes"] == {
+            m: sum(x[m][0] for x in group) for m in MODES}, "success totals")
+        for mode, contrast in stats["joint_vs"].items():
+            changes = [x["joint"][0] - x[mode][0] for x in group]
+            require(contrast["rescues"] == changes.count(1) and contrast["losses"] == changes.count(-1)
+                    and contrast["joint_minus"] == sum(changes)/len(changes), "paired rescue/loss discrepancy")
     return dict(job=job, pfs=str(out), pin=run["pin"], device=device["cuda_name"], uuid=device["cuda_uuid"],
                 start_epoch=start, finish_epoch=end, gpu_hours=(end-start)/3600, fit=FIT_SHA,
                 frozen_parameters=before, historical=read(out/"historical-noop.json"),
