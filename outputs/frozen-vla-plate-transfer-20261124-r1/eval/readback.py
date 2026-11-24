@@ -2,6 +2,7 @@
 import argparse
 import os
 from pathlib import Path
+from tempfile import TemporaryDirectory
 import statistics
 import runpy
 
@@ -13,6 +14,7 @@ from native import CAMERAS, PROPRIO, PROMPT
 from panel import MODES, bank
 from plan import seed
 from source_data import PublicHistory
+from storage import install, slot
 from ur5e_motor import array_digest, public_digest, to_openpi_observation
 
 
@@ -130,6 +132,16 @@ def verify_case(path, row, fixture=False):
     return result, audit
 
 
+def publish_report(path, data):
+    if not slot(path).exists():
+        bind(path, data)
+        return
+    with TemporaryDirectory() as tmp:
+        local = Path(tmp) / path.name
+        bind(local, data)
+        install(local, path)
+
+
 def main(args):
     require(len(os.sched_getaffinity(0)) <= 2, "readback requires bounded CPU")
     if args.fixture:
@@ -183,10 +195,10 @@ def main(args):
         all_rows.append(result)
         audits.append(audit)
     report = args.out / f"readback-{args.n}.json"
-    bind(report, dict(n=args.n, frozen=frozen, allocations=contexts, audits=audits,
+    publish_report(report, dict(n=args.n, frozen=frozen, allocations=contexts, audits=audits,
                       median_seconds_per_case=statistics.median(r["seconds"] for r in audits)))
     seal = args.out / f"look-{args.n}.json"
-    bind(seal, dict(n=args.n, manifest_sha256=sha(args.manifest), native_readback=report.name,
+    publish_report(seal, dict(n=args.n, manifest_sha256=sha(args.manifest), native_readback=report.name,
                     native_readback_sha256=sha(report), rows=all_rows))
     print("SEALED", seal, sha(seal), flush=True)
 

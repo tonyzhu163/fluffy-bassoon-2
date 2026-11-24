@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-plate-transfer-20261124-r1/fit/code-7f749ae21b8d74ad58536c00ae4aafd5ffca45c5/outputs/frozen-vla-plate-transfer-20261124-r1/fit/fit_plate.py", line 276, in <module>
+    run(parser.parse_args())
+  File "/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-plate-transfer-20261124-r1/fit/code-7f749ae21b8d74ad58536c00ae4aafd5ffca45c5/outputs/frozen-vla-plate-transfer-20261124-r1/fit/fit_plate.py", line 233, in run
+    params, progress = optimize(native, params, train, out, contract, args.prior)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-plate-transfer-20261124-r1/fit/code-7f749ae21b8d74ad58536c00ae4aafd5ffca45c5/outputs/frozen-vla-plate-transfer-20261124-r1/fit/fit_plate.py", line 162, in optimize
+    tmp.write_bytes(serialization.msgpack_serialize(jax.device_get(payload)))
+  File "/mowenjie/.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py", line 1067, in write_bytes
+    with self.open(mode='wb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 28] No space left on device: '/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-plate-transfer-20261124-r1/fit/gpu02/optimizer.part'
