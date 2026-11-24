@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/setups/symmeta-perceiver-followups-20261123-r1/src-d9cab94afd93/outputs/frozen-transfer-identity-20261124-r1/score.py", line 281, in <module>
+    main(parser.parse_args().out)
+  File "/mowenjie/fluffy-bassoon-2/setups/symmeta-perceiver-followups-20261123-r1/src-d9cab94afd93/outputs/frozen-transfer-identity-20261124-r1/score.py", line 240, in main
+    row, obs = episode(tar, m, rules)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/setups/symmeta-perceiver-followups-20261123-r1/src-d9cab94afd93/outputs/frozen-transfer-identity-20261124-r1/score.py", line 110, in episode
+    assert row["model"]["arm"] == row["actuated_arm"] and row["donor_arm"] == spec["arm"]
+                                  ~~~^^^^^^^^^^^^^^^^
+KeyError: 'actuated_arm'

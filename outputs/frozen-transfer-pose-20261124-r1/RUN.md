@@ -1,0 +1,30 @@
+# Reproducing the fixed-tape experiment
+
+Baige CPU host alias `baige-dev` has the native LIBERO Python environment. The raw source is the read-only native-transfer GPU job. The analysis uses the two authorized CPU cores, including Mesa threads, hides CUDA, disables bytecode and confines cache writes to the attempt. Parent-supplied detached Git trees are under `/mowenjie/fluffy-bassoon-2/setups/symmeta-perceiver-followups-20261123-r1/src-<12-digit-prefix>`. Use a fresh output directory per attempt. Every Python invocation uses the pinned simulator environment. Each run writes per-case outputs before the next case.
+
+- Replay was collected from a8a997e7d06bb131d3f9710204c58e106f0f0904 native code with recorder d70e206a00c6c5d59f190ec4a9b0bc6df2ec82c4. Nominal raw tapes use the issued prefix, after policy normalization and bounding. Commands after the original tape end and policy samples discarded at replanning are unavailable.
+- FK scoring uses c468ef48b1494b494ab6713525cc8d3ff441ff73. Comparative FK readback uses the revision in [the readback receipt](evidence/readback/readback.json). Actual per-condition and runtime revisions/hashes are stored with their observations.
+- The remote run root is `/mowenjie/fluffy-bassoon-2/outputs/frozen-transfer-pose-20261124-r1`. Subdirectories `replay01`, `solve01`, `readback01` and `treatment01` hold the respective outputs and logs. The repository evidence copies omit runtime caches.
+
+For the replay and solver, use the matching Git tree as the working directory, with paths and process affinity as shown below. Create fresh output directories before invoking the scripts. Repeat in the second process using core 47 and Panda. For treatment, select its own pinned checkout and replace `solve` in the last command with `treatment`. The score of the matched branches is produced by `score_treatment.py` using the pinned Linux simulator interpreter on one of the two cores with CUDA hidden.
+
+```bash
+r=frozen-transfer-pose-20261124-r1
+root=/mowenjie/fluffy-bassoon-2/outputs/$r
+bash outputs/$r/run.sh 46 Kinova3 "$root/NEW-replay"
+export POSE_REPLAY="$root/NEW-replay"
+bash outputs/$r/run.sh 46 Kinova3 "$root/NEW-solve" solve
+```
+
+## Evidence fields
+
+All NPZs load with NumPy allow_pickle=False. Each first dimension indexes executed controls, with array index zero corresponding to control one. Cartesian vectors are world-frame meters or radians. Matrices are world-from-grip-site rotations. Arms use the same physical PandaGripper. The independent donor waypoint measurement uses the staged human state.
+
+- `evidence/replay/<task>-<start>-<arm>.json` includes original tape path/digest, opening proposal hash, seed, both reset identities, actuator order, compiled model/config, source and replay outcomes. The paired NPZ gives 7D normalized commands; pre/post boundary joints and world TCP/wrist; public inputs; actual native OSC targets; commanded and achieved pad midpoint; recording drift and native reward. Pad target transports the pre-step midpoint of the two collision-pad centers rigidly to the unmodified goal. Actual pad midpoint includes finger motion. Chunk orientation-drift values are NaN off recorded attitude boundaries.
+- `evidence/solver/<tape>-on-<model>.npz` contains each full/free FK witness and residual [meters, radians]. The static box uses compiled limited-joint ranges. The rate box intersects those ranges with the pre-control measured joint position ± manufacturer speed × dt. The matched solution uses the observed untreated angular tracking error for that control as an offline allowance. The same-case static and rate scores are world TCP/attitude, independent of contact. The linear diagnostic stores predicted XYZ/rotvec errors followed by true FK errors for the first bounded Jacobian update. Solves use exact FK iterates, then attitude-constrained position refinement where necessary. Unsuccessful local searches supply upper bounds on achievable errors only. Positive hinge-chain certificates supply lower bounds. Their offsets and index are recorded and evaluated at both exact attitude and the legacy 0.01 rad convention. The constraint calculation follows the prior [hinge-chain verification](../frozen-vla-reachability-20261123-r1/verify_geometry.py). Candidate position witnesses come without collision, grasp, continuity or torque guarantees.
+- `evidence/readback/` contains machine-readable per-case static witnesses, tracking and timing, replay qualification and nearest policy goal to the staged drawer release. Readback repeats FK for every stored full/free solution, verifies bounds and hashes, and projects the pad offset through each witness. Percentiles describe controls within a selected episode. The six paired starts are the units for task comparisons.
+- `evidence/treatment/` contains per-branch native measurements, paired case summaries, correction counts and logs. Each NPZ includes original and applied command, correction before and after float32 rounding, unclipped original relative-command goal on the branch, actual issued attitude, absolute TCP/wrist/pad before and after, and native reward. Drawer-family records also log endpoint finger contacts, drawer travel and bowl lift for scoring only. Wrist corrections and their negatives share the original action box. The measured rotation from original to issued wrist goal may differ slightly across branches because axis-angle increments compose nonlinearly.
+
+## Final reduction
+
+The initial native-branch reducer took the maximum signed drawer coordinate. Opening is negative in this model. The final pinned reducer takes the maximum absolute travel from the initial coordinate and reads the same immutable per-control arrays. The corrected table and revision are in the local treatment evidence and in the remote `treatment-score02` directory. The original reduction is retained remotely in `treatment01`. All reported drawer distances use the corrected reduction. Remote `angular01` contains the supplementary certificate calculation using each native control's observed angular tracking error. [Consolidated receipts and revisions](evidence/receipt.json)
