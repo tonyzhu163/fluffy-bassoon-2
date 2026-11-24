@@ -1,0 +1,63 @@
+{
+  "verified_common_physics_modules": {
+    "libero-crossarm-20261120-r1/arm_env.py": "6152c403870ddbc6d4462fe8e1cde9958560762d257c4e942df4d26db0264d12",
+    "libero-crossarm-20261120-r1/sim_reset.py": "f777beb0bf6891f9fe103e93d75843c8d1f0be8db683c2a088c07662ed1a9f45",
+    "libero-xemb-ur5e-sysid-20261120-r1/ur5e_sim_worker.py": "a11e4624bce8abc6036c5aa852622030d8568a62e90f6cbf12004321ce3f02f2",
+    "libero-xemb-ur5e-sysid-20261120-r1/ur5e_motor.py": "d59c82f37cb3996eb0d8eac688955b16dca50f63bdd21b4b21d4ffe224a01e2b"
+  },
+  "original_writers": {
+    "frozen-vla-native-transfer-20261123-r1": {
+      "pin": "a8a997e7d06bb131d3f9710204c58e106f0f0904",
+      "github_commit": "https://github.com/tonyzhu163/fluffy-bassoon-2/commit/a8a997e7d06bb131d3f9710204c58e106f0f0904",
+      "launcher_and_recorder_sha256": {
+        "native_rollout.py": "77c3038fce87686f7c64eb66b97a8bab5dd8007a47d4eaf7142fe61c5cf97e53",
+        "panel.py": "0a0d3e3f5fcbebf92d6538d403457a9c2956039403d4a19b22349e6cd38c2ff2",
+        "run.sh": "49318857a2ff7b190e14760b436ff777e6abe9d0cfe6761d7be5e95bced7e164"
+      },
+      "shared_native_env_sh_sha256": "77443bdb9dc56a534452790ba944503813268a7feb7c77f77500085cd5a1feb5"
+    },
+    "frozen-vla-tracking-feedback-20261123-r1": {
+      "pin": "522ccf30d18f96f4ad49104c9c862096a9db1652",
+      "github_commit": "https://github.com/tonyzhu163/fluffy-bassoon-2/commit/522ccf30d18f96f4ad49104c9c862096a9db1652",
+      "launcher_and_recorder_sha256": {
+        "live.py": "c91c645b6aa5659a4a9f2479f5fa309b169464f0549043ce91778ed2d08e7958",
+        "run.sh": "4429553292843212d7219464474c07e4ab9b7ff7197ea5fd7d7f898222669632"
+      },
+      "shared_native_env_sh_sha256": "77443bdb9dc56a534452790ba944503813268a7feb7c77f77500085cd5a1feb5"
+    },
+    "frozen-transfer-progress-20261124-r1": {
+      "pin": "d70e206a00c6c5d59f190ec4a9b0bc6df2ec82c4",
+      "github_commit": "https://github.com/tonyzhu163/fluffy-bassoon-2/commit/d70e206a00c6c5d59f190ec4a9b0bc6df2ec82c4",
+      "launcher_and_recorder_sha256": {
+        "run.py": "d7ee99dc675a1de051197de8d1f34602f0f9e946929c8b9a4ec2ed9ad7316cbe",
+        "intervention.py": "29ee6a76a357d84e73ec67f294b38bb9ca28a0641a0940d93d62615f849fff95",
+        "contract.py": "31c07190cdd41c871c0b93056d8566d90ca83ad7aff3e3e490428504bf41c8af",
+        "runtime.sh": "957d602a2dfc71724b2f232c98347344e17d233e17c10e53a20108549dc98091"
+      },
+      "shared_native_env_sh_sha256": "77443bdb9dc56a534452790ba944503813268a7feb7c77f77500085cd5a1feb5"
+    },
+    "frozen-transfer-cue-20261124-r1": {
+      "pin": "e15eefb3f76e475acdf0795e2e17ba0e1ee46fae",
+      "github_commit": "https://github.com/tonyzhu163/fluffy-bassoon-2/commit/e15eefb3f76e475acdf0795e2e17ba0e1ee46fae",
+      "launcher_and_recorder_sha256": {
+        "run.py": "019dfbcc9fea114f87eda2208c0ab49484b3c9fed5ee26e1162d0b58c2853754",
+        "runtime.sh": "b57f1b4858d80f937a912d7bbfc1e95d341a79389ac24a55e4e16d1862588d9f"
+      },
+      "shared_native_env_sh_sha256": "77443bdb9dc56a534452790ba944503813268a7feb7c77f77500085cd5a1feb5"
+    }
+  },
+  "validation_commit": "311b4f8a24ace9602f8bb5dfc818155489484287",
+  "prior_engine_sha256": "3f04e516e0d575099a39a6f18867dbaef985dbd2de2bcf3fe514fd33eed5238d",
+  "thread_settings_from_original_launchers": {
+    "OPENBLAS_NUM_THREADS": 1,
+    "OMP_NUM_THREADS": 1,
+    "MKL_NUM_THREADS": 1,
+    "LP_NUM_THREADS": 1
+  },
+  "semantics": {
+    "rows_14_15": "Raw Trace with matrix=None stores chunks[].cmd[:executed] from the issued nominal OSC block.",
+    "rows_16_17": "Raw mode wraps the same Trace, with matrix=None and corrections=None; cmd contains actual executed controls.",
+    "row_31": "Simulator stores chunks[].sent after motor clipping/retargeting; use the executed prefix as recorded, including the tuned correction exactly once.",
+    "donors": "Original raw calls[].sent from the fixed successful IIWA source. Source noise is locked to the tape. Engine checks hash, nominal zero-yaw/scale-one/sign-one, native return and actual OSC commands."
+  }
+}
