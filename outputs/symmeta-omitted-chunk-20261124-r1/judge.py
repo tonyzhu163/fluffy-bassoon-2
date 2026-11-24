@@ -360,8 +360,8 @@ def freeze(data_dir, reader_path, out, runtime):
     ok = np.isfinite(e)
     np.testing.assert_allclose(e[ok], ref[ok], rtol=0., atol=1e-9)
     independent_fold_difference = float(np.max(np.abs(e[ok] - ref[ok]), initial=0.))
-    for name, source in parts.items():
-        save_arrays(out / f"compact-{name}.npz", source)
+    for name, role_arrays in parts.items():
+        save_arrays(out / f"compact-{name}.npz", role_arrays)
     save_arrays(out / "predictions.npz", {**{k: parts["eval"][k] for k in (*ID, "seed")},
                 **pred, "fold_error": e, "advantage": d})
     hashes = {p.name: digest(p) for p in sorted(out.glob("*.npz"))}
