@@ -137,10 +137,25 @@ def summarize(folder, cpu, pin):
                   rows=rows, controls=sum(sum(r["controls"].values()) for r in rows))
     if cpu:
         result["routing"] = [json.loads((folder/f"routing-{arm}.json").read_bytes()) for arm in ARMS]
+        # Exercise the same three production reductions on known layout-paired outcomes.
+        fixtures = [dict(arm=arm, layout=l, success=dict(visual=int(l%2==0),
+                    tuned=int(l%2==1), clock=int(l%2==0), raw=0)) for arm in ARMS for l in LAYOUTS]
+        contrasts = endpoints(fixtures)["both"]["contrasts"]
+        expected = {"tuned": (4,4,0,0), "clock": (0,0,8,0), "raw": (4,0,4,50)}
+        for baseline, truth in expected.items():
+            v = contrasts["visual-minus-"+baseline]
+            require(tuple(v[k] for k in ("rescues","losses","ties","effect_pp")) == truth,
+                    "registered contrast fixture")
+        result["synthetic_contrast_check"] = contrasts
         return result
     for which in ("actual","same_tuned_observations"):
         result[which+"_timing_counts"] = dict(Counter(r[which]["order"] for r in rows))
-    result["endpoints"] = {}
+    result["endpoints"] = endpoints(rows)
+    return result
+
+
+def endpoints(rows):
+    result = {}
     for arm in (*ARMS, "both"):
         rs = [r for r in rows if arm == "both" or r["arm"] == arm]
         totals = {m:sum(r["success"][m] for r in rs) for m in MODES}
@@ -152,5 +167,5 @@ def summarize(folder, cpu, pin):
                 rescue_denominator=len(rs)-totals[b], loss_denominator=totals[b],
                 layout_differences=[v/(len(rs)/4) for v in layout_sums], effect_pp=100*sum(d)/len(rs),
                 layout_bootstrap_95_pp=interval(layout_sums,len(rs)))
-        result["endpoints"][arm] = dict(n=len(rs),successes=totals, contrasts=contrasts)
+        result[arm] = dict(n=len(rs),successes=totals, contrasts=contrasts)
     return result

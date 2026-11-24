@@ -4,6 +4,7 @@ import json
 import os
 from pathlib import Path
 import socket
+import runpy
 from unittest.mock import patch
 
 import numpy as np
@@ -17,7 +18,9 @@ from ur5e_sim_worker import UR5eSimulator
 
 
 def release_rows():
-    from libero_remote.reproducibility import numerical_state_fingerprint
+    # The OpenPI interpreter only needs the release's standalone NumPy hasher.
+    hasher = Path(os.environ["CROSSARM_RELEASE"])/"libero_remote/reproducibility.py"
+    numerical_state_fingerprint = runpy.run_path(str(hasher))["numerical_state_fingerprint"]
     import torch
     bank = Path(os.environ["CROSSARM_RELEASE"]) / ("simulator-source/libero/libero/init_files/libero_goal/"
                 "open_the_top_drawer_and_put_the_bowl_inside.pruned_init")
