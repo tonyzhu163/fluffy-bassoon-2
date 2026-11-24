@@ -9,7 +9,7 @@
 | Channel | Kinova3 | Source arm | Evidence |
 | --- | --- | --- | --- |
 | Rotation vector X, as packed | −3.29 to −3.09 on all 10 archived public frames (layouts 14 and 15, controls 0–90) | Positive in every source training example (checkpoint minimum +0.353 rad, SmolVLA) | [source-view frames](../frozen-vla-source-view-20261123-r1/evidence/cpu01), [state](../frozen-vla-factory-20261123-r1/state/RESULT.md) |
-| Same frames after the sign flip | +2.97 to +3.15; state moves by 6.2832 in L2 | Panda on these layouts: +3.06 to +3.17 | [pose replays](../frozen-transfer-pose-20261124-r1/evidence/replay) |
+| Same frames after the sign flip | +2.97 to +3.15; state moves by 6.2832 in L2 | Panda along its rollouts on these layouts: +2.91 to +3.17 | [pose replays](../frozen-transfer-pose-20261124-r1/evidence/replay) |
 | Grip-site position at reset | Kinova3 − Panda on layout 14: (−2.2, −0.8, −3.2) mm; layout 15: (3.3, 7.4, 5.0) mm | | pose replays |
 | Grip-site rotation at reset | 3.35° and 2.31° from Panda on layouts 14 and 15 | | pose replays |
 | Hand frame against grip site | Fixed 90° about Z, constant to 0.09° over the 10 frames | Same gripper | frames and replays |
@@ -19,7 +19,7 @@
 - The reset position differences change sign between layouts, so they give no fixed offset to remove. All three arms carry `PandaGripper`.
 - The pose replays hold rotation matrices. The Kinova3 sign along a whole rollout is known only at the 10 frames.
 - No record in the repository holds a source arm's reported quaternion or finger qpos as numbers. The source branch rests on the SmolVLA checkpoint statistic and the UR5e finding in FINDINGS. `state-dropped` checks the π₀.₅ checkpoint's own mean for a positive X at launch.
-- Every archived native Kinova3 run packed state with the raw sign.
+- The native Kinova3 runs listed in the plan all packed state with the raw sign.
 
 ## Adapters ([adapter.py](adapter.py))
 
