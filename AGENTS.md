@@ -21,6 +21,11 @@ the [documentation index](docs/README.md). Keep LycoReco work and runs pinned to
   comparison that decides the question (a matched baseline, an oracle ceiling,
   a noise floor), and say which. Report measured effects with their
   uncertainty and let the decision follow from what they show.
+- For confirmatory policy evaluations, register the primary paired native outcome,
+  independent sampling unit, uncertainty method, and stopping rule before scoring.
+  Continue on fresh units until the registered test resolves benefit or harm, or
+  the authorized budget or eligible population is exhausted. Account for repeated
+  looks and model comparisons. Report an unresolved result with its interval.
 - As orchestrator, delegate investigations, implementation, experiments and critical
   reviews through the existing worker CLI (locally, `codex exec`). Parallelize
   independent tasks. Give each worker the question, context, deliverable, resource
