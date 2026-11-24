@@ -1,0 +1,111 @@
+"""Train the paired models, inspect source-only validation and seal the common budget."""
+import argparse
+from dataclasses import asdict
+import hashlib
+import time
+import os
+from pathlib import Path
+from flax import serialization
+import cv2
+import jax
+import numpy as np
+import eval_wider_family as pr7
+from camera import TRAIN, VALIDATION
+from data import SENSOR, read, write, sha, gather, load_bank, prepare
+from model import CFG, LABELS, OPT, init, infer, restore, decode, step
+
+
+def wrap(a):
+    return (a+180)%360-180
+
+
+def validation(p, bank, controls):
+    stats, errors = [], []
+    n = len(controls['valid'])
+    for j, pose in enumerate(VALIDATION):
+        yaw = []
+        for start in range(0,n,32):
+            idx = np.minimum(np.arange(start,start+32), n-1)
+            b = {k:controls[k][idx] for k in SENSOR}
+            b.update(gather(bank,j,idx))
+            yaw.extend(decode(infer(p,b))[0][:min(n-start,32)])
+        err = np.abs(wrap(yaw-controls['yaw_deg']))
+        stats.append(dict(pose=pose,mae=float(err.mean())))
+        errors.append(err)
+    return stats,np.stack(errors)
+
+
+def train(out,cache):
+    assert jax.default_backend()=='gpu' and len(jax.devices())==1
+    probe=read(out/'gpu.json')
+    name=probe['devices'][0]['cuda_name'].upper()
+    assert probe['status']=='passed' and probe['exclusive_training_admission'] and len(probe['devices'])==1
+    assert name in ('NVIDIA GEFORCE RTX 4090','NVIDIA RPBZZZ6') or 'RTX PRO 6000' in name
+    seal=read(cache/'ready.json')
+    assert seal['source']==sha(cache/'source.json')
+    current = {k:v for k,v in np.load(cache/'train-control.npz').items()}
+    val = {k:v for k,v in np.load(cache/'val-control.npz').items()}
+    records, paths, exposure = [],{},{}
+    checks = (1000,2000,2500,3500,4500,5000)
+    for arm in ('B','A'):
+        bank, val_bank = load_bank(cache,'train',arm,True), load_bank(cache,'val',arm,False)
+        for seed in pr7.SEEDS:
+            start = time.monotonic()
+            rng = np.random.default_rng(seed*10007+31)
+            cameras = np.random.default_rng(seed*4099+217)
+            digest = hashlib.sha256()
+            p = init(seed)
+            state = OPT.init(p)
+            params = sum(x.size for x in jax.tree.leaves(p))
+            prob = np.full(len(TRAIN), .8/(len(TRAIN)-1))
+            prob[0] = .2
+            for i in range(1,5001):
+                idx = rng.choice(len(current['valid']), size=32, replace=True)
+                b = pr7.relabel({k:v[idx] for k,v in current.items()},pr7.sample_mixed(rng,('family',),32))
+                labels = {k:b[k] for k in LABELS}
+                pose = cameras.choice(len(TRAIN),size=32,p=prob)
+                for v in (idx,pose,*labels.values()):
+                    digest.update(v.tobytes())
+                obs = {k:b[k] for k in SENSOR}
+                obs.update(gather(bank,pose,idx))
+                p,state,loss = step(p,state,obs,labels)
+                if i in checks:
+                    l = float(loss)
+                    assert np.isfinite(l)
+                    stats, err = validation(p,val_bank,val)
+                    np.save(out/f'val-{arm}-{seed}-{i}.npy',err)
+                    records.append(dict(arm=arm,seed=seed,steps=i,loss=l,poses=stats,
+                                        mae=float(err.mean()),seconds=time.monotonic()-start))
+                    write(out/'source-curves.json',records)
+                    print(arm,seed,i,l,'source validation',float(err.mean()),flush=True)
+                if i in (2500,5000):
+                    path=out/f'{arm}-seed{seed}-step{i}.msgpack'
+                    path.write_bytes(serialization.to_bytes(p))
+                    restored=restore(path,seed)
+                    for x,y in zip(jax.tree.leaves(p),jax.tree.leaves(restored),strict=True):
+                        np.testing.assert_array_equal(x,y)
+                    paths[path.name]=sha(path)
+            ex=digest.hexdigest()
+            assert exposure.setdefault(seed,ex)==ex
+        del bank,val_bank
+    mean = {n:float(np.mean([r['mae'] for r in records if r['arm']=='B' and r['steps']==n])) for n in (2500,5000)}
+    selected = min(mean,key=mean.get)
+    write(out/'sealed.json',dict(steps=selected,source_B_mean=mean,params_per_arm=params,
+          source=seal['source'],training_exposures=exposure,checkpoint_sha256=paths,
+          cfg=asdict(CFG),revision=(out/'launch.txt').read_text().split()[0],
+          source_poses=TRAIN,validation_poses=VALIDATION))
+    print('SEALED',selected,flush=True)
+
+
+if __name__=='__main__':
+    ap=argparse.ArgumentParser()
+    ap.add_argument('mode',choices=('prepare','train'))
+    ap.add_argument('cache',type=Path)
+    ap.add_argument('out',type=Path,nargs='?')
+    a=ap.parse_args()
+    cv2.setNumThreads(1)
+    if a.mode=='prepare':
+        assert os.environ['CUDA_VISIBLE_DEVICES']==''
+        prepare(a.cache)
+    else:
+        train(a.out,a.cache)
