@@ -1,0 +1,13 @@
+STATUS=CPU_QUALIFIED_AND_STAGED
+REGISTRATION=3c693063e7f0f9a39b64cc9a0c6542d5623af6df
+PIN=8b0230bfb852416d036a04db8ecc83ae90b7e900
+CHECKOUT=/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-matched-history-sham-20261124-r1/code-8b0230bfb852416d036a04db8ecc83ae90b7e900
+COMMAND=bash /mowenjie/fluffy-bassoon-2/outputs/frozen-vla-matched-history-sham-20261124-r1/code-8b0230bfb852416d036a04db8ecc83ae90b7e900/outputs/frozen-vla-matched-history-sham-20261124-r1/launch.sh gpu 8b0230bfb852416d036a04db8ecc83ae90b7e900
+RESOURCES=Baige Distributed Training, 1 exclusive RTX 4090, 12 vCPU, 64 GiB, 50 minutes wall maximum, 0 automatic retries; <=0.8334 GPUh, charged to 12 GPUh pilot. Root submits.
+OUTPUT=/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-matched-history-sham-20261124-r1/gpu01
+CPU=/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-matched-history-sham-20261124-r1/cpu-8b0230bfb852416d036a04db8ecc83ae90b7e900
+PANEL=c51e767770bc48827a1d6d3837cddefe1b7a1d6c matched-task contract 063c9640096eeabdeb560b2e8dd4bddac71c3250ed4b5636922d398d562d2999
+FIT=/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-cotraining-20261124-r1/model/gpu02/fit.json SHA256 4855546591381f149d7509a6af3d45db32e9e82a732788c8376d504f19417dbc, training pin 29e9e5e5209db26ce0cbf695387c64cdf79b98fa
+DESIGN=All eight registered cases. Three independent native trajectories per case. Common plain joint opening. Afterward real and sham share the same precompiled executable, state and diffusion bank. Sham replaces its freshly computed offset with runtime zeros. Plain stays on the plain joint executable. Four unissued control-10 calls on each real trajectory.
+SUBMISSION_RECEIPT=/tmp/frozen-vla-cotrain-20261124/sham-submitted.txt
+CPU_QUALIFICATION=24/24 short real-simulator fixtures, 8/8 opening and same-input control-10 triplets, actual serialized joint factors, lightweight upstream embeddings only, no scored GPU rollouts. Full paired readback passed on two Linux CPU cores.
