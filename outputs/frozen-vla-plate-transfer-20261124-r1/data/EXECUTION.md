@@ -17,3 +17,11 @@ The SHA-256 of the ordered 253-candidate file is `ce1d4da211f9fe76512dcefa19c0c6
 ```bash
 bash outputs/frozen-vla-plate-transfer-20261124-r1/data/launch.sh gpu dec6b1f3d6f33e134e5fcb75185a99f761845216 gpu01
 ```
+
+## Distributed collection
+
+Baige Distributed Training job `job-h3fk587i4jg2` ran on one exclusive NVIDIA GeForce RTX 4090. The scheduler allocated 12 CPUs and 64 GiB RAM. The launcher restricted computation to two cores and used one EGL renderer. A CUDA arithmetic, UUID, PCI and process check passed on the allocated device. All native receipts identify its NVIDIA 4090 renderer. The PFS mount reported 113,724,358,656 bytes available at launch. Full replay tapes used 782 MiB and the final datasets used 101 MiB as reported by `du -sh`. [GPU probe](evidence/gpu01/gpu.json) · [Storage readback](evidence/gpu01/storage.txt)
+
+The launcher started at 13:54:10 Shanghai time on November 24. The first two native positive episodes were verified by 13:56:56. At 13:59:42 all 16 training pairs were complete. The job published the complete dataset, including the four held-out pairs, and exited 0 at 14:00:27. Launcher time was 377 seconds (0.10472 GPU-hours). The scheduler's 120-minute limit was an upper bound. [Launch receipt](evidence/gpu01/launch.txt) · [Native output](evidence/gpu01/console.log) · [Exit receipt](evidence/gpu01/exit.txt)
+
+An independent readback using `ce9ca43a58a4f4a99d9f37d3626f39903f871e68` ran on Baige development CPU cores 26 and 27. It took 11 seconds and exited 0 at 14:00:42. It verified the seal emitted by the native launcher, all tape and HDF5 digests, source-only enrollment order, shared row bytes, balanced body counts and disjoint placements. The trainer and parent received the seal via the shared handoff. The original source-order digest was identical in the CPU smoke and GPU collection. [Readback metrics](evidence/readback01/readback.json) · [Readback pin and invocation receipt](evidence/readback01/launch.txt) · [Readback exit](evidence/readback01/exit.txt)
