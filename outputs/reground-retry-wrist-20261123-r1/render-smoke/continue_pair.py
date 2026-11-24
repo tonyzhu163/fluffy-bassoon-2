@@ -2,21 +2,45 @@
 import argparse
 from contextlib import ExitStack
 import os
+import subprocess
+import sys
 from pathlib import Path
 from unittest.mock import patch
 
 import reference as ref
 
 
+DRAIN_PIN = "6e51cd532ec9c5b7ca285a051660bd181374fae8"
+
+
+def drain_validator(store):
+    checkout = store.parent.parent / f"drain-src-{DRAIN_PIN}"
+    git = ["git", "-C", str(checkout)]
+    ref.require(subprocess.check_output([*git, "rev-parse", "HEAD"], text=True).strip() == DRAIN_PIN,
+                "Drain dispatch pin differs")
+    subprocess.run([*git, "diff", "--quiet", "HEAD", "--", "recovery/drain"], check=True)
+    sys.path.insert(0, str(checkout / "recovery/drain"))
+    import dispatch
+    return dispatch.validate_batch
+
+
 def validate_sealed(attempt, retry):
     store = attempt.parent.parent / "batches"
     grid = retry.schedule()
     originals = []
+    check_drain = None
     for path in sorted(store.glob("batch[0-9][0-9][0-9]")):
         batch = int(path.name[5:])
         ref.require(batch < len(grid), f"Unexpected sealed batch {batch}")
-        retry.validate(path, grid[batch])
         producer = ref.read(path / "producer.json")
+        if (path / "dispatch.json").is_file():
+            ref.require(55 <= batch < 70 and ref.read(path / "dispatch.json")["dispatch_pin"] == DRAIN_PIN,
+                        "Unexpected operational dispatch provenance")
+            if check_drain is None:
+                check_drain = drain_validator(store)
+            check_drain(path, grid[batch], retry, published=True)
+            continue
+        retry.validate(path, grid[batch])
         if producer["attempt"] == "retry02":
             ref.require(producer["code"] == os.environ["RETRY_PIN"], "Original producer scientific pin differs")
             originals.append(batch)
@@ -154,7 +178,8 @@ def main():
     originals = validate_sealed(args.attempt, retry)
     ref.write(args.attempt / "validated-originals.json", dict(batches=originals, pin=os.environ["RETRY_PIN"],
               operational_pin=os.environ["CONTINUATION_PIN"], smoke_pin=args.smoke_pin, physical_protocol=selected["mode"]))
-    with patch.object(retry, "run_pair", run_pair):
+    ref.require(retry.schedule()[54] == CASES, "Continuation changed the enrolled batch054")
+    with patch.object(retry, "run_pair", run_pair), patch.object(worker, "selected", return_value=[54]):
         worker.run(args.attempt, 0, "full")
 
 
