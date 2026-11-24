@@ -1,20 +1,33 @@
 """Portable final CPU readback of the complete cohort and eligibility of archived controls."""
 import argparse
-from collections import Counter
 import gzip
 from itertools import combinations
 import json
-import os
+import math
 from pathlib import Path
-import sys
 
 import numpy as np
 
 from release import HERE, KIN, UR, LAUNCH, ORIGINAL, ROOT, checked, digest, original, read
 from rollout import TRACES, TRANSPORT, MOTOR_READY
 
-sys.path.insert(0,str(HERE.parent/UR))
-from portable_readback import fp, planar
+def fp(a):
+    a = np.ascontiguousarray(a)
+    return digest(repr((a.shape,a.dtype.str)).encode()+a.tobytes())
+
+
+def planar(values, degrees, factor, grip):
+    # The portable UR verifier uses independent float64 scalar products.
+    angle = math.radians(degrees)
+    cs,sn = math.cos(angle),math.sin(angle)
+    v = np.asarray(values,dtype=np.float64)
+    w = v.copy()
+    w[:,0] = factor*(cs*v[:,0]-sn*v[:,1])
+    w[:,1] = factor*(sn*v[:,0]+cs*v[:,1])
+    w[:,2] *= factor
+    w[:,6] *= grip
+    return np.clip(w,-1,1)
+
 
 PACKETS = {"UR5e":"be817675e72acca4ebb34a8b6f48d774aa51077a54d12a86ca28cc80456332b2",
            "Kinova3":"ef18976059a9a8944ab88bbc144c43b41aee8ba8eb8bb7bb9c9b8e05e502d8f7"}
@@ -193,12 +206,19 @@ def main(body, attempt,job):
         names=["A_real","B_real"] + (["frozen_warp"] if body=="UR5e" else [])
         op,new,acts,sha=group(folder,r,names,PACKETS[body],"release_sha256")
         archive,old_sha,unmatched={},None,["original incomplete"]
+        opening_check = None
         ar = oldsites[r["index"]]
         assert r["true_map"]==ar["true_map"] and r["query"]==ar["query"] and r["reference"]==ar["reference"]
         if old_available:
             old_names=list(ar["corrections"])
             oldop,baseline,arch_acts,old_sha=group(old_dir,ar,old_names,old_binding,binding_field)
             unmatched=[k for k in op if op[k]!=oldop[k]]
+            diff = np.abs(np.subtract(oldop["first_raw"],op["first_raw"]))
+            opening_check = dict(reset_differences=[k for k in op["reset"] if op["reset"][k]!=oldop["reset"][k]],
+                environment_differences=[k for k in op["environment"] if op["environment"][k]!=oldop["environment"][k]],
+                motor_input_differences=[k for k in op["motor_inputs"] if op["motor_inputs"][k]!=oldop["motor_inputs"][k]],
+                max_abs_raw=float(diff.max()),changed_raw_components=int(np.count_nonzero(diff)),
+                old_opening=oldop["opening_proposal"])
             for m in old_names:
                 label=m+"_24" if m in ("A","B") else m
                 archive[label]=baseline[m]
@@ -214,10 +234,17 @@ def main(body, attempt,job):
         result.append(dict(**{k:r[k] for k in ("index","suite","task_id","shard","slot","angle_deg","regime","query_layout","noise_seed")},
             new=new,old=archive,new_tape_sha256=sha,old_tape_sha256=old_sha,query_physics=op["reset"]["physics"],
             opening=op["opening_proposal"],opening_inputs=op["motor_inputs"],noise_sha256=op["reset"]["noise_sha256"],
-            cross_job_mismatch=unmatched,action_differences=comparisons,
+            cross_job_mismatch=unmatched,cross_job_opening=opening_check,action_differences=comparisons,
             success={m:v["success"] for m,v in (new|archive).items()}))
     eligible=all(not r["cross_job_mismatch"] for r in result)
     stats=summarize(result,eligible)
+    if old_available:
+        stats["historical_success_counts"]={m:sum(r["old"][m]["success"] for r in result) for m in result[0]["old"]}
+        stats["historical_cross_job_qualification"]=dict(
+            reset_equal=sum(not r["cross_job_opening"]["reset_differences"] for r in result),
+            motor_inputs_equal=sum(not r["cross_job_opening"]["motor_input_differences"] for r in result),
+            raw_opening_equal=sum(r["cross_job_opening"]["changed_raw_components"]==0 for r in result),
+            max_abs_raw=max(r["cross_job_opening"]["max_abs_raw"] for r in result))
     return dict(body=body,job=job,attempt=attempt,runtime=runtime,gpu_exit=(folder/"exit.txt").read_text().strip(),
                 release_sha256=PACKETS[body],original= str(old_dir),original_launch_sha256=LAUNCH[body],
                 archive_eligible=eligible,matched_old_openings=sum(not r["cross_job_mismatch"] for r in result),
