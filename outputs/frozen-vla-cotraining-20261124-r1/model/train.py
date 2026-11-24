@@ -219,9 +219,10 @@ def run(args):
         raise ValueError("Read-only recovery input has a different contract")
     stock = load_stock()
     model = stock._model
-    first = ds["train"][0]
-    # A nonzero diagnostic vector exercises both branches even on episode reset.
-    json_write(out / "native-parity.json", native_check.check(stock, raw_item(first), np.ones(52, np.float32)))
+    first = next(row for row in ds["train"] if np.any(row["history"]))
+    parity = native_check.check(stock, raw_item(first), first["history"])
+    parity.update(trajectory_id=str(first["trajectory_id"]), t=int(first["t"]))
+    json_write(out / "native-parity.json", parity)
     extract = bind(model, capture, static_argnames=("train",))
     cache_dir = out / "cache"
     cache_dir.mkdir()
