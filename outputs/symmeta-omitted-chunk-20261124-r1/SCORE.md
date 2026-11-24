@@ -15,3 +15,30 @@ Registered on 24 November 2026 before inspecting this experiment's evaluation ou
 Task membership and exposure of original reader fits must be supplied by the reader worker before empirical inference. Reader-fit tasks may overlap the projection-fit role. Evaluation tasks and calibration tasks must be disjoint from both reader training and projection fitting. The estimator uses raw archived pixels and commands. Predictions and metrics from prior target panels do not enter the study.
 
 The registered judge fit uses 224 earlier physical supports (eight tasks, two arms, two resets, seven shifts). Twelve tasks are reserved for training the two readers. Four calibration tasks and eight evaluation tasks use 224 and 448 separate physical traces respectively from the larger archive, with four resets per arm and shift. Task lists and grid counts are enforced in the scorer. Adjacent chunks share a physical boundary frame. When the middle token is omitted, its two endpoints can still occur separately in the retained neighbors. Omitted issued command, direct paired flow, and proprioceptive deltas are withheld by the reader mask. This design tests held-out motion-token consistency. It cannot establish generalization to wholly unseen pixels. [Reader collection and masking](INPUTS.md)
+
+## CPU qualification and reproduction
+
+On Baige, the independent fit check opened the 224 original judge-fit tapes only, covering 112 Panda and 112 Sawyer traces. Of 672 chunks, 633 had both usable flow and planar command. The source design had rank two. The largest coefficient difference between directly stacked least squares and the task-level sufficient statistics used for bootstrap refitting was 6.7 × 10⁻¹⁶. Feeding identical before/after frames produced zero pooled flow on every chunk. All 224 real traces shared both boundary frames with their neighbors. [Linux CPU qualification](judge-evidence/qualification.json)
+
+In a 24-row known-answer fixture with distinct endpoints, rotating the omitted command or assigning the next chunk's visual direction changed the emitted yaw on 12 rows. Ignoring visual flow forced the calibration constant on all 24 and changed all 24 emitted yaws. The independent complex-valued angle calculation checked all 144 fold/reader errors. Fixture results establish that the implemented path can respond to the held-out input, including its final output. The real evaluation separately reports the interventions after calibration chooses the slope. [Known-answer controls](judge_qualify.py)
+
+Run from the deployed scorer Git checkout on Baige CPU after the reader export has completed. The input names below are those announced by the reader worker. Use a fresh output subdirectory for each attempt. The evaluation executable verifies the pre-label seal and independently replays all frozen predictions before it opens the evaluation labels. Its joint intervals refit the judge and mixing calibration for each task draw. Its conditional intervals use the same test draws with the original fit.
+
+```bash
+set -eu
+run=outputs/symmeta-omitted-chunk-20261124-r1
+shared=/mowenjie/fluffy-bassoon-2/$run
+py=/mowenjie/fluffy-bassoon/envs/openpi-215abfb/bin/python
+pin=$(git rev-parse HEAD)
+export CUDA_VISIBLE_DEVICES="" OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1
+export JAX_PLATFORMS=cpu PYTHONDONTWRITEBYTECODE=1
+frozen="$shared/judge-evidence/freeze01"
+scored="$shared/judge-evidence/score01"
+"$py" -B "$run/judge.py" --pin "$pin" --data "$shared/data01" \
+  --readers "$shared/pred01/readers.npz" --out "$frozen"
+seal=$(sha256sum "$frozen/seal.json" | cut -d ' ' -f 1)
+"$py" -B "$run/score.py" --pin "$pin" --frozen "$frozen" --seal-sha "$seal" \
+  --labels "$shared/data01/labels-eval.npz" --out "$scored"
+```
+
+The freeze requires the source seal and authenticated reader prediction receipt including the full-decoder and omitted-slot poison checks. It collects an independent complex-angle check on the actual scored pairs before opening evaluation labels. The scorer saves full-precision per-role coverage, fold/exclusion counts, every paired contrast, endpoint oracle headroom, per-task and per-seed results, exact conditional whole-task sign-flip probabilities, and calibration-refit variability in `metrics.json`. The [qualification script](judge_qualify.py) can be rerun with the same Linux CPU environment in the pinned checkout.
