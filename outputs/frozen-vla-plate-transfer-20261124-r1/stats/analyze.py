@@ -55,7 +55,7 @@ def cp(k, n, alpha):
     if n == 0:
         return (0.0, 1.0)
     lower = beta.ppf(alpha / 2, k, n - k + 1) if k else 0.0
-    upper = beta.isf(alpha / 2, n - k, k + 1) if k < n else 1.0
+    upper = beta.isf(alpha / 2, k + 1, n - k) if k < n else 1.0
     return float(lower), float(upper)
 
 
@@ -235,11 +235,17 @@ def analyze(manifest_files, source_file, source_sha, seals, budget_stop=False):
         readback = path.parent / seal["native_readback"]
         require(valid_hash(seal["native_readback_sha256"]) and digest(readback) == seal["native_readback_sha256"],
                 "native readback receipt changed")
+        audit = load(readback)
+        audits = audit["audits"]
+        require(audit["n"] == n and len(audits) == n, "incomplete native audits")
         for i, row in enumerate(rows):
+            require(audits[i]["case_id"] == i, "wrong audited native case")
             for key in ("noise_seed", "layout_seed", "movable_xy_hash", "scene_hash"):
                 require(row[key] == panel[i][key], f"{key} differs from sealed physical enrollment")
         for row in rows[len(previous):]:
-            case_dir = path.parent / row["case_dir"]
+            case = audits[row["case_id"]]
+            case_dir = Path(case["pfs"])
+            require(digest(case_dir / "complete.json") == case["complete_sha256"], "audited case hash mismatch")
             complete = load(case_dir / "complete.json")
             for key in ("case_id", "layout_seed", "noise_seed", "scene_hash", "movable_xy_hash"):
                 require(row[key] == complete[key], f"case receipt mismatch: {key}")
@@ -248,6 +254,7 @@ def analyze(manifest_files, source_file, source_sha, seals, budget_stop=False):
                 require(digest(episode_file) == complete["receipts"][mode], "episode receipt hash mismatch")
                 episode = load(episode_file)
                 require(episode["mode"] == mode and episode["case_id"] == row["case_id"], "wrong episode identity")
+                require(case["trajectory_sha256"][mode] == episode["tape_sha256"], "native HDF5 digest changed")
                 with h5py.File(case_dir / f"{mode}.h5", "r") as tape:
                     require(episode["controls"] == len(tape["reward"]), "raw tape controls differ from receipt")
                     require(read_endpoint(tape) == row[mode], "native endpoint differs from sealed outcome")

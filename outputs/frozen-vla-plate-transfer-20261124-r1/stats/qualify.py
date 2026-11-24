@@ -13,7 +13,7 @@ import scipy
 from scipy.signal import fftconvolve
 from scipy.stats import binom, binomtest
 
-from analyze import (case_seed, cp, decide, exact_p, interval, read_endpoint, require, spend_at,
+from analyze import (case_seed, check_manifest, cp, decide, digest, exact_p, interval, read_endpoint, require, spend_at,
                      summary, validate_rows)
 
 
@@ -134,6 +134,10 @@ def reference_checks():
 
 def main():
     require(sys.platform.startswith("linux") and len(os.sched_getaffinity(0)) <= 2, "use bounded Linux CPU")
+    path = Path(sys.argv[1])
+    manifest = check_manifest(path)
+    physical = dict(placements=len(manifest["cases"]), rejected=len(manifest["rejected"]),
+                    sha256=digest(path), prior_sha256=manifest["prior_sha256"])
     null = {str(q): scenarios(0, q) for q in (0, 1/12, 1/4, 1/2, 1)}
     for sequence in null.values():
         for j, r in enumerate(sequence):
@@ -143,7 +147,7 @@ def main():
     planning = {str(q): scenarios(1/12, q) for q in (1/12, 1/4, 1/2)}
     for r in planning[str(1/12)]:
         assert r["negative_by_look"] < 1e-12
-    print(json.dumps(dict(reference=reference_checks(), endpoint_examples=endpoints(), gate_example=gate_checks(),
+    print(json.dumps(dict(physical=physical, reference=reference_checks(), endpoint_examples=endpoints(), gate_example=gate_checks(),
                           null_equal_margins=null, planning_delta_1_over_12=planning,
                           scipy=scipy.__version__, python=sys.version, cores=sorted(os.sched_getaffinity(0)),
                           host=os.uname().nodename, pin=os.environ["STATS_PIN"]), indent=2, allow_nan=False))

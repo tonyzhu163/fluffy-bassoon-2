@@ -15,9 +15,10 @@ cpu=${STATS_CPU:-31}
 py=/mowenjie/fluffy-bassoon/envs/openpi-215abfb/bin/python
 start=$(date +%s)
 trap 'rc=$?; echo "$rc $start $(date +%s)" > "$out/exit.txt"' EXIT
+exec 2> >(tee "$out/stderr.log" >&2)
 echo "host=$(hostname) pin=$STATS_PIN cpu=$cpu mode=$mode python=$py" > "$out/launch.txt"
 case "$mode" in
-    qualify) taskset -c "$cpu" "$py" -Bu "$here/qualify.py" > "$out/qualification.json" ;;
+    qualify) taskset -c "$cpu" "$py" -Bu "$here/qualify.py" "$@" > "$out/qualification.json" ;;
     analyze) taskset -c "$cpu" "$py" -Bu "$here/analyze.py" "$@" --out "$out/analysis.json" ;;
     *) exit 2 ;;
 esac
