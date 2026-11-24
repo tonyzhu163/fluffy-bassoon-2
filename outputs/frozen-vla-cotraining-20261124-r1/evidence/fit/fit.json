@@ -1,0 +1,388 @@
+{
+  "schema": "pi05-libero-native-flow-v1",
+  "contract": "bb93692ff25b6ef029dfcc33122a5dec8ff0794c17c832436ee7d4fb9af3703e",
+  "base": {
+    "openpi_revision": "215abfb217dbac7d5f1273282331b9b1866c0479",
+    "checkpoint_manifest": "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170",
+    "normalization": "b3a44bb2810436fb62917decaea58bd4d9110255df527dea21e8fd40c960bd84"
+  },
+  "code_revision": "29e9e5e5209db26ce0cbf695387c64cdf79b98fa",
+  "data_manifest": "05209732b5e3f04308c8acbef2f6c8c8a2f173673840fdb055e1b094ff7d6f40",
+  "parameters": {
+    "original": {
+      "action_out_proj/kernel": "4f4b7f988bca3a487947b940a079079975abe75e66d630835fd0bf06f38139ae",
+      "action_out_proj/bias": "2815b12acd6e515fe91eb9e2e432cca172634faef3b4fd0055005ca8941b1756",
+      "fitted": {}
+    },
+    "policy_only": {
+      "action_out_proj/kernel": "4dd09e067501c879816ac5298f4616a374488ff14fb707dfad8013f0f81dd325",
+      "action_out_proj/bias": "2815b12acd6e515fe91eb9e2e432cca172634faef3b4fd0055005ca8941b1756",
+      "fitted": {
+        "left": "10c40785000dda994e102b7333cadccee3c19e26b4cc16f8568e575fa498d5e6",
+        "right": "83ce1a8ebe944427be12ffec937f37bda702088a8823df7d927217412b92d41b"
+      }
+    },
+    "adapter_only": {
+      "action_out_proj/kernel": "4f4b7f988bca3a487947b940a079079975abe75e66d630835fd0bf06f38139ae",
+      "action_out_proj/bias": "2815b12acd6e515fe91eb9e2e432cca172634faef3b4fd0055005ca8941b1756",
+      "fitted": {
+        "history_in": "fabb88fea24a14f63eba261b6a0335676148320c1d440c5ca0ff40432ef54027",
+        "history_out": "0719990e6cdab9011b783f229c5d9a0c347cf2a2cbcea11ea66e0b55a7d41fd5"
+      }
+    },
+    "joint": {
+      "action_out_proj/kernel": "3bd66e29fa259df3e731928634558831727612834bb0a20287baf76442a18d6d",
+      "action_out_proj/bias": "2815b12acd6e515fe91eb9e2e432cca172634faef3b4fd0055005ca8941b1756",
+      "fitted": {
+        "history_in": "0d07d136e356a3772b0ca11bd0e1bbf2b102db0fc6b32dbcb49c54470baeaecc",
+        "history_out": "63da05de1773325ecef270a3580e1c9c8ff5397be5e7069fbe6bbf08850e0cb6",
+        "left": "e5b66060e4a84a4f501700add710849724ed9cfb192dcd5987e2ca96ff7e93a0",
+        "right": "0f911b0689b65db358be7d706d6d7c16b189c6a069c76911fe9d8c262831dd27"
+      }
+    }
+  },
+  "heads_sha256": "ecf5cf6424421cabd292764d968728329e252c1d5665715d175182f78b0043e5",
+  "metrics": {
+    "train": {
+      "conditions": {
+        "original": {
+          "native_mse_32": 0.002682103542611003,
+          "first_five_physical_mse_7": 0.013249121606349945,
+          "trajectory_mse_32": {
+            "panda/episode_000808": 0.0038414825685322285,
+            "panda/episode_000809": 0.0011221482418477535,
+            "panda/episode_000811": 0.0018507043132558465,
+            "panda/episode_000812": 0.003346916288137436,
+            "panda/episode_000813": 0.002280803397297859,
+            "panda/episode_000815": 0.0013369175139814615,
+            "panda/episode_000818": 0.00210868613794446,
+            "panda/episode_000819": 0.002706733765080571,
+            "panda/episode_000827": 0.0021673396695405245,
+            "panda/episode_001261": 0.0014301089104264975,
+            "panda/episode_001262": 0.007750372402369976,
+            "panda/episode_001263": 0.0012459168210625648,
+            "panda/episode_001264": 0.00295464089140296,
+            "panda/episode_001265": 0.0021747166756540537,
+            "panda/episode_001266": 0.001294654794037342,
+            "panda/episode_001268": 0.002554622944444418,
+            "panda/episode_001272": 0.0030420690309256315,
+            "panda/episode_001273": 0.0017316184239462018,
+            "panda/episode_001274": 0.001787359593436122,
+            "panda/episode_001275": 0.008158419281244278,
+            "panda/episode_001277": 0.002253663493320346
+          }
+        },
+        "policy_only": {
+          "native_mse_32": 0.002545345574617386,
+          "first_five_physical_mse_7": 0.012558679096400738,
+          "trajectory_mse_32": {
+            "panda/episode_000808": 0.003444150323048234,
+            "panda/episode_000809": 0.001184549881145358,
+            "panda/episode_000811": 0.0018647596007212996,
+            "panda/episode_000812": 0.0030835717916488647,
+            "panda/episode_000813": 0.0021675957832485437,
+            "panda/episode_000815": 0.0012809738982468843,
+            "panda/episode_000818": 0.002034708159044385,
+            "panda/episode_000819": 0.002621680498123169,
+            "panda/episode_000827": 0.0020873218309134245,
+            "panda/episode_001261": 0.0013983682729303837,
+            "panda/episode_001262": 0.006934323813766241,
+            "panda/episode_001263": 0.0012110450770705938,
+            "panda/episode_001264": 0.0028833295218646526,
+            "panda/episode_001265": 0.0020889700390398502,
+            "panda/episode_001266": 0.0012860449496656656,
+            "panda/episode_001268": 0.002361138118430972,
+            "panda/episode_001272": 0.0028198447544127703,
+            "panda/episode_001273": 0.0016952513251453638,
+            "panda/episode_001274": 0.00179575989022851,
+            "panda/episode_001275": 0.007688324898481369,
+            "panda/episode_001277": 0.002226764801889658
+          }
+        },
+        "adapter_only": {
+          "native_mse_32": 0.002580974018201232,
+          "first_five_physical_mse_7": 0.012726661749184132,
+          "trajectory_mse_32": {
+            "panda/episode_000808": 0.0037806963082402945,
+            "panda/episode_000809": 0.0011247263755649328,
+            "panda/episode_000811": 0.0018750103190541267,
+            "panda/episode_000812": 0.003263726830482483,
+            "panda/episode_000813": 0.0020842570811510086,
+            "panda/episode_000815": 0.0012731848983094096,
+            "panda/episode_000818": 0.0020601381547749043,
+            "panda/episode_000819": 0.0025253647472709417,
+            "panda/episode_000827": 0.0021214941516518593,
+            "panda/episode_001261": 0.0014467337168753147,
+            "panda/episode_001262": 0.007478202227503061,
+            "panda/episode_001263": 0.0011768226977437735,
+            "panda/episode_001264": 0.002889275550842285,
+            "panda/episode_001265": 0.002033624332398176,
+            "panda/episode_001266": 0.0012001884169876575,
+            "panda/episode_001268": 0.0024378830567002296,
+            "panda/episode_001272": 0.002820026595145464,
+            "panda/episode_001273": 0.0016494403826072812,
+            "panda/episode_001274": 0.001683547510765493,
+            "panda/episode_001275": 0.007859237492084503,
+            "panda/episode_001277": 0.002194800414144993
+          }
+        },
+        "joint": {
+          "native_mse_32": 0.0024617782328277826,
+          "first_five_physical_mse_7": 0.012174033559858799,
+          "trajectory_mse_32": {
+            "panda/episode_000808": 0.0034826258197426796,
+            "panda/episode_000809": 0.001163274748250842,
+            "panda/episode_000811": 0.0018632643623277545,
+            "panda/episode_000812": 0.0030604705680161715,
+            "panda/episode_000813": 0.0020055011846125126,
+            "panda/episode_000815": 0.0012540126917883754,
+            "panda/episode_000818": 0.0019385634222999215,
+            "panda/episode_000819": 0.002434809459373355,
+            "panda/episode_000827": 0.0020570210181176662,
+            "panda/episode_001261": 0.001392157981172204,
+            "panda/episode_001262": 0.006719318218529224,
+            "panda/episode_001263": 0.00116247171536088,
+            "panda/episode_001264": 0.0028373929671943188,
+            "panda/episode_001265": 0.001961351837962866,
+            "panda/episode_001266": 0.0012035246472805738,
+            "panda/episode_001268": 0.0022887743543833494,
+            "panda/episode_001272": 0.00266746967099607,
+            "panda/episode_001273": 0.0016107425326481462,
+            "panda/episode_001274": 0.0016877789748832583,
+            "panda/episode_001275": 0.007470972836017609,
+            "panda/episode_001277": 0.002141360193490982
+          }
+        }
+      },
+      "paired_contrasts": {
+        "original": {
+          "trajectory_mean_joint_minus_control": -0.00022557314063998915,
+          "bootstrap_trajectory_ci95": [
+            -0.00033604393829591574,
+            -0.0001333973739140978
+          ]
+        },
+        "policy_only": {
+          "trajectory_mean_joint_minus_control": -8.360085831511588e-05,
+          "bootstrap_trajectory_ci95": [
+            -0.00011502944661991759,
+            -5.3918697743765314e-05
+          ]
+        },
+        "adapter_only": {
+          "trajectory_mean_joint_minus_control": -0.00012264390742140158,
+          "bootstrap_trajectory_ci95": [
+            -0.00020591427968438006,
+            -5.891872874815905e-05
+          ]
+        }
+      },
+      "trajectory_count": 21
+    },
+    "heldout": {
+      "conditions": {
+        "original": {
+          "native_mse_32": 0.0035819527693092823,
+          "first_five_physical_mse_7": 0.01568511500954628,
+          "trajectory_mse_32": {
+            "panda/episode_000820": 0.0005519428523257375,
+            "panda/episode_000824": 0.005166146904230118,
+            "panda/episode_000825": 0.001250090659596026,
+            "panda/episode_000828": 0.003405315335839987,
+            "panda/episode_001271": 0.0022496094461530447,
+            "panda/episode_001276": 0.0047868387773633,
+            "panda/episode_001282": 0.009590232744812965,
+            "panda/episode_001291": 0.0016554463654756546
+          }
+        },
+        "policy_only": {
+          "native_mse_32": 0.0036216317676007748,
+          "first_five_physical_mse_7": 0.01581014320254326,
+          "trajectory_mse_32": {
+            "panda/episode_000820": 0.0005578314885497093,
+            "panda/episode_000824": 0.005186768714338541,
+            "panda/episode_000825": 0.0012712912866845727,
+            "panda/episode_000828": 0.003537261625751853,
+            "panda/episode_001271": 0.0023261404130607843,
+            "panda/episode_001276": 0.004802927374839783,
+            "panda/episode_001282": 0.009626863524317741,
+            "panda/episode_001291": 0.001663970178924501
+          }
+        },
+        "adapter_only": {
+          "native_mse_32": 0.0036300860811024904,
+          "first_five_physical_mse_7": 0.016026845201849937,
+          "trajectory_mse_32": {
+            "panda/episode_000820": 0.0006105640204623342,
+            "panda/episode_000824": 0.005105186253786087,
+            "panda/episode_000825": 0.0012548798695206642,
+            "panda/episode_000828": 0.0034843049943447113,
+            "panda/episode_001271": 0.002338358433917165,
+            "panda/episode_001276": 0.004821564070880413,
+            "panda/episode_001282": 0.00972480047494173,
+            "panda/episode_001291": 0.0017010290175676346
+          }
+        },
+        "joint": {
+          "native_mse_32": 0.0036565656773746014,
+          "first_five_physical_mse_7": 0.016052160412073135,
+          "trajectory_mse_32": {
+            "panda/episode_000820": 0.0006305159768089652,
+            "panda/episode_000824": 0.00514118280261755,
+            "panda/episode_000825": 0.0012876477558165789,
+            "panda/episode_000828": 0.003530353307723999,
+            "panda/episode_001271": 0.0023921197280287743,
+            "panda/episode_001276": 0.00481211906298995,
+            "panda/episode_001282": 0.009750261902809143,
+            "panda/episode_001291": 0.0017083253478631377
+          }
+        }
+      },
+      "paired_contrasts": {
+        "original": {
+          "trajectory_mean_joint_minus_control": 7.461284985765815e-05,
+          "bootstrap_trajectory_ci95": [
+            3.2560917679802516e-05,
+            0.00011847514106193556
+          ]
+        },
+        "policy_only": {
+          "trajectory_mean_joint_minus_control": 3.49339097738266e-05,
+          "bootstrap_trajectory_ci95": [
+            1.4788383850827813e-06,
+            7.026510138530284e-05
+          ]
+        },
+        "adapter_only": {
+          "trajectory_mean_joint_minus_control": 2.647984365466982e-05,
+          "bootstrap_trajectory_ci95": [
+            1.3224024587543682e-05,
+            3.922531141142826e-05
+          ]
+        }
+      },
+      "trajectory_count": 8
+    }
+  },
+  "epochs": [
+    {
+      "epoch": 1,
+      "batches": 12,
+      "seconds": 130.15960870450363,
+      "order_sha256": "5bffcf1715596f6a27b11372f339a7e5ccd66c569202af08d89604b0620f9521",
+      "training_mse": {
+        "policy_only": 0.0026826791290659457,
+        "adapter_only": 0.0027014703664463013,
+        "joint": 0.0027034302959994725
+      }
+    },
+    {
+      "epoch": 2,
+      "batches": 12,
+      "seconds": 52.13740469049662,
+      "order_sha256": "c98987f1d291a6d6df3e51b756a86662d245b67668a84f596c539253a5720e8c",
+      "training_mse": {
+        "policy_only": 0.002673439943464473,
+        "adapter_only": 0.0026570196302297213,
+        "joint": 0.0026507020714537552
+      }
+    },
+    {
+      "epoch": 3,
+      "batches": 12,
+      "seconds": 52.17706217383966,
+      "order_sha256": "c3882c930b0861825b19d117a90ae97a97fbbf555c6a5d0249cca088db32d791",
+      "training_mse": {
+        "policy_only": 0.0026616855999842906,
+        "adapter_only": 0.0026372069066079953,
+        "joint": 0.0026213222881779075
+      }
+    },
+    {
+      "epoch": 4,
+      "batches": 12,
+      "seconds": 52.173373410943896,
+      "order_sha256": "407f9bfd3fb0adb1f652f53111876e915213f8c21ef289e69cf815881627fc49",
+      "training_mse": {
+        "policy_only": 0.0026445390443162373,
+        "adapter_only": 0.0026231530064251274,
+        "joint": 0.00259345218364615
+      }
+    },
+    {
+      "epoch": 5,
+      "batches": 12,
+      "seconds": 52.186397114768624,
+      "order_sha256": "f10e99918b0346ae0a8b4c9aa42b4f3edbda85302ad4a4c2ee921c23d1bfe189",
+      "training_mse": {
+        "policy_only": 0.002626890520332381,
+        "adapter_only": 0.002615867347534125,
+        "joint": 0.0025712617595369616
+      }
+    },
+    {
+      "epoch": 6,
+      "batches": 12,
+      "seconds": 52.23024332989007,
+      "order_sha256": "56e900690b73abdd1643d604cf97714c32d4ee23d129bfd8945057c757493cce",
+      "training_mse": {
+        "policy_only": 0.0026096536603290588,
+        "adapter_only": 0.0026036465812164047,
+        "joint": 0.0025432611194749675
+      }
+    },
+    {
+      "epoch": 7,
+      "batches": 12,
+      "seconds": 52.17745950538665,
+      "order_sha256": "985a047c8536ea3cef5e113d7ec4910e41f7f2a15007d8c2d4b55dc55b2c847c",
+      "training_mse": {
+        "policy_only": 0.0025902049674186856,
+        "adapter_only": 0.002599262942870458,
+        "joint": 0.0025227014460445694
+      }
+    },
+    {
+      "epoch": 8,
+      "batches": 12,
+      "seconds": 52.13821179885417,
+      "order_sha256": "7bff077850755dd1112a86223de915825c08d17e8b59e5465490a21f0c46bb35",
+      "training_mse": {
+        "policy_only": 0.0025699403777252883,
+        "adapter_only": 0.0026030046380280205,
+        "joint": 0.00250763514971671
+      }
+    }
+  ],
+  "resources": {
+    "wall_s": 750.6635944270529,
+    "max_rss_kib": 14677728,
+    "device": "cuda:0",
+    "device_kind": "NVIDIA GeForce RTX 4090",
+    "jax_memory_stats": {
+      "num_allocs": 65882,
+      "bytes_in_use": 7376033280,
+      "peak_bytes_in_use": 7607274240,
+      "largest_alloc_size": 2415919104,
+      "bytes_limit": 18937970688,
+      "bytes_reserved": 0,
+      "peak_bytes_reserved": 0,
+      "largest_free_block_bytes": 0,
+      "pool_bytes": 8621391872,
+      "peak_pool_bytes": 8621391872
+    }
+  },
+  "reloaded_parity": {
+    "shape": [
+      10,
+      7
+    ],
+    "stock_sha256": "29bc7ffab5156062b7b254182c39ec4ed2d55f5ce37dcc390fcdb9da421feef5",
+    "noop_sha256": "29bc7ffab5156062b7b254182c39ec4ed2d55f5ce37dcc390fcdb9da421feef5",
+    "max_abs": 0.0,
+    "noop_engine": "materialized-native",
+    "fused_zero_sha256": "f72fee24c74c228e4b1ec664cc001ecb371f767e2812870e6fcdc671dce32374",
+    "fused_zero_max_abs": 0.0029248124465942604,
+    "fused_zero_bitwise": false
+  }
+}
