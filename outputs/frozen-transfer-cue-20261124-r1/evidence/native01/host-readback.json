@@ -1,0 +1,117 @@
+{
+  "arithmetic": {
+    "cpu03": {
+      "mismatched_logged_XY_components": {
+        "separate_fp32_products_then_add": 69,
+        "dev_host_matmul": 0
+      },
+      "max_abs_error_across_both_readback_methods": 1.4901161193847656e-08
+    },
+    "gpu01": {
+      "mismatched_logged_XY_components": {
+        "separate_fp32_products_then_add": 0,
+        "dev_host_matmul": 1989
+      },
+      "max_abs_error_across_both_readback_methods": 1.1920928955078125e-07
+    }
+  },
+  "cpu03_vs_gpu01_starts": [
+    {
+      "arm": "Kinova3",
+      "layout": 34,
+      "matching_release_row": true,
+      "matching_release_scene": true,
+      "matching_full_noise": true,
+      "matching_physics": false
+    },
+    {
+      "arm": "Kinova3",
+      "layout": 35,
+      "matching_release_row": true,
+      "matching_release_scene": true,
+      "matching_full_noise": true,
+      "matching_physics": false
+    },
+    {
+      "arm": "Kinova3",
+      "layout": 36,
+      "matching_release_row": true,
+      "matching_release_scene": true,
+      "matching_full_noise": true,
+      "matching_physics": false
+    },
+    {
+      "arm": "Kinova3",
+      "layout": 37,
+      "matching_release_row": true,
+      "matching_release_scene": true,
+      "matching_full_noise": true,
+      "matching_physics": false
+    },
+    {
+      "arm": "IIWA",
+      "layout": 34,
+      "matching_release_row": true,
+      "matching_release_scene": true,
+      "matching_full_noise": true,
+      "matching_physics": false
+    },
+    {
+      "arm": "IIWA",
+      "layout": 35,
+      "matching_release_row": true,
+      "matching_release_scene": true,
+      "matching_full_noise": true,
+      "matching_physics": false
+    },
+    {
+      "arm": "IIWA",
+      "layout": 36,
+      "matching_release_row": true,
+      "matching_release_scene": true,
+      "matching_full_noise": true,
+      "matching_physics": false
+    },
+    {
+      "arm": "IIWA",
+      "layout": 37,
+      "matching_release_row": true,
+      "matching_release_scene": true,
+      "matching_full_noise": true,
+      "matching_physics": false
+    }
+  ],
+  "shared_run_log_sha256": "14ae96da804203b18708e7f49717a5419338d551445999406027d9c042fb9a37",
+  "independent_summary_sha256": "62eaed9ca9eda69e16c85b6e1ddbb80322cb06dd0d6fbe5ac98df4260c4d3950",
+  "archive_sha256": "637383c46eabaf3f8aaf776a9534e84aef152a277ab3ca9ac191c5a68c94fd5c",
+  "final_checker_cpu03": {
+    "fixture": true,
+    "episodes": 32,
+    "controls": 320,
+    "queries": 64,
+    "runtime": {
+      "exit": 0,
+      "summed_episode_seconds": 69.567
+    },
+    "readback_seconds": 1.048,
+    "verified_utc": "2026-11-24T03:37:22.483448+00:00",
+    "cpu_affinity": [
+      38,
+      39
+    ],
+    "checks_agree_with_official": true,
+    "synthetic_checks": {
+      "first_differing_query_t": 5,
+      "first_differing_control": 8,
+      "mismatched_pre_cue_state_rejected": true,
+      "opposed_arm_fixture_joint_counts": {
+        "net_native_successes": [
+          0,
+          0,
+          4
+        ],
+        "draws": 256
+      }
+    }
+  }
+}
