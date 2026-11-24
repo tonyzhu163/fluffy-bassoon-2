@@ -1,6 +1,5 @@
 """Read the registered BASE role map and fixed archive. No model fitting or rollout."""
 import argparse
-import csv
 import hashlib
 import json
 import os
@@ -107,9 +106,13 @@ def episode(tar, m, rules):
     reset = row["reset"]
     assert spec["variant"] == "BASE" and reset["bddl_sha256"] == roles["bddl_sha256"]
     assert reset["source_pin"] == rules["release"] and reset["manifest_sha256"] == rules["manifest_sha256"]
-    assert row["model"]["arm"] == row["actuated_arm"] and row["donor_arm"] == spec["arm"]
+    arm = row["model"]["arm"]
+    if split == "arm_swap":
+        assert row["actuated_arm"] == arm and row["donor_arm"] == spec["arm"]
+    else:
+        assert arm == spec["arm"]
     group = group_name(split, row["layout"], spec["init_state_id"])
-    assert (row["actuated_arm"] == row["donor_arm"]) == (group != "swapped_arm")
+    assert (arm == spec["arm"]) == (group != "swapped_arm")
     assert bool(max(row["original_rewards"])) == bool(row["original_success"])
     assert bool(max(row["cpu_rewards"])) == bool(row["cpu_success"])
     assert len(row["cpu_rewards"]) == row["cpu_controls"] and len(row["original_rewards"]) == row["source_controls"]
@@ -128,7 +131,7 @@ def episode(tar, m, rules):
         observations[t] = (label, obj, pub["close_age"], pub["aperture_mm"])
         touch_names.update(touched)
         carry_names.update(held)
-    record = dict(group=group, case=row["case"], task=task_id, arm=row["actuated_arm"], donor_arm=spec["arm"],
+    record = dict(group=group, case=row["case"], task=task_id, arm=arm, donor_arm=spec["arm"],
                   donor_row=spec["init_state_id"], layout=row["layout"], seed=row["seed"],
                   donor_hash=row["input_sha256"], scene=reset["scene_fingerprint"], released_row=reset["released_row_fingerprint"],
                   perturbation=reset["perturbation_plan_fingerprint"], bddl=reset["bddl_sha256"],
