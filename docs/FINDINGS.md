@@ -2,6 +2,8 @@
 
 ## Frozen cross-embodiment adaptation on new arms
 
+Across eight official BASE tasks on IIWA and Kinova3, raw frozen π₀.₅ solved 16/16 starts on layout 31, the tuned Perceiver 14/16, fixed temporal averaging 10/16 and averaging aligned to measured TCP motion 12/16. Alignment rescued three starts and lost one against fixed averaging, but lost both drawer starts that tuned solved. The adaptive index departed from fixed on 371/711 decision boundaries. [Native outcomes and verified command traces](../outputs/frozen-transfer-progress-20261124-r1/NATIVE.md)
+
 Across 256 held-out-arm OOD supports on four arm–policy panels, equal-weight tuned-plus-geometric yaw estimates scored 6.133°, versus 6.132° for two independently seeded tuned Perceivers and 6.433° for one. The cross-architecture difference was +0.001° (paired 95% task interval −0.719° to +0.785°). On eight held-out Panda/Sawyer source tasks the same mixed ensemble had a 2.154° advantage. [Matched ensembles](../outputs/frozen-transfer-ensemble-20261124-r1/RESULT.md) · [Omitted-chunk selection](../outputs/symmeta-omitted-chunk-20261124-r1/SCORE.md)
 
 Every one of 600 requested Kinova3 poses on two failed drawer episodes had a static joint-valid witness. On two successful moka-pot episodes, 110 requested poses had certified exclusions at their original wrist orientation. A wrist relaxation chosen from joint encoders and known kinematics rescued neither drawer and reduced fixed-tape Kinova3 completions from 3/6 to 1/6. [Feasibility and physical intervention](../outputs/frozen-transfer-pose-20261124-r1/RESULT.md)
