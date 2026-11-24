@@ -3,17 +3,23 @@ import argparse
 import os
 from pathlib import Path
 import statistics
+import runpy
 
 import h5py
 import numpy as np
 
 from large_panel_protocol import bind, digest, mobile_joints, read, require, sha
-from libero_remote.reproducibility import numerical_state_fingerprint
 from native import CAMERAS, PROPRIO, PROMPT
 from panel import MODES, bank
 from plan import seed
 from source_data import PublicHistory
 from ur5e_motor import array_digest, public_digest, to_openpi_observation
+
+
+
+# Read the release's pure fingerprint function without initializing its remote HTTP client.
+numerical_state_fingerprint = runpy.run_path(str(Path(os.environ["CROSSARM_RELEASE"]) /
+    "libero_remote/reproducibility.py"))["numerical_state_fingerprint"]
 
 
 def episode(case, mode, expected, fixture):
@@ -155,7 +161,7 @@ def main(args):
             require(manifest == sha(args.manifest) or (args.prior and manifest in args.prior), "unknown physical manifest")
             before = read(shard / "before.json")
             require(before == read(shard / "after.json") and before["files"]["fit.json"] == fit_sha
-                    and before["resident_stock"] and before["deployed_kernel"] and before["resident_heads"],
+                    and before["resident_stock"] == before["deployed_stock"] and before["deployed_kernel"] and before["resident_heads"],
                     "weight drift or missing fit identity")
             if frozen is None:
                 frozen = before
