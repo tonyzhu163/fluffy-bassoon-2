@@ -1,5 +1,7 @@
 # Frozen-VLA architecture factory
 
+The [three-way frozen-policy selector and ICBA comparison](../frozen-vla-selector-20261124-r1/README.md) implement the follow-up on deciding whether to execute, correct, or re-query a proposal.
+
 The factory tests which information a lightweight adapter needs to control an unfamiliar robot with π₀ or π₀.₅ frozen. The primary benchmark is LIBERO-Pro2.0. Each lane starts from revision `757a44cd4374833cad790852df8b87ddf412e638`. For native comparisons, use paired task starts, identical proposal noise and native task reward. Keep each support budget and observation privilege explicit.
 
 Workflow `wfr-92d79c14c63342a292b2e0ea047f678a` launched all twelve workers. The native worker owns accelerator submissions with an incremental limit of 12 GPU-hours. Eleven other workers have CPU-only allocations. Existing Perceiver and FK jobs retain their original owners. The archived workflow preserves the exact lane prompts, response schema and stop conditions for this run. [Executed workflow source](workflow.py)
