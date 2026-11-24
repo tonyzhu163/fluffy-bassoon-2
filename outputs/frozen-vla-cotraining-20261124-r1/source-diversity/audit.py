@@ -33,6 +33,9 @@ def inventory(out):
     indexes = {}
     rows = []
     kinds = Counter()
+    first_by_digest = {}
+    duplicates = []
+    grip_values = set()
     for e in episodes:
         if (e["body"], e["split"]) != ("Sawyer", "train"):
             continue
@@ -75,11 +78,18 @@ def inventory(out):
             assert not reward[:-1].any() and reward[-1] == 1
         kind = "generated" if generated else "released"
         kinds[kind] += 1
+        digest = e["trajectory_sha256"]
+        if digest in first_by_digest:
+            first = first_by_digest[digest]
+            assert first["collector_sha256"] == e["sha256"] and first["pose"] == e["pose"]
+            duplicates.append(dict(path=str(path.relative_to(ARCHIVE)), same_as=first["path"], sha256=e["sha256"]))
+            continue
+        grip_values.update(np.unique(action[:, -1]).tolist())
         rows.append(dict(kind=kind, pose=e["pose"], seed=e["seed"], controls=n, terminal_reward=1,
                          bank=e["bank"], path=str(path.relative_to(ARCHIVE)), collector_sha256=e["sha256"],
                          trajectory_sha256=e["trajectory_sha256"], scene_row=e.get("generated_row_fingerprint")
                          or e["released_row_fingerprint"]))
-    assert len({r["trajectory_sha256"] for r in rows}) == len(rows)
+        first_by_digest[digest] = rows[-1]
     with (out / "training-tapes.csv").open("w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=rows[0], lineterminator="\n")
         writer.writeheader()
@@ -96,6 +106,7 @@ def inventory(out):
                             ten_action_windows=sum(max(0, r["controls"]-9) for r in group),
                             shared_panda_layouts=len(layouts & panda))
     save_json(out / "coverage.json", dict(manifest=str(MANIFEST), sha256=sha(MANIFEST), counts=counts,
+              copies=duplicates, distinct_grip_commands=sorted(grip_values),
               excluded_recovery=kinds["expert_recovery_suffix_excluded"], excluded_validation=sum(
                   (e["body"], e["split"]) == ("Sawyer", "validation") for e in episodes),
               index_sha256={str(p.relative_to(ARCHIVE)): sha(p/"index.json") for p in indexes}))
