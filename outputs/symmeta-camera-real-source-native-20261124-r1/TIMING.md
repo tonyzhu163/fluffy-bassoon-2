@@ -1,0 +1,5 @@
+# Registration clock
+
+Drafting began at 14:08 Shanghai on November 24. The finished PLAN.md and its coordination hash were written at 14:09:14. The source fit had sealed its weights at 14:08:48. Its source-only diagnostic finished at 14:09:20, and its first target-scoring process opened UR5e.log at 14:09:26. UR5e-predictions.json.gz was written at 14:10:18. No fresh source scores, weights, held-camera predictions or new native rewards had been inspected for this registration. The timing is prospective for held-target scoring and native evaluation.
+
+Historical transfer speed was estimated from completed case-file timestamps only. The first through 29th UR5e quartets span 1,514 seconds, or 13.52 seconds per episode over the intervening 112 episodes. The first through 14th Kinova3 quintets span 927 seconds, or 14.26 seconds per episode over 65 episodes. Applying those rates to the new 192 and 128 episodes gives 43 and 30 rollout minutes, respectively, before startup. These are partial-run projections. The initial proposed scheduler maxima are 90 and 70 minutes, within the aggregate 210-minute limit.
