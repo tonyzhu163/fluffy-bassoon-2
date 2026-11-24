@@ -1,0 +1,431 @@
+{
+  "arm": "IIWA",
+  "suite": "libero_spatial",
+  "task": 0,
+  "ordinal": 3,
+  "query": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-multiarm-confirmation-20261123-r1/gpu01-IIWA/libero_spatial-0-14-raw.json",
+    "sha256": "1f9a945e948dca2cf01eeb5ad2763131723e7c4eac7713f11a6673f622a9afe6"
+  },
+  "support": {
+    "arm": "IIWA",
+    "collector_pin": "490f25c5716aa067199c5b65e32caf6cd15421a4",
+    "controls": 15,
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/xemb-icml-campaign-20261121-r1/gpu09iiwa/live/shard-6/support/00-fam_nom-passive.npz",
+    "physics": "0dbbc879f28e561088cb119cfff6990517fe41e6e6c2690cd2b0a20ff411d188",
+    "seed": 31830011,
+    "sha256": "3ef9bd40fc8c30a13df38c0394a301ca741e24ba43b13d2afe33a45e7330b81b",
+    "start": 11,
+    "task": "libero_spatial/0"
+  },
+  "archived_query_reset": {
+    "source_pin": "e5500c690c1498eca1b7050350654964190cdf70",
+    "manifest_sha256": "71a6e4e25a2a4a162844d77136e7bff8e6f69c839d2d8194620c4afeabde2bba",
+    "bddl_sha256": "0cb4525db8d9271216e309e25a4729b9fd01217ee36903695228494cf390846f",
+    "suite": "libero_spatial",
+    "task_id": 0,
+    "init_state_id": 14,
+    "seed": 41830014,
+    "released_row_fingerprint": "1bd3c6f2a60ded0ae7b2230cdbee7ae686d4db720f64c28b159d29c155beaee3",
+    "scene_fingerprint": "f6d38a7726fccc438aad2e4ae4c2d97c89ad4826f6cc36b26d43835fac2c3667",
+    "post_settle_scene_fingerprint": "b4948bfc5cdeac5b350f606c9d053617969bb730d7b3a7b4847529ffe3a45264",
+    "post_settle_scene_errors": {
+      "max_position_m": 7.325000879088728e-15,
+      "position_body": "akita_black_bowl_1_main",
+      "max_rotation_rad": 2.6756397860845617e-14,
+      "rotation_body": "plate_1_main"
+    },
+    "initial_state_fingerprint": "ff4af12d0704c04f3869dc0cb7353e2903346705f8e63c4e6ef7b1cb2119d88f",
+    "alignment": {
+      "method": "joint_limited_grip_site_ik",
+      "seed_qpos": [
+        0.0,
+        0.65,
+        0.0,
+        -1.89,
+        0.0,
+        0.6,
+        0.0
+      ],
+      "qpos": [
+        -0.007625414486996328,
+        0.3145049590578571,
+        -0.018837787742864112,
+        -1.8301263451224847,
+        0.01881029678318539,
+        1.0061643309978066,
+        -0.007936130292261053
+      ],
+      "position_error_m": 3.1217034139498565e-06,
+      "rotation_error_rad": 7.347454358895858e-05,
+      "settled_tcp_error_m": 0.008069055154919624,
+      "settled_rotation_error_rad": 0.05460655316710472,
+      "settled_jaw_difference_m": 1.6086836751583178e-08
+    },
+    "perturbation_plan": {
+      "version": "libero_nonphysical_plan_v2",
+      "case_id": "BASE",
+      "schedule": "base",
+      "operator": "none",
+      "variant": "identity",
+      "trigger": "none",
+      "targets": [],
+      "disturbance_targets": [],
+      "references": [],
+      "mechanisms": [
+        "base"
+      ],
+      "assets": [],
+      "params": {},
+      "constraints": [],
+      "seed": 41830014,
+      "event_duration_steps": 24
+    },
+    "perturbation_plan_fingerprint": "8ea1d0029d57025cf2795fe7083c43623acb3221cb611ffdbece365615b310b1"
+  },
+  "archived_model": {
+    "arm": "IIWA",
+    "model_class": "MountedIIWA",
+    "joint_count": 7,
+    "joint_names": [
+      "robot0_joint_1",
+      "robot0_joint_2",
+      "robot0_joint_3",
+      "robot0_joint_4",
+      "robot0_joint_5",
+      "robot0_joint_6",
+      "robot0_joint_7"
+    ],
+    "joint_links": [
+      "robot0_link_1",
+      "robot0_link_2",
+      "robot0_link_3",
+      "robot0_link_4",
+      "robot0_link_5",
+      "robot0_link_6",
+      "robot0_link_7"
+    ],
+    "model_nq": 48,
+    "model_nv": 43,
+    "xml_sha256": "7eb9d87f431f7fbfcb0e028e608956aa2c2f7dc456abb0dfb6f234fd8044a5dd",
+    "arm_meshes": [
+      "robot0_link_0",
+      "robot0_link_0_vis",
+      "robot0_link_1",
+      "robot0_link_1_vis",
+      "robot0_link_2",
+      "robot0_link_2_vis",
+      "robot0_link_3",
+      "robot0_link_3_vis",
+      "robot0_link_4",
+      "robot0_link_4_vis",
+      "robot0_link_5",
+      "robot0_link_5_vis",
+      "robot0_link_6",
+      "robot0_link_6_vis",
+      "robot0_link_7",
+      "robot0_link_7_vis"
+    ],
+    "mount": "RethinkMount",
+    "base_xyz": [
+      -0.66,
+      0.0,
+      0.912
+    ],
+    "gripper": "PandaGripper",
+    "gripper_xml_sha256": "d9d68123909d6910488310d0fae4e358ed4ac831c6d0957f3e30893a5412baac",
+    "gripper_joints": [
+      "gripper0_finger_joint1",
+      "gripper0_finger_joint2"
+    ],
+    "tcp_site": "gripper0_grip_site",
+    "hand_link": "robot0_right_hand",
+    "cameras": [
+      "agentview",
+      "robot0_eye_in_hand"
+    ],
+    "wrist_parent": "robot0_right_hand",
+    "wrist_fovy_deg": 75.0,
+    "controller": "OSC_POSE",
+    "control_freq": 20,
+    "osc_output_max": [
+      0.05,
+      0.05,
+      0.05,
+      0.5,
+      0.5,
+      0.5
+    ],
+    "robosuite": "1.4.0",
+    "mujoco": "3.2.3"
+  },
+  "midpoint_start": 80,
+  "maps": {
+    "native": {
+      "A": [
+        [
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "draw": 0
+    },
+    "family": {
+      "A": [
+        [
+          0.134161406601076,
+          -0.6980672086973913
+        ],
+        [
+          0.6980672086973913,
+          0.134161406601076
+        ]
+      ],
+      "draw": 1
+    },
+    "swap": {
+      "A": [
+        [
+          0.31255495004022,
+          -0.6713521275620897
+        ],
+        [
+          -0.6713521275620897,
+          -0.31255495004022
+        ]
+      ],
+      "draw": 3
+    },
+    "general": {
+      "A": [
+        [
+          -0.7475256967999206,
+          0.2029634590505995
+        ],
+        [
+          0.14252971340977724,
+          0.5695362773212455
+        ]
+      ],
+      "draw": 20
+    }
+  },
+  "source_amplitude": 0.2331708784372714,
+  "support_reset": {
+    "source_pin": "e5500c690c1498eca1b7050350654964190cdf70",
+    "manifest_sha256": "71a6e4e25a2a4a162844d77136e7bff8e6f69c839d2d8194620c4afeabde2bba",
+    "bddl_sha256": "0cb4525db8d9271216e309e25a4729b9fd01217ee36903695228494cf390846f",
+    "suite": "libero_spatial",
+    "task_id": 0,
+    "init_state_id": 11,
+    "seed": 31830011,
+    "released_row_fingerprint": "17ae7a18eaca55f95ba4c01415fca2c4e76fed904dc093c7be2f8fabc0fb37c4",
+    "scene_fingerprint": "d372d30dceb09102f24d4c892aec1f68c6e56c6164f4d1b3ae280b8344c10eb1",
+    "post_settle_scene_fingerprint": "95ae6b2e844e9f9405ce620a2718443fea5c30c437d8efed515a9cf9493e8fdc",
+    "post_settle_scene_errors": {
+      "max_position_m": 0.0,
+      "position_body": "akita_black_bowl_1_main",
+      "max_rotation_rad": 2.5206074206728997e-17,
+      "rotation_body": "akita_black_bowl_2_main"
+    },
+    "initial_state_fingerprint": "c2a7e47eae88cde6312bef67a1622f0772c3fee18c08ad2b700933c657dd2fb8",
+    "alignment": {
+      "method": "joint_limited_grip_site_ik",
+      "seed_qpos": [
+        0.0,
+        0.65,
+        0.0,
+        -1.89,
+        0.0,
+        0.6,
+        0.0
+      ],
+      "qpos": [
+        0.02777920249588159,
+        0.32684826820700724,
+        0.0218536698075867,
+        -1.8376972068139317,
+        0.01114158714122867,
+        1.0191683186429608,
+        0.0011946134233596591
+      ],
+      "position_error_m": 4.058691350883991e-12,
+      "rotation_error_rad": 1.9344865328974395e-10,
+      "settled_tcp_error_m": 0.007656958419829607,
+      "settled_rotation_error_rad": 0.04425521939992905,
+      "settled_jaw_difference_m": 9.541061274376261e-08
+    },
+    "perturbation_plan": {
+      "version": "libero_nonphysical_plan_v2",
+      "case_id": "BASE",
+      "schedule": "base",
+      "operator": "none",
+      "variant": "identity",
+      "trigger": "none",
+      "targets": [],
+      "disturbance_targets": [],
+      "references": [],
+      "mechanisms": [
+        "base"
+      ],
+      "assets": [],
+      "params": {},
+      "constraints": [],
+      "seed": 31830011,
+      "event_duration_steps": 24
+    },
+    "perturbation_plan_fingerprint": "2feae5c01f5f230ea5607cb8dfb814b1f052deb733bd56c4f9559595d2659e77"
+  },
+  "model": {
+    "arm": "IIWA",
+    "model_class": "MountedIIWA",
+    "joint_count": 7,
+    "joint_names": [
+      "robot0_joint_1",
+      "robot0_joint_2",
+      "robot0_joint_3",
+      "robot0_joint_4",
+      "robot0_joint_5",
+      "robot0_joint_6",
+      "robot0_joint_7"
+    ],
+    "joint_links": [
+      "robot0_link_1",
+      "robot0_link_2",
+      "robot0_link_3",
+      "robot0_link_4",
+      "robot0_link_5",
+      "robot0_link_6",
+      "robot0_link_7"
+    ],
+    "model_nq": 48,
+    "model_nv": 43,
+    "xml_sha256": "7eb9d87f431f7fbfcb0e028e608956aa2c2f7dc456abb0dfb6f234fd8044a5dd",
+    "arm_meshes": [
+      "robot0_link_0",
+      "robot0_link_0_vis",
+      "robot0_link_1",
+      "robot0_link_1_vis",
+      "robot0_link_2",
+      "robot0_link_2_vis",
+      "robot0_link_3",
+      "robot0_link_3_vis",
+      "robot0_link_4",
+      "robot0_link_4_vis",
+      "robot0_link_5",
+      "robot0_link_5_vis",
+      "robot0_link_6",
+      "robot0_link_6_vis",
+      "robot0_link_7",
+      "robot0_link_7_vis"
+    ],
+    "mount": "RethinkMount",
+    "base_xyz": [
+      -0.66,
+      0.0,
+      0.912
+    ],
+    "gripper": "PandaGripper",
+    "gripper_xml_sha256": "d9d68123909d6910488310d0fae4e358ed4ac831c6d0957f3e30893a5412baac",
+    "gripper_joints": [
+      "gripper0_finger_joint1",
+      "gripper0_finger_joint2"
+    ],
+    "tcp_site": "gripper0_grip_site",
+    "hand_link": "robot0_right_hand",
+    "cameras": [
+      "agentview",
+      "robot0_eye_in_hand"
+    ],
+    "wrist_parent": "robot0_right_hand",
+    "wrist_fovy_deg": 75.0,
+    "controller": "OSC_POSE",
+    "control_freq": 20,
+    "osc_output_max": [
+      0.05,
+      0.05,
+      0.05,
+      0.5,
+      0.5,
+      0.5
+    ],
+    "robosuite": "1.4.0",
+    "mujoco": "3.2.3"
+  },
+  "support_start_xyz_delta_mm": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "held_reset": {
+    "source_pin": "e5500c690c1498eca1b7050350654964190cdf70",
+    "manifest_sha256": "71a6e4e25a2a4a162844d77136e7bff8e6f69c839d2d8194620c4afeabde2bba",
+    "bddl_sha256": "0cb4525db8d9271216e309e25a4729b9fd01217ee36903695228494cf390846f",
+    "suite": "libero_spatial",
+    "task_id": 0,
+    "init_state_id": 14,
+    "seed": 41830014,
+    "released_row_fingerprint": "1bd3c6f2a60ded0ae7b2230cdbee7ae686d4db720f64c28b159d29c155beaee3",
+    "scene_fingerprint": "f6d38a7726fccc438aad2e4ae4c2d97c89ad4826f6cc36b26d43835fac2c3667",
+    "post_settle_scene_fingerprint": "3371e627f48815346b26364d22ab5d0a9bb511808b4620d235a6d98c779daabd",
+    "post_settle_scene_errors": {
+      "max_position_m": 3.555558570457285e-15,
+      "position_body": "akita_black_bowl_1_main",
+      "max_rotation_rad": 1.0991313733902104e-14,
+      "rotation_body": "plate_1_main"
+    },
+    "initial_state_fingerprint": "d954b65d2d43671726e577318ef83e6fba8668aa15a5a7d15c95685aa40c3bca",
+    "alignment": {
+      "method": "joint_limited_grip_site_ik",
+      "seed_qpos": [
+        0.0,
+        0.65,
+        0.0,
+        -1.89,
+        0.0,
+        0.6,
+        0.0
+      ],
+      "qpos": [
+        -0.007623926869420958,
+        0.314508385737204,
+        -0.018839828374357395,
+        -1.8301214277917142,
+        0.01881088983660977,
+        1.006172089647205,
+        -0.007936654554787568
+      ],
+      "position_error_m": 3.398376920464192e-06,
+      "rotation_error_rad": 7.972500990946615e-05,
+      "settled_tcp_error_m": 0.008069274947047234,
+      "settled_rotation_error_rad": 0.05460129678249359,
+      "settled_jaw_difference_m": 1.6086836751583178e-08
+    },
+    "perturbation_plan": {
+      "version": "libero_nonphysical_plan_v2",
+      "case_id": "BASE",
+      "schedule": "base",
+      "operator": "none",
+      "variant": "identity",
+      "trigger": "none",
+      "targets": [],
+      "disturbance_targets": [],
+      "references": [],
+      "mechanisms": [
+        "base"
+      ],
+      "assets": [],
+      "params": {},
+      "constraints": [],
+      "seed": 41830014,
+      "event_duration_steps": 24
+    },
+    "perturbation_plan_fingerprint": "8ea1d0029d57025cf2795fe7083c43623acb3221cb611ffdbece365615b310b1"
+  },
+  "complete": true,
+  "recovered_held_family": "general"
+}
