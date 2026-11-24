@@ -27,3 +27,9 @@ An improved motion prediction or label fit cannot by itself establish a native-s
 ## Follow-up on grasp identity
 
 In the registered wrist-motion trial, hand opening perfectly ordered the two branches within each of the 146 opposing carry/empty observations. The natural failure that may need a visual reader is holding the wrong item with a perfectly ordinary jaw opening. Before fitting such a reader, count definite non-target pickups on the original policy tapes, using the instructed object identities and sustained physical retention. Distinguish a wrong approach without pickup and allow legitimate multi-object sequences. This follow-up reuses the prior panel and is exploratory. [Wrist-motion evidence](../frozen-transfer-object-20261124-r1/RESULT.md)
+
+## Follow-up on mixing two readers
+
+The held-out source yaw test favored a fixed mix over the per-trace choice. To isolate whether the geometric reader adds information beyond a second Perceiver, compare two independently seeded tuned readers against one tuned and one geometric reader. Give the methods the same two predictions, measured as a count, and the same base gain and gripper output. Use fixed midpoints and, separately, fit each method's weight on the same source calibration split. Test on the four original held-out arm–policy archives and report the prior inspection of those archives.
+
+The native phase comparison uses index five as the fixed control. The adaptive index can only move earlier. Any favorable native result would justify a fresh test against an observation-blind control with the same marginal index distribution, before attributing the gain to the measured motion itself. The original 64-episode panel is unchanged.
