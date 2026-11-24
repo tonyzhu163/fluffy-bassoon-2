@@ -32,7 +32,7 @@ bounded() {
     local remaining
     remaining=$(find "$run" -name '*.cpu' -type f -exec cat {} + | awk 'NF==2 {used+=$1+$2} END {print int(890-used)}')
     ((remaining > 0))
-    (ulimit -t "$remaining"; /usr/bin/time -o "$out/$label.cpu" -f '%U %S' taskset -c 50,51 "$py" -Bu "$@") >> "$out/run.log" 2>&1
+    (ulimit -t "$remaining"; TIMEFORMAT='%U %S'; { time taskset -c 50,51 "$py" -Bu "$@" >> "$out/run.log" 2>&1; } 2> "$out/$label.cpu")
 }
 case "$mode" in
     proof|digital|physical)

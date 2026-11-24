@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-mode=${1:?qualify, prepare, fit or physical}
+mode=${1:?qualify, prepare, fit, physical or physical-gpu}
 pin=${2:?full git pin}
 attempt=${3:?fresh attempt directory}
 here=$(cd "$(dirname "$0")" && pwd -P)
@@ -26,8 +26,13 @@ start=$(date +%s)
 trap 'rc=$?; echo "$rc $(date +%s) $start" > "$out/exit.txt"' EXIT
 echo "$pin $(hostname) $mode $attempt" > "$out/launch.txt"
 df -h "$out" > "$out/storage.txt"
-if [[ $mode == fit ]]; then
-    [[ $(hostname) == job-* && -s "$run/${4:?prepared bank}/bank/ready.json" ]]
+if [[ $mode == fit || $mode == physical-gpu ]]; then
+    [[ $(hostname) == job-* ]]
+    if [[ $mode == fit ]]; then
+        [[ -s "$run/${4:?prepared bank}/bank/ready.json" ]]
+    else
+        [[ -s "$run/${4:?sealed fit}/sealed.json" && -s "${5:?physical bank}" ]]
+    fi
     export JAX_PLATFORMS=cuda FLUFFY_GPU_EXECUTION=baige NCCL_P2P_DISABLE=1 CUDA_VISIBLE_DEVICES=0
     libs="$root/setups/libero90-full-action-20261119-r1/desktop-libs02"
     IFS=: read -ra paths <<< "${LD_LIBRARY_PATH:-}"
@@ -39,8 +44,13 @@ if [[ $mode == fit ]]; then
     date +%s > "$out/gpu-start.txt"
     "$root/setups/robocasa365-native-20261101-r1/env/bin/python" -Bu "$code/scripts/[train]gpu_probe.py" \
        --expected-count 1 --purpose training --baige-container --baige-exclusive-training --output "$out/gpu.json" > "$out/probe.log" 2>&1
-    "$py" -Bu "$here/train.py" train "$run/$4/bank" "$out" "$run/${5:?off-axis prep}/bank" > "$out/train.log" 2>&1
-    "$py" -Bu "$here/evaluate.py" digital "$out" "$out" > "$out/digital.log" 2>&1
+    if [[ $mode == fit ]]; then
+        "$py" -Bu "$here/train.py" train "$run/$4/bank" "$out" "$run/${5:?off-axis prep}/bank" > "$out/train.log" 2>&1
+        "$py" -Bu "$here/evaluate.py" digital "$out" "$out" > "$out/digital.log" 2>&1
+    else
+        "$py" -c 'import jax; assert jax.default_backend() == "gpu" and len(jax.devices()) == 1'
+        "$py" -Bu "$here/evaluate.py" physical "$run/$4" "$out" "$5" > "$out/run.log" 2>&1
+    fi
     date +%s > "$out/gpu-end.txt"
 else
     export JAX_PLATFORMS=cpu CUDA_VISIBLE_DEVICES="" NVIDIA_VISIBLE_DEVICES=void
