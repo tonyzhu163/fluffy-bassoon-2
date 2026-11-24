@@ -73,7 +73,9 @@ def verify(obj, row, mode, *, cpu=False):
     require(obj["case"] == row and obj["mode"] == mode and obj["fixture"] is cpu and
             obj["source_sha256"] == SOURCE_SHA and obj["weights_sha256"] == (None if cpu else WEIGHT_SHA),
             "case or source identity")
-    require(model["arm"] == reset["arm"] == q["arm"] and model["model_class"] == "Mounted"+q["arm"] and
+    # Both hashed panel archives identify the object arena as the floor-mounted variant.
+    expected_class = ("OnTheGround" if q["suite"] == "libero_object" else "Mounted") + q["arm"]
+    require(model["arm"] == reset["arm"] == q["arm"] and model["model_class"] == expected_class and
             model["model_class"] == reset["model_class"] and model["joint_count"] == len(model["joint_names"]) == 7
             and model["gripper"] == "PandaGripper" and model["controller"] == "OSC_POSE" and model["control_freq"] == 20
             and model["tcp_site"] == "gripper0_grip_site", "compiled robot or control contract")
@@ -204,7 +206,10 @@ def analyze(folder, arm, cpu=False):
             quartet[mode] = obj
         pairing(quartet)
         results.append({m: x["native"]["success"] for m, x in quartet.items()})
-        details.append(dict(query=q, diagnostics=diagnostics, success=results[-1]))
+        raw = quartet["raw"]
+        shared = {k: raw["environment"][k] for k in ("released_row_fingerprint", "bddl_sha256")}
+        shared.update({k: raw["native"]["reset"][k] for k in ("noise_seed", "noise_sha256", "horizon", "prompt")})
+        details.append(dict(query=q, matched_start=shared, diagnostics=diagnostics, success=results[-1]))
     require({p.name for p in (folder/"episodes").glob("*.json")} == expected, "incomplete or extra endpoints")
     return results, details
 
@@ -222,9 +227,19 @@ if __name__ == "__main__":
         group, details = analyze(folder, arm)
         groups.append(group)
         origins.append(json.loads((folder/"origin.json").read_bytes()))
-        answer[arm] = dict(native=endpoints([group]), tasks=details)
+        totals = {}
+        for mode in MODES:
+            counts, histogram = Counter(), Counter()
+            for task in details:
+                counts.update(task["diagnostics"][mode]["counts"])
+                histogram.update(task["diagnostics"][mode]["phase_histogram"])
+            totals[mode] = dict(counts=dict(counts), phase_histogram=dict(histogram))
+        answer[arm] = dict(native=endpoints([group]), intervention_totals=totals, tasks=details)
     if len(groups) == 2:
         require(origins[0]["pin"] == origins[1]["pin"],
                 "cross-arm pooling requires the same pinned evaluator")
+        require([r["matched_start"] for r in answer["IIWA"]["tasks"]] ==
+                [r["matched_start"] for r in answer["Kinova3"]["tasks"]],
+                "across-arm released row, native task or common noise mismatch")
         answer["pooled_equal_arm"] = endpoints(groups)
     save(args.out, answer)
