@@ -1,0 +1,33 @@
+# Independent review of frozen-policy transfer
+
+**No completed native comparison establishes that a new adapter beats tuned Perceiver on a held-out simulated arm with a nominal command interface.** A second tuned reader matched the mixed ensemble’s target yaw accuracy. The progress experiment can test native success, with one important limit on interpreting a win.
+
+## Native baseline
+
+I checked all 1,152 historical pairs against their reward tapes, applied factors, resets and opening proposals. **On the nominal interface, tuned completed 74/96 and SymMeta 70/96**, with nine tuned-only successes and five SymMeta-only. These are 32 panel/task starts repeated across three reader seeds. On 768 imposed OOD-shift pairs, tuned completed 527 and SymMeta 533, with 81 tuned-only and 87 SymMeta-only. I reproduced all four OOD whole-task intervals. Each includes zero. [Paired records and intervals](../symmeta-perceiver-retry-20261123-r1/RESULT.md)
+
+## Source yaw and the two-reader control
+
+Both readers were refitted on 12 official source-training task IDs. The eight judge-fit IDs fall within those 12. Four calibration and eight evaluation IDs were disjoint from fitting and each other. I checked original collection labels, reconstructed the projection and calibration, and reproduced all 1,344 outputs and three primary joint-bootstrap intervals. The 448 evaluation traces represent 64 Panda/Sawyer resets across seven familiar shifts, scored at three seeds. Adjacent tokens share endpoint images. Omission tests command-and-flow consistency within a trace. [Membership and masking](../symmeta-omitted-chunk-20261124-r1/INPUTS.md) · [Frozen score](../symmeta-omitted-chunk-20261124-r1/SCORE.md)
+
+| Source comparison | Paired difference | 95% task interval |
+|---|---:|---:|
+| Adaptive minus single tuned yaw error | −2.278° | −4.144 to −0.600° |
+| Adaptive minus calibrated constant yaw error | +0.390° | −0.415 to +1.705° |
+| Better-reader choices, hard selector minus always geometric | 644 vs 867 of 1,344 (−16.59 pp) | −31.03 to +8.56 pp |
+
+All 36 traces with unusable three-fold evidence received the fixed 62%-geometric blend. In the subsequent matched two-reader comparison, I rejoined the original target predictions by support and ordered seed pair. On 256 previously inspected OOD target supports, single tuned, two tuned and mixed midpoint scored 6.433°, 6.132° and 6.133°. Mixed minus two tuned was +0.001° at midpoint (95% interval −0.719 to +0.785°) and +0.511° at source-calibrated weights (−0.549 to +1.970°). Source-task differences had favored geometry by 2.154° and 2.457°. Reader count and support exposure match. Training recipes differ, and neither ensemble has a native reward comparison. [Ensemble readback](../frozen-transfer-ensemble-20261124-r1/score01/metrics.json)
+
+## Physical replay
+
+- **Post-closure timing.** From TCP positions and native rewards on 12 held-out starts, untreated/static/timed/shifted gave 0.4813/0.4734/0.4912/0.4920 mm/control and 1/2/2/4 completions. Timed minus static was +0.01779 mm/control (three-task interval −0.00228 to +0.03360), with one rescue and one loss. Every unsuccessful continuation exhausted its donor tape before the horizon. The source fit relates Sawyer and Panda motion increments. It supplies no independent measurement of actuator latency. [Position and reward tapes](../frozen-transfer-timing-20261124-r1/evidence/traces.tar.gz)
+- **Grasp sensing.** Endpoint witnesses gave 146 opposing layout windows in 17 bouts on five tasks. Center/proprioception/corners Brier losses were 0.09564/0.06824/0.10219. The fixed-scene IIWA–UR5e swap yielded only 13 pudding windows and one bowl window, with losses 0.30033/0.25377/0.28111. Aperture ranked all pairs correctly, but deployment sees one hand. Of 337 eligible original windows, 253 were loaded, three empty and 81 ambiguous. All strict loads held an instructed object. All three original failures were on the drawer, and only one supplied a recorded load. These tapes give little coverage for a wrong-pickup reader. [Witnesses](../frozen-transfer-object-20261124-r1/evidence/trajectories.tar.gz) · [Identity coverage](../frozen-transfer-identity-20261124-r1/RESULT.md)
+- **Wrist pose.** All 600 goals on the two failed Kinova3 drawer tapes had static full-pose witnesses. Through first plate contact on layout 15, fixed/free wrist residuals inside the manufacturer speed box averaged 16.45/1.04 mm against 30.68 mm actual tracking error. Kinematic endpoints leave torque and contact feasibility open. I checked 36 native reward arrays, unchanged translation/gripper commands and opposite wrist changes on common prefixes. Raw/adaptive/sham completed 3/1/0 of six Kinova3 tapes and 6/0/3 on Panda. The adapter rescued neither drawer and lost eight raw completions. One untreated Kinova3 moka replay already differed from the archived success. [Geometry and treatment](../frozen-transfer-pose-20261124-r1/RESULT.md)
+
+## Native progress and handoff
+
+I recovered the source motion matrix exactly from 576 five-control blocks on 192 nominal Panda/Sawyer traces. Its 24 source task IDs exclude the eight native query tasks. On evaluator `d70e206a00c6`, I independently checked all 64 scripted episodes (704 controls) for matched openings/noise, seed-41 factors, donor indices, blending and sent commands. Each IIWA/Kinova3 quartet uses the same row-31 BASE start, nominal interface and five-control cadence. The three tuned modes use the same separate row-11 support. [Production code](../frozen-transfer-progress-20261124-r1/intervention.py) · [CPU qualification](../frozen-transfer-progress-20261124-r1/evidence/cpu02-readback.json)
+
+**Fixed always takes index 5. Progress can only select the same or an earlier index.** A win would establish a controller benefit on these starts. Attributing it to measured motion requires an observation-blind control with comparable index frequencies. After a mixed block, the observed travel follows the actual mixture while the reference path follows the original proposal. Within-block waypoints interpolate a source law fitted at five-control endpoints.
+
+**Native result pending.** At 11:04 Shanghai both Baige 4090 probes had passed, with no complete quartet (IIWA `job-xrzslhwy0nni`, Kinova3 `job-6cew0txsfs7d`). After both shard exits, use the handoff’s two-shard readback on 32 fresh episodes per arm. Check terminal reward tapes, opening and noise equality, phase departures and changed sent controls. Give rescues and losses versus fixed, tuned and raw by arm, then resample the same eight tasks jointly across arms. One start/noise per task limits generalization. Review cost was zero GPU-hours. [Pinned readback command](../frozen-transfer-progress-20261124-r1/HANDOFF.md)

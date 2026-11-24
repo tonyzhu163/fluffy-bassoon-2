@@ -1,0 +1,326 @@
+{
+  "case": {
+    "arm": "Panda",
+    "suite": "libero_goal",
+    "task_id": 3,
+    "init_state_id": 14,
+    "variant": "BASE",
+    "seed": 41810314
+  },
+  "tape": "/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-native-transfer-20261123-r1/gpu01/libero_goal-3-14-Panda.json",
+  "tape_sha256": "e869f2e76c2e4c121f45ffe3b4bc5fdc45b4861fc35e7e3c93ea7bc578926e62",
+  "recording_job": "job-xaugtearcacf",
+  "opening_proposal_sha256": "a3d6e1b8c0ceadac4bccc6fd99d5eef6ccd28bfbec39aa5346e613264d3c281f",
+  "action_schema": {
+    "shape": [
+      7
+    ],
+    "dtype": "float32",
+    "controller": "OSC_POSE",
+    "control_mode": "relative",
+    "control_freq": 20,
+    "low": [
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0
+    ],
+    "high": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ]
+  },
+  "reset": {
+    "source_pin": "e5500c690c1498eca1b7050350654964190cdf70",
+    "manifest_sha256": "71a6e4e25a2a4a162844d77136e7bff8e6f69c839d2d8194620c4afeabde2bba",
+    "bddl_sha256": "695545a33399e12e978b1b5682b6ea2181f3289608cad3f063f5bf90f0b87e67",
+    "suite": "libero_goal",
+    "task_id": 3,
+    "init_state_id": 14,
+    "seed": 41810314,
+    "released_row_fingerprint": "e6599bd05ddd998075d83d18b0be3a5b509a6c26e84bb01c248014d3e25932a9",
+    "scene_fingerprint": "48ef7fa0f25ec8782bc019fd5fad14cdf6c6c6456d784aa1e0096f1e4d77e633",
+    "post_settle_scene_fingerprint": "2fc4c67bbe7d50b36a0dc333405c8fb151e74d3b062752a7ace9fd82984e7b4d",
+    "post_settle_scene_errors": {
+      "max_position_m": 0.0,
+      "position_body": "akita_black_bowl_1_main",
+      "max_rotation_rad": 0.0,
+      "rotation_body": "akita_black_bowl_1_main"
+    },
+    "initial_state_fingerprint": "ee208c25c79b162db088f8d3710008a970d89bf1b702c0dffa8cca64e904656b",
+    "alignment": {
+      "method": "released_panda_state"
+    },
+    "perturbation_plan": {
+      "version": "libero_nonphysical_plan_v2",
+      "case_id": "BASE",
+      "schedule": "base",
+      "operator": "none",
+      "variant": "identity",
+      "trigger": "none",
+      "targets": [],
+      "disturbance_targets": [],
+      "references": [],
+      "mechanisms": [
+        "base"
+      ],
+      "assets": [],
+      "params": {},
+      "constraints": [],
+      "seed": 41810314,
+      "event_duration_steps": 24
+    },
+    "perturbation_plan_fingerprint": "c1e274a9caf96b6e4dcd18fece0e4af00d5a811c40b13471b517dac94afbc968"
+  },
+  "recorded_settled_hash": "18851c834399e62b1af28ae72fc1d854ab930773f6ec06ffbcc330d8eedbc751",
+  "model": {
+    "arm": "Panda",
+    "model_class": "MountedPanda",
+    "joint_count": 7,
+    "joint_names": [
+      "robot0_joint1",
+      "robot0_joint2",
+      "robot0_joint3",
+      "robot0_joint4",
+      "robot0_joint5",
+      "robot0_joint6",
+      "robot0_joint7"
+    ],
+    "joint_links": [
+      "robot0_link1",
+      "robot0_link2",
+      "robot0_link3",
+      "robot0_link4",
+      "robot0_link5",
+      "robot0_link6",
+      "robot0_link7"
+    ],
+    "model_nq": 41,
+    "model_nv": 37,
+    "xml_sha256": "51e3a4a6d54bcaf77e9d36a27372b871728590eedf53d4fd0e195525950eb988",
+    "arm_meshes": [
+      "robot0_link0",
+      "robot0_link0_vis_0",
+      "robot0_link0_vis_1",
+      "robot0_link0_vis_10",
+      "robot0_link0_vis_11",
+      "robot0_link0_vis_2",
+      "robot0_link0_vis_3",
+      "robot0_link0_vis_4",
+      "robot0_link0_vis_5",
+      "robot0_link0_vis_6",
+      "robot0_link0_vis_7",
+      "robot0_link0_vis_8",
+      "robot0_link0_vis_9",
+      "robot0_link1",
+      "robot0_link1_vis",
+      "robot0_link2",
+      "robot0_link2_vis",
+      "robot0_link3",
+      "robot0_link3_vis_0",
+      "robot0_link3_vis_1",
+      "robot0_link3_vis_2",
+      "robot0_link3_vis_3",
+      "robot0_link4",
+      "robot0_link4_vis_0",
+      "robot0_link4_vis_1",
+      "robot0_link4_vis_2",
+      "robot0_link4_vis_3",
+      "robot0_link5",
+      "robot0_link5_vis_0",
+      "robot0_link5_vis_1",
+      "robot0_link5_vis_2",
+      "robot0_link6",
+      "robot0_link6_vis_0",
+      "robot0_link6_vis_1",
+      "robot0_link6_vis_10",
+      "robot0_link6_vis_11",
+      "robot0_link6_vis_12",
+      "robot0_link6_vis_13",
+      "robot0_link6_vis_14",
+      "robot0_link6_vis_15",
+      "robot0_link6_vis_16",
+      "robot0_link6_vis_2",
+      "robot0_link6_vis_3",
+      "robot0_link6_vis_4",
+      "robot0_link6_vis_5",
+      "robot0_link6_vis_6",
+      "robot0_link6_vis_7",
+      "robot0_link6_vis_8",
+      "robot0_link6_vis_9",
+      "robot0_link7_vis_0",
+      "robot0_link7_vis_1",
+      "robot0_link7_vis_2",
+      "robot0_link7_vis_3",
+      "robot0_link7_vis_4",
+      "robot0_link7_vis_5",
+      "robot0_link7_vis_6",
+      "robot0_link7_vis_7"
+    ],
+    "mount": "RethinkMount",
+    "base_xyz": [
+      -0.66,
+      0.0,
+      0.912
+    ],
+    "gripper": "PandaGripper",
+    "gripper_xml_sha256": "d9d68123909d6910488310d0fae4e358ed4ac831c6d0957f3e30893a5412baac",
+    "gripper_joints": [
+      "gripper0_finger_joint1",
+      "gripper0_finger_joint2"
+    ],
+    "tcp_site": "gripper0_grip_site",
+    "hand_link": "robot0_right_hand",
+    "cameras": [
+      "agentview",
+      "robot0_eye_in_hand"
+    ],
+    "wrist_parent": "robot0_right_hand",
+    "wrist_fovy_deg": 75.0,
+    "controller": "OSC_POSE",
+    "control_freq": 20,
+    "osc_output_max": [
+      0.05,
+      0.05,
+      0.05,
+      0.5,
+      0.5,
+      0.5
+    ],
+    "robosuite": "1.4.0",
+    "mujoco": "3.2.3"
+  },
+  "controller_class": "OperationalSpaceController",
+  "arm_actuators": [
+    "robot0_torq_j1",
+    "robot0_torq_j2",
+    "robot0_torq_j3",
+    "robot0_torq_j4",
+    "robot0_torq_j5",
+    "robot0_torq_j6",
+    "robot0_torq_j7"
+  ],
+  "arm_motor_ctrlrange": [
+    [
+      -80.0,
+      80.0
+    ],
+    [
+      -80.0,
+      80.0
+    ],
+    [
+      -80.0,
+      80.0
+    ],
+    [
+      -80.0,
+      80.0
+    ],
+    [
+      -80.0,
+      80.0
+    ],
+    [
+      -12.0,
+      12.0
+    ],
+    [
+      -12.0,
+      12.0
+    ]
+  ],
+  "action_dimensions": 7,
+  "simulator_actuators": 9,
+  "grip_command_dof": 1,
+  "arm_limited": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+  ],
+  "compiled_arm_ranges": [
+    [
+      -2.8973,
+      2.8973
+    ],
+    [
+      -1.7628,
+      1.7628
+    ],
+    [
+      -2.8973,
+      2.8973
+    ],
+    [
+      -3.0718,
+      -0.0698
+    ],
+    [
+      -2.8973,
+      2.8973
+    ],
+    [
+      -0.0175,
+      3.7525
+    ],
+    [
+      -2.8973,
+      2.8973
+    ]
+  ],
+  "input_max": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "output_max": [
+    0.05,
+    0.05,
+    0.05,
+    0.5,
+    0.5,
+    0.5
+  ],
+  "kp": [
+    150.0,
+    150.0,
+    150.0,
+    150.0,
+    150.0,
+    150.0
+  ],
+  "kd": [
+    24.49489742783178,
+    24.49489742783178,
+    24.49489742783178,
+    24.49489742783178,
+    24.49489742783178,
+    24.49489742783178
+  ],
+  "physics_dt": 0.002,
+  "sample_dt": 0.05,
+  "native_controls": 175,
+  "replay_controls": 173,
+  "recorded_success": true,
+  "success": true,
+  "terminated": true,
+  "truncated": false,
+  "reward_tape_equal": false,
+  "terminal_flags_equal": true,
+  "data_sha256": "5435de12528da31f3d4c69fd340af1696fe29b5c2900f11ad72572b8356ce055"
+}

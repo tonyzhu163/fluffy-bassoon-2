@@ -1,0 +1,300 @@
+{
+  "case": {
+    "arm": "Kinova3",
+    "suite": "libero_goal",
+    "task_id": 6,
+    "init_state_id": 15,
+    "variant": "BASE",
+    "seed": 41810615
+  },
+  "tape": "/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-native-transfer-20261123-r1/gpu01/libero_goal-6-15-Kinova3.json",
+  "tape_sha256": "2abc9e4851d843251613cc90027843d52f665356a2efdc94dbd5ab3ac41cfc74",
+  "recording_job": "job-xaugtearcacf",
+  "opening_proposal_sha256": "d36bf00ff5e1a1b85736f728129a1792809971d4f164438f77b9e9c5ad5dda58",
+  "action_schema": {
+    "shape": [
+      7
+    ],
+    "dtype": "float32",
+    "controller": "OSC_POSE",
+    "control_mode": "relative",
+    "control_freq": 20,
+    "low": [
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0
+    ],
+    "high": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ]
+  },
+  "reset": {
+    "source_pin": "e5500c690c1498eca1b7050350654964190cdf70",
+    "manifest_sha256": "71a6e4e25a2a4a162844d77136e7bff8e6f69c839d2d8194620c4afeabde2bba",
+    "bddl_sha256": "3d3af42d90dc7dde3a5a0a7580999d95a5dbc900c97f3883841abc0543a51600",
+    "suite": "libero_goal",
+    "task_id": 6,
+    "init_state_id": 15,
+    "seed": 41810615,
+    "released_row_fingerprint": "8e73af1966ece2654cdc6ca4ec205ed5208949c0dc2ca2c259a50d70c34e9d0c",
+    "scene_fingerprint": "6b87441ae5a40c6800ddb11573b68095912ad751f37f3739cbd95bc61eae1d84",
+    "post_settle_scene_fingerprint": "4143940ff7a9c95e3d883e2d6b05cee07649a4fcae48d7dc9345584f5511be79",
+    "post_settle_scene_errors": {
+      "max_position_m": 0.0,
+      "position_body": "akita_black_bowl_1_main",
+      "max_rotation_rad": 1.9770276224543824e-17,
+      "rotation_body": "plate_1_main"
+    },
+    "initial_state_fingerprint": "b0a3e4c17ad133e917bf15cd1b56d4a5726276dc8bbbc738a1696a65c07294dc",
+    "alignment": {
+      "method": "joint_limited_grip_site_ik",
+      "seed_qpos": [
+        0.0,
+        0.65,
+        0.0,
+        1.89,
+        0.0,
+        0.6,
+        -1.5707963267948966
+      ],
+      "qpos": [
+        -0.18996175173468546,
+        0.4681713468533502,
+        0.20387350022630096,
+        1.5611194653376603,
+        -0.095301087673952,
+        1.1952488159758905,
+        -1.5780903654250018
+      ],
+      "position_error_m": 4.575044445397642e-13,
+      "rotation_error_rad": 1.6247595381434663e-12,
+      "settled_tcp_error_m": 0.002050418872386217,
+      "settled_rotation_error_rad": 0.04332437738776207,
+      "settled_jaw_difference_m": -4.654595375797044e-09
+    },
+    "perturbation_plan": {
+      "version": "libero_nonphysical_plan_v2",
+      "case_id": "BASE",
+      "schedule": "base",
+      "operator": "none",
+      "variant": "identity",
+      "trigger": "none",
+      "targets": [],
+      "disturbance_targets": [],
+      "references": [],
+      "mechanisms": [
+        "base"
+      ],
+      "assets": [],
+      "params": {},
+      "constraints": [],
+      "seed": 41810615,
+      "event_duration_steps": 24
+    },
+    "perturbation_plan_fingerprint": "cab764c43138f34fceb49a0d08b4b530367bfe05540d00bbfb76095220b79833"
+  },
+  "recorded_settled_hash": "b1eeaee20083fbdae135e714c50703c6133f2486943306a810ed1dcab314d8ee",
+  "model": {
+    "arm": "Kinova3",
+    "model_class": "MountedKinova3",
+    "joint_count": 7,
+    "joint_names": [
+      "robot0_Actuator1",
+      "robot0_Actuator2",
+      "robot0_Actuator3",
+      "robot0_Actuator4",
+      "robot0_Actuator5",
+      "robot0_Actuator6",
+      "robot0_Actuator7"
+    ],
+    "joint_links": [
+      "robot0_shoulder_link",
+      "robot0_HalfArm1_Link",
+      "robot0_HalfArm2_Link",
+      "robot0_forearm_link",
+      "robot0_SphericalWrist1_Link",
+      "robot0_SphericalWrist2_Link",
+      "robot0_Bracelet_Link"
+    ],
+    "model_nq": 41,
+    "model_nv": 37,
+    "xml_sha256": "2884d72a0427223d333dc00fa2c199c3f86406184c234f436436c7d149002cd7",
+    "arm_meshes": [
+      "robot0_base_link",
+      "robot0_bracelet_with_vision_link",
+      "robot0_forearm_link",
+      "robot0_half_arm_1_link",
+      "robot0_half_arm_2_link",
+      "robot0_shoulder_link",
+      "robot0_spherical_wrist_1_link",
+      "robot0_spherical_wrist_2_link"
+    ],
+    "mount": "RethinkMount",
+    "base_xyz": [
+      -0.66,
+      0.0,
+      0.912
+    ],
+    "gripper": "PandaGripper",
+    "gripper_xml_sha256": "d9d68123909d6910488310d0fae4e358ed4ac831c6d0957f3e30893a5412baac",
+    "gripper_joints": [
+      "gripper0_finger_joint1",
+      "gripper0_finger_joint2"
+    ],
+    "tcp_site": "gripper0_grip_site",
+    "hand_link": "robot0_right_hand",
+    "cameras": [
+      "agentview",
+      "robot0_eye_in_hand"
+    ],
+    "wrist_parent": "robot0_right_hand",
+    "wrist_fovy_deg": 75.0,
+    "controller": "OSC_POSE",
+    "control_freq": 20,
+    "osc_output_max": [
+      0.05,
+      0.05,
+      0.05,
+      0.5,
+      0.5,
+      0.5
+    ],
+    "robosuite": "1.4.0",
+    "mujoco": "3.2.3"
+  },
+  "controller_class": "OperationalSpaceController",
+  "arm_actuators": [
+    "robot0_torq_j1",
+    "robot0_torq_j2",
+    "robot0_torq_j3",
+    "robot0_torq_j4",
+    "robot0_torq_j5",
+    "robot0_torq_j6",
+    "robot0_torq_j7"
+  ],
+  "arm_motor_ctrlrange": [
+    [
+      -32.0,
+      32.0
+    ],
+    [
+      -32.0,
+      32.0
+    ],
+    [
+      -32.0,
+      32.0
+    ],
+    [
+      -32.0,
+      32.0
+    ],
+    [
+      -32.0,
+      32.0
+    ],
+    [
+      -13.0,
+      13.0
+    ],
+    [
+      -13.0,
+      13.0
+    ]
+  ],
+  "action_dimensions": 7,
+  "simulator_actuators": 9,
+  "grip_command_dof": 1,
+  "arm_limited": [
+    false,
+    true,
+    false,
+    true,
+    false,
+    true,
+    false
+  ],
+  "compiled_arm_ranges": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      -2.41,
+      2.41
+    ],
+    [
+      0.0,
+      0.0
+    ],
+    [
+      -2.66,
+      2.66
+    ],
+    [
+      0.0,
+      0.0
+    ],
+    [
+      -2.23,
+      2.23
+    ],
+    [
+      0.0,
+      0.0
+    ]
+  ],
+  "input_max": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "output_max": [
+    0.05,
+    0.05,
+    0.05,
+    0.5,
+    0.5,
+    0.5
+  ],
+  "kp": [
+    150.0,
+    150.0,
+    150.0,
+    150.0,
+    150.0,
+    150.0
+  ],
+  "kd": [
+    24.49489742783178,
+    24.49489742783178,
+    24.49489742783178,
+    24.49489742783178,
+    24.49489742783178,
+    24.49489742783178
+  ],
+  "physics_dt": 0.002,
+  "sample_dt": 0.05,
+  "native_controls": 99,
+  "replay_controls": 99,
+  "recorded_success": true,
+  "success": true,
+  "terminated": true,
+  "truncated": false,
+  "reward_tape_equal": true,
+  "terminal_flags_equal": true,
+  "data_sha256": "b435999a18d62eab7bf71228f1b0ea5859a65f3c407d9ead8c608a66415ce01b"
+}
