@@ -75,17 +75,17 @@ the [documentation index](docs/README.md). Keep LycoReco work and runs pinned to
 
 ## Compute and storage
 
-- Default to Baige for compute, launches, availability and job status. Check
-  queue capacity, limits and actual accelerator type before scheduling. Keep
+- Default to Baige for compute, launches, availability and job status, and use the installed official CLIs directly instead of browser consoles: **`aihc`** (`/opt/homebrew/bin/aihc`, `~/.aihc/config` mode `600`, pool `aihc-serverless`, queue `aihcq-rh0wwk9muei4`, region `cn-bj`) for Baige, and **`pai`** (`/opt/homebrew/bin/pai`, `~/.pai/` mode `600`, region `cn-wulanchabu`, workspace `268463`, quota `DM05` / `quota1wyoh6y93pj`) for Ali PAI Wulanchabu PPUs. Keep browser consoles as fallback only when a CLI operation is unavailable or the user requests it.
+- **CLI workflow:**
+  - Baige (`aihc`): inspect with `aihc job list`, `aihc job get <job-id>`, `aihc job logs <job-id> --podname <job-id>-master-0`, and `aihc queue list`; submit via `aihc job export <template-job-id>` → edit `name`, `jobSpec.command`, `jobSpec.resources` (clear `faultTolerance: false` and `faultToleranceArgs: ""` on exported JSON and remove the temporary `workspace/aihc/` export dir) → `aihc job create -f <job.json>`; stop only your own jobs with `aihc job stop <job-id>`.
+  - Ali PAI (`pai`): check live capacity with `pai resource quota get quota1wyoh6y93pj -o json` (`DM05` `PPU-ZW810E` specs: `1/2/4/8/16GPU` up to `16GPU/184C/1800GM`); inspect with `pai dlc job list/get/logs/wait`; submit via `pai dlc job resubmit <template-job-id> --export > /tmp/job.json` → edit `DisplayName`/`JobSpecs`/`UserCommand` → `pai dlc job submit --body-json @/tmp/job.json`; stop only your own jobs with `pai dlc job stop <job-id>`.
+- Check queue capacity, limits and actual accelerator type before scheduling. Keep
   GPU isolation at the exclusive scheduler container. Avoid nested device
   namespaces and bubblewrap so the job retains scheduler GPU visibility.
 - Submit full GPU training, rollout collection and benchmark evaluation on
   RTX 4090 or RTX PRO 6000D through Baige **分布式训练** (Distributed
-  Training), including single-GPU runs. Use **开发机** (development machine)
+  Training, via `aihc job create`), including single-GPU runs. Use **开发机** (development machine)
   GPUs exclusively for short smoke tests and runtime qualification.
-- During Baige computer use, reuse and navigate existing browser windows,
-  tabs and console terminals. Open a new one only when no suitable existing
-  surface is available or the user requests it.
 - Launch verified, in-scope work once resources are ready. Allocations or
   incremental budgets up to 50 GPU-hours need no further approval. Track
   cumulative use across workers. Ask before an unapproved budget above 50
