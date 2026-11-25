@@ -107,8 +107,12 @@ the [documentation index](docs/README.md). Keep LycoReco work and runs pinned to
   6000D distributed work.
 - On Ali PPU, preserve vendor libraries and qualify framework support and core
   numerical behavior on the allocated PPU before model work.
-- Measure batch capacity and update time. When tuning execution batches,
-  preserve the saved global batch, loss weighting and optimizer schedule.
+- Before launching multi-GPU/multi-PPU or long scale-up jobs, calibrate
+  accelerator utilization and throughput on the target hardware (live GPU/PPU
+  utilization, VRAM headroom, samples/s or tokens/s, and collective overhead).
+  Check whether gradient checkpointing, micro-batch size, dataloader stalls, or
+  kernel fallbacks leave compute idle, and tune execution batches while
+  preserving the saved global batch, loss weighting and optimizer schedule.
 - Verify advancing updates or completed artifacts after launch, then check every
   20 minutes. Report cluster, job ID, progress, last check and next action.
   Diagnose failures before retrying under a fresh run ID.
